@@ -1,0 +1,35 @@
+[gd_resource type="Theme" load_steps=6 format=3 uid="uid://cmd714lbb53ja"]
+
+[ext_resource type="FontFile" uid="uid://b3s7umd01feyu" path="res://assets/fonts/Carthage Pro Regular.ttf" id="1_20opa"]
+[ext_resource type="FontFile" uid="uid://xmwjvmqspojb" path="res://assets/fonts/Grand_Aventure_Text.otf" id="1_fe8sr"]
+
+[sub_resource type="Gradient" id="Gradient_ky8k2"]
+offsets = PackedFloat32Array(0, 0.933121, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.0352941, 0, 0, 1, 0.0705882, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_bi0ku"]
+gradient = SubResource("Gradient_ky8k2")
+fill_from = Vector2(1, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3wemq"]
+texture = SubResource("GradientTexture2D_bi0ku")
+
+[resource]
+Button/font_sizes/font_size = 25
+CheckButton/fonts/font = ExtResource("1_20opa")
+Label/colors/font_color = Color(1, 1, 1, 1)
+Label/colors/font_outline_color = Color(0, 0, 0, 1)
+Label/colors/font_shadow_color = Color(0, 0, 0, 1)
+Label/fonts/font = ExtResource("1_fe8sr")
+Panel/styles/panel = SubResource("StyleBoxTexture_3wemq")
+RichTextLabel/colors/font_outline_color = Color(0, 0, 0, 1)
+RichTextLabel/colors/font_shadow_color = Color(0, 0, 0, 0.498039)
+RichTextLabel/fonts/bold_font = null
+RichTextLabel/fonts/normal_font = ExtResource("1_fe8sr")
+TabBar/styles/button_highlight = null
+TabBar/styles/button_pressed = null
+TabBar/styles/tab_disabled = null
+TabBar/styles/tab_focus = null
+TabBar/styles/tab_hovered = null
+TabBar/styles/tab_selected = null
+TabBar/styles/tab_unselected = null

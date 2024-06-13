@@ -1,0 +1,984 @@
+[gd_scene load_steps=46 format=3 uid="uid://gunf36bni4oe"]
+
+[ext_resource type="Script" path="res://assets/scripts/worldRelated/worldScript/worldScript.gd" id="1_t2nyd"]
+[ext_resource type="PackedScene" uid="uid://boicvk4qeqmbd" path="res://assets/entities/pawnSpawn/pawnSpawn.tscn" id="2_cx0r4"]
+[ext_resource type="Script" path="res://assets/resources/customResources/worldData/worldData.gd" id="2_ex3qv"]
+[ext_resource type="PackedScene" uid="uid://1gfropwtqfbn" path="res://assets/entities/GodotSky/GodotSky.tscn" id="2_q6kef"]
+[ext_resource type="PackedScene" uid="uid://dsxt078giobel" path="res://assets/entities/weapons/Uzi/Uzi.tscn" id="3_s544t"]
+[ext_resource type="Texture2D" uid="uid://rnjqykyxts43" path="res://assets/textures/crosshair/crosshair037.png" id="4_tvd5p"]
+[ext_resource type="Script" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="5_ddfvh"]
+[ext_resource type="PackedScene" uid="uid://wtqya32cwdbk" path="res://assets/entities/weapons/Beretta/Beretta.tscn" id="6_h8kok"]
+[ext_resource type="PackedScene" uid="uid://boh343kalvj5i" path="res://assets/entities/weapons/Revolver/Revolver.tscn" id="7_rht07"]
+[ext_resource type="PackedScene" uid="uid://bn07wnk5k005c" path="res://assets/entities/weapons/HoneyBadger/honeybadger.tscn" id="8_nnj4s"]
+[ext_resource type="Texture2D" uid="uid://sr64p1aykopo" path="res://assets/textures/crosshair/crosshair004.png" id="9_q254j"]
+[ext_resource type="AudioStream" uid="uid://kto2dqyucdyf" path="res://assets/music/menu/HHb2.mp3" id="10_j5crf"]
+[ext_resource type="AudioStream" uid="uid://ct6qupxdsjj37" path="res://assets/music/menu/polli.mp3" id="11_74cd2"]
+[ext_resource type="Script" path="res://assets/scripts/entities/interactiveObject/interactiveObject.gd" id="11_r32om"]
+[ext_resource type="PackedScene" uid="uid://4seyitfkc6wn" path="res://assets/entities/clothing/Pants/pants.tscn" id="11_rcdrs"]
+[ext_resource type="AudioStream" uid="uid://4fr4v3mmy3oj" path="res://assets/music/menu/Frenzy.mp3" id="12_rwpt3"]
+[ext_resource type="PackedScene" uid="uid://jwq6tye7ok4r" path="res://assets/entities/clothing/Glasses/SiftinShades/SiftinShades.tscn" id="13_4ny3e"]
+[ext_resource type="PackedScene" uid="uid://cgghffeqks1ac" path="res://assets/entities/clothing/Gloves/left_glove_fingerless.tscn" id="14_ex2yk"]
+[ext_resource type="PackedScene" uid="uid://bb5qvdslt6004" path="res://assets/entities/clothing/Pants/armored_pants.tscn" id="16_crfc1"]
+[ext_resource type="PackedScene" uid="uid://dodu8jdt3nw06" path="res://assets/scenes/ui/GamePauseMenu.tscn" id="18_jge35"]
+[ext_resource type="PackedScene" uid="uid://cn7cu77jr8mqg" path="res://assets/entities/props/radio.tscn" id="18_wditn"]
+[ext_resource type="PackedScene" uid="uid://d10o2e44ltrnl" path="res://assets/entities/clothing/ArmoredShirt/armor_shirt.tscn" id="21_chy4y"]
+
+[sub_resource type="Resource" id="Resource_o85ge"]
+script = ExtResource("2_ex3qv")
+enableTimeCycle = false
+worldName = "Uncle Tsimks' Shop"
+worldDescription = "Get ripped off at this jackasses pawn shop.."
+worldType = 0
+spawnPawnsOnLoad = true
+playOnStart = false
+spawnType = 0
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_rpwqt"]
+vertices = PackedVector3Array(-1.48699, 4.315, -0.797509, -1.48699, 4.315, -0.0475087, -0.736988, 4.065, -0.0475087, -0.986988, 4.315, -1.54751, -1.48699, 4.315, -0.797509, -0.736988, 4.065, -0.0475087, 4.26301, 4.065, -0.0475087, 5.26301, 4.315, -1.54751, 4.26301, 4.065, -0.0475087, 5.26301, 4.315, -0.0475087, 5.26301, 4.315, -1.54751, -0.736988, 4.065, -0.0475087, -0.736988, 3.565, 8.20249, 4.26301, 3.565, 8.20249, 4.26301, 4.065, -0.0475087, -0.736988, 3.565, 2.70249, 4.26301, 3.565, 2.70249, 2.01301, 0.814996, 0.452491, 3.01301, 0.814996, 0.702491, 3.01301, 0.814996, 0.202491, -0.736988, 0.814996, 2.45249, -0.736988, 0.814996, 2.95249, 0.0130119, 0.814996, 3.20249, 3.76301, 0.814996, 5.20249, 4.26301, 0.814996, 4.95249, 4.26301, 0.814996, 2.45249, -0.736988, 0.814996, 2.45249, 0.0130119, 0.814996, 3.20249, 0.0130119, 0.814996, 7.70249, -0.736988, 0.814996, 8.20249, 4.26301, 0.814996, 8.20249, 3.76301, 0.814996, 7.70249, 0.0130119, 0.814996, 7.70249, 3.76301, 0.814996, 7.70249, 3.76301, 0.814996, 5.20249, 0.0130119, 0.814996, 3.20249)
+polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(4, 3, 5), PackedInt32Array(5, 3, 6), PackedInt32Array(6, 3, 7), PackedInt32Array(10, 9, 8), PackedInt32Array(14, 16, 11), PackedInt32Array(11, 16, 15), PackedInt32Array(15, 16, 13), PackedInt32Array(15, 13, 12), PackedInt32Array(19, 18, 17), PackedInt32Array(22, 21, 20), PackedInt32Array(24, 23, 25), PackedInt32Array(25, 23, 27), PackedInt32Array(25, 27, 26), PackedInt32Array(31, 30, 28), PackedInt32Array(28, 30, 29), PackedInt32Array(33, 32, 34), PackedInt32Array(34, 32, 35)]
+
+[sub_resource type="GDScript" id="GDScript_j4g3k"]
+script/source = "extends Node3D
+var isInShop = false
+@export var shopCam : Camera3D
+#@export var shopHud : Control
+@onready var header_lbl : Label = $control/panel/label
+
+func _ready():
+#	shopHud.hide()
+	Dialogic.VAR.set('tsimkShopRadioDestroyed',false)
+	shopCam.current = false
+	Dialogic.signal_event.connect(_on_dialogic_signal)
+
+func _on_dialogic_signal(argument:String):
+	if argument == \"tsimkShop\":
+		await Fade.fade_out(0.3, Color(0,0,0,1),\"GradientVertical\",false,true).finished
+		Dialogic.end_timeline()
+		enableShop()
+
+
+
+func _unhandled_input(event):
+	if Input.is_action_just_pressed(\"gEscape\"):
+		if isInShop:
+			disableShop()
+
+func _on_button_pressed() -> void:
+	get_tree().paused = true
+	await Fade.fade_out(0.3, Color(0,0,0,1),\"GradientVertical\",false,true).finished
+	get_tree().paused = false
+	get_tree().change_scene_to_file(\"res://assets/scenes/worlds/areas/playerHome/playerHome.tscn\")
+
+func enableShop():
+		isInShop = true
+		shopCam.current = true
+		gameManager.showMouse()
+		#shopHud.show()
+		gameManager.pauseMenu.canPause = false
+		gameManager.activeCamera.hud.hudEnabled = false
+		gameManager.activeCamera.followingEntity.hide()
+		await Fade.fade_in(0.3, Color(0,0,0,1),\"GradientVertical\",false,true).finished
+
+func disableShop():
+		gameManager.activeCamera.followingEntity.show()
+		gameManager.activeCamera.hud.hudEnabled = true
+		isInShop = false
+		shopCam.current = false
+		#shopHud.hide()
+		gameManager.pauseMenu.canPause = true
+		gameManager.hideMouse()
+		gameManager.activeCamera.camera.make_current()
+
+
+func _on_hitbox_damaged(amount, impulse, vector):
+	Dialogic.VAR.set('tsimkShopRadioDestroyed',true)
+"
+
+[sub_resource type="Gradient" id="Gradient_b1ly5"]
+offsets = PackedFloat32Array(0.888889, 1)
+colors = PackedColorArray(0.20871, 0.20871, 0.20871, 1, 0.303233, 0.303233, 0.303233, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_7o6wj"]
+gradient = SubResource("Gradient_b1ly5")
+fill = 1
+fill_from = Vector2(0.2, 0.8)
+fill_to = Vector2(0.2, 1)
+metadata/_snap_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_neh1q"]
+albedo_texture = SubResource("GradientTexture2D_7o6wj")
+uv1_scale = Vector3(21.465, 56.11, 26.16)
+uv1_offset = Vector3(1.65, 0, -1.43)
+uv1_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j7cys"]
+albedo_color = Color(0.831373, 0.615686, 0.466667, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2k8lx"]
+albedo_color = Color(0.54902, 0.54902, 0.54902, 1)
+
+[sub_resource type="Resource" id="Resource_0r7g6"]
+resource_local_to_scene = true
+script = ExtResource("5_ddfvh")
+canBeReloaded = true
+weaponMagSize = 128
+ammoSize = 30
+reloadTime = 0.5
+headDismember = false
+weaponDamage = 5.0
+weaponFireRate = 0.06
+weaponImpulse = 14.0
+weaponShots = 1
+useCustomCrosshairSize = true
+crosshairSizeOverride = Vector2(0.5, 0.5)
+forcedCrosshair = ExtResource("4_tvd5p")
+useFOV = false
+fovShotAmount = 1.5
+weaponRecoil = Vector3(3, 7, 5)
+weaponRecoilStrength = 4.0
+weaponSpread = 0.08
+weaponRecoilStrengthAim = 4.0
+weaponSpreadAim = 0.05
+leftHandParent = false
+rightHandParent = true
+useWeaponSprintAnim = false
+useLeftHandIdle = false
+useRightHandIdle = true
+useLeftHandAiming = false
+useRightHandAiming = true
+useLeftHandFreeAiming = false
+useRightHandFreeAiming = true
+weaponPositionOffset = Vector3(0, -0.09, 0.05)
+weaponRotationOffset = Vector3(1.555, 0, 0)
+bulletColor = Color(255, 255, 0, 255)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nx6ob"]
+radius = 0.181037
+height = 0.670525
+
+[sub_resource type="Resource" id="Resource_2rpfk"]
+resource_local_to_scene = true
+script = ExtResource("5_ddfvh")
+canBeReloaded = true
+weaponMagSize = 128
+ammoSize = 30
+reloadTime = 0.5
+headDismember = false
+weaponDamage = 6.0
+weaponFireRate = 0.2
+weaponImpulse = 16.0
+weaponShots = 1
+useCustomCrosshairSize = false
+crosshairSizeOverride = Vector2(0.8, 0.8)
+useFOV = false
+fovShotAmount = 1.5
+weaponRecoil = Vector3(5, 4, 0.25)
+weaponRecoilStrength = 8.0
+weaponSpread = 0.12
+weaponRecoilStrengthAim = 4.0
+weaponSpreadAim = 0.05
+leftHandParent = false
+rightHandParent = true
+useWeaponSprintAnim = false
+useLeftHandIdle = false
+useRightHandIdle = true
+useLeftHandAiming = true
+useRightHandAiming = true
+useLeftHandFreeAiming = false
+useRightHandFreeAiming = true
+weaponPositionOffset = Vector3(0, -0.15, 0.075)
+weaponRotationOffset = Vector3(0, 0, -1.65)
+bulletColor = Color(255, 255, 0, 255)
+
+[sub_resource type="Resource" id="Resource_o0urw"]
+resource_local_to_scene = true
+script = ExtResource("5_ddfvh")
+canBeReloaded = true
+weaponMagSize = 128
+ammoSize = 30
+reloadTime = 0.5
+headDismember = false
+weaponDamage = 9.0
+weaponFireRate = 0.09
+weaponImpulse = 15.0
+weaponShots = 1
+useCustomCrosshairSize = false
+crosshairSizeOverride = Vector2(0.8, 0.8)
+forcedCrosshair = ExtResource("9_q254j")
+useFOV = false
+fovShotAmount = 1.5
+weaponRecoil = Vector3(5, 7, 3)
+weaponRecoilStrength = 7.0
+weaponSpread = 0.05
+weaponRecoilStrengthAim = 4.0
+weaponSpreadAim = 0.04
+leftHandParent = false
+rightHandParent = true
+useWeaponSprintAnim = false
+useLeftHandIdle = true
+useRightHandIdle = true
+useLeftHandAiming = true
+useRightHandAiming = true
+useLeftHandFreeAiming = true
+useRightHandFreeAiming = true
+weaponPositionOffset = Vector3(-0.015, -0.335, 0.12)
+weaponRotationOffset = Vector3(-0.015, 0, -0.05)
+bulletColor = Color(255, 255, 0, 255)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wutts"]
+cull_mode = 2
+albedo_color = Color(0.831373, 0.615686, 0.466667, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8qlvt"]
+albedo_color = Color(0.929412, 0.776471, 0.670588, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5lh24"]
+albedo_color = Color(0.360784, 0.360784, 0.360784, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mxjq0"]
+albedo_color = Color(0.6, 0.415686, 0.235294, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mfbqf"]
+albedo_color = Color(0.729412, 0.603922, 0.388235, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ck0fj"]
+albedo_color = Color(0.219608, 0.270588, 0.164706, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rgt10"]
+albedo_color = Color(0.783, 0.8294, 0.87, 1)
+metallic = 1.0
+roughness = 0.3
+
+[sub_resource type="GDScript" id="GDScript_j561y"]
+resource_name = "shopLeave"
+script/source = "extends Node3D
+@export var interactive : InteractiveObject
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	interactive.objectUsed.connect(gotoHome)
+
+func gotoHome(pawn:BasePawn):
+	interactive.remove_from_group(\"Interactable\")
+	musicManager.change_song_to(null,0.5)
+	await Fade.fade_out(0.3, Color(0,0,0,1),\"GradientVertical\",false,true).finished
+	get_tree().change_scene_to_file(\"res://assets/scenes/worlds/areas/playerHome/playerHome.tscn\")
+"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hfo7w"]
+albedo_color = Color(0.54902, 0.384314, 0.156863, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2ciii"]
+size = Vector3(1.10938, 2.01221, 0.111206)
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_7757a"]
+streams_count = 3
+stream_0/stream = ExtResource("10_j5crf")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("11_74cd2")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("12_rwpt3")
+stream_2/weight = 1.0
+
+[node name="worldBase" type="Node"]
+script = ExtResource("1_t2nyd")
+worldData = SubResource("Resource_o85ge")
+
+[node name="Spawns" type="Node" parent="."]
+
+[node name="playerSpawns" type="Node" parent="Spawns"]
+
+[node name="pawnSpawn" parent="Spawns/playerSpawns" instance=ExtResource("2_cx0r4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.67419, 0.537713, 8.11731)
+pawnType = 0
+pawnWeapons = Array[PackedScene]([ExtResource("7_rht07"), ExtResource("3_s544t"), ExtResource("8_nnj4s")])
+pawnClothing = Array[PackedScene]([ExtResource("16_crfc1")])
+aiSkill = null
+aiType = null
+
+[node name="pawnSpawns" type="Node" parent="Spawns"]
+
+[node name="pawnSpawn" parent="Spawns/pawnSpawns" node_paths=PackedStringArray("dialogueStartingCam") instance=ExtResource("2_cx0r4")]
+transform = Transform3D(-0.997125, 0, 0.0757794, 0, 1, 0, -0.0757794, 0, -0.997125, 2.36541, 0.537713, 0.584182)
+pawnName = "Uncle Tsimk"
+pawnWeapons = Array[PackedScene]([ExtResource("6_h8kok")])
+pawnClothing = Array[PackedScene]([ExtResource("13_4ny3e"), ExtResource("21_chy4y"), ExtResource("14_ex2yk"), ExtResource("11_rcdrs")])
+aiSkill = 0
+weaponToEquip = 1
+isInteractable = true
+hatedGroups = Array[StringName]([&"Hostile"])
+dialogueStartingCam = NodePath("../../../Misc/dialogueCam")
+dialogueName = &"uncleTalk"
+animationToForce = &"PawnAnim/shopIdle1"
+pawnColor = Color(0.225761, 0.616941, 0.860719, 1)
+
+[node name="Environment" type="Node" parent="."]
+
+[node name="GodotSky" parent="Environment" instance=ExtResource("2_q6kef")]
+
+[node name="Geometry" type="Node3D" parent="."]
+
+[node name="navigationRegion3d" type="NavigationRegion3D" parent="Geometry"]
+navigation_mesh = SubResource("NavigationMesh_rpwqt")
+
+[node name="ShopBg" type="Node3D" parent="Geometry/navigationRegion3d" node_paths=PackedStringArray("shopCam")]
+script = SubResource("GDScript_j4g3k")
+shopCam = NodePath("shopCam")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Geometry/navigationRegion3d/ShopBg"]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Sign" type="CSGCombiner3D" parent="Geometry/navigationRegion3d/ShopBg"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.28206, 0)
+use_collision = true
+
+[node name="csgBox3d" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/Sign"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.344377, 0.445679, -0.0830231)
+size = Vector3(2.51636, 1.51782, 0.124542)
+material = SubResource("StandardMaterial3D_neh1q")
+
+[node name="csgBox3d2" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/Sign"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.344377, 0.445679, -0.139303)
+size = Vector3(2.66992, 1.58691, 0.124542)
+material = SubResource("StandardMaterial3D_j7cys")
+
+[node name="csgBox3d3" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/Sign"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.844466, -0.5202, -0.139303)
+size = Vector3(0.148193, 0.574829, 0.0837402)
+material = SubResource("StandardMaterial3D_j7cys")
+
+[node name="csgBox3d4" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/Sign"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.55923, -0.523129, -0.139303)
+size = Vector3(0.148193, 0.580688, 0.0837402)
+material = SubResource("StandardMaterial3D_j7cys")
+
+[node name="csgBox3d5" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/Sign"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.338806, -0.281186, -0.0767424)
+size = Vector3(2.58905, 0.0968018, 0.208862)
+material = SubResource("StandardMaterial3D_j7cys")
+
+[node name="csgBox3d6" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/Sign"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.835186, 1.14117, -0.0767424)
+size = Vector3(0.0938416, 0.0968018, 0.208862)
+material = SubResource("StandardMaterial3D_2k8lx")
+
+[node name="csgBox3d7" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/Sign"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.52848, 1.14117, -0.0767424)
+size = Vector3(0.0938416, 0.0968018, 0.208862)
+material = SubResource("StandardMaterial3D_2k8lx")
+
+[node name="csgBox3d8" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/Sign"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.86277, 0.770316, -0.0767424)
+size = Vector3(0.0209579, 0.0420532, 0.208862)
+material = SubResource("StandardMaterial3D_2k8lx")
+
+[node name="csgBox3d9" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/Sign"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0483, 0.648755, -0.0767424)
+size = Vector3(0.0209579, 0.0420532, 0.208862)
+material = SubResource("StandardMaterial3D_2k8lx")
+
+[node name="csgBox3d10" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/Sign"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.179577, 0.816941, -0.0767424)
+size = Vector3(0.0209579, 0.0420532, 0.208862)
+material = SubResource("StandardMaterial3D_2k8lx")
+
+[node name="csgBox3d11" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/Sign"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.266131, 0.806867, -0.0767424)
+size = Vector3(0.0209579, 0.0420532, 0.208862)
+material = SubResource("StandardMaterial3D_2k8lx")
+
+[node name="csgBox3d12" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/Sign"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.238236, 0.28484, -0.0767424)
+size = Vector3(0.0209579, 0.0420532, 0.208862)
+material = SubResource("StandardMaterial3D_2k8lx")
+
+[node name="csgBox3d13" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/Sign"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.202632, 0.13813, -0.0767424)
+size = Vector3(0.0209579, 0.0420532, 0.208862)
+material = SubResource("StandardMaterial3D_2k8lx")
+
+[node name="csgBox3d14" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/Sign"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.564567, 0.279914, -0.0767424)
+size = Vector3(0.0209579, 0.0420532, 0.208862)
+material = SubResource("StandardMaterial3D_2k8lx")
+
+[node name="csgBox3d15" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/Sign"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.29947, 0.279914, -0.0767424)
+size = Vector3(0.0209579, 0.0420532, 0.208862)
+material = SubResource("StandardMaterial3D_2k8lx")
+
+[node name="csgBox3d16" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/Sign"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.73093, 0.279914, -0.0767424)
+size = Vector3(0.0209579, 0.0420532, 0.208862)
+material = SubResource("StandardMaterial3D_2k8lx")
+
+[node name="Uzi" parent="Geometry/navigationRegion3d/ShopBg/Sign" instance=ExtResource("3_s544t")]
+process_mode = 4
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0.8, 0)
+axis_lock_linear_x = true
+axis_lock_linear_y = true
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+weaponResource = SubResource("Resource_0r7g6")
+
+[node name="uziarea3d" type="Area3D" parent="Geometry/navigationRegion3d/ShopBg/Sign/Uzi"]
+process_mode = 3
+
+[node name="collisionShape3d" type="CollisionShape3D" parent="Geometry/navigationRegion3d/ShopBg/Sign/Uzi/uziarea3d"]
+process_mode = 3
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_nx6ob")
+
+[node name="Beretta" parent="Geometry/navigationRegion3d/ShopBg/Sign" instance=ExtResource("6_h8kok")]
+process_mode = 4
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.8, 0)
+axis_lock_linear_x = true
+axis_lock_linear_y = true
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+weaponResource = SubResource("Resource_2rpfk")
+
+[node name="berettaarea3d" type="Area3D" parent="Geometry/navigationRegion3d/ShopBg/Sign/Beretta"]
+process_mode = 3
+
+[node name="collisionShape3d" type="CollisionShape3D" parent="Geometry/navigationRegion3d/ShopBg/Sign/Beretta/berettaarea3d"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_nx6ob")
+
+[node name="Revolver" parent="Geometry/navigationRegion3d/ShopBg/Sign" instance=ExtResource("7_rht07")]
+process_mode = 4
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+axis_lock_linear_x = true
+axis_lock_linear_y = true
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+
+[node name="revolverarea3d" type="Area3D" parent="Geometry/navigationRegion3d/ShopBg/Sign/Revolver"]
+process_mode = 3
+
+[node name="collisionShape3d" type="CollisionShape3D" parent="Geometry/navigationRegion3d/ShopBg/Sign/Revolver/revolverarea3d"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_nx6ob")
+
+[node name="Honeybadger" parent="Geometry/navigationRegion3d/ShopBg/Sign" instance=ExtResource("8_nnj4s")]
+process_mode = 4
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 1, 0.3, 0)
+axis_lock_linear_x = true
+axis_lock_linear_y = true
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+weaponResource = SubResource("Resource_o0urw")
+
+[node name="honeybadgerarea3d" type="Area3D" parent="Geometry/navigationRegion3d/ShopBg/Sign/Honeybadger"]
+process_mode = 3
+
+[node name="collisionShape3d" type="CollisionShape3D" parent="Geometry/navigationRegion3d/ShopBg/Sign/Honeybadger/honeybadgerarea3d"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_nx6ob")
+
+[node name="Shelves" type="CSGCombiner3D" parent="Geometry/navigationRegion3d/ShopBg"]
+transform = Transform3D(0.999721, 0, 0.0236296, 0, 1, 0, -0.0236296, 0, 0.999721, 2.23994, 1.76521, -0.525165)
+use_collision = true
+
+[node name="csgBox3d" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/Shelves"]
+transform = Transform3D(1, 0, 2.71946e-07, 0, 1, 0, -2.71946e-07, 0, 1, 2.38419e-07, 0.055481, -0.0117493)
+size = Vector3(2.28101, 2.60608, 0.456726)
+material = SubResource("StandardMaterial3D_wutts")
+
+[node name="csgBox3d2" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/Shelves/csgBox3d"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.977198, 0.0206909)
+operation = 2
+size = Vector3(2.19165, 0.512238, 0.438843)
+material = SubResource("StandardMaterial3D_8qlvt")
+
+[node name="csgBox3d3" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/Shelves/csgBox3d"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.377198, 0.0206909)
+operation = 2
+size = Vector3(2.19165, 0.512238, 0.438843)
+material = SubResource("StandardMaterial3D_8qlvt")
+
+[node name="csgBox3d4" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/Shelves/csgBox3d"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.222802, 0.0206909)
+operation = 2
+size = Vector3(2.19165, 0.512238, 0.438843)
+material = SubResource("StandardMaterial3D_8qlvt")
+
+[node name="csgBox3d5" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/Shelves/csgBox3d"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.822802, 0.0206909)
+operation = 2
+size = Vector3(2.19165, 0.512238, 0.438843)
+material = SubResource("StandardMaterial3D_8qlvt")
+
+[node name="stall" type="CSGCombiner3D" parent="Geometry/navigationRegion3d/ShopBg"]
+use_collision = true
+
+[node name="csgBox3d" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/stall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.06704, 0.0513546, 4.21954)
+size = Vector3(6.92609, 0.972717, 10.8182)
+
+[node name="csgBox3d10" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/stall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.68521, 1.7071, 4.21954)
+size = Vector3(0.603554, 4.28421, 10.8182)
+
+[node name="csgBox3d12" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/stall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.92241, 1.7071, 9.27364)
+size = Vector3(7.8188, 4.28421, 0.710006)
+
+[node name="csgBox3d11" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/stall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.29652, 1.7071, 4.21954)
+size = Vector3(0.603554, 4.28421, 10.8182)
+
+[node name="csgBox3d2" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/stall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.90652, 0.526259, 1.57948)
+size = Vector3(6.59713, 1.92253, 0.717312)
+material = SubResource("StandardMaterial3D_5lh24")
+
+[node name="csgBox3d5" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/stall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.91693, 2.21855, 1.57948)
+size = Vector3(0.223633, 1.92253, 0.307617)
+material = SubResource("StandardMaterial3D_mxjq0")
+
+[node name="csgBox3d7" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/stall"]
+transform = Transform3D(1, 0, 0, 0, 0.0204014, 0.999792, 0, -0.999792, 0.0204014, 4.91693, 2.81315, 0.325757)
+size = Vector3(0.158203, 2.95817, 0.307617)
+material = SubResource("StandardMaterial3D_mxjq0")
+
+[node name="csgBox3d8" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/stall"]
+transform = Transform3D(1, 0, 0, 0, 0.0204014, 0.999792, 0, -0.999792, 0.0204014, -1.19359, 2.81315, 0.325757)
+size = Vector3(0.158203, 2.95817, 0.307617)
+material = SubResource("StandardMaterial3D_mxjq0")
+
+[node name="csgBox3d6" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/stall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.18684, 2.21855, 1.57948)
+size = Vector3(0.223633, 1.92253, 0.307617)
+material = SubResource("StandardMaterial3D_mxjq0")
+
+[node name="csgBox3d3" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/stall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.13204, 1.66239, -1.40662)
+size = Vector3(7.04818, 4.19478, 0.717312)
+material = SubResource("StandardMaterial3D_5lh24")
+
+[node name="csgBox3d4" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/stall"]
+transform = Transform3D(1, 0, 0, 0, -0.182579, -0.983191, 0, 0.983191, -0.182579, 2.08706, 3.48662, 0.0283905)
+size = Vector3(6.95822, 4.19478, 0.15077)
+material = SubResource("StandardMaterial3D_5lh24")
+
+[node name="csgBox3d9" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/stall"]
+transform = Transform3D(1, 0, 0, 0, 0.00994793, -0.99995, 0, 0.99995, 0.00994793, 1.96725, 3.1305, 5.94657)
+size = Vector3(6.71859, 7.89755, 0.15077)
+material = SubResource("StandardMaterial3D_5lh24")
+
+[node name="node3d" type="Node3D" parent="Geometry/navigationRegion3d/ShopBg/stall"]
+
+[node name="litlewoodenthings" type="CSGCombiner3D" parent="Geometry/navigationRegion3d/ShopBg/stall/node3d"]
+
+[node name="csgBox3d9" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/stall/node3d/litlewoodenthings"]
+transform = Transform3D(1, 0, 0, 0, 0.0204014, 0.999792, 0, -0.999792, 0.0204014, -1.19359, 3.21206, -0.945035)
+size = Vector3(0.119141, 0.400838, 0.920059)
+material = SubResource("StandardMaterial3D_mfbqf")
+
+[node name="csgBox3d10" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/stall/node3d/litlewoodenthings"]
+transform = Transform3D(1, 0, 0, 0, 0.0204014, 0.999792, 0, -0.999792, 0.0204014, -1.19359, 3.21206, -0.507629)
+size = Vector3(0.119141, 0.400838, 0.920059)
+material = SubResource("StandardMaterial3D_mfbqf")
+
+[node name="csgBox3d11" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/stall/node3d/litlewoodenthings"]
+transform = Transform3D(1, 0, 0, 0, 0.0204014, 0.999792, 0, -0.999792, 0.0204014, -1.19359, 3.21206, -0.0674719)
+size = Vector3(0.119141, 0.400838, 0.920059)
+material = SubResource("StandardMaterial3D_mfbqf")
+
+[node name="csgBox3d12" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/stall/node3d/litlewoodenthings"]
+transform = Transform3D(1, 0, 0, 0, 0.0204014, 0.999792, 0, -0.999792, 0.0204014, -1.19359, 3.21206, 0.353291)
+size = Vector3(0.119141, 0.400838, 0.920059)
+material = SubResource("StandardMaterial3D_mfbqf")
+
+[node name="csgBox3d13" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/stall/node3d/litlewoodenthings"]
+transform = Transform3D(1, 0, 0, 0, 0.0204014, 0.999792, 0, -0.999792, 0.0204014, -1.19359, 3.21206, 0.787767)
+size = Vector3(0.119141, 0.400838, 0.920059)
+material = SubResource("StandardMaterial3D_mfbqf")
+
+[node name="csgBox3d14" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/stall/node3d/litlewoodenthings"]
+transform = Transform3D(1, 0, 0, 0, 0.0204014, 0.999792, 0, -0.999792, 0.0204014, -1.19359, 3.21206, 1.2213)
+size = Vector3(0.119141, 0.400838, 0.920059)
+material = SubResource("StandardMaterial3D_mfbqf")
+
+[node name="csgBox3d15" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/stall/node3d/litlewoodenthings"]
+transform = Transform3D(1, 0, 0, 0, -0.98507, 0.172153, 0, -0.172153, -0.98507, -1.19359, 3.80844, 0.357611)
+operation = 2
+size = Vector3(0.702148, 0.696025, 3.18959)
+material = SubResource("StandardMaterial3D_mfbqf")
+
+[node name="litlewoodenthings2" type="CSGCombiner3D" parent="Geometry/navigationRegion3d/ShopBg/stall/node3d"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.15981, 0, 0)
+
+[node name="csgBox3d9" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/stall/node3d/litlewoodenthings2"]
+transform = Transform3D(1, 0, 0, 0, 0.0204014, 0.999792, 0, -0.999792, 0.0204014, -1.19359, 3.21206, -0.945035)
+size = Vector3(0.119141, 0.400838, 0.920059)
+material = SubResource("StandardMaterial3D_mfbqf")
+
+[node name="csgBox3d10" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/stall/node3d/litlewoodenthings2"]
+transform = Transform3D(1, 0, 0, 0, 0.0204014, 0.999792, 0, -0.999792, 0.0204014, -1.19359, 3.21206, -0.507629)
+size = Vector3(0.119141, 0.400838, 0.920059)
+material = SubResource("StandardMaterial3D_mfbqf")
+
+[node name="csgBox3d11" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/stall/node3d/litlewoodenthings2"]
+transform = Transform3D(1, 0, 0, 0, 0.0204014, 0.999792, 0, -0.999792, 0.0204014, -1.19359, 3.21206, -0.0674719)
+size = Vector3(0.119141, 0.400838, 0.920059)
+material = SubResource("StandardMaterial3D_mfbqf")
+
+[node name="csgBox3d12" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/stall/node3d/litlewoodenthings2"]
+transform = Transform3D(1, 0, 0, 0, 0.0204014, 0.999792, 0, -0.999792, 0.0204014, -1.19359, 3.21206, 0.353291)
+size = Vector3(0.119141, 0.400838, 0.920059)
+material = SubResource("StandardMaterial3D_mfbqf")
+
+[node name="csgBox3d13" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/stall/node3d/litlewoodenthings2"]
+transform = Transform3D(1, 0, 0, 0, 0.0204014, 0.999792, 0, -0.999792, 0.0204014, -1.19359, 3.21206, 0.787767)
+size = Vector3(0.119141, 0.400838, 0.920059)
+material = SubResource("StandardMaterial3D_mfbqf")
+
+[node name="csgBox3d14" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/stall/node3d/litlewoodenthings2"]
+transform = Transform3D(1, 0, 0, 0, 0.0204014, 0.999792, 0, -0.999792, 0.0204014, -1.19359, 3.21206, 1.2213)
+size = Vector3(0.119141, 0.400838, 0.920059)
+material = SubResource("StandardMaterial3D_mfbqf")
+
+[node name="csgBox3d15" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/stall/node3d/litlewoodenthings2"]
+transform = Transform3D(1, 0, 0, 0, -0.98507, 0.172153, 0, -0.172153, -0.98507, -1.19359, 3.80844, 0.357611)
+operation = 2
+size = Vector3(0.702148, 0.696025, 3.18959)
+material = SubResource("StandardMaterial3D_mfbqf")
+
+[node name="csgBox3d" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg"]
+transform = Transform3D(0.99113, 0, -0.132896, 0, 1, 0, 0.132896, 0, 0.99113, 3.89216, 0.686982, 0.607679)
+use_collision = true
+size = Vector3(0.3, 0.3, 1)
+material = SubResource("StandardMaterial3D_ck0fj")
+
+[node name="csgBox3d" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/csgBox3d"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.374525)
+size = Vector3(0.31543, 0.307617, 0.0410156)
+
+[node name="csgBox3d2" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/csgBox3d"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.38419e-07, 0, 0.388034)
+size = Vector3(0.31543, 0.307617, 0.0410156)
+
+[node name="csgBox3d3" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/csgBox3d"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.149096, -0.00187641, 2.38419e-07)
+size = Vector3(0.0507812, 0.0236816, 0.133789)
+
+[node name="csgCombiner3d" type="CSGCombiner3D" parent="Geometry/navigationRegion3d/ShopBg"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.38375, 0, -0.707159)
+material_override = SubResource("StandardMaterial3D_rgt10")
+use_collision = true
+
+[node name="csgCylinder3d" type="CSGCylinder3D" parent="Geometry/navigationRegion3d/ShopBg/csgCombiner3d"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.44549, 0)
+radius = 0.0212291
+sides = 6
+
+[node name="csgCylinder3d2" type="CSGCylinder3D" parent="Geometry/navigationRegion3d/ShopBg/csgCombiner3d"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.552937, 1.44549, 0)
+radius = 0.0212291
+sides = 6
+
+[node name="csgCylinder3d3" type="CSGCylinder3D" parent="Geometry/navigationRegion3d/ShopBg/csgCombiner3d"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.44549, 1.77873)
+radius = 0.0212291
+sides = 6
+
+[node name="csgCylinder3d4" type="CSGCylinder3D" parent="Geometry/navigationRegion3d/ShopBg/csgCombiner3d"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.552937, 1.44549, 1.77873)
+radius = 0.0212291
+sides = 6
+
+[node name="csgBox3d" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/csgCombiner3d"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.268645, 2.40807, 0.891621)
+size = Vector3(0.611328, 0.0336914, 1.92798)
+
+[node name="csgBox3d" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/csgCombiner3d/csgBox3d"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.047766, 0)
+operation = 2
+size = Vector3(0.540039, 0.09, 1.87402)
+
+[node name="csgBox3d2" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/csgCombiner3d"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.268645, 2.00807, 0.891621)
+size = Vector3(0.611328, 0.0336914, 1.92798)
+
+[node name="csgBox3d" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/csgCombiner3d/csgBox3d2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.047766, 0)
+operation = 2
+size = Vector3(0.540039, 0.09, 1.87402)
+
+[node name="csgBox3d3" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/csgCombiner3d"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.268645, 1.60807, 0.891621)
+size = Vector3(0.611328, 0.0336914, 1.92798)
+
+[node name="csgBox3d" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/csgCombiner3d/csgBox3d3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.047766, 0)
+operation = 2
+size = Vector3(0.540039, 0.09, 1.87402)
+
+[node name="csgBox3d4" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/csgCombiner3d"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.268645, 1.30807, 0.891621)
+size = Vector3(0.611328, 0.0336914, 1.92798)
+
+[node name="csgBox3d" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/csgCombiner3d/csgBox3d4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.047766, 0)
+operation = 2
+size = Vector3(0.540039, 0.09, 1.87402)
+
+[node name="csgCombiner3d2" type="CSGCombiner3D" parent="Geometry/navigationRegion3d/ShopBg"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.38375, 0, 5.54549)
+material_override = SubResource("StandardMaterial3D_rgt10")
+use_collision = true
+
+[node name="csgCylinder3d" type="CSGCylinder3D" parent="Geometry/navigationRegion3d/ShopBg/csgCombiner3d2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.44549, 0)
+radius = 0.0212291
+sides = 6
+
+[node name="csgCylinder3d2" type="CSGCylinder3D" parent="Geometry/navigationRegion3d/ShopBg/csgCombiner3d2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.552937, 1.44549, 0)
+radius = 0.0212291
+sides = 6
+
+[node name="csgCylinder3d3" type="CSGCylinder3D" parent="Geometry/navigationRegion3d/ShopBg/csgCombiner3d2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.44549, 1.77873)
+radius = 0.0212291
+sides = 6
+
+[node name="csgCylinder3d4" type="CSGCylinder3D" parent="Geometry/navigationRegion3d/ShopBg/csgCombiner3d2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.552937, 1.44549, 1.77873)
+radius = 0.0212291
+sides = 6
+
+[node name="csgBox3d" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/csgCombiner3d2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.268645, 2.40807, 0.891621)
+size = Vector3(0.611328, 0.0336914, 1.92798)
+
+[node name="csgBox3d" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/csgCombiner3d2/csgBox3d"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.047766, 0)
+operation = 2
+size = Vector3(0.540039, 0.09, 1.87402)
+
+[node name="csgBox3d2" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/csgCombiner3d2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.268645, 2.00807, 0.891621)
+size = Vector3(0.611328, 0.0336914, 1.92798)
+
+[node name="csgBox3d" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/csgCombiner3d2/csgBox3d2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.047766, 0)
+operation = 2
+size = Vector3(0.540039, 0.09, 1.87402)
+
+[node name="csgBox3d3" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/csgCombiner3d2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.268645, 1.60807, 0.891621)
+size = Vector3(0.611328, 0.0336914, 1.92798)
+
+[node name="csgBox3d" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/csgCombiner3d2/csgBox3d3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.047766, 0)
+operation = 2
+size = Vector3(0.540039, 0.09, 1.87402)
+
+[node name="csgBox3d4" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/csgCombiner3d2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.268645, 1.30807, 0.891621)
+size = Vector3(0.611328, 0.0336914, 1.92798)
+
+[node name="csgBox3d" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/csgCombiner3d2/csgBox3d4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.047766, 0)
+operation = 2
+size = Vector3(0.540039, 0.09, 1.87402)
+
+[node name="csgCombiner3d3" type="CSGCombiner3D" parent="Geometry/navigationRegion3d/ShopBg"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.15385, 0, 5.54549)
+material_override = SubResource("StandardMaterial3D_rgt10")
+use_collision = true
+
+[node name="csgCylinder3d" type="CSGCylinder3D" parent="Geometry/navigationRegion3d/ShopBg/csgCombiner3d3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.44549, 0)
+radius = 0.0212291
+sides = 6
+
+[node name="csgCylinder3d2" type="CSGCylinder3D" parent="Geometry/navigationRegion3d/ShopBg/csgCombiner3d3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.552937, 1.44549, 0)
+radius = 0.0212291
+sides = 6
+
+[node name="csgCylinder3d3" type="CSGCylinder3D" parent="Geometry/navigationRegion3d/ShopBg/csgCombiner3d3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.44549, 1.77873)
+radius = 0.0212291
+sides = 6
+
+[node name="csgCylinder3d4" type="CSGCylinder3D" parent="Geometry/navigationRegion3d/ShopBg/csgCombiner3d3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.552937, 1.44549, 1.77873)
+radius = 0.0212291
+sides = 6
+
+[node name="csgBox3d" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/csgCombiner3d3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.268645, 2.40807, 0.891621)
+size = Vector3(0.611328, 0.0336914, 1.92798)
+
+[node name="csgBox3d" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/csgCombiner3d3/csgBox3d"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.047766, 0)
+operation = 2
+size = Vector3(0.540039, 0.09, 1.87402)
+
+[node name="csgBox3d2" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/csgCombiner3d3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.268645, 2.00807, 0.891621)
+size = Vector3(0.611328, 0.0336914, 1.92798)
+
+[node name="csgBox3d" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/csgCombiner3d3/csgBox3d2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.047766, 0)
+operation = 2
+size = Vector3(0.540039, 0.09, 1.87402)
+
+[node name="csgBox3d3" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/csgCombiner3d3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.268645, 1.60807, 0.891621)
+size = Vector3(0.611328, 0.0336914, 1.92798)
+
+[node name="csgBox3d" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/csgCombiner3d3/csgBox3d3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.047766, 0)
+operation = 2
+size = Vector3(0.540039, 0.09, 1.87402)
+
+[node name="csgBox3d4" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/csgCombiner3d3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.268645, 1.30807, 0.891621)
+size = Vector3(0.611328, 0.0336914, 1.92798)
+
+[node name="csgBox3d" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/csgCombiner3d3/csgBox3d4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.047766, 0)
+operation = 2
+size = Vector3(0.540039, 0.09, 1.87402)
+
+[node name="csgCombiner3d4" type="CSGCombiner3D" parent="Geometry/navigationRegion3d/ShopBg"]
+transform = Transform3D(0.99959, 0, 0.0286195, 0, 1, 0, -0.0286195, 0, 0.99959, -1.15385, 0, 3.54549)
+material_override = SubResource("StandardMaterial3D_rgt10")
+use_collision = true
+
+[node name="csgCylinder3d" type="CSGCylinder3D" parent="Geometry/navigationRegion3d/ShopBg/csgCombiner3d4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.44549, 0)
+radius = 0.0212291
+sides = 6
+
+[node name="csgCylinder3d2" type="CSGCylinder3D" parent="Geometry/navigationRegion3d/ShopBg/csgCombiner3d4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.552937, 1.44549, 0)
+radius = 0.0212291
+sides = 6
+
+[node name="csgCylinder3d3" type="CSGCylinder3D" parent="Geometry/navigationRegion3d/ShopBg/csgCombiner3d4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.44549, 1.77873)
+radius = 0.0212291
+sides = 6
+
+[node name="csgCylinder3d4" type="CSGCylinder3D" parent="Geometry/navigationRegion3d/ShopBg/csgCombiner3d4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.552937, 1.44549, 1.77873)
+radius = 0.0212291
+sides = 6
+
+[node name="csgBox3d" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/csgCombiner3d4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.268645, 2.40807, 0.891621)
+size = Vector3(0.611328, 0.0336914, 1.92798)
+
+[node name="csgBox3d" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/csgCombiner3d4/csgBox3d"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.047766, 0)
+operation = 2
+size = Vector3(0.540039, 0.09, 1.87402)
+
+[node name="csgBox3d2" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/csgCombiner3d4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.268645, 2.00807, 0.891621)
+size = Vector3(0.611328, 0.0336914, 1.92798)
+
+[node name="csgBox3d" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/csgCombiner3d4/csgBox3d2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.047766, 0)
+operation = 2
+size = Vector3(0.540039, 0.09, 1.87402)
+
+[node name="csgBox3d3" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/csgCombiner3d4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.268645, 1.60807, 0.891621)
+size = Vector3(0.611328, 0.0336914, 1.92798)
+
+[node name="csgBox3d" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/csgCombiner3d4/csgBox3d3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.047766, 0)
+operation = 2
+size = Vector3(0.540039, 0.09, 1.87402)
+
+[node name="csgBox3d4" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/csgCombiner3d4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.268645, 1.30807, 0.891621)
+size = Vector3(0.611328, 0.0336914, 1.92798)
+
+[node name="csgBox3d" type="CSGBox3D" parent="Geometry/navigationRegion3d/ShopBg/csgCombiner3d4/csgBox3d4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.047766, 0)
+operation = 2
+size = Vector3(0.540039, 0.09, 1.87402)
+
+[node name="shopCam" type="Camera3D" parent="Geometry/navigationRegion3d/ShopBg"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.245, 2.074, 3.781)
+visible = false
+fov = 36.6
+far = 12.11
+
+[node name="door" type="Node3D" parent="Geometry/navigationRegion3d" node_paths=PackedStringArray("interactive")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.72321, 2.07711, 8.43931)
+script = SubResource("GDScript_j561y")
+interactive = NodePath("interactiveObject")
+
+[node name="csgBox3d" type="CSGBox3D" parent="Geometry/navigationRegion3d/door"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0622559, -0.518555, 0.453857)
+size = Vector3(1.12451, 2.03711, 0.0922852)
+material = SubResource("StandardMaterial3D_hfo7w")
+
+[node name="interactiveObject" type="RigidBody3D" parent="Geometry/navigationRegion3d/door" groups=["Interactable"]]
+collision_layer = 33
+collision_mask = 33
+lock_rotation = true
+freeze = true
+script = ExtResource("11_r32om")
+customInteractText = "Go Home"
+useCustomInteractText = true
+interactType = 1
+canBeUsed = true
+
+[node name="collisionShape3d" type="CollisionShape3D" parent="Geometry/navigationRegion3d/door/interactiveObject"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0546875, -0.506104, 0.444397)
+shape = SubResource("BoxShape3D_2ciii")
+
+[node name="interactiveObject" parent="Geometry/navigationRegion3d" instance=ExtResource("18_wditn")]
+transform = Transform3D(-0.98269, 0, 0.185255, 0, 1, 0, -0.185255, 0, -0.98269, 3.51909, 1.46723, 1.59967)
+defaultStream = SubResource("AudioStreamRandomizer_7757a")
+
+[node name="Pawns" type="Node3D" parent="."]
+
+[node name="Players" type="Node3D" parent="Pawns"]
+
+[node name="Props" type="Node3D" parent="."]
+
+[node name="Misc" type="Node3D" parent="."]
+
+[node name="Particles" type="Node3D" parent="Misc"]
+
+[node name="WaypointNodes" type="Node3D" parent="Misc"]
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="Misc"]
+_spawnable_scenes = PackedStringArray("res://assets/entities/camera/camera.tscn")
+spawn_path = NodePath("../../Pawns/Players")
+
+[node name="dialogueCam" type="Marker3D" parent="Misc"]
+transform = Transform3D(-0.794043, 0, -0.607861, 0, 1, 0, 0.607861, 0, -0.794043, 1.50445, 2.05129, 0.756602)
+
+[node name="GamePauseMenu" parent="." instance=ExtResource("18_jge35")]
+
+[connection signal="mouse_entered" from="Geometry/navigationRegion3d/ShopBg/Sign/Uzi/uziarea3d" to="Geometry/navigationRegion3d/ShopBg" method="_on_uziarea_3d_mouse_entered"]
+[connection signal="mouse_entered" from="Geometry/navigationRegion3d/ShopBg/Sign/Beretta/berettaarea3d" to="Geometry/navigationRegion3d/ShopBg" method="_on_berettaarea_3d_mouse_entered"]
+[connection signal="mouse_entered" from="Geometry/navigationRegion3d/ShopBg/Sign/Revolver/revolverarea3d" to="Geometry/navigationRegion3d/ShopBg" method="_on_revolverarea_3d_mouse_entered"]
+[connection signal="mouse_entered" from="Geometry/navigationRegion3d/ShopBg/Sign/Honeybadger/honeybadgerarea3d" to="Geometry/navigationRegion3d/ShopBg" method="_on_honeybadgerarea_3d_mouse_entered"]
+[connection signal="damaged" from="Geometry/navigationRegion3d/interactiveObject/hitbox" to="Geometry/navigationRegion3d/ShopBg" method="_on_hitbox_damaged"]
+
+[editable path="Geometry/navigationRegion3d/interactiveObject"]
+[editable path="Geometry/navigationRegion3d/interactiveObject/radio"]

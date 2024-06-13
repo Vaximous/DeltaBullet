@@ -1,0 +1,67 @@
+[gd_scene load_steps=5 format=3 uid="uid://b4dpjminsf4mx"]
+
+[ext_resource type="Script" path="res://assets/scripts/worldRelated/worldScript/worldScript.gd" id="1_vjirs"]
+[ext_resource type="Environment" uid="uid://dnig6jq4e6pjs" path="res://assets/envs/default_environment.tres" id="2_e62ir"]
+[ext_resource type="PackedScene" uid="uid://dodu8jdt3nw06" path="res://assets/scenes/ui/GamePauseMenu.tscn" id="3_2mura"]
+
+[sub_resource type="GDScript" id="GDScript_7bgfo"]
+resource_name = "worldEnvironment"
+script/source = "extends Node
+@onready var worldEnv : WorldEnvironment = $worldEnvironment:
+	set(value):
+		worldEnv = value
+		UserConfig.configs_updated.connect(updateGraphics)
+func _ready():
+	updateGraphics()
+	UserConfig.configs_updated.connect(updateGraphics)
+
+func updateGraphics():
+	worldEnv.get_environment().ssil_enabled = UserConfig.graphics_Ssil
+	worldEnv.get_environment().ssr_enabled = UserConfig.graphics_Ssr
+	worldEnv.get_environment().sdfgi_enabled = UserConfig.graphics_Sdfgi
+"
+
+[node name="worldBase" type="Node"]
+script = ExtResource("1_vjirs")
+
+[node name="Spawns" type="Node" parent="."]
+
+[node name="playerSpawns" type="Node" parent="Spawns"]
+
+[node name="pawnSpawns" type="Node" parent="Spawns"]
+
+[node name="Environment" type="Node" parent="."]
+script = SubResource("GDScript_7bgfo")
+
+[node name="worldEnvironment" type="WorldEnvironment" parent="Environment"]
+environment = ExtResource("2_e62ir")
+
+[node name="reflectionProbe" type="ReflectionProbe" parent="Environment"]
+
+[node name="directionalLight3d" type="DirectionalLight3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 0.912456, 0.409175, 0, -0.409175, 0.912456, 0, 0, 0)
+shadow_enabled = true
+directional_shadow_blend_splits = true
+directional_shadow_fade_start = 1.0
+
+[node name="Geometry" type="Node3D" parent="."]
+
+[node name="Pawns" type="Node3D" parent="."]
+
+[node name="Players" type="Node3D" parent="Pawns"]
+
+[node name="Props" type="Node3D" parent="."]
+
+[node name="Misc" type="Node3D" parent="."]
+
+[node name="Particles" type="Node3D" parent="Misc"]
+
+[node name="WaypointNodes" type="Node3D" parent="Misc"]
+
+[node name="Triggers" type="Node3D" parent="Misc"]
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="Misc"]
+_spawnable_scenes = PackedStringArray("res://assets/entities/camera/camera.tscn")
+spawn_path = NodePath("../../Pawns/Players")
+
+[node name="GamePauseMenu" parent="." instance=ExtResource("3_2mura")]

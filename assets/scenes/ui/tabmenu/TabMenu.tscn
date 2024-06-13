@@ -1,0 +1,191 @@
+[gd_scene load_steps=25 format=3 uid="uid://7hcwtpln33no"]
+
+[ext_resource type="Script" path="res://assets/scenes/ui/tabmenu/TabMenu.gd" id="1_3o718"]
+[ext_resource type="AudioStream" uid="uid://f2h70ga15l4e" path="res://assets/sounds/ui/notif1_new.wav" id="2_3qfkf"]
+[ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="2_bxlnm"]
+[ext_resource type="FontFile" uid="uid://xmwjvmqspojb" path="res://assets/fonts/Grand_Aventure_Text.otf" id="2_ivuvm"]
+[ext_resource type="Texture2D" uid="uid://b3q3bs8i806sf" path="res://assets/scenes/ui/tabmenu/icons/buttonMerged.png" id="3_4bmoa"]
+[ext_resource type="AudioStream" uid="uid://c7v7iev137c2t" path="res://assets/sounds/ui/notif2_new.wav" id="3_odpon"]
+[ext_resource type="PackedScene" uid="uid://drgtawnawhikt" path="res://assets/scenes/ui/tabmenu/contractsScreen/contractsPanel.tscn" id="5_p5r15"]
+
+[sub_resource type="Gradient" id="Gradient_nujsh"]
+offsets = PackedFloat32Array(0, 0.0935961, 0.906404, 1)
+colors = PackedColorArray(0.0923971, 0.0923971, 0.092397, 1, 0.270222, 0.270222, 0.270222, 1, 0.435194, 0.435192, 0.43519, 1, 1, 1, 1, 0.14902)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_6h5st"]
+gradient = SubResource("Gradient_nujsh")
+fill_from = Vector2(1, 1)
+
+[sub_resource type="Gradient" id="Gradient_cnymy"]
+offsets = PackedFloat32Array(0, 0.093596, 0.821429, 1)
+colors = PackedColorArray(1, 0, 0.0117647, 0, 0.180392, 0, 0, 0, 0.286275, 0, 0, 1, 0.0941176, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_6q5ak"]
+gradient = SubResource("Gradient_cnymy")
+fill_from = Vector2(1, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pcktx"]
+atlas = ExtResource("3_4bmoa")
+region = Rect2(0, 0, 149, 31)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_4vb4a"]
+load_path = "res://.godot/imported/buttonMerged.png-91432e2a93b464425cfe3c7212e05b5e.bptc.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gs4ws"]
+atlas = SubResource("CompressedTexture2D_4vb4a")
+region = Rect2(0, 101, 149, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_th2o5"]
+atlas = ExtResource("3_4bmoa")
+region = Rect2(0, 68, 149, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fp2dk"]
+atlas = ExtResource("3_4bmoa")
+region = Rect2(0, 33, 149, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sulrh"]
+atlas = ExtResource("3_4bmoa")
+region = Rect2(151, 0, 150, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h2mws"]
+atlas = SubResource("CompressedTexture2D_4vb4a")
+region = Rect2(151, 101, 150, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6uw3l"]
+atlas = ExtResource("3_4bmoa")
+region = Rect2(151, 68, 150, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c07sm"]
+atlas = ExtResource("3_4bmoa")
+region = Rect2(151, 33, 150, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m00pm"]
+atlas = ExtResource("3_4bmoa")
+region = Rect2(453, 0, 149, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m22ws"]
+atlas = SubResource("CompressedTexture2D_4vb4a")
+region = Rect2(453, 102, 149, 31)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e5v32"]
+atlas = ExtResource("3_4bmoa")
+region = Rect2(453, 67, 149, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v6kr0"]
+atlas = ExtResource("3_4bmoa")
+region = Rect2(453, 33, 149, 32)
+
+[node name="TabMenu" type="CanvasLayer"]
+script = ExtResource("1_3o718")
+
+[node name="tabControl" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="topBar" type="Control" parent="tabControl"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = -13.0
+offset_right = -1235.0
+offset_bottom = 56.0
+grow_horizontal = 2
+
+[node name="toptexture" type="TextureRect" parent="tabControl/topBar"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 4.392
+offset_left = 1.0
+offset_top = 37.0
+offset_right = -0.0800781
+offset_bottom = 106.0
+texture = SubResource("GradientTexture2D_6h5st")
+
+[node name="toptexture2" type="TextureRect" parent="tabControl/topBar"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 4.411
+offset_top = 9.0
+offset_right = -2.01514
+offset_bottom = 61.0
+texture = SubResource("GradientTexture2D_6q5ak")
+expand_mode = 1
+
+[node name="label" type="Label" parent="tabControl/topBar"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 4.389
+offset_left = 21.0
+offset_top = 49.0
+offset_right = 2.01489
+offset_bottom = 111.0
+theme_override_fonts/font = ExtResource("2_ivuvm")
+theme_override_font_sizes/font_size = 61
+text = "Contracts"
+
+[node name="buttons" type="Control" parent="tabControl/topBar"]
+anchors_preset = 0
+offset_left = -2.0
+offset_top = 10.0
+offset_right = 423.0
+offset_bottom = 45.0
+theme = ExtResource("2_bxlnm")
+
+[node name="hBoxContainer" type="HBoxContainer" parent="tabControl/topBar/buttons"]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 3.0
+offset_right = 711.0
+offset_bottom = 36.0
+
+[node name="contractsButton" type="TextureButton" parent="tabControl/topBar/buttons/hBoxContainer"]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_pcktx")
+texture_pressed = SubResource("AtlasTexture_gs4ws")
+texture_hover = SubResource("AtlasTexture_th2o5")
+texture_focused = SubResource("AtlasTexture_fp2dk")
+ignore_texture_size = true
+
+[node name="equipmentButton" type="TextureButton" parent="tabControl/topBar/buttons/hBoxContainer"]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_sulrh")
+texture_pressed = SubResource("AtlasTexture_h2mws")
+texture_hover = SubResource("AtlasTexture_6uw3l")
+texture_focused = SubResource("AtlasTexture_c07sm")
+ignore_texture_size = true
+
+[node name="mapButton" type="TextureButton" parent="tabControl/topBar/buttons/hBoxContainer"]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_m00pm")
+texture_pressed = SubResource("AtlasTexture_m22ws")
+texture_hover = SubResource("AtlasTexture_e5v32")
+texture_focused = SubResource("AtlasTexture_v6kr0")
+ignore_texture_size = true
+
+[node name="animationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="sounds" type="Node" parent="."]
+
+[node name="notifSound1" type="AudioStreamPlayer" parent="sounds"]
+stream = ExtResource("2_3qfkf")
+
+[node name="notifSound2" type="AudioStreamPlayer" parent="sounds"]
+stream = ExtResource("3_odpon")
+
+[node name="contractsPanel" parent="." instance=ExtResource("5_p5r15")]
+visible = false
+
+[connection signal="pressed" from="tabControl/topBar/buttons/hBoxContainer/contractsButton" to="contractsPanel" method="scanContracts"]
+[connection signal="pressed" from="tabControl/topBar/buttons/hBoxContainer/contractsButton" to="contractsPanel" method="show"]
+[connection signal="pressed" from="tabControl/topBar/buttons/hBoxContainer/equipmentButton" to="contractsPanel" method="hide"]
+[connection signal="pressed" from="tabControl/topBar/buttons/hBoxContainer/mapButton" to="contractsPanel" method="hide"]

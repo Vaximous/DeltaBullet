@@ -1,0 +1,117 @@
+[gd_scene load_steps=7 format=3 uid="uid://drgtawnawhikt"]
+
+[ext_resource type="Script" path="res://assets/scenes/ui/tabmenu/contractsScreen/contractsPanel.gd" id="1_iynu0"]
+[ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="1_p0eik"]
+[ext_resource type="FontFile" uid="uid://b3s7umd01feyu" path="res://assets/fonts/Carthage Pro Regular.ttf" id="2_hpqr6"]
+
+[sub_resource type="Gradient" id="Gradient_qcggf"]
+colors = PackedColorArray(0, 0, 0, 1, 1, 0.0313726, 0.0470588, 0.211765)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_2fo8e"]
+gradient = SubResource("Gradient_qcggf")
+
+[sub_resource type="LabelSettings" id="LabelSettings_73bfl"]
+font = ExtResource("2_hpqr6")
+font_size = 21
+outline_size = 6
+outline_color = Color(0, 0, 0, 1)
+shadow_color = Color(0.215902, 0.215902, 0.215902, 0)
+
+[node name="contractsPanel" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("1_iynu0")
+
+[node name="contractInfo" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -495.0
+offset_top = -326.0
+offset_right = 495.0
+offset_bottom = 326.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="panel" type="Panel" parent="contractInfo"]
+layout_mode = 0
+offset_right = 990.0
+offset_bottom = 652.0
+
+[node name="textureRect" type="TextureRect" parent="contractInfo"]
+layout_mode = 0
+offset_left = -21.0
+offset_top = -26.0
+offset_right = 304.0
+offset_bottom = 38.0
+texture = SubResource("GradientTexture2D_2fo8e")
+
+[node name="contracts" type="Label" parent="contractInfo"]
+layout_mode = 0
+offset_left = -21.0
+offset_top = -18.0
+offset_right = 130.0
+offset_bottom = 34.0
+theme = ExtResource("1_p0eik")
+theme_override_font_sizes/font_size = 51
+text = "Contracts
+"
+
+[node name="contractsAvailable" type="VBoxContainer" parent="contractInfo"]
+custom_minimum_size = Vector2(0, 224.565)
+layout_mode = 0
+offset_left = 6.0
+offset_top = 52.0
+offset_right = 516.0
+offset_bottom = 640.0
+
+[node name="contractInfo" type="Control" parent="contractInfo"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -287.0
+offset_top = -327.0
+offset_bottom = 335.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="panel" type="Panel" parent="contractInfo/contractInfo"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.975
+anchor_right = 0.5
+anchor_bottom = 0.975
+offset_left = -140.5
+offset_top = -280.45
+offset_right = 140.5
+offset_bottom = -1.45001
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="contractInfo" type="Label" parent="contractInfo/contractInfo/panel"]
+layout_mode = 0
+offset_right = 275.0
+offset_bottom = 237.0
+label_settings = SubResource("LabelSettings_73bfl")
+horizontal_alignment = 1
+autowrap_mode = 3
+clip_text = true
+
+[node name="contractorIcon" type="TextureRect" parent="contractInfo/contractInfo"]
+layout_mode = 0
+offset_right = 286.0
+offset_bottom = 282.0

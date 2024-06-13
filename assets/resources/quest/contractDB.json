@@ -1,0 +1,26 @@
+[
+	{
+		"id": 1,
+		"questName": "Test",
+		"questInfo": "Hey, this is a quick test. Bitch!",
+		"questDescriptions": [
+			"Uhh... Kill some asshole",
+			"Good!"
+		],
+		"questProgress": 0,
+		"questCompleted": false,
+		"questFailed": false
+	},
+	{
+		"id": 2,
+		"questName": "Testa 2",
+		"questInfo": "Also a quick test. All using badass.json files to store the contracts! Soon I gotta add functions to actually complete the bitch..",
+		"questDescriptions": [
+			"Uhh... Collect some shit.",
+			"Good!"
+		],
+		"questProgress": 0,
+		"questCompleted": false,
+		"questFailed": false
+	}
+]

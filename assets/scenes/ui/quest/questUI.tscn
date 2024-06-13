@@ -1,0 +1,49 @@
+[gd_scene load_steps=6 format=3 uid="uid://cabdajmjdar7y"]
+
+[sub_resource type="Gradient" id="Gradient_s1gsj"]
+offsets = PackedFloat32Array(0, 0.636364, 0.881818, 1)
+colors = PackedColorArray(0.00566115, 0.00566115, 0.00566115, 1, 0.243137, 0.243137, 0.243137, 1, 0.470588, 0.470588, 0.470588, 0.215686, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_f1e7n"]
+gradient = SubResource("Gradient_s1gsj")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bbtim"]
+texture = SubResource("GradientTexture1D_f1e7n")
+
+[sub_resource type="Gradient" id="Gradient_50tsv"]
+offsets = PackedFloat32Array(0, 0.869048, 0.996032)
+colors = PackedColorArray(0, 0, 0, 1, 0.313726, 0, 0.0117647, 1, 1, 0, 0.0117647, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ypg6o"]
+gradient = SubResource("Gradient_50tsv")
+
+[node name="questUi" type="Control"]
+layout_mode = 3
+anchor_right = 0.344
+anchor_bottom = 0.264
+offset_right = -0.400024
+offset_bottom = 0.399994
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ui" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 551.0
+offset_bottom = 239.0
+
+[node name="panelBG" type="Panel" parent="ui"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_bbtim")
+
+[node name="textureRect" type="TextureRect" parent="ui"]
+layout_mode = 0
+offset_right = 572.0
+offset_bottom = 64.0
+texture = SubResource("GradientTexture2D_ypg6o")
+
+[node name="animationPlayer" type="AnimationPlayer" parent="."]

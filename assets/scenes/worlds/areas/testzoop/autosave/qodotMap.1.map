@@ -1,0 +1,53 @@
+// Game: Delta Bullet
+// Format: Standard
+// entity 0
+{
+"classname" "worldspawn"
+"_tb_mod" "textures"
+"_tb_textures" "textures;textures\Developer_Textures;textures\Developer_Textures\Dark;textures\Developer_Textures\Green;textures\Developer_Textures\Light;textures\Developer_Textures\Orange;textures\Developer_Textures\Purple;textures\Developer_Textures\Red;textures\brick;textures\world"
+// brush 0
+{
+( -448 448 48 ) ( -448 -448 48 ) ( -448 -448 -16 ) Developer_Textures/Dark/texture_08 0 0 0 0.1 0.1
+( -448 -448 48 ) ( 640 -448 48 ) ( 640 -448 -16 ) Developer_Textures/Dark/texture_08 0 0 0 0.1 0.1
+( 640 -448 -16 ) ( 640 448 -16 ) ( -448 448 -16 ) Developer_Textures/Dark/texture_08 0 0 0 0.1 0.1
+( -448 448 48 ) ( 640 448 48 ) ( 640 -448 48 ) Developer_Textures/Dark/texture_08 0 0 0 0.1 0.1
+( 640 448 -16 ) ( 640 448 48 ) ( -448 448 48 ) Developer_Textures/Dark/texture_08 0 0 0 0.1 0.1
+( 640 -448 48 ) ( 640 448 48 ) ( 640 448 -16 ) Developer_Textures/Dark/texture_08 0 0 0 0.1 0.1
+}
+// brush 1
+{
+( 640 -1120 -16 ) ( 640 -1119 -16 ) ( 640 -1120 -15 ) Developer_Textures/Dark/texture_08 0 0 0 0.1 0.1
+( 640 -1120 -16 ) ( 640 -1120 -15 ) ( 641 -1120 -16 ) Developer_Textures/Dark/texture_08 0 0 0 0.1 0.1
+( 640 -1120 -16 ) ( 641 -1120 -16 ) ( 640 -1119 -16 ) Developer_Textures/Dark/texture_08 0 0 0 0.1 0.1
+( 1184 448 48 ) ( 1184 449 48 ) ( 1185 448 48 ) Developer_Textures/Dark/texture_08 0 0 0 0.1 0.1
+( 1184 448 48 ) ( 1185 448 48 ) ( 1184 448 49 ) Developer_Textures/Dark/texture_08 0 0 0 0.1 0.1
+( 1184 448 48 ) ( 1184 448 49 ) ( 1184 449 48 ) Developer_Textures/Dark/texture_08 0 0 0 0.1 0.1
+}
+// brush 2
+{
+( -1104 448 48 ) ( -1104 -1552 48 ) ( -1104 -1552 -16 ) Developer_Textures/Dark/texture_08 16 0 0 0.1 0.1
+( -1104 -1552 48 ) ( -448 -1552 48 ) ( -448 -1552 -16 ) Developer_Textures/Dark/texture_08 0 0 0 0.1 0.1
+( -448 -1552 -16 ) ( -448 448 -16 ) ( -1104 448 -16 ) Developer_Textures/Dark/texture_08 0 -16 0 0.1 0.1
+( -1104 448 48 ) ( -448 448 48 ) ( -448 -1552 48 ) Developer_Textures/Dark/texture_08 0 -16 0 0.1 0.1
+( -448 448 -16 ) ( -448 448 48 ) ( -1104 448 48 ) Developer_Textures/Dark/texture_08 0 0 0 0.1 0.1
+( -448 -1552 48 ) ( -448 448 48 ) ( -448 448 -16 ) Developer_Textures/Dark/texture_08 16 0 0 0.1 0.1
+}
+// brush 3
+{
+( -448 448 -16 ) ( -448 449 -16 ) ( -448 448 -15 ) Developer_Textures/Dark/texture_08 0 0 0 0.1 0.1
+( -448 448 -16 ) ( -448 448 -15 ) ( -447 448 -16 ) Developer_Textures/Dark/texture_08 0 0 0 0.1 0.1
+( -448 448 -16 ) ( -447 448 -16 ) ( -448 449 -16 ) Developer_Textures/Dark/texture_08 0 0 0 0.1 0.1
+( 1184 1488 48 ) ( 1184 1489 48 ) ( 1185 1488 48 ) Developer_Textures/Dark/texture_08 0 0 0 0.1 0.1
+( 1184 1488 48 ) ( 1185 1488 48 ) ( 1184 1488 49 ) Developer_Textures/Dark/texture_08 0 0 0 0.1 0.1
+( 1184 1488 48 ) ( 1184 1488 49 ) ( 1184 1489 48 ) Developer_Textures/Dark/texture_08 0 0 0 0.1 0.1
+}
+// brush 4
+{
+( -1312 1488 896 ) ( -1312 400 896 ) ( -1312 400 32 ) Developer_Textures/Dark/texture_08 0 32 0 1 1
+( -1312 400 896 ) ( -448 400 896 ) ( -448 400 32 ) Developer_Textures/Dark/texture_08 0 32 0 1 1
+( -448 400 32 ) ( -448 1488 32 ) ( -1312 1488 32 ) Developer_Textures/Dark/texture_08 0 0 0 1 1
+( -1312 1488 896 ) ( -448 1488 896 ) ( -448 400 896 ) Developer_Textures/Dark/texture_08 0 0 0 1 1
+( -448 1488 32 ) ( -448 1488 896 ) ( -1312 1488 896 ) Developer_Textures/Dark/texture_08 0 32 0 1 1
+( -448 400 896 ) ( -448 1488 896 ) ( -448 1488 32 ) Developer_Textures/Dark/texture_08 0 32 0 1 1
+}
+}

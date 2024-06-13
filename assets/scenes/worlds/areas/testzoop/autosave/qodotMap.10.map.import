@@ -1,0 +1,14 @@
+[remap]
+
+importer="qodot.map"
+type="Resource"
+uid="uid://bmsupsfv8em43"
+path="res://.godot/imported/qodotMap.10.map-faf2e62f47f99866f49319d473b22d45.tres"
+
+[deps]
+
+source_file="res://assets/scenes/worlds/areas/testzoop/autosave/qodotMap.10.map"
+dest_files=["res://.godot/imported/qodotMap.10.map-faf2e62f47f99866f49319d473b22d45.tres"]
+
+[params]
+

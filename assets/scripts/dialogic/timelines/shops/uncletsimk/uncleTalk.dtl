@@ -1,0 +1,25 @@
+if {tsimkShopRadioDestroyed} == false:
+	Welcome to Tsimk's Bullet Heaven, What can I get you?
+	- I'm good, Thanks.
+		else:
+			...Destroying my boombox was unnecessary, What is it you want?
+		[signal arg="tsimkShop"]
+		- I'm good, Thanks.
+		if {tsimkShopRadioDestroyed} == false:
+			See you around then.
+		else:
+			Fuck off, jackass..
+	- Who are you?
+		Depends on who's asking. Working this type of market earned me the name Uncle Tsimk.
+		- Think I can get a discount?
+			Tsimk doesn't do discounts, Cough up the grit or leave. Maybe if word got out about your presence then I'd consider it.
+		- You have any special "under-the-table" deals?
+			Your name doesn't ring a bell anywhere, as far as I'm concerned you wouldn't need to know if I do any deals like that.
+		- Nice to meet you Tsimk.
+			It's Uncle Tsimk. You wanna buy somethin'?
+			- No.
+				See you around then.
+			- Yeah.
+				[signal arg="tsimkShop"]
+	- I'd like to buy some weapons.
+		[signal arg="tsimkShop"]

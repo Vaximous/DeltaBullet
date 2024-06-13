@@ -1,0 +1,1367 @@
+[gd_scene load_steps=78 format=3 uid="uid://d2pec0trbvhku"]
+
+[ext_resource type="PackedScene" uid="uid://dsxt078giobel" path="res://assets/entities/weapons/Uzi/Uzi.tscn" id="1_8bhe7"]
+[ext_resource type="Texture2D" uid="uid://rnjqykyxts43" path="res://assets/textures/crosshair/crosshair037.png" id="2_5kkg3"]
+[ext_resource type="Script" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="3_qv2tl"]
+[ext_resource type="PackedScene" uid="uid://wtqya32cwdbk" path="res://assets/entities/weapons/Beretta/Beretta.tscn" id="4_4ybn6"]
+[ext_resource type="PackedScene" uid="uid://boh343kalvj5i" path="res://assets/entities/weapons/Revolver/Revolver.tscn" id="5_0hdpi"]
+[ext_resource type="PackedScene" uid="uid://bn07wnk5k005c" path="res://assets/entities/weapons/HoneyBadger/honeybadger.tscn" id="6_xu3gl"]
+[ext_resource type="Texture2D" uid="uid://sr64p1aykopo" path="res://assets/textures/crosshair/crosshair004.png" id="7_bwqp8"]
+[ext_resource type="PackedScene" uid="uid://bg8aarggcxwa8" path="res://assets/entities/pawnEntity/pawnEntity.tscn" id="10_d37gn"]
+[ext_resource type="Environment" uid="uid://wwq6f40kybqq" path="res://assets/entities/GodotSky/WorldEnvironment/default_environment.tres" id="11_ngohw"]
+[ext_resource type="PackedScene" uid="uid://jwq6tye7ok4r" path="res://assets/entities/clothing/Glasses/SiftinShades/SiftinShades.tscn" id="11_pb8wb"]
+[ext_resource type="PackedScene" uid="uid://qlrpb47edm7y" path="res://assets/models/props/radio.gltf" id="12_3qioh"]
+[ext_resource type="PackedScene" uid="uid://cgghffeqks1ac" path="res://assets/entities/clothing/Gloves/left_glove_fingerless.tscn" id="12_4ri5t"]
+[ext_resource type="PackedScene" uid="uid://bap501mpmqgb" path="res://assets/entities/clothing/Gloves/right_glove_fingerless.tscn" id="13_lj3cu"]
+[ext_resource type="PackedScene" uid="uid://bb5qvdslt6004" path="res://assets/entities/clothing/Pants/armored_pants.tscn" id="14_mtc4w"]
+[ext_resource type="PackedScene" uid="uid://nyee136gj7vd" path="res://assets/entities/clothing/longSleeve/long_sleeved_jacket.tscn" id="15_g6ejc"]
+
+[sub_resource type="GDScript" id="GDScript_j4g3k"]
+script/source = "extends Node3D
+var isInShop = false
+@export var shopCam : Camera3D
+@onready var header_lbl : Label = $control/panel/label
+
+func _ready():
+#	shopHud.hide()
+	shopCam.current = false
+	Dialogic.signal_event.connect(_on_dialogic_signal)
+
+func _on_dialogic_signal(argument:String):
+	if argument == \"tsimkShop\":
+		await Fade.fade_out(0.3, Color(0,0,0,1),\"GradientVertical\",false,true).finished
+		Dialogic.end_timeline()
+		enableShop()
+
+
+
+func _unhandled_input(event):
+	if Input.is_action_just_pressed(\"gEscape\"):
+		if isInShop:
+			disableShop()
+
+func _on_button_pressed() -> void:
+	get_tree().paused = true
+	await Fade.fade_out(0.3, Color(0,0,0,1),\"GradientVertical\",false,true).finished
+	get_tree().paused = false
+	get_tree().change_scene_to_file(\"res://assets/scenes/worlds/areas/playerHome/playerHome.tscn\")
+
+func enableShop():
+		isInShop = true
+		shopCam.current = true
+		globalGameManager.showMouse()
+		#shopHud.show()
+		globalGameManager.pauseMenu.canPause = false
+		globalGameManager.activeCamera.hud.hudEnabled = false
+		globalGameManager.activeCamera.followingEntity.hide()
+		await Fade.fade_in(0.3, Color(0,0,0,1),\"GradientVertical\",false,true).finished
+
+func disableShop():
+		globalGameManager.activeCamera.followingEntity.show()
+		globalGameManager.activeCamera.hud.hudEnabled = true
+		isInShop = false
+		shopCam.current = false
+		#shopHud.hide()
+		globalGameManager.pauseMenu.canPause = true
+		globalGameManager.hideMouse()
+		globalGameManager.activeCamera.camera.make_current()
+"
+
+[sub_resource type="Gradient" id="Gradient_b1ly5"]
+offsets = PackedFloat32Array(0.888889, 1)
+colors = PackedColorArray(0.20871, 0.20871, 0.20871, 1, 0.303233, 0.303233, 0.303233, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_7o6wj"]
+gradient = SubResource("Gradient_b1ly5")
+fill = 1
+fill_from = Vector2(0.2, 0.8)
+fill_to = Vector2(0.2, 1)
+metadata/_snap_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_neh1q"]
+albedo_texture = SubResource("GradientTexture2D_7o6wj")
+uv1_scale = Vector3(21.465, 56.11, 26.16)
+uv1_offset = Vector3(1.65, 0, -1.43)
+uv1_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j7cys"]
+albedo_color = Color(0.831373, 0.615686, 0.466667, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2k8lx"]
+albedo_color = Color(0.54902, 0.54902, 0.54902, 1)
+
+[sub_resource type="Resource" id="Resource_0r7g6"]
+resource_local_to_scene = true
+script = ExtResource("3_qv2tl")
+headDismember = false
+weaponDamage = 5.0
+weaponFireRate = 0.06
+weaponImpulse = 14.0
+weaponShots = 1
+useCustomCrosshairSize = true
+crosshairSizeOverride = Vector2(0.5, 0.5)
+forcedCrosshair = ExtResource("2_5kkg3")
+useFOV = false
+fovShotAmount = 1.5
+weaponRecoil = Vector3(3, 7, 5)
+weaponRecoilStrength = 4.0
+weaponSpread = 0.08
+weaponRecoilStrengthAim = 4.0
+weaponSpreadAim = 0.05
+leftHandParent = false
+rightHandParent = true
+useWeaponSprintAnim = false
+useLeftHandIdle = false
+useRightHandIdle = true
+useLeftHandAiming = false
+useRightHandAiming = true
+useLeftHandFreeAiming = false
+useRightHandFreeAiming = true
+weaponPositionOffset = Vector3(0, -0.09, 0.05)
+weaponRotationOffset = Vector3(1.555, 0, 0)
+bulletColor = Color(255, 255, 0, 255)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nx6ob"]
+radius = 0.181037
+height = 0.670525
+
+[sub_resource type="Resource" id="Resource_2rpfk"]
+resource_local_to_scene = true
+script = ExtResource("3_qv2tl")
+headDismember = false
+weaponDamage = 6.0
+weaponFireRate = 0.2
+weaponImpulse = 16.0
+weaponShots = 1
+useCustomCrosshairSize = false
+crosshairSizeOverride = Vector2(0.8, 0.8)
+useFOV = false
+fovShotAmount = 1.5
+weaponRecoil = Vector3(5, 4, 0.25)
+weaponRecoilStrength = 8.0
+weaponSpread = 0.12
+weaponRecoilStrengthAim = 4.0
+weaponSpreadAim = 0.05
+leftHandParent = false
+rightHandParent = true
+useWeaponSprintAnim = false
+useLeftHandIdle = false
+useRightHandIdle = true
+useLeftHandAiming = true
+useRightHandAiming = true
+useLeftHandFreeAiming = false
+useRightHandFreeAiming = true
+weaponPositionOffset = Vector3(0, -0.15, 0.075)
+weaponRotationOffset = Vector3(0, 0, -1.65)
+bulletColor = Color(255, 255, 0, 255)
+
+[sub_resource type="Resource" id="Resource_o0urw"]
+resource_local_to_scene = true
+script = ExtResource("3_qv2tl")
+headDismember = false
+weaponDamage = 9.0
+weaponFireRate = 0.09
+weaponImpulse = 15.0
+weaponShots = 1
+useCustomCrosshairSize = false
+crosshairSizeOverride = Vector2(0.8, 0.8)
+forcedCrosshair = ExtResource("7_bwqp8")
+useFOV = false
+fovShotAmount = 1.5
+weaponRecoil = Vector3(5, 7, 3)
+weaponRecoilStrength = 7.0
+weaponSpread = 0.05
+weaponRecoilStrengthAim = 4.0
+weaponSpreadAim = 0.04
+leftHandParent = false
+rightHandParent = true
+useWeaponSprintAnim = false
+useLeftHandIdle = true
+useRightHandIdle = true
+useLeftHandAiming = true
+useRightHandAiming = true
+useLeftHandFreeAiming = true
+useRightHandFreeAiming = true
+weaponPositionOffset = Vector3(-0.015, -0.335, 0.12)
+weaponRotationOffset = Vector3(-0.015, 0, -0.05)
+bulletColor = Color(255, 255, 0, 255)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wutts"]
+cull_mode = 2
+albedo_color = Color(0.831373, 0.615686, 0.466667, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8qlvt"]
+albedo_color = Color(0.929412, 0.776471, 0.670588, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5lh24"]
+albedo_color = Color(0.360784, 0.360784, 0.360784, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mxjq0"]
+albedo_color = Color(0.6, 0.415686, 0.235294, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mfbqf"]
+albedo_color = Color(0.729412, 0.603922, 0.388235, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ck0fj"]
+albedo_color = Color(0.219608, 0.270588, 0.164706, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rgt10"]
+albedo_color = Color(0.783, 0.8294, 0.87, 1)
+metallic = 1.0
+roughness = 0.3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1185i"]
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.560784, 0.560784, 0.560784, 1)
+border_blend = true
+
+[sub_resource type="LabelSettings" id="LabelSettings_5ansj"]
+font_size = 32
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Gradient" id="Gradient_74ffa"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_qjnlc"]
+gradient = SubResource("Gradient_74ffa")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b6w7g"]
+albedo_texture = SubResource("GradientTexture2D_qjnlc")
+metallic = 1.0
+roughness = 0.59
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_d11q2"]
+animation = &"PawnAnim/Run4"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fgfye"]
+animation = &"PawnAnim/Jump"
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_6c8mw"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_5725y"]
+animation = &"PawnAnim/Run4"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_0uupm"]
+animation = &"PawnAnim/WalkBackwards"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_t8rlb"]
+animation = &"PawnAnim/WalkBackwardsLeft"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_hp7y3"]
+animation = &"PawnAnim/WalkBackwardsR"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_po0ht"]
+animation = &"PawnAnim/RunUpRightNew"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_qux2g"]
+animation = &"PawnAnim/RunUpLeftNew"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_0nmij"]
+animation = &"PawnAnim/WalkLeft"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_v4kej"]
+animation = &"PawnAnim/WalkRight"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_tbvvn"]
+animation = &"PawnAnim/Idle"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_b5ba2"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_5725y")
+blend_point_0/pos = Vector2(0, 1)
+blend_point_1/node = SubResource("AnimationNodeAnimation_0uupm")
+blend_point_1/pos = Vector2(0, -1)
+blend_point_2/node = SubResource("AnimationNodeAnimation_t8rlb")
+blend_point_2/pos = Vector2(-1, -1)
+blend_point_3/node = SubResource("AnimationNodeAnimation_hp7y3")
+blend_point_3/pos = Vector2(1, -1)
+blend_point_4/node = SubResource("AnimationNodeAnimation_po0ht")
+blend_point_4/pos = Vector2(-1, 1)
+blend_point_5/node = SubResource("AnimationNodeAnimation_qux2g")
+blend_point_5/pos = Vector2(1, 1)
+blend_point_6/node = SubResource("AnimationNodeAnimation_0nmij")
+blend_point_6/pos = Vector2(1, 0)
+blend_point_7/node = SubResource("AnimationNodeAnimation_v4kej")
+blend_point_7/pos = Vector2(-1, 0)
+blend_point_8/node = SubResource("AnimationNodeAnimation_tbvvn")
+blend_point_8/pos = Vector2(0, 0)
+
+[sub_resource type="Curve" id="Curve_p8388"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="AnimationNodeTransition" id="AnimationNodeTransition_dt76d"]
+xfade_time = 0.2
+xfade_curve = SubResource("Curve_p8388")
+input_0/name = "notAiming"
+input_0/auto_advance = false
+input_0/reset = true
+input_1/name = "aiming"
+input_1/auto_advance = false
+input_1/reset = true
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_flkpv"]
+animation = &"PawnAnim/Fall"
+
+[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_6vg4h"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_2do4t"]
+animation = &"PawnAnim/Idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_s2v0u"]
+animation = &"PawnAnim/FinalWalkForward"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_q57g1"]
+animation = &"PawnAnim/runCartoonish"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_of51n"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_2do4t")
+blend_point_0/pos = 0.0
+blend_point_1/node = SubResource("AnimationNodeAnimation_s2v0u")
+blend_point_1/pos = 1.0
+blend_point_2/node = SubResource("AnimationNodeAnimation_q57g1")
+blend_point_2/pos = -1.0
+
+[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_x58ix"]
+
+[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_klbir"]
+filter_enabled = true
+filters = ["MaleSkeleton/Skeleton3D:Head", "MaleSkeleton/Skeleton3D:L_Foot", "MaleSkeleton/Skeleton3D:L_Forearm", "MaleSkeleton/Skeleton3D:L_Hand", "MaleSkeleton/Skeleton3D:L_LowerLeg", "MaleSkeleton/Skeleton3D:L_Shoulder", "MaleSkeleton/Skeleton3D:L_Toe", "MaleSkeleton/Skeleton3D:L_UpperArm", "MaleSkeleton/Skeleton3D:L_UpperLeg", "MaleSkeleton/Skeleton3D:R_Foot", "MaleSkeleton/Skeleton3D:R_Forearm", "MaleSkeleton/Skeleton3D:R_Hand", "MaleSkeleton/Skeleton3D:R_LowerLeg", "MaleSkeleton/Skeleton3D:R_Shoulder", "MaleSkeleton/Skeleton3D:R_Toe", "MaleSkeleton/Skeleton3D:R_UpperArm", "MaleSkeleton/Skeleton3D:R_UpperLeg", "MaleSkeleton/Skeleton3D:Spine_0", "MaleSkeleton/Skeleton3D:Spine_1", "MaleSkeleton/Skeleton3D:Spine_2"]
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_3n17a"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_74p54"]
+animation = &"PawnAnim/Idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_1ikok"]
+animation = &"PawnAnim/FinalWalkForward"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_6k8ug"]
+animation = &"PawnAnim/NewerWalkUpleft"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_e3k56"]
+animation = &"PawnAnim/NewerWalkUpRight"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_d3qoj"]
+animation = &"PawnAnim/WalkBackwardsLeft"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_54dlx"]
+animation = &"PawnAnim/WalkBackwardsR"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_vvxn0"]
+animation = &"PawnAnim/WalkBackwards"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_1l86n"]
+animation = &"PawnAnim/WalkLeft"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_5qfga"]
+animation = &"PawnAnim/WalkRight"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_2n37i"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_74p54")
+blend_point_0/pos = Vector2(0, 0)
+blend_point_1/node = SubResource("AnimationNodeAnimation_1ikok")
+blend_point_1/pos = Vector2(0, 1)
+blend_point_2/node = SubResource("AnimationNodeAnimation_6k8ug")
+blend_point_2/pos = Vector2(1, 1)
+blend_point_3/node = SubResource("AnimationNodeAnimation_e3k56")
+blend_point_3/pos = Vector2(-1, 1)
+blend_point_4/node = SubResource("AnimationNodeAnimation_d3qoj")
+blend_point_4/pos = Vector2(-1, -1)
+blend_point_5/node = SubResource("AnimationNodeAnimation_54dlx")
+blend_point_5/pos = Vector2(1, -1)
+blend_point_6/node = SubResource("AnimationNodeAnimation_vvxn0")
+blend_point_6/pos = Vector2(0, -1)
+blend_point_7/node = SubResource("AnimationNodeAnimation_1l86n")
+blend_point_7/pos = Vector2(1, 0)
+blend_point_8/node = SubResource("AnimationNodeAnimation_5qfga")
+blend_point_8/pos = Vector2(-1, 0)
+max_space = Vector2(1.02, 1)
+
+[sub_resource type="Curve" id="Curve_ffbdm"]
+_data = [Vector2(0.00857142, 0), 0.0, 0.0, 0, 0, Vector2(1, 0.986229), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="AnimationNodeTransition" id="AnimationNodeTransition_y3cmn"]
+xfade_time = 0.35
+xfade_curve = SubResource("Curve_ffbdm")
+input_0/name = "walking"
+input_0/auto_advance = false
+input_0/reset = true
+input_1/name = "running"
+input_1/auto_advance = false
+input_1/reset = true
+
+[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_0lac3"]
+filter_enabled = true
+filters = ["MaleSkeleton/Skeleton3D:Head", "MaleSkeleton/Skeleton3D:Neck", "MaleSkeleton/Skeleton3D:R_Forearm", "MaleSkeleton/Skeleton3D:R_Hand", "MaleSkeleton/Skeleton3D:R_Index0", "MaleSkeleton/Skeleton3D:R_Index1", "MaleSkeleton/Skeleton3D:R_Index2", "MaleSkeleton/Skeleton3D:R_Middle0", "MaleSkeleton/Skeleton3D:R_Middle1", "MaleSkeleton/Skeleton3D:R_Middle2", "MaleSkeleton/Skeleton3D:R_Pinkie0", "MaleSkeleton/Skeleton3D:R_Pinkie1", "MaleSkeleton/Skeleton3D:R_Pinkie2", "MaleSkeleton/Skeleton3D:R_Ring0", "MaleSkeleton/Skeleton3D:R_Ring1", "MaleSkeleton/Skeleton3D:R_Ring2", "MaleSkeleton/Skeleton3D:R_Shoulder", "MaleSkeleton/Skeleton3D:R_Thumb0", "MaleSkeleton/Skeleton3D:R_Thumb1", "MaleSkeleton/Skeleton3D:R_Thumb2", "MaleSkeleton/Skeleton3D:R_UpperArm"]
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_1d0po"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_ku2o8"]
+graph_offset = Vector2(-314, 54)
+nodes/BlendSpace1D/node = SubResource("AnimationNodeBlendSpace1D_1d0po")
+nodes/BlendSpace1D/position = Vector2(60, 160)
+node_connections = [&"output", 0, &"BlendSpace1D"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_bs0lv"]
+resource_local_to_scene = true
+resource_name = "PawnAnimTree"
+graph_offset = Vector2(-872.441, -287.097)
+nodes/Animation/node = SubResource("AnimationNodeAnimation_d11q2")
+nodes/Animation/position = Vector2(-1340, -200)
+nodes/Jump/node = SubResource("AnimationNodeAnimation_fgfye")
+nodes/Jump/position = Vector2(-880, -140)
+nodes/aimSprintScale/node = SubResource("AnimationNodeTimeScale_6c8mw")
+nodes/aimSprintScale/position = Vector2(-660, 140)
+nodes/aimSprintStrafe/node = SubResource("AnimationNodeBlendSpace2D_b5ba2")
+nodes/aimSprintStrafe/position = Vector2(-900, 180)
+nodes/aimTransition/node = SubResource("AnimationNodeTransition_dt76d")
+nodes/aimTransition/position = Vector2(-120, -240)
+nodes/fallAnim/node = SubResource("AnimationNodeAnimation_flkpv")
+nodes/fallAnim/position = Vector2(-640, -160)
+nodes/fallBlend/node = SubResource("AnimationNodeBlend2_6vg4h")
+nodes/fallBlend/position = Vector2(-380, -400)
+nodes/idleSpace/node = SubResource("AnimationNodeBlendSpace1D_of51n")
+nodes/idleSpace/position = Vector2(-1340, -340)
+nodes/jumpBlend/node = SubResource("AnimationNodeBlend2_x58ix")
+nodes/jumpBlend/position = Vector2(-600, -340)
+nodes/output/position = Vector2(880, -280)
+nodes/runBlend/node = SubResource("AnimationNodeBlend2_klbir")
+nodes/runBlend/position = Vector2(-780, -340)
+nodes/runSpeed/node = SubResource("AnimationNodeTimeScale_3n17a")
+nodes/runSpeed/position = Vector2(-1040, -240)
+nodes/strafeSpace/node = SubResource("AnimationNodeBlendSpace2D_2n37i")
+nodes/strafeSpace/position = Vector2(-900, 0)
+nodes/strafeType/node = SubResource("AnimationNodeTransition_y3cmn")
+nodes/strafeType/position = Vector2(-460, 0)
+nodes/weaponBlend/node = SubResource("AnimationNodeBlend2_0lac3")
+nodes/weaponBlend/position = Vector2(320, -220)
+nodes/weaponState/node = SubResource("AnimationNodeBlendTree_ku2o8")
+nodes/weaponState/position = Vector2(-120, -40)
+node_connections = [&"aimSprintScale", 0, &"aimSprintStrafe", &"aimTransition", 0, &"fallBlend", &"aimTransition", 1, &"strafeType", &"fallBlend", 0, &"jumpBlend", &"fallBlend", 1, &"fallAnim", &"jumpBlend", 0, &"runBlend", &"jumpBlend", 1, &"Jump", &"output", 0, &"weaponBlend", &"runBlend", 0, &"idleSpace", &"runBlend", 1, &"runSpeed", &"runSpeed", 0, &"Animation", &"strafeType", 0, &"strafeSpace", &"strafeType", 1, &"aimSprintScale", &"weaponBlend", 0, &"aimTransition", &"weaponBlend", 1, &"weaponState"]
+
+[node name="ShopBg" type="Node3D" node_paths=PackedStringArray("shopCam")]
+script = SubResource("GDScript_j4g3k")
+shopCam = NodePath("camera3d")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Sign" type="CSGCombiner3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.28206, 0)
+
+[node name="csgBox3d" type="CSGBox3D" parent="Sign"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.344377, 0.445679, -0.0830231)
+size = Vector3(2.51636, 1.51782, 0.124542)
+material = SubResource("StandardMaterial3D_neh1q")
+
+[node name="csgBox3d2" type="CSGBox3D" parent="Sign"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.344377, 0.445679, -0.139303)
+size = Vector3(2.66992, 1.58691, 0.124542)
+material = SubResource("StandardMaterial3D_j7cys")
+
+[node name="csgBox3d3" type="CSGBox3D" parent="Sign"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.844466, -0.5202, -0.139303)
+size = Vector3(0.148193, 0.574829, 0.0837402)
+material = SubResource("StandardMaterial3D_j7cys")
+
+[node name="csgBox3d4" type="CSGBox3D" parent="Sign"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.55923, -0.523129, -0.139303)
+size = Vector3(0.148193, 0.580688, 0.0837402)
+material = SubResource("StandardMaterial3D_j7cys")
+
+[node name="csgBox3d5" type="CSGBox3D" parent="Sign"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.338806, -0.281186, -0.0767424)
+size = Vector3(2.58905, 0.0968018, 0.208862)
+material = SubResource("StandardMaterial3D_j7cys")
+
+[node name="csgBox3d6" type="CSGBox3D" parent="Sign"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.835186, 1.14117, -0.0767424)
+size = Vector3(0.0938416, 0.0968018, 0.208862)
+material = SubResource("StandardMaterial3D_2k8lx")
+
+[node name="csgBox3d7" type="CSGBox3D" parent="Sign"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.52848, 1.14117, -0.0767424)
+size = Vector3(0.0938416, 0.0968018, 0.208862)
+material = SubResource("StandardMaterial3D_2k8lx")
+
+[node name="csgBox3d8" type="CSGBox3D" parent="Sign"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.86277, 0.770316, -0.0767424)
+size = Vector3(0.0209579, 0.0420532, 0.208862)
+material = SubResource("StandardMaterial3D_2k8lx")
+
+[node name="csgBox3d9" type="CSGBox3D" parent="Sign"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0483, 0.648755, -0.0767424)
+size = Vector3(0.0209579, 0.0420532, 0.208862)
+material = SubResource("StandardMaterial3D_2k8lx")
+
+[node name="csgBox3d10" type="CSGBox3D" parent="Sign"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.179577, 0.816941, -0.0767424)
+size = Vector3(0.0209579, 0.0420532, 0.208862)
+material = SubResource("StandardMaterial3D_2k8lx")
+
+[node name="csgBox3d11" type="CSGBox3D" parent="Sign"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.266131, 0.806867, -0.0767424)
+size = Vector3(0.0209579, 0.0420532, 0.208862)
+material = SubResource("StandardMaterial3D_2k8lx")
+
+[node name="csgBox3d12" type="CSGBox3D" parent="Sign"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.238236, 0.28484, -0.0767424)
+size = Vector3(0.0209579, 0.0420532, 0.208862)
+material = SubResource("StandardMaterial3D_2k8lx")
+
+[node name="csgBox3d13" type="CSGBox3D" parent="Sign"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.202632, 0.13813, -0.0767424)
+size = Vector3(0.0209579, 0.0420532, 0.208862)
+material = SubResource("StandardMaterial3D_2k8lx")
+
+[node name="csgBox3d14" type="CSGBox3D" parent="Sign"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.564567, 0.279914, -0.0767424)
+size = Vector3(0.0209579, 0.0420532, 0.208862)
+material = SubResource("StandardMaterial3D_2k8lx")
+
+[node name="csgBox3d15" type="CSGBox3D" parent="Sign"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.29947, 0.279914, -0.0767424)
+size = Vector3(0.0209579, 0.0420532, 0.208862)
+material = SubResource("StandardMaterial3D_2k8lx")
+
+[node name="csgBox3d16" type="CSGBox3D" parent="Sign"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.73093, 0.279914, -0.0767424)
+size = Vector3(0.0209579, 0.0420532, 0.208862)
+material = SubResource("StandardMaterial3D_2k8lx")
+
+[node name="Uzi" parent="Sign" instance=ExtResource("1_8bhe7")]
+process_mode = 4
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0.8, 0)
+axis_lock_linear_x = true
+axis_lock_linear_y = true
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+weaponResource = SubResource("Resource_0r7g6")
+
+[node name="uziarea3d" type="Area3D" parent="Sign/Uzi"]
+process_mode = 3
+
+[node name="collisionShape3d" type="CollisionShape3D" parent="Sign/Uzi/uziarea3d"]
+process_mode = 3
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_nx6ob")
+
+[node name="Beretta" parent="Sign" instance=ExtResource("4_4ybn6")]
+process_mode = 4
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.8, 0)
+axis_lock_linear_x = true
+axis_lock_linear_y = true
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+weaponResource = SubResource("Resource_2rpfk")
+
+[node name="berettaarea3d" type="Area3D" parent="Sign/Beretta"]
+process_mode = 3
+
+[node name="collisionShape3d" type="CollisionShape3D" parent="Sign/Beretta/berettaarea3d"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_nx6ob")
+
+[node name="Revolver" parent="Sign" instance=ExtResource("5_0hdpi")]
+process_mode = 4
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+axis_lock_linear_x = true
+axis_lock_linear_y = true
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+
+[node name="revolverarea3d" type="Area3D" parent="Sign/Revolver"]
+process_mode = 3
+
+[node name="collisionShape3d" type="CollisionShape3D" parent="Sign/Revolver/revolverarea3d"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_nx6ob")
+
+[node name="Honeybadger" parent="Sign" instance=ExtResource("6_xu3gl")]
+process_mode = 4
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 1, 0.3, 0)
+axis_lock_linear_x = true
+axis_lock_linear_y = true
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+weaponResource = SubResource("Resource_o0urw")
+
+[node name="honeybadgerarea3d" type="Area3D" parent="Sign/Honeybadger"]
+process_mode = 3
+
+[node name="collisionShape3d" type="CollisionShape3D" parent="Sign/Honeybadger/honeybadgerarea3d"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_nx6ob")
+
+[node name="Shelves" type="CSGCombiner3D" parent="."]
+transform = Transform3D(0.999721, 0, 0.0236296, 0, 1, 0, -0.0236296, 0, 0.999721, 2.23994, 1.76521, -0.525165)
+
+[node name="csgBox3d" type="CSGBox3D" parent="Shelves"]
+transform = Transform3D(1, 0, 2.71946e-07, 0, 1, 0, -2.71946e-07, 0, 1, 2.38419e-07, 0.055481, -0.0117493)
+size = Vector3(2.28101, 2.60608, 0.456726)
+material = SubResource("StandardMaterial3D_wutts")
+
+[node name="csgBox3d2" type="CSGBox3D" parent="Shelves/csgBox3d"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.977198, 0.0206909)
+operation = 2
+size = Vector3(2.19165, 0.512238, 0.438843)
+material = SubResource("StandardMaterial3D_8qlvt")
+
+[node name="csgBox3d3" type="CSGBox3D" parent="Shelves/csgBox3d"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.377198, 0.0206909)
+operation = 2
+size = Vector3(2.19165, 0.512238, 0.438843)
+material = SubResource("StandardMaterial3D_8qlvt")
+
+[node name="csgBox3d4" type="CSGBox3D" parent="Shelves/csgBox3d"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.222802, 0.0206909)
+operation = 2
+size = Vector3(2.19165, 0.512238, 0.438843)
+material = SubResource("StandardMaterial3D_8qlvt")
+
+[node name="csgBox3d5" type="CSGBox3D" parent="Shelves/csgBox3d"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.822802, 0.0206909)
+operation = 2
+size = Vector3(2.19165, 0.512238, 0.438843)
+material = SubResource("StandardMaterial3D_8qlvt")
+
+[node name="stall" type="CSGCombiner3D" parent="."]
+use_collision = true
+
+[node name="csgBox3d" type="CSGBox3D" parent="stall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.06704, 0.0513546, 4.21954)
+size = Vector3(6.92609, 0.972717, 10.8182)
+
+[node name="csgBox3d10" type="CSGBox3D" parent="stall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.68521, 1.7071, 4.21954)
+size = Vector3(0.603554, 4.28421, 10.8182)
+
+[node name="csgBox3d12" type="CSGBox3D" parent="stall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.92241, 1.7071, 9.27364)
+size = Vector3(7.8188, 4.28421, 0.710006)
+
+[node name="csgBox3d11" type="CSGBox3D" parent="stall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.29652, 1.7071, 4.21954)
+size = Vector3(0.603554, 4.28421, 10.8182)
+
+[node name="csgBox3d2" type="CSGBox3D" parent="stall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.90652, 0.526259, 1.57948)
+size = Vector3(6.59713, 1.92253, 0.717312)
+material = SubResource("StandardMaterial3D_5lh24")
+
+[node name="csgBox3d5" type="CSGBox3D" parent="stall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.91693, 2.21855, 1.57948)
+size = Vector3(0.223633, 1.92253, 0.307617)
+material = SubResource("StandardMaterial3D_mxjq0")
+
+[node name="csgBox3d7" type="CSGBox3D" parent="stall"]
+transform = Transform3D(1, 0, 0, 0, 0.0204014, 0.999792, 0, -0.999792, 0.0204014, 4.91693, 2.81315, 0.325757)
+size = Vector3(0.158203, 2.95817, 0.307617)
+material = SubResource("StandardMaterial3D_mxjq0")
+
+[node name="csgBox3d8" type="CSGBox3D" parent="stall"]
+transform = Transform3D(1, 0, 0, 0, 0.0204014, 0.999792, 0, -0.999792, 0.0204014, -1.19359, 2.81315, 0.325757)
+size = Vector3(0.158203, 2.95817, 0.307617)
+material = SubResource("StandardMaterial3D_mxjq0")
+
+[node name="csgBox3d6" type="CSGBox3D" parent="stall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.18684, 2.21855, 1.57948)
+size = Vector3(0.223633, 1.92253, 0.307617)
+material = SubResource("StandardMaterial3D_mxjq0")
+
+[node name="csgBox3d3" type="CSGBox3D" parent="stall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.13204, 1.66239, -1.40662)
+size = Vector3(7.04818, 4.19478, 0.717312)
+material = SubResource("StandardMaterial3D_5lh24")
+
+[node name="csgBox3d4" type="CSGBox3D" parent="stall"]
+transform = Transform3D(1, 0, 0, 0, -0.182579, -0.983191, 0, 0.983191, -0.182579, 2.08706, 3.48662, 0.0283905)
+size = Vector3(6.95822, 4.19478, 0.15077)
+material = SubResource("StandardMaterial3D_5lh24")
+
+[node name="csgBox3d9" type="CSGBox3D" parent="stall"]
+transform = Transform3D(1, 0, 0, 0, 0.00994793, -0.99995, 0, 0.99995, 0.00994793, 1.96725, 3.1305, 5.94657)
+size = Vector3(6.71859, 7.89755, 0.15077)
+material = SubResource("StandardMaterial3D_5lh24")
+
+[node name="node3d" type="Node3D" parent="stall"]
+
+[node name="litlewoodenthings" type="CSGCombiner3D" parent="stall/node3d"]
+
+[node name="csgBox3d9" type="CSGBox3D" parent="stall/node3d/litlewoodenthings"]
+transform = Transform3D(1, 0, 0, 0, 0.0204014, 0.999792, 0, -0.999792, 0.0204014, -1.19359, 3.21206, -0.945035)
+size = Vector3(0.119141, 0.400838, 0.920059)
+material = SubResource("StandardMaterial3D_mfbqf")
+
+[node name="csgBox3d10" type="CSGBox3D" parent="stall/node3d/litlewoodenthings"]
+transform = Transform3D(1, 0, 0, 0, 0.0204014, 0.999792, 0, -0.999792, 0.0204014, -1.19359, 3.21206, -0.507629)
+size = Vector3(0.119141, 0.400838, 0.920059)
+material = SubResource("StandardMaterial3D_mfbqf")
+
+[node name="csgBox3d11" type="CSGBox3D" parent="stall/node3d/litlewoodenthings"]
+transform = Transform3D(1, 0, 0, 0, 0.0204014, 0.999792, 0, -0.999792, 0.0204014, -1.19359, 3.21206, -0.0674719)
+size = Vector3(0.119141, 0.400838, 0.920059)
+material = SubResource("StandardMaterial3D_mfbqf")
+
+[node name="csgBox3d12" type="CSGBox3D" parent="stall/node3d/litlewoodenthings"]
+transform = Transform3D(1, 0, 0, 0, 0.0204014, 0.999792, 0, -0.999792, 0.0204014, -1.19359, 3.21206, 0.353291)
+size = Vector3(0.119141, 0.400838, 0.920059)
+material = SubResource("StandardMaterial3D_mfbqf")
+
+[node name="csgBox3d13" type="CSGBox3D" parent="stall/node3d/litlewoodenthings"]
+transform = Transform3D(1, 0, 0, 0, 0.0204014, 0.999792, 0, -0.999792, 0.0204014, -1.19359, 3.21206, 0.787767)
+size = Vector3(0.119141, 0.400838, 0.920059)
+material = SubResource("StandardMaterial3D_mfbqf")
+
+[node name="csgBox3d14" type="CSGBox3D" parent="stall/node3d/litlewoodenthings"]
+transform = Transform3D(1, 0, 0, 0, 0.0204014, 0.999792, 0, -0.999792, 0.0204014, -1.19359, 3.21206, 1.2213)
+size = Vector3(0.119141, 0.400838, 0.920059)
+material = SubResource("StandardMaterial3D_mfbqf")
+
+[node name="csgBox3d15" type="CSGBox3D" parent="stall/node3d/litlewoodenthings"]
+transform = Transform3D(1, 0, 0, 0, -0.98507, 0.172153, 0, -0.172153, -0.98507, -1.19359, 3.80844, 0.357611)
+operation = 2
+size = Vector3(0.702148, 0.696025, 3.18959)
+material = SubResource("StandardMaterial3D_mfbqf")
+
+[node name="litlewoodenthings2" type="CSGCombiner3D" parent="stall/node3d"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.15981, 0, 0)
+
+[node name="csgBox3d9" type="CSGBox3D" parent="stall/node3d/litlewoodenthings2"]
+transform = Transform3D(1, 0, 0, 0, 0.0204014, 0.999792, 0, -0.999792, 0.0204014, -1.19359, 3.21206, -0.945035)
+size = Vector3(0.119141, 0.400838, 0.920059)
+material = SubResource("StandardMaterial3D_mfbqf")
+
+[node name="csgBox3d10" type="CSGBox3D" parent="stall/node3d/litlewoodenthings2"]
+transform = Transform3D(1, 0, 0, 0, 0.0204014, 0.999792, 0, -0.999792, 0.0204014, -1.19359, 3.21206, -0.507629)
+size = Vector3(0.119141, 0.400838, 0.920059)
+material = SubResource("StandardMaterial3D_mfbqf")
+
+[node name="csgBox3d11" type="CSGBox3D" parent="stall/node3d/litlewoodenthings2"]
+transform = Transform3D(1, 0, 0, 0, 0.0204014, 0.999792, 0, -0.999792, 0.0204014, -1.19359, 3.21206, -0.0674719)
+size = Vector3(0.119141, 0.400838, 0.920059)
+material = SubResource("StandardMaterial3D_mfbqf")
+
+[node name="csgBox3d12" type="CSGBox3D" parent="stall/node3d/litlewoodenthings2"]
+transform = Transform3D(1, 0, 0, 0, 0.0204014, 0.999792, 0, -0.999792, 0.0204014, -1.19359, 3.21206, 0.353291)
+size = Vector3(0.119141, 0.400838, 0.920059)
+material = SubResource("StandardMaterial3D_mfbqf")
+
+[node name="csgBox3d13" type="CSGBox3D" parent="stall/node3d/litlewoodenthings2"]
+transform = Transform3D(1, 0, 0, 0, 0.0204014, 0.999792, 0, -0.999792, 0.0204014, -1.19359, 3.21206, 0.787767)
+size = Vector3(0.119141, 0.400838, 0.920059)
+material = SubResource("StandardMaterial3D_mfbqf")
+
+[node name="csgBox3d14" type="CSGBox3D" parent="stall/node3d/litlewoodenthings2"]
+transform = Transform3D(1, 0, 0, 0, 0.0204014, 0.999792, 0, -0.999792, 0.0204014, -1.19359, 3.21206, 1.2213)
+size = Vector3(0.119141, 0.400838, 0.920059)
+material = SubResource("StandardMaterial3D_mfbqf")
+
+[node name="csgBox3d15" type="CSGBox3D" parent="stall/node3d/litlewoodenthings2"]
+transform = Transform3D(1, 0, 0, 0, -0.98507, 0.172153, 0, -0.172153, -0.98507, -1.19359, 3.80844, 0.357611)
+operation = 2
+size = Vector3(0.702148, 0.696025, 3.18959)
+material = SubResource("StandardMaterial3D_mfbqf")
+
+[node name="csgBox3d" type="CSGBox3D" parent="."]
+transform = Transform3D(0.99113, 0, -0.132896, 0, 1, 0, 0.132896, 0, 0.99113, 3.89216, 0.686982, 0.607679)
+size = Vector3(0.3, 0.3, 1)
+material = SubResource("StandardMaterial3D_ck0fj")
+
+[node name="csgBox3d" type="CSGBox3D" parent="csgBox3d"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.374525)
+size = Vector3(0.31543, 0.307617, 0.0410156)
+
+[node name="csgBox3d2" type="CSGBox3D" parent="csgBox3d"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.38419e-07, 0, 0.388034)
+size = Vector3(0.31543, 0.307617, 0.0410156)
+
+[node name="csgBox3d3" type="CSGBox3D" parent="csgBox3d"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.149096, -0.00187641, 2.38419e-07)
+size = Vector3(0.0507812, 0.0236816, 0.133789)
+
+[node name="csgCombiner3d" type="CSGCombiner3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.38375, 0, -0.707159)
+material_override = SubResource("StandardMaterial3D_rgt10")
+
+[node name="csgCylinder3d" type="CSGCylinder3D" parent="csgCombiner3d"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.44549, 0)
+radius = 0.0212291
+sides = 6
+
+[node name="csgCylinder3d2" type="CSGCylinder3D" parent="csgCombiner3d"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.552937, 1.44549, 0)
+radius = 0.0212291
+sides = 6
+
+[node name="csgCylinder3d3" type="CSGCylinder3D" parent="csgCombiner3d"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.44549, 1.77873)
+radius = 0.0212291
+sides = 6
+
+[node name="csgCylinder3d4" type="CSGCylinder3D" parent="csgCombiner3d"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.552937, 1.44549, 1.77873)
+radius = 0.0212291
+sides = 6
+
+[node name="csgBox3d" type="CSGBox3D" parent="csgCombiner3d"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.268645, 2.40807, 0.891621)
+size = Vector3(0.611328, 0.0336914, 1.92798)
+
+[node name="csgBox3d" type="CSGBox3D" parent="csgCombiner3d/csgBox3d"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.047766, 0)
+operation = 2
+size = Vector3(0.540039, 0.09, 1.87402)
+
+[node name="csgBox3d2" type="CSGBox3D" parent="csgCombiner3d"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.268645, 2.00807, 0.891621)
+size = Vector3(0.611328, 0.0336914, 1.92798)
+
+[node name="csgBox3d" type="CSGBox3D" parent="csgCombiner3d/csgBox3d2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.047766, 0)
+operation = 2
+size = Vector3(0.540039, 0.09, 1.87402)
+
+[node name="csgBox3d3" type="CSGBox3D" parent="csgCombiner3d"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.268645, 1.60807, 0.891621)
+size = Vector3(0.611328, 0.0336914, 1.92798)
+
+[node name="csgBox3d" type="CSGBox3D" parent="csgCombiner3d/csgBox3d3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.047766, 0)
+operation = 2
+size = Vector3(0.540039, 0.09, 1.87402)
+
+[node name="csgBox3d4" type="CSGBox3D" parent="csgCombiner3d"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.268645, 1.30807, 0.891621)
+size = Vector3(0.611328, 0.0336914, 1.92798)
+
+[node name="csgBox3d" type="CSGBox3D" parent="csgCombiner3d/csgBox3d4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.047766, 0)
+operation = 2
+size = Vector3(0.540039, 0.09, 1.87402)
+
+[node name="csgCombiner3d2" type="CSGCombiner3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.38375, 0, 5.54549)
+material_override = SubResource("StandardMaterial3D_rgt10")
+
+[node name="csgCylinder3d" type="CSGCylinder3D" parent="csgCombiner3d2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.44549, 0)
+radius = 0.0212291
+sides = 6
+
+[node name="csgCylinder3d2" type="CSGCylinder3D" parent="csgCombiner3d2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.552937, 1.44549, 0)
+radius = 0.0212291
+sides = 6
+
+[node name="csgCylinder3d3" type="CSGCylinder3D" parent="csgCombiner3d2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.44549, 1.77873)
+radius = 0.0212291
+sides = 6
+
+[node name="csgCylinder3d4" type="CSGCylinder3D" parent="csgCombiner3d2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.552937, 1.44549, 1.77873)
+radius = 0.0212291
+sides = 6
+
+[node name="csgBox3d" type="CSGBox3D" parent="csgCombiner3d2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.268645, 2.40807, 0.891621)
+size = Vector3(0.611328, 0.0336914, 1.92798)
+
+[node name="csgBox3d" type="CSGBox3D" parent="csgCombiner3d2/csgBox3d"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.047766, 0)
+operation = 2
+size = Vector3(0.540039, 0.09, 1.87402)
+
+[node name="csgBox3d2" type="CSGBox3D" parent="csgCombiner3d2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.268645, 2.00807, 0.891621)
+size = Vector3(0.611328, 0.0336914, 1.92798)
+
+[node name="csgBox3d" type="CSGBox3D" parent="csgCombiner3d2/csgBox3d2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.047766, 0)
+operation = 2
+size = Vector3(0.540039, 0.09, 1.87402)
+
+[node name="csgBox3d3" type="CSGBox3D" parent="csgCombiner3d2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.268645, 1.60807, 0.891621)
+size = Vector3(0.611328, 0.0336914, 1.92798)
+
+[node name="csgBox3d" type="CSGBox3D" parent="csgCombiner3d2/csgBox3d3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.047766, 0)
+operation = 2
+size = Vector3(0.540039, 0.09, 1.87402)
+
+[node name="csgBox3d4" type="CSGBox3D" parent="csgCombiner3d2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.268645, 1.30807, 0.891621)
+size = Vector3(0.611328, 0.0336914, 1.92798)
+
+[node name="csgBox3d" type="CSGBox3D" parent="csgCombiner3d2/csgBox3d4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.047766, 0)
+operation = 2
+size = Vector3(0.540039, 0.09, 1.87402)
+
+[node name="csgCombiner3d3" type="CSGCombiner3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.15385, 0, 5.54549)
+material_override = SubResource("StandardMaterial3D_rgt10")
+
+[node name="csgCylinder3d" type="CSGCylinder3D" parent="csgCombiner3d3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.44549, 0)
+radius = 0.0212291
+sides = 6
+
+[node name="csgCylinder3d2" type="CSGCylinder3D" parent="csgCombiner3d3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.552937, 1.44549, 0)
+radius = 0.0212291
+sides = 6
+
+[node name="csgCylinder3d3" type="CSGCylinder3D" parent="csgCombiner3d3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.44549, 1.77873)
+radius = 0.0212291
+sides = 6
+
+[node name="csgCylinder3d4" type="CSGCylinder3D" parent="csgCombiner3d3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.552937, 1.44549, 1.77873)
+radius = 0.0212291
+sides = 6
+
+[node name="csgBox3d" type="CSGBox3D" parent="csgCombiner3d3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.268645, 2.40807, 0.891621)
+size = Vector3(0.611328, 0.0336914, 1.92798)
+
+[node name="csgBox3d" type="CSGBox3D" parent="csgCombiner3d3/csgBox3d"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.047766, 0)
+operation = 2
+size = Vector3(0.540039, 0.09, 1.87402)
+
+[node name="csgBox3d2" type="CSGBox3D" parent="csgCombiner3d3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.268645, 2.00807, 0.891621)
+size = Vector3(0.611328, 0.0336914, 1.92798)
+
+[node name="csgBox3d" type="CSGBox3D" parent="csgCombiner3d3/csgBox3d2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.047766, 0)
+operation = 2
+size = Vector3(0.540039, 0.09, 1.87402)
+
+[node name="csgBox3d3" type="CSGBox3D" parent="csgCombiner3d3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.268645, 1.60807, 0.891621)
+size = Vector3(0.611328, 0.0336914, 1.92798)
+
+[node name="csgBox3d" type="CSGBox3D" parent="csgCombiner3d3/csgBox3d3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.047766, 0)
+operation = 2
+size = Vector3(0.540039, 0.09, 1.87402)
+
+[node name="csgBox3d4" type="CSGBox3D" parent="csgCombiner3d3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.268645, 1.30807, 0.891621)
+size = Vector3(0.611328, 0.0336914, 1.92798)
+
+[node name="csgBox3d" type="CSGBox3D" parent="csgCombiner3d3/csgBox3d4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.047766, 0)
+operation = 2
+size = Vector3(0.540039, 0.09, 1.87402)
+
+[node name="csgCombiner3d4" type="CSGCombiner3D" parent="."]
+transform = Transform3D(0.99959, 0, 0.0286195, 0, 1, 0, -0.0286195, 0, 0.99959, -1.15385, 0, 3.54549)
+material_override = SubResource("StandardMaterial3D_rgt10")
+
+[node name="csgCylinder3d" type="CSGCylinder3D" parent="csgCombiner3d4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.44549, 0)
+radius = 0.0212291
+sides = 6
+
+[node name="csgCylinder3d2" type="CSGCylinder3D" parent="csgCombiner3d4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.552937, 1.44549, 0)
+radius = 0.0212291
+sides = 6
+
+[node name="csgCylinder3d3" type="CSGCylinder3D" parent="csgCombiner3d4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.44549, 1.77873)
+radius = 0.0212291
+sides = 6
+
+[node name="csgCylinder3d4" type="CSGCylinder3D" parent="csgCombiner3d4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.552937, 1.44549, 1.77873)
+radius = 0.0212291
+sides = 6
+
+[node name="csgBox3d" type="CSGBox3D" parent="csgCombiner3d4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.268645, 2.40807, 0.891621)
+size = Vector3(0.611328, 0.0336914, 1.92798)
+
+[node name="csgBox3d" type="CSGBox3D" parent="csgCombiner3d4/csgBox3d"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.047766, 0)
+operation = 2
+size = Vector3(0.540039, 0.09, 1.87402)
+
+[node name="csgBox3d2" type="CSGBox3D" parent="csgCombiner3d4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.268645, 2.00807, 0.891621)
+size = Vector3(0.611328, 0.0336914, 1.92798)
+
+[node name="csgBox3d" type="CSGBox3D" parent="csgCombiner3d4/csgBox3d2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.047766, 0)
+operation = 2
+size = Vector3(0.540039, 0.09, 1.87402)
+
+[node name="csgBox3d3" type="CSGBox3D" parent="csgCombiner3d4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.268645, 1.60807, 0.891621)
+size = Vector3(0.611328, 0.0336914, 1.92798)
+
+[node name="csgBox3d" type="CSGBox3D" parent="csgCombiner3d4/csgBox3d3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.047766, 0)
+operation = 2
+size = Vector3(0.540039, 0.09, 1.87402)
+
+[node name="csgBox3d4" type="CSGBox3D" parent="csgCombiner3d4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.268645, 1.30807, 0.891621)
+size = Vector3(0.611328, 0.0336914, 1.92798)
+
+[node name="csgBox3d" type="CSGBox3D" parent="csgCombiner3d4/csgBox3d4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.047766, 0)
+operation = 2
+size = Vector3(0.540039, 0.09, 1.87402)
+
+[node name="camera3d" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.245, 2.074, 3.781)
+fov = 36.6
+far = 12.11
+
+[node name="control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="colorRect" type="ColorRect" parent="control"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 80.0
+grow_horizontal = 2
+color = Color(0.12549, 0.12549, 0.12549, 1)
+
+[node name="label" type="Label" parent="control/colorRect"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -1128.0
+offset_top = 16.0
+offset_right = -72.0
+offset_bottom = 96.0
+grow_horizontal = 0
+text = "you have
+5 trillion gold"
+horizontal_alignment = 2
+
+[node name="panel" type="Panel" parent="control/colorRect"]
+layout_mode = 0
+offset_left = 1536.0
+offset_top = 8.0
+offset_right = 1600.0
+offset_bottom = 72.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_1185i")
+
+[node name="label2" type="Label" parent="control/colorRect/panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "user
+icon?"
+
+[node name="button" type="Button" parent="control/colorRect"]
+layout_mode = 0
+offset_right = 168.0
+offset_bottom = 80.0
+text = "<< home"
+
+[node name="panel" type="Panel" parent="control"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 8.0
+offset_top = 88.0
+offset_right = 712.0
+offset_bottom = 360.0
+
+[node name="label" type="Label" parent="control/panel"]
+layout_mode = 1
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 140.0
+offset_bottom = 61.0
+text = "HEADER"
+label_settings = SubResource("LabelSettings_5ansj")
+
+[node name="hSeparator" type="HSeparator" parent="control/panel/label"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -8.0
+offset_right = 36.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="label2" type="Label" parent="control/panel"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 72.0
+offset_right = 169.0
+offset_bottom = 95.0
+text = "stats of the weapon"
+
+[node name="panel" type="Panel" parent="control/panel/label2"]
+layout_mode = 0
+offset_left = -4.0
+offset_top = -4.0
+offset_right = 364.0
+offset_bottom = 124.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_1185i")
+
+[node name="panel2" type="Panel" parent="control/panel"]
+layout_mode = 0
+offset_left = 388.0
+offset_top = 68.0
+offset_right = 688.0
+offset_bottom = 264.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_1185i")
+
+[node name="label4" type="Label" parent="control/panel/panel2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -81.5
+offset_top = -11.5
+offset_right = 81.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "image of the weapon"
+
+[node name="label3" type="Label" parent="control/panel"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 208.0
+offset_right = 169.0
+offset_bottom = 231.0
+text = "this will cost you
+$600,000,000"
+
+[node name="panel" type="Panel" parent="control/panel/label3"]
+layout_mode = 0
+offset_left = -4.0
+offset_top = -4.0
+offset_right = 364.0
+offset_bottom = 56.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_1185i")
+
+[node name="button" type="Button" parent="control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.71
+anchor_top = 0.853
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 0.299988
+offset_right = -16.0
+offset_bottom = -20.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "talk to shop guy"
+
+[node name="button2" type="Button" parent="control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.853
+anchor_right = 0.29
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 0.299988
+offset_right = -3.05176e-05
+offset_bottom = -20.0
+grow_vertical = 0
+text = "back to missions"
+
+[node name="panel2" type="Panel" parent="control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.6
+anchor_right = 1.0
+offset_left = -6.10352e-05
+offset_top = 88.0
+offset_right = -8.0
+offset_bottom = 320.0
+grow_horizontal = 0
+
+[node name="label" type="RichTextLabel" parent="control/panel2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "shop guy : 
+weapon advice about the weapon and stuff
+
+
+lore or shop guy anecdote about the weapon
+
+
+doesnt have to fill the full box"
+
+[node name="button3" type="Button" parent="control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.418
+anchor_bottom = 0.853
+offset_left = 8.0
+offset_top = -0.200012
+offset_right = 144.0
+offset_bottom = -23.7
+grow_vertical = 0
+text = "<< upgrades
+or other store"
+
+[node name="worldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("11_ngohw")
+
+[node name="radio" parent="." instance=ExtResource("12_3qioh")]
+transform = Transform3D(-0.0905121, 0, -0.283595, 0, 0.297688, 0, 0.283595, 0, -0.0905121, 3.10559, 1.48255, 1.58883)
+
+[node name="Radio" parent="radio" index="0"]
+material_override = SubResource("StandardMaterial3D_b6w7g")
+
+[node name="RadioAntennae" parent="radio/Radio" index="0"]
+transform = Transform3D(1, 2.04891e-08, 2.98023e-08, 0, 0.997924, -0.0644104, -2.98023e-08, 0.0644104, 0.997923, -0.0740445, 0.949959, -0.733811)
+material_override = SubResource("StandardMaterial3D_b6w7g")
+
+[node name="RadioHandle" parent="radio/Radio" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.761665, 0)
+material_override = SubResource("StandardMaterial3D_b6w7g")
+
+[node name="pawnEntity" parent="." instance=ExtResource("10_d37gn")]
+transform = Transform3D(-0.991928, 0, 0.126805, 0, 1, 0, -0.126805, 0, -0.991928, 2.36638, 1.6013, 0.777267)
+forceAnimation = true
+animationToForce = "PawnAnim/shopIdle1"
+
+[node name="Skeleton3D" parent="pawnEntity/Mesh/MaleSkeleton" index="0"]
+bones/0/position = Vector3(0.0346361, 0.868292, -0.087322)
+bones/0/rotation = Quaternion(-0.210684, 0.143301, -0.0375966, 0.966263)
+bones/1/rotation = Quaternion(0.249189, -0.0219981, -0.0103051, 0.96815)
+bones/2/rotation = Quaternion(0.0542514, -0.0164574, 0.00220223, 0.998389)
+bones/3/rotation = Quaternion(0.591167, 0.339504, 0.502662, -0.531591)
+bones/4/rotation = Quaternion(-0.497291, 0.404776, -0.240383, 0.728749)
+bones/5/rotation = Quaternion(0.32507, 0.0113652, -0.372401, 0.869205)
+bones/6/rotation = Quaternion(0.0512885, -0.191898, -0.0368214, 0.979382)
+bones/22/rotation = Quaternion(0.549851, -0.419079, -0.565965, -0.449132)
+bones/23/rotation = Quaternion(-0.449644, -0.511707, 0.230668, 0.694816)
+bones/24/rotation = Quaternion(0.422809, -0.00998479, 0.484299, 0.76589)
+bones/25/rotation = Quaternion(0.0670954, 0.0249038, 0.149412, 0.986182)
+bones/41/rotation = Quaternion(-0.0413301, -0.0233453, 0.0442087, 0.997894)
+bones/42/rotation = Quaternion(0.0446715, 0.663972, 0.0246172, 0.746016)
+bones/43/rotation = Quaternion(0.985569, 0.0917737, -0.141259, 0.016665)
+bones/44/rotation = Quaternion(0.692405, 0.00145806, 0.0250864, 0.721072)
+bones/45/rotation = Quaternion(-0.157495, 0.783662, -0.380114, -0.465384)
+bones/46/rotation = Quaternion(0.240748, -0.0271384, -0.0370326, 0.969501)
+bones/47/rotation = Quaternion(0.990253, 0.0916465, 0.0986274, 0.0356867)
+bones/48/rotation = Quaternion(0.292418, -0.00199478, -0.0284228, 0.955866)
+bones/49/rotation = Quaternion(-0.0714429, 0.877083, -0.472143, -0.051977)
+bones/50/rotation = Quaternion(0.405976, 0.00948044, -0.00282245, 0.91383)
+
+[node name="SiftinShades" parent="pawnEntity/Mesh/MaleSkeleton/Skeleton3D/Clothing" index="0" instance=ExtResource("11_pb8wb")]
+
+[node name="LeftGloveFingerless" parent="pawnEntity/Mesh/MaleSkeleton/Skeleton3D/Clothing" index="1" instance=ExtResource("12_4ri5t")]
+
+[node name="RightGloveFingerless" parent="pawnEntity/Mesh/MaleSkeleton/Skeleton3D/Clothing" index="2" instance=ExtResource("13_lj3cu")]
+
+[node name="ArmoredPants" parent="pawnEntity/Mesh/MaleSkeleton/Skeleton3D/Clothing" index="3" instance=ExtResource("14_mtc4w")]
+
+[node name="longSleevedJacket" parent="pawnEntity/Mesh/MaleSkeleton/Skeleton3D/Clothing" index="4" instance=ExtResource("15_g6ejc")]
+
+[node name="AnimationTree" parent="pawnEntity" index="3"]
+tree_root = SubResource("AnimationNodeBlendTree_bs0lv")
+
+[node name="UpperChest" parent="pawnEntity/BoneAttatchments" index="0"]
+transform = Transform3D(0.987535, 0.154442, 0.0300557, -0.146269, 0.971533, -0.186306, -0.0579742, 0.179589, 0.982022, 2.45242, 1.7997, 0.652133)
+
+[node name="LeftThigh" parent="pawnEntity/BoneAttatchments" index="1"]
+transform = Transform3D(0.886578, 0.119379, -0.44689, -0.0770169, -0.914529, -0.397088, -0.456114, 0.386472, -0.801607, 2.45989, 1.46307, 0.688292)
+
+[node name="LeftFoot" parent="pawnEntity/BoneAttatchments" index="2"]
+transform = Transform3D(-0.592347, -0.790733, -0.154326, 0.777619, -0.611234, 0.1472, -0.210738, -0.0328124, 0.976955, 2.31819, 0.919747, 0.534753)
+
+[node name="LeftKnee" parent="pawnEntity/BoneAttatchments" index="3"]
+transform = Transform3D(0.875421, -0.471796, -0.104921, -0.12481, -0.430393, 0.893953, -0.466931, -0.769503, -0.43567, 2.50819, 1.09307, 0.844647)
+
+[node name="RightThigh" parent="pawnEntity/BoneAttatchments" index="4"]
+transform = Transform3D(0.992191, 0.123306, 0.0185987, 0.117892, -0.878829, -0.462293, -0.0406587, 0.460866, -0.886527, 2.36104, 1.47646, 0.702164)
+
+[node name="RightFoot" parent="pawnEntity/BoneAttatchments" index="5"]
+transform = Transform3D(-0.99244, -0.0211224, -0.120863, -0.0782976, -0.649414, 0.75636, -0.0944711, 0.760113, 0.642867, 2.47745, 0.726521, 0.841682)
+
+[node name="RightKnee" parent="pawnEntity/BoneAttatchments" index="6"]
+transform = Transform3D(0.983484, 0.165174, -0.0737757, 0.172398, -0.979333, 0.105548, -0.0548159, -0.116547, -0.991658, 2.41093, 1.12092, 0.888617)
+
+[node name="Stomach" parent="pawnEntity/BoneAttatchments" index="7"]
+transform = Transform3D(0.985055, 0.152851, 0.0792693, -0.146118, 0.985608, -0.0847755, -0.0910886, 0.0719267, 0.993222, 2.42092, 1.59658, 0.637309)
+
+[node name="Hips" parent="pawnEntity/BoneAttatchments" index="8"]
+transform = Transform3D(0.981483, 0.06517, 0.18007, -0.133037, 0.908394, 0.396376, -0.137743, -0.412997, 0.900252, 2.41181, 1.46959, 0.695042)
+
+[node name="Neck" parent="pawnEntity/BoneAttatchments" index="9"]
+transform = Transform3D(0.997813, 0.0655437, -0.00727955, -0.0659432, 0.992792, -0.0999846, 0.000673719, 0.100247, 0.994953, 2.49318, 2.05609, 0.699526)
+
+[node name="leftHand" parent="pawnEntity/BoneAttatchments" index="10"]
+transform = Transform3D(-0.322663, 0.0388736, 0.945702, 0.624357, -0.742184, 0.243527, 0.711362, 0.669028, 0.215203, 2.61003, 1.57904, 0.693561)
+
+[node name="rightHand" parent="pawnEntity/BoneAttatchments" index="11"]
+transform = Transform3D(-0.760083, 0.512546, -0.399438, -0.619828, -0.387314, 0.682474, 0.19509, 0.766311, 0.612087, 2.32521, 1.66869, 0.794523)
+
+[node name="leftArm" parent="pawnEntity/BoneAttatchments" index="12"]
+transform = Transform3D(-0.649969, -0.0209739, 0.759648, -0.294333, -0.914624, -0.277096, 0.70061, -0.403708, 0.588299, 2.61872, 2.01606, 0.646555)
+
+[node name="leftForearm" parent="pawnEntity/BoneAttatchments" index="13"]
+transform = Transform3D(-0.655035, -0.0134562, 0.75547, 0.445305, -0.814609, 0.37159, 0.610423, 0.579803, 0.539592, 2.61347, 1.78709, 0.545487)
+
+[connection signal="mouse_entered" from="Sign/Uzi/uziarea3d" to="." method="_on_uziarea_3d_mouse_entered"]
+[connection signal="mouse_entered" from="Sign/Beretta/berettaarea3d" to="." method="_on_berettaarea_3d_mouse_entered"]
+[connection signal="mouse_entered" from="Sign/Revolver/revolverarea3d" to="." method="_on_revolverarea_3d_mouse_entered"]
+[connection signal="mouse_entered" from="Sign/Honeybadger/honeybadgerarea3d" to="." method="_on_honeybadgerarea_3d_mouse_entered"]
+[connection signal="pressed" from="control/colorRect/button" to="." method="_on_button_pressed"]
+
+[editable path="radio"]
+[editable path="pawnEntity"]

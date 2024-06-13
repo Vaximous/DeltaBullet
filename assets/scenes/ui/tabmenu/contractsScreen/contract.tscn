@@ -1,0 +1,212 @@
+[gd_scene load_steps=15 format=3 uid="uid://bqj148ksj0dpd"]
+
+[ext_resource type="FontFile" uid="uid://xmwjvmqspojb" path="res://assets/fonts/Grand_Aventure_Text.otf" id="1_4dk14"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dnp2o"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_38nq5"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0h44v"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_al2td"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vxoiw"]
+
+[sub_resource type="GDScript" id="GDScript_j38f1"]
+resource_name = "contractButton"
+script/source = "extends Button
+class_name ContractButton
+@onready var activeQuestIcon : TextureRect = $textureRect2
+@onready var contractLabel : Label = $contractName
+@onready var animationPlayer : AnimationPlayer = $animationPlayer
+@export_category(\"Contract Button\")
+@export var contractName : String = \"\"
+@export var contractID : int = 0
+
+func _ready()->void:
+	animationPlayer.play(\"unhover\")
+	contractLabel.text = contractName
+	questManager.questActivated.connect(checkActiveContract)
+
+func initializeContract(id:int)->void:
+	for quest in questManager.questDatabase:
+		if quest.id == id:
+			contractID = id
+			contractName = str(quest.questName)
+			if contractLabel != null:
+				contractLabel.text = contractName
+
+func _on_focus_entered()->void:
+	animationPlayer.play(\"hover\")
+
+func _on_focus_exited()->void:
+	animationPlayer.play(\"unhover\")
+
+func _on_mouse_exited()-> void:
+	animationPlayer.play(\"unhover\")
+
+func _on_mouse_entered()->void:
+	animationPlayer.play(\"hover\")
+
+func activateContract():
+	for quest in questManager.questDatabase:
+		if !quest.questCompleted or !quest.questFailed:
+			questManager.activateQuest(contractID)
+
+func checkActiveContract()->void:
+	if contractID == questManager.currentActiveQuest:
+		activeQuestIcon.show()
+	else:
+		activeQuestIcon.hide()
+"
+
+[sub_resource type="Gradient" id="Gradient_ki6gk"]
+colors = PackedColorArray(0.0588235, 0, 0, 1, 1, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_aw0a0"]
+gradient = SubResource("Gradient_ki6gk")
+
+[sub_resource type="Animation" id="Animation_3m4hh"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("textureRect:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(387, 73)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("contractName:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(15, 5)]
+}
+
+[sub_resource type="Animation" id="Animation_1e1h5"]
+resource_name = "hover"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("textureRect:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(0.203063, 0.15932),
+"update": 0,
+"values": [Vector2(17, 73), Vector2(387, 73)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("contractName:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(0.25, 1.03527),
+"update": 0,
+"values": [Vector2(5, 5), Vector2(15, 5)]
+}
+
+[sub_resource type="Animation" id="Animation_5y2t3"]
+resource_name = "unhover"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("textureRect:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.15932, 1),
+"update": 0,
+"values": [Vector2(387, 73), Vector2(17, 73)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("contractName:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.9),
+"transitions": PackedFloat32Array(0.138696, 1),
+"update": 0,
+"values": [Vector2(15, 5), Vector2(5, 5)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_l5od6"]
+_data = {
+"RESET": SubResource("Animation_3m4hh"),
+"hover": SubResource("Animation_1e1h5"),
+"unhover": SubResource("Animation_5y2t3")
+}
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_dxtjt"]
+
+[node name="ContractButton" type="Button"]
+custom_minimum_size = Vector2(0, 90)
+offset_right = 550.0
+offset_bottom = 74.0
+mouse_filter = 1
+theme_override_styles/normal = SubResource("StyleBoxEmpty_dnp2o")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_38nq5")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_0h44v")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_al2td")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_vxoiw")
+script = SubResource("GDScript_j38f1")
+
+[node name="textureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 387.0
+offset_bottom = 73.0
+texture = SubResource("GradientTexture1D_aw0a0")
+expand_mode = 1
+
+[node name="contractName" type="Label" parent="."]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 5.0
+offset_right = 669.0
+offset_bottom = 77.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = -4
+theme_override_constants/outline_size = 7
+theme_override_fonts/font = ExtResource("1_4dk14")
+theme_override_font_sizes/font_size = 46
+text = "ContractName"
+vertical_alignment = 1
+
+[node name="animationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_l5od6")
+}
+
+[node name="textureRect2" type="TextureRect" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 693.0
+offset_top = 20.0
+offset_right = 733.0
+offset_bottom = 60.0
+texture = SubResource("PlaceholderTexture2D_dxtjt")
+
+[connection signal="focus_entered" from="." to="." method="_on_focus_entered"]
+[connection signal="focus_exited" from="." to="." method="_on_focus_exited"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="pressed" from="." to="." method="activateContract"]
+[connection signal="pressed" from="." to="animationPlayer" method="play" binds= ["unhover"]]

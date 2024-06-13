@@ -1,0 +1,92 @@
+[gd_scene load_steps=15 format=3 uid="uid://s6dyoa7x5ebw"]
+
+[ext_resource type="Texture2D" uid="uid://bec1o4nxcwu58" path="res://assets/textures/bullet/holes/flesh/flesh1.png" id="1_0i2o3"]
+[ext_resource type="Script" path="res://assets/components/GOAP/GOAP_Demo/GoapDemo.gd" id="1_gby1j"]
+[ext_resource type="Script" path="res://assets/components/GOAP/GOAP_ManagerComponent.gd" id="1_i5f3a"]
+[ext_resource type="Script" path="res://assets/components/GOAP/GOAP_GoalComponent.gd" id="2_i67pp"]
+[ext_resource type="Texture2D" uid="uid://bdtjibjnn8euc" path="res://assets/models/effects/shoot_flare_2.png" id="5_hnsg8"]
+[ext_resource type="Script" path="res://assets/components/GOAP/GOAP_Demo/GOAPAction_goToPoint.gd" id="5_qika0"]
+[ext_resource type="Script" path="res://assets/components/GOAP/GOAP_Demo/GOAPAction_idleRandomDuration.gd" id="6_hu40x"]
+[ext_resource type="Script" path="res://assets/components/GOAP/res_goap_Expression.gd" id="6_v8xkr"]
+[ext_resource type="Script" path="res://assets/components/GOAP/GOAP_Demo/GOAPAction_dodgeRandomly.gd" id="7_76b5j"]
+
+[sub_resource type="Resource" id="Resource_q0pgm"]
+script = ExtResource("6_v8xkr")
+expression = "float(get_local_mouse_position().length() > 64.0) * 5.0"
+input_names = PackedStringArray()
+variants = []
+
+[sub_resource type="Resource" id="Resource_q8xvp"]
+script = ExtResource("6_v8xkr")
+expression = "float(randf() > 0.9) * 5.0"
+input_names = PackedStringArray()
+variants = []
+
+[sub_resource type="Resource" id="Resource_gak33"]
+script = ExtResource("6_v8xkr")
+expression = "float(get_local_mouse_position().length() > 64.0) * 5.0"
+input_names = PackedStringArray()
+variants = []
+
+[sub_resource type="Resource" id="Resource_mix48"]
+script = ExtResource("6_v8xkr")
+expression = "float(get_local_mouse_position().length() < 64.0) * 500.0"
+input_names = PackedStringArray()
+variants = []
+
+[sub_resource type="Resource" id="Resource_gyayi"]
+script = ExtResource("6_v8xkr")
+expression = "1.0"
+input_names = PackedStringArray()
+variants = []
+
+[node name="GOAPDemo" type="Node2D"]
+script = ExtResource("1_gby1j")
+
+[node name="TargetPos" type="Sprite2D" parent="."]
+position = Vector2(857.18, 595.82)
+scale = Vector2(0.120391, 0.120391)
+texture = ExtResource("5_hnsg8")
+
+[node name="mouse_avoider" type="Sprite2D" parent="."]
+texture = ExtResource("1_0i2o3")
+
+[node name="goapManager" type="Node" parent="mouse_avoider" node_paths=PackedStringArray("fallback_goal")]
+script = ExtResource("1_i5f3a")
+goal_selection_interval = 0.2
+fallback_goal = NodePath("WanderAimlessly")
+
+[node name="WanderAimlessly" type="Node" parent="mouse_avoider/goapManager" node_paths=PackedStringArray("root_node", "fallback_action")]
+script = ExtResource("2_i67pp")
+root_node = NodePath("../..")
+action_pick_interval = 1.06
+fallback_action = NodePath("idleRandomDuration")
+weight_expression = SubResource("Resource_q0pgm")
+
+[node name="idleRandomDuration" type="Node" parent="mouse_avoider/goapManager/WanderAimlessly"]
+script = ExtResource("6_hu40x")
+finish_delay = 0.5
+weight_expression = SubResource("Resource_q8xvp")
+
+[node name="goToPoint" type="Node" parent="mouse_avoider/goapManager/WanderAimlessly" node_paths=PackedStringArray("tgt_pos")]
+script = ExtResource("5_qika0")
+tgt_pos = NodePath("../../../../TargetPos")
+finish_delay = 0.5
+weight_expression = SubResource("Resource_gak33")
+
+[node name="DodgeMouse" type="Node" parent="mouse_avoider/goapManager" node_paths=PackedStringArray("root_node", "fallback_action")]
+script = ExtResource("2_i67pp")
+root_node = NodePath("../..")
+fallback_action = NodePath("idleRandomDuration")
+weight_expression = SubResource("Resource_mix48")
+
+[node name="dodgeRandomly" type="Node" parent="mouse_avoider/goapManager/DodgeMouse"]
+script = ExtResource("7_76b5j")
+finish_delay = 0.2
+weight_expression = SubResource("Resource_gyayi")
+
+[node name="idleRandomDuration" type="Node" parent="mouse_avoider/goapManager/DodgeMouse"]
+script = ExtResource("6_hu40x")
+weight_expression = SubResource("Resource_q8xvp")
+
+[node name="gpuParticles2d" type="GPUParticles2D" parent="mouse_avoider"]

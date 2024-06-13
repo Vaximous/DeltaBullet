@@ -1,0 +1,84 @@
+[gd_scene load_steps=14 format=3 uid="uid://cn7cu77jr8mqg"]
+
+[ext_resource type="Script" path="res://assets/entities/props/radio.gd" id="1_sjcpk"]
+[ext_resource type="PackedScene" uid="uid://qlrpb47edm7y" path="res://assets/models/props/radio.gltf" id="2_4gxm0"]
+[ext_resource type="AudioStream" uid="uid://kto2dqyucdyf" path="res://assets/music/menu/HHb2.mp3" id="2_qu1o8"]
+[ext_resource type="AudioStream" uid="uid://ct6qupxdsjj37" path="res://assets/music/menu/polli.mp3" id="3_7m60u"]
+[ext_resource type="Script" path="res://assets/scripts/entities/hitbox/hitbox.gd" id="3_wwei6"]
+[ext_resource type="Script" path="res://assets/components/healthComponent/healthComponent.gd" id="4_inbxv"]
+[ext_resource type="AudioStream" uid="uid://4fr4v3mmy3oj" path="res://assets/music/menu/Frenzy.mp3" id="4_ya6gt"]
+[ext_resource type="AudioStream" uid="uid://ceotuwcmjjrgc" path="res://assets/sounds/misc/crash.wav" id="8_0tnq2"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_oc2lj"]
+streams_count = 3
+stream_0/stream = ExtResource("2_qu1o8")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("3_7m60u")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("4_ya6gt")
+stream_2/weight = 1.0
+
+[sub_resource type="Gradient" id="Gradient_kuaec"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_h6vej"]
+gradient = SubResource("Gradient_kuaec")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ixtvs"]
+albedo_texture = SubResource("GradientTexture2D_h6vej")
+metallic = 1.0
+roughness = 0.59
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xr5it"]
+size = Vector3(0.504639, 0.341583, 0.0980835)
+
+[node name="radio" type="RigidBody3D" groups=["Interactable"]]
+collision_layer = 32
+collision_mask = 43
+script = ExtResource("1_sjcpk")
+defaultStream = SubResource("AudioStreamRandomizer_oc2lj")
+objectName = "Radio"
+customInteractText = "Toggle Radio"
+useCustomInteractText = true
+interactType = 1
+canBeUsed = true
+
+[node name="radio" parent="." instance=ExtResource("2_4gxm0")]
+transform = Transform3D(-1.49012e-08, 0, 0.297689, 0, 0.297688, 0, -0.297689, 0, -1.49012e-08, 0.0651245, 0, 0.0263574)
+
+[node name="Radio" parent="radio" index="0"]
+material_override = SubResource("StandardMaterial3D_ixtvs")
+
+[node name="RadioAntennae" parent="radio/Radio" index="0"]
+transform = Transform3D(1, 2.04891e-08, 2.98023e-08, 0, 0.997924, -0.0644104, -2.98023e-08, 0.0644104, 0.997923, -0.0740445, 0.949959, -0.733811)
+material_override = SubResource("StandardMaterial3D_ixtvs")
+
+[node name="RadioHandle" parent="radio/Radio" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.761665, 0)
+material_override = SubResource("StandardMaterial3D_ixtvs")
+
+[node name="collisionShape3d" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, -1.49012e-08, 0, 1, 0, 1.49012e-08, 0, 1, 0.0692141, 0.179625, 0.0191963)
+shape = SubResource("BoxShape3D_xr5it")
+
+[node name="hitbox" type="Area3D" parent="." node_paths=PackedStringArray("healthComponent")]
+script = ExtResource("3_wwei6")
+healthComponent = NodePath("../healthComponent")
+
+[node name="collisionShape3d" type="CollisionShape3D" parent="hitbox"]
+transform = Transform3D(1, 0, -1.49012e-08, 0, 1, 0, 1.49012e-08, 0, 1, 0.0692141, 0.179625, 0.0191963)
+shape = SubResource("BoxShape3D_xr5it")
+
+[node name="healthComponent" type="Node" parent="."]
+script = ExtResource("4_inbxv")
+health = 1
+
+[node name="audioStreamPlayer3d" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("8_0tnq2")
+volume_db = -10.0
+bus = &"Sounds"
+attenuation_filter_db = 0.0
+
+[connection signal="damaged" from="hitbox" to="." method="_on_hitbox_damaged"]
+[connection signal="healthDepleted" from="healthComponent" to="." method="_on_health_component_health_depleted"]
+
+[editable path="radio"]

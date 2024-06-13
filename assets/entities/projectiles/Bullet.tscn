@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://sjxq22ronv14"]
+
+[ext_resource type="Script" path="res://assets/entities/projectiles/Bullet.gd" id="1_mie4e"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_jg7a5"]
+radius = 0.1
+height = 0.2
+
+[node name="bullet" type="RayCast3D"]
+collision_mask = 19
+collide_with_areas = true
+debug_shape_custom_color = Color(1, 0, 1, 1)
+debug_shape_thickness = 5
+script = ExtResource("1_mie4e")
+max_distance = 1000.0
+
+[node name="meshInstance3d" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("SphereMesh_jg7a5")

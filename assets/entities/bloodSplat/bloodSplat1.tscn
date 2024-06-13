@@ -1,0 +1,51 @@
+[gd_scene load_steps=4 format=3 uid="uid://i3voqj6cml0b"]
+
+[ext_resource type="Texture2D" uid="uid://bcorupsltbnma" path="res://assets/textures/blood/bloodSplat/blood1.png" id="1_4ubn2"]
+[ext_resource type="Texture2D" uid="uid://b5ke6o7v1koma" path="res://assets/textures/blood/bloodSplat/blood1_n.png" id="2_g1dl4"]
+
+[sub_resource type="GDScript" id="GDScript_xai0k"]
+resource_name = "bloodSplatHandler"
+script/source = "extends Node3D
+class_name bloodSplatHandler
+@onready var splatDecal : Decal = $bloodSplat1
+var growSpeed : float = 24.0
+var maxSize : float = 0.4
+var defaultBloodSize : Vector3 = Vector3(0.3,0.3,0.3)
+var bloodTextures : Array = [\"res://assets/textures/blood/bloodSplat/blood1.png\",\"res://assets/textures/blood/bloodSplat/blood2.png\",\"res://assets/textures/blood/bloodSplat/blood3.png\",\"res://assets/textures/blood/bloodSplat/blood4.png\"]
+var bloodNormals : Array = [\"res://assets/textures/blood/bloodSplat/blood1_n.png\",\"res://assets/textures/blood/bloodSplat/blood2_n.png\",\"res://assets/textures/blood/bloodSplat/blood3_n.png\",\"res://assets/textures/blood/bloodSplat/blood4_n.png\"]
+# Called when the node enters the scene tree for the first time.
+func _ready()->void:
+	var timer = get_tree().create_timer(UserConfig.game_decal_remove_time)
+	timer.timeout.connect(queue_free)
+	maxSize = randf_range(0.1,0.5)
+	var textureInt = randi_range(0,bloodTextures.size()-1)
+	splatDecal.texture_albedo = load(bloodTextures[textureInt])
+	splatDecal.texture_normal = load(bloodNormals[textureInt])
+	splatDecal.size = Vector3(0.1,0.1,0.1)
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _physics_process(delta)->void:
+	if visible:
+		splatDecal.size.x = lerpf(splatDecal.size.x,maxSize,growSpeed*delta)
+		splatDecal.size.y = lerpf(splatDecal.size.y,maxSize,growSpeed*delta)
+		splatDecal.size.z = lerpf(splatDecal.size.z,maxSize,growSpeed*delta)
+
+
+func _on_visible_on_screen_notifier_3d_screen_entered():
+	show()
+
+func _on_visible_on_screen_notifier_3d_screen_exited():
+	hide()
+"
+
+[node name="decal" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+script = SubResource("GDScript_xai0k")
+
+[node name="bloodSplat1" type="Decal" parent="." groups=["bloodDecal"]]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+size = Vector3(0.3, 0.3, 0.3)
+texture_albedo = ExtResource("1_4ubn2")
+texture_normal = ExtResource("2_g1dl4")
+cull_mask = 1048551
+
+[node name="visibleOnScreenEnabler3d" type="VisibleOnScreenEnabler3D" parent="."]

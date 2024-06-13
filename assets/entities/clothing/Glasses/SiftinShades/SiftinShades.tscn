@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://jwq6tye7ok4r"]
+
+[ext_resource type="PackedScene" uid="uid://cdqtbg28cxotd" path="res://assets/entities/clothing/clothingBase.tscn" id="1_6mmub"]
+[ext_resource type="ArrayMesh" uid="uid://caitlsrl8lvxo" path="res://assets/models/pawn/clothing/glasses/siftinShades.res" id="2_u4g3f"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t3rff"]
+albedo_color = Color(0.117647, 0.117647, 0.117647, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d8iy3"]
+metallic = 1.0
+metallic_specular = 0.0
+roughness = 0.14
+
+[node name="SiftinShades" instance=ExtResource("1_6mmub")]
+clothingType = 1
+itemName = "Siftin' Shades"
+
+[node name="clothingMesh" parent="." index="0"]
+mesh = ExtResource("2_u4g3f")
+surface_material_override/0 = SubResource("StandardMaterial3D_t3rff")
+surface_material_override/1 = SubResource("StandardMaterial3D_d8iy3")

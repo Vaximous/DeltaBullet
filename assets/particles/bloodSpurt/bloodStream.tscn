@@ -1,0 +1,273 @@
+[gd_scene load_steps=30 format=3 uid="uid://c82qjgm4xjcpt"]
+
+[ext_resource type="ArrayMesh" uid="uid://dwbvwbso5hlc1" path="res://assets/models/misc/bloodcone/Cone/bloodcone.res" id="1_433se"]
+[ext_resource type="Texture2D" uid="uid://djho1o4a46mla" path="res://assets/textures/blood/ParticleCloudWhite.png" id="2_6y8u4"]
+[ext_resource type="Texture2D" uid="uid://7r7fibraa87x" path="res://assets/textures/blood/blood_gush/frameblood0003.png" id="2_ffxk6"]
+[ext_resource type="Texture2D" uid="uid://bimk8xiwemuh7" path="res://assets/textures/blood/realBloodSheets/Blood_1-2.png" id="3_dpix7"]
+[ext_resource type="Texture2D" uid="uid://bm32frk77ofg3" path="res://assets/textures/blood/blood_gush/bloodNormal.png" id="3_utmfl"]
+[ext_resource type="Texture2D" uid="uid://dvovreh6l13lj" path="res://assets/textures/blood/realBloodSheets/Blood_1-2_n.png" id="4_250jg"]
+
+[sub_resource type="Curve" id="Curve_4uxkm"]
+max_value = 255.0
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 255), 357.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_2irea"]
+curve = SubResource("Curve_4uxkm")
+
+[sub_resource type="Curve" id="Curve_kty81"]
+max_value = 2.0
+_data = [Vector2(0.0242718, 0.945055), 0.0, -6.86423, 0, 0, Vector2(0.131068, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_cgjcb"]
+curve = SubResource("Curve_kty81")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ow2gb"]
+lifetime_randomness = 0.47
+particle_flag_align_y = true
+particle_flag_rotate_y = true
+direction = Vector3(0, 0, 1)
+spread = 12.54
+flatness = 0.06
+initial_velocity_min = 5.0
+initial_velocity_max = 5.0
+gravity = Vector3(0, -15, 0)
+scale_min = 0.5
+scale_max = 2.0
+scale_curve = SubResource("CurveTexture_cgjcb")
+color = Color(1, 1, 1, 0)
+alpha_curve = SubResource("CurveTexture_2irea")
+collision_mode = 2
+collision_use_scale = true
+sub_emitter_mode = 3
+sub_emitter_amount_at_collision = 2
+
+[sub_resource type="GDScript" id="GDScript_fb3dx"]
+script/source = "extends GPUParticles3D
+var remove = false
+var stopbleeding = false
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	randomize()
+	$stopSpurtTimer.wait_time = randf_range(5,25)
+	$timer.wait_time = randf_range(3,10)
+	amount = randi_range(15,35)
+	$bloodLand.amount = amount
+	self.process_material.spread = randf_range(5,20)
+	self.process_material.flatness = randf_range(0,5)
+	self.process_material.initial_velocity_min = randf_range(1,4)
+	self.process_material.initial_velocity_max = randf_range(self.process_material.initial_velocity_min,5)
+	self.lifetime = randf_range(0.5,2)
+func _process(delta):
+	if Engine.get_frames_per_second() < 60:
+		queue_free()
+
+
+	if stopbleeding:
+		self.lifetime += 0.1
+
+		if lifetime >= 25:
+			emitting = false
+
+	if remove:
+		self.lifetime = self.lifetime + 0.8
+		transparency = lerpf(transparency,1.0,4*delta)
+		$bloodLand.transparency = lerpf($bloodLand.transparency,1.0,4*delta)
+
+		if transparency >= 1.0:
+			emitting = false
+			queue_free()
+
+func _on_timer_timeout():
+	remove = true
+
+
+func _on_stop_spurt_timer_timeout():
+	stopbleeding = true
+"
+
+[sub_resource type="Curve" id="Curve_v3mcd"]
+_data = [Vector2(0, 1), 0.0, -1.10285, 0, 0, Vector2(0.679612, 0), 0.0263227, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_inqm3"]
+curve = SubResource("Curve_v3mcd")
+
+[sub_resource type="Curve" id="Curve_2tsyi"]
+max_value = 2.0
+_data = [Vector2(0, 0.263736), 0.0, 0.0, 0, 0, Vector2(0.519418, 1.51648), 1.9116, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_wvrms"]
+curve = SubResource("Curve_2tsyi")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_5fuw5"]
+particle_flag_align_y = true
+angle_max = 24.6
+inherit_velocity_ratio = 0.504
+direction = Vector3(0, 0, 1)
+spread = 11.154
+initial_velocity_min = 3.15
+initial_velocity_max = 3.15
+gravity = Vector3(0, -12.995, 0)
+linear_accel_min = -19.05
+attractor_interaction_enabled = false
+scale_min = 0.8
+scale_max = 5.0
+scale_curve = SubResource("CurveTexture_wvrms")
+alpha_curve = SubResource("CurveTexture_inqm3")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oedkt"]
+transparency = 1
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.552941, 0, 0, 0.737255)
+albedo_texture = ExtResource("2_6y8u4")
+metallic = 1.0
+metallic_specular = 0.0
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_l7any"]
+material = SubResource("StandardMaterial3D_oedkt")
+size = Vector2(0.3, 0.3)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_meh8y"]
+transparency = 1
+cull_mode = 2
+albedo_color = Color(0.462745, 0.0941176, 0.0745098, 1)
+albedo_texture = ExtResource("3_dpix7")
+albedo_texture_msdf = true
+metallic = 0.75
+metallic_specular = 0.0
+roughness = 0.0
+normal_enabled = true
+normal_texture = ExtResource("4_250jg")
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 4
+particles_anim_v_frames = 4
+particles_anim_loop = false
+
+[sub_resource type="Curve" id="Curve_e4ray"]
+_data = [Vector2(0, 0), 0.0, 1.8595, 0, 0, Vector2(0.980582, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_addkl"]
+curve = SubResource("Curve_e4ray")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_8ptcv"]
+lifetime_randomness = 0.45
+particle_flag_align_y = true
+particle_flag_rotate_y = true
+angle_max = 360.0
+direction = Vector3(0, 0, 1)
+initial_velocity_min = 1.1
+initial_velocity_max = 4.0
+angular_velocity_max = 1.1
+gravity = Vector3(0, -5.78, 0)
+scale_min = 0.15
+scale_max = 2.2
+scale_curve = SubResource("CurveTexture_addkl")
+anim_speed_min = 2.2
+anim_speed_max = 2.5
+collision_mode = 2
+collision_use_scale = true
+sub_emitter_mode = 3
+sub_emitter_amount_at_collision = 1
+
+[sub_resource type="QuadMesh" id="QuadMesh_01uwf"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gyjka"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+disable_ambient_light = true
+albedo_color = Color(0.552941, 0, 0, 1)
+albedo_texture = ExtResource("2_ffxk6")
+roughness = 0.0
+normal_enabled = true
+normal_scale = 1.3
+normal_texture = ExtResource("3_utmfl")
+rim_enabled = true
+disable_receive_shadows = true
+
+[sub_resource type="Curve" id="Curve_ro5oo"]
+_data = [Vector2(0, 0.757895), 0.0, 6.18947, 0, 0, Vector2(1e-05, 1), -1.12516, -1.12516, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_mousa"]
+curve = SubResource("Curve_ro5oo")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_pdrmt"]
+particle_flag_align_y = true
+particle_flag_rotate_y = true
+angle_min = -360.0
+angle_max = 360.0
+direction = Vector3(0, 0, -1)
+flatness = 1.0
+initial_velocity_min = 1.65
+initial_velocity_max = 1.65
+gravity = Vector3(0, -15, 0)
+scale_min = 0.3
+scale_curve = SubResource("CurveTexture_mousa")
+collision_mode = 1
+collision_friction = 0.0
+collision_bounce = 0.0
+collision_use_scale = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_aix64"]
+size = Vector2(0.58, 0.835)
+
+[node name="bloodStream" type="GPUParticles3D"]
+ignore_occlusion_culling = true
+amount = 1000
+sub_emitter = NodePath("bloodLand")
+lifetime = 6.69
+fixed_fps = 144
+process_material = SubResource("ParticleProcessMaterial_ow2gb")
+draw_pass_1 = ExtResource("1_433se")
+script = SubResource("GDScript_fb3dx")
+
+[node name="bloodSmoke" type="GPUParticles3D" parent="."]
+amount = 25
+preprocess = 0.15
+speed_scale = 1.8
+fixed_fps = 144
+process_material = SubResource("ParticleProcessMaterial_5fuw5")
+draw_pass_1 = SubResource("QuadMesh_l7any")
+
+[node name="bloodSpurt" type="GPUParticles3D" parent="."]
+material_override = SubResource("StandardMaterial3D_meh8y")
+amount = 105
+randomness = 0.57
+fixed_fps = 144
+process_material = SubResource("ParticleProcessMaterial_8ptcv")
+draw_pass_1 = SubResource("QuadMesh_01uwf")
+
+[node name="timer" type="Timer" parent="."]
+wait_time = 35.0
+autostart = true
+
+[node name="bloodLand" type="GPUParticles3D" parent="."]
+material_override = SubResource("StandardMaterial3D_gyjka")
+cast_shadow = 0
+emitting = false
+amount = 22
+lifetime = 363.55
+one_shot = true
+randomness = 0.1
+fixed_fps = 144
+process_material = SubResource("ParticleProcessMaterial_pdrmt")
+draw_pass_1 = SubResource("PlaneMesh_aix64")
+
+[node name="stopSpurtTimer" type="Timer" parent="."]
+wait_time = 5.738
+autostart = true
+
+[connection signal="timeout" from="timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="stopSpurtTimer" to="." method="_on_stop_spurt_timer_timeout"]

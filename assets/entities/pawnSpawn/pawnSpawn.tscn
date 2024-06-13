@@ -1,0 +1,51 @@
+[gd_scene load_steps=8 format=3 uid="uid://boicvk4qeqmbd"]
+
+[ext_resource type="Script" path="res://assets/entities/pawnSpawn/pawnSpawn.gd" id="1_2jqm3"]
+[ext_resource type="ArrayMesh" uid="uid://dvkb1ntdr5k04" path="res://assets/models/pawn/pawnMarkerReferenceModel.res" id="2_kp4hc"]
+[ext_resource type="Texture2D" uid="uid://c1bh2rcoj7vd8" path="res://assets/textures/pawn_tex/texture_Base_Color.jpg" id="3_moayw"]
+[ext_resource type="Texture2D" uid="uid://bnyghsg41pkwb" path="res://assets/textures/pawn_tex/texture_Mixed_AO.jpg" id="4_l5i4o"]
+[ext_resource type="Texture2D" uid="uid://bu7qfitv8acsl" path="res://assets/textures/pawn_tex/texture_Metallic.jpg" id="5_o6dck"]
+[ext_resource type="Texture2D" uid="uid://d68y7icd86b3" path="res://assets/textures/pawn_tex/texture_Roughness.jpg" id="6_ie2lk"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_adlwk"]
+resource_name = "MALE"
+cull_mode = 2
+shading_mode = 2
+specular_mode = 1
+disable_ambient_light = true
+disable_fog = true
+vertex_color_use_as_albedo = true
+albedo_color = Color(1, 0.74, 0.44, 1)
+albedo_texture = ExtResource("3_moayw")
+metallic_texture = ExtResource("5_o6dck")
+roughness_texture = ExtResource("6_ie2lk")
+roughness_texture_channel = 4
+emission_enabled = true
+emission = Color(2.07564e-07, 0.260467, 2.16588e-07, 1)
+emission_energy_multiplier = 0.0
+emission_on_uv2 = true
+rim = 0.25
+rim_tint = 1.0
+ao_enabled = true
+ao_light_affect = 1.0
+ao_texture = ExtResource("4_l5i4o")
+ao_texture_channel = 4
+heightmap_scale = 2.93
+subsurf_scatter_strength = 1.0
+refraction_scale = 1.0
+proximity_fade_distance = 4096.0
+distance_fade_min_distance = 40.6
+distance_fade_max_distance = 1991.94
+
+[node name="pawnSpawn" type="Marker3D"]
+gizmo_extents = 0.0
+script = ExtResource("1_2jqm3")
+aiType = 0
+
+[node name="previewMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_adlwk")
+gi_mode = 0
+mesh = ExtResource("2_kp4hc")
+
+[node name="clothingpreview" type="Node3D" parent="previewMesh"]

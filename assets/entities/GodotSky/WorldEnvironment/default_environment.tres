@@ -1,0 +1,30 @@
+[gd_resource type="Environment" load_steps=3 format=3 uid="uid://wwq6f40kybqq"]
+
+[ext_resource type="CompressedTexture3D" uid="uid://sr0kr5d88j54" path="res://assets/textures/misc/neutral-lut.png" id="1_5oxbj"]
+[ext_resource type="Sky" uid="uid://bq7217qbtqsdc" path="res://assets/entities/GodotSky/WorldEnvironment/default_sky.tres" id="2_bh024"]
+
+[resource]
+background_mode = 2
+sky = ExtResource("2_bh024")
+tonemap_mode = 3
+ssao_enabled = true
+ssao_intensity = 1.5
+ssil_enabled = true
+ssil_intensity = 0.75
+sdfgi_enabled = true
+sdfgi_y_scale = 2
+glow_enabled = true
+glow_normalized = true
+glow_bloom = 0.15
+glow_blend_mode = 1
+fog_light_energy = 0.0
+fog_sun_scatter = 0.17
+fog_density = 0.009
+fog_aerial_perspective = 0.14
+fog_sky_affect = 0.765
+fog_height = 96.8
+fog_height_density = 0.089
+volumetric_fog_density = 0.004224
+adjustment_enabled = true
+adjustment_saturation = 1.15
+adjustment_color_correction = ExtResource("1_5oxbj")

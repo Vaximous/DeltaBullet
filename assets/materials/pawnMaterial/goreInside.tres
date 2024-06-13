@@ -1,0 +1,10 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://5n0kme1jerwl"]
+
+[resource]
+resource_name = "goreInside"
+transparency = 1
+cull_mode = 2
+shading_mode = 2
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.607843, 0.0196078, 0, 0)
+roughness = 0.5

@@ -1,0 +1,246 @@
+[gd_scene load_steps=23 format=3 uid="uid://b53hvcf0hvvkw"]
+
+[ext_resource type="Script" path="res://assets/components/GOAP/GOAP_ManagerComponent.gd" id="2_vf6b8"]
+[ext_resource type="Script" path="res://assets/components/GOAP/GOAP_GoalComponent.gd" id="3_r5ni1"]
+[ext_resource type="Script" path="res://assets/components/GOAP/res_goap_Expression.gd" id="4_6rm13"]
+[ext_resource type="Script" path="res://assets/components/aiComponent/aiComponent.gd" id="4_gaqok"]
+[ext_resource type="Script" path="res://assets/components/aiComponent/goapActions/getPositiontoWaypoint.gd" id="4_n7wpi"]
+[ext_resource type="Script" path="res://assets/components/GOAP/GOAP_ActionComponent.gd" id="7_4bq6d"]
+[ext_resource type="Script" path="res://assets/components/aiComponent/goapActions/getPositiontoLastPos.gd" id="7_yx6r1"]
+[ext_resource type="Script" path="res://assets/components/aiComponent/ShootPawn.gd" id="8_ybyvq"]
+
+[sub_resource type="Resource" id="Resource_0tklj"]
+script = ExtResource("4_6rm13")
+expression = "float(!pawnHasTarget and int(getAiType()) == 1 and overlappingObject == null) "
+input_names = PackedStringArray()
+variants = []
+
+[sub_resource type="Resource" id="Resource_7ouww"]
+script = ExtResource("4_6rm13")
+expression = "float(!pawnHasTarget)"
+input_names = PackedStringArray()
+variants = []
+
+[sub_resource type="Resource" id="Resource_ne0l5"]
+script = ExtResource("4_6rm13")
+expression = "float(pawnHasTarget)"
+input_names = PackedStringArray()
+variants = []
+
+[sub_resource type="Resource" id="Resource_f6xav"]
+script = ExtResource("4_6rm13")
+expression = "float(withinAttackRange)"
+input_names = PackedStringArray()
+variants = []
+
+[sub_resource type="Resource" id="Resource_wayqs"]
+script = ExtResource("4_6rm13")
+expression = "float(!withinAttackRange)"
+input_names = PackedStringArray()
+variants = []
+
+[sub_resource type="Resource" id="Resource_guxpe"]
+script = ExtResource("4_6rm13")
+expression = "float(int(getAiType()) == 0 and !pawnHasTarget)"
+input_names = PackedStringArray()
+variants = []
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_oojxb"]
+bottom_radius = 0.0
+radial_segments = 4
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cwf7e"]
+transparency = 1
+albedo_color = Color(0.0117647, 0.454902, 0, 0.356863)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_102wm"]
+radius = 2.58404
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_1ongu"]
+radius = 7.78618
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gxudk"]
+albedo_color = Color(0, 1, 0.368627, 1)
+
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_t2je8"]
+
+[sub_resource type="Gradient" id="Gradient_4vyck"]
+colors = PackedColorArray(0, 0, 0, 1, 1, 1, 0.32549, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_crd1y"]
+gradient = SubResource("Gradient_4vyck")
+
+[node name="aiComponent" type="Node3D" node_paths=PackedStringArray("goapManager", "moveTo", "navAgent", "navPointGrabber", "visionTimer")]
+script = ExtResource("4_gaqok")
+goapManager = NodePath("goapManager")
+moveTo = NodePath("moveTo")
+navAgent = NodePath("navAgent")
+navPointGrabber = NodePath("navPointGrabber")
+visionTimer = NodePath("visionTimer")
+hatedPawnGroups = Array[StringName]([&"Player", &"Hostile"])
+
+[node name="goapManager" type="Node" parent="." node_paths=PackedStringArray("fallback_goal")]
+script = ExtResource("2_vf6b8")
+fallback_goal = NodePath("Wander")
+
+[node name="Wander" type="Node" parent="goapManager" node_paths=PackedStringArray("root_node", "fallback_action")]
+process_thread_group = 2
+process_thread_group_order = 0
+process_thread_messages = 0
+script = ExtResource("3_r5ni1")
+root_node = NodePath("../..")
+fallback_action = NodePath("getPositiontoWaypoint")
+weight_expression = SubResource("Resource_0tklj")
+
+[node name="getPositiontoWaypoint" type="Node" parent="goapManager/Wander" node_paths=PackedStringArray("moveToMarker", "navAgent", "navPointGrabber", "aiComponent")]
+script = ExtResource("4_n7wpi")
+moveToMarker = NodePath("../../../moveTo")
+navAgent = NodePath("../../../navAgent")
+navPointGrabber = NodePath("../../../navPointGrabber")
+aiComponent = NodePath("../../..")
+finish_delay = 0.1
+weight_expression = SubResource("Resource_7ouww")
+renew_cooldown_on_finish = false
+
+[node name="KillPawn" type="Node" parent="goapManager" node_paths=PackedStringArray("root_node", "fallback_action")]
+process_thread_group = 2
+process_thread_group_order = 0
+process_thread_messages = 0
+script = ExtResource("3_r5ni1")
+root_node = NodePath("../..")
+fallback_action = NodePath("getPositiontoLastKnownPosition")
+weight_expression = SubResource("Resource_ne0l5")
+
+[node name="ShootPawn" type="Node" parent="goapManager/KillPawn" node_paths=PackedStringArray("aiComponent")]
+script = ExtResource("8_ybyvq")
+aiComponent = NodePath("../../..")
+weight_expression = SubResource("Resource_f6xav")
+
+[node name="getPositiontoLastKnownPosition" type="Node" parent="goapManager/KillPawn" node_paths=PackedStringArray("aiComponent", "moveToMarker", "navAgent", "navPointGrabber")]
+script = ExtResource("7_yx6r1")
+aiComponent = NodePath("../../..")
+moveToMarker = NodePath("../../../moveTo")
+navAgent = NodePath("../../../navAgent")
+navPointGrabber = NodePath("../../../navPointGrabber")
+weight_expression = SubResource("Resource_wayqs")
+
+[node name="Retreat" type="Node" parent="goapManager" node_paths=PackedStringArray("root_node")]
+process_thread_group = 2
+process_thread_group_order = 0
+process_thread_messages = 0
+script = ExtResource("3_r5ni1")
+root_node = NodePath("../..")
+
+[node name="Flee" type="Node" parent="goapManager" node_paths=PackedStringArray("root_node")]
+process_thread_group = 2
+process_thread_group_order = 0
+process_thread_messages = 0
+script = ExtResource("3_r5ni1")
+root_node = NodePath("../..")
+
+[node name="InvestigateSound" type="Node" parent="goapManager" node_paths=PackedStringArray("root_node")]
+process_thread_group = 2
+process_thread_group_order = 0
+process_thread_messages = 0
+script = ExtResource("3_r5ni1")
+root_node = NodePath("../..")
+
+[node name="InvestigateBody" type="Node" parent="goapManager"]
+process_thread_group = 2
+process_thread_group_order = 0
+process_thread_messages = 0
+script = ExtResource("3_r5ni1")
+
+[node name="Idle" type="Node" parent="goapManager" node_paths=PackedStringArray("root_node", "fallback_action")]
+process_thread_group = 2
+process_thread_group_order = 0
+process_thread_messages = 0
+script = ExtResource("3_r5ni1")
+root_node = NodePath("../..")
+action_pick_interval = 3.0
+fallback_action = NodePath("DoNothing")
+weight_expression = SubResource("Resource_guxpe")
+
+[node name="DoNothing" type="Node" parent="goapManager/Idle"]
+script = ExtResource("7_4bq6d")
+weight_expression = SubResource("Resource_guxpe")
+
+[node name="moveTo" type="Marker3D" parent="."]
+
+[node name="debugMoveToMesh" type="MeshInstance3D" parent="moveTo"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.01134, 0)
+top_level = true
+visible = false
+mesh = SubResource("CylinderMesh_oojxb")
+surface_material_override/0 = SubResource("StandardMaterial3D_cwf7e")
+
+[node name="navAgent" type="NavigationAgent3D" parent="."]
+target_desired_distance = 5.0
+navigation_layers = 9
+avoidance_enabled = true
+radius = 0.3
+avoidance_layers = 9
+avoidance_mask = 9
+debug_path_custom_color = Color(0.239216, 0.745098, 0, 1)
+
+[node name="navPointGrabber" type="Area3D" parent="."]
+collision_layer = 0
+
+[node name="collisionShape3d" type="CollisionShape3D" parent="navPointGrabber"]
+shape = SubResource("SphereShape3D_102wm")
+
+[node name="visionCast" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.543199, 0)
+target_position = Vector3(0, 0, 0)
+collision_mask = 3
+debug_shape_custom_color = Color(0, 0, 1, 1)
+debug_shape_thickness = 5
+
+[node name="pawnGrabber" type="Area3D" parent="."]
+collision_layer = 8
+collision_mask = 8
+
+[node name="collisionShape3d" type="CollisionShape3D" parent="pawnGrabber"]
+shape = SubResource("SphereShape3D_1ongu")
+
+[node name="meshInstance3d" type="MeshInstance3D" parent="pawnGrabber"]
+material_override = SubResource("StandardMaterial3D_gxudk")
+mesh = SubResource("ImmediateMesh_t2je8")
+
+[node name="visionTimer" type="Timer" parent="."]
+process_callback = 0
+wait_time = 0.2
+autostart = true
+
+[node name="debugPawnStats" type="Label3D" parent="."]
+visible = false
+pixel_size = 0.003
+offset = Vector2(0, 100)
+billboard = 2
+alpha_cut = 1
+text = "Pawn Name - 
+Pawn Detection - 
+Has Target - 
+Has Detected -
+"
+
+[node name="sprite3d" type="Sprite3D" parent="."]
+transform = Transform3D(0.0686986, 0, 0, 0, 14.1423, 0, 0, 0, 1.0015, 0, 0, 0)
+visible = false
+texture = SubResource("GradientTexture1D_crd1y")
+
+[node name="aiAimcast" type="RayCast3D" parent="."]
+target_position = Vector3(0, 0, -250)
+collision_mask = 23
+collide_with_areas = true
+debug_shape_custom_color = Color(1, 0.823529, 0, 1)
+
+[node name="aiAimcastEnd" type="Marker3D" parent="aiAimcast"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -63.4755)
+
+[connection signal="target_reached" from="navAgent" to="." method="_on_nav_agent_target_reached"]
+[connection signal="velocity_computed" from="navAgent" to="." method="_on_nav_agent_velocity_computed"]
+[connection signal="area_entered" from="pawnGrabber" to="." method="_on_pawn_grabber_area_entered"]
+[connection signal="body_entered" from="pawnGrabber" to="." method="_on_pawn_grabber_body_entered"]
+[connection signal="body_exited" from="pawnGrabber" to="." method="_on_pawn_grabber_body_exited"]
+[connection signal="timeout" from="visionTimer" to="." method="_on_vision_timer_timeout"]

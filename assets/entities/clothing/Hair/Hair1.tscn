@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://cyo2gkchgm6il"]
+
+[ext_resource type="PackedScene" uid="uid://cdqtbg28cxotd" path="res://assets/entities/clothing/clothingBase.tscn" id="1_d8v58"]
+[ext_resource type="ArrayMesh" uid="uid://b78i7mpafeo74" path="res://assets/models/pawn/clothing/hair/hair01.res" id="2_37p3b"]
+
+[node name="Hair1" instance=ExtResource("1_d8v58")]
+clothingType = 2
+itemName = "Hair01"
+
+[node name="clothingMesh" parent="." index="0"]
+mesh = ExtResource("2_37p3b")

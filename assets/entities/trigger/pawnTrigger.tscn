@@ -1,0 +1,36 @@
+[gd_scene load_steps=2 format=3 uid="uid://7ueyays7enj5"]
+
+[sub_resource type="GDScript" id="GDScript_1wp6m"]
+resource_name = "pawnTrigger"
+script/source = "@tool
+extends Area3D
+class_name PawnTrigger
+signal triggerActivated
+@export_category(\"Pawn Trigger\")
+@export var activeTrigger : bool = true
+@export var triggerOnce : bool = true
+@export var triggerGroups : Array[String] = [\"Player\"]
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+
+
+
+
+func _on_area_entered(area):
+	if activeTrigger == true:
+		if triggerOnce:
+			Console.add_rich_console_message(\"%s Triggered. No longer active\" %[name])
+			activeTrigger = false
+		triggerActivated.emit()
+"
+
+[node name="pawnTrigger" type="Area3D"]
+script = SubResource("GDScript_1wp6m")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=3 uid="uid://b4v8dskvpby4c"]
+
+[ext_resource type="Script" path="res://assets/scripts/clothing/clothingBase.gd" id="1_338rr"]
+[ext_resource type="ArrayMesh" uid="uid://bfc1ltt1xdrum" path="res://assets/models/pawn/clothing/hair/hair02.res" id="2_o7x0h"]
+[ext_resource type="Skin" uid="uid://dni81a81m0edc" path="res://assets/models/pawn/male/pawnSkin.tres" id="3_j1cpo"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t0ptt"]
+albedo_color = Color(0.196078, 0.196078, 0.196078, 1)
+
+[node name="clothingBase" type="Node3D"]
+script = ExtResource("1_338rr")
+clothingType = 2
+itemName = "Hair 2"
+
+[node name="clothingMesh" type="MeshInstance3D" parent="."]
+mesh = ExtResource("2_o7x0h")
+skin = ExtResource("3_j1cpo")
+surface_material_override/0 = SubResource("StandardMaterial3D_t0ptt")

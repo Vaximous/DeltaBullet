@@ -1,0 +1,14 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://cet4363l3i6lx"]
+
+[ext_resource type="Texture2D" uid="uid://cegscmnorofk5" path="res://assets/textures/world/fence/chainlink.png" id="1_if6tn"]
+
+[resource]
+transparency = 2
+alpha_scissor_threshold = 0.2
+alpha_antialiasing_mode = 0
+cull_mode = 1
+albedo_texture = ExtResource("1_if6tn")
+metallic_specular = 0.0
+uv1_scale = Vector3(0.9, 0.9, 0.9)
+uv1_triplanar = true
+uv1_world_triplanar = true

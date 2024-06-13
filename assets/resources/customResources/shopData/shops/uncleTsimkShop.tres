@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="ShopData" load_steps=2 format=3 uid="uid://bp0sh4b0ptq40"]
+
+[ext_resource type="Script" path="res://assets/resources/customResources/shopData/shopData.gd" id="1_dawxm"]
+
+[resource]
+script = ExtResource("1_dawxm")
+shopName = &" Uncle Tsimks\' Shop"

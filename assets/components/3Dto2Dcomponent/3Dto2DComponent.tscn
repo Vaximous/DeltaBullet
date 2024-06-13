@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cbmy8aewv7g1w"]
+
+[ext_resource type="Script" path="res://assets/components/3Dto2Dcomponent/3Dto2DComponent.gd" id="1_o6p8o"]
+
+[node name="3Dto2DComponent" type="Marker3D"]
+script = ExtResource("1_o6p8o")

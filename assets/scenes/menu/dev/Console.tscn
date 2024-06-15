@@ -144,7 +144,7 @@ autowrap_mode = 0
 [node name="cvars" type="Node" parent="."]
 script = ExtResource("2_bhpyj")
 
-[connection signal="close_requested" from="window" to="window" method="hide"]
+[connection signal="close_requested" from="window" to="." method="_on_window_close_requested"]
 [connection signal="focus_entered" from="window" to="." method="_on_window_focus_entered"]
 [connection signal="window_input" from="window" to="." method="_on_window_window_input"]
 [connection signal="text_changed" from="window/control/panel/lineEdit" to="." method="detect_autocomplete"]

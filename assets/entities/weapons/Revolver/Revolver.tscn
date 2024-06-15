@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://boh343kalvj5i"]
+[gd_scene load_steps=54 format=3 uid="uid://boh343kalvj5i"]
 
 [ext_resource type="PackedScene" uid="uid://cpd5r8bmx2885" path="res://assets/entities/weapons/weaponBase.tscn" id="1_supac"]
 [ext_resource type="Resource" uid="uid://f30cnkk8nnpb" path="res://assets/entities/weapons/Revolver/RevolverData.tres" id="2_pkn4b"]
@@ -146,6 +146,18 @@ particles_anim_loop = false
 
 [sub_resource type="QuadMesh" id="QuadMesh_avg6y"]
 material = SubResource("StandardMaterial3D_y85su")
+
+[sub_resource type="GDScript" id="GDScript_ypukd"]
+resource_name = "shotSmoke"
+script/source = "extends GPUParticles3D
+
+
+func _init()->void:
+	gameManager.freeOrphans.connect(free_me_orphan)
+func free_me_orphan()->void:
+	if not is_inside_tree():
+		queue_free()
+"
 
 [sub_resource type="GDScript" id="GDScript_41d3r"]
 script/source = "static func execute(node : Node) -> void:
@@ -337,6 +349,7 @@ one_shot = true
 explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_2pv0k")
 draw_pass_1 = SubResource("QuadMesh_avg6y")
+script = SubResource("GDScript_ypukd")
 
 [node name="duplicatorComponent" type="Node" parent="Mesh/marker3d/ShootSmoke" index="0"]
 script = ExtResource("6_r8ocj")

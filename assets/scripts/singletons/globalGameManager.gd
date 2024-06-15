@@ -1,4 +1,5 @@
 extends Node
+signal freeOrphans
 ## Global Game Manager Start
 var menuScenes = [preload("res://assets/scenes/menu/menuScenes/menuscene1.tscn"),preload("res://assets/scenes/menu/menuScenes/menuScene2.tscn"),preload("res://assets/scenes/menu/menuScenes/menuScene3.tscn")]
 
@@ -261,3 +262,6 @@ func loadWorld(worldscene:String, fadein:bool = false)->void:
 		#get_tree().change_scene_to_packed(loader)
 	get_tree().root.add_child(inst)
 	inst.sceneToLoad = worldscene
+
+func freeOrphanNodes():
+	freeOrphans.emit()

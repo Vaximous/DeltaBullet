@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://bn07wnk5k005c"]
+[gd_scene load_steps=48 format=3 uid="uid://bn07wnk5k005c"]
 
 [ext_resource type="PackedScene" uid="uid://cpd5r8bmx2885" path="res://assets/entities/weapons/weaponBase.tscn" id="1_821xr"]
 [ext_resource type="AudioStream" uid="uid://bsf2lnjdianff" path="res://assets/sounds/weapons/honeybadger/CobaltCatsupGunSoundsForReddit_StdPistolOneShot_Var2.wav" id="2_r5eso"]
@@ -689,6 +689,18 @@ particles_anim_loop = false
 [sub_resource type="QuadMesh" id="QuadMesh_p2041"]
 material = SubResource("StandardMaterial3D_rfu4s")
 
+[sub_resource type="GDScript" id="GDScript_r8km3"]
+resource_name = "shotSmoke"
+script/source = "extends GPUParticles3D
+
+
+func _init()->void:
+	gameManager.freeOrphans.connect(free_me_orphan)
+func free_me_orphan()->void:
+	if not is_inside_tree():
+		queue_free()
+"
+
 [sub_resource type="GDScript" id="GDScript_fqemc"]
 script/source = "static func execute(node : Node) -> void:
 	(node as GPUParticles3D).restart()
@@ -758,6 +770,7 @@ one_shot = true
 explosiveness = 1.0
 process_material = SubResource("ParticleProcessMaterial_nyg8u")
 draw_pass_1 = SubResource("QuadMesh_p2041")
+script = SubResource("GDScript_r8km3")
 
 [node name="duplicatorComponent" parent="Cube_005/Marker3D/ShootSmoke" index="0" instance=ExtResource("6_32xuo")]
 useWorldMiscAsParent = true

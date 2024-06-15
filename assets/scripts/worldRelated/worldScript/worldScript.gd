@@ -22,12 +22,16 @@ var pawnScene = load("res://assets/entities/pawnEntity/pawnEntity.tscn").duplica
 	set(value):
 		worldData = value
 
+func _init()->void:
+	gameManager.freeOrphans.connect(free_me_orphan)
+
 func _enter_tree()->void:
 	gameManager.world = self
 
 func _ready()->void:
 	gameManager.pauseMenu = pauseControl
 	emit_signal("worldLoaded")
+	gameManager.freeOrphanNodes()
 	setupWorld()
 	##Spawn a player at a point.
 	if !gameManager.isMultiplayerGame:
@@ -77,3 +81,7 @@ func setupWorld()-> void:
 				print_rich("[color=red]The soundscape.. Its null retard.[/color]")
 	else:
 		print_rich("[color=red]Set the world data for this world!!![/color]")
+
+func free_me_orphan()->void:
+	if not is_inside_tree():
+		queue_free()

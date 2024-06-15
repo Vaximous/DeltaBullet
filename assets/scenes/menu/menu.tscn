@@ -9,13 +9,18 @@ script/source = "extends Node
 @onready var menuMusic = $menuMusic
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func _ready()->void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	Fade.fade_in(0.8, Color(0,0,0,1),\"GradientVertical\",false,true)
 	musicManager.change_song_to(menuMusic.stream,0.5)
 	var menu = gameManager.menuScenes[randi_range(0,gameManager.menuScenes.size()-1)].instantiate()
 	add_child(menu)
-
+	gameManager.freeOrphanNodes()
+func _init()->void:
+	gameManager.freeOrphans.connect(free_me_orphan)
+func free_me_orphan()->void:
+	if not is_inside_tree():
+		queue_free()
 
 
 "

@@ -40,6 +40,7 @@ func _ready() -> void:
 	worldNameControl.show()
 	continueLabel.hide()
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	gameManager.freeOrphanNodes()
 
 func _process(delta) -> void:
 	if sceneToLoad != "" or " " or null:

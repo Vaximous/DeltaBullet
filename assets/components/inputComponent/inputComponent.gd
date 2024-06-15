@@ -65,8 +65,11 @@ func _process(_delta)->void:
 					controllingPawn.turnAmount = -controllingPawn.attachedCam.vertical.rotation.x
 
 func getInputDir():
+	if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED or Input.get_mouse_mode() == Input.MOUSE_MODE_HIDDEN:
 		inputDir = Vector3(Input.get_action_strength("gMoveRight") - Input.get_action_strength("gMoveLeft"), 0, Input.get_action_strength("gMoveBackward") - Input.get_action_strength("gMoveForward"))
 		return inputDir
+	else:
+		return Vector3.ZERO
 
 func _unhandled_input(event)->void:
 	if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED or Input.get_mouse_mode() == Input.MOUSE_MODE_HIDDEN:
@@ -124,31 +127,32 @@ func _unhandled_input(event)->void:
 						controllingPawn.attachedCam.fireVignette(0.8,Color.DARK_RED)
 						gameManager.notifyFade("You've died! Press F6 to restart!", 4, 5)
 
-##Movement Code
-	if movementEnabled:
-		if Dialogic.current_timeline == null:
-			if Input.get_action_strength("gSprint") >= 1:
-				emit_signal("movementKeyPressed","Sprint")
-				if controllingPawn:
-					if controllingPawn.canRun:
-						controllingPawn.isRunning = true
-						#controllingPawn.freeAim = false
+	##Movement Code
+	if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED or Input.get_mouse_mode() == Input.MOUSE_MODE_HIDDEN:
+		if movementEnabled:
+			if Dialogic.current_timeline == null:
+				if Input.get_action_strength("gSprint") >= 1:
+					emit_signal("movementKeyPressed","Sprint")
+					if controllingPawn:
+						if controllingPawn.canRun:
+							controllingPawn.isRunning = true
+							#controllingPawn.freeAim = false
 
-			else:
-				if controllingPawn:
-					controllingPawn.isRunning = false
-			if event is InputEventKey:
-				if Input.get_action_strength("gMoveRight") >= 1:
-					emit_signal("movementKeyPressed","Right")
+				else:
+					if controllingPawn:
+						controllingPawn.isRunning = false
+				if event is InputEventKey:
+					if Input.get_action_strength("gMoveRight") >= 1:
+						emit_signal("movementKeyPressed","Right")
 
-				if Input.get_action_strength("gMoveLeft") >= 1:
-					emit_signal("movementKeyPressed","Left")
+					if Input.get_action_strength("gMoveLeft") >= 1:
+						emit_signal("movementKeyPressed","Left")
 
-				if Input.get_action_strength("gMoveForward") >= 1:
-					emit_signal("movementKeyPressed","Forward")
+					if Input.get_action_strength("gMoveForward") >= 1:
+						emit_signal("movementKeyPressed","Forward")
 
-				if Input.get_action_strength("gMoveBackward") >= 1:
-					emit_signal("movementKeyPressed","Backward")
+					if Input.get_action_strength("gMoveBackward") >= 1:
+						emit_signal("movementKeyPressed","Backward")
 
 
 

@@ -84,6 +84,7 @@ func _input(event: InputEvent) -> void:
 		console.hide()
 		await get_tree().process_frame
 		console.show()
+		gameManager.showMouse()
 		console.grab_focus()
 		input_field.grab_focus()
 
@@ -91,6 +92,7 @@ func _input(event: InputEvent) -> void:
 func _on_window_window_input(event: InputEvent) -> void:
 	if event.is_action_pressed("devConsole"):
 		console.hide()
+		gameManager.hideMouse()
 	if input_field.has_focus() and event.is_pressed():
 		display_autocompletion_results()
 		if event.as_text() == "Tab":
@@ -207,3 +209,8 @@ func null_catch(variable) -> bool:
 	if variable == null:
 		Console.add_console_message("Currently unavailable.", Color.LIGHT_CORAL)
 	return variable == null
+
+
+func _on_window_close_requested()->void:
+	console.hide()
+	gameManager.hideMouse()

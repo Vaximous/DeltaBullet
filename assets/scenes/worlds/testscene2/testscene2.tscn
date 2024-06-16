@@ -605,6 +605,7 @@ size = Vector3(267.3, 108.116, 191.661)
 
 [sub_resource type="Resource" id="Resource_jqsg3"]
 script = ExtResource("22_28ln3")
+useBulletTrail = true
 canBeReloaded = true
 weaponMagSize = 128
 ammoSize = 30
@@ -910,6 +911,7 @@ node_connections = [&"output", 0, &"weaponStateSpeed", &"weaponStateSpeed", 0, &
 [sub_resource type="Resource" id="Resource_pl82l"]
 resource_local_to_scene = true
 script = ExtResource("22_28ln3")
+useBulletTrail = true
 canBeReloaded = true
 weaponMagSize = 128
 ammoSize = 30
@@ -1361,6 +1363,7 @@ stream_0/weight = 1.0
 [sub_resource type="Resource" id="Resource_6sa46"]
 resource_local_to_scene = true
 script = ExtResource("22_28ln3")
+useBulletTrail = true
 canBeReloaded = true
 weaponMagSize = 128
 ammoSize = 24

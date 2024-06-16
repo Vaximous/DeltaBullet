@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cswnmrx871siw"
-path.bptc="res://.godot/imported/blood4_n.png-5fab14c63871fe89b9650d4f33f496aa.bptc.ctex"
+uid="uid://bmk0t5ov3lco3"
+path.s3tc="res://.godot/imported/T_Splatter_077.png-d7863cfe7ea67a805b63f9bfe9b5365f.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,13 +11,13 @@ metadata={
 
 [deps]
 
-source_file="res://assets/textures/blood/bloodSplat/blood4_n.png"
-dest_files=["res://.godot/imported/blood4_n.png-5fab14c63871fe89b9650d4f33f496aa.bptc.ctex"]
+source_file="res://assets/textures/blood/bloodSplat/T_Splatter_077.png"
+dest_files=["res://.godot/imported/T_Splatter_077.png-d7863cfe7ea67a805b63f9bfe9b5365f.s3tc.ctex"]
 
 [params]
 
 compress/mode=2
-compress/high_quality=true
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
 compress/normal_map=0

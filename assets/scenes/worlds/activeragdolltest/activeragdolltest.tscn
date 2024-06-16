@@ -234,9 +234,9 @@ pawnClothing = Array[PackedScene]([ExtResource("7_qm1ts"), ExtResource("8_30e07"
 environment = SubResource("Environment_ly0hw")
 
 [node name="reflectionProbe" parent="Environment" index="1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.78976, 10.6119, -4.97916)
-visible = false
-size = Vector3(57.191, 41.2238, 47.7066)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -111.999, 10.6119, -24.2307)
+size = Vector3(399.775, 41.2238, 277.27)
+enable_shadows = true
 
 [node name="directionalLight3d" parent="Environment" index="2"]
 transform = Transform3D(1, 0, 0, 0, 0.861071, 0.508485, 0, -0.508485, 0.861071, 0, 5.37935, 0)
@@ -302,12 +302,12 @@ transform = Transform3D(1, -1.36962e-19, 5.30719e-21, 0, 0, 1, -5.87298e-23, -1,
 shape = SubResource("SphereShape3D_c28eq")
 
 [node name="Physical Bone Bone_001" type="PhysicalBone3D" parent="Props/untitled2/Armature/Skeleton3D" index="2" node_paths=PackedStringArray("animSkeleton")]
-transform = Transform3D(1, 1.66463e-07, 9.40226e-12, -1.77636e-15, 2.04146e-06, -1.00396, -2.38418e-07, 1.00316, 1.60187e-06, -9.53674e-07, 2.90801, -0.19933)
+transform = Transform3D(1, 1.66461e-07, 9.40226e-12, -1.77636e-15, 2.04146e-06, -1.00396, -2.38418e-07, 1.00316, 1.60187e-06, -9.53674e-07, 2.90801, -0.19933)
 collision_layer = 2
 collision_mask = 11
 joint_type = 1
 joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.53669e-07, 3.32573e-05, 0.903086)
-body_offset = Transform3D(1, -7.27098e-08, 9.02034e-12, -1.77636e-15, 2.04146e-06, -1.00396, 0, 1.00316, 1.60187e-06, -9.53674e-07, 0.906665, -3.48091e-05)
+body_offset = Transform3D(1, -7.27112e-08, 9.02034e-12, -1.77636e-15, 2.04146e-06, -1.00396, 0, 1.00316, 1.60187e-06, -9.53674e-07, 0.906665, -3.48091e-05)
 bone_name = "Bone.001"
 joint_constraints/bias = 0.3
 joint_constraints/damping = 1.0

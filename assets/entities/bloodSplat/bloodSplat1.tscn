@@ -1,7 +1,18 @@
-[gd_scene load_steps=4 format=3 uid="uid://i3voqj6cml0b"]
+[gd_scene load_steps=15 format=3 uid="uid://i3voqj6cml0b"]
 
-[ext_resource type="Texture2D" uid="uid://bcorupsltbnma" path="res://assets/textures/blood/bloodSplat/blood1.png" id="1_4ubn2"]
-[ext_resource type="Texture2D" uid="uid://b5ke6o7v1koma" path="res://assets/textures/blood/bloodSplat/blood1_n.png" id="2_g1dl4"]
+[ext_resource type="Texture2D" uid="uid://bmcn1k1auf0d2" path="res://assets/textures/blood/bloodSplat/T_Dots_006.png" id="1_3l6hn"]
+[ext_resource type="Texture2D" uid="uid://bvcomc0m7tbpo" path="res://assets/textures/blood/bloodSplat/T_Dots_007.png" id="2_t3m5m"]
+[ext_resource type="Texture2D" uid="uid://d36admix5tf5j" path="res://assets/textures/blood/bloodSplat/T_Dots_019.png" id="3_01s3m"]
+[ext_resource type="Texture2D" uid="uid://ba4vsvgx246bm" path="res://assets/textures/blood/bloodSplat/T_Splatter_016.png" id="4_6tdj2"]
+[ext_resource type="Texture2D" uid="uid://be4msfshsewtj" path="res://assets/textures/blood/bloodSplat/T_Splatter_018.png" id="5_2rcag"]
+[ext_resource type="Texture2D" uid="uid://bc2pkqlqd28ds" path="res://assets/textures/blood/bloodSplat/T_Splatter_067.png" id="6_6ytpf"]
+[ext_resource type="Texture2D" uid="uid://doesxq6w77mf4" path="res://assets/textures/blood/bloodSplat/T_Splatter_072.png" id="7_81e7q"]
+[ext_resource type="Texture2D" uid="uid://bp21qn8m52o5p" path="res://assets/textures/blood/bloodSplat/T_Splatter_073.png" id="8_5bt3b"]
+[ext_resource type="Texture2D" uid="uid://3xffgloa0krl" path="res://assets/textures/blood/bloodSplat/T_Splatter_074.png" id="9_tiryh"]
+[ext_resource type="Texture2D" uid="uid://cq4hkdulfticp" path="res://assets/textures/blood/bloodSplat/T_Splatter_075.png" id="10_mrbtf"]
+[ext_resource type="Texture2D" uid="uid://br5g0xv2eict6" path="res://assets/textures/blood/bloodSplat/T_Splatter_076.png" id="11_ej6ce"]
+[ext_resource type="Texture2D" uid="uid://bmk0t5ov3lco3" path="res://assets/textures/blood/bloodSplat/T_Splatter_077.png" id="12_80ser"]
+[ext_resource type="Texture2D" uid="uid://bwsw4apa2n084" path="res://assets/textures/blood/bloodSplat/T_Splatter_078.png" id="13_mjrd1"]
 
 [sub_resource type="GDScript" id="GDScript_xai0k"]
 resource_name = "bloodSplatHandler"
@@ -11,17 +22,17 @@ class_name bloodSplatHandler
 var growSpeed : float = 24.0
 var maxSize : float = 0.4
 var defaultBloodSize : Vector3 = Vector3(0.3,0.3,0.3)
-var bloodTextures : Array = [\"res://assets/textures/blood/bloodSplat/blood1.png\",\"res://assets/textures/blood/bloodSplat/blood2.png\",\"res://assets/textures/blood/bloodSplat/blood3.png\",\"res://assets/textures/blood/bloodSplat/blood4.png\"]
-var bloodNormals : Array = [\"res://assets/textures/blood/bloodSplat/blood1_n.png\",\"res://assets/textures/blood/bloodSplat/blood2_n.png\",\"res://assets/textures/blood/bloodSplat/blood3_n.png\",\"res://assets/textures/blood/bloodSplat/blood4_n.png\"]
+@export var bloodTextures : Array[Texture2D] = []
+#var bloodNormals : Array = [\"res://assets/textures/blood/bloodSplat/blood1_n.png\",\"res://assets/textures/blood/bloodSplat/blood2_n.png\",\"res://assets/textures/blood/bloodSplat/blood3_n.png\",\"res://assets/textures/blood/bloodSplat/blood4_n.png\"]
 # Called when the node enters the scene tree for the first time.
 func _ready()->void:
 	var timer = get_tree().create_timer(UserConfig.game_decal_remove_time)
 	timer.timeout.connect(queue_free)
-	maxSize = randf_range(0.1,0.5)
+	maxSize = randf_range(defaultBloodSize.x,0.8)
 	var textureInt = randi_range(0,bloodTextures.size()-1)
-	splatDecal.texture_albedo = load(bloodTextures[textureInt])
-	splatDecal.texture_normal = load(bloodNormals[textureInt])
-	splatDecal.size = Vector3(0.1,0.1,0.1)
+	splatDecal.texture_albedo = bloodTextures[textureInt]
+	#splatDecal.texture_normal = load(bloodNormals[textureInt])
+	splatDecal.size = defaultBloodSize
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta)->void:
 	if visible:
@@ -40,12 +51,11 @@ func _on_visible_on_screen_notifier_3d_screen_exited():
 [node name="decal" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
 script = SubResource("GDScript_xai0k")
+bloodTextures = Array[Texture2D]([ExtResource("1_3l6hn"), ExtResource("2_t3m5m"), ExtResource("3_01s3m"), ExtResource("4_6tdj2"), ExtResource("5_2rcag"), ExtResource("6_6ytpf"), ExtResource("7_81e7q"), ExtResource("8_5bt3b"), ExtResource("9_tiryh"), ExtResource("10_mrbtf"), ExtResource("11_ej6ce"), ExtResource("12_80ser"), ExtResource("13_mjrd1")])
 
 [node name="bloodSplat1" type="Decal" parent="." groups=["bloodDecal"]]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
 size = Vector3(0.3, 0.3, 0.3)
-texture_albedo = ExtResource("1_4ubn2")
-texture_normal = ExtResource("2_g1dl4")
 cull_mask = 1048551
 
 [node name="visibleOnScreenEnabler3d" type="VisibleOnScreenEnabler3D" parent="."]

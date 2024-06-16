@@ -11,7 +11,8 @@ script/source = "extends Control
 
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func _ready()->void:
+	musicManager.change_song_to(null)
 	$textureRect.modulate = Color.TRANSPARENT
 	await get_tree().process_frame
 	$AnimationPlayer.play(\"logostart\")
@@ -19,11 +20,11 @@ func _ready():
 	await Fade.fade_out(0.2, Color(0,0,0,1),\"GradientVertical\",false,true).finished
 	get_tree().change_scene_to_file(\"res://assets/scenes/menu/menu.tscn\")
 
-func _process(delta):
+func _process(delta)->void:
 	$textureRect.modulate = lerp($textureRect.modulate,Color.WHITE,0.8*delta)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _input(event):
+func _input(event)->void:
 	if Input.is_action_just_pressed(\"gLeftClick\"):
 		$AnimationPlayer.stop()
 		$sound.stop()
@@ -277,6 +278,7 @@ texture = ExtResource("1_jxbia")
 expand_mode = 4
 
 [node name="textureRect" type="TextureRect" parent="."]
+visible = false
 modulate = Color(1, 1, 1, 0)
 layout_mode = 1
 anchors_preset = 1

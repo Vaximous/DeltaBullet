@@ -102,10 +102,11 @@ func duplicate_node() -> void:
 
 func recycle_pooled() -> Node:
 	#Get first node that is ready (outside of tree)
-	for node in dup_pool:
-		if node.is_inside_tree():
-			continue
-		return node
+	if dup_pool != null:
+		for node in dup_pool:
+			if node.is_inside_tree() and node != null:
+				continue
+			return node
 	#No available nodes found
 	if expand_pool_when_empty:
 		var new_dup = get_parent().duplicate()

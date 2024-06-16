@@ -206,11 +206,11 @@ func fire()->void:
 
 		for b in weaponResource.weaponShots:
 			currentAmmo -= weaponResource.ammoConsumption
-			var bullet = createMuzzle()
-			if weaponResource.weaponShots > 1:
-				#randomize the muzzle pos?
-				bullet.position.x += randf_range(-0.09,0.09)
-				bullet.position.y += randf_range(-0.05,0.05)
+			#var bullet = createMuzzle()
+			#if weaponResource.weaponShots > 1:
+				##randomize the muzzle pos?
+				#bullet.position.x += randf_range(-0.09,0.09)
+				#bullet.position.y += randf_range(-0.05,0.05)
 
 			if shot_cast != null:
 				spawnProjectile(shot_cast)
@@ -228,18 +228,24 @@ func fire()->void:
 
 func spawnProjectile(raycaster : RayCast3D) -> void:
 	print(raycaster.get_path())
+	var bulletTrail : BulletTrail
+	if weaponResource.useBulletTrail:
+		bulletTrail = weaponResource.defaultBulletTrail.instantiate()
 	var p : Projectile = projectile.instantiate() as Projectile
 
 	var ray_target_point := get_hit_target(raycaster)
 
 	p.projectile_owner = self
-	gameManager.world.add_child(p)
+	gameManager.world.worldMisc.add_child(p)
 	p.global_transform.origin = muzzlePoint.global_transform.origin
 	p.add_exception(weaponOwner)
 	for hitbox in weaponOwner.getAllHitboxes():
 		p.add_exception(hitbox)
 	print("%s == %s : %s" % [raycaster.get_collision_point(), ray_target_point, raycaster.get_collision_point() == ray_target_point])
 	p.velocity = -(muzzlePoint.global_transform.origin - ray_target_point).normalized() * weaponResource.bulletSpeed
+	if bulletTrail != null:
+		gameManager.world.worldMisc.add_child(bulletTrail)
+		bulletTrail.initTrail(muzzlePoint.global_position, ray_target_point)
 	return
 
 

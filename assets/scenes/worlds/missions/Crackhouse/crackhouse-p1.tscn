@@ -44,15 +44,7 @@ script/source = "extends Node
 @onready var beginningTrigger = $\"../pawnTrigger\"
 @onready var cam1marker = $\"../../marker3d\"
 # Called when the node enters the scene tree for the first time.
-func _ready():
-	beginningTrigger.triggerActivated.connect(startBeginning)
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
-func startBeginning():
+func startBeginning()->void:
 	gameManager.disablePlayer()
 	gameManager.activeCamera.hud.hudEnabled = false
 	var cutsceneCam : CutsceneCamera = gameManager.create_dialogue_camera()
@@ -538,7 +530,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 53.8851, 1.07907, 24.8223)
 
 [node name="pawnTrigger" parent="Misc/Triggers" index="0" instance=ExtResource("13_gmp2x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.81834, 0.600162, 35.9415)
-collision_layer = 0
+collision_layer = 8
+collision_mask = 9
 
 [node name="collisionShape3d" type="CollisionShape3D" parent="Misc/Triggers/pawnTrigger" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4068, -0.213013)
@@ -549,3 +542,5 @@ script = SubResource("GDScript_ipreh")
 
 [node name="marker3d" type="Marker3D" parent="Misc" index="4"]
 transform = Transform3D(0.329582, 0.353965, -0.875263, -0.124736, 0.935259, 0.331258, 0.935851, 0, 0.352397, 12.5989, 2.03279, 17.5056)
+
+[connection signal="triggerActivated" from="Misc/Triggers/pawnTrigger" to="Misc/Triggers/node" method="startBeginning"]

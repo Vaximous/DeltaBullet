@@ -1,26 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://dbqnhh5btxgqk"]
+[gd_scene load_steps=3 format=3 uid="uid://dbqnhh5btxgqk"]
 
 [ext_resource type="Script" path="res://assets/entities/emitters/bloodDroplet/bloodDroplets.gd" id="1_stiwh"]
-[ext_resource type="Texture2D" uid="uid://bimk8xiwemuh7" path="res://assets/textures/blood/realBloodSheets/Blood_1-2.png" id="2_cx5xv"]
-[ext_resource type="Texture2D" uid="uid://dvovreh6l13lj" path="res://assets/textures/blood/realBloodSheets/Blood_1-2_n.png" id="3_bio28"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_7wm2j"]
 radius = 0.0463136
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tpnov"]
-transparency = 1
-albedo_color = Color(0.270588, 0, 0, 1)
-albedo_texture = ExtResource("2_cx5xv")
-albedo_texture_msdf = true
-normal_enabled = true
-normal_texture = ExtResource("3_bio28")
-billboard_mode = 3
-billboard_keep_scale = true
-particles_anim_h_frames = 1
-particles_anim_v_frames = 1
-particles_anim_loop = false
-
-[sub_resource type="ImmediateMesh" id="ImmediateMesh_8jdrh"]
 
 [node name="bloodDroplet" type="RigidBody3D"]
 collision_layer = 4
@@ -33,21 +16,6 @@ script = ExtResource("1_stiwh")
 
 [node name="collisionShape3d" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_7wm2j")
-
-[node name="sprite3d" type="Sprite3D" parent="."]
-transform = Transform3D(0.08, 0, 0, 0, 0.08, 0, 0, 0, 0.08, 0, 0, 0)
-visible = false
-material_override = SubResource("StandardMaterial3D_tpnov")
-modulate = Color(0.270588, 0.0666667, 0.0313726, 1)
-billboard = 2
-texture = ExtResource("2_cx5xv")
-hframes = 4
-vframes = 4
-frame = 6
-
-[node name="meshInstance3d" type="MeshInstance3D" parent="."]
-visible = false
-mesh = SubResource("ImmediateMesh_8jdrh")
 
 [node name="visibleOnScreenEnabler3d" type="VisibleOnScreenNotifier3D" parent="."]
 

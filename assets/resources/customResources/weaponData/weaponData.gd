@@ -3,6 +3,7 @@ class_name ItemData
 
 @export_category("Weapon")
 @export_subgroup("Behavior")
+@export var useBulletTrail : bool = true
 var defaultBulletTrail = load("res://assets/entities/bulletTrail/bulletTrail.tscn")
 @export_subgroup("Stats")
 ## Can this weapon be reloaded?

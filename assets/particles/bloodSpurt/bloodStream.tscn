@@ -49,7 +49,7 @@ var remove = false
 var stopbleeding = false
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func _ready()->void:
 	randomize()
 	$stopSpurtTimer.wait_time = randf_range(5,25)
 	$timer.wait_time = randf_range(3,10)
@@ -60,7 +60,7 @@ func _ready():
 	self.process_material.initial_velocity_min = randf_range(1,4)
 	self.process_material.initial_velocity_max = randf_range(self.process_material.initial_velocity_min,5)
 	self.lifetime = randf_range(0.5,2)
-func _process(delta):
+func _process(delta)->void:
 	if Engine.get_frames_per_second() < 60:
 		queue_free()
 

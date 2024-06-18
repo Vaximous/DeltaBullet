@@ -1,16 +1,22 @@
-[gd_scene load_steps=18 format=3 uid="uid://bgy0ycoxec6p6"]
+[gd_scene load_steps=25 format=3 uid="uid://bgy0ycoxec6p6"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_rrsmc"]
 [ext_resource type="PackedScene" uid="uid://boicvk4qeqmbd" path="res://assets/entities/pawnSpawn/pawnSpawn.tscn" id="2_d45q2"]
 [ext_resource type="Script" path="res://assets/resources/customResources/worldData/worldData.gd" id="2_yse5r"]
 [ext_resource type="Texture2D" uid="uid://mbsy6cv3jimj" path="res://assets/scenes/worlds/debug/particletest/loading.png" id="3_vbqlr"]
-[ext_resource type="Texture2D" uid="uid://cl5igunl62bm" path="res://assets/textures/Developer_Textures/Orange/texture_04.png" id="3_y1emq"]
 [ext_resource type="PackedScene" uid="uid://wtqya32cwdbk" path="res://assets/entities/weapons/Beretta/Beretta.tscn" id="4_c40k5"]
 [ext_resource type="PackedScene" uid="uid://dbqnhh5btxgqk" path="res://assets/entities/emitters/bloodDroplet/bloodDroplets.tscn" id="6_06gf1"]
 [ext_resource type="PackedScene" uid="uid://dsxt078giobel" path="res://assets/entities/weapons/Uzi/Uzi.tscn" id="6_tgu38"]
 [ext_resource type="PackedScene" uid="uid://bn07wnk5k005c" path="res://assets/entities/weapons/HoneyBadger/honeybadger.tscn" id="7_q40r8"]
 [ext_resource type="CompressedTexture3D" uid="uid://sr0kr5d88j54" path="res://assets/textures/misc/neutral-lut.png" id="8_5qwju"]
+[ext_resource type="PackedScene" uid="uid://boh343kalvj5i" path="res://assets/entities/weapons/Revolver/Revolver.tscn" id="8_uwo5p"]
 [ext_resource type="Texture2D" uid="uid://d0f0crtwpmoka" path="res://assets/textures/panoramas/panoramatest1.png" id="9_6to67"]
+[ext_resource type="Texture2D" uid="uid://c8sgb4evkx2ve" path="res://assets/textures/urban/Floor-02-Color.tga" id="11_h2hbs"]
+[ext_resource type="Texture2D" uid="uid://bg3wgise5f8xg" path="res://assets/textures/urban/Floor-02-Specular.tga" id="12_1iy1t"]
+[ext_resource type="Texture2D" uid="uid://dweyx5ea4rrbf" path="res://assets/textures/urban/Brick-Wall-05-Color.tga" id="12_lv231"]
+[ext_resource type="Texture2D" uid="uid://coqyj540ut06d" path="res://assets/textures/urban/Brick-Wall-05-Specular.tga" id="13_1h0c2"]
+[ext_resource type="Texture2D" uid="uid://dqqed6ax6wm71" path="res://assets/textures/urban/Floor-02-Normal.tga" id="13_tjvye"]
+[ext_resource type="Texture2D" uid="uid://budtgret7s7vx" path="res://assets/textures/urban/Brick-Wall-05-Normal.tga" id="14_54g3l"]
 
 [sub_resource type="Resource" id="Resource_ko4a2"]
 script = ExtResource("2_yse5r")
@@ -55,11 +61,26 @@ adjustment_saturation = 1.15
 adjustment_color_correction = ExtResource("8_5qwju")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cad6t"]
-albedo_texture = ExtResource("3_y1emq")
-clearcoat_enabled = true
+albedo_texture = ExtResource("11_h2hbs")
+metallic = 1.0
+metallic_texture = ExtResource("12_1iy1t")
+normal_enabled = true
+normal_texture = ExtResource("13_tjvye")
 clearcoat_roughness = 0.22
+uv1_scale = Vector3(0.35, 0.35, 0.35)
 uv1_triplanar = true
 uv1_world_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2q1u2"]
+albedo_texture = ExtResource("12_lv231")
+metallic = 1.0
+metallic_texture = ExtResource("13_1h0c2")
+normal_enabled = true
+normal_scale = 1.2
+normal_texture = ExtResource("14_54g3l")
+clearcoat_roughness = 0.22
+uv1_scale = Vector3(0.35, 0.35, 0.35)
+uv1_triplanar = true
 
 [sub_resource type="GDScript" id="GDScript_2frmb"]
 resource_name = "bloodemitter"
@@ -92,11 +113,15 @@ worldData = SubResource("Resource_ko4a2")
 [node name="pawnSpawn" parent="Spawns/playerSpawns" index="0" instance=ExtResource("2_d45q2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.71872, 0.5, 5.91885)
 pawnType = 0
-pawnWeapons = Array[PackedScene]([ExtResource("4_c40k5"), ExtResource("6_tgu38"), ExtResource("7_q40r8")])
+pawnWeapons = Array[PackedScene]([ExtResource("4_c40k5"), ExtResource("6_tgu38"), ExtResource("7_q40r8"), ExtResource("8_uwo5p")])
 
 [node name="pawnSpawn" parent="Spawns/pawnSpawns" index="0" instance=ExtResource("2_d45q2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.34917, 0.5, 6.68547)
 pawnName = "Barf"
+
+[node name="pawnSpawn2" parent="Spawns/pawnSpawns" index="1" instance=ExtResource("2_d45q2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.94332, 4.84833, 8.11038)
+pawnName = "Barf 2"
 
 [node name="worldEnvironment" parent="Environment" index="0"]
 environment = SubResource("Environment_4ygah")
@@ -114,7 +139,7 @@ material = SubResource("StandardMaterial3D_cad6t")
 transform = Transform3D(1, 0, 0, 0, 0.991079, -0.133277, 0, 0.133277, 0.991079, 1.99634, 2.02969, 8.06425)
 use_collision = true
 size = Vector3(9.4203, 5.10272, 0.538208)
-material = SubResource("StandardMaterial3D_cad6t")
+material = SubResource("StandardMaterial3D_2q1u2")
 
 [node name="bloodDroplet" parent="Props" index="0" instance=ExtResource("6_06gf1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.92651, 2.01259, 4.67099)

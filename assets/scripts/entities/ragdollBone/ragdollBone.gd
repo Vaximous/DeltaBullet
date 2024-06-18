@@ -117,6 +117,7 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 						particle.amount = randi_range(25,75)
 						joint_type = 0
 						bounce = 0.25
+						createBlood()
 				return
 			elif contactForce > mediumImpactThreshold:
 				audioStreamPlayer.stream = mediumImpactSounds
@@ -128,6 +129,7 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 						var particle = globalParticles.createParticle("BloodSpurt",self.position)
 						particle.rotation = self.rotation
 						particle.amount = randi_range(25,40)
+						createBlood()
 				return
 			elif contactForce > lightImpactThreshold:
 				audioStreamPlayer.stream = lightImpactSounds
@@ -140,6 +142,7 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 						await get_tree().process_frame
 						var particle = globalParticles.createParticle("BloodSpurt",self.position)
 						particle.rotation = self.rotation
+						createBlood()
 			return
 
 #func _physics_process(delta)->void:
@@ -163,3 +166,9 @@ func hit(dmg, dealer=null, hitImpulse:Vector3 = Vector3.ZERO, hitPoint:Vector3 =
 
 func hookes_law(displacement: Vector3, current_velocity: Vector3, stiffness: float, damping: float) -> Vector3:
 	return (stiffness * displacement) - (damping * current_velocity)
+
+func createBlood()->void:
+	var droplets : PackedScene = load("res://assets/entities/emitters/bloodDroplet/bloodDroplets.tscn")
+	var blood = droplets.instantiate()
+	gameManager.world.worldMisc.add_child(blood)
+	blood.global_position = global_position

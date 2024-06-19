@@ -79,6 +79,18 @@ var aimFOV
 		if cameraData:
 			zoomAmount = cameraData.zoomAmount
 
+
+var controllerVector = Vector2.ZERO:
+	set(value):
+		controllerVector = value.normalized()
+		if controllerVector != Vector2.ZERO:
+			motionX = rad_to_deg(-controllerVector.x * gameManager.controllerSens)
+			motionY = rad_to_deg(-controllerVector.y * gameManager.controllerSens)
+			castLerp = Vector3(motionY* recoilLookSpeed+0.01,motionX* recoilLookSpeed,0)
+			camPivot.rotation_degrees.y += motionX
+			vertical.rotation_degrees.x += motionY
+			#Lock Cam
+			vertical.rotation.x = clamp(vertical.rotation.x, deg_to_rad(-88), deg_to_rad(88))
 var defaultZoomAmount : float = 25.0
 var defaultZoomSpeed : float = 16.0
 @export var zoomSpeed : float = 11.0:
@@ -119,6 +131,8 @@ func _input(_event)->void:
 
 
 func _physics_process(delta)->void:
+	controllerVector.y = Input.get_action_strength("gLookDown") - Input.get_action_strength("gLookUp")
+	controllerVector.x = Input.get_action_strength("gLookRight") - Input.get_action_strength("gLookLeft")
 	#Interact Cast HUD
 	if !isFreecam:
 		interactCheck()
@@ -416,3 +430,6 @@ func interactCheck()->void:
 
 func _exit_tree()->void:
 	gameManager.activeCamera = null
+
+
+

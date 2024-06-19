@@ -50,6 +50,7 @@ stream_2/weight = 1.0
 script = SubResource("GDScript_3c2w4")
 
 [node name="decal" type="Decal" parent="."]
+layers = 24
 size = Vector3(0.132018, 0.15534, 0.117771)
 texture_albedo = ExtResource("1_0wp7x")
 

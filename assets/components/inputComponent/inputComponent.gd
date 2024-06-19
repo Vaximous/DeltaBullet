@@ -7,6 +7,7 @@ signal actionHeldDown(action:InputEventKey)
 signal mouseButtonPressed(button:InputEventMouseButton)
 signal mouseButtonHeld(button:InputEventMouseButton)
 signal onMouseMotion(motion:InputEventMouseMotion)
+signal onJoyMotion(motion:InputEventJoypadMotion)
 
 #Variables
 ##Enables the movement keys to be emitted
@@ -16,6 +17,12 @@ var mouseActionsEnabled:bool = true
 var mouseButtonInput:InputEventMouseButton = InputEventMouseButton.new()
 var inputDir = Vector3(Input.get_action_strength("gMoveRight") - Input.get_action_strength("gMoveLeft"), 0, Input.get_action_strength("gMoveBackward") - Input.get_action_strength("gMoveForward"))
 var controllingPawn
+
+func _ready()->void:
+	InputMap.action_set_deadzone("gLookUp",gameManager.deadzone)
+	InputMap.action_set_deadzone("gLookDown",gameManager.deadzone)
+	InputMap.action_set_deadzone("gLookLeft",gameManager.deadzone)
+	InputMap.action_set_deadzone("gLookURight",gameManager.deadzone)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta)->void:
@@ -77,8 +84,8 @@ func _unhandled_input(event)->void:
 			if Dialogic.current_timeline == null:
 				if event is InputEventMouseMotion:
 					emit_signal("onMouseMotion", event)
-				elif event is InputEventJoypadMotion:
-					pass
+				if event is InputEventJoypadMotion:
+					emit_signal("onJoyMotion", event)
 
 				if event.is_action_pressed("gMwheelUp"):
 					#emit_signal("mouseButtonPressed", event.button_index)

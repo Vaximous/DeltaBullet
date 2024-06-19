@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://bgy0ycoxec6p6"]
+[gd_scene load_steps=28 format=3 uid="uid://bgy0ycoxec6p6"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_rrsmc"]
 [ext_resource type="PackedScene" uid="uid://boicvk4qeqmbd" path="res://assets/entities/pawnSpawn/pawnSpawn.tscn" id="2_d45q2"]
@@ -17,6 +17,8 @@
 [ext_resource type="Texture2D" uid="uid://coqyj540ut06d" path="res://assets/textures/urban/Brick-Wall-05-Specular.tga" id="13_1h0c2"]
 [ext_resource type="Texture2D" uid="uid://dqqed6ax6wm71" path="res://assets/textures/urban/Floor-02-Normal.tga" id="13_tjvye"]
 [ext_resource type="Texture2D" uid="uid://budtgret7s7vx" path="res://assets/textures/urban/Brick-Wall-05-Normal.tga" id="14_54g3l"]
+[ext_resource type="PackedScene" uid="uid://dend7ate7mq6e" path="res://assets/entities/bulletHoles/default/BulletHole.tscn" id="17_5q6o5"]
+[ext_resource type="Script" path="res://assets/resources/PhysicsMaterials/DB_PhysicsMaterial.gd" id="18_y1uao"]
 
 [sub_resource type="Resource" id="Resource_ko4a2"]
 script = ExtResource("2_yse5r")
@@ -82,6 +84,13 @@ clearcoat_roughness = 0.22
 uv1_scale = Vector3(0.35, 0.35, 0.35)
 uv1_triplanar = true
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_t6kk3"]
+resource_name = "FleshPhysicsMaterial"
+script = ExtResource("18_y1uao")
+penetration_resistance = 0.0
+penetration_entry_cost = 0.0
+bullet_hole = ExtResource("17_5q6o5")
+
 [sub_resource type="GDScript" id="GDScript_2frmb"]
 resource_name = "bloodemitter"
 script/source = "extends CSGBox3D
@@ -140,6 +149,7 @@ transform = Transform3D(1, 0, 0, 0, 0.991079, -0.133277, 0, 0.133277, 0.991079, 
 use_collision = true
 size = Vector3(9.4203, 5.10272, 0.538208)
 material = SubResource("StandardMaterial3D_2q1u2")
+metadata/physics_material_override = SubResource("PhysicsMaterial_t6kk3")
 
 [node name="bloodDroplet" parent="Props" index="0" instance=ExtResource("6_06gf1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.92651, 2.01259, 4.67099)

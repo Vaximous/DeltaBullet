@@ -32,6 +32,7 @@ func _ready() -> void:
 			blood.apply_impulse(Vector3(randf_range(-normal.x,normal.x),randf_range(-normal.y,normal.y),randf_range(-normal.z,normal.z)) * randf_range(minDropletForce,maxDropletForce))
 
 
+
 func _on_blood_spurt_finished()->void:
 	bloodSpurt.queue_free()
 "

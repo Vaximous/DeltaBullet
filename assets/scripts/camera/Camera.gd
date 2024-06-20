@@ -85,7 +85,7 @@ var controllerVector = Vector2.ZERO:
 		controllerVector = value.normalized()
 		if controllerVector != Vector2.ZERO:
 			motionX = rad_to_deg(-controllerVector.x * gameManager.controllerSens)
-			motionY = rad_to_deg(-controllerVector.y * gameManager.controllerSens)
+			motionY = rad_to_deg(controllerVector.y * gameManager.controllerSens)
 			castLerp = Vector3(motionY* recoilLookSpeed+0.01,motionX* recoilLookSpeed,0)
 			camPivot.rotation_degrees.y += motionX
 			vertical.rotation_degrees.x += motionY
@@ -131,8 +131,7 @@ func _input(_event)->void:
 
 
 func _physics_process(delta)->void:
-	controllerVector.y = Input.get_action_strength("gLookDown") - Input.get_action_strength("gLookUp")
-	controllerVector.x = Input.get_action_strength("gLookRight") - Input.get_action_strength("gLookLeft")
+	controllerVector = Input.get_vector("gLookLeft","gLookRight","gLookDown","gLookUp",gameManager.deadzone)
 	#Interact Cast HUD
 	if !isFreecam:
 		interactCheck()

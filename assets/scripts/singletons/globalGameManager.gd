@@ -19,9 +19,9 @@ var pawnDebug : bool = false
 var userDir = DirAccess.open("user://")
 
 #Ingame
-var controllerSens : float = 0.006
+var controllerSens : float = 0.015
 var mouseSens : float = 0.0020
-var deadzone : float = 0.2
+var deadzone : float = 0.1
 var defaultFOV : int = 90
 
 #World

@@ -6,6 +6,6 @@
 [resource]
 resource_name = "FleshPhysicsMaterial"
 script = ExtResource("2_vopb5")
-penetration_resistance = 50.0
-penetration_entry_cost = 50.0
+penetration_resistance = 25.0
+penetration_entry_cost = 25.0
 bullet_hole = ExtResource("1_7j7ng")

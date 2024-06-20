@@ -106,7 +106,7 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 	contactCount = state.get_contact_count()
 	if audioCooldown > 0:
 			return
-	print(bonePhysics)
+	#print(bonePhysics)
 	if state.get_contact_count() > 0:
 		if exclusionArray.has(state.get_contact_collider(0)):
 			return

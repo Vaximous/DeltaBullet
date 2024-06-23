@@ -1,17 +1,18 @@
 [gd_scene load_steps=9 format=3 uid="uid://b1x2t2na1bc2b"]
 
 [ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="1_cg2cc"]
+[ext_resource type="Texture2D" uid="uid://cchng1uogx7qf" path="res://assets/textures/misc/logo.png" id="3_hv6kb"]
 [ext_resource type="PackedScene" uid="uid://wncyofb1f8i7" path="res://assets/scenes/ui/options/optionsMenu.tscn" id="4_fyhf6"]
 [ext_resource type="Texture2D" uid="uid://dc3fkfugwvtla" path="res://assets/textures/misc/company-logo (1).png" id="5_bto6s"]
 [ext_resource type="PackedScene" uid="uid://ba0s8u6mtjxns" path="res://assets/scenes/menu/menuButton.tscn" id="5_nxhqu"]
-[ext_resource type="Texture2D" uid="uid://crli285hmp5iv" path="res://assets/textures/misc/one-stick-army.png" id="6_gqa0f"]
 
 [sub_resource type="GDScript" id="GDScript_xob6c"]
 script/source = "extends Control
-@onready var verSeperator = $verSep
-@onready var versionLabel = $versionLabel
-@onready var optionsMenu = $Options
-@onready var buttonHolder = $buttonHolder
+@onready var gameLogo : TextureRect = $gameLogo
+@onready var verSeperator : HSeparator = $verSep
+@onready var versionLabel : Label = $versionLabel
+@onready var optionsMenu : Control = $Options
+@onready var buttonHolder : Control = $buttonHolder
 var anykey = false
 var pressed = false
 # Called when the node enters the scene tree for the first time.
@@ -20,10 +21,12 @@ func _ready()->void:
 
 func _process(delta)->void:
 	if optionsMenu.visible:
+		gameLogo.modulate = lerp(gameLogo.modulate,Color(1, 1, 1, 0),12*delta)
 		versionLabel.modulate = lerp(versionLabel.modulate,Color(1, 1, 1, 0),12*delta)
 		buttonHolder.modulate = lerp(buttonHolder.modulate,Color(1, 1, 1, 0),12*delta)
 		verSeperator.modulate = lerp(versionLabel.modulate,Color(1, 1, 1, 0),12*delta)
 	else:
+		gameLogo.modulate = lerp(gameLogo.modulate,Color(1, 1, 1, 1),12*delta)
 		verSeperator.modulate = lerp(verSeperator.modulate,Color(1, 1, 1, 1),12*delta)
 		versionLabel.modulate = lerp(versionLabel.modulate,Color(1, 1, 1, 1),12*delta)
 		buttonHolder.modulate = lerp(buttonHolder.modulate,Color(1, 1, 1, 1),12*delta)
@@ -94,16 +97,14 @@ texture = ExtResource("5_bto6s")
 expand_mode = 1
 
 [node name="gameLogo" type="TextureRect" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_bottom = 0.43
-offset_left = 46.0
-offset_top = 70.0
-offset_right = 419.0
-offset_bottom = -14.0
-texture = ExtResource("6_gqa0f")
-expand_mode = 1
+offset_left = 92.0
+offset_top = 32.0
+offset_right = 948.0
+offset_bottom = -4.0
+texture = ExtResource("3_hv6kb")
 
 [node name="buttonHolder" type="Control" parent="."]
 layout_mode = 1

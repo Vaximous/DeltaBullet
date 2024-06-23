@@ -159,10 +159,10 @@ func applyShadowFilterQuality() -> void:
 func applyShadowQuality() -> void:
 	match graphics_shadow_quality:
 		-1:
-			RenderingServer.directional_shadow_atlas_set_size(64,true)
-			RenderingServer.viewport_set_positional_shadow_atlas_size(get_viewport().get_viewport_rid(),64,true)
-			ProjectSettings.set_setting("rendering/lights_and_shadows/directional_shadow/size",64)
-			ProjectSettings.set_setting("rendering/lights_and_shadows/positional_shadow/atlas_size",64)
+			RenderingServer.directional_shadow_atlas_set_size(16,true)
+			RenderingServer.viewport_set_positional_shadow_atlas_size(get_viewport().get_viewport_rid(),16,true)
+			ProjectSettings.set_setting("rendering/lights_and_shadows/directional_shadow/size",16)
+			ProjectSettings.set_setting("rendering/lights_and_shadows/positional_shadow/atlas_size",16)
 		0:
 			RenderingServer.directional_shadow_atlas_set_size(256,true)
 			RenderingServer.viewport_set_positional_shadow_atlas_size(get_viewport().get_viewport_rid(),256,true)

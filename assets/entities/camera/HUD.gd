@@ -14,7 +14,6 @@ signal interactionFound
 @onready var healthTexture = $healthTexture
 var slidingCrosshairPos : Vector2 = Vector2.ZERO
 @export var hudEnabled = true
-
 @onready var healthBar = $hpBar
 @onready var fpsControl = $FPSCounter
 @onready var fpsLabel = $FPSCounter/label

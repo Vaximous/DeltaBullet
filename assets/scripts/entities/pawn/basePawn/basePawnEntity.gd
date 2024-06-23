@@ -424,8 +424,6 @@ func checkComponents():
 				raycaster = _cam.camCast
 				add_to_group("Player")
 
-
-
 	if velocityComponent == null or healthComponent == null:
 		return null
 	else:
@@ -554,7 +552,6 @@ func moveClothesToRagdoll(moveto) -> void:
 		clothes.reparent(moveto)
 		clothes.remapSkeleton()
 	return
-
 
 func checkClothingHider() -> void:
 	for clothes in clothingHolder.get_children():

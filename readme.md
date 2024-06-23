@@ -2,7 +2,9 @@
 
 ![Bullet plotting to take his city](https://github.com/Vaximous/DeltaBullet/blob/main/.src/design/db0001.png)
 
-Delta Bullet is a violent third person action shooter in which you take the role of "Bullet". The best contract killer in the underground business, taking up any available mission to further his own goal of revenge after being left for dead by a contractor in a gang-conspiracy that runs deeper than they could ever imagine.
+[Trello](https://trello.com/b/RC2LMNCn/delta-bullet)
+
+**Delta Bullet** is a violent third person action shooter in which you take the role of "Bullet". The best contract killer in the underground business, taking up any available mission to further his own goal of revenge after being left for dead by a contractor in a gang-conspiracy that runs deeper than they could ever imagine.
 
 Delta Bullet features a whole host of weapons from your simple handguns to power crushing shotguns all the way to military grade arsenal like Miniguns and Rocket Launchers all laundered through various shady channels and into your hands
 

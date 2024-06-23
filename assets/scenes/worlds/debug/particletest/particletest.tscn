@@ -160,11 +160,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.34917, 0.5, 6.68547)
 pawnName = "Barf"
 
 [node name="pawnSpawn2" parent="Spawns/pawnSpawns" index="1" instance=ExtResource("2_d45q2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.94332, 4.84833, 8.11038)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.94332, 6.1694, 8.11038)
 pawnName = "Barf 2"
 
 [node name="worldEnvironment" parent="Environment" index="0"]
 environment = SubResource("Environment_4ygah")
+
+[node name="reflectionProbe" parent="Environment" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.2557, 0, 29.8013)
+size = Vector3(258.56, 20, 202.452)
 
 [node name="directionalLight3d" parent="Environment" index="2"]
 transform = Transform3D(-0.285921, 0.133752, -0.948873, -0.0789652, 0.983554, 0.162435, 0.954994, 0.121372, -0.270657, 0.0669081, 2.06023, 0)
@@ -176,9 +180,9 @@ size = Vector3(258, 1, 199)
 material = SubResource("StandardMaterial3D_cad6t")
 
 [node name="csgBox3d2" type="CSGBox3D" parent="Geometry" index="1"]
-transform = Transform3D(1, 0, 0, 0, 0.991079, -0.133277, 0, 0.133277, 0.991079, 1.99634, 2.02969, 8.06425)
+transform = Transform3D(1, 0, 0, 0, 0.991079, -0.133277, 0, 0.133277, 0.991079, 1.99634, 2.81046, 8.16924)
 use_collision = true
-size = Vector3(9.4203, 5.10272, 0.538208)
+size = Vector3(9.4203, 6.67831, 0.538208)
 material = SubResource("StandardMaterial3D_2q1u2")
 metadata/physics_material_override = SubResource("PhysicsMaterial_t6kk3")
 

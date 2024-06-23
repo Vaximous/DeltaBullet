@@ -195,7 +195,9 @@ var currentItem = null
 		currentItem = itemInventory[currentItemIndex]
 		if !currentItem == null:
 			emit_signal("itemChanged")
+			currentItem.isAiming = false
 			equipWeapon(currentItemIndex)
+			currentItem.isAiming = false
 			if currentItem.weaponResource != null:
 				await get_tree().process_frame
 				if currentItem.weaponResource.leftHandParent:
@@ -315,12 +317,12 @@ func _physics_process(delta) -> void:
 						currentItem.isAiming = false
 				if isMoving and isRunning and is_on_floor() and !meshLookAt and !currentItem.weaponResource.useWeaponSprintAnim and !currentItem.isReloading and animationTree.active or currentItem == null:
 					animationTree.set("parameters/weaponBlend/blend_amount", lerpf(animationTree.get("parameters/weaponBlend/blend_amount"), 0, 4*delta))
-					animationTree.set("parameters/weaponBlend_Left_blend/blend_amount", lerpf(animationTree.get("parameters/weaponBlend_Left_blend/blend_amount"), 0, 12*delta))
+					animationTree.set("parameters/weaponBlend_Left_blend/blend_amount", lerpf(animationTree.get("parameters/weaponBlend_Left_blend/blend_amount"),animationTree.get("parameters/weaponBlend/blend_amount"),12*delta))
 				else:
 					animationTree.set("parameters/weaponBlend/blend_amount", lerpf(animationTree.get("parameters/weaponBlend/blend_amount"), 1, 12*delta))
 			else:
 				animationTree.set("parameters/weaponBlend/blend_amount", lerpf(animationTree.get("parameters/weaponBlend/blend_amount"), 0, 12*delta))
-				animationTree.set("parameters/weaponBlend_Left_blend/blend_amount", lerpf(animationTree.get("parameters/weaponBlend_Left_blend/blend_amount"), 0, 12*delta))
+				animationTree.set("parameters/weaponBlend_Left_blend/blend_amount", lerpf(animationTree.get("parameters/weaponBlend_Left_blend/blend_amount"),animationTree.get("parameters/weaponBlend/blend_amount"),12*delta))
 
 			#Mesh Rotation
 			doMeshRotation(delta)

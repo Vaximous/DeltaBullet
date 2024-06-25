@@ -54,12 +54,12 @@ func _on_credits_button_pressed()->void:
 	gameManager.notify_warn(\"Not yet implemented.\", 2, 10)
 "
 
-[sub_resource type="Gradient" id="Gradient_opr76"]
+[sub_resource type="Gradient" id="Gradient_qjgg7"]
 offsets = PackedFloat32Array(0, 0.5, 1)
 colors = PackedColorArray(0, 0, 0, 0.905882, 0.286275, 0.286275, 0.286275, 0, 1, 1, 1, 0)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_x7df6"]
-gradient = SubResource("Gradient_opr76")
+gradient = SubResource("Gradient_qjgg7")
 
 [node name="MenuUI" type="Control"]
 process_mode = 3
@@ -76,6 +76,7 @@ theme = ExtResource("1_cg2cc")
 script = SubResource("GDScript_xob6c")
 
 [node name="gradientBG" type="TextureRect" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

@@ -1,178 +1,511 @@
-[gd_scene load_steps=25 format=3 uid="uid://7hcwtpln33no"]
+[gd_scene load_steps=21 format=3 uid="uid://7hcwtpln33no"]
 
 [ext_resource type="Script" path="res://assets/scenes/ui/tabmenu/TabMenu.gd" id="1_3o718"]
 [ext_resource type="AudioStream" uid="uid://f2h70ga15l4e" path="res://assets/sounds/ui/notif1_new.wav" id="2_3qfkf"]
-[ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="2_bxlnm"]
-[ext_resource type="FontFile" uid="uid://xmwjvmqspojb" path="res://assets/fonts/Grand_Aventure_Text.otf" id="2_ivuvm"]
-[ext_resource type="Texture2D" uid="uid://b3q3bs8i806sf" path="res://assets/scenes/ui/tabmenu/icons/buttonMerged.png" id="3_4bmoa"]
+[ext_resource type="Texture2D" uid="uid://csrdyf3v7tg3s" path="res://assets/textures/menu/delta2_logo_vig.png" id="2_j6tow"]
 [ext_resource type="AudioStream" uid="uid://c7v7iev137c2t" path="res://assets/sounds/ui/notif2_new.wav" id="3_odpon"]
+[ext_resource type="Texture2D" uid="uid://504xj3pihqkf" path="res://assets/textures/menu/contracts.png" id="3_pd03a"]
+[ext_resource type="Texture2D" uid="uid://ccom8nj20lo6u" path="res://assets/textures/menu/loadout.png" id="4_1g34t"]
+[ext_resource type="Texture2D" uid="uid://em4yyeqrwqmj" path="res://assets/textures/menu/stats.png" id="5_nhyq3"]
 [ext_resource type="PackedScene" uid="uid://drgtawnawhikt" path="res://assets/scenes/ui/tabmenu/contractsScreen/contractsPanel.tscn" id="5_p5r15"]
 
-[sub_resource type="Gradient" id="Gradient_nujsh"]
-offsets = PackedFloat32Array(0, 0.0935961, 0.906404, 1)
-colors = PackedColorArray(0.0923971, 0.0923971, 0.092397, 1, 0.270222, 0.270222, 0.270222, 1, 0.435194, 0.435192, 0.43519, 1, 1, 1, 1, 0.14902)
+[sub_resource type="Shader" id="Shader_5k0jc"]
+code = "shader_type canvas_item;
+uniform vec4 color: source_color;
+uniform float multiplier = 0.2;
+uniform float softness = 3.0;
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_6h5st"]
-gradient = SubResource("Gradient_nujsh")
-fill_from = Vector2(1, 1)
+void fragment() {
+	float value = distance(UV,vec2(0.5));
+	COLOR = vec4(color.rgb,smoothstep(multiplier,softness,value));
+}
+"
 
-[sub_resource type="Gradient" id="Gradient_cnymy"]
-offsets = PackedFloat32Array(0, 0.093596, 0.821429, 1)
-colors = PackedColorArray(1, 0, 0.0117647, 0, 0.180392, 0, 0, 0, 0.286275, 0, 0, 1, 0.0941176, 0, 0, 1)
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6kk6m"]
+shader = SubResource("Shader_5k0jc")
+shader_parameter/color = Color(0, 0, 0, 1)
+shader_parameter/multiplier = 0.34
+shader_parameter/softness = 0.9
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_6q5ak"]
-gradient = SubResource("Gradient_cnymy")
-fill_from = Vector2(1, 1)
+[sub_resource type="Gradient" id="Gradient_opr76"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(0.20868, 1.51913e-07, 2.40654e-08, 0.905882, 0.555289, 0, 0.0122233, 0, 1, 1, 1, 0)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_pcktx"]
-atlas = ExtResource("3_4bmoa")
-region = Rect2(0, 0, 149, 31)
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_qqioy"]
+gradient = SubResource("Gradient_opr76")
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_4vb4a"]
-load_path = "res://.godot/imported/buttonMerged.png-91432e2a93b464425cfe3c7212e05b5e.bptc.ctex"
+[sub_resource type="Animation" id="Animation_e1pyl"]
+resource_name = "in"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(0.258816, 1),
+"update": 0,
+"values": [Vector2(-287, 0), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(0.258816, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = false
+tracks/2/path = NodePath(".:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.7),
+"transitions": PackedFloat32Array(0.183011, 0.965936),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../vignette:material:shader_parameter/multiplier")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.7),
+"transitions": PackedFloat32Array(0.176777, 1),
+"update": 0,
+"values": [0.9, 0.34]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("../blackBar:color")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(0.277393, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("../blackBar:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.241484, 1),
+"update": 0,
+"values": [Vector2(0, 911), Vector2(0, 848)]
+}
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_gs4ws"]
-atlas = SubResource("CompressedTexture2D_4vb4a")
-region = Rect2(0, 101, 149, 32)
+[sub_resource type="Animation" id="Animation_4k066"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-287, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../vignette:material:shader_parameter/multiplier")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.34]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("../blackBar:color")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("../blackBar:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 832)]
+}
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_th2o5"]
-atlas = ExtResource("3_4bmoa")
-region = Rect2(0, 68, 149, 32)
+[sub_resource type="Animation" id="Animation_ouy2n"]
+resource_name = "out"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(0.176777, 0.258816),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-287, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(0.176777, 0.258816),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../vignette:material:shader_parameter/multiplier")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(0.420448, 0.482968),
+"update": 0,
+"values": [0.35, 0.9]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../blackBar:color")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(0.287175, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../blackBar:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(0.143588, 1),
+"update": 0,
+"values": [Vector2(0, 832), Vector2(0, 911)]
+}
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_fp2dk"]
-atlas = ExtResource("3_4bmoa")
-region = Rect2(0, 33, 149, 32)
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1qwql"]
+_data = {
+"RESET": SubResource("Animation_4k066"),
+"in": SubResource("Animation_e1pyl"),
+"out": SubResource("Animation_ouy2n")
+}
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_sulrh"]
-atlas = ExtResource("3_4bmoa")
-region = Rect2(151, 0, 150, 31)
+[sub_resource type="Animation" id="Animation_k4j18"]
+resource_name = "iconIn"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("previewIcon:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(0.420449, 1.51572),
+"update": 0,
+"values": [Vector2(153, 0), Vector2(115, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("previewIcon:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(0.535887, 1.51572),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("previewIcon:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(0.277392, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0.956863)]
+}
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_h2mws"]
-atlas = SubResource("CompressedTexture2D_4vb4a")
-region = Rect2(151, 101, 150, 32)
+[sub_resource type="Animation" id="Animation_5a7bn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("previewIcon:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(34, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("previewIcon:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("previewIcon:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.443137)]
+}
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_6uw3l"]
-atlas = ExtResource("3_4bmoa")
-region = Rect2(151, 68, 150, 31)
+[sub_resource type="Animation" id="Animation_8pifu"]
+resource_name = "iconOut"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("previewIcon:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(0.217638, 0.420449),
+"update": 0,
+"values": [Vector2(117, 0), Vector2(177, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("previewIcon:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(0.217638, 0.535887),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("previewIcon:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(0.217638, 0.277392),
+"update": 0,
+"values": [Color(1, 1, 1, 0.686275), Color(1, 1, 1, 0)]
+}
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_c07sm"]
-atlas = ExtResource("3_4bmoa")
-region = Rect2(151, 33, 150, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_m00pm"]
-atlas = ExtResource("3_4bmoa")
-region = Rect2(453, 0, 149, 31)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_m22ws"]
-atlas = SubResource("CompressedTexture2D_4vb4a")
-region = Rect2(453, 102, 149, 31)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_e5v32"]
-atlas = ExtResource("3_4bmoa")
-region = Rect2(453, 67, 149, 33)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_v6kr0"]
-atlas = ExtResource("3_4bmoa")
-region = Rect2(453, 33, 149, 32)
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kv18w"]
+_data = {
+"RESET": SubResource("Animation_5a7bn"),
+"iconIn": SubResource("Animation_k4j18"),
+"iconOut": SubResource("Animation_8pifu")
+}
 
 [node name="TabMenu" type="CanvasLayer"]
 script = ExtResource("1_3o718")
 
-[node name="tabControl" type="Control" parent="."]
-layout_mode = 3
+[node name="previewIcon" type="TextureRect" parent="."]
+self_modulate = Color(1, 1, 1, 0.443137)
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 34.0
+offset_right = 1517.0
+offset_bottom = 834.0
+grow_horizontal = 0
+grow_vertical = 2
+texture = ExtResource("2_j6tow")
+expand_mode = 1
+
+[node name="vignette" type="ColorRect" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_6kk6m")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
+metadata/_edit_use_anchors_ = true
 
-[node name="topBar" type="Control" parent="tabControl"]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_top = -13.0
-offset_right = -1235.0
-offset_bottom = 56.0
+[node name="gradientBG" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = -1
+anchor_bottom = 1.0
+offset_left = -287.0
+offset_right = 538.0
+offset_bottom = 901.0
 grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture1D_qqioy")
 
-[node name="toptexture" type="TextureRect" parent="tabControl/topBar"]
-visible = false
+[node name="animationPlayer" type="AnimationPlayer" parent="gradientBG"]
+libraries = {
+"": SubResource("AnimationLibrary_1qwql")
+}
+
+[node name="buttons" type="Control" parent="gradientBG"]
+layout_mode = 1
+anchor_left = -0.005
+anchor_right = 1.086
+anchor_bottom = 1.002
+offset_left = -0.115
+offset_right = -0.0220947
+offset_bottom = 0.19989
+grow_vertical = 2
+
+[node name="vBoxContainer" type="VBoxContainer" parent="gradientBG/buttons"]
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 4.392
-offset_left = 1.0
-offset_top = 37.0
-offset_right = -0.0800781
-offset_bottom = 106.0
-texture = SubResource("GradientTexture2D_6h5st")
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_right = 355.0
+offset_bottom = -6.00702
 
-[node name="toptexture2" type="TextureRect" parent="tabControl/topBar"]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 4.411
-offset_top = 9.0
-offset_right = -2.01514
-offset_bottom = 61.0
-texture = SubResource("GradientTexture2D_6q5ak")
-expand_mode = 1
-
-[node name="label" type="Label" parent="tabControl/topBar"]
-visible = false
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 4.389
-offset_left = 21.0
-offset_top = 49.0
-offset_right = 2.01489
-offset_bottom = 111.0
-theme_override_fonts/font = ExtResource("2_ivuvm")
-theme_override_font_sizes/font_size = 61
-text = "Contracts"
-
-[node name="buttons" type="Control" parent="tabControl/topBar"]
-anchors_preset = 0
-offset_left = -2.0
-offset_top = 10.0
-offset_right = 423.0
-offset_bottom = 45.0
-theme = ExtResource("2_bxlnm")
-
-[node name="hBoxContainer" type="HBoxContainer" parent="tabControl/topBar/buttons"]
-layout_mode = 0
-offset_left = 2.0
-offset_top = 3.0
-offset_right = 711.0
-offset_bottom = 36.0
-
-[node name="contractsButton" type="TextureButton" parent="tabControl/topBar/buttons/hBoxContainer"]
-custom_minimum_size = Vector2(130, 0)
+[node name="contracts" type="TextureButton" parent="gradientBG/buttons/vBoxContainer"]
 layout_mode = 2
-texture_normal = SubResource("AtlasTexture_pcktx")
-texture_pressed = SubResource("AtlasTexture_gs4ws")
-texture_hover = SubResource("AtlasTexture_th2o5")
-texture_focused = SubResource("AtlasTexture_fp2dk")
-ignore_texture_size = true
+texture_normal = ExtResource("3_pd03a")
 
-[node name="equipmentButton" type="TextureButton" parent="tabControl/topBar/buttons/hBoxContainer"]
-custom_minimum_size = Vector2(130, 0)
+[node name="Loadout" type="TextureButton" parent="gradientBG/buttons/vBoxContainer"]
 layout_mode = 2
-texture_normal = SubResource("AtlasTexture_sulrh")
-texture_pressed = SubResource("AtlasTexture_h2mws")
-texture_hover = SubResource("AtlasTexture_6uw3l")
-texture_focused = SubResource("AtlasTexture_c07sm")
-ignore_texture_size = true
+texture_normal = ExtResource("4_1g34t")
 
-[node name="mapButton" type="TextureButton" parent="tabControl/topBar/buttons/hBoxContainer"]
-custom_minimum_size = Vector2(130, 0)
+[node name="Stats" type="TextureButton" parent="gradientBG/buttons/vBoxContainer"]
 layout_mode = 2
-texture_normal = SubResource("AtlasTexture_m00pm")
-texture_pressed = SubResource("AtlasTexture_m22ws")
-texture_hover = SubResource("AtlasTexture_e5v32")
-texture_focused = SubResource("AtlasTexture_v6kr0")
-ignore_texture_size = true
+texture_normal = ExtResource("5_nhyq3")
 
 [node name="animationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_kv18w")
+}
+playback_default_blend_time = 0.2
 
 [node name="sounds" type="Node" parent="."]
 
@@ -185,7 +518,18 @@ stream = ExtResource("3_odpon")
 [node name="contractsPanel" parent="." instance=ExtResource("5_p5r15")]
 visible = false
 
-[connection signal="pressed" from="tabControl/topBar/buttons/hBoxContainer/contractsButton" to="contractsPanel" method="scanContracts"]
-[connection signal="pressed" from="tabControl/topBar/buttons/hBoxContainer/contractsButton" to="contractsPanel" method="show"]
-[connection signal="pressed" from="tabControl/topBar/buttons/hBoxContainer/equipmentButton" to="contractsPanel" method="hide"]
-[connection signal="pressed" from="tabControl/topBar/buttons/hBoxContainer/mapButton" to="contractsPanel" method="hide"]
+[node name="blackBar" type="ColorRect" parent="."]
+visible = false
+anchors_preset = -1
+anchor_top = 0.942
+anchor_right = 1.004
+anchor_bottom = 1.0
+offset_top = 832.0
+offset_right = 1607.0
+offset_bottom = 900.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0, 0, 0, 1)
+
+[connection signal="mouse_entered" from="gradientBG/buttons/vBoxContainer/contracts" to="." method="_on_contracts_mouse_entered"]
+[connection signal="mouse_exited" from="gradientBG/buttons/vBoxContainer/contracts" to="." method="_on_contracts_mouse_exited"]

@@ -19,6 +19,7 @@ var pawnDebug : bool = false
 var userDir = DirAccess.open("user://")
 
 #Ingame
+var playerPawns : Array[BasePawn] = []
 var controllerSens : float = 0.015
 var mouseSens : float = 0.0020
 var deadzone : float = 0.1

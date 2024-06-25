@@ -412,6 +412,7 @@ func checkComponents():
 		if inputComponent is Component:
 			inputComponent.controllingPawn = self
 			if gameManager.activeCamera == null:
+				gameManager.playerPawns.append(self)
 				var cam = load("res://assets/entities/camera/camera.tscn")
 				var _cam = cam.instantiate()
 				_cam.global_position = self.global_position
@@ -921,3 +922,64 @@ func throwThrowable()->void:
 		## Throw the actual throwable here
 		canThrowThrowable = true
 		isArmingThrowable = true
+
+func savePawnFile()->void:
+	Console.add_rich_console_message("[color=green]Saving Pawn to File..[/color]")
+	var testPath = FileAccess.open("user://player.pwn",FileAccess.WRITE)
+	var saveWeapons : Array
+	var saveClothes : Array
+	saveWeapons.clear()
+	for weapons in itemInventory.size():
+		if itemInventory[weapons] != null:
+			saveWeapons.append(itemInventory[weapons].get_scene_file_path())
+	saveClothes.clear()
+	for clothes in clothingInventory.size():
+		saveClothes.append(clothingInventory[clothes].get_scene_file_path())
+	var pwnDict = {
+		"clothes" : saveClothes,
+		"items" : saveWeapons,
+		"pawnColorR" : pawnColor.r,
+		"pawnColorG" : pawnColor.g,
+		"pawnColorB" : pawnColor.b,
+	}
+	var stringy = JSON.stringify(pwnDict)
+	testPath.store_line(stringy)
+	Console.add_rich_console_message("[color=green]Saved Pawn File![/color]")
+
+func loadPawnFile(pawnFile:String = "user://player.pwn")->void:
+	if not FileAccess.file_exists(pawnFile):
+		Console.add_rich_console_message("[color=red]Pawn file doesn't exist![/color]")
+		return
+
+	clothingInventory.clear()
+	itemInventory.clear()
+	for clothes in clothingHolder.get_children():
+		clothes.queue_free()
+	for weapons in itemHolder.get_children():
+		weapons.queue_free()
+	itemInventory.append(null)
+	var pwnFile = FileAccess.open(pawnFile,FileAccess.READ)
+	while pwnFile.get_position() < pwnFile.get_length():
+		var string = pwnFile.get_line()
+		var json = JSON.new()
+		var result = json.parse(string)
+
+		if not result == OK:
+			Console.add_rich_console_message("[color=red]Couldn't Parse %s![/color]"%string)
+			return
+
+		var nodeData = json.get_data()
+
+		##Create Inventory Items/Clothes
+		for item in nodeData["items"]:
+			var inventoryItem = load(item).instantiate()
+			itemHolder.add_child(inventoryItem)
+
+		for clothing in nodeData["clothes"]:
+				var clothingItem = load(clothing).instantiate()
+				clothingHolder.add_child(clothingItem)
+
+		checkClothes()
+		checkItems()
+		pawnColor = Color(nodeData["pawnColorR"],nodeData["pawnColorG"],nodeData["pawnColorB"],1)
+		Console.add_rich_console_message("[color=green]Loaded Pawn File![/color]")

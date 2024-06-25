@@ -33,8 +33,9 @@ func _input(event: InputEvent) -> void:
 func _on_resume_button_pressed()->void:
 	unpauseGame()
 
-
 func _on_menu_button_pressed()->void:
+	if gameManager.playerPawns[0] != null:
+		gameManager.playerPawns[0].savePawnFile()
 	musicManager.change_song_to(null,0.5)
 	await Fade.fade_out(0.3, Color(0,0,0,1),"GradientVertical",false,true).finished
 	get_tree().paused = false

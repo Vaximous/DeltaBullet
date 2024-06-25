@@ -154,6 +154,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.71872, 0.5, 5.91885)
 pawnType = 0
 pawnWeapons = Array[PackedScene]([ExtResource("4_c40k5"), ExtResource("6_tgu38"), ExtResource("7_q40r8"), ExtResource("8_uwo5p")])
 pawnClothing = Array[PackedScene]([ExtResource("9_3ne02"), ExtResource("10_8dx3e"), ExtResource("11_peoen"), ExtResource("12_wpjvl"), ExtResource("13_jub1n")])
+pawnColor = Color(0, 0, 0.733333, 1)
 
 [node name="pawnSpawn" parent="Spawns/pawnSpawns" index="0" instance=ExtResource("2_d45q2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.34917, 0.5, 6.68547)
@@ -188,6 +189,7 @@ metadata/physics_material_override = SubResource("PhysicsMaterial_t6kk3")
 
 [node name="csgBox3d" type="CSGBox3D" parent="Props" index="0"]
 transform = Transform3D(1, 0, 0, 0, 0.337752, 0.941235, 0, -0.941235, 0.337752, -0.557839, 3.41242, 3.01165)
+visible = false
 script = SubResource("GDScript_2frmb")
 waittime = 0.01
 
@@ -197,6 +199,7 @@ autostart = true
 
 [node name="csgBox3d2" type="CSGBox3D" parent="Props" index="1"]
 transform = Transform3D(1, 0, 0, 0, 0.337752, 0.941235, 0, -0.941235, 0.337752, 0.754014, 3.41242, 5.80444)
+visible = false
 script = SubResource("GDScript_2frmb")
 
 [node name="timer" type="Timer" parent="Props/csgBox3d2" index="0"]
@@ -205,6 +208,7 @@ autostart = true
 
 [node name="meshInstance3d" type="MeshInstance3D" parent="Props" index="2" node_paths=PackedStringArray("aObj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.96666, 3.22657)
+visible = false
 material_override = SubResource("StandardMaterial3D_c61bn")
 mesh = SubResource("ImmediateMesh_pac6e")
 script = SubResource("GDScript_2nv5m")
@@ -212,6 +216,7 @@ aObj = NodePath("../meshInstance3d2")
 
 [node name="meshInstance3d2" type="MeshInstance3D" parent="Props" index="3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.57036, 2.80381, 2.56913)
+visible = false
 mesh = SubResource("SphereMesh_gh5mg")
 
 [node name="bloodDroplet" parent="Props" index="4" instance=ExtResource("6_06gf1")]

@@ -31,6 +31,7 @@ var sceneLoading
 var press = false
 
 func _ready() -> void:
+	gameManager.playerPawns.clear()
 	worldNameControl.hide()
 	await Fade.fade_in(0.3)
 	await get_tree().create_timer(0.2).timeout

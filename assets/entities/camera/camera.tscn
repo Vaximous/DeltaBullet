@@ -74,7 +74,7 @@ func addTilt(tilt:float = 0.0):
 	rotation += tilt
 "
 
-[sub_resource type="Shader" id="Shader_3r2o3"]
+[sub_resource type="Shader" id="Shader_1wy2d"]
 code = "shader_type canvas_item;
 uniform vec4 color: source_color;
 uniform float multiplier = 0.2;
@@ -87,7 +87,7 @@ void fragment() {
 "
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5giah"]
-shader = SubResource("Shader_3r2o3")
+shader = SubResource("Shader_1wy2d")
 shader_parameter/color = Color(0, 0, 0, 1)
 shader_parameter/multiplier = 0.43
 shader_parameter/softness = 0.9

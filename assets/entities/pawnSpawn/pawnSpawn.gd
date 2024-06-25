@@ -63,7 +63,7 @@ func pawnTypeColor(value)->void:
 
 func spawnPawn():
 	if active:
-		var pawn = gameManager.world.pawnScene.instantiate()
+		var pawn : BasePawn = gameManager.world.pawnScene.instantiate()
 		#Player Pawn
 		var pawnSpawns = gameManager.world.pawnWorldSpawns.get_children()
 		var pawnPlayerSpawns = gameManager.world.playerWorldSpawns.get_children()
@@ -81,19 +81,19 @@ func spawnPawn():
 				pawn.checkComponents()
 				pawn.fixRot()
 				pawn.add_to_group(&"Player")
-
-				for clothing in pawnClothing.size():
-					if pawnClothing[clothing] != null:
-						var clothingSpawn = pawnClothing[clothing]
-						var clothingNode = clothingSpawn.instantiate()
-						pawn.clothingHolder.add_child(clothingNode)
-						pawn.checkClothes()
-				for item in pawnWeapons.size():
-					if pawnWeapons[item] != null:
-						var itemSpawn = pawnWeapons[item]
-						var itemNode = itemSpawn.instantiate()
-						pawn.itemHolder.add_child(itemNode)
-						pawn.checkItems()
+				pawn.loadPawnFile()
+				#for clothing in pawnClothing.size():
+					#if pawnClothing[clothing] != null:
+						#var clothingSpawn = pawnClothing[clothing]
+						#var clothingNode = clothingSpawn.instantiate()
+						#pawn.clothingHolder.add_child(clothingNode)
+						#pawn.checkClothes()
+				#for item in pawnWeapons.size():
+					#if pawnWeapons[item] != null:
+						#var itemSpawn = pawnWeapons[item]
+						#var itemNode = itemSpawn.instantiate()
+						#pawn.itemHolder.add_child(itemNode)
+						#pawn.checkItems()
 		elif pawnType == 1:
 			#Pawn
 			var aiControllerComponent = load("res://assets/components/aiComponent/aiComponent.tscn")

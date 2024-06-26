@@ -51,6 +51,7 @@ offset_top = 18.0
 offset_right = 207.0
 offset_bottom = 136.0
 texture = SubResource("PlaceholderTexture2D_rrhwt")
+expand_mode = 1
 
 [node name="saveName" type="Label" parent="."]
 layout_mode = 0

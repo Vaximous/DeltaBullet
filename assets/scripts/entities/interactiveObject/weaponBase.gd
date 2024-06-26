@@ -103,7 +103,7 @@ func _physics_process(delta)->void:
 				weaponMesh.position = weaponResource.weaponPositionOffset
 				weaponMesh.rotation = weaponResource.weaponRotationOffset
 
-				if weaponAnimSet:
+				if weaponAnimSet and isEquipped:
 					if weaponRemoteState != null and weaponRemoteStateLeft != null:
 						if weaponResource.useWeaponSprintAnim:
 							if weaponOwner.isRunning and !isFiring and !isAiming and !weaponOwner.freeAim:
@@ -166,6 +166,8 @@ func _physics_process(delta)->void:
 							elif weaponOwner.preventWeaponFire and !isReloading:
 								weaponRemoteState.travel("idle")
 								weaponRemoteStateLeft.travel("idle")
+			else:
+				weaponOwner.animationTree.set("parameters/weaponBlend_Left_blend/blend_amount", lerpf(weaponOwner.animationTree.get("parameters/weaponBlend_Left_blend/blend_amount"), 0, leftArmSpeed*delta))
 				collisionEnabled = false
 
 	if collisionEnabled:
@@ -196,7 +198,7 @@ func fire()->void:
 			if weaponOwner.attachedCam.camCast != null:
 				shot_cast = weaponOwner.attachedCam.camCast
 
-		if weaponRemoteState and weaponRemoteStateLeft:
+		if weaponRemoteState and weaponRemoteStateLeft and isEquipped:
 			weaponRemoteState.start("fire")
 			weaponRemoteStateLeft.start("fire")
 		if weaponOwner.attachedCam:
@@ -391,6 +393,10 @@ func resetWeaponMesh()->void:
 
 func resetToDefault()->void:
 	resetWeaponMesh()
+	if weaponRemoteState != null:
+		weaponRemoteState.stop()
+	if weaponRemoteStateLeft != null:
+		weaponRemoteStateLeft.stop()
 	weaponAnimSet = false
 	weaponOwner = null
 	isFiring = false
@@ -451,7 +457,7 @@ func reloadWeapon()->void:
 	await get_tree().process_frame
 	weaponRemoteState.stop()
 	weaponRemoteStateLeft.stop()
-	if canReloadWeapon and !isReloading and weaponResource.canBeReloaded:
+	if canReloadWeapon and !isReloading and weaponResource.canBeReloaded and isEquipped:
 		var firedShots = weaponResource.ammoSize - currentAmmo
 		weaponRemoteState.travel("reload")
 		weaponRemoteState.next()

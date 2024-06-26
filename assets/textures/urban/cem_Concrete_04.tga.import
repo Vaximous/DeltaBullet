@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://djqo5emhckfhg"
-path.s3tc="res://.godot/imported/Floor-06-Specular.tga-f122abce3afdde600b649e292e36eefe.s3tc.ctex"
+uid="uid://bc1parbnkgewl"
+path.s3tc="res://.godot/imported/cem_Concrete_04.tga-11c917e61785bace20053418570819f4.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/textures/urban/Floor-06-Specular.tga"
-dest_files=["res://.godot/imported/Floor-06-Specular.tga-f122abce3afdde600b649e292e36eefe.s3tc.ctex"]
+source_file="res://assets/textures/urban/cem_Concrete_04.tga"
+dest_files=["res://.godot/imported/cem_Concrete_04.tga-11c917e61785bace20053418570819f4.s3tc.ctex"]
 
 [params]
 

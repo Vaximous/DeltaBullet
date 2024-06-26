@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://djqo5emhckfhg"
-path.s3tc="res://.godot/imported/Floor-06-Specular.tga-f122abce3afdde600b649e292e36eefe.s3tc.ctex"
+uid="uid://ksqovy04h5gl"
+path.s3tc="res://.godot/imported/brick002.tga-90a1543ef103ede9e7d1e324b892cae8.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/textures/urban/Floor-06-Specular.tga"
-dest_files=["res://.godot/imported/Floor-06-Specular.tga-f122abce3afdde600b649e292e36eefe.s3tc.ctex"]
+source_file="res://assets/textures/urban/brick002.tga"
+dest_files=["res://.godot/imported/brick002.tga-90a1543ef103ede9e7d1e324b892cae8.s3tc.ctex"]
 
 [params]
 

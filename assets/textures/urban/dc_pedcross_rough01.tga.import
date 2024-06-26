@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://djqo5emhckfhg"
-path.s3tc="res://.godot/imported/Floor-06-Specular.tga-f122abce3afdde600b649e292e36eefe.s3tc.ctex"
+uid="uid://d0t0t6qvrugie"
+path.s3tc="res://.godot/imported/dc_pedcross_rough01.tga-6959f77f4446ca8d8bb295283f0e4562.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/textures/urban/Floor-06-Specular.tga"
-dest_files=["res://.godot/imported/Floor-06-Specular.tga-f122abce3afdde600b649e292e36eefe.s3tc.ctex"]
+source_file="res://assets/textures/urban/dc_pedcross_rough01.tga"
+dest_files=["res://.godot/imported/dc_pedcross_rough01.tga-6959f77f4446ca8d8bb295283f0e4562.s3tc.ctex"]
 
 [params]
 
@@ -22,7 +22,7 @@ compress/lossy_quality=0.7
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=true
+mipmaps/generate=false
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
@@ -32,4 +32,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=0
+detect_3d/compress_to=1

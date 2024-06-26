@@ -26,6 +26,7 @@ var deadzone : float = 0.1
 var defaultFOV : int = 90
 
 #World
+var currentSave : String
 var dialogueCamLerpSpeed:float = 5.0
 var world : WorldScene
 var pauseMenu : PauseMenu
@@ -38,7 +39,8 @@ const dialogue_cam : PackedScene = preload("res://assets/entities/camera/Dialogu
 # Called when the node enters the scene tree for the first time.
 func _ready()->void:
 	initializeSteam()
-
+	if !userDir.dir_exists("saves"):
+		userDir.make_dir("saves")
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	soundPlayer.bus = "Sounds"
 	if richPresenceEnabled:
@@ -92,26 +94,34 @@ func _input(_event)->void:
 
 
 
-func takeScreenshot() -> String:
+func takeScreenshot(path:String = "user://screenshots",screenshotName:String = "") -> String:
 	print("Initializing screenshot!")
 	var screenshot_count = 0
 	var screenshot = get_viewport().get_texture().get_image()
 
 	var savedfilepath
-	if userDir.dir_exists("user://screenshots"):
-		var _screenshot_dir = DirAccess.open("user://screenshots/")
+	if userDir.dir_exists(path):
+		var _screenshot_dir = DirAccess.open(path)
 		print(_screenshot_dir.get_current_dir())
 		screenshot_count = _screenshot_dir.get_files().size() + 1
-		screenshot.save_png("user://screenshots/screenshot_" + str(screenshot_count) + ".png")
-		savedfilepath = "user://screenshots/screenshot_" + str(screenshot_count) + ".png"
-		screenshot_count = screenshot_count + 1
+		if screenshotName == "" or " ":
+			screenshot.save_png("%s/screenshot_" + str(screenshot_count) + ".png")
+			savedfilepath = "%s/screenshot_" + str(screenshot_count) + ".png"
+			screenshot_count = screenshot_count + 1
+		else:
+			screenshot.save_png("%s/%s.png"%[path,screenshotName])
+			savedfilepath = "%s/%s.png"%[path,screenshotName]
 	else:
-		userDir.make_dir("screenshots")
-		var _screenshot_dir = DirAccess.open("user://screenshots/")
-		screenshot.save_png("user://screenshots/screenshot_" + str(screenshot_count) + ".png")
-		savedfilepath = "user://screenshots/screenshot_" + str(screenshot_count) + ".png"
-		screenshot_count = screenshot_count + 1
-	print("Saved screenshot!")
+		userDir.make_dir(path)
+		var _screenshot_dir = DirAccess.open(path)
+		if screenshotName == "" or " ":
+			screenshot.save_png("%s/screenshot_" + str(screenshot_count) + ".png")
+			savedfilepath = "%s/screenshot_" + str(screenshot_count) + ".png"
+			screenshot_count = screenshot_count + 1
+		else:
+			screenshot.save_png("%s/%s.png"%[path,screenshotName])
+			savedfilepath = "%s/%s.png"%[path,screenshotName]
+	print("Saved screenshot at %s/%s.png"%[path,screenshotName])
 	return savedfilepath
 
 func restartScene()->void:
@@ -254,6 +264,7 @@ func enablePlayer()->void:
 			activeCamera.followingEntity.inputComponent.mouseActionsEnabled = true
 
 func loadWorld(worldscene:String, fadein:bool = false)->void:
+	musicManager.change_song_to(null)
 	var loader = load("res://assets/scenes/menu/loadingscreen/loadingScreen.tscn")
 	var inst = loader.instantiate()
 	if fadein:
@@ -268,3 +279,98 @@ func loadWorld(worldscene:String, fadein:bool = false)->void:
 
 func freeOrphanNodes():
 	freeOrphans.emit()
+
+func saveGame(saveName:String = "Save1"):
+	if world != null:
+		var saveDir = DirAccess.open("user://saves")
+		saveDir.make_dir(saveName)
+		var saveFile = FileAccess.open("user://saves/%s/%s.pwnSave"%[saveName,saveName],FileAccess.WRITE)
+		currentSave = "user://saves/%s/%s.pwnSave"%[saveName,saveName]
+		var screenshot = get_viewport().get_texture().get_image()
+		screenshot.save_png("user://saves/%s/%s.png"%[saveName,saveName])
+		print("user://saves/%s/%s.png"%[saveName,saveName])
+		var pawnFile = playerPawns[0].savePawnFile("user://saves/%s/%s"%[saveName,saveName])
+		var saveDict : Dictionary = {
+			"saveName" : saveName,
+			"saveLocation" : gameManager.world.worldData.worldName,
+			"scene" : get_tree().current_scene.get_scene_file_path(),
+			"timestamp" : Time.get_unix_time_from_system(),
+			"pawnToLoad" : pawnFile,
+			"saveScreenie" : "user://saves/%s/%s.png"%[saveName,saveName]
+		}
+		var stringy = JSON.stringify(saveDict)
+		saveFile.store_line(stringy)
+		Console.add_rich_console_message("[color=green] Saved game '%s' sucessfully!"%saveName)
+		return saveFile
+
+func loadGame(save:String)->void:
+	if save != "" or save != null:
+		var saveFile = FileAccess.open(save,FileAccess.READ)
+		if saveFile != null:
+			Engine.time_scale = 1.0
+			get_tree().paused = false
+			while saveFile.get_position() < saveFile.get_length():
+				var string = saveFile.get_line()
+				var json = JSON.new()
+				var result = json.parse(string)
+				if not result == OK:
+					Console.add_rich_console_message("[color=red]Couldn't Parse %s![/color]"%string)
+					return
+				var nodeData = json.get_data()
+				currentSave = save
+				loadWorld(nodeData["scene"])
+
+func scan_for_scenes(dirpath : String, max_depth : int = -1, _depth = 0) -> PackedStringArray:
+	if _depth == 0:
+		print("Scanning scenes at %s..." % dirpath)
+	if max_depth >= 0:
+		if _depth > max_depth:
+			return []
+
+	var dir = DirAccess.open(dirpath)
+	var found_scenes : PackedStringArray = []
+	if dir:
+		dir.list_dir_begin()
+		var file_name = dir.get_next()
+		while file_name != "":
+			if !dir.current_is_dir():
+				if file_name.ends_with(".tscn") or file_name.ends_with(".scn"):
+					found_scenes.append((dirpath +"/"+ file_name).simplify_path())
+				elif file_name.ends_with(".tscn.remap") or file_name.ends_with(".scn.remap"):
+					var remapfile = ConfigFile.new()
+					remapfile.load(dirpath + file_name)
+					found_scenes.append(remapfile.get_value("remap", "path"))
+					file_name = dir.get_next()
+					continue
+			else:
+				#is a directory
+				found_scenes.append_array(scan_for_scenes((dirpath +"/"+ file_name +"/").simplify_path(), max_depth, _depth + 1))
+			file_name = dir.get_next()
+	else:
+		print("An error occurred when trying to access the path.")
+	return found_scenes
+
+func scanForSaves(dirpath : String, max_depth : int = -1, _depth = 0) -> PackedStringArray:
+	if _depth == 0:
+		print("Scanning saves at %s..." % dirpath)
+	if max_depth >= 0:
+		if _depth > max_depth:
+			return []
+
+	var dir = DirAccess.open(dirpath)
+	var foundSaves : PackedStringArray = []
+	if dir:
+		dir.list_dir_begin()
+		var file_name = dir.get_next()
+		while file_name != "":
+			if !dir.current_is_dir():
+				if file_name.ends_with("pwnSave"):
+					print(file_name)
+					foundSaves.append((dirpath +"/"+ file_name).simplify_path())
+			else:
+				#is a directory
+				foundSaves.append_array(scanForSaves((dirpath +"/"+ file_name +"/").simplify_path(), max_depth, _depth + 1))
+			file_name = dir.get_next()
+	else:
+		print("An error occurred when trying to access the path.")
+	return foundSaves

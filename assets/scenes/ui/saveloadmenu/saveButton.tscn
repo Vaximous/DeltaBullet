@@ -1,0 +1,89 @@
+[gd_scene load_steps=11 format=3 uid="uid://dwxr1gnovk0jv"]
+
+[ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="1_6sqyy"]
+[ext_resource type="Script" path="res://assets/scenes/ui/saveloadmenu/saveButton.gd" id="2_hc6b0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qqgmi"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_uklys"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dkqhi"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1sutc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hgw5i"]
+
+[sub_resource type="Gradient" id="Gradient_06uxp"]
+colors = PackedColorArray(0.196078, 0, 0, 1, 0.356863, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_pv6nl"]
+gradient = SubResource("Gradient_06uxp")
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_rrhwt"]
+
+[node name="saveButton" type="Button"]
+custom_minimum_size = Vector2(0, 190)
+anchors_preset = -1
+anchor_right = 0.662
+anchor_bottom = 0.211
+offset_right = 0.800049
+offset_bottom = 0.0999908
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_6sqyy")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_qqgmi")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_uklys")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_dkqhi")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_1sutc")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_hgw5i")
+script = ExtResource("2_hc6b0")
+
+[node name="background" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 740.0
+offset_bottom = 152.0
+texture = SubResource("GradientTexture1D_pv6nl")
+
+[node name="saveIcon" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 13.0
+offset_top = 18.0
+offset_right = 207.0
+offset_bottom = 136.0
+texture = SubResource("PlaceholderTexture2D_rrhwt")
+
+[node name="saveName" type="Label" parent="."]
+layout_mode = 0
+offset_left = 241.0
+offset_top = 6.0
+offset_right = 1308.0
+offset_bottom = 67.0
+theme_override_font_sizes/font_size = 31
+text = "SAVENAME"
+vertical_alignment = 1
+
+[node name="saveLocation" type="Label" parent="."]
+self_modulate = Color(0.796243, 0.796243, 0.796243, 1)
+layout_mode = 0
+offset_left = 241.0
+offset_top = 67.0
+offset_right = 730.0
+offset_bottom = 128.0
+theme_override_font_sizes/font_size = 22
+text = "Save Location
+"
+vertical_alignment = 1
+
+[node name="saveTimestamp" type="Label" parent="."]
+self_modulate = Color(0.796243, 0.796243, 0.796243, 1)
+layout_mode = 0
+offset_left = 241.0
+offset_top = 36.0
+offset_right = 730.0
+offset_bottom = 97.0
+theme_override_font_sizes/font_size = 22
+text = "Save Time
+"
+vertical_alignment = 1
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

@@ -198,6 +198,7 @@ var currentItem = null
 			currentItem.isAiming = false
 			equipWeapon(currentItemIndex)
 			currentItem.isAiming = false
+
 			if currentItem.weaponResource != null:
 				await get_tree().process_frame
 				if currentItem.weaponResource.leftHandParent:
@@ -250,6 +251,7 @@ var currentItem = null
 		hitImpulse = Vector3.ZERO
 @export var hitVector : Vector3 = Vector3.ZERO
 @export_subgroup("Misc")
+var lastLeftBlend : AnimationNodeStateMachinePlayback
 ## First-person, just for shits and giggles
 var isFirstperson : bool = false:
 	set(value):
@@ -317,13 +319,15 @@ func _physics_process(delta) -> void:
 						currentItem.isAiming = false
 				if isMoving and isRunning and is_on_floor() and !meshLookAt and !currentItem.weaponResource.useWeaponSprintAnim and !currentItem.isReloading and animationTree.active or currentItem == null:
 					animationTree.set("parameters/weaponBlend/blend_amount", lerpf(animationTree.get("parameters/weaponBlend/blend_amount"), 0, 4*delta))
-					animationTree.set("parameters/weaponBlend_Left_blend/blend_amount", lerpf(animationTree.get("parameters/weaponBlend_Left_blend/blend_amount"),animationTree.get("parameters/weaponBlend/blend_amount"),12*delta))
+					animationTree.set("parameters/weaponBlend_Left_blend/blend_amount", lerpf(animationTree.get("parameters/weaponBlend_Left_blend/blend_amount"),0,12*delta))
 				else:
 					animationTree.set("parameters/weaponBlend/blend_amount", lerpf(animationTree.get("parameters/weaponBlend/blend_amount"), 1, 12*delta))
 			else:
+				for items in itemHolder.get_children():
+					if items.isEquipped != false:
+						items.isEquipped = false
 				animationTree.set("parameters/weaponBlend/blend_amount", lerpf(animationTree.get("parameters/weaponBlend/blend_amount"), 0, 12*delta))
-				animationTree.set("parameters/weaponBlend_Left_blend/blend_amount", lerpf(animationTree.get("parameters/weaponBlend_Left_blend/blend_amount"),animationTree.get("parameters/weaponBlend/blend_amount"),12*delta))
-
+				animationTree.set("parameters/weaponBlend_Left_blend/blend_amount", lerpf(animationTree.get("parameters/weaponBlend_Left_blend/blend_amount"),0,12*delta))
 			#Mesh Rotation
 			doMeshRotation(delta)
 			# Add the gravity
@@ -632,6 +636,7 @@ func setupWeaponAnimations() -> void:
 			animationTree.tree_root.add_node("weaponBlend_left", blendSet)
 			(animationTree.tree_root as AnimationNodeBlendTree).connect_node("weaponBlend_Left_blend", 1, "weaponBlend_left")
 			currentItem.weaponRemoteStateLeft = animationTree.get("parameters/weaponBlend_left/weaponState/playback")
+			lastLeftBlend = currentItem.weaponRemoteStateLeft
 			currentItem.weaponAnimSet = true
 			return
 	else:
@@ -639,7 +644,7 @@ func setupWeaponAnimations() -> void:
 		return
 
 func setLeftHandFilter(value : bool = true) -> void:
-	var filterBlend = animationTree.tree_root.get_node("weaponBlend")
+	var filterBlend = animationTree.tree_root.get_node("weaponBlend_Left_blend")
 	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:L_Shoulder", value)
 	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:L_UpperArm", value)
 	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:L_Forearm", value)
@@ -696,6 +701,8 @@ func equipWeapon(index) -> void:
 func unequipWeapon() -> void:
 	animationTree.set("parameters/weaponBlend/blend_amount", 0)
 	animationTree.set("parameters/weaponBlend_Left_blend/blend_amount", 0)
+	if lastLeftBlend != null:
+		lastLeftBlend.stop()
 	for weapon in itemHolder.get_children():
 		weapon.hide()
 		weapon.resetToDefault()
@@ -923,9 +930,9 @@ func throwThrowable()->void:
 		canThrowThrowable = true
 		isArmingThrowable = true
 
-func savePawnFile()->void:
+func savePawnFile(pawnFile:String = "player"):
 	Console.add_rich_console_message("[color=green]Saving Pawn to File..[/color]")
-	var testPath = FileAccess.open("user://player.pwn",FileAccess.WRITE)
+	var path = FileAccess.open("%s.pwn"%pawnFile,FileAccess.WRITE)
 	var saveWeapons : Array
 	var saveClothes : Array
 	saveWeapons.clear()
@@ -943,12 +950,14 @@ func savePawnFile()->void:
 		"pawnColorB" : pawnColor.b,
 	}
 	var stringy = JSON.stringify(pwnDict)
-	testPath.store_line(stringy)
+	path.store_line(stringy)
 	Console.add_rich_console_message("[color=green]Saved Pawn File![/color]")
+	return "%s.pwn"%pawnFile
 
-func loadPawnFile(pawnFile:String = "user://player.pwn")->void:
+func loadPawnFile(pawnFile:String = "player")->void:
 	if not FileAccess.file_exists(pawnFile):
 		Console.add_rich_console_message("[color=red]Pawn file doesn't exist![/color]")
+		print(pawnFile)
 		return
 
 	clothingInventory.clear()

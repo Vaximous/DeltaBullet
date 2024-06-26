@@ -5,10 +5,12 @@ var canPause : bool = true
 @onready var soundPlayer : AudioStreamPlayer = $audioStreamPlayer
 @onready var secondSound : AudioStreamPlayer = $audioStreamPlayer2
 @onready var gradientBG : TextureRect = $gradientBG
+@onready var saveLoadMenu : Control = $saveloadmenu
 
 func _ready() -> void:
 	gradientBG.self_modulate = Color.TRANSPARENT
 	modulate = Color.TRANSPARENT
+	saveLoadMenu.modulate = Color.TRANSPARENT
 	hide()
 
 func _process(delta)->void:
@@ -34,8 +36,6 @@ func _on_resume_button_pressed()->void:
 	unpauseGame()
 
 func _on_menu_button_pressed()->void:
-	if gameManager.playerPawns[0] != null:
-		gameManager.playerPawns[0].savePawnFile()
 	musicManager.change_song_to(null,0.5)
 	await Fade.fade_out(0.3, Color(0,0,0,1),"GradientVertical",false,true).finished
 	get_tree().paused = false

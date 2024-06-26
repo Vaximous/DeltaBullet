@@ -23,39 +23,34 @@ extends Button
 @onready var textLabel =  $label
 @onready var animPlayer : AnimationPlayer = $animationPlayer
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func _ready()->void:
 	animPlayer.play(\"unhover\")
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(delta)->void:
 	textLabel.text = text
 
-
-func _on_mouse_entered():
+func _on_mouse_entered()->void:
 	doHover()
 
-
-func _on_mouse_exited():
+func _on_mouse_exited()->void:
 	doUnhover()
 
-
-func _on_pressed():
+func _on_pressed()->void:
 	selectSound.play()
 
 
-func _on_focus_entered():
+func _on_focus_entered()->void:
 	doHover()
 
-
-func _on_focus_exited():
+func _on_focus_exited()->void:
 	doUnhover()
 
-func doUnhover():
+func doUnhover()->void:
 	if !animPlayer.current_animation == \"unhover\":
 		animPlayer.play(\"unhover\")
 
-func doHover():
+func doHover()->void:
 	hoverSound.play()
 	if !animPlayer.current_animation == \"hover\":
 		animPlayer.play(\"hover\")
@@ -277,7 +272,7 @@ layout_mode = 1
 anchors_preset = -1
 anchor_bottom = 1.043
 offset_right = 100.0
-offset_bottom = 49.0
+offset_bottom = -0.0209999
 texture = SubResource("GradientTexture1D_su33n")
 expand_mode = 1
 

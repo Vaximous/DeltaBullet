@@ -26,6 +26,7 @@ var deadzone : float = 0.1
 var defaultFOV : int = 90
 
 #World
+var saveOverwrite : String
 var currentSave : String
 var dialogueCamLerpSpeed:float = 5.0
 var world : WorldScene

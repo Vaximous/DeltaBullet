@@ -14,12 +14,9 @@ func _ready()->void:
 	hidePanel()
 
 func initSavePanel()->void:
+	gameManager.getEventSignal("overwriteSave").connect(showOverridePanel)
 	clearSaves()
-	var saveButton = load("res://assets/scenes/ui/saveloadmenu/saveButton.tscn")
-	var newSave : Button = saveButton.instantiate()
-	saveContainer.add_child(newSave)
-	newSave.buttonType = 1
-	newSave.pressed.connect(showSaveNamePanel)
+	createSaveMaker()
 	showPanel()
 	scanSaves(2)
 	panelLabel.text = "Choose Save"
@@ -66,6 +63,7 @@ func hideOverridePanel()->void:
 	overridePanel.hide()
 
 func showOverridePanel()->void:
+	overridePanel.modulate = Color.TRANSPARENT
 	overridePanel.visible = true
 	var tween = create_tween()
 	tween.set_parallel(true)
@@ -88,4 +86,20 @@ func showSaveNamePanel()->void:
 func saveGame()->void:
 	if saveName.text != "" or saveName.text != " ":
 		gameManager.saveGame(saveName.text)
+		clearSaves()
+		createSaveMaker()
+		scanSaves(2)
+		gameManager.notifyCheck("'%s' Sucessfully Saved."%saveName.text, 2, 1.5)
 		hideSaveNamePanel()
+
+func _on_yes_button_pressed()->void:
+	gameManager.saveGame(gameManager.saveOverwrite)
+	gameManager.notifyCheck("'%s' Sucessfully Saved."%gameManager.saveOverwrite, 2, 1.5)
+	hideOverridePanel()
+
+func createSaveMaker()->void:
+	var saveButton = load("res://assets/scenes/ui/saveloadmenu/saveButton.tscn")
+	var newSave : Button = saveButton.instantiate()
+	saveContainer.add_child(newSave)
+	newSave.buttonType = 1
+	newSave.pressed.connect(showSaveNamePanel)

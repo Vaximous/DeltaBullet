@@ -126,6 +126,7 @@ offset_right = 284.5
 offset_bottom = 146.5
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 
 [node name="textureRect" type="TextureRect" parent="panel/overwritePanel"]
 layout_mode = 0
@@ -173,10 +174,10 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -280.5
+offset_left = -283.0
 offset_top = -63.0
-offset_right = -277.5
-offset_bottom = -60.0
+offset_right = 35.0
+offset_bottom = 3.0
 grow_horizontal = 0
 grow_vertical = 0
 text = "Yes"
@@ -188,8 +189,8 @@ anchor_top = 1.0
 anchor_right = 0.0
 anchor_bottom = 1.0
 offset_top = -63.0
-offset_right = 3.0
-offset_bottom = -60.0
+offset_right = 279.0
+offset_bottom = -17.0
 grow_horizontal = 1
 grow_vertical = 0
 text = "no"
@@ -265,5 +266,7 @@ theme_override_font_sizes/font_size = 15
 text = "Accept"
 
 [connection signal="pressed" from="panel/closeButton" to="." method="hidePanel"]
+[connection signal="pressed" from="panel/overwritePanel/yesButton" to="." method="_on_yes_button_pressed"]
+[connection signal="pressed" from="panel/overwritePanel/noButton" to="." method="hideOverridePanel"]
 [connection signal="pressed" from="panel/saveNamePanel/closeButton" to="." method="hideSaveNamePanel"]
 [connection signal="pressed" from="panel/saveNamePanel/acceptButton" to="." method="saveGame"]

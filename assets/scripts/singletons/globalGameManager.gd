@@ -295,6 +295,7 @@ func saveGame(saveName:String = "Save1"):
 			"saveLocation" : gameManager.world.worldData.worldName,
 			"scene" : get_tree().current_scene.get_scene_file_path(),
 			"timestamp" : Time.get_unix_time_from_system(),
+			"dateDict" : Time.get_date_dict_from_system(),
 			"pawnToLoad" : pawnFile,
 			"saveScreenie" : "user://saves/%s/%s.png"%[saveName,saveName]
 		}

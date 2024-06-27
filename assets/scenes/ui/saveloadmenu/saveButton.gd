@@ -1,14 +1,26 @@
 extends Button
+@onready var selectSound : AudioStreamPlayer = $selectSound
+@onready var hoverSound : AudioStreamPlayer = $audioStreamPlayer
 @onready var background : TextureRect = $background
 @onready var saveIcon : TextureRect = $saveIcon
 @onready var saveName : Label = $saveName
 @onready var saveLocation : Label = $saveLocation
 @onready var saveTimestamp : Label = $saveTimestamp
 var sceneLoad : String
-@export_enum("Save","CreateSave") var buttonType : int = 0
+@export_enum("Load","CreateSave","Save") var buttonType : int = 0:
+	set(value):
+		buttonType = value
+		if buttonType == 1:
+			saveIcon.texture = load(["res://assets/scenes/ui/saveloadmenu/save1.png","res://assets/scenes/ui/saveloadmenu/save2.png","res://assets/scenes/ui/saveloadmenu/save3.png","res://assets/scenes/ui/saveloadmenu/save4.png"].pick_random())
+			saveName.text = "Create New Save"
+			saveLocation.text = ""
+			saveTimestamp.text = ""
 var saveFile:
 	set(value):
 		saveFile = value
+
+func _ready()->void:
+	hoverOff()
 
 func parseData(data:String)->void:
 	var imgicon = Image.new()
@@ -23,20 +35,34 @@ func parseData(data:String)->void:
 				Console.add_rich_console_message("[color=red]Couldn't Parse %s![/color]"%string)
 				return
 			var jsonData = json.get_data()
+			var date = jsonData["dateDict"]
+			saveTimestamp.text = "%d/%02d/%02d" % [date.month, date.day, date.year]
 			saveName.text = jsonData["saveName"]
-
-			print(jsonData["saveScreenie"])
 			imgicon.load(jsonData["saveScreenie"])
 			imgtexture.set_image(imgicon)
 			saveIcon.texture = imgtexture
 			saveLocation.text = jsonData["saveLocation"]
 			sceneLoad = jsonData["scene"]
 
+func hoverOn()->void:
+	hoverSound.play()
+	var tween = create_tween()
+	tween.set_ease(Tween.EASE_IN_OUT)
+	tween.tween_property(background,"size",Vector2(615,152),0.25)
+
+func hoverOff()->void:
+	var tween = create_tween()
+	tween.set_ease(Tween.EASE_OUT)
+	tween.tween_property(background,"size",Vector2(256,152),0.25)
 
 func _on_pressed()->void:
+	if selectSound.playing != true:
+		selectSound.play()
+		hoverSound.stop()
 	match buttonType:
 		0:
-			gameManager.notifyCheck("'%s' Sucessfully Loaded."%saveName.text, 2, 1.5)
+			await Fade.fade_out(0.3, Color(0,0,0,1),"GradientVertical",false,true).finished
+			#gameManager.notifyCheck("'%s' Sucessfully Loaded."%saveName.text, 2, 1.5)
 			gameManager.loadGame(saveFile)
 		1:
 			pass

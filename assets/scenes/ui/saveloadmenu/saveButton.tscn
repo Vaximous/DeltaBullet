@@ -1,7 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://dwxr1gnovk0jv"]
+[gd_scene load_steps=13 format=3 uid="uid://dwxr1gnovk0jv"]
 
 [ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="1_6sqyy"]
 [ext_resource type="Script" path="res://assets/scenes/ui/saveloadmenu/saveButton.gd" id="2_hc6b0"]
+[ext_resource type="AudioStream" uid="uid://08mwbmwvrolu" path="res://assets/sounds/ui/uiAppear2.wav" id="3_g47wy"]
+[ext_resource type="AudioStream" uid="uid://dbxyo1p3kd36u" path="res://assets/sounds/ui/uievaluate.wav" id="4_qgfjb"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qqgmi"]
 
@@ -40,7 +42,7 @@ script = ExtResource("2_hc6b0")
 
 [node name="background" type="TextureRect" parent="."]
 layout_mode = 0
-offset_right = 740.0
+offset_right = 614.0
 offset_bottom = 152.0
 texture = SubResource("GradientTexture1D_pv6nl")
 
@@ -87,4 +89,20 @@ text = "Save Time
 "
 vertical_alignment = 1
 
+[node name="audioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_g47wy")
+volume_db = -10.0
+pitch_scale = 2.05
+bus = &"UI"
+
+[node name="selectSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_qgfjb")
+volume_db = -10.0
+pitch_scale = 2.05
+bus = &"UI"
+
+[connection signal="focus_entered" from="." to="." method="hoverOn"]
+[connection signal="focus_exited" from="." to="." method="hoverOff"]
+[connection signal="mouse_entered" from="." to="." method="hoverOn"]
+[connection signal="mouse_exited" from="." to="." method="hoverOff"]
 [connection signal="pressed" from="." to="." method="_on_pressed"]

@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://b1x2t2na1bc2b"]
+[gd_scene load_steps=10 format=3 uid="uid://b1x2t2na1bc2b"]
 
 [ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="1_cg2cc"]
 [ext_resource type="Texture2D" uid="uid://cchng1uogx7qf" path="res://assets/textures/misc/logo.png" id="3_hv6kb"]
 [ext_resource type="PackedScene" uid="uid://wncyofb1f8i7" path="res://assets/scenes/ui/options/optionsMenu.tscn" id="4_fyhf6"]
 [ext_resource type="Texture2D" uid="uid://dc3fkfugwvtla" path="res://assets/textures/misc/company-logo (1).png" id="5_bto6s"]
 [ext_resource type="PackedScene" uid="uid://ba0s8u6mtjxns" path="res://assets/scenes/menu/menuButton.tscn" id="5_nxhqu"]
+[ext_resource type="PackedScene" uid="uid://81cyr0xg0y7d" path="res://assets/scenes/ui/saveloadmenu/saveloadmenu.tscn" id="6_8a5q4"]
 
 [sub_resource type="GDScript" id="GDScript_xob6c"]
 script/source = "extends Control
@@ -39,7 +40,6 @@ func _on_play_button_pressed()->void:
 func _on_quit_button_pressed()->void:
 	await Fade.fade_out(0.4, Color(0,0,0,1),\"GradientVertical\",false,true).finished
 	get_tree().quit()
-
 
 func _on_options_button_pressed()->void:
 	optionsMenu.show()
@@ -124,12 +124,26 @@ layout_mode = 1
 anchor_left = 0.019
 anchor_right = 0.019
 anchor_bottom = 0.2
-offset_left = 0.000999451
-offset_top = 1.52588e-05
-offset_right = 350.001
-offset_bottom = 1.52588e-05
+offset_left = -0.379954
+offset_top = -53.3332
+offset_right = 349.62
+offset_bottom = -53.3332
 grow_horizontal = 1
 grow_vertical = 1
+text = "New game"
+
+[node name="loadButton" parent="buttonHolder" instance=ExtResource("5_nxhqu")]
+layout_mode = 1
+anchor_left = 0.019
+anchor_right = 0.019
+anchor_bottom = 0.2
+offset_left = 0.000999451
+offset_top = 18.0953
+offset_right = 350.001
+offset_bottom = 18.0953
+grow_horizontal = 1
+grow_vertical = 1
+text = "load game"
 
 [node name="optionsButton" parent="buttonHolder" instance=ExtResource("5_nxhqu")]
 layout_mode = 1
@@ -206,7 +220,13 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 31
 text = "1.0"
 
+[node name="saveLoadMenu" parent="." instance=ExtResource("6_8a5q4")]
+visible = false
+layout_mode = 1
+
 [connection signal="pressed" from="buttonHolder/playButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="buttonHolder/loadButton" to="saveLoadMenu" method="show"]
+[connection signal="pressed" from="buttonHolder/loadButton" to="saveLoadMenu" method="initLoadPanel"]
 [connection signal="pressed" from="buttonHolder/optionsButton" to="." method="_on_options_button_pressed"]
 [connection signal="pressed" from="buttonHolder/creditsButton" to="." method="_on_credits_button_pressed"]
 [connection signal="pressed" from="buttonHolder/quitButton" to="." method="_on_quit_button_pressed"]

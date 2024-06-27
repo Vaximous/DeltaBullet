@@ -80,6 +80,7 @@ func hideSaveNamePanel()->void:
 
 func showSaveNamePanel()->void:
 	saveNamePanel.visible = true
+	saveNamePanel.modulate = Color.TRANSPARENT
 	var tween = create_tween()
 	tween.set_parallel(true)
 	tween.tween_property(saveNamePanel,"modulate",Color(1,1,1,1),0.3)

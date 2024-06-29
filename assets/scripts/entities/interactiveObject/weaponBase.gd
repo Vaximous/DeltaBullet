@@ -114,7 +114,7 @@ func _physics_process(delta)->void:
 							if weaponRemoteState != null and weaponRemoteStateLeft != null:
 								weaponRemoteState.travel("idle")
 								weaponRemoteStateLeft.travel("idle")
-								if weaponResource.useLeftHandIdle:
+								if weaponResource.useLeftHandIdle and !weaponOwner.isArmingThrowable:
 									weaponOwner.animationTree.set("parameters/weaponBlend_Left_blend/blend_amount", lerpf(weaponOwner.animationTree.get("parameters/weaponBlend_Left_blend/blend_amount"), 1, leftArmSpeed*delta))
 								else:
 									weaponOwner.animationTree.set("parameters/weaponBlend_Left_blend/blend_amount", lerpf(weaponOwner.animationTree.get("parameters/weaponBlend_Left_blend/blend_amount"), 0, leftArmSpeed*delta))
@@ -155,7 +155,7 @@ func _physics_process(delta)->void:
 									if !weaponRemoteState.get_current_node() == "aim":
 										weaponRemoteState.travel("aim")
 										weaponRemoteStateLeft.travel("aim")
-								if weaponResource.useLeftHandFreeAiming:
+								if weaponResource.useLeftHandFreeAiming and !weaponOwner.isArmingThrowable:
 									weaponOwner.animationTree.set("parameters/weaponBlend_Left_blend/blend_amount", lerpf(weaponOwner.animationTree.get("parameters/weaponBlend_Left_blend/blend_amount"), 1, leftArmSpeed*delta))
 								else:
 									weaponOwner.animationTree.set("parameters/weaponBlend_Left_blend/blend_amount", lerpf(weaponOwner.animationTree.get("parameters/weaponBlend_Left_blend/blend_amount"), 0, leftArmSpeed*delta))
@@ -457,7 +457,7 @@ func reloadWeapon()->void:
 	await get_tree().process_frame
 	weaponRemoteState.stop()
 	weaponRemoteStateLeft.stop()
-	if canReloadWeapon and !isReloading and weaponResource.canBeReloaded and isEquipped:
+	if canReloadWeapon and !isReloading and weaponResource.canBeReloaded and isEquipped and !weaponOwner.isArmingThrowable:
 		var firedShots = weaponResource.ammoSize - currentAmmo
 		weaponRemoteState.travel("reload")
 		weaponRemoteState.next()

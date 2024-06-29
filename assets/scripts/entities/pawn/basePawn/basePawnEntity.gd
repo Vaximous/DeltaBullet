@@ -181,10 +181,13 @@ var oldPos : float = 0.0
 @export var defaultRunSpeed : float = 6.0
 @export var canJump : bool = true
 @export var isJumping : bool = false
-@export_subgroup("Inventory")
-var throwableInventory : Array = []
+@export_subgroup("Throwables")
+var throwableItem
+var throwableAmount : int = 0
 var isArmingThrowable : bool = false
 var canThrowThrowable : bool = true
+var isThrowing = false
+@export_subgroup("Inventory")
 var pawnCash : int = 0
 var itemNames : Array
 @export var itemInventory : Array
@@ -328,6 +331,12 @@ func _physics_process(delta) -> void:
 						items.isEquipped = false
 				animationTree.set("parameters/weaponBlend/blend_amount", lerpf(animationTree.get("parameters/weaponBlend/blend_amount"), 0, 12*delta))
 				animationTree.set("parameters/weaponBlend_Left_blend/blend_amount", lerpf(animationTree.get("parameters/weaponBlend_Left_blend/blend_amount"),0,12*delta))
+
+			if isArmingThrowable:
+				animationTree.set("parameters/leftThrowableBlend/blend_amount", lerpf(animationTree.get("parameters/leftThrowableBlend/blend_amount"),1,12*delta))
+				animationTree.set("parameters/weaponBlend_Left_blend/blend_amount", lerpf(animationTree.get("parameters/weaponBlend_Left_blend/blend_amount"),0,12*delta))
+			else:
+				animationTree.set("parameters/leftThrowableBlend/blend_amount", lerpf(animationTree.get("parameters/leftThrowableBlend/blend_amount"),0,12*delta))
 			#Mesh Rotation
 			doMeshRotation(delta)
 			# Add the gravity
@@ -919,16 +928,21 @@ func _exit_tree()->void:
 			duplicated[i].queue_free()
 
 func armThrowable()->void:
-	if canThrowThrowable:
+	if canThrowThrowable and !isArmingThrowable and throwableAmount>0:
+		animationTree.set("parameters/leftArmed_Throw/request",AnimationNodeOneShot.ONE_SHOT_REQUEST_NONE)
 		isArmingThrowable = true
+		isThrowing = false
 
 func throwThrowable()->void:
 	if isArmingThrowable:
+		isThrowing = true
 		canThrowThrowable = false
-		isArmingThrowable = false
+		animationTree.set("parameters/leftArmed_Throw/request",AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 		## Throw the actual throwable here
+		await get_tree().create_timer(0.8).timeout
 		canThrowThrowable = true
-		isArmingThrowable = true
+		isThrowing = false
+		isArmingThrowable = false
 
 func savePawnFile(pawnFile:String = "player"):
 	Console.add_rich_console_message("[color=green]Saving Pawn to File..[/color]")

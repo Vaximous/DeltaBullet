@@ -1,0 +1,50 @@
+extends Control
+@onready var panelLabel : Label = $panel/textureRect/label
+@onready var mapContainer : VBoxContainer = $panel/scrollContainer/mapContainer
+@onready var saveName : TextEdit = $panel/saveNamePanel/textEdit
+
+func _process(delta)->void:
+	if visible:
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	else:
+		queue_free()
+
+func _ready()->void:
+	initPanel()
+
+func initPanel()->void:
+	clearMaps()
+	showPanel()
+	scanMaps()
+
+func clearMaps()->void:
+	for maps in mapContainer.get_children():
+		maps.queue_free()
+
+func scanMaps()->void:
+	var mapButton = load("res://assets/scenes/ui/mapslist/mapButton.tscn")
+	var mapsArray = gameManager.scan_for_scenes("res://assets/scenes/worlds/")
+	for map in mapsArray:
+		if map.get_extension() == "tscn":
+			var mapinfo = load(map).instantiate()
+			#print(mapinfo)
+			var _map = mapButton.instantiate()
+			mapContainer.add_child(_map)
+			_map.mapFile = mapinfo
+			_map.sceneLoad = map
+			_map.parseMap()
+			gameManager.freeOrphanNodes()
+
+func hidePanel()->void:
+	var tween = create_tween()
+	tween.set_ease(Tween.EASE_OUT)
+	tween.set_parallel(true)
+	await tween.tween_property(self,"modulate",Color(1,1,1,0),0.25).finished
+	queue_free()
+
+func showPanel()->void:
+	var tween = create_tween()
+	tween.set_ease(Tween.EASE_IN)
+	tween.set_parallel(true)
+	tween.tween_property(self,"modulate",Color(1,1,1,1),0.25)
+

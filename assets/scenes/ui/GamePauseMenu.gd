@@ -6,6 +6,7 @@ var canPause : bool = true
 @onready var secondSound : AudioStreamPlayer = $audioStreamPlayer2
 @onready var gradientBG : TextureRect = $gradientBG
 @onready var saveLoadMenu : Control = $saveloadmenu
+@onready var resumeButton : Button = $ResumeButton
 
 func _ready() -> void:
 	gradientBG.self_modulate = Color.TRANSPARENT
@@ -51,6 +52,7 @@ func unpauseGame()->void:
 	get_tree().paused = false
 
 func pauseGame()->void:
+	resumeButton.focus_mode = 2
 	musicManager.pauseMusic()
 	Dialogic.end_timeline()
 	secondSound.play()

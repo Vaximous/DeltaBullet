@@ -29,6 +29,18 @@ func _process(_delta)->void:
 	if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED or Input.get_mouse_mode() == Input.MOUSE_MODE_HIDDEN:
 		if mouseActionsEnabled:
 			if Dialogic.current_timeline == null:
+				if Input.is_action_pressed("gThrowThrowable"):
+					if controllingPawn:
+						controllingPawn.freeAim = true
+						if !controllingPawn.isArmingThrowable and !controllingPawn.isThrowing:
+							controllingPawn.meshRotation = controllingPawn.attachedCam.camRot
+							controllingPawn.armThrowable()
+
+				if Input.is_action_just_released("gThrowThrowable"):
+					if controllingPawn and !controllingPawn.isThrowing:
+						controllingPawn.freeAimTimer.start()
+						controllingPawn.throwThrowable()
+
 				if Input.is_action_pressed("gRightClick"):
 					if !controllingPawn == null:
 						if !controllingPawn.isPawnDead:
@@ -144,7 +156,6 @@ func _unhandled_input(event)->void:
 						if controllingPawn.canRun:
 							controllingPawn.isRunning = true
 							#controllingPawn.freeAim = false
-
 				else:
 					if controllingPawn:
 						controllingPawn.isRunning = false

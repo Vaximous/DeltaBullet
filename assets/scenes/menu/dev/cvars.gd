@@ -98,6 +98,7 @@ func spawnPawn(walk:bool = false,position : Vector3 = Vector3.INF) -> void:
 		gameManager.world.worldPawns.add_child(pawn)
 		pawn.rotation.y = randf_range(0,360)
 		pawn.global_position = cast.get_collision_point()
+		pawn.fallDamageEnabled = true
 		pawn.global_position.y = pawn.global_position.y + 1
 		if walk:
 			var controller : AIComponent = aiControllerComponent.instantiate()
@@ -248,3 +249,8 @@ func loadMap(map):
 	if map is String:
 		if map != "" or " ":
 			gameManager.loadWorld(str("%s.tscn"%map))
+
+func maps():
+	var maplist = load("res://assets/scenes/ui/mapslist/maplist.tscn")
+	var mapInst = maplist.instantiate()
+	get_tree().current_scene.add_child(mapInst)

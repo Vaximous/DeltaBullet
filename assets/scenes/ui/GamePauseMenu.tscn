@@ -160,9 +160,9 @@ volume_db = -15.0
 bus = &"UI"
 
 [connection signal="pressed" from="ResumeButton" to="." method="_on_resume_button_pressed"]
-[connection signal="pressed" from="SaveButton" to="saveloadmenu" method="show"]
 [connection signal="pressed" from="SaveButton" to="saveloadmenu" method="initSavePanel"]
-[connection signal="pressed" from="LoadButton" to="saveloadmenu" method="show"]
+[connection signal="pressed" from="SaveButton" to="saveloadmenu" method="show"]
 [connection signal="pressed" from="LoadButton" to="saveloadmenu" method="initLoadPanel"]
+[connection signal="pressed" from="LoadButton" to="saveloadmenu" method="show"]
 [connection signal="pressed" from="OptionsButton" to="Options" method="show"]
 [connection signal="pressed" from="menuButton" to="." method="_on_menu_button_pressed"]

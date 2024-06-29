@@ -1,8 +1,7 @@
-[gd_scene load_steps=16 format=3 uid="uid://81cyr0xg0y7d"]
+[gd_scene load_steps=14 format=3 uid="uid://bjje0kxj4rhxt"]
 
-[ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="1_jcq11"]
-[ext_resource type="Script" path="res://assets/scenes/ui/saveloadmenu/saveloadmenu.gd" id="2_0er7p"]
-[ext_resource type="PackedScene" uid="uid://ba0s8u6mtjxns" path="res://assets/scenes/menu/menuButton.tscn" id="3_2ws27"]
+[ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="1_i040y"]
+[ext_resource type="Script" path="res://assets/scenes/ui/mapslist/maplist.gd" id="2_sbhbf"]
 
 [sub_resource type="Gradient" id="Gradient_clvtb"]
 colors = PackedColorArray(0.407843, 0, 0, 1, 0.309804, 0, 0, 0)
@@ -39,10 +38,8 @@ data = {
 [sub_resource type="ImageTexture" id="ImageTexture_bbnqk"]
 image = SubResource("Image_g1yuk")
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_7fdao"]
-gradient = SubResource("Gradient_clvtb")
-
-[node name="saveLoadMenu" type="Control"]
+[node name="maplistMenu" type="Control"]
+modulate = Color(1, 1, 1, 0)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -50,8 +47,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
-theme = ExtResource("1_jcq11")
-script = ExtResource("2_0er7p")
+theme = ExtResource("1_i040y")
+script = ExtResource("2_sbhbf")
 
 [node name="panel" type="Panel" parent="."]
 layout_mode = 1
@@ -82,7 +79,8 @@ offset_top = 7.0
 offset_right = 301.0
 offset_bottom = 59.0
 theme_override_font_sizes/font_size = 51
-text = "Choose save"
+text = "Choose map
+"
 
 [node name="scrollContainer" type="ScrollContainer" parent="panel"]
 layout_mode = 0
@@ -91,7 +89,7 @@ offset_top = 59.0
 offset_right = 1105.0
 offset_bottom = 688.0
 
-[node name="saveContainer" type="VBoxContainer" parent="panel/scrollContainer"]
+[node name="mapContainer" type="VBoxContainer" parent="panel/scrollContainer"]
 layout_mode = 2
 
 [node name="closeButton" type="Button" parent="panel"]
@@ -112,161 +110,4 @@ shortcut = SubResource("Shortcut_xum6f")
 icon = SubResource("ImageTexture_bbnqk")
 icon_alignment = 1
 
-[node name="overwritePanel" type="Panel" parent="panel"]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -284.5
-offset_top = -146.5
-offset_right = 284.5
-offset_bottom = 146.5
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 1
-
-[node name="textureRect" type="TextureRect" parent="panel/overwritePanel"]
-layout_mode = 0
-offset_left = -65.5
-offset_top = -16.5
-offset_right = 190.5
-offset_bottom = 23.5
-texture = SubResource("GradientTexture1D_7fdao")
-
-[node name="label" type="Label" parent="panel/overwritePanel/textureRect"]
-layout_mode = 0
-offset_left = 6.0
-offset_top = 2.0
-offset_right = 170.0
-offset_bottom = 37.0
-theme_override_font_sizes/font_size = 41
-text = "overwrite"
-vertical_alignment = 1
-
-[node name="label" type="Label" parent="panel/overwritePanel"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -272.5
-offset_top = -103.5
-offset_right = 273.5
-offset_bottom = 62.5
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 36
-text = "Are you sure you want to save in this slot? Doing so will overwrite it with new data.
-
-This cannot be reversed."
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 2
-
-[node name="yesButton" parent="panel/overwritePanel" instance=ExtResource("3_2ws27")]
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -283.0
-offset_top = -63.0
-offset_right = 35.0
-offset_bottom = 3.0
-grow_horizontal = 0
-grow_vertical = 0
-text = "Yes"
-
-[node name="noButton" parent="panel/overwritePanel" instance=ExtResource("3_2ws27")]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_right = 0.0
-anchor_bottom = 1.0
-offset_top = -63.0
-offset_right = 279.0
-offset_bottom = -17.0
-grow_horizontal = 1
-grow_vertical = 0
-text = "no"
-
-[node name="saveNamePanel" type="Panel" parent="panel"]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -295.0
-offset_top = -86.0
-offset_right = 295.0
-offset_bottom = 86.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="textureRect" type="TextureRect" parent="panel/saveNamePanel"]
-layout_mode = 0
-offset_left = -18.0
-offset_top = -16.0
-offset_right = 238.0
-offset_bottom = 24.0
-texture = SubResource("GradientTexture1D_nhmo2")
-
-[node name="label" type="Label" parent="panel/saveNamePanel/textureRect"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 16.0
-theme_override_font_sizes/font_size = 42
-text = "save name"
-
-[node name="textEdit" type="TextEdit" parent="panel/saveNamePanel"]
-layout_mode = 0
-offset_left = 8.0
-offset_top = 59.0
-offset_right = 565.0
-offset_bottom = 109.0
-placeholder_text = "Input Save File name here.."
-
-[node name="closeButton" type="Button" parent="panel/saveNamePanel"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -40.0
-offset_bottom = 30.0
-grow_horizontal = 0
-mouse_filter = 1
-theme_override_styles/normal = SubResource("StyleBoxEmpty_cfk1e")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_q7ge1")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_poqoo")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_ptr20")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_hxtqf")
-shortcut = SubResource("Shortcut_xum6f")
-icon = SubResource("ImageTexture_bbnqk")
-icon_alignment = 1
-
-[node name="acceptButton" type="Button" parent="panel/saveNamePanel"]
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -89.0
-offset_top = -30.0
-grow_horizontal = 0
-grow_vertical = 0
-theme_override_font_sizes/font_size = 15
-text = "Accept"
-
 [connection signal="pressed" from="panel/closeButton" to="." method="hidePanel"]
-[connection signal="pressed" from="panel/overwritePanel/yesButton" to="." method="_on_yes_button_pressed"]
-[connection signal="pressed" from="panel/overwritePanel/noButton" to="." method="hideOverridePanel"]
-[connection signal="pressed" from="panel/saveNamePanel/closeButton" to="." method="hideSaveNamePanel"]
-[connection signal="pressed" from="panel/saveNamePanel/acceptButton" to="." method="saveGame"]

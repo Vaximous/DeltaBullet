@@ -22,7 +22,8 @@ func free_me_orphan()->void:
 	if not is_inside_tree():
 		queue_free()
 
-
+func _process(delta)->void:
+	gameManager.showMouse()
 "
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_jmo12"]

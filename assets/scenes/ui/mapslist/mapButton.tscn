@@ -1,0 +1,97 @@
+[gd_scene load_steps=13 format=3 uid="uid://r1ok4f7qf2k0"]
+
+[ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="1_6twjy"]
+[ext_resource type="Script" path="res://assets/scenes/ui/mapslist/mapButton.gd" id="2_n5rn8"]
+[ext_resource type="AudioStream" uid="uid://08mwbmwvrolu" path="res://assets/sounds/ui/uiAppear2.wav" id="3_dklqy"]
+[ext_resource type="AudioStream" uid="uid://dbxyo1p3kd36u" path="res://assets/sounds/ui/uievaluate.wav" id="4_gl0dt"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qqgmi"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_uklys"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dkqhi"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1sutc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hgw5i"]
+
+[sub_resource type="Gradient" id="Gradient_06uxp"]
+colors = PackedColorArray(0.196078, 0, 0, 1, 0.356863, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_pv6nl"]
+gradient = SubResource("Gradient_06uxp")
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_rrhwt"]
+
+[node name="mapButton" type="Button"]
+custom_minimum_size = Vector2(0, 190)
+anchors_preset = -1
+anchor_right = 0.662
+anchor_bottom = 0.211
+offset_right = 0.800049
+offset_bottom = 0.0999908
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme = ExtResource("1_6twjy")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_qqgmi")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_uklys")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_dkqhi")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_1sutc")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_hgw5i")
+script = ExtResource("2_n5rn8")
+
+[node name="background" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 614.0
+offset_bottom = 152.0
+texture = SubResource("GradientTexture1D_pv6nl")
+
+[node name="mapIcon" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 13.0
+offset_top = 18.0
+offset_right = 207.0
+offset_bottom = 136.0
+texture = SubResource("PlaceholderTexture2D_rrhwt")
+expand_mode = 1
+
+[node name="mapName" type="Label" parent="."]
+layout_mode = 0
+offset_left = 241.0
+offset_top = 6.0
+offset_right = 1308.0
+offset_bottom = 67.0
+theme_override_font_sizes/font_size = 31
+text = "Map Name"
+vertical_alignment = 1
+
+[node name="mapDescription" type="Label" parent="."]
+self_modulate = Color(0.796243, 0.796243, 0.796243, 1)
+layout_mode = 0
+offset_left = 241.0
+offset_top = 49.0
+offset_right = 730.0
+offset_bottom = 110.0
+theme_override_font_sizes/font_size = 22
+text = "Map Description
+"
+vertical_alignment = 1
+
+[node name="audioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_dklqy")
+volume_db = -10.0
+pitch_scale = 2.05
+bus = &"UI"
+
+[node name="selectSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_gl0dt")
+volume_db = -10.0
+pitch_scale = 2.05
+bus = &"UI"
+
+[connection signal="focus_entered" from="." to="." method="hoverOn"]
+[connection signal="focus_exited" from="." to="." method="hoverOff"]
+[connection signal="mouse_entered" from="." to="." method="hoverOn"]
+[connection signal="mouse_exited" from="." to="." method="hoverOff"]
+[connection signal="pressed" from="." to="." method="_on_pressed"]

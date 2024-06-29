@@ -11,7 +11,7 @@ var sceneLoad : String
 	set(value):
 		buttonType = value
 		if buttonType == 1:
-			saveIcon.texture = load(["res://assets/scenes/ui/saveloadmenu/save1.png","res://assets/scenes/ui/saveloadmenu/save2.png","res://assets/scenes/ui/saveloadmenu/save3.png","res://assets/scenes/ui/saveloadmenu/save4.png"].pick_random())
+			saveIcon.texture = load(["res://assets/misc/db7.png","res://assets/scenes/ui/saveloadmenu/save1.png","res://assets/scenes/ui/saveloadmenu/save2.png","res://assets/scenes/ui/saveloadmenu/save3.png","res://assets/scenes/ui/saveloadmenu/save4.png"].pick_random())
 			saveName.text = "Create New Save"
 			saveLocation.text = ""
 			saveTimestamp.text = ""

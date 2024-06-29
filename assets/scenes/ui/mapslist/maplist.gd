@@ -23,17 +23,22 @@ func clearMaps()->void:
 
 func scanMaps()->void:
 	var mapButton = load("res://assets/scenes/ui/mapslist/mapButton.tscn")
-	var mapsArray = gameManager.scan_for_scenes("res://assets/scenes/worlds/")
+	var mapsArray = gameManager.scan_for_scenes(&"res://assets/scenes/worlds/")
 	for map in mapsArray:
-		if map.get_extension() == "tscn":
-			var mapinfo = load(map).instantiate()
-			#print(mapinfo)
-			var _map = mapButton.instantiate()
-			mapContainer.add_child(_map)
-			_map.mapFile = mapinfo
-			_map.sceneLoad = map
-			_map.parseMap()
-			gameManager.freeOrphanNodes()
+		if map.get_extension() == "tscn" || map.get_extension() == "scn":
+			var mapinfo = load(map)
+			if mapinfo is PackedScene:
+				#Console.add_rich_console_message("[color=green]%s[/color]"%mapinfo)
+				var mapVariants = mapinfo._bundled["variants"]
+				for v in mapVariants:
+					if v is WorldData:
+						var _map = mapButton.instantiate()
+						mapContainer.add_child(_map)
+						_map.mapFile = v
+						#Console.add_rich_console_message("[color=blue]%s[/color]"%_map.mapFile)
+						_map.sceneLoad = map
+						_map.parseMap()
+						gameManager.freeOrphanNodes()
 
 func hidePanel()->void:
 	var tween = create_tween()

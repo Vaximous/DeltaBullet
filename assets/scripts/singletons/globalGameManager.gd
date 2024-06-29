@@ -26,6 +26,7 @@ var deadzone : float = 0.1
 var defaultFOV : int = 90
 
 #World
+var tempImages : Array = ["res://assets/scenes/ui/saveloadmenu/save1.png","res://assets/scenes/ui/saveloadmenu/save2.png","res://assets/scenes/ui/saveloadmenu/save3.png","res://assets/scenes/ui/saveloadmenu/save4.png","res://assets/misc/db7.png"]
 var saveOverwrite : String
 var currentSave : String
 var dialogueCamLerpSpeed:float = 5.0
@@ -321,10 +322,12 @@ func loadGame(save:String)->void:
 				var nodeData = json.get_data()
 				currentSave = save
 				loadWorld(nodeData["scene"])
+		else:
+			Console.add_rich_console_message("[color=red]Unable to find that save![/color]")
 
 func scan_for_scenes(dirpath : String, max_depth : int = -1, _depth = 0) -> PackedStringArray:
 	if _depth == 0:
-		print("Scanning scenes at %s..." % dirpath)
+		Console.add_rich_console_message("[color=orange]Scanning scenes at %s...[/color]" % dirpath)
 	if max_depth >= 0:
 		if _depth > max_depth:
 			return []
@@ -339,9 +342,11 @@ func scan_for_scenes(dirpath : String, max_depth : int = -1, _depth = 0) -> Pack
 				if file_name.ends_with(".tscn") or file_name.ends_with(".scn"):
 					found_scenes.append((dirpath +"/"+ file_name).simplify_path())
 				elif file_name.ends_with(".tscn.remap") or file_name.ends_with(".scn.remap"):
-					var remapfile = ConfigFile.new()
-					remapfile.load(dirpath + file_name)
-					found_scenes.append(remapfile.get_value("remap", "path"))
+					var remapfile = "%s/%s"%[dirpath,file_name]
+					var cfg = ConfigFile.new()
+					cfg.load(remapfile)
+					#Console.add_rich_console_message("[color=purple]%s[/color]"%cfg.get_value("remap", "path"))
+					found_scenes.append(cfg.get_value("remap", "path"))
 					file_name = dir.get_next()
 					continue
 			else:
@@ -349,7 +354,9 @@ func scan_for_scenes(dirpath : String, max_depth : int = -1, _depth = 0) -> Pack
 				found_scenes.append_array(scan_for_scenes((dirpath +"/"+ file_name +"/").simplify_path(), max_depth, _depth + 1))
 			file_name = dir.get_next()
 	else:
+		Console.add_rich_console_message("[color=red]An error occurred when trying to access the path.[/color]")
 		print("An error occurred when trying to access the path.")
+
 	return found_scenes
 
 func scanForSaves(dirpath : String, max_depth : int = -1, _depth = 0) -> PackedStringArray:

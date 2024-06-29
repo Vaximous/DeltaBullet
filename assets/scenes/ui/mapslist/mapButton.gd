@@ -6,21 +6,22 @@ extends Button
 @onready var mapName : Label = $mapName
 @onready var mapDescription : Label = $mapDescription
 var sceneLoad : String
-var mapFile
+var mapFile : WorldData
 
 func _ready()->void:
 	hoverOff()
 
 func parseMap()->void:
 	if mapFile != null:
-		if mapFile.get("worldData") != null:
-			mapName.text = mapFile.worldData.worldName
-			mapDescription.text = mapFile.worldData.worldDescription
-			if mapFile.worldData.worldLoadingTexture != null:
-				mapIcon.texture = mapFile.worldData.worldLoadingTexture
+		mapName.text = mapFile.worldName
+		mapDescription.text = mapFile.worldDescription
+		if mapFile.worldLoadingTexture != null:
+			mapIcon.texture = mapFile.worldLoadingTexture
 		else:
-			queue_free()
-			gameManager.freeOrphanNodes()
+			mapIcon.texture = load(gameManager.tempImages.pick_random())
+	else:
+		queue_free()
+	gameManager.freeOrphanNodes()
 
 func hoverOn()->void:
 	hoverSound.play()

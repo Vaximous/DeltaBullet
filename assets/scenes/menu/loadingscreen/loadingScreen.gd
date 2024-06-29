@@ -26,6 +26,8 @@ var data:
 		worldNameLabel.text = data.worldName
 		worldDescription.text = data.worldDescription
 		worldBG.texture = data.worldLoadingTexture
+		if data.worldLoadingTexture == null:
+			worldBG.texture = load(gameManager.tempImages.pick_random())
 var loadStatus
 var sceneLoading
 var press = false

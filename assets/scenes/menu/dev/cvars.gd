@@ -251,6 +251,9 @@ func loadMap(map):
 			gameManager.loadWorld(str("%s.tscn"%map))
 
 func maps():
+	for m in get_tree().get_nodes_in_group(&"maplist"):
+		m.queue_free()
+
 	var maplist = load("res://assets/scenes/ui/mapslist/maplist.tscn")
 	var mapInst = maplist.instantiate()
 	get_tree().current_scene.add_child(mapInst)

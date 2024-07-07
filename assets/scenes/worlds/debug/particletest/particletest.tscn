@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://bgy0ycoxec6p6"]
+[gd_scene load_steps=40 format=3 uid="uid://bgy0ycoxec6p6"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_rrsmc"]
 [ext_resource type="PackedScene" uid="uid://boicvk4qeqmbd" path="res://assets/entities/pawnSpawn/pawnSpawn.tscn" id="2_d45q2"]
@@ -8,7 +8,6 @@
 [ext_resource type="PackedScene" uid="uid://dbqnhh5btxgqk" path="res://assets/entities/emitters/bloodDroplet/bloodDroplets.tscn" id="6_06gf1"]
 [ext_resource type="PackedScene" uid="uid://dsxt078giobel" path="res://assets/entities/weapons/Uzi/Uzi.tscn" id="6_tgu38"]
 [ext_resource type="PackedScene" uid="uid://bn07wnk5k005c" path="res://assets/entities/weapons/HoneyBadger/honeybadger.tscn" id="7_q40r8"]
-[ext_resource type="CompressedTexture3D" uid="uid://sr0kr5d88j54" path="res://assets/textures/misc/neutral-lut.png" id="8_5qwju"]
 [ext_resource type="PackedScene" uid="uid://boh343kalvj5i" path="res://assets/entities/weapons/Revolver/Revolver.tscn" id="8_uwo5p"]
 [ext_resource type="PackedScene" uid="uid://cgghffeqks1ac" path="res://assets/entities/clothing/Gloves/left_glove_fingerless.tscn" id="9_3ne02"]
 [ext_resource type="Texture2D" uid="uid://d0f0crtwpmoka" path="res://assets/textures/panoramas/panoramatest1.png" id="9_6to67"]
@@ -35,6 +34,23 @@ worldType = 0
 spawnPawnsOnLoad = true
 playOnStart = false
 spawnType = 0
+
+[sub_resource type="Curve" id="Curve_07aw7"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_kpisn"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_fc8cv"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 0.97041), 0.213839, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_bfvmr"]
+curve_x = SubResource("Curve_07aw7")
+curve_y = SubResource("Curve_kpisn")
+curve_z = SubResource("Curve_fc8cv")
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_0veox"]
 panorama = ExtResource("9_6to67")
@@ -65,7 +81,7 @@ fog_height_density = 0.089
 volumetric_fog_density = 0.0112
 adjustment_enabled = true
 adjustment_saturation = 1.15
-adjustment_color_correction = ExtResource("8_5qwju")
+adjustment_color_correction = SubResource("CurveXYZTexture_bfvmr")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cad6t"]
 albedo_texture = ExtResource("11_h2hbs")

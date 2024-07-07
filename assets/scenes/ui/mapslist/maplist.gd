@@ -46,6 +46,7 @@ func hidePanel()->void:
 	tween.set_parallel(true)
 	await tween.tween_property(self,"modulate",Color(1,1,1,0),0.25).finished
 	queue_free()
+	gameManager.hideMouse()
 
 func showPanel()->void:
 	var tween = create_tween()
@@ -53,3 +54,5 @@ func showPanel()->void:
 	tween.set_parallel(true)
 	tween.tween_property(self,"modulate",Color(1,1,1,1),0.25)
 
+func _on_close_button_pressed()->void:
+	gameManager.hideMouse()

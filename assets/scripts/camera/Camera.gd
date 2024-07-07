@@ -361,7 +361,10 @@ func fireRecoil(setRecoilX:float = 0.0,setRecoilY:float = 0.0,setRecoilZ:float =
 		camTargetRot = Vector3(camRecoil.x, randf_range(0.0,camRecoil.y), randf_range(0.0,camRecoil.z) )
 	else:
 		camTargetRot = Vector3(setRecoilX, randf_range(-setRecoilY,setRecoilY), randf_range(-setRecoilZ,setRecoilZ) )
-
+	if !isZoomed:
+		camera.fov += randf_range(0.8,1.6)
+	else:
+		camera.fov += randf_range(0.1,0.8)
 func applyWeaponSpread(spread)->void:
 	camCast.rotation += Vector3(randf_range(0.0, spread),randf_range(-spread, spread),0)
 	hud.getCrosshair().addSize(0.85)

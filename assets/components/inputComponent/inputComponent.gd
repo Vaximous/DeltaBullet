@@ -58,8 +58,8 @@ func _process(_delta)->void:
 				else:
 					if controllingPawn:
 						controllingPawn.meshLookAt = false
+						controllingPawn.canRun = true
 						if !controllingPawn.freeAim:
-							controllingPawn.canRun = true
 							controllingPawn.freeAim = false
 				if Dialogic.current_timeline == null:
 					if Input.is_action_pressed("gLeftClick"):

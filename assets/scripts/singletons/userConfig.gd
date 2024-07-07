@@ -25,6 +25,13 @@ var audio_custom_music_enabled : bool = false
 var graphics_motion_blur : bool = false
 var graphics_resolution : int = 0
 var graphics_fullscreen : bool = false
+var graphics_vsync : bool = true:
+	set(value):
+		graphics_vsync = value
+		if graphics_vsync:
+			DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ENABLED)
+		else:
+			DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
 var graphics_fxaa : bool = true:
 	set(value):
 		graphics_fxaa = value

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://b1x2t2na1bc2b"]
+[gd_scene load_steps=15 format=3 uid="uid://b1x2t2na1bc2b"]
 
 [ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="1_cg2cc"]
 [ext_resource type="Texture2D" uid="uid://cchng1uogx7qf" path="res://assets/textures/misc/logo.png" id="3_hv6kb"]
@@ -53,6 +53,10 @@ func free_me_orphan()->void:
 
 func _on_credits_button_pressed()->void:
 	gameManager.notify_warn(\"Not yet implemented.\", 2, 10)
+
+
+func _on_button_pressed()->void:
+	OS.shell_open(\"http://smackneckstudios.com\")
 "
 
 [sub_resource type="Gradient" id="Gradient_qjgg7"]
@@ -62,6 +66,7 @@ colors = PackedColorArray(0, 0, 0, 0.905882, 0.286275, 0.286275, 0.286275, 0, 1,
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_x7df6"]
 gradient = SubResource("Gradient_qjgg7")
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_s6jd1"]
 [node name="MenuUI" type="Control"]
 process_mode = 3
 layout_mode = 3
@@ -97,6 +102,16 @@ offset_bottom = 165.0
 grow_horizontal = 0
 texture = ExtResource("5_bto6s")
 expand_mode = 1
+
+[node name="button" type="Button" parent="Smackneck"]
+layout_mode = 0
+offset_right = 151.0
+offset_bottom = 160.0
+theme_override_styles/normal = SubResource("StyleBoxEmpty_s6jd1")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_j1uqd")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_mefbm")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_5nlo5")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_qkvf1")
 
 [node name="gameLogo" type="TextureRect" parent="."]
 layout_mode = 1
@@ -225,6 +240,7 @@ text = "1.0"
 visible = false
 layout_mode = 1
 
+[connection signal="pressed" from="Smackneck/button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="buttonHolder/playButton" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="buttonHolder/loadButton" to="saveLoadMenu" method="initLoadPanel"]
 [connection signal="pressed" from="buttonHolder/loadButton" to="saveLoadMenu" method="show"]

@@ -272,7 +272,7 @@ layout_mode = 1
 anchors_preset = -1
 anchor_bottom = 1.043
 offset_right = 100.0
-offset_bottom = -0.0209999
+offset_bottom = 49.0
 texture = SubResource("GradientTexture1D_su33n")
 expand_mode = 1
 

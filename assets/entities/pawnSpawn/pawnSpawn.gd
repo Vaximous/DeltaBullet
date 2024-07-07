@@ -27,6 +27,7 @@ var previewMeshMat = load("res://assets/materials/pawnMaterial/MALE.tres").dupli
 @export_enum("Idle","Wander","Patrol") var aiType = 1
 @export var hatedGroups : Array[StringName] = ["Player","Hostile"]
 @export var spawnGroup : StringName = "Hostile"
+@export var pawnHP : int = 100
 var forceAnimation: bool = false
 @export var dialogueStartingCam : Marker3D
 @export var dialogueName : StringName = ""
@@ -155,10 +156,9 @@ func spawnPawn():
 				pawn.currentItemIndex = weaponToEquip
 			if pawnColor != Color(1.0,0.74,0.44,1.0):
 				pawn.pawnColor = pawnColor
+			pawn.healthComponent.health = pawnHP
 		pawnSpawned.emit(pawn)
 		return pawn
-
-	return
 
 func setClothesPreview()->void:
 	if Engine.is_editor_hint():

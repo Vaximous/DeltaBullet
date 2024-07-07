@@ -1,6 +1,6 @@
 [
 	{
-		"id": 1,
+		"id": 0,
 		"questName": "Test",
 		"questInfo": "Hey, this is a quick test. Bitch!",
 		"questDescriptions": [
@@ -12,7 +12,7 @@
 		"questFailed": false
 	},
 	{
-		"id": 2,
+		"id": 1,
 		"questName": "Testa 2",
 		"questInfo": "Also a quick test. All using badass.json files to store the contracts! Soon I gotta add functions to actually complete the bitch..",
 		"questDescriptions": [

@@ -49,9 +49,9 @@ func _on_mouse_entered()->void:
 	animationPlayer.play(\"hover\")
 
 func activateContract():
-	for quest in questManager.questDatabase:
-		if !quest.questCompleted or !quest.questFailed:
-			questManager.activateQuest(contractID)
+	if !questManager.questDatabase[contractID].questCompleted or !questManager.questDatabase[contractID].questFailed:
+		questManager.activateQuest(contractID)
+		checkActiveContract()
 
 func checkActiveContract()->void:
 	if contractID == questManager.currentActiveQuest:
@@ -198,9 +198,9 @@ libraries = {
 [node name="textureRect2" type="TextureRect" parent="."]
 visible = false
 layout_mode = 0
-offset_left = 693.0
+offset_left = 334.0
 offset_top = 20.0
-offset_right = 733.0
+offset_right = 374.0
 offset_bottom = 60.0
 texture = SubResource("PlaceholderTexture2D_dxtjt")
 

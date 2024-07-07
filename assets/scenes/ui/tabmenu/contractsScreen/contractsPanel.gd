@@ -15,6 +15,6 @@ func scanContracts()->void:
 		_contractButton.pressed.connect(updateContractInfo.bind(quest.id))
 
 func updateContractInfo(id)->void:
-	for quest in questManager.questDatabase:
-		if quest.id == id:
-			contractInfo.text = str(quest.questInfo)
+	for quest in questManager.questDatabase.size():
+		if questManager.questDatabase[quest].id == id:
+			contractInfo.text = str(questManager.questDatabase[quest].questInfo)

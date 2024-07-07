@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://1uuvtqrmyqus"]
+[gd_scene load_steps=44 format=3 uid="uid://1uuvtqrmyqus"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_fy66m"]
 [ext_resource type="PackedScene" uid="uid://boicvk4qeqmbd" path="res://assets/entities/pawnSpawn/pawnSpawn.tscn" id="2_mn033"]
@@ -17,9 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://bap501mpmqgb" path="res://assets/entities/clothing/Gloves/right_glove_fingerless.tscn" id="8_30e07"]
 [ext_resource type="PackedScene" uid="uid://b026rv1louhqg" path="res://assets/entities/clothing/Longcoats/longCoat.tscn" id="9_oa5hw"]
 [ext_resource type="PackedScene" uid="uid://4seyitfkc6wn" path="res://assets/entities/clothing/Pants/pants.tscn" id="10_ogp5d"]
-[ext_resource type="PackedScene" uid="uid://b4v8dskvpby4c" path="res://assets/entities/clothing/Hair/Hair2.tscn" id="14_bhjxw"]
 [ext_resource type="PackedScene" uid="uid://di4i31dg7lojx" path="res://assets/entities/pawnEntity/ragdoll/pawnRagdoll.tscn" id="15_4qgq4"]
-[ext_resource type="PackedScene" uid="uid://nyee136gj7vd" path="res://assets/entities/clothing/longSleeve/long_sleeved_jacket.tscn" id="15_wjsdj"]
 [ext_resource type="PackedScene" uid="uid://dend7ate7mq6e" path="res://assets/entities/bulletHoles/default/BulletHole.tscn" id="17_4tm44"]
 [ext_resource type="Script" path="res://assets/resources/PhysicsMaterials/DB_PhysicsMaterial.gd" id="17_15fkl"]
 [ext_resource type="Texture2D" uid="uid://bodygaior62dl" path="res://assets/textures/Developer_Textures/Light/texture_08.png" id="18_8tf33"]
@@ -293,12 +291,10 @@ func questCheck(id)->void:
 		questPawns.append(jerry)
 		jerry.killedPawn.connect(questManager.progressQuest.bind(1))
 
-
 func _questProgress(id,questProgress):
 	if id == 1:
 		if questProgress == 1:
-			gameManager.notifyCheck(\"Jerry is dead! Contract Complete!\", 2, 10)
-			questManager.completeQuest(id)
+			gameManager.notify_warn(\"Jerry is dead!.\", 2, 10)
 "
 
 [node name="worldBase2" instance=ExtResource("1_fy66m")]
@@ -309,18 +305,12 @@ transform = Transform3D(0.77901, 0, -0.627012, 0, 1, 0, 0.627012, 0, 0.77901, 1.
 pawnType = 0
 pawnWeapons = Array[PackedScene]([ExtResource("4_a2bgr"), ExtResource("5_pk0d2"), ExtResource("6_81xn8")])
 pawnClothing = Array[PackedScene]([ExtResource("7_qm1ts"), ExtResource("8_30e07"), ExtResource("9_oa5hw"), ExtResource("10_ogp5d")])
-pawnHP = 100
 
 [node name="pawnSpawn" parent="Spawns/pawnSpawns" index="0" instance=ExtResource("2_mn033")]
 transform = Transform3D(-0.863642, 0, 0.504106, 0, 1, 0, -0.504106, 0, -0.863642, 7.89555, 0.5, 2.78226)
 active = false
 pawnName = "Jerry"
-pawnWeapons = Array[PackedScene]([ExtResource("4_a2bgr"), ExtResource("5_pk0d2")])
-pawnClothing = Array[PackedScene]([ExtResource("14_bhjxw"), ExtResource("15_wjsdj"), ExtResource("10_ogp5d")])
-equipWeaponOnSpawn = true
-weaponToEquip = 2
-pawnHP = 3500
-pawnColor = Color(0.926594, 0.735976, 0.847277, 1)
+pawnWeapons = Array[PackedScene]([ExtResource("4_a2bgr")])
 
 [node name="worldEnvironment" parent="Environment" index="0"]
 environment = SubResource("Environment_ly0hw")

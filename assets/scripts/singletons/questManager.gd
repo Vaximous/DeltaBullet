@@ -4,6 +4,7 @@ signal questFailed(id)
 signal databaseCreated
 signal questCompleted(id)
 signal questProgressed(id,questProgress)
+signal questProgression(id,questProgress)
 
 ## Database for all quests in the game. A JSON file containing quest information such as Quest Name, Quest Description, Quest ID and current status of the quest.
 var questDatabase : Array
@@ -48,10 +49,12 @@ func activateQuest(id) -> void:
 func progressQuest(id) -> void:
 	## If the quest is progressed the quest progress integer will increase and a signal will be emitted.
 	if currentQuests.has(id):
-		currentQuests[id].questProgress += 1
-		questProgressed.emit(id,currentQuests[id].questProgress)
-		print_rich("[color=green]Quest '%s' progressed.[/color]" %currentQuests[id].questName)
-		Console.add_rich_console_message("[color=green]Quest '%s' progressed.[/color]" %currentQuests[id].questName)
+		if !currentQuests[id].questProgress > currentQuests[id].questDescriptions.size()-1:
+			currentQuests[id].questProgress += 1
+			questProgressed.emit(id)
+			questProgression.emit(id,currentQuests[id].questProgress)
+			print_rich("[color=green]Quest '%s' progressed.[/color]" %currentQuests[id].questName)
+			Console.add_rich_console_message("[color=green]Quest '%s' progressed.[/color]" %currentQuests[id].questName)
 
 func completeQuest(id) -> void:
 	## Mark the quest as complete

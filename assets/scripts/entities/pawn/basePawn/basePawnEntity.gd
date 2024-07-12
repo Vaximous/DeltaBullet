@@ -8,6 +8,7 @@ signal clothingChanged
 signal itemChanged
 signal forcingAnimation
 signal killedPawn
+signal onPawnKilled
 signal hitboxAssigned(hitbox)
 signal headshottedPawn
 
@@ -212,6 +213,7 @@ var currentItem = null
 					itemHolder.position = Vector3.ZERO
 
 			if attachedCam:
+				currentItem.weaponCast = attachedCam.camCast
 				if currentItem.weaponResource.useCustomCrosshairSize:
 					attachedCam.hud.getCrosshair().crosshairSize = currentItem.weaponResource.crosshairSizeOverride
 				else:
@@ -451,6 +453,7 @@ func die(killer:Node3D = null) -> void:
 		attachedCam.hud.hudEnabled = false
 		attachedCam.resetCamCast()
 		Dialogic.end_timeline()
+	onPawnKilled.emit()
 	isPawnDead = true
 	var ragdoll = await createRagdoll(lastHitPart, killer)
 	await moveDecalsToRagdoll(ragdoll)

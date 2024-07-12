@@ -61,6 +61,7 @@ func completeQuest(id) -> void:
 	if currentQuests.has(id):
 		currentQuests[id].completed = true
 		questCompleted.emit(id)
+		gameManager.notifyCheck("Quest '%s' completed." %currentQuests[id].questName, 2, 10)
 		print_rich("[color=green]Quest '%s' completed.[/color]" %currentQuests[id].questName)
 		Console.add_rich_console_message("[color=green]Quest '%s' completed.[/color]" %currentQuests[id].questName)
 

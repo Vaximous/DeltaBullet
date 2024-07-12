@@ -11,7 +11,9 @@ var leftArmSpeed = 16
 var weaponRemoteState : AnimationNodeStateMachinePlayback
 var weaponRemoteStateLeft : AnimationNodeStateMachinePlayback
 var weaponAnimSet = false
-var weaponOwner : BasePawn = null
+var weaponOwner : BasePawn = null:
+	set(value):
+		weaponOwner = value
 var canReloadWeapon = false
 var currentMagSize = 0:
 	set(value):
@@ -193,10 +195,10 @@ func fire()->void:
 		shot_fired.emit()
 		isFiring = true
 
-		var shot_cast : RayCast3D = weaponCast
-		if checkShooter():
-			if weaponOwner.attachedCam.camCast != null:
-				shot_cast = weaponOwner.attachedCam.camCast
+		#var shot_cast : RayCast3D = weaponCast
+		#if checkShooter():
+			#if weaponOwner.attachedCam.camCast != null:
+				#shot_cast = weaponOwner.attachedCam.camCast
 
 		if weaponRemoteState and weaponRemoteStateLeft and isEquipped:
 			weaponRemoteState.start("fire")
@@ -214,15 +216,15 @@ func fire()->void:
 				#bullet.position.x += randf_range(-0.09,0.09)
 				#bullet.position.y += randf_range(-0.05,0.05)
 
-			if shot_cast != null:
-				spawnProjectile(shot_cast)
+			if weaponCast != null:
+				spawnProjectile(weaponCast)
+				applyCameraRecoil()
 					#raycastHit(shot_cast)
 					#var hit = globalParticles.detectMaterial(getHitObject(shot_cast))
 					#if hit != null:
 						#var pt = globalParticles.createParticle(globalParticles.detectMaterial(getHitObject(shot_cast)), getRayColPoint(shot_cast))
 						#if !pt == null:
 							#pt.look_at(getRayColPoint(shot_cast) + getRayNormal(shot_cast))
-		applyCameraRecoil()
 		await get_tree().create_timer(weaponResource.weaponFireRate).timeout
 		isFiring = false
 	return
@@ -454,7 +456,7 @@ func setWeaponRecoil()->void:
 			weaponOwner.attachedCam.camRecoil = weaponResource.weaponRecoil
 
 func reloadWeapon()->void:
-	await get_tree().process_frame
+	#await get_tree().process_frame
 	weaponRemoteState.stop()
 	weaponRemoteStateLeft.stop()
 	if canReloadWeapon and !isReloading and weaponResource.canBeReloaded and isEquipped and !weaponOwner.isArmingThrowable:

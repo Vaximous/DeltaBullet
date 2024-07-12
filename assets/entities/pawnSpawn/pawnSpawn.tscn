@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://ctyjq1f6284yy" path="res://assets/textures/pawn_tex/texture_Normal_OpenGL.jpg" id="5_sssv4"]
 [ext_resource type="Texture2D" uid="uid://d68y7icd86b3" path="res://assets/textures/pawn_tex/texture_Roughness.jpg" id="6_ie2lk"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i2s2r"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yg3hr"]
 resource_name = "MALE"
 cull_mode = 2
 diffuse_mode = 2
@@ -41,11 +41,10 @@ distance_fade_max_distance = 1991.94
 gizmo_extents = 0.0
 script = ExtResource("1_2jqm3")
 aiType = 0
-pawnHP = null
 
 [node name="previewMesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
-material_override = SubResource("StandardMaterial3D_i2s2r")
+material_override = SubResource("StandardMaterial3D_yg3hr")
 gi_mode = 0
 mesh = ExtResource("2_kp4hc")
 

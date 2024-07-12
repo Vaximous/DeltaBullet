@@ -103,3 +103,6 @@ func _on_visible_on_screen_enabler_3d_screen_entered()->void:
 func _on_visible_on_screen_enabler_3d_screen_exited()->void:
 	onScreen = false
 	queue_free()
+
+func _ready()->void:
+	get_tree().create_timer(1).timeout.connect(queue_free)

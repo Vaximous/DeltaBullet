@@ -229,8 +229,10 @@ func pawnDebug(value:bool):
 	if gameManager.world:
 		gameManager.pawnDebug = value
 		if value:
+			gameManager.getEventSignal("debugEnabled").emit()
 			gameManager.notify_warn("Pawn Debugger info will appear above NPC pawns' heads.", 2, 10)
 		else:
+			gameManager.getEventSignal("debugDisabled").emit()
 			gameManager.notify_warn("Pawn Debugger info will no longer appear above NPC pawns' heads.", 2, 10)
 
 func debugToggle():

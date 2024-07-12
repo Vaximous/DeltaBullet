@@ -170,6 +170,7 @@ func _physics_process(delta)->void:
 
 	#Always Screentilt
 	if UserConfig.game_camera_screentilt_always:
+		#camCurrRot.x += castLerp.x
 		camCurrRot.z += -castLerp.y
 	#Cast Lerp
 

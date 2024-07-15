@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://glmcou87njh6"]
+
+[ext_resource type="Script" path="res://assets/components/aiComponent/aiMemoryManager.gd" id="1_1x181"]
+
+[node name="aiMemoryManager" type="Node"]
+script = ExtResource("1_1x181")

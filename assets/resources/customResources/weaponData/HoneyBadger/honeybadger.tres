@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3 uid="uid://b2ai53knvexou"]
 
 [ext_resource type="Script" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="1_3lyem"]
-[ext_resource type="Texture2D" uid="uid://sr64p1aykopo" path="res://assets/textures/crosshair/crosshair004.png" id="1_o6tua"]
+[ext_resource type="Texture2D" uid="uid://c7b38t83ckisx" path="res://assets/textures/crosshair/crosshair161.png" id="1_s2o5w"]
 
 [resource]
 resource_local_to_scene = true
@@ -19,9 +19,9 @@ bulletPenetration = 1.0
 weaponImpulse = 25.0
 weaponShots = 1
 ammoConsumption = 1
-useCustomCrosshairSize = false
-crosshairSizeOverride = Vector2(0.8, 0.8)
-forcedCrosshair = ExtResource("1_o6tua")
+useCustomCrosshairSize = true
+crosshairSizeOverride = Vector2(0.6, 0.6)
+forcedCrosshair = ExtResource("1_s2o5w")
 useFOV = true
 fovShotAmount = 0.8
 weaponRecoil = Vector3(5, 7, 3)

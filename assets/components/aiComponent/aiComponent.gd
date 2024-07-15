@@ -1,7 +1,9 @@
 @tool
 extends Node3D
 class_name AIComponent
+signal canSeeSomething
 signal interactSpeakTrigger
+signal visibleObject(object,visibleposition)
 @onready var visualMesh : MeshInstance3D = $visualMesh:
 	set(value):
 		visualMesh = value
@@ -12,9 +14,6 @@ signal interactSpeakTrigger
 		aimCast = value
 @onready var aimCastEnd : Marker3D = $aiAimcast/aiAimcastEnd
 @onready var pawnDebugLabel : Label3D = $debugPawnStats
-@onready var immediateMesh : MeshInstance3D = $pawnGrabber/meshInstance3d
-@onready var visionCast : RayCast3D = $visionCast
-@onready var detectionShape : CollisionShape3D = $pawnGrabber/collisionShape3d
 @export_category("AI Component")
 @export var pawnOwner : BasePawn:
 	set(value):
@@ -23,6 +22,8 @@ signal interactSpeakTrigger
 		pawnOwner.itemChanged.connect(setWeaponCast)
 		pawnOwner.onScreenNotifier.screen_entered.connect(enableAnimations)
 		pawnOwner.onScreenNotifier.screen_exited.connect(disableAnimations)
+		global_position = pawnOwner.pawnMesh.global_position
+		global_position.y += 1
 @export_category("Interaction")
 @export_enum("Dialogue") var interactType : int = 0
 @export var isInteractable : bool = false
@@ -49,44 +50,40 @@ var isInDialogue : bool
 @export var navPointGrabber : Area3D
 @export var visionTimer : Timer
 @onready var pawnGrabber : Area3D = $pawnGrabber
+@export_subgroup("Memory")
+@onready var memorySpanTimer = $memorySpan
+@export var memoryManager : AiMemoryManager
+#@export var memorySpan : float = 10.0
 @export_subgroup("Mesh")
-@export var meshAngle:float = 30:
+@export var meshAngle:float = 1:
 	set(value):
 		meshAngle = value
-		if Engine.is_editor_hint():
+		if visualMesh:
 			visualMesh.mesh = createLOSWedge()
 @export var meshHeight:float = 1.0:
 	set(value):
 		meshHeight = value
-		if Engine.is_editor_hint():
+		if visualMesh:
 			visualMesh.mesh = createLOSWedge()
 @export var meshDistance:float = 10.0:
 	set(value):
 		meshDistance = value
-		if Engine.is_editor_hint():
+		if visualMesh:
 			visualMesh.mesh = createLOSWedge()
 @export_subgroup("Overlap")
+@export_flags_3d_physics var collisionMasks : int
 @export var visibleObjects : Array = []
 @export var pawnHasTarget : bool = false:
 	set(value):
 		#setExceptions()
-		aimCast.position = visionCast.position
+		#aimCast.position = visionCast.position
 		pawnHasTarget = value
 		pawnOwner.freeAim = value
 		pawnOwner.meshLookAt = value
-@export var overlappingObject : Node:
-	set(value):
-		#setExceptions()
-		overlappingObject = value
-		if value == null:
-			pawnHasTarget = false
-@export var overlappingObjectPosition : Vector3
 @export_subgroup("Detection")
 var withinAttackRange : bool = false
 @export var hatedPawnGroups : Array[StringName]
 @export var hatedPawns : Array[BasePawn]
-@export var detectionRadius : float = 10.0
-@export var detectionAngle : float = 90.0
 @export var attackRange : float = 6.0
 @export var aimSpeed : float = 0.075
 var lastDirection : Vector3
@@ -95,10 +92,7 @@ var debugDist : Vector3
 @export var currLocation:Vector3
 @export var newVelocity:Vector3
 var reachedTarget : bool = false
-var distanceToPawn : float = 0.0
-var tgtVect : Vector3
-var tgtBasis : Basis
-var lookAt : float
+
 
 func _ready() -> void:
 	if !Engine.is_editor_hint():
@@ -110,14 +104,25 @@ func _ready() -> void:
 		await get_tree().process_frame
 		if isInteractable:
 			setInteractablePawn(true)
-
 		if pawnOwner:
 			pawnOwner.healthComponent.healthDepleted.connect(ceaseAI)
 			for hboxes in pawnOwner.hitboxes.size():
 				pawnOwner.hitboxes[hboxes].damaged.connect(addToHatedPawns)
 	else:
 		visualMesh.visible = true
-		visualMesh.mesh = createLOSWedge()
+		visualMesh.mesh = createFOVModel()
+
+func createFOVModel()->ImmediateMesh:
+	var _mesh : ImmediateMesh = ImmediateMesh.new()
+	var FOVA = getDirFromAngle(-meshAngle/2)
+	var FOVB = getDirFromAngle(meshAngle/2)
+	_mesh.surface_begin(Mesh.PRIMITIVE_LINES)
+	#_mesh.surface_add_vertex(position * meshDistance)
+	_mesh.surface_add_vertex(FOVA * meshDistance)
+	#_mesh.surface_add_vertex(position * meshDistance)
+	_mesh.surface_add_vertex(FOVB * meshDistance)
+	_mesh.surface_end()
+	return _mesh
 
 func createLOSWedge()->ArrayMesh:
 	var _mesh : ArrayMesh = ArrayMesh.new()
@@ -136,8 +141,8 @@ func createLOSWedge()->ArrayMesh:
 	var topRight : Vector3
 
 	bottomCenter = Vector3.ZERO
-	bottomRight = Quaternion.from_euler(Vector3(0, meshAngle,0)) * Vector3.FORWARD * meshDistance
-	bottomLeft = Quaternion.from_euler(Vector3(0, -meshAngle,0)) * Vector3.FORWARD * meshDistance
+	bottomRight = Quaternion.from_euler(Vector3(0, meshAngle/2,0)) * Vector3.FORWARD * meshDistance
+	bottomLeft = Quaternion.from_euler(Vector3(0, -meshAngle/2,0)) * Vector3.FORWARD * meshDistance
 
 	topCenter = bottomCenter + Vector3.UP * meshHeight
 	topLeft = bottomLeft + Vector3.UP * meshHeight
@@ -161,8 +166,8 @@ func createLOSWedge()->ArrayMesh:
 	vertArray.push_back(topRight)
 	vertArray.push_back(bottomRight)
 	vertArray.push_back(bottomCenter)
-	var currAngle : float = -meshAngle
-	var deltaAngle : float = (meshAngle * 2)/segs
+	var currAngle : float = -meshAngle/2
+	var deltaAngle : float = (meshAngle/2 * 2)/segs
 	for segment in segs:
 		bottomRight = Quaternion.from_euler(Vector3(0, currAngle,0)) * Vector3.FORWARD * meshDistance
 		bottomLeft = Quaternion.from_euler(Vector3(0, currAngle + deltaAngle,0)) * Vector3.FORWARD * meshDistance
@@ -197,134 +202,60 @@ func createLOSWedge()->ArrayMesh:
 	return _mesh
 
 func scan()->void:
-	visibleObjects.clear()
-	Console.add_rich_console_message("[color=green]%s Scanning.." %pawnName)
-	var shape = PhysicsServer3D.sphere_shape_create()
-	var shapeRadius = 5.0
-	PhysicsServer3D.shape_set_data(shape,shapeRadius)
-	var params : PhysicsShapeQueryParameters3D = PhysicsShapeQueryParameters3D.new()
-	params.shape_rid = shape
-	params.transform.origin = global_position
-	var world = get_world_3d().direct_space_state
-	var result = world.intersect_shape(params)
-	var count : int
-	if !result.is_empty():
-		#Console.add_rich_console_message("[color=green]%s" %result)
-		count = result.size()
-		for obj in result:
-			#Console.add_rich_console_message("[color=green]%s" %obj)
-			if canSeeObject(obj.collider):
-				Console.add_rich_console_message("[color=green]%s found %s." %[pawnName,obj.collider.name])
-				visibleObjects.append(obj.collider)
-	PhysicsServer3D.free_rid(shape)
+	if pawnOwner != null:
+		var pawnRID : Array[RID] = []
+		pawnRID.append(pawnOwner.get_rid())
+		visibleObjects.clear()
+		#Console.add_rich_console_message("[color=green]%s Scanning.." %pawnName)
+		var shape = PhysicsServer3D.sphere_shape_create()
+		PhysicsServer3D.shape_set_data(shape,meshDistance)
+		var params : PhysicsShapeQueryParameters3D = PhysicsShapeQueryParameters3D.new()
+		params.exclude = pawnRID
+		params.shape_rid = shape
+		params.transform.origin = global_position
+		#print(params.exclude)
+		var world = get_world_3d().direct_space_state
+		var result = world.intersect_shape(params)
+		var count : int
+		if !result.is_empty():
+			#Console.add_rich_console_message("[color=green]%s" %result)
+			count = result.size()
+			for obj in result:
+				#Console.add_rich_console_message("[color=green]%s" %obj)
+				if canSeeObject(obj.collider):
+					#Console.add_rich_console_message("[color=green]%s found %s." %[pawnName,obj.collider.name])
+					visibleObject.emit(obj.collider,obj.collider.global_position)
+					visibleObjects.append(obj.collider)
+					canSeeSomething.emit()
+					#Console.add_rich_console_message("[color=green]%s can see %s"%[pawnName,obj.collider.name])
+		PhysicsServer3D.free_rid(shape)
 
-func canSeeObject(object:Node3D):
-	var orig : Vector3 = transform.origin
-	var deltaAngle : float
-	var destination : Vector3 = object.transform.origin
-	var dir: Vector3  = global_position.direction_to(object.global_position)
-	if (dir.y < 0 || dir.y > meshHeight):
-		return false
-	dir.y = 0
-	deltaAngle = dir.angle_to(Vector3.FORWARD)
-	if (deltaAngle > meshAngle):
+func canSeeObject(object:Node3D)->bool:
+	var pawnRID : Array[RID] = []
+	pawnRID.append(pawnOwner.get_rid())
+	var dist = self.global_position.direction_to(object.global_position)
+	var dotProd = dist.dot(-pawnOwner.pawnMesh.global_transform.basis.z)
+	if dotProd > 0:
+		var rayParams : PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.new()
+		rayParams.hit_from_inside = false
+		rayParams.exclude = pawnRID
+		rayParams.from = global_position
+		rayParams.to = object.global_position
+		rayParams.collision_mask = collisionMasks
+		var rayResults = get_world_3d().direct_space_state.intersect_ray(rayParams)
+		#print(rayResults)
+		if rayResults.is_empty():
+			return true
+		else:
+			return false
+	else:
 		return false
 
-	#return true
+func getDirFromAngle(angleInDeg:float) -> Vector3:
+	return Vector3(sin(angleInDeg * deg_to_rad(angleInDeg)),0,cos(angleInDeg*deg_to_rad(angleInDeg)))
 
 func _physics_process(delta) -> void:
 	pass
-
-
-	##OLD SHIT
-	#if pawnOwner != null:
-		#lookAt = aimCast.global_transform.basis.get_euler().y
-		#pawnOwner.meshRotation = lookAt
-	#if navAgent != null:
-		#if navAgent.is_target_reachable():
-			#var nextLocation = navAgent.get_next_path_position()
-			#currLocation = pawnOwner.global_position
-			#newVelocity = (nextLocation - currLocation).normalized() * pawnOwner.velocityComponent.vMaxSpeed
-			#navAgent.set_velocity(newVelocity)
-			##reachedTarget = false
-		#else:
-			#pawnOwner.direction = Vector3.ZERO
-			#navAgent.set_velocity(Vector3.ZERO)
-#
-		##Console.add_console_message("%s, overlapping: %s" %[pawnName,overlappingObject])
-#
-		## LOS Debug
-		#if gameManager.pawnDebug:
-			#pawnDebugLabel.visible = gameManager.pawnDebug
-			#if pawnDebugLabel.visible:
-				#pawnDebugLabel.position.y = 1
-				#pawnDebugLabel.text = "Pawn Name - %s
-				#Pawn Detection - %s
-				#Has Target - %s
-				#Pawn Skill - %s
-				#Has Reached Target - %s
-				#" %[pawnName,overlappingObject,pawnHasTarget,aiSkill,navAgent.is_target_reached()]
-			#if overlappingObject != null:
-				#debugDist = self.global_position.direction_to(overlappingObject.global_position)
-				#immediateMesh.show()
-				#$moveTo/debugMoveToMesh.visible = gameManager.pawnDebug
-				#immediateMesh.mesh.clear_surfaces()
-				#immediateMesh.mesh.surface_begin(Mesh.PRIMITIVE_LINE_STRIP)
-				#immediateMesh.mesh.surface_add_vertex(self.position)
-				#immediateMesh.mesh.surface_add_vertex(debugDist)
-				#immediateMesh.mesh.surface_end()
-#
-		#if pawnHasTarget:
-			#pawnOwner.turnAmount = lerpf(pawnOwner.turnAmount,-aimCast.rotation.x,16*delta)
-			#if overlappingObjectPosition != null:
-				#tgtVect = global_position.direction_to(overlappingObjectPosition)
-				#tgtBasis = Basis.looking_at(tgtVect)
-#
-				#if aimCast != null:
-					#if !visionCast.is_colliding():
-						#if pawnOwner.currentItem != null:
-							#pawnOwner.preventWeaponFire = false
-						#aimCast.look_at(overlappingObjectPosition)
-						##aimCastEnd.position = Vector3(0,0,10)
-					#else:
-						##aimCast.basis = aimCast.basis.slerp(Basis.looking_at(to_local(visionCast.get_collision_point())),aimSpeed)
-						#if pawnOwner.currentItem != null:
-							#pawnOwner.preventWeaponFire = true
-							##pawnOwner.currentItem.isAiming = false
-#
-		#if pawnOwner:
-			#pawnPosition = pawnOwner.pawnMesh.position
-
-func _on_vision_timer_timeout() -> void:
-	pass
-
-func lookForPawn() -> void:
-	for pawn in pawnGrabber.get_overlapping_bodies():
-		for groups in hatedPawnGroups.size():
-			if pawn.is_in_group(hatedPawnGroups[groups]):
-				if pawn is BasePawn:
-					if !pawn.isPawnDead:
-						var posVect = self.position
-						var pawnVect = pawn.global_position
-						var dist = self.global_position.direction_to(pawnVect)
-						var dotProd = dist.dot(-pawnOwner.pawnMesh.global_transform.basis.z)
-						if dotProd > 0:
-							if pawnOwner != null:
-								overlappingObject = pawn
-								pawnHasTarget = true
-								distanceToPawn = pawnOwner.position.distance_to(overlappingObject.position)
-		for pawns in hatedPawns.size():
-			if pawn == hatedPawns[pawns]:
-				if !pawn.isPawnDead:
-					var posVect = self.position
-					var pawnVect = pawn.global_position
-					var dist = self.global_position.direction_to(pawnVect)
-					var dotProd = dist.dot(-pawnOwner.pawnMesh.global_transform.basis.z)
-					if dotProd > 0:
-						if pawnOwner != null:
-							overlappingObject = pawn
-							pawnHasTarget = true
-							distanceToPawn = pawnOwner.position.distance_to(overlappingObject.position)
 
 func ceaseAI() -> void:
 	navAgent.queue_free()
@@ -334,14 +265,6 @@ func ceaseAI() -> void:
 func setupBlackboardObjects() -> void:
 	pass
 
-func undetectPawn() -> void:
-	pawnHasTarget = false
-	overlappingObject = null
-	overlappingObjectPosition = Vector3.ZERO
-	immediateMesh.hide()
-	distanceToPawn = 0.0
-	#pawnOwner.freeAim = false
-
 func addRaycastException(object) -> void:
 	aimCast.add_exception(object)
 	#$pawnGrabber/rayCast3d.add_exception(object)
@@ -349,18 +272,6 @@ func addRaycastException(object) -> void:
 func addToHatedPawns(amount, impulse, vector, dealer) -> void:
 	if !hatedPawns.has(dealer) and pawnOwner.currentItem != null:
 		hatedPawns.append(dealer)
-
-func _on_pawn_grabber_area_entered(area) -> void:
-	lookForPawn()
-
-func _on_pawn_grabber_body_entered(body) -> void:
-	lookForPawn()
-
-func _on_pawn_grabber_body_exited(body) -> void:
-	if pawnHasTarget:
-		if body == overlappingObject:
-			undetectPawn()
-
 
 func speakTrigger(dialogue) -> void:
 	if pawnOwner:
@@ -387,10 +298,10 @@ func setInteractablePawn(value:bool = false) -> void:
 			pawnOwner.remove_from_group("Interactable")
 			interactSpeakTrigger.disconnect(speakTrigger)
 
-func getAiType():
+func getAiType()->int:
 	return aiType
 
-func setWeaponCast():
+func setWeaponCast()->void:
 	if pawnOwner != null:
 		if pawnOwner.currentItem != null:
 			pawnOwner.currentItem.weaponCast = aimCast
@@ -409,11 +320,10 @@ func enableDebugInfo()->void:
 	if pawnDebugLabel.visible:
 		pawnDebugLabel.position.y = 1
 		pawnDebugLabel.text = "Pawn Name - %s
-		Pawn Detection - %s
 		Has Target - %s
 		Pawn Skill - %s
 		Has Reached Target - %s
-		" %[pawnName,overlappingObject,pawnHasTarget,aiSkill,navAgent.is_target_reached()]
+		" %[pawnName,pawnHasTarget,aiSkill,navAgent.is_target_reached()]
 
 func disableDebugInfo()->void:
 	visualMesh.hide()
@@ -432,11 +342,17 @@ func disableAnimations() -> void:
 
 func setExceptions()->void:
 	if pawnOwner != null:
-		if visionCast != null:
-			visionCast.add_exception(pawnOwner)
-			for hb in pawnOwner.getAllHitboxes():
-				visionCast.add_exception(hb.getCollisionObject())
+		#if visionCast != null:
+			#visionCast.add_exception(pawnOwner)
+			#for hb in pawnOwner.getAllHitboxes():
+				#visionCast.add_exception(hb.getCollisionObject())
 		if aimCast !=null:
 			aimCast.add_exception(pawnOwner)
 			for hb in pawnOwner.getAllHitboxes():
 				aimCast.add_exception(hb.getCollisionObject())
+
+func _on_can_see_something():
+	memoryManager.updateBrain(self)
+
+func _on_memory_span_timeout():
+	memoryManager.forgetMemories(memorySpanTimer.wait_time-1)

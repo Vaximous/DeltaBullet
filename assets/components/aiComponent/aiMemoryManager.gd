@@ -4,17 +4,43 @@ signal brainUpdated
 signal memoryFound
 signal memoriesRefreshed
 signal memoryCreated
+signal bestMemoryFound
 
 @export_category("Memory Manager")
+@export var brainOwner : AIComponent
 @export var maxMemories : int = 15
 @export var aiMemories : Array = []
+@export var distanceWeight  : float = 1.0
+@export var memoryAgeWeight : float  = 1.0
+var bestMemory : Memory:
+	set(value):
+		bestMemory = value
+		if bestMemory != null:
+			bestMemoryFound.emit()
+
+func normalizeValues(value:float,maxValue:float):
+	return 1.0-(value/maxValue)
+
+func evaluateScores()->void:
+	#print("evaluated")
+	for memory in aiMemories:
+		memory.score = calculateScore(memory)
+		if (bestMemory == null || memory.score > bestMemory.score):
+			bestMemory = memory
+
+func calculateScore(memory:Memory)->float:
+	var distanceScore : float = normalizeValues(memory.distance,brainOwner.meshDistance) * distanceWeight
+	var ageScore : float = normalizeValues(memory.memoryAge,brainOwner.memorySpanTimer.wait_time) * memoryAgeWeight
+	return ageScore + distanceScore
 
 func forgetMemories(olderThan:float)->void:
 	var oldMemories = aiMemories.filter(func(mem): return mem.memoryAge > olderThan)
 	for memory in oldMemories:
 		var memInt = aiMemories.find(memory)
 		aiMemories.remove_at(memInt)
-
+	for mem in aiMemories:
+		if mem.memoryOwner == null:
+			aiMemories.remove_at(aiMemories.find(mem))
 
 func updateBrain(ai:AIComponent)->void:
 	if ai != null:
@@ -53,6 +79,7 @@ func createMemory(object:Node3D,sensorOwner:Node3D)->Memory:
 		return _memory
 	else:
 		return null
+
 class Memory extends RefCounted:
 	var memoryAge : float:
 		set(value):

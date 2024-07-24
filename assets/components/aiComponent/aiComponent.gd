@@ -1,9 +1,10 @@
 @tool
 extends Node3D
 class_name AIComponent
+signal onScan
 signal canSeeSomething
 signal interactSpeakTrigger
-signal visibleObject(object,visibleposition)
+signal visibleObject(object:Node3D,visibleposition:Vector3)
 @onready var visualMesh : MeshInstance3D = $visualMesh:
 	set(value):
 		visualMesh = value
@@ -33,6 +34,8 @@ var isInDialogue : bool
 @export var dialogueString : String
 @export_subgroup("Identification")
 @export var pawnName : String
+@export var aimSpeed : float = 0.75
+@export_enum("Idle","Wander","Patrol") var pawnType = 0
 @export_enum("High","Normal","Retarded") var aiSkill : int = 1:
 	set(value):
 		aiSkill = value
@@ -42,20 +45,26 @@ var isInDialogue : bool
 			aimSpeed = 0.075
 		elif value == 2:
 			aimSpeed = 0.015
-@export_enum("Idle","Wander","Patrol") var aiType : int = 0
-@export_enum("Friendly","Neutral","Hostile") var aiMindState : int = 1
 @export_subgroup("Nodes")
-@export var moveTo : Marker3D
+@export var pawnFSM : FiniteStateMachine:
+	set(value):
+		pawnFSM = value
+		for state in pawnFSM.get_children():
+			if state is StateMachineState:
+				state.aiOwner = self
 @export var navAgent : NavigationAgent3D
 @export var navPointGrabber : Area3D
 @export var visionTimer : Timer
 @onready var pawnGrabber : Area3D = $pawnGrabber
 @export_subgroup("Memory")
-@onready var memorySpanTimer = $memorySpan
-@export var memoryManager : AiMemoryManager
+@onready var memorySpanTimer : Timer = $memorySpan
+@export var memoryManager : AiMemoryManager:
+	set(value):
+		memoryManager = value
+		memoryManager.brainOwner = self
 #@export var memorySpan : float = 10.0
-@export_subgroup("Mesh")
-@export var meshAngle:float = 1:
+@export_subgroup("FOV Mesh")
+var meshAngle:float = 1:
 	set(value):
 		meshAngle = value
 		if visualMesh:
@@ -70,9 +79,16 @@ var isInDialogue : bool
 		meshDistance = value
 		if visualMesh:
 			visualMesh.mesh = createLOSWedge()
-@export_subgroup("Overlap")
+@export_subgroup("Overlap & Detection")
 @export_flags_3d_physics var collisionMasks : int
 @export var visibleObjects : Array = []
+@export var chosenTarget : Node3D = null:
+	set(value):
+		chosenTarget = value
+		if chosenTarget == null:
+			pawnHasTarget = false
+		else:
+			pawnHasTarget = true
 @export var pawnHasTarget : bool = false:
 	set(value):
 		#setExceptions()
@@ -81,18 +97,10 @@ var isInDialogue : bool
 		pawnOwner.freeAim = value
 		pawnOwner.meshLookAt = value
 @export_subgroup("Detection")
-var withinAttackRange : bool = false
-@export var hatedPawnGroups : Array[StringName]
-@export var hatedPawns : Array[BasePawn]
-@export var attackRange : float = 6.0
-@export var aimSpeed : float = 0.075
-var lastDirection : Vector3
-var pawnPosition : Vector3
-var debugDist : Vector3
 @export var currLocation:Vector3
 @export var newVelocity:Vector3
-var reachedTarget : bool = false
-
+@export_category("Debug")
+var posSpheres : Array = []
 
 func _ready() -> void:
 	if !Engine.is_editor_hint():
@@ -106,8 +114,6 @@ func _ready() -> void:
 			setInteractablePawn(true)
 		if pawnOwner:
 			pawnOwner.healthComponent.healthDepleted.connect(ceaseAI)
-			for hboxes in pawnOwner.hitboxes.size():
-				pawnOwner.hitboxes[hboxes].damaged.connect(addToHatedPawns)
 	else:
 		visualMesh.visible = true
 		visualMesh.mesh = createFOVModel()
@@ -212,7 +218,7 @@ func scan()->void:
 		var params : PhysicsShapeQueryParameters3D = PhysicsShapeQueryParameters3D.new()
 		params.exclude = pawnRID
 		params.shape_rid = shape
-		params.transform.origin = global_position
+		params.transform.origin = pawnOwner.transform.origin
 		#print(params.exclude)
 		var world = get_world_3d().direct_space_state
 		var result = world.intersect_shape(params)
@@ -223,12 +229,22 @@ func scan()->void:
 			for obj in result:
 				#Console.add_rich_console_message("[color=green]%s" %obj)
 				if canSeeObject(obj.collider):
+					if gameManager.pawnDebug:
+						for sphere in posSpheres:
+							if sphere != null:
+								sphere.queue_free()
+						var newSphere = MeshInstance3D.new()
+						newSphere.mesh = SphereMesh.new()
+						posSpheres.append(newSphere)
+						add_child(newSphere)
+						newSphere.global_position = obj.collider.global_position
 					#Console.add_rich_console_message("[color=green]%s found %s." %[pawnName,obj.collider.name])
 					visibleObject.emit(obj.collider,obj.collider.global_position)
 					visibleObjects.append(obj.collider)
 					canSeeSomething.emit()
 					#Console.add_rich_console_message("[color=green]%s can see %s"%[pawnName,obj.collider.name])
 		PhysicsServer3D.free_rid(shape)
+		onScan.emit()
 
 func canSeeObject(object:Node3D)->bool:
 	var pawnRID : Array[RID] = []
@@ -239,8 +255,8 @@ func canSeeObject(object:Node3D)->bool:
 		var rayParams : PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.new()
 		rayParams.hit_from_inside = false
 		rayParams.exclude = pawnRID
-		rayParams.from = global_position
-		rayParams.to = object.global_position
+		rayParams.from = Vector3(pawnOwner.global_position.x,pawnOwner.global_position.y + 1, pawnOwner.global_position.z)
+		rayParams.to = Vector3(object.global_position.x,object.global_position.y + 1, object.global_position.z)
 		rayParams.collision_mask = collisionMasks
 		var rayResults = get_world_3d().direct_space_state.intersect_ray(rayParams)
 		#print(rayResults)
@@ -254,24 +270,14 @@ func canSeeObject(object:Node3D)->bool:
 func getDirFromAngle(angleInDeg:float) -> Vector3:
 	return Vector3(sin(angleInDeg * deg_to_rad(angleInDeg)),0,cos(angleInDeg*deg_to_rad(angleInDeg)))
 
-func _physics_process(delta) -> void:
-	pass
-
 func ceaseAI() -> void:
 	navAgent.queue_free()
 	if isInDialogue:
 		Dialogic.end_timeline()
 
-func setupBlackboardObjects() -> void:
-	pass
-
-func addRaycastException(object) -> void:
+func addRaycastException(object:Node3D) -> void:
 	aimCast.add_exception(object)
 	#$pawnGrabber/rayCast3d.add_exception(object)
-
-func addToHatedPawns(amount, impulse, vector, dealer) -> void:
-	if !hatedPawns.has(dealer) and pawnOwner.currentItem != null:
-		hatedPawns.append(dealer)
 
 func speakTrigger(dialogue) -> void:
 	if pawnOwner:
@@ -298,21 +304,16 @@ func setInteractablePawn(value:bool = false) -> void:
 			pawnOwner.remove_from_group("Interactable")
 			interactSpeakTrigger.disconnect(speakTrigger)
 
-func getAiType()->int:
-	return aiType
-
 func setWeaponCast()->void:
 	if pawnOwner != null:
 		if pawnOwner.currentItem != null:
 			pawnOwner.currentItem.weaponCast = aimCast
 			pawnOwner.currentItem.weaponCastEnd = aimCastEnd
 
-
 func _on_nav_agent_velocity_computed(safe_velocity) -> void:
 	if navAgent:
 		if pawnOwner != null:
 			pawnOwner.direction = safe_velocity
-			reachedTarget = false
 
 func enableDebugInfo()->void:
 	visualMesh.show()
@@ -330,7 +331,6 @@ func disableDebugInfo()->void:
 	pawnDebugLabel.visible = false
 
 func _on_nav_agent_target_reached() -> void:
-	reachedTarget = true
 	pawnOwner.direction = Vector3.ZERO
 	navAgent.set_velocity(Vector3.ZERO)
 
@@ -356,3 +356,35 @@ func _on_can_see_something():
 
 func _on_memory_span_timeout():
 	memoryManager.forgetMemories(memorySpanTimer.wait_time-1)
+
+func getTargetPosition()->Vector3:
+	return memoryManager.bestMemory.memoryPosition
+
+func isTargetInSight()->bool:
+	return memoryManager.bestMemory.memoryAge < 0.5
+
+func getTargetDistance()->float:
+	return memoryManager.bestMemory.distance
+
+func hasTarget()->bool:
+	return memoryManager.bestMemory != null
+
+func getMemoryAge():
+	return memoryManager.bestMemory.memoryAge
+
+func getTarget()->Node3D:
+	return memoryManager.bestMemory.memoryOwner
+
+func walkToPosition(to:Vector3)->void:
+	#print("%s is walking to %s"%[pawnName,to])
+	navAgent.target_position = to
+	newVelocity = (navAgent.get_next_path_position() - global_position).normalized()
+	navAgent.velocity = newVelocity
+
+func stopLookingAt()->void:
+	pawnOwner.meshLookAt = false
+
+func lookAtPosition(lookat:Vector3)->void:
+	pawnOwner.meshLookAt = true
+	aimCast.look_at(lookat)
+	pawnOwner.meshRotation = aimCast.global_transform.basis.get_euler().y

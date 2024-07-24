@@ -31,6 +31,7 @@ func _enter_tree()->void:
 func _ready()->void:
 	gameManager.pauseMenu = pauseControl
 	emit_signal("worldLoaded")
+	gameManager.getEventSignal("contractRefresh").emit()
 	gameManager.freeOrphanNodes()
 	setupWorld()
 	##Spawn a player at a point.

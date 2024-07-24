@@ -7,7 +7,7 @@ var vVelocity:Vector3 = Vector3.ZERO
 ##Maximum speed this velocity component can go to
 @export var vMaxSpeed :float = 8.0
 
-func accelerateToVel(velocity:Vector3,delta, useX:bool=true,useY:bool=true,useZ:bool=true):
+func accelerateToVel(velocity:Vector3,delta:float, useX:bool=true,useY:bool=true,useZ:bool=true)->Vector3:
 	if useX:
 		vVelocity.x = lerp(vVelocity.x, velocity.x * vMaxSpeed, delta * vAcceleration )
 	if useY:
@@ -16,5 +16,5 @@ func accelerateToVel(velocity:Vector3,delta, useX:bool=true,useY:bool=true,useZ:
 		vVelocity.z = lerp(vVelocity.z, velocity.z * vMaxSpeed, delta * vAcceleration)
 	return vVelocity
 
-func getAcceleration():
+func getAcceleration()->float:
 	return vAcceleration

@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://bgy0ycoxec6p6"]
+[gd_scene load_steps=41 format=3 uid="uid://bgy0ycoxec6p6"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_rrsmc"]
 [ext_resource type="PackedScene" uid="uid://boicvk4qeqmbd" path="res://assets/entities/pawnSpawn/pawnSpawn.tscn" id="2_d45q2"]
@@ -82,6 +82,10 @@ volumetric_fog_density = 0.0112
 adjustment_enabled = true
 adjustment_saturation = 1.15
 adjustment_color_correction = SubResource("CurveXYZTexture_bfvmr")
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_21tre"]
+vertices = PackedVector3Array(-3, 0.965229, 7, -1, 0.965229, 7, -1, 0.965229, -69, -3.25, 0.965229, 8, -3, 0.965229, 7, -1, 0.965229, -69, -141, 0.965229, -69, -141, 0.965229, 8, -1, 0.965229, 7, 5, 0.965229, 7, 5, 0.965229, -69, -1, 0.965229, -69, 5, 0.965229, -69, 5, 0.965229, 7, 7, 0.965229, 7, 5, 0.965229, -69, 7, 0.965229, 7, 7.25, 0.965229, 8, 116, 0.965229, 8, 116, 0.965229, -69, -1, 0.965229, 129, -1, 0.965229, 9, -3, 0.965229, 9, -1, 0.965229, 129, -3, 0.965229, 9, -3.25, 0.965229, 8, -141, 0.965229, 8, -141, 0.965229, 129, 116, 0.965229, 8, 7.25, 0.965229, 8, 7, 0.965229, 9, 5, 0.965229, 129, 116, 0.965229, 129, 7, 0.965229, 9, 5, 0.965229, 9, 5, 0.965229, 129, -1, 0.965229, 129, 5, 0.965229, 129, 5, 0.965229, 9, -1, 0.965229, 9)
+polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(4, 3, 5), PackedInt32Array(5, 3, 7), PackedInt32Array(5, 7, 6), PackedInt32Array(11, 10, 8), PackedInt32Array(8, 10, 9), PackedInt32Array(14, 13, 12), PackedInt32Array(16, 15, 17), PackedInt32Array(17, 15, 18), PackedInt32Array(18, 15, 19), PackedInt32Array(22, 21, 20), PackedInt32Array(24, 23, 25), PackedInt32Array(25, 23, 26), PackedInt32Array(26, 23, 27), PackedInt32Array(29, 28, 30), PackedInt32Array(30, 28, 32), PackedInt32Array(30, 32, 31), PackedInt32Array(35, 34, 33), PackedInt32Array(39, 38, 36), PackedInt32Array(36, 38, 37)]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cad6t"]
 albedo_texture = ExtResource("11_h2hbs")
@@ -191,13 +195,16 @@ size = Vector3(258.56, 20, 202.452)
 [node name="directionalLight3d" parent="Environment" index="2"]
 transform = Transform3D(-0.285921, 0.133752, -0.948873, -0.0789652, 0.983554, 0.162435, 0.954994, 0.121372, -0.270657, 0.0669081, 2.06023, 0)
 
-[node name="csgBox3d" type="CSGBox3D" parent="Geometry" index="0"]
+[node name="navigationRegion3d" type="NavigationRegion3D" parent="Geometry" index="0"]
+navigation_mesh = SubResource("NavigationMesh_21tre")
+
+[node name="csgBox3d" type="CSGBox3D" parent="Geometry/navigationRegion3d" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.5, 0, 30)
 use_collision = true
 size = Vector3(258, 1, 199)
 material = SubResource("StandardMaterial3D_cad6t")
 
-[node name="csgBox3d2" type="CSGBox3D" parent="Geometry" index="1"]
+[node name="csgBox3d2" type="CSGBox3D" parent="Geometry/navigationRegion3d" index="1"]
 transform = Transform3D(1, 0, 0, 0, 0.991079, -0.133277, 0, 0.133277, 0.991079, 1.99634, 2.81046, 8.16924)
 use_collision = true
 size = Vector3(9.4203, 6.67831, 0.538208)

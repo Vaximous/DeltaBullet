@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://lhkevmu82kog"]
+
+[ext_resource type="Script" path="res://assets/entities/questEntity/quest.gd" id="1_qdhro"]
+[ext_resource type="PackedScene" uid="uid://b883b6dhrfe8q" path="res://assets/scenes/worlds/testscene2/testscene2.tscn" id="2_iiq0f"]
+[ext_resource type="Script" path="res://assets/contracts/testContract2/killthebastads.gd" id="3_t6r8f"]
+
+[node name="cloakedUpContract" type="Node"]
+script = ExtResource("1_qdhro")
+questName = "Cloaked Up"
+questDescription = "Kill The Two bastards wearing dark outfits. One is red and the other is grey."
+questScene = ExtResource("2_iiq0f")
+
+[node name="subContract" type="Node" parent="."]
+script = ExtResource("3_t6r8f")

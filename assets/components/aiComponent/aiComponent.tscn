@@ -1,17 +1,14 @@
-[gd_scene load_steps=11 format=3 uid="uid://b53hvcf0hvvkw"]
+[gd_scene load_steps=14 format=3 uid="uid://b53hvcf0hvvkw"]
 
 [ext_resource type="PackedScene" uid="uid://glmcou87njh6" path="res://assets/components/aiComponent/aiMemoryManager.tscn" id="2_fp3i1"]
 [ext_resource type="Script" path="res://addons/finite_state_machine/scripts/finite_state_machine.gd" id="2_ubyph"]
-[ext_resource type="Script" path="res://addons/finite_state_machine/scripts/state_machine_state.gd" id="3_2vna3"]
 [ext_resource type="Script" path="res://assets/components/aiComponent/aiComponent.gd" id="4_gaqok"]
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_oojxb"]
-bottom_radius = 0.0
-radial_segments = 4
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cwf7e"]
-transparency = 1
-albedo_color = Color(0.0117647, 0.454902, 0, 0.356863)
+[ext_resource type="Script" path="res://assets/components/aiComponent/aiStates/Idle.gd" id="4_p56ey"]
+[ext_resource type="Script" path="res://assets/components/aiComponent/aiStates/Search.gd" id="5_uyejc"]
+[ext_resource type="Script" path="res://assets/components/aiComponent/aiStates/Wander.gd" id="6_vgbdp"]
+[ext_resource type="Script" path="res://assets/components/aiComponent/aiStates/Attack.gd" id="7_m2cst"]
+[ext_resource type="Script" path="res://assets/components/aiComponent/aiStates/FindCover.gd" id="8_bgtfw"]
+[ext_resource type="Script" path="res://assets/components/aiComponent/aiStates/Patrol.gd" id="9_8na1r"]
 
 [sub_resource type="Gradient" id="Gradient_4vyck"]
 colors = PackedColorArray(0, 0, 0, 1, 1, 1, 0.32549, 1)
@@ -24,66 +21,58 @@ transparency = 1
 cull_mode = 2
 albedo_color = Color(1, 0, 0, 0.309804)
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_7baow"]
-_surfaces = [{
-"aabb": AABB(-4.99996, 0, -5, 9.99991, 1, 5.02102),
-"format": 34359738369,
-"primitive": 3,
-"uv_scale": Vector4(0, 0, 0, 0),
-"vertex_count": 132,
-"vertex_data": PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 164, 255, 159, 64, 0, 0, 0, 0, 192, 46, 172, 60, 164, 255, 159, 64, 0, 0, 128, 63, 192, 46, 172, 60, 164, 255, 159, 64, 0, 0, 128, 63, 192, 46, 172, 60, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0, 164, 255, 159, 192, 0, 0, 128, 63, 192, 46, 172, 60, 164, 255, 159, 192, 0, 0, 128, 63, 192, 46, 172, 60, 164, 255, 159, 192, 0, 0, 0, 0, 192, 46, 172, 60, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 159, 85, 152, 64, 0, 0, 0, 0, 10, 185, 195, 191, 164, 255, 159, 64, 0, 0, 0, 0, 192, 46, 172, 60, 164, 255, 159, 64, 0, 0, 128, 63, 192, 46, 172, 60, 164, 255, 159, 64, 0, 0, 128, 63, 192, 46, 172, 60, 159, 85, 152, 64, 0, 0, 128, 63, 10, 185, 195, 191, 159, 85, 152, 64, 0, 0, 0, 0, 10, 185, 195, 191, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0, 159, 85, 152, 64, 0, 0, 128, 63, 10, 185, 195, 191, 164, 255, 159, 64, 0, 0, 128, 63, 192, 46, 172, 60, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 164, 255, 159, 64, 0, 0, 0, 0, 192, 46, 172, 60, 159, 85, 152, 64, 0, 0, 0, 0, 10, 185, 195, 191, 245, 173, 129, 64, 0, 0, 0, 0, 14, 112, 59, 192, 159, 85, 152, 64, 0, 0, 0, 0, 10, 185, 195, 191, 159, 85, 152, 64, 0, 0, 128, 63, 10, 185, 195, 191, 159, 85, 152, 64, 0, 0, 128, 63, 10, 185, 195, 191, 245, 173, 129, 64, 0, 0, 128, 63, 14, 112, 59, 192, 245, 173, 129, 64, 0, 0, 0, 0, 14, 112, 59, 192, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0, 245, 173, 129, 64, 0, 0, 128, 63, 14, 112, 59, 192, 159, 85, 152, 64, 0, 0, 128, 63, 10, 185, 195, 191, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 159, 85, 152, 64, 0, 0, 0, 0, 10, 185, 195, 191, 245, 173, 129, 64, 0, 0, 0, 0, 14, 112, 59, 192, 189, 134, 60, 64, 0, 0, 0, 0, 206, 72, 129, 192, 245, 173, 129, 64, 0, 0, 0, 0, 14, 112, 59, 192, 245, 173, 129, 64, 0, 0, 128, 63, 14, 112, 59, 192, 245, 173, 129, 64, 0, 0, 128, 63, 14, 112, 59, 192, 189, 134, 60, 64, 0, 0, 128, 63, 206, 72, 129, 192, 189, 134, 60, 64, 0, 0, 0, 0, 206, 72, 129, 192, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0, 189, 134, 60, 64, 0, 0, 128, 63, 206, 72, 129, 192, 245, 173, 129, 64, 0, 0, 128, 63, 14, 112, 59, 192, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 245, 173, 129, 64, 0, 0, 0, 0, 14, 112, 59, 192, 189, 134, 60, 64, 0, 0, 0, 0, 206, 72, 129, 192, 84, 72, 198, 63, 0, 0, 0, 0, 158, 32, 152, 192, 189, 134, 60, 64, 0, 0, 0, 0, 206, 72, 129, 192, 189, 134, 60, 64, 0, 0, 128, 63, 206, 72, 129, 192, 189, 134, 60, 64, 0, 0, 128, 63, 206, 72, 129, 192, 84, 72, 198, 63, 0, 0, 128, 63, 158, 32, 152, 192, 84, 72, 198, 63, 0, 0, 0, 0, 158, 32, 152, 192, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0, 84, 72, 198, 63, 0, 0, 128, 63, 158, 32, 152, 192, 189, 134, 60, 64, 0, 0, 128, 63, 206, 72, 129, 192, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 189, 134, 60, 64, 0, 0, 0, 0, 206, 72, 129, 192, 84, 72, 198, 63, 0, 0, 0, 0, 158, 32, 152, 192, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 160, 192, 84, 72, 198, 63, 0, 0, 0, 0, 158, 32, 152, 192, 84, 72, 198, 63, 0, 0, 128, 63, 158, 32, 152, 192, 84, 72, 198, 63, 0, 0, 128, 63, 158, 32, 152, 192, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 160, 192, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 160, 192, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 160, 192, 84, 72, 198, 63, 0, 0, 128, 63, 158, 32, 152, 192, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 84, 72, 198, 63, 0, 0, 0, 0, 158, 32, 152, 192, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 160, 192, 84, 72, 198, 191, 0, 0, 0, 0, 158, 32, 152, 192, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 160, 192, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 160, 192, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 160, 192, 84, 72, 198, 191, 0, 0, 128, 63, 158, 32, 152, 192, 84, 72, 198, 191, 0, 0, 0, 0, 158, 32, 152, 192, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0, 84, 72, 198, 191, 0, 0, 128, 63, 158, 32, 152, 192, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 160, 192, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 160, 192, 84, 72, 198, 191, 0, 0, 0, 0, 158, 32, 152, 192, 189, 134, 60, 192, 0, 0, 0, 0, 206, 72, 129, 192, 84, 72, 198, 191, 0, 0, 0, 0, 158, 32, 152, 192, 84, 72, 198, 191, 0, 0, 128, 63, 158, 32, 152, 192, 84, 72, 198, 191, 0, 0, 128, 63, 158, 32, 152, 192, 189, 134, 60, 192, 0, 0, 128, 63, 206, 72, 129, 192, 189, 134, 60, 192, 0, 0, 0, 0, 206, 72, 129, 192, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0, 189, 134, 60, 192, 0, 0, 128, 63, 206, 72, 129, 192, 84, 72, 198, 191, 0, 0, 128, 63, 158, 32, 152, 192, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 84, 72, 198, 191, 0, 0, 0, 0, 158, 32, 152, 192, 189, 134, 60, 192, 0, 0, 0, 0, 206, 72, 129, 192, 245, 173, 129, 192, 0, 0, 0, 0, 14, 112, 59, 192, 189, 134, 60, 192, 0, 0, 0, 0, 206, 72, 129, 192, 189, 134, 60, 192, 0, 0, 128, 63, 206, 72, 129, 192, 189, 134, 60, 192, 0, 0, 128, 63, 206, 72, 129, 192, 245, 173, 129, 192, 0, 0, 128, 63, 14, 112, 59, 192, 245, 173, 129, 192, 0, 0, 0, 0, 14, 112, 59, 192, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0, 245, 173, 129, 192, 0, 0, 128, 63, 14, 112, 59, 192, 189, 134, 60, 192, 0, 0, 128, 63, 206, 72, 129, 192, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 189, 134, 60, 192, 0, 0, 0, 0, 206, 72, 129, 192, 245, 173, 129, 192, 0, 0, 0, 0, 14, 112, 59, 192, 159, 85, 152, 192, 0, 0, 0, 0, 10, 185, 195, 191, 245, 173, 129, 192, 0, 0, 0, 0, 14, 112, 59, 192, 245, 173, 129, 192, 0, 0, 128, 63, 14, 112, 59, 192, 245, 173, 129, 192, 0, 0, 128, 63, 14, 112, 59, 192, 159, 85, 152, 192, 0, 0, 128, 63, 10, 185, 195, 191, 159, 85, 152, 192, 0, 0, 0, 0, 10, 185, 195, 191, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0, 159, 85, 152, 192, 0, 0, 128, 63, 10, 185, 195, 191, 245, 173, 129, 192, 0, 0, 128, 63, 14, 112, 59, 192, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 245, 173, 129, 192, 0, 0, 0, 0, 14, 112, 59, 192, 159, 85, 152, 192, 0, 0, 0, 0, 10, 185, 195, 191, 164, 255, 159, 192, 0, 0, 0, 0, 192, 46, 172, 60, 159, 85, 152, 192, 0, 0, 0, 0, 10, 185, 195, 191, 159, 85, 152, 192, 0, 0, 128, 63, 10, 185, 195, 191, 159, 85, 152, 192, 0, 0, 128, 63, 10, 185, 195, 191, 164, 255, 159, 192, 0, 0, 128, 63, 192, 46, 172, 60, 164, 255, 159, 192, 0, 0, 0, 0, 192, 46, 172, 60, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0, 164, 255, 159, 192, 0, 0, 128, 63, 192, 46, 172, 60, 159, 85, 152, 192, 0, 0, 128, 63, 10, 185, 195, 191, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 159, 85, 152, 192, 0, 0, 0, 0, 10, 185, 195, 191, 164, 255, 159, 192, 0, 0, 0, 0, 192, 46, 172, 60)
-}]
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_qcm2i"]
 
-[node name="aiComponent" type="Node3D" node_paths=PackedStringArray("moveTo", "navAgent", "visionTimer", "memoryManager")]
+[node name="aiComponent" type="Node3D" node_paths=PackedStringArray("pawnFSM", "navAgent", "visionTimer", "memoryManager")]
 script = ExtResource("4_gaqok")
-moveTo = NodePath("moveTo")
+aimSpeed = 0.075
+pawnType = null
+pawnFSM = NodePath("pawnFSM")
 navAgent = NodePath("navAgent")
 visionTimer = NodePath("visionTimer")
 memoryManager = NodePath("aiMemoryManager")
-meshAngle = 3.15
 meshDistance = 5.0
 collisionMasks = 1
-hatedPawnGroups = Array[StringName]([&"Player", &"Hostile"])
 
-[node name="aiMemoryManager" parent="." instance=ExtResource("2_fp3i1")]
+[node name="aiMemoryManager" parent="." node_paths=PackedStringArray("brainOwner") instance=ExtResource("2_fp3i1")]
+brainOwner = NodePath("..")
 
 [node name="memorySpan" type="Timer" parent="."]
 process_callback = 0
 wait_time = 10.0
 autostart = true
 
-[node name="pawnFSM" type="Node" parent="." node_paths=PackedStringArray("animation_player")]
+[node name="pawnFSM" type="Node" parent="." node_paths=PackedStringArray("current_state", "animation_player")]
 script = ExtResource("2_ubyph")
+current_state = NodePath("Idle")
 animation_player = NodePath("animationPlayer")
 
 [node name="animationPlayer" type="AnimationPlayer" parent="pawnFSM"]
 
-[node name="Idle" type="Node" parent="pawnFSM"]
-script = ExtResource("3_2vna3")
+[node name="Idle" type="Node" parent="pawnFSM" node_paths=PackedStringArray("aiOwner")]
+script = ExtResource("4_p56ey")
+aiOwner = NodePath("../..")
 
-[node name="Search" type="Node" parent="pawnFSM"]
-script = ExtResource("3_2vna3")
+[node name="Search" type="Node" parent="pawnFSM" node_paths=PackedStringArray("aiOwner")]
+script = ExtResource("5_uyejc")
+aiOwner = NodePath("../..")
+detectionMaxThreshold = 100
 
-[node name="Wander" type="Node" parent="pawnFSM"]
-script = ExtResource("3_2vna3")
+[node name="Wander" type="Node" parent="pawnFSM" node_paths=PackedStringArray("aiOwner")]
+script = ExtResource("6_vgbdp")
+aiOwner = NodePath("../..")
 
-[node name="Attack" type="Node" parent="pawnFSM"]
-script = ExtResource("3_2vna3")
+[node name="Attack" type="Node" parent="pawnFSM" node_paths=PackedStringArray("aiOwner")]
+script = ExtResource("7_m2cst")
+aiOwner = NodePath("../..")
 
-[node name="FindCover" type="Node" parent="pawnFSM"]
-script = ExtResource("3_2vna3")
+[node name="FindCover" type="Node" parent="pawnFSM" node_paths=PackedStringArray("aiOwner")]
+script = ExtResource("8_bgtfw")
+aiOwner = NodePath("../..")
 
-[node name="Patrol" type="Node" parent="pawnFSM"]
-script = ExtResource("3_2vna3")
-
-[node name="moveTo" type="Marker3D" parent="."]
-
-[node name="debugMoveToMesh" type="MeshInstance3D" parent="moveTo"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.01134, 0)
-top_level = true
-visible = false
-mesh = SubResource("CylinderMesh_oojxb")
-surface_material_override/0 = SubResource("StandardMaterial3D_cwf7e")
+[node name="Patrol" type="Node" parent="pawnFSM" node_paths=PackedStringArray("aiOwner")]
+script = ExtResource("9_8na1r")
+aiOwner = NodePath("../..")
 
 [node name="navAgent" type="NavigationAgent3D" parent="."]
 target_desired_distance = 5.0
@@ -96,7 +85,7 @@ debug_path_custom_color = Color(0.239216, 0.745098, 0, 1)
 
 [node name="visionTimer" type="Timer" parent="."]
 process_callback = 0
-wait_time = 0.8
+wait_time = 0.05
 autostart = true
 
 [node name="detectionNotice" type="Sprite3D" parent="."]
@@ -126,10 +115,11 @@ debug_shape_custom_color = Color(1, 0.823529, 0, 1)
 
 [node name="visualMesh" type="MeshInstance3D" parent="."]
 material_override = SubResource("StandardMaterial3D_giynp")
-mesh = SubResource("ArrayMesh_7baow")
+mesh = SubResource("ImmediateMesh_qcm2i")
 
 [connection signal="canSeeSomething" from="." to="." method="_on_can_see_something"]
 [connection signal="timeout" from="memorySpan" to="." method="_on_memory_span_timeout"]
 [connection signal="target_reached" from="navAgent" to="." method="_on_nav_agent_target_reached"]
 [connection signal="velocity_computed" from="navAgent" to="." method="_on_nav_agent_velocity_computed"]
 [connection signal="timeout" from="visionTimer" to="." method="scan"]
+[connection signal="timeout" from="visionTimer" to="aiMemoryManager" method="evaluateScores"]

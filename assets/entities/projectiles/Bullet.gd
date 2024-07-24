@@ -24,7 +24,7 @@ func _physics_process(delta: float) -> void:
 		if expire_by_distance():
 			return
 		var col : Object = hit_data['col']
-		print(col)
+		#print(col)
 		var col_point : Vector3 = hit_data['col_point']
 		var col_normal : Vector3 = hit_data['col_normal']
 		var remainder : float = hit_data['remainder']

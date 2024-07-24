@@ -1458,8 +1458,9 @@ aiType = 1
 hatedGroups = Array[StringName]([&"Booger", &"Player", &"Hostile"])
 pawnColor = Color(0.898039, 0.772549, 0.662745, 1)
 
-[node name="boogerSpawn" parent="Spawns/pawnSpawns" index="4" instance=ExtResource("2_26w0h")]
+[node name="boogerSpawn" parent="Spawns/pawnSpawns" index="4" groups=["cloakedupcontract"] instance=ExtResource("2_26w0h")]
 transform = Transform3D(-0.656323, 0, -0.754481, 0, 1, 0, 0.754481, 0, -0.656323, -19.7794, 4.08233, 37.0557)
+active = false
 pawnName = "Booger"
 pawnWeapons = Array[PackedScene]([ExtResource("3_glhev"), ExtResource("5_ugf6w"), ExtResource("4_obu2t")])
 pawnClothing = Array[PackedScene]([ExtResource("9_kyyf3"), ExtResource("13_cq42m")])
@@ -1472,8 +1473,9 @@ hatedGroups = Array[StringName]([&"Hostile"])
 spawnGroup = &"Booger"
 pawnColor = Color(0.345098, 0.356863, 0.345098, 1)
 
-[node name="booger2Spawn" parent="Spawns/pawnSpawns" index="5" instance=ExtResource("2_26w0h")]
+[node name="booger2Spawn" parent="Spawns/pawnSpawns" index="5" groups=["cloakedupcontract"] instance=ExtResource("2_26w0h")]
 transform = Transform3D(-0.884557, 0, -0.466433, 0, 1, 0, 0.466433, 0, -0.884557, -9.81522, 4.32761, -5.25035)
+active = false
 pawnName = "Booger 2"
 pawnWeapons = Array[PackedScene]([ExtResource("3_glhev"), ExtResource("5_ugf6w"), ExtResource("4_obu2t")])
 pawnClothing = Array[PackedScene]([ExtResource("9_kyyf3"), ExtResource("7_mcian"), ExtResource("9_80ovt"), ExtResource("6_qqxlv"), ExtResource("13_pdeob")])

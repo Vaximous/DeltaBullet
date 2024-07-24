@@ -65,6 +65,7 @@ func on_animation_changed(_old_name: StringName, _new_name: StringName) -> void:
 # FiniteStateMachine node
 func change_state(state_name: String) -> void:
 	if is_instance_valid(state_machine):
+		print("Changed state to %s from %s" %[state_name,state_machine.current_state])
 		state_machine.change_state(state_name)
 	else:
 		push_error("State ", self, " has not been yet initialized")

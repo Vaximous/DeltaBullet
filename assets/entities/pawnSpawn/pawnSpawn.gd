@@ -119,9 +119,9 @@ func spawnPawn():
 			pawn.inputComponent = controller
 			pawn.checkComponents()
 			pawn.fixRot()
-			controller.aiType = aiType
-			controller.aiSkill = aiSkill
-			controller.hatedPawnGroups = hatedGroups
+			#controller.aiType = aiType
+			#controller.aiSkill = aiSkill
+			#controller.hatedPawnGroups = hatedGroups
 			pawn.add_to_group(spawnGroup)
 
 			if pawnName != "":

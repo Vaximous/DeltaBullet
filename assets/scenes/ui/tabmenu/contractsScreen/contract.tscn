@@ -21,20 +21,16 @@ class_name ContractButton
 @onready var animationPlayer : AnimationPlayer = $animationPlayer
 @export_category(\"Contract Button\")
 @export var contractName : String = \"\"
-@export var contractID : int = 0
+@export var contractNode : Contract = null
+var contractHolder : Control
 
 func _ready()->void:
 	animationPlayer.play(\"unhover\")
 	contractLabel.text = contractName
-	questManager.questActivated.connect(checkActiveContract)
 
-func initializeContract(id:int)->void:
-	for quest in questManager.questDatabase:
-		if quest.id == id:
-			contractID = id
-			contractName = str(quest.questName)
-			if contractLabel != null:
-				contractLabel.text = contractName
+func initializeContract(contract:Contract)->void:
+	contractName = contract.questName
+	contractNode = contract
 
 func _on_focus_entered()->void:
 	animationPlayer.play(\"hover\")
@@ -48,16 +44,15 @@ func _on_mouse_exited()-> void:
 func _on_mouse_entered()->void:
 	animationPlayer.play(\"hover\")
 
-func activateContract():
-	if !questManager.questDatabase[contractID].questCompleted or !questManager.questDatabase[contractID].questFailed:
-		questManager.activateQuest(contractID)
-		checkActiveContract()
-
-func checkActiveContract()->void:
-	if contractID == questManager.currentActiveQuest:
-		activeQuestIcon.show()
+func toggleContract()->void:
+	if !contractNode.questActive:
+		contractNode.enableQuest()
 	else:
-		activeQuestIcon.hide()
+		contractNode.disableQuest()
+
+func setSelectedContract()->void:
+	if contractHolder:
+		contractHolder.selectedContract = contractNode
 "
 
 [sub_resource type="Gradient" id="Gradient_ki6gk"]
@@ -208,5 +203,5 @@ texture = SubResource("PlaceholderTexture2D_dxtjt")
 [connection signal="focus_exited" from="." to="." method="_on_focus_exited"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
-[connection signal="pressed" from="." to="." method="activateContract"]
+[connection signal="pressed" from="." to="." method="setSelectedContract"]
 [connection signal="pressed" from="." to="animationPlayer" method="play" binds= ["unhover"]]

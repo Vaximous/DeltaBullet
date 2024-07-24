@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://8ua50jm475he"]
+
+[ext_resource type="Script" path="res://assets/entities/questEntity/quest.gd" id="1_2v5ky"]
+
+[sub_resource type="GDScript" id="GDScript_v70ju"]
+resource_name = "test"
+script/source = "extends SubContract
+@onready var boss : PawnSpawn = $Spawns/pawnSpawns/pawnSpawn
+
+func onQuestEntered()->void:
+	super()
+	if get_tree() != null:
+		boss = get_tree().get_first_node_in_group(&\"badboss\")
+		if boss != null:
+			boss.active = true
+			var enemy : BasePawn = boss.spawnPawn()
+			boss.active = false
+			enemy.onPawnKilled.connect(contractOwner.progressQuest)
+"
+
+[node name="testContract" type="Node"]
+script = ExtResource("1_2v5ky")
+questName = "Test Contract"
+questDescription = "Some Shit"
+questObjective = "Hmm.."
+
+[node name="subContract" type="Node" parent="."]
+script = SubResource("GDScript_v70ju")

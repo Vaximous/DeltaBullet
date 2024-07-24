@@ -9,7 +9,7 @@ signal itemChanged
 signal forcingAnimation
 signal killedPawn
 signal onPawnKilled
-signal hitboxAssigned(hitbox)
+signal hitboxAssigned(hitbox:Hitbox)
 signal headshottedPawn
 
 #Threading
@@ -83,7 +83,7 @@ var direction : Vector3 = Vector3.ZERO:
 var meshRotation : float = 0.0
 ##Component Setup
 @export_category("Pawn")
-var defaultPawnMaterial = load("res://assets/materials/pawnMaterial/MALE.tres")
+var defaultPawnMaterial : StandardMaterial3D = load("res://assets/materials/pawnMaterial/MALE.tres")
 var currentPawnMat : StandardMaterial3D
 @export var pawnColor : Color = Color(1.0,0.76,0.00,1.0):
 	set(value):
@@ -149,7 +149,7 @@ signal cameraAttached
 		return collisionEnabled
 
 @export_subgroup("Variables")
-signal pawnDied(pawnRagdoll)
+signal pawnDied(pawnRagdoll:PawnRagdoll)
 @export var turnAmount : float
 @export var turnSpeed : float = 18.0
 var preventWeaponFire : bool = false
@@ -183,17 +183,17 @@ var oldPos : float = 0.0
 @export var canJump : bool = true
 @export var isJumping : bool = false
 @export_subgroup("Throwables")
-var throwableItem
+var throwableItem : Node
 var throwableAmount : int = 0
 var isArmingThrowable : bool = false
 var canThrowThrowable : bool = true
-var isThrowing = false
+var isThrowing : bool = false
 @export_subgroup("Inventory")
 var pawnCash : int = 0
 var itemNames : Array
 @export var itemInventory : Array
-var currentItem = null
-@export var currentItemIndex = 0:
+var currentItem : InteractiveObject = null
+@export var currentItemIndex : int = 0:
 	set(value):
 		currentItemIndex = clamp(value, 0, itemInventory.size()-1)
 		currentItem = itemInventory[currentItemIndex]
@@ -286,7 +286,7 @@ func _ready() -> void:
 	setupPawnColor()
 	setupAnimationTree()
 	#getAllHitboxes()
-func _physics_process(delta) -> void:
+func _physics_process(delta:float) -> void:
 	if pawnEnabled:
 		if !isPawnDead:
 #region AimBlocking
@@ -442,8 +442,6 @@ func checkComponents():
 
 	if velocityComponent == null or healthComponent == null:
 		return null
-	else:
-		return OK
 
 func die(killer:Node3D = null) -> void:
 	if !attachedCam == null:
@@ -474,7 +472,7 @@ func die(killer:Node3D = null) -> void:
 	footstepSounds.queue_free()
 	queue_free()
 
-func _on_health_component_health_depleted(dealer) -> void:
+func _on_health_component_health_depleted(dealer:BasePawn) -> void:
 	await get_tree().process_frame
 	if dealer != null:
 		die(dealer)
@@ -482,7 +480,7 @@ func _on_health_component_health_depleted(dealer) -> void:
 		die(null)
 
 
-func createRagdoll(impulse_bone : int = 0,killer:Node3D = null):
+func createRagdoll(impulse_bone : int = 0,killer:Node3D = null)->PawnRagdoll:
 	var currVel = velocity
 	await get_tree().process_frame
 	if !ragdollScene == null:
@@ -538,9 +536,11 @@ func createRagdoll(impulse_bone : int = 0,killer:Node3D = null):
 		if collisionShape != null:
 			collisionShape.queue_free()
 		return ragdoll
+	else:
+		return null
 
 
-func checkItems():
+func checkItems()->void:
 	for items in itemHolder.get_children():
 		items.freeze = true
 		items.collisionObject.disabled = true
@@ -554,7 +554,7 @@ func checkItems():
 		if !itemNames.has(items.objectName):
 			itemNames.append(items.objectName)
 
-func checkClothes():
+func checkClothes()->void:
 	for clothes in clothingHolder.get_children():
 		if !clothingInventory.has(clothes):
 			clothingInventory.append(clothes)
@@ -563,7 +563,7 @@ func checkClothes():
 
 	checkClothingHider()
 
-func moveClothesToRagdoll(moveto) -> void:
+func moveClothesToRagdoll(moveto:Node3D) -> void:
 	for clothes in clothingHolder.get_children():
 		clothes.itemSkeleton = moveto.ragdollSkeleton.get_path()
 		clothes.reparent(moveto)
@@ -598,7 +598,7 @@ func checkClothingHider() -> void:
 			if clothes.leftLowerLeg:
 				leftLowerLeg.hide()
 
-func moveDecalsToRagdoll(ragdoll:PawnRagdoll):
+func moveDecalsToRagdoll(ragdoll:PawnRagdoll)->bool:
 	#Decal reparent..
 	for hboxes in getAllHitboxes():
 		for decals in hboxes.get_children():
@@ -699,7 +699,7 @@ func setRightHandFilter(value : bool = true) -> void:
 	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:R_Pinkie1", value)
 	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:R_Pinkie2", value)
 
-func equipWeapon(index) -> void:
+func equipWeapon(index:int) -> void:
 	await unequipWeapon()
 	if !equipSound.playing:
 		equipSound.play()
@@ -804,6 +804,7 @@ func getInteractionObject():
 			if col.is_in_group("Interactable"):
 				gameManager.getEventSignal("interactableFound").emit()
 				return col
+
 
 func getClothes():
 	for clothes in clothingHolder.get_children():
@@ -922,7 +923,7 @@ func flinch() -> void:
 		#bodyIKMarker.rotation.y += randf_range(-0.5,0.5)
 		bodyIKMarker.rotation.z += randf_range(-0.25,0.35)
 
-func _on_health_component_on_damaged(dealer, hitDirection)->void:
+func _on_health_component_on_damaged(dealer:Node3D, hitDirection:Vector3)->void:
 	flinch()
 
 func _exit_tree()->void:
@@ -947,7 +948,7 @@ func throwThrowable()->void:
 		isThrowing = false
 		isArmingThrowable = false
 
-func savePawnFile(pawnFile:String = "player"):
+func savePawnFile(pawnFile:String = "player")->String:
 	Console.add_rich_console_message("[color=green]Saving Pawn to File..[/color]")
 	var path = FileAccess.open("%s.pwn"%pawnFile,FileAccess.WRITE)
 	var saveWeapons : Array

@@ -534,11 +534,11 @@ bus = &"UI"
 [node name="questNotification" type="MarginContainer" parent="HUD"]
 layout_mode = 1
 anchors_preset = -1
-anchor_top = 0.092
-anchor_bottom = 0.092
-offset_top = 0.199997
+anchor_top = 0.049
+anchor_bottom = 0.19
+offset_top = -0.100002
 offset_right = 553.0
-offset_bottom = 127.2
+offset_bottom = -1.52588e-05
 grow_vertical = 2
 
 [node name="killSound" type="AudioStreamPlayer" parent="."]

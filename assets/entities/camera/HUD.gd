@@ -2,6 +2,7 @@ extends Control
 signal interactionunFound
 signal interactionFound
 @export_category("Hud")
+@onready var questNotifHolder : MarginContainer = $questNotification
 @export var cam : Camera3D
 @export var interactionOffset : Vector2 = Vector2.ZERO
 @onready var interactHud = $Interact

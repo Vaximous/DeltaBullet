@@ -415,7 +415,10 @@ func equipToPawn(pawn:BasePawn):
 			if objectUsed.is_connected(equipToPawn):
 				objectUsed.disconnect(equipToPawn)
 			if pawn.attachedCam:
-				gameManager.notifyFade("%s Added to inventory." %objectName)
+				var _notification = load("res://assets/scenes/ui/generalNotif/generalNotification.tscn").instantiate()
+				pawn.attachedCam.hud.gameNotifications.add_child(_notification)
+				_notification.doNotification(null,"New Item Acquired","%s Added to inventory." %objectName)
+				#gameManager.notifyFade("%s Added to inventory." %objectName)
 				pawn.equipSound.play()
 				pawn.attachedCam.fireRecoil(0,3.7,5.4,true)
 		else:
@@ -426,8 +429,11 @@ func equipToPawn(pawn:BasePawn):
 							pawn.itemInventory[weaponIndex].currentMagSize += currentMagSize
 							self.queue_free()
 							if pawn.attachedCam:
-								gameManager.notifyFade("+%s %s Ammo has been added" %[currentMagSize,objectName])
-								pawn.equipSound.play()
+								var _notification = load("res://assets/scenes/ui/generalNotif/generalNotification.tscn").instantiate()
+								pawn.attachedCam.hud.gameNotifications.add_child(_notification)
+								_notification.doNotification(null,objectName,"+%s Ammo has been added." %currentMagSize)
+								#gameManager.notifyFade("+%s %s Ammo has been added" %[currentMagSize,objectName])
+								#pawn.equipSound.play()
 								pawn.attachedCam.fireRecoil(0,3.7,5.4,true)
 						else:
 							if pawn.attachedCam:

@@ -451,11 +451,13 @@ offset_right = 170.0
 offset_bottom = 87.0
 
 [node name="FPSCounter" type="Control" parent="HUD"]
-anchors_preset = 0
-offset_left = 4.0
-offset_top = 2.0
-offset_right = 66.0
-offset_bottom = 41.0
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -62.0
+offset_bottom = 39.0
+grow_horizontal = 0
 
 [node name="colorRect" type="ColorRect" parent="HUD/FPSCounter"]
 layout_mode = 0
@@ -534,11 +536,34 @@ bus = &"UI"
 [node name="questNotification" type="MarginContainer" parent="HUD"]
 layout_mode = 1
 anchors_preset = -1
-anchor_top = 0.049
-anchor_bottom = 0.19
-offset_top = -0.100002
+anchor_bottom = 0.141
 offset_right = 553.0
-offset_bottom = -1.52588e-05
+offset_bottom = 0.0999832
+grow_vertical = 2
+
+[node name="marginContainer" type="MarginContainer" parent="HUD"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 0.613
+anchor_right = 1.0
+anchor_bottom = 0.613
+offset_left = -428.0
+offset_top = -170.7
+offset_bottom = 171.3
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="control" type="Control" parent="HUD/marginContainer"]
+layout_mode = 2
+
+[node name="gameNotifications" type="VBoxContainer" parent="HUD/marginContainer/control"]
+clip_contents = true
+custom_minimum_size = Vector2(0, 500)
+layout_mode = 2
+offset_right = 428.0
+offset_bottom = 575.0
+grow_horizontal = 0
 grow_vertical = 2
 
 [node name="killSound" type="AudioStreamPlayer" parent="."]

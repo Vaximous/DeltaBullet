@@ -558,11 +558,9 @@ grow_vertical = 2
 layout_mode = 2
 
 [node name="gameNotifications" type="VBoxContainer" parent="HUD/marginContainer/control"]
-clip_contents = true
-custom_minimum_size = Vector2(0, 500)
 layout_mode = 2
 offset_right = 428.0
-offset_bottom = 575.0
+offset_bottom = 412.0
 grow_horizontal = 0
 grow_vertical = 2
 

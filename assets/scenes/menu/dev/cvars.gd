@@ -72,22 +72,31 @@ func load(path : String):
 	Console.add_console_message("Loaded %s" % path, Color.GREEN)
 	return res
 
-func posess():
+func posess()->void:
 	var cast : RayCast3D = gameManager.activeCamera.debugCast
 	if cast:
 		if cast.is_colliding():
 			if cast.get_collider().is_in_group("Posessable"):
 				freecam()
-				gameManager.notify_warn("Posessing..", 2, 5)
+				#gameManager.notify_warn("Posessing..", 2, 5)
+				var _notification = load("res://assets/scenes/ui/generalNotif/generalNotification.tscn").instantiate()
+				gameManager.activeCamera.hud.gameNotifications.add_child(_notification)
+				_notification.doNotification(null,"Posession", "Posessed %s." %cast.get_collider())
 				gameManager.activeCamera.posessObject(cast.get_collider(),cast.get_collider().followNode)
 			else:
+				var _notification = load("res://assets/scenes/ui/generalNotif/generalNotification.tscn").instantiate()
+				gameManager.activeCamera.hud.gameNotifications.add_child(_notification)
+				_notification.doNotification(null,"Posession", "Unable to posess %s!" %cast.get_collider())
 				gameManager.notify_warn("Cannot posess %s, Its not possessable" %cast.get_collider(), 2, 5)
 				Console.add_console_message("Cannot posess %s, Its not possessable" %cast.get_collider())
 	else:
 		gameManager.notify_warn("You can't posess nothing dipshit. Look at a pawn.", 2, 5)
 		Console.add_console_message("You can't posess nothing dipshit. Look at a pawn.")
-func freecam():
-	gameManager.notify_warn("Freecam Enabled", 2, 5)
+func freecam()->void:
+	#gameManager.notify_warn("Freecam Enabled", 2, 5)
+	var _notification = load("res://assets/scenes/ui/generalNotif/generalNotification.tscn").instantiate()
+	gameManager.activeCamera.hud.gameNotifications.add_child(_notification)
+	_notification.doNotification(null,"Camera", "Freecam Enabled.")
 	gameManager.activeCamera.unposessObject(true)
 
 func spawnPawn(walk:bool = false,position : Vector3 = Vector3.INF) -> void:
@@ -151,10 +160,10 @@ func _g(key, default = null):
 	Console.add_console_message("got {%s:%s}" % [key, got], Color.DIM_GRAY)
 	return got
 
-func setFirstperson():
+func setFirstperson()->void:
 	gameManager.activeCamera.followingEntity.setFirstperson()
 
-func setThirdperson():
+func setThirdperson()->void:
 	gameManager.activeCamera.followingEntity.setThirdperson()
 
 func loadFromFile(filename : String):
@@ -217,42 +226,54 @@ func spawnPlayer(pos:Vector3 = Vector3.ZERO):
 	playerPawn.inputComponent = controller
 	playerPawn.checkComponents()
 
-func setTimeOfDay(time:float):
+func setTimeOfDay(time:float)->void:
 	if gameManager.world:
 		gameManager.world.worldSky.timeOfDay = time
 
-func progressTime(value:bool):
+func progressTime(value:bool)->void:
 	if gameManager.world:
 		gameManager.world.worldSky.simulateTime = value
 
-func pawnDebug(value:bool):
+func pawnDebug(value:bool)->void:
 	if gameManager.world:
 		gameManager.pawnDebug = value
 		if value:
 			gameManager.getEventSignal("debugEnabled").emit()
-			gameManager.notify_warn("Pawn Debugger info will appear above NPC pawns' heads.", 2, 10)
+			var _notification = load("res://assets/scenes/ui/generalNotif/generalNotification.tscn").instantiate()
+			gameManager.activeCamera.hud.gameNotifications.add_child(_notification)
+			_notification.doNotification(null,"Pawn Debug", "Pawn Info will be displayed.")
+			#gameManager.notify_warn("Pawn Debugger info will appear above NPC pawns' heads.", 2, 10)
 		else:
 			gameManager.getEventSignal("debugDisabled").emit()
-			gameManager.notify_warn("Pawn Debugger info will no longer appear above NPC pawns' heads.", 2, 10)
+			var _notification = load("res://assets/scenes/ui/generalNotif/generalNotification.tscn").instantiate()
+			gameManager.activeCamera.hud.gameNotifications.add_child(_notification)
+			_notification.doNotification(null,"Pawn Debug", "Pawn Info will no longer be displayed.")
+			#gameManager.notify_warn("Pawn Debugger info will no longer appear above NPC pawns' heads.", 2, 10)
 
-func debugToggle():
+func debugToggle()->void:
 	if gameManager.debugEnabled:
-		gameManager.notify_warn("Debug controls are disabled.", 2, 10)
+		var _notification = load("res://assets/scenes/ui/generalNotif/generalNotification.tscn").instantiate()
+		gameManager.activeCamera.hud.gameNotifications.add_child(_notification)
+		_notification.doNotification(null,"Debug Mode", "Debug controls are disabled.")
+		#gameManager.notify_warn("Debug controls are disabled.", 2, 10)
 		gameManager.debugEnabled = false
 		Console.add_console_message("Debug controls are now disabled.")
 	else:
-		gameManager.notify_warn("Debug controls are enabled.", 2, 10)
+		var _notification = load("res://assets/scenes/ui/generalNotif/generalNotification.tscn").instantiate()
+		gameManager.activeCamera.hud.gameNotifications.add_child(_notification)
+		_notification.doNotification(null,"Debug Mode", "Debug controls are enabled.")
+		#gameManager.notify_warn("Debug controls are enabled.", 2, 10)
 		gameManager.debugEnabled = true
 		Console.add_console_message("Debug controls are now enabled.")
 
-func loadMap(map):
+func loadMap(map)->void:
 	var worldsPath = "res://assets/scenes/worlds/"
 	var dir : DirAccess
 	if map is String:
 		if map != "" or " ":
 			gameManager.loadWorld(str("%s.tscn"%map))
 
-func maps():
+func maps()->void:
 	for m in get_tree().get_nodes_in_group(&"maplist"):
 		m.queue_free()
 

@@ -595,8 +595,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 53.8851, 1.07907, 24.8223)
 
 [node name="pawnTrigger" parent="Misc/Triggers" index="0" instance=ExtResource("13_gmp2x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.81834, 0.600162, 35.9415)
-collision_layer = 8
-collision_mask = 9
 
 [node name="collisionShape3d" type="CollisionShape3D" parent="Misc/Triggers/pawnTrigger" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4068, -0.213013)

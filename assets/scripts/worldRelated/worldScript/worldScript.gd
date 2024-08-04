@@ -63,11 +63,11 @@ func getSpawnPoints(offset:Vector3 = Vector3(0,0,0), pickRandom:bool = true, spa
 func getPlayerSpawnPoints(offset:Vector3 = Vector3(0,0,0), pickRandom:bool = true, spawn_idx:int = 0):
 	if pickRandom:
 		var spawnZone = playerWorldSpawns.get_children().pick_random()
-		if spawnZone is PawnSpawn:
+		if spawnZone is PawnSpawn and !null:
 			if spawnZone.pawnType == 0:
 				return spawnZone
-	else:
-		pass
+		else:
+			return null
 
 func checkWorldType():
 	pass

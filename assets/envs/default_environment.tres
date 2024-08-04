@@ -1,17 +1,17 @@
 [gd_resource type="Environment" load_steps=5 format=3 uid="uid://dnig6jq4e6pjs"]
 
 [ext_resource type="CompressedTexture3D" uid="uid://sr0kr5d88j54" path="res://assets/textures/misc/neutral-lut.png" id="1_mwulk"]
-[ext_resource type="Texture2D" uid="uid://b35duytn55243" path="res://assets/textures/panoramas/panoramatest2.png" id="2_mlhpo"]
+[ext_resource type="Texture2D" uid="uid://dvfkpbe83xcf4" path="res://assets/textures/panoramas/panoramatest3.png" id="2_vnusa"]
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_5xlke"]
-panorama = ExtResource("2_mlhpo")
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_31k0b"]
+panorama = ExtResource("2_vnusa")
 
-[sub_resource type="Sky" id="Sky_ecqul"]
-sky_material = SubResource("PanoramaSkyMaterial_5xlke")
+[sub_resource type="Sky" id="Sky_6fpt0"]
+sky_material = SubResource("PanoramaSkyMaterial_31k0b")
 
 [resource]
 background_mode = 2
-sky = SubResource("Sky_ecqul")
+sky = SubResource("Sky_6fpt0")
 reflected_light_source = 1
 tonemap_mode = 3
 tonemap_white = 1.85

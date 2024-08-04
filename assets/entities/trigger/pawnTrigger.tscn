@@ -13,16 +13,20 @@ signal triggerActivated
 
 func enteredTrigger(entered)->void:
 	if activeTrigger == true:
-		if triggerOnce:
-			Console.add_rich_console_message(\"%s Triggered. No longer active\" %[name])
-			activeTrigger = false
-		triggerActivated.emit()
+		for _triggerGroups in triggerGroups:
+			if entered.is_in_group(_triggerGroups):
+				if triggerOnce:
+					Console.add_rich_console_message(\"%s Triggered. No longer active\" %[name])
+					activeTrigger = false
+				triggerActivated.emit()
 
 func _on_body_entered(body)->void:
 	enteredTrigger(body)
 "
 
 [node name="pawnTrigger" type="Area3D"]
+collision_layer = 8
+collision_mask = 9
 script = SubResource("GDScript_1wp6m")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

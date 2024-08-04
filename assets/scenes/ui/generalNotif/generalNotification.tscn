@@ -16,8 +16,8 @@ gradient = SubResource("Gradient_8mawy")
 texture = SubResource("GradientTexture2D_f3wlm")
 
 [sub_resource type="Gradient" id="Gradient_g30t8"]
-offsets = PackedFloat32Array(0, 0.502128, 1)
-colors = PackedColorArray(0.20868, 1.51913e-07, 2.40654e-08, 1, 0.378232, 7.18953e-07, 1.92523e-07, 1, 0.219608, 0, 0, 1)
+offsets = PackedFloat32Array(0, 0.0851064, 0.476596, 0.86383, 1)
+colors = PackedColorArray(0.658824, 0.658824, 0.658824, 0, 0.184314, 0, 0, 0, 0.356863, 0, 0, 1, 0.372549, 0, 0, 0, 0.352941, 0.352941, 0.352941, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_lktfp"]
 gradient = SubResource("Gradient_g30t8")
@@ -167,10 +167,10 @@ tracks/0/path = NodePath(".:size")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.21, 6, 6.2),
-"transitions": PackedFloat32Array(0.241485, 0.143587, 0.143587, 0.241485),
+"times": PackedFloat32Array(0, 0.3, 5.8, 6, 6.2),
+"transitions": PackedFloat32Array(0.241485, 0.965934, 0.258815, 0.143587, 0.241485),
 "update": 0,
-"values": [Vector2(0, 65), Vector2(345, 65), Vector2(345, 65), Vector2(0, 65)]
+"values": [Vector2(0, 65), Vector2(330, 65), Vector2(345, 65), Vector2(345, 65), Vector2(0, 65)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -206,7 +206,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0, 0.2, 5.99746, 6.24077),
 "transitions": PackedFloat32Array(0.189465, 1, 0.297302, 0.189465),
 "update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+"values": [Color(0.619608, 0, 0, 1), Color(1, 0.156863, 0, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -335,7 +335,7 @@ layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.943
 anchor_right = 0.943
-offset_right = 303.001
+offset_right = 303.0
 offset_bottom = 36.0
 theme_override_fonts/font = ExtResource("1_6tx56")
 theme_override_font_sizes/font_size = 36
@@ -348,7 +348,7 @@ anchors_preset = -1
 anchor_left = 0.873
 anchor_right = 0.873
 offset_top = 30.0
-offset_right = 302.998
+offset_right = 302.997
 offset_bottom = 66.0
 theme_override_colors/font_color = Color(0.572549, 0, 0, 1)
 theme_override_fonts/font = ExtResource("1_6tx56")

@@ -21,7 +21,9 @@ func healPawn(pawn:BasePawn)->void:
 				if pawn.attachedCam:
 					pawn.attachedCam.fireVignette(0.9,Color.DARK_OLIVE_GREEN)
 					pawn.attachedCam.fireRecoil(0,randf_range(5.15,7.8),0,true)
-					gameManager.notifyFade("You've been healed.",2,1.5)
+					var _notification = load("res://assets/scenes/ui/generalNotif/generalNotification.tscn").instantiate()
+					gameManager.activeCamera.hud.gameNotifications.add_child(_notification)
+					_notification.doNotification(null,"Medkit", "Health fully recovered.")
 					gameManager.playSound(gameManager.getGlobalSound("healSound"))
 					useSound.play()
 				remove_from_group("Interactable")

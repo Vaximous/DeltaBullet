@@ -159,6 +159,7 @@ uv1_triplanar = true
 [sub_resource type="Resource" id="Resource_oguyb"]
 resource_local_to_scene = true
 script = ExtResource("14_cm81i")
+useBulletTrail = true
 canBeReloaded = true
 weaponMagSize = 64
 ammoSize = 8
@@ -196,6 +197,7 @@ bulletColor = Color(1, 1, 0, 1)
 [sub_resource type="Resource" id="Resource_a31ky"]
 resource_local_to_scene = true
 script = ExtResource("14_cm81i")
+useBulletTrail = true
 canBeReloaded = true
 weaponMagSize = 128
 ammoSize = 24
@@ -234,6 +236,7 @@ bulletColor = Color(1, 1, 0, 1)
 [sub_resource type="Resource" id="Resource_frf23"]
 resource_local_to_scene = true
 script = ExtResource("14_cm81i")
+useBulletTrail = true
 canBeReloaded = true
 weaponMagSize = 511
 ammoSize = 64

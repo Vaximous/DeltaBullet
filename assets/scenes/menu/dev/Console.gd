@@ -67,17 +67,14 @@ func add_rich_console_message(message : String) -> void:
 	await get_tree().process_frame
 	scroll.scroll_vertical = 50000
 
-func setInput():
+func setInput()->void:
 	get_viewport().gui_disable_input = console.has_focus()
-
 
 func warn_restricted(string : String) -> bool:
 	if Console.safe_mode:
 		Console.add_console_message("Cannot access '%s' in safe mode." % string, Color.LIGHT_CORAL)
 		return true
 	return false
-
-
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("devConsole"):

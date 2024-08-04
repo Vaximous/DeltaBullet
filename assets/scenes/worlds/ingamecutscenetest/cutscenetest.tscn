@@ -4,9 +4,8 @@
 [ext_resource type="Script" path="res://assets/resources/customResources/worldData/worldData.gd" id="2_0uiqm"]
 [ext_resource type="PackedScene" uid="uid://boicvk4qeqmbd" path="res://assets/entities/pawnSpawn/pawnSpawn.tscn" id="3_7nscv"]
 [ext_resource type="Texture2D" uid="uid://70l067us6ars" path="res://assets/textures/Developer_Textures/Dark/texture_02.png" id="4_x6jv4"]
-[ext_resource type="Resource" uid="uid://40lv2vl6tvmo" path="res://assets/entities/GodotSky/Presets/sky_default.tres" id="4_yesgi"]
 [ext_resource type="PackedScene" uid="uid://7ueyays7enj5" path="res://assets/entities/trigger/pawnTrigger.tscn" id="5_c45s4"]
-[ext_resource type="PackedScene" uid="uid://b8ia4ol1ep30o" path="res://assets/scenes/worlds/ingamecutscenetest/CameraAnimTest.fbx" id="6_qm216"]
+[ext_resource type="Animation" uid="uid://tpxrorecspnn" path="res://assets/animations/cutscene/test/test.res" id="6_dwuh0"]
 
 [sub_resource type="Resource" id="Resource_v28rw"]
 script = ExtResource("2_0uiqm")
@@ -16,7 +15,7 @@ worldDescription = "Whole ass animated cutscene."
 worldType = 0
 spawnPawnsOnLoad = true
 playOnStart = false
-spawnType = 0
+spawnType = 2
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nlko4"]
 albedo_texture = ExtResource("4_x6jv4")
@@ -25,32 +24,45 @@ uv1_triplanar = true
 [sub_resource type="GDScript" id="GDScript_55kce"]
 resource_name = "test"
 script/source = "extends Node
+@onready var pawnSpawn : PawnSpawn = $\"../../../Spawns/pawnSpawns/pawnSpawn\"
 @onready var trigger = $pawnTrigger
+@onready var cam : Camera3D = $\"RootNode_Camera(0)\"
+@onready var animPlayer : AnimationPlayer = $animationPlayer
+var anim : Animation = load(\"res://assets/animations/cutscene/test/test.res\")
 
 func _ready():
-	trigger.triggerActivated.connect(doCutscene)
+	doCutscene()
 
 func doCutscene():
-	cutsceneManager.createCutscene(\"test\",\"res://assets/scenes/worlds/ingamecutscenetest/cameraanim.res\")
+	await get_tree().create_timer(1).timeout
+	var pawn : BasePawn = pawnSpawn.spawnPawn()
+	var lib : AnimationLibrary = AnimationLibrary.new()
+	lib.add_animation(\"testo\",anim)
+	print(\"scene\")
+	Console.add_rich_console_message(str(anim.track_get_path(1)))
+	pawn.animationTree.active = false
+	anim.track_set_path(0,cam.get_path())
+	anim.track_set_path(1,pawn.pawnSkeleton.get_path())
+	animPlayer.add_animation_library(\"testLib\",lib)
+	animPlayer.play(\"testLib/testo\")
+	print(animPlayer.current_animation)
+	cam.make_current()
+	#cutsceneManager.createCutscene(\"test\",\"res://assets/scenes/worlds/ingamecutscenetest/cameraanim.res\")
 "
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_8gho0"]
-size = Vector3(21.287, 4.89557, 1)
+[sub_resource type="BoxShape3D" id="BoxShape3D_es0q0"]
+size = Vector3(6.5332, 5.8136, 7.93994)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dlrol"]
+_data = {
+"test": ExtResource("6_dwuh0")
+}
 
 [node name="worldBase" instance=ExtResource("1_sb044")]
 worldData = SubResource("Resource_v28rw")
 
-[node name="pawnSpawn" parent="Spawns/playerSpawns" index="0" instance=ExtResource("3_7nscv")]
+[node name="pawnSpawn" parent="Spawns/pawnSpawns" index="0" instance=ExtResource("3_7nscv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.523239, 0, 3.19578)
-pawnType = 0
-
-[node name="GodotSky" parent="Environment" index="0"]
-simulateTime = false
-skyRotation = 0.0
-animateStarMap = true
-sunShadow = true
-moonShadow = true
-skyPreset = ExtResource("4_yesgi")
 
 [node name="csgBox3d" type="CSGBox3D" parent="Geometry" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, -0.519316, -2)
@@ -58,15 +70,21 @@ use_collision = true
 size = Vector3(21, 1, 29)
 material = SubResource("StandardMaterial3D_nlko4")
 
-[node name="node" type="Node" parent="Misc/Triggers" index="0"]
+[node name="RootNode" type="Node" parent="Misc/Triggers" index="0"]
 script = SubResource("GDScript_55kce")
 
-[node name="pawnTrigger" parent="Misc/Triggers/node" index="0" instance=ExtResource("5_c45s4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.53674, 1.00995, -0.0399132)
+[node name="pawnTrigger" parent="Misc/Triggers/RootNode" index="0" instance=ExtResource("5_c45s4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.81834, 1.15085, -1.26899)
 
-[node name="collisionShape3d" type="CollisionShape3D" parent="Misc/Triggers/node/pawnTrigger" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.932068, 1.45859, 0)
-shape = SubResource("BoxShape3D_8gho0")
+[node name="collisionShape3d" type="CollisionShape3D" parent="Misc/Triggers/RootNode/pawnTrigger" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.7666, 2.4068, -0.499268)
+shape = SubResource("BoxShape3D_es0q0")
 
-[node name="Root Scene" parent="." index="7" instance=ExtResource("6_qm216")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.42834, -0.0193172, -4.01044)
+[node name="animationPlayer" type="AnimationPlayer" parent="Misc/Triggers/RootNode" index="1"]
+libraries = {
+"": SubResource("AnimationLibrary_dlrol")
+}
+
+[node name="RootNode_Camera(0)" type="Camera3D" parent="Misc/Triggers/RootNode" index="2"]
+
+[connection signal="triggerActivated" from="Misc/Triggers/RootNode/pawnTrigger" to="Misc/Triggers/RootNode" method="doCutscene"]

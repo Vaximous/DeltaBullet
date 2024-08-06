@@ -99,14 +99,14 @@ states/sprint/position = Vector2(619, -13)
 states/unequip/node = SubResource("AnimationNodeAnimation_syl42")
 states/unequip/position = Vector2(843, 100)
 transitions = ["sprint", "idle", SubResource("AnimationNodeStateMachineTransition_5ul8h"), "idle", "sprint", SubResource("AnimationNodeStateMachineTransition_gga4p"), "idle", "unequip", SubResource("AnimationNodeStateMachineTransition_7mtao"), "unequip", "End", SubResource("AnimationNodeStateMachineTransition_sftbu"), "Start", "idle", SubResource("AnimationNodeStateMachineTransition_2yi56"), "idle", "aim", SubResource("AnimationNodeStateMachineTransition_mh4se"), "aim", "fire", SubResource("AnimationNodeStateMachineTransition_7n2o2"), "fire", "aim", SubResource("AnimationNodeStateMachineTransition_va47p"), "aim", "idle", SubResource("AnimationNodeStateMachineTransition_umbs7"), "idle", "reload", SubResource("AnimationNodeStateMachineTransition_b2pei"), "reload", "idle", SubResource("AnimationNodeStateMachineTransition_tp78b"), "aim", "reload", SubResource("AnimationNodeStateMachineTransition_w3l64"), "reload", "aim", SubResource("AnimationNodeStateMachineTransition_ssigc"), "fire", "reload", SubResource("AnimationNodeStateMachineTransition_6of8o"), "reload", "fire", SubResource("AnimationNodeStateMachineTransition_culs7")]
-graph_offset = Vector2(146, 84)
+graph_offset = Vector2(124, 10)
 
 [sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_uy32p"]
 
 [resource]
 resource_local_to_scene = true
 resource_name = "berettaRoot"
-graph_offset = Vector2(-480, 162)
+graph_offset = Vector2(-434, 106)
 nodes/output/position = Vector2(380, 140)
 nodes/weaponState/node = SubResource("AnimationNodeStateMachine_q1np0")
 nodes/weaponState/position = Vector2(-180, 120)

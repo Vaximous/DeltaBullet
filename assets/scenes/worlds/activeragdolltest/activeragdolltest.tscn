@@ -382,7 +382,7 @@ animSkeleton = NodePath("../untitled/Armature/Skeleton3D")
 transform = Transform3D(1, -1.32171e-23, -1.77516e-15, -1.7752e-15, -7.45058e-09, -1, 2.15729e-21, 1, -7.45058e-09, 0, 1.00071, -0.199311)
 collision_layer = 2
 collision_mask = 11
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.77642e-15, 1.62199e-05, 1.00071)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.77642e-15, 1.622e-05, 1.00071)
 body_offset = Transform3D(1, -1.32171e-23, -1.77516e-15, -1.7752e-15, -7.45058e-09, -1, 2.15729e-21, 1, -7.45058e-09, 0, 1.00071, -1.62125e-05)
 bone_name = "Bone"
 script = SubResource("GDScript_8s8wa")
@@ -393,11 +393,11 @@ transform = Transform3D(1, -1.36962e-19, 5.30719e-21, 0, 0, 1, -5.87298e-23, -1,
 shape = SubResource("SphereShape3D_c28eq")
 
 [node name="Physical Bone Bone_001" type="PhysicalBone3D" parent="Props/untitled2/Armature/Skeleton3D" index="2" node_paths=PackedStringArray("animSkeleton")]
-transform = Transform3D(1, 1.66452e-07, 9.40226e-12, -1.77636e-15, 2.04146e-06, -1.00396, -2.38418e-07, 1.00316, 1.60187e-06, -9.53674e-07, 2.90801, -0.19933)
+transform = Transform3D(1, 1.66452e-07, 9.40226e-12, -1.77636e-15, 2.04891e-06, -1.00396, -2.38418e-07, 1.00316, 1.60187e-06, -9.53674e-07, 2.90801, -0.19933)
 collision_layer = 2
 collision_mask = 11
 joint_type = 1
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.53669e-07, 3.32573e-05, 0.903086)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.53668e-07, 3.32574e-05, 0.903089)
 body_offset = Transform3D(1, -7.27203e-08, 9.02034e-12, -1.77636e-15, 2.04146e-06, -1.00396, 0, 1.00316, 1.60187e-06, -9.53674e-07, 0.906665, -3.48091e-05)
 bone_name = "Bone.001"
 joint_constraints/bias = 0.3

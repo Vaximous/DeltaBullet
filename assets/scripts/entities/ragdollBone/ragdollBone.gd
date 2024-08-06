@@ -153,17 +153,17 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 					createBlood()
 		return
 
-#func _physics_process(delta)->void:
-	#if get_owner().visibleOnScreen:
-		#if boneState and whirrSound:
-			#audioCooldown -= delta
-			#if inAirStreamPlayer != null:
-				#var fac = clamp(linear_velocity.length() * angular_velocity.length_squared() / 1000.0, 0.0, 1.0)
-				#if linear_velocity.length() < 2.0:
-					#fac *= 0
-				##Realistically it would only play the sound as its whipping towards the viewer
-				#inAirStreamPlayer.volume_db = lerp(inAirStreamPlayer.volume_db, -80 + (fac * 80), delta * 6)
-				#inAirStreamPlayer.pitch_scale = lerp(inAirStreamPlayer.pitch_scale, (angular_velocity.length() / 500.0) + 2.0, delta * 4)
+func _physics_process(delta)->void:
+	if get_owner().visibleOnScreen:
+		if boneState and whirrSound:
+			audioCooldown -= delta
+			if inAirStreamPlayer != null:
+				var fac = clamp(linear_velocity.length() * angular_velocity.length_squared() / 1000.0, 0.0, 1.0)
+				if linear_velocity.length() < 2.0:
+					fac *= 0
+				#Realistically it would only play the sound as its whipping towards the viewer
+				inAirStreamPlayer.volume_db = lerp(inAirStreamPlayer.volume_db, -80 + (fac * 80), delta * 6)
+				inAirStreamPlayer.pitch_scale = lerp(inAirStreamPlayer.pitch_scale, (angular_velocity.length() / 500.0) + 2.0, delta * 4)
 
 func hit(dmg, dealer=null, hitImpulse:Vector3 = Vector3.ZERO, hitPoint:Vector3 = Vector3.ZERO)->void:
 	emit_signal("onHit",hitImpulse,hitPoint)

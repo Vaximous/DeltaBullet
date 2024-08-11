@@ -25,13 +25,16 @@ script/source = "extends Node3D
 class_name bloodSplatHandler
 @onready var dropletSound : AudioStreamPlayer3D = $dropletSound
 @onready var splatDecal : Decal = $bloodSplat1
-var growSpeed : float = 24.0
+var growSpeedMin : float = 20.0
+var growSpeedMax : float = 34.0
+var growSpeed : float = 0.0
 var maxSize : float = 0.4
 var defaultBloodSize : Vector3 = Vector3(0.3,0.3,0.3)
 @export var bloodTextures : Array[Texture2D] = []
 #var bloodNormals : Array = [\"res://assets/textures/blood/bloodSplat/blood1_n.png\",\"res://assets/textures/blood/bloodSplat/blood2_n.png\",\"res://assets/textures/blood/bloodSplat/blood3_n.png\",\"res://assets/textures/blood/bloodSplat/blood4_n.png\"]
 # Called when the node enters the scene tree for the first time.
 func _ready()->void:
+	growSpeed = randf_range(growSpeedMin,growSpeedMax)
 	var timer = get_tree().create_timer(UserConfig.game_decal_remove_time)
 	timer.timeout.connect(queue_free)
 	maxSize = randf_range(defaultBloodSize.x,0.8)

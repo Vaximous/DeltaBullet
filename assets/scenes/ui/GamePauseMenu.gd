@@ -6,7 +6,7 @@ var canPause : bool = true
 @onready var secondSound : AudioStreamPlayer = $audioStreamPlayer2
 @onready var gradientBG : TextureRect = $gradientBG
 @onready var saveLoadMenu : Control = $saveloadmenu
-@onready var resumeButton : Button = $ResumeButton
+@onready var resumeButton : Button = $buttons/ResumeButton
 
 func _ready() -> void:
 	gradientBG.self_modulate = Color.TRANSPARENT

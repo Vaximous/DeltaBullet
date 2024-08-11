@@ -54,8 +54,11 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_c0e2a")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fl3pl"]
-shading_mode = 0
+shading_mode = 2
+diffuse_mode = 3
 albedo_texture = ExtResource("3_adp1r")
+metallic_specular = 0.0
+grow_amount = 0.01
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_u8wpy"]
 _surfaces = [{
@@ -379,7 +382,7 @@ stream_0/stream = ExtResource("2_2gcbv")
 stream_0/weight = 1.0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_slnw1"]
-size = Vector3(0.0761719, 0.321045, 0.691635)
+size = Vector3(0.0761719, 0.277222, 0.588493)
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_oep0y"]
 _data = {
@@ -493,7 +496,7 @@ bus = &"Sounds"
 attenuation_filter_db = 0.0
 
 [node name="collisionObject" parent="." index="2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00292969, -0.0516357, 0.0903549)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00292969, -0.0297241, 0.038784)
 shape = SubResource("BoxShape3D_slnw1")
 
 [node name="AnimationTree" parent="." index="3"]

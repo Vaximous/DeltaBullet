@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://bgy0ycoxec6p6"]
+[gd_scene load_steps=45 format=3 uid="uid://bgy0ycoxec6p6"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_rrsmc"]
 [ext_resource type="PackedScene" uid="uid://boicvk4qeqmbd" path="res://assets/entities/pawnSpawn/pawnSpawn.tscn" id="2_d45q2"]
@@ -24,6 +24,8 @@
 [ext_resource type="PackedScene" uid="uid://dend7ate7mq6e" path="res://assets/entities/bulletHoles/default/BulletHole.tscn" id="17_5q6o5"]
 [ext_resource type="Script" path="res://assets/resources/PhysicsMaterials/DB_PhysicsMaterial.gd" id="18_y1uao"]
 [ext_resource type="PackedScene" uid="uid://bidurnqgd1c74" path="res://assets/entities/weapons/m4/m4.tscn" id="24_n7adl"]
+[ext_resource type="Texture2D" uid="uid://c7b38t83ckisx" path="res://assets/textures/crosshair/crosshair161.png" id="25_uauqw"]
+[ext_resource type="Script" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="26_ev0fr"]
 
 [sub_resource type="Resource" id="Resource_ko4a2"]
 script = ExtResource("2_yse5r")
@@ -167,6 +169,45 @@ func _physics_process(delta)->void:
 
 [sub_resource type="SphereMesh" id="SphereMesh_gh5mg"]
 
+[sub_resource type="Resource" id="Resource_gua43"]
+resource_local_to_scene = true
+script = ExtResource("26_ev0fr")
+useBulletTrail = true
+canBeReloaded = true
+weaponMagSize = 128
+ammoSize = 30
+reloadTime = 1.9
+headDismember = false
+weaponDamage = 7.9
+weaponFireRate = 0.1
+bulletSpeed = 800.0
+bulletPenetration = 1.0
+weaponImpulse = 27.0
+weaponShots = 1
+ammoConsumption = 1
+useCustomCrosshairSize = true
+crosshairSizeOverride = Vector2(0.6, 0.6)
+forcedCrosshair = ExtResource("25_uauqw")
+useFOV = true
+fovShotAmount = 0.8
+weaponRecoil = Vector3(5, 9, 3)
+weaponRecoilStrength = 7.0
+weaponSpread = 0.09
+weaponRecoilStrengthAim = 4.0
+weaponSpreadAim = 0.07
+leftHandParent = false
+rightHandParent = true
+useWeaponSprintAnim = true
+useLeftHandIdle = true
+useRightHandIdle = true
+useLeftHandAiming = true
+useRightHandAiming = true
+useLeftHandFreeAiming = true
+useRightHandFreeAiming = true
+weaponPositionOffset = Vector3(-0.015, 0.13, 0.075)
+weaponRotationOffset = Vector3(0, -1.74, -1.48)
+bulletColor = Color(1, 1, 0, 1)
+
 [node name="worldBase" instance=ExtResource("1_rrsmc")]
 worldData = SubResource("Resource_ko4a2")
 
@@ -258,6 +299,7 @@ axis_lock_linear_z = true
 
 [node name="M4" parent="Props" index="6" instance=ExtResource("24_n7adl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.31164, 2.04248, 5.08815)
+weaponResource = SubResource("Resource_gua43")
 collisionEnabled = true
 
 [connection signal="timeout" from="Props/csgBox3d/timer" to="Props/csgBox3d" method="_on_timer_timeout"]

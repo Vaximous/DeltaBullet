@@ -13,7 +13,7 @@ script/source = "extends Control
 @onready var verSeperator : HSeparator = $verSep
 @onready var versionLabel : Label = $versionLabel
 @onready var optionsMenu : Control = $Options
-@onready var buttonHolder : Control = $buttonHolder
+@onready var buttonHolder : VBoxContainer = $buttonHolder
 var anykey = false
 var pressed = false
 # Called when the node enters the scene tree for the first time.
@@ -111,86 +111,37 @@ offset_right = 856.2
 offset_bottom = -0.400024
 texture = ExtResource("3_hv6kb")
 
-[node name="buttonHolder" type="Control" parent="."]
+[node name="buttonHolder" type="VBoxContainer" parent="."]
 layout_mode = 1
+anchors_preset = -1
 anchor_left = 0.046
 anchor_top = 0.5
 anchor_right = 0.046
-anchor_bottom = 0.877
+anchor_bottom = 0.815
 offset_left = 0.400002
-offset_top = 49.9999
+offset_top = 12.0
 offset_right = 421.4
-offset_bottom = -44.3
+offset_bottom = -0.500061
 scale = Vector2(1.05, 1.05)
 
 [node name="playButton" parent="buttonHolder" instance=ExtResource("5_nxhqu")]
-layout_mode = 1
-anchor_left = 0.019
-anchor_top = -0.218
-anchor_right = 0.019
-anchor_bottom = -0.018
-offset_left = -0.379954
-offset_top = 0.0768166
-offset_right = 349.62
-offset_bottom = 0.0768142
-grow_horizontal = 1
-grow_vertical = 1
+layout_mode = 2
 text = "New game"
 
 [node name="loadButton" parent="buttonHolder" instance=ExtResource("5_nxhqu")]
-layout_mode = 1
-anchor_left = 0.019
-anchor_top = 0.074
-anchor_right = 0.019
-anchor_bottom = 0.274
-offset_left = 0.000999451
-offset_top = -0.0347042
-offset_right = 350.001
-offset_bottom = -0.0347061
-grow_horizontal = 1
-grow_vertical = 1
+layout_mode = 2
 text = "load game"
 
 [node name="optionsButton" parent="buttonHolder" instance=ExtResource("5_nxhqu")]
-layout_mode = 1
-anchor_left = 0.019
-anchor_top = 0.298
-anchor_right = 0.019
-anchor_bottom = 0.498
-offset_left = 0.000999451
-offset_top = -0.00999451
-offset_right = 350.001
-offset_bottom = -0.0100098
-grow_horizontal = 1
-grow_vertical = 1
+layout_mode = 2
 text = "Options"
 
 [node name="creditsButton" parent="buttonHolder" instance=ExtResource("5_nxhqu")]
-layout_mode = 1
-anchor_left = 0.021
-anchor_top = 0.571
-anchor_right = 0.021
-anchor_bottom = 0.771
-offset_left = 0.158999
-offset_top = 0.10498
-offset_right = 350.159
-offset_bottom = 0.104996
-grow_horizontal = 1
-grow_vertical = 1
+layout_mode = 2
 text = "Credits"
 
 [node name="quitButton" parent="buttonHolder" instance=ExtResource("5_nxhqu")]
-layout_mode = 1
-anchor_left = 0.029
-anchor_top = 0.829
-anchor_right = 0.029
-anchor_bottom = 1.029
-offset_left = -0.209
-offset_top = -0.105011
-offset_right = 349.791
-offset_bottom = -0.105026
-grow_horizontal = 1
-grow_vertical = 1
+layout_mode = 2
 text = "Quit
 "
 
@@ -202,24 +153,24 @@ layout_mode = 1
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.05
-anchor_top = 0.872
+anchor_top = 0.5
 anchor_right = 0.05
-anchor_bottom = 0.872
-offset_top = 0.199951
+anchor_bottom = 0.5
+offset_top = 323.0
 offset_right = 464.0
-offset_bottom = 13.2
+offset_bottom = 336.0
 
 [node name="versionLabel" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.049
-anchor_top = 0.887
+anchor_top = 0.5
 anchor_right = 0.049
-anchor_bottom = 0.922
-offset_left = 0.599998
-offset_top = -0.300049
+anchor_bottom = 0.5
+offset_left = 0.600006
+offset_top = 336.0
 offset_right = 101.6
-offset_bottom = 0.199951
+offset_bottom = 368.0
 theme_override_colors/font_color = Color(0.400698, 0.400698, 0.400698, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)

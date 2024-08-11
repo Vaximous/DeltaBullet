@@ -72,74 +72,40 @@ text = "Paused"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ResumeButton" parent="." instance=ExtResource("3_mr0iv")]
+[node name="buttons" type="VBoxContainer" parent="."]
 layout_mode = 1
+anchors_preset = 8
 anchor_left = 0.5
-anchor_top = 0.419
+anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 0.419
-offset_left = -170.0
-offset_top = -23.1
-offset_right = 171.0
-offset_bottom = 23.9
-grow_horizontal = 1
-grow_vertical = 1
+anchor_bottom = 0.5
+offset_left = -169.0
+offset_top = -98.0
+offset_right = 164.0
+offset_bottom = 177.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ResumeButton" parent="buttons" instance=ExtResource("3_mr0iv")]
+layout_mode = 2
 text = "Resume"
 
-[node name="SaveButton" parent="." instance=ExtResource("3_mr0iv")]
-layout_mode = 1
-anchor_left = 0.5
-anchor_top = 0.482
-anchor_right = 0.5
-anchor_bottom = 0.482
-offset_left = -170.0
-offset_top = -23.8
-offset_right = 171.0
-offset_bottom = 23.2
-grow_horizontal = 1
-grow_vertical = 1
+[node name="SaveButton" parent="buttons" instance=ExtResource("3_mr0iv")]
+layout_mode = 2
 text = "Save Game
 "
 
-[node name="LoadButton" parent="." instance=ExtResource("3_mr0iv")]
-layout_mode = 1
-anchor_left = 0.5
-anchor_top = 0.544
-anchor_right = 0.5
-anchor_bottom = 0.544
-offset_left = -170.0
-offset_top = -23.6
-offset_right = 171.0
-offset_bottom = 23.4
-grow_horizontal = 1
-grow_vertical = 1
+[node name="LoadButton" parent="buttons" instance=ExtResource("3_mr0iv")]
+layout_mode = 2
 text = "Load Game
 "
 
-[node name="OptionsButton" parent="." instance=ExtResource("3_mr0iv")]
-layout_mode = 1
-anchor_left = 0.5
-anchor_top = 0.605
-anchor_right = 0.5
-anchor_bottom = 0.605
-offset_left = -170.0
-offset_top = -23.5
-offset_right = 171.0
-offset_bottom = 23.5
+[node name="OptionsButton" parent="buttons" instance=ExtResource("3_mr0iv")]
+layout_mode = 2
 text = "Options"
 
-[node name="menuButton" parent="." instance=ExtResource("3_mr0iv")]
-layout_mode = 1
-anchor_left = 0.5
-anchor_top = 0.668
-anchor_right = 0.5
-anchor_bottom = 0.668
-offset_left = -170.0
-offset_top = -23.2
-offset_right = 171.0
-offset_bottom = 23.8
-grow_horizontal = 1
-grow_vertical = 1
+[node name="menuButton" parent="buttons" instance=ExtResource("3_mr0iv")]
+layout_mode = 2
 text = "exit to menu"
 
 [node name="Options" parent="." instance=ExtResource("1_nxica")]
@@ -147,6 +113,7 @@ visible = false
 layout_mode = 1
 
 [node name="saveloadmenu" parent="." instance=ExtResource("5_j4k36")]
+visible = false
 layout_mode = 1
 
 [node name="audioStreamPlayer" type="AudioStreamPlayer" parent="."]
@@ -159,10 +126,10 @@ stream = ExtResource("6_raf1m")
 volume_db = -15.0
 bus = &"UI"
 
-[connection signal="pressed" from="ResumeButton" to="." method="_on_resume_button_pressed"]
-[connection signal="pressed" from="SaveButton" to="saveloadmenu" method="initSavePanel"]
-[connection signal="pressed" from="SaveButton" to="saveloadmenu" method="show"]
-[connection signal="pressed" from="LoadButton" to="saveloadmenu" method="initLoadPanel"]
-[connection signal="pressed" from="LoadButton" to="saveloadmenu" method="show"]
-[connection signal="pressed" from="OptionsButton" to="Options" method="show"]
-[connection signal="pressed" from="menuButton" to="." method="_on_menu_button_pressed"]
+[connection signal="pressed" from="buttons/ResumeButton" to="." method="_on_resume_button_pressed"]
+[connection signal="pressed" from="buttons/SaveButton" to="saveloadmenu" method="initSavePanel"]
+[connection signal="pressed" from="buttons/SaveButton" to="saveloadmenu" method="show"]
+[connection signal="pressed" from="buttons/LoadButton" to="saveloadmenu" method="initLoadPanel"]
+[connection signal="pressed" from="buttons/LoadButton" to="saveloadmenu" method="show"]
+[connection signal="pressed" from="buttons/OptionsButton" to="Options" method="show"]
+[connection signal="pressed" from="buttons/menuButton" to="." method="_on_menu_button_pressed"]

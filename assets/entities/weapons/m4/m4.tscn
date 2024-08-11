@@ -254,7 +254,7 @@ script/source = "static func execute(node : Node) -> void:
 "
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_upyhg"]
-random_pitch = 1.15
+random_pitch = 1.05
 streams_count = 1
 stream_0/stream = ExtResource("7_2gub5")
 stream_0/weight = 1.0
@@ -339,7 +339,7 @@ use_pooling = true
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." index="1"]
 stream = SubResource("AudioStreamRandomizer_upyhg")
-attenuation_model = 2
+volume_db = -10.0
 bus = &"Sounds"
 attenuation_filter_db = 0.0
 

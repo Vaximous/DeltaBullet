@@ -952,17 +952,23 @@ func savePawnFile(pawnFile:String = "player")->String:
 	Console.add_rich_console_message("[color=green]Saving Pawn to File..[/color]")
 	var path = FileAccess.open("%s.pwn"%pawnFile,FileAccess.WRITE)
 	var saveWeapons : Array
+	var saveWeaponAmmo : Array
+	var saveWeaponMags : Array
 	var saveClothes : Array
 	saveWeapons.clear()
 	for weapons in itemInventory.size():
 		if itemInventory[weapons] != null:
 			saveWeapons.append(itemInventory[weapons].get_scene_file_path())
+			saveWeaponAmmo.append(itemInventory[weapons].currentAmmo)
+			saveWeaponMags.append(itemInventory[weapons].currentMagSize)
 	saveClothes.clear()
 	for clothes in clothingInventory.size():
 		saveClothes.append(clothingInventory[clothes].get_scene_file_path())
 	var pwnDict = {
 		"clothes" : saveClothes,
 		"items" : saveWeapons,
+		"itemAmmo" : saveWeaponAmmo,
+		"itemMags" : saveWeaponMags,
 		"pawnColorR" : pawnColor.r,
 		"pawnColorG" : pawnColor.g,
 		"pawnColorB" : pawnColor.b,
@@ -995,12 +1001,27 @@ func loadPawnFile(pawnFile:String = "player")->void:
 			Console.add_rich_console_message("[color=red]Couldn't Parse %s![/color]"%string)
 			return
 
-		var nodeData = json.get_data()
+		var nodeData : Variant = json.get_data()
 
 		##Create Inventory Items/Clothes
-		for item in nodeData["items"]:
-			var inventoryItem = load(item).instantiate()
+		var itemAmmo : Array
+		var itemMags : Array
+		if nodeData["itemAmmo"] != null:
+			itemAmmo = nodeData["itemAmmo"]
+		if nodeData["itemMags"] != null:
+			itemMags = nodeData["itemMags"]
+
+		var items : Array = nodeData["items"]
+		for item in items:
+			var index : int = items.find(item)
+			var inventoryItem : Weapon = load(item).instantiate()
 			itemHolder.add_child(inventoryItem)
+			if nodeData["itemAmmo"] != null and nodeData["itemMags"] != null:
+				if itemAmmo.size() >0:
+					inventoryItem.currentAmmo = itemAmmo[index]
+				if itemMags.size() >0:
+					inventoryItem.currentMagSize = itemMags[index]
+
 
 		for clothing in nodeData["clothes"]:
 				var clothingItem = load(clothing).instantiate()

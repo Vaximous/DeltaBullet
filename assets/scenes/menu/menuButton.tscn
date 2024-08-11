@@ -237,11 +237,12 @@ Label/colors/font_shadow_color = Color(0, 0, 0, 1)
 Label/fonts/font = ExtResource("1_tp3ek")
 
 [node name="menuButton" type="Button"]
+custom_minimum_size = Vector2(0, 50)
 anchors_preset = -1
 anchor_right = 0.213
-anchor_bottom = 0.052
-offset_right = 0.199982
-offset_bottom = 0.200001
+anchor_bottom = 0.056
+offset_right = 0.200012
+offset_bottom = -0.400002
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1

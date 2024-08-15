@@ -62,15 +62,10 @@ func _on_visible_on_screen_notifier_3d_screen_exited()->void:
 random_pitch = 1.25
 streams_count = 5
 stream_0/stream = ExtResource("14_c7oq4")
-stream_0/weight = 1.0
 stream_1/stream = ExtResource("15_v3lqi")
-stream_1/weight = 1.0
 stream_2/stream = ExtResource("16_dg0rv")
-stream_2/weight = 1.0
 stream_3/stream = ExtResource("17_7ryyk")
-stream_3/weight = 1.0
 stream_4/stream = ExtResource("18_gjub7")
-stream_4/weight = 1.0
 
 [node name="decal" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)

@@ -433,6 +433,3 @@ func interactCheck()->void:
 
 func _exit_tree()->void:
 	gameManager.activeCamera = null
-
-
-

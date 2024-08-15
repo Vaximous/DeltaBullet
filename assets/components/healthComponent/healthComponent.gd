@@ -40,5 +40,3 @@ func damage(amount, dealer:Node3D = null)->void:
 	emit_signal("onDamaged",dealer)
 	health = health - amount
 	lastDealer = dealer
-
-

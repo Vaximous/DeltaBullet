@@ -171,9 +171,3 @@ func _unhandled_input(event)->void:
 
 					if Input.get_action_strength("gMoveBackward") >= 1:
 						emit_signal("movementKeyPressed","Backward")
-
-
-
-
-
-

@@ -175,15 +175,15 @@ fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.5, 0)
 metadata/_snap_enabled = true
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sfs43"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bxvi1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_t3v2y"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r5gou"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8tfve"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_t3v2y"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bxvi1"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sfs43"]
 
 [sub_resource type="InputEventKey" id="InputEventKey_60klc"]
 device = -1
@@ -192,7 +192,7 @@ keycode = 4194305
 [sub_resource type="Shortcut" id="Shortcut_v2vor"]
 events = [SubResource("InputEventKey_60klc")]
 
-[sub_resource type="Image" id="Image_5jipe"]
+[sub_resource type="Image" id="Image_arw1u"]
 data = {
 "data": PackedByteArray(255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 96, 255, 255, 255, 97, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 96, 255, 255, 255, 97, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 96, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 97, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 96, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 97, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 97, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 97, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 96, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 96, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 97, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 97, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 96, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 96, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 97, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 97, 255, 255, 255, 96, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 96, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 97, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 96, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 97, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 96, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 96, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 97, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 96, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 97, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 96, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 96, 255, 255, 255, 97, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 97, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 96, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 96, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 97, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 97, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 96, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 96, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 97, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 97, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 97, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 96, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 97, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 96, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 97, 255, 255, 255, 96, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 97, 255, 255, 255, 96, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0),
 "format": "RGBA8",
@@ -202,13 +202,12 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_lrq7s"]
-image = SubResource("Image_5jipe")
+image = SubResource("Image_arw1u")
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_1t3p6"]
 random_pitch = 1.2
 streams_count = 1
 stream_0/stream = ExtResource("2_w3nni")
-stream_0/weight = 1.0
 
 [node name="Options" type="Control"]
 layout_mode = 3
@@ -264,7 +263,7 @@ stretch = true
 [node name="subViewport" type="SubViewport" parent="panelHolder/panel/textureRect/subViewportContainer"]
 own_world_3d = true
 handle_input_locally = false
-size = Vector2i(960, 480)
+size = Vector2i(64, 64)
 render_target_update_mode = 4
 
 [node name="Node3D" parent="panelHolder/panel/textureRect/subViewportContainer/subViewport" instance=ExtResource("2_b3bty")]
@@ -285,6 +284,7 @@ current_tab = 1
 [node name="Game" type="Control" parent="panelHolder/panel/optionsPanel"]
 visible = false
 layout_mode = 2
+metadata/_tab_index = 0
 
 [node name="vBoxContainer" type="VBoxContainer" parent="panelHolder/panel/optionsPanel/Game"]
 layout_mode = 1
@@ -359,6 +359,7 @@ value = 25.0
 
 [node name="Video" type="Control" parent="panelHolder/panel/optionsPanel"]
 layout_mode = 2
+metadata/_tab_index = 1
 
 [node name="vBoxContainer" type="VBoxContainer" parent="panelHolder/panel/optionsPanel/Video"]
 layout_mode = 1
@@ -420,7 +421,6 @@ text = "Very High
 alignment = 2
 item_count = 5
 popup/item_0/text = "Very Low"
-popup/item_0/id = 0
 popup/item_1/text = "Low"
 popup/item_1/id = 1
 popup/item_2/text = "Medium"
@@ -453,7 +453,6 @@ text = "Soft Very Low"
 alignment = 2
 item_count = 6
 popup/item_0/text = "Hard"
-popup/item_0/id = 0
 popup/item_1/text = "Soft Very Low"
 popup/item_1/id = 1
 popup/item_2/text = "Soft Low"
@@ -488,7 +487,6 @@ text = "2X"
 alignment = 2
 item_count = 4
 popup/item_0/text = "Disabled"
-popup/item_0/id = 0
 popup/item_1/text = "2X"
 popup/item_1/id = 1
 popup/item_2/text = "4X"
@@ -499,6 +497,7 @@ popup/item_3/id = 3
 [node name="Audio" type="Control" parent="panelHolder/panel/optionsPanel"]
 visible = false
 layout_mode = 2
+metadata/_tab_index = 2
 
 [node name="vBoxContainer" type="VBoxContainer" parent="panelHolder/panel/optionsPanel/Audio"]
 layout_mode = 1
@@ -622,6 +621,7 @@ max_value = 3.0
 [node name="Controls" type="Control" parent="panelHolder/panel/optionsPanel"]
 visible = false
 layout_mode = 2
+metadata/_tab_index = 3
 
 [node name="saveSettings" type="Button" parent="panelHolder/panel"]
 layout_mode = 1
@@ -666,11 +666,11 @@ offset_bottom = -258.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
-theme_override_styles/normal = SubResource("StyleBoxEmpty_sfs43")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_bxvi1")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_t3v2y")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_r5gou")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_8tfve")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_t3v2y")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_bxvi1")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_sfs43")
 shortcut = SubResource("Shortcut_v2vor")
 icon = SubResource("ImageTexture_lrq7s")
 icon_alignment = 1

@@ -18,13 +18,13 @@ var visibleOnScreen : bool = true
 @onready var rightUpperLeg:MeshInstance3D = $Mesh/Male/MaleSkeleton/Skeleton3D/Male_RightThigh
 @onready var leftLowerLeg:MeshInstance3D = $Mesh/Male/MaleSkeleton/Skeleton3D/Male_LeftKnee
 @onready var rightLowerLeg:MeshInstance3D = $Mesh/Male/MaleSkeleton/Skeleton3D/Male_RightKnee
-@onready var deathSound:AudioStreamPlayer3D = $"Mesh/Male/MaleSkeleton/Skeleton3D/Physical Bone Neck/deathSound"
-@onready var obliterateSound : AudioStreamPlayer3D = $"Mesh/Male/MaleSkeleton/Skeleton3D/Physical Bone Neck/obliterateSound"
+@onready var deathSound:AudioStreamPlayer3D = $"Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone Neck/deathSound"
+@onready var obliterateSound : AudioStreamPlayer3D = $"Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone Neck/obliterateSound"
 
 @onready var clothingHolder:Node3D = $Mesh/Male/MaleSkeleton/Skeleton3D/Clothing
 @onready var ragdollSkeleton : Skeleton3D = $Mesh/Male/MaleSkeleton/Skeleton3D
+@onready var physicalBoneSimulator : PhysicalBoneSimulator3D = $Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D
 @onready var ragdollMesh:Node3D = $Mesh
-@onready var soundQueue : SoundQueue = $"Mesh/Male/MaleSkeleton/Skeleton3D/Physical Bone Neck/SoundQueue"
 var physicsBones : Array[PhysicalBone3D]
 @export_category("Ragdoll")
 @export_subgroup("Active Ragdoll")
@@ -54,7 +54,7 @@ signal cameraAttached
 func _ready()-> void:
 	removeTimer.wait_time = UserConfig.game_ragdoll_remove_time
 	removeTimer.start()
-	for bones in ragdollSkeleton.get_children().filter(func(x): return x is PhysicalBone3D):
+	for bones in physicalBoneSimulator.get_children().filter(func(x): return x is PhysicalBone3D):
 		physicsBones.append(bones)
 	for pb in physicsBones:
 		if pb.get_script() != null:
@@ -63,12 +63,12 @@ func _ready()-> void:
 
 	deathSound.play()
 	if startOnInstance:
-		ragdollSkeleton.physical_bones_start_simulation()
+		startRagdoll()
 
 	checkClothingHider()
 
 func startRagdoll()-> void:
-	ragdollSkeleton.physical_bones_start_simulation()
+	physicalBoneSimulator.physical_bones_start_simulation()
 	checkClothingHider()
 
 func ragTwitch(convulsionAmount : float = 10.0, bodyPartIDX : int = 0)-> void:

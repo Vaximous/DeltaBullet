@@ -19,6 +19,7 @@ var pawnDebug : bool = false
 var userDir = DirAccess.open("user://")
 
 #Ingame
+var playerPosition : Vector3 = Vector3.ZERO
 var playerPawns : Array[BasePawn] = []
 var controllerSens : float = 0.015
 var mouseSens : float = 0.0020
@@ -300,7 +301,8 @@ func saveGame(saveName:String = "Save1"):
 			"timestamp" : Time.get_unix_time_from_system(),
 			"dateDict" : Time.get_date_dict_from_system(),
 			"pawnToLoad" : pawnFile,
-			"saveScreenie" : "user://saves/%s/%s.png"%[saveName,saveName]
+			"saveScreenie" : "user://saves/%s/%s.png"%[saveName,saveName],
+			"playerPosition": playerPawns[0].global_position
 		}
 		var stringy = JSON.stringify(saveDict)
 		saveFile.store_line(stringy)

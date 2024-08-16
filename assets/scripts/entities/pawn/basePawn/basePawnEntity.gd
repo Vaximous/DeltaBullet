@@ -496,20 +496,23 @@ func createRagdoll(impulse_bone : int = 0,killer:Node3D = null)->PawnRagdoll:
 		for bones in ragdoll.ragdollSkeleton.get_bone_count():
 			ragdoll.ragdollSkeleton.set_bone_pose_position(bones, pawnSkeleton.get_bone_pose_position(bones))
 			ragdoll.ragdollSkeleton.set_bone_pose_rotation(bones, pawnSkeleton.get_bone_pose_rotation(bones))
-		for bones in ragdoll.ragdollSkeleton.get_child_count():
-			var child = ragdoll.ragdollSkeleton.get_child(bones)
+		for bones in ragdoll.physicalBoneSimulator.get_child_count():
+			var child = ragdoll.physicalBoneSimulator.get_child(bones)
 			if child is RagdollBone:
+				ragdoll.ragdollSkeleton.set_bone_pose_position(child.get_bone_id(), pawnSkeleton.get_bone_pose_position(child.get_bone_id()))
+				ragdoll.ragdollSkeleton.set_bone_pose_rotation(child.get_bone_id(), pawnSkeleton.get_bone_pose_rotation(child.get_bone_id()))
+				child.rotation = pawnSkeleton.get_bone_pose_rotation(child.get_bone_id())
 				child.linear_velocity = currVel
 				child.angular_velocity = currVel
 				ragdoll.startRagdoll()
 				child.apply_central_impulse(currVel)
 				if child.get_bone_id() == impulse_bone:
-					ragdoll.startRagdoll()
+					#ragdoll.startRagdoll()
 					child.apply_impulse(hitImpulse * randf_range(1.5,2), hitVector)
 		emit_signal("pawnDied",ragdoll)
 		moveClothesToRagdoll(ragdoll)
 		ragdoll.checkClothingHider()
-
+		#ragdoll.startRagdoll()
 		if impulse_bone == 41:
 			if killer != null:
 				if killer.currentItem != null:

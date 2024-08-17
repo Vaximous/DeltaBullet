@@ -493,14 +493,15 @@ func createRagdoll(impulse_bone : int = 0,killer:Node3D = null)->PawnRagdoll:
 		ragdoll.targetSkeleton = pawnSkeleton
 		gameManager.world.worldMisc.add_child(ragdoll)
 		ragdoll.setPawnMaterial(currentPawnMat)
+		ragdoll.ragdollSkeleton.animate_physical_bones = true
 		for bones in ragdoll.ragdollSkeleton.get_bone_count():
-			ragdoll.ragdollSkeleton.set_bone_pose_position(bones, pawnSkeleton.get_bone_pose_position(bones))
-			ragdoll.ragdollSkeleton.set_bone_pose_rotation(bones, pawnSkeleton.get_bone_pose_rotation(bones))
+			ragdoll.savedPose.append(pawnSkeleton.get_bone_pose(bones))
+			#ragdoll.ragdollSkeleton.set_bone_rest(bones, pawnSkeleton.get_bone_pose(bones))
+			ragdoll.ragdollSkeleton.set_bone_global_pose(bones, pawnSkeleton.get_bone_global_pose(bones))
+			#ragdoll.physicalBoneSimulator.get_skeleton().set_bone_pose_rotation(bones, pawnSkeleton.get_bone_pose_rotation(bones))
 		for bones in ragdoll.physicalBoneSimulator.get_child_count():
 			var child = ragdoll.physicalBoneSimulator.get_child(bones)
 			if child is RagdollBone:
-				ragdoll.ragdollSkeleton.set_bone_pose_position(child.get_bone_id(), pawnSkeleton.get_bone_pose_position(child.get_bone_id()))
-				ragdoll.ragdollSkeleton.set_bone_pose_rotation(child.get_bone_id(), pawnSkeleton.get_bone_pose_rotation(child.get_bone_id()))
 				child.linear_velocity = currVel
 				child.angular_velocity = currVel
 				ragdoll.startRagdoll()
@@ -526,9 +527,9 @@ func createRagdoll(impulse_bone : int = 0,killer:Node3D = null)->PawnRagdoll:
 			await cam.unposessObject()
 			await cam.posessObject(ragdoll, ragdoll.rootCameraNode)
 			ragdoll.removeTimer.stop()
-			for bones in ragdoll.ragdollSkeleton.get_child_count():
-				if ragdoll.ragdollSkeleton.get_child(bones) is RagdollBone:
-					cam.camSpring.add_excluded_object(ragdoll.ragdollSkeleton.get_child(bones).get_rid())
+			for bones in ragdoll.physicalBoneSimulator.get_child_count():
+				if ragdoll.physicalBoneSimulator.get_child(bones) is RagdollBone:
+					cam.camSpring.add_excluded_object(ragdoll.physicalBoneSimulator.get_child(bones).get_rid())
 			attachedCam = null
 		if ragdoll.activeRagdollEnabled:
 			if impulse_bone == 41:

@@ -23,10 +23,14 @@ var visibleOnScreen : bool = true
 
 @onready var clothingHolder:Node3D = $Mesh/Male/MaleSkeleton/Skeleton3D/Clothing
 @onready var ragdollSkeleton : Skeleton3D = $Mesh/Male/MaleSkeleton/Skeleton3D
-@onready var physicalBoneSimulator : PhysicalBoneSimulator3D = $Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D
+@onready var physicalBoneSimulator : PhysicalBoneSimulator3D = $Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D:
+	set(value):
+		physicalBoneSimulator = value
+		physicalBoneSimulator.ragdoll = self
 @onready var ragdollMesh:Node3D = $Mesh
 var physicsBones : Array[PhysicalBone3D]
 @export_category("Ragdoll")
+var savedPose :Array[Transform3D]
 @export_subgroup("Active Ragdoll")
 @export var activeRagdollEnabled:bool = false
 @export var targetSkeleton : Skeleton3D
@@ -68,6 +72,7 @@ func _ready()-> void:
 	checkClothingHider()
 
 func startRagdoll()-> void:
+	ragdollSkeleton.animate_physical_bones = true
 	physicalBoneSimulator.physical_bones_start_simulation()
 	checkClothingHider()
 
@@ -147,3 +152,9 @@ func _on_visible_on_screen_notifier_3d_screen_entered()-> void:
 func _on_visible_on_screen_notifier_3d_screen_exited()-> void:
 	visibleOnScreen = false
 	hide()
+
+
+func _on_skeleton_3d_skeleton_updated() -> void:
+	for bones in ragdollSkeleton.get_bone_count():
+		#ragdollSkeleton.set_bone_rest(bones, savedPose[bones])
+		ragdollSkeleton.set_bone_pose(bones, savedPose[bones])

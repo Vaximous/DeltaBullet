@@ -5,11 +5,11 @@
 [ext_resource type="Resource" uid="uid://rp3mpjmisoyh" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/default_object_movement_component.tres" id="3_g2v7o"]
 [ext_resource type="Resource" uid="uid://c8ulad7utgrg7" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/pre_blur_processing_stage.tres" id="4_bluyl"]
 [ext_resource type="Script" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/pre_blur_processor.gd" id="5_7anbc"]
-[ext_resource type="Resource" uid="uid://bk5yd5plopwi2" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/simple_jf_blur_stage.tres" id="6_n2dle"]
+[ext_resource type="Resource" uid="uid://ceav72kvj4qbw" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/realistic_jf_blur_stage.tres" id="6_ll3cx"]
 [ext_resource type="Resource" uid="uid://bj3exhmsfcx4w" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jf_simple_stage.tres" id="7_e0t5e"]
 [ext_resource type="Resource" uid="uid://co5k7plgmxepi" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jump_flood_neighbor_max_stage.tres" id="8_ec0v7"]
 [ext_resource type="Resource" uid="uid://dc5fr84ue3dn5" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jump_flood_overlay_stage.tres" id="9_45tcp"]
-[ext_resource type="Script" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/simple_jf_motion_blur.gd" id="10_byhqv"]
+[ext_resource type="Script" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/realistic_jf_motion_blur.gd" id="10_ny3a5"]
 [ext_resource type="Resource" uid="uid://c10aboaly701b" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jump_flood_tile_max_x_stage.tres" id="11_7lqiq"]
 [ext_resource type="Resource" uid="uid://cymk87e4nyxva" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jump_flood_tile_max_y_stage.tres" id="12_ux1ux"]
 
@@ -27,19 +27,19 @@ camera_movement_component = ExtResource("1_hiso8")
 object_movement_component = ExtResource("3_g2v7o")
 debug = false
 
-[sub_resource type="CompositorEffect" id="CompositorEffect_uxybo"]
+[sub_resource type="CompositorEffect" id="CompositorEffect_ty0m4"]
 resource_local_to_scene = false
 resource_name = ""
 enabled = true
 effect_callback_type = 4
 needs_motion_vectors = false
 needs_normal_roughness = false
-script = ExtResource("10_byhqv")
+script = ExtResource("10_ny3a5")
 tile_max_x_stage = ExtResource("11_7lqiq")
 tile_max_y_stage = ExtResource("12_ux1ux")
 construct_stage = ExtResource("7_e0t5e")
 neighbor_max_stage = ExtResource("8_ec0v7")
-blur_stage = ExtResource("6_n2dle")
+blur_stage = ExtResource("6_ll3cx")
 overlay_stage = ExtResource("9_45tcp")
 perpen_error_threshold = 0.5
 sample_step_multiplier = 16
@@ -54,4 +54,4 @@ target_constant_framerate = 60.0
 debug = false
 
 [resource]
-compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_pmh78"), SubResource("CompositorEffect_uxybo")])
+compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_pmh78"), SubResource("CompositorEffect_ty0m4")])

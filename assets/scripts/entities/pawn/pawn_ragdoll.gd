@@ -4,7 +4,7 @@ class_name PawnRagdoll
 var visibleOnScreen : bool = true
 ##Pawn Parts
 @onready var headshotsound : AudioStreamPlayer3D = $headshotFlesh
-@onready var headBone:PhysicalBone3D = $"Mesh/Male/MaleSkeleton/Skeleton3D/Physical Bone Neck"
+@onready var headBone:PhysicalBone3D = $"Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone Neck"
 @onready var removeTimer:Timer = $remove_timer
 @onready var head:MeshInstance3D = $Mesh/Male/MaleSkeleton/Skeleton3D/MaleHead
 @onready var upperChest:MeshInstance3D = $Mesh/Male/MaleSkeleton/Skeleton3D/Male_UpperBody

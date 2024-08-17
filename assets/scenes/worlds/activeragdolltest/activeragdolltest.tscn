@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://1uuvtqrmyqus"]
+[gd_scene load_steps=61 format=3 uid="uid://1uuvtqrmyqus"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_fy66m"]
 [ext_resource type="PackedScene" uid="uid://boicvk4qeqmbd" path="res://assets/entities/pawnSpawn/pawnSpawn.tscn" id="2_mn033"]
@@ -23,7 +23,19 @@
 [ext_resource type="PackedScene" uid="uid://dend7ate7mq6e" path="res://assets/entities/bulletHoles/default/BulletHole.tscn" id="17_4tm44"]
 [ext_resource type="Script" path="res://assets/resources/PhysicsMaterials/DB_PhysicsMaterial.gd" id="17_15fkl"]
 [ext_resource type="Texture2D" uid="uid://bodygaior62dl" path="res://assets/textures/Developer_Textures/Light/texture_08.png" id="18_8tf33"]
+[ext_resource type="Resource" uid="uid://cslvcweyejh3c" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/default_camera_movement_component.tres" id="18_lwsam"]
+[ext_resource type="Resource" uid="uid://iru8ynu04i00" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/default_camera_rotation_component.tres" id="19_sq4tn"]
+[ext_resource type="Resource" uid="uid://rp3mpjmisoyh" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/default_object_movement_component.tres" id="20_m0loq"]
+[ext_resource type="Resource" uid="uid://c8ulad7utgrg7" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/pre_blur_processing_stage.tres" id="21_8dple"]
 [ext_resource type="Script" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="22_js4nn"]
+[ext_resource type="Script" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/pre_blur_processor.gd" id="22_lxq5l"]
+[ext_resource type="Resource" uid="uid://bk5yd5plopwi2" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/simple_jf_blur_stage.tres" id="23_g61mr"]
+[ext_resource type="Resource" uid="uid://bj3exhmsfcx4w" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jf_simple_stage.tres" id="24_iy4y5"]
+[ext_resource type="Resource" uid="uid://co5k7plgmxepi" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jump_flood_neighbor_max_stage.tres" id="25_oxgnd"]
+[ext_resource type="Resource" uid="uid://dc5fr84ue3dn5" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jump_flood_overlay_stage.tres" id="26_ewgtj"]
+[ext_resource type="Script" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/simple_jf_motion_blur.gd" id="27_b4nnh"]
+[ext_resource type="Resource" uid="uid://c10aboaly701b" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jump_flood_tile_max_x_stage.tres" id="28_48dfi"]
+[ext_resource type="Resource" uid="uid://cymk87e4nyxva" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jump_flood_tile_max_y_stage.tres" id="29_x6oxu"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_14nxj"]
 streams_count = 2
@@ -76,6 +88,49 @@ volumetric_fog_density = 0.0112
 adjustment_enabled = true
 adjustment_saturation = 1.15
 adjustment_color_correction = ExtResource("4_qmki0")
+
+[sub_resource type="CompositorEffect" id="CompositorEffect_pmh78"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = false
+needs_normal_roughness = false
+script = ExtResource("22_lxq5l")
+pre_blur_processor_stage = ExtResource("21_8dple")
+camera_rotation_component = ExtResource("19_sq4tn")
+camera_movement_component = ExtResource("18_lwsam")
+object_movement_component = ExtResource("20_m0loq")
+debug = false
+
+[sub_resource type="CompositorEffect" id="CompositorEffect_uxybo"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = false
+needs_normal_roughness = false
+script = ExtResource("27_b4nnh")
+tile_max_x_stage = ExtResource("28_48dfi")
+tile_max_y_stage = ExtResource("29_x6oxu")
+construct_stage = ExtResource("24_iy4y5")
+neighbor_max_stage = ExtResource("25_oxgnd")
+blur_stage = ExtResource("23_g61mr")
+overlay_stage = ExtResource("26_ewgtj")
+perpen_error_threshold = 0.5
+sample_step_multiplier = 16
+step_exponent_modifier = 1.0
+JFA_pass_count = 3
+samples = 16
+intensity = 1.0
+center_fade = 0.0
+framerate_independent = true
+uncapped_independence = false
+target_constant_framerate = 60.0
+debug = false
+
+[sub_resource type="Compositor" id="Compositor_h0amj"]
+compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_pmh78"), SubResource("CompositorEffect_uxybo")])
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_57wiy"]
 vertices = PackedVector3Array(5.26401, 1, -5.7359, 5.26401, 1, -4.2359, 77.514, 1, -4.4859, 4.26401, 1, -5.9859, 5.26401, 1, -5.7359, 77.514, 1, -4.4859, 77.514, 1, -166.986, 4.51401, 1, 117.014, 4.51401, 1, 8.7641, 4.01401, 1, 8.5141, -308.736, 1, 117.014, -308.736, 1, 117.014, 4.01401, 1, 8.5141, 4.26401, 1, -5.9859, 4.26401, 1, -5.9859, 77.514, 1, -166.986, -308.736, 1, -166.986, -308.736, 1, 117.014, 5.26401, 1, -4.2359, 5.26401, 1, 7.0141, 77.514, 1, 7.2641, 77.514, 1, -4.4859, 77.514, 1, 7.2641, 5.26401, 1, 7.0141, 5.26401, 1, 8.5141, 77.514, 1, 7.2641, 5.26401, 1, 8.5141, 4.51401, 1, 8.7641, 4.51401, 1, 117.014, 77.514, 1, 117.014)
@@ -222,7 +277,7 @@ radius = 1.10435
 radius = 0.181316
 height = 2.39488
 
-[sub_resource type="Resource" id="Resource_a46wh"]
+[sub_resource type="Resource" id="Resource_y2df1"]
 resource_local_to_scene = true
 script = ExtResource("22_js4nn")
 useBulletTrail = true
@@ -256,8 +311,8 @@ useLeftHandAiming = true
 useRightHandAiming = true
 useLeftHandFreeAiming = false
 useRightHandFreeAiming = true
-weaponPositionOffset = Vector3(0, -0.15, 0.075)
-weaponRotationOffset = Vector3(0, 0, -1.65)
+weaponPositionOffset = Vector3(0, -0.185, 0.055)
+weaponRotationOffset = Vector3(0, -1.63, -1.505)
 bulletColor = Color(1, 1, 0, 1)
 
 [sub_resource type="GDScript" id="GDScript_3oo1c"]
@@ -321,6 +376,7 @@ pawnColor = Color(0.926594, 0.735976, 0.847277, 1)
 
 [node name="worldEnvironment" parent="Environment" index="0"]
 environment = SubResource("Environment_ly0hw")
+compositor = SubResource("Compositor_h0amj")
 
 [node name="reflectionProbe" parent="Environment" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -111.999, 10.6119, -24.2307)
@@ -377,11 +433,11 @@ physSkel = NodePath("Armature/Skeleton3D")
 animSkeleton = NodePath("../untitled/Armature/Skeleton3D")
 
 [node name="Physical Bone Bone" type="PhysicalBone3D" parent="Props/untitled2/Armature/Skeleton3D" index="1" node_paths=PackedStringArray("animSkeleton")]
-transform = Transform3D(1, -2.1705e-21, -1.7752e-15, -1.7752e-15, -7.45058e-09, -1, 2.15729e-21, 1, -7.45058e-09, 0, 1.00071, -0.199311)
+transform = Transform3D(1, -2.17051e-21, -1.7752e-15, -1.7752e-15, -7.45058e-09, -1, 2.15729e-21, 1, -7.45058e-09, 0, 1.00071, -0.199311)
 collision_layer = 2
 collision_mask = 11
 joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.77646e-15, 1.62199e-05, 1.00071)
-body_offset = Transform3D(1, -2.1705e-21, -1.7752e-15, -1.7752e-15, -7.45058e-09, -1, 2.15729e-21, 1, -7.45058e-09, 0, 1.00071, -1.62125e-05)
+body_offset = Transform3D(1, -2.17051e-21, -1.7752e-15, -1.7752e-15, -7.45058e-09, -1, 2.15729e-21, 1, -7.45058e-09, 0, 1.00071, -1.62125e-05)
 bone_name = "Bone"
 script = SubResource("GDScript_8s8wa")
 animSkeleton = NodePath("../../../../untitled/Armature/Skeleton3D")
@@ -416,7 +472,7 @@ startOnInstance = true
 
 [node name="Beretta" parent="Props" index="3" instance=ExtResource("4_a2bgr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5649, 3.09809)
-weaponResource = SubResource("Resource_a46wh")
+weaponResource = SubResource("Resource_y2df1")
 collisionEnabled = true
 
 [node name="marker3d" type="Marker3D" parent="Misc/WaypointNodes" index="0"]

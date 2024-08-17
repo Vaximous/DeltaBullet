@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://bkuvk0ydswjvb"]
+[gd_scene load_steps=59 format=3 uid="uid://bkuvk0ydswjvb"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_ypyko"]
 [ext_resource type="ArrayMesh" uid="uid://tsr0mvorfnj" path="res://assets/scenes/worlds/areas/playerHome/playerHomeFitted.tres" id="2_kyvid"]
@@ -6,12 +6,24 @@
 [ext_resource type="Script" path="res://assets/resources/customResources/worldData/worldData.gd" id="2_vqmji"]
 [ext_resource type="Texture2D" uid="uid://dwy1ieh8lo0m0" path="res://assets/scenes/worlds/areas/playerHome/previewscreenTest.png" id="3_6em3y"]
 [ext_resource type="ArrayMesh" uid="uid://b0jgjxjwcgi01" path="res://assets/scenes/worlds/areas/playerHome/distantBuildings.res" id="3_qs60m"]
+[ext_resource type="Resource" uid="uid://cslvcweyejh3c" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/default_camera_movement_component.tres" id="5_p37th"]
+[ext_resource type="Resource" uid="uid://iru8ynu04i00" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/default_camera_rotation_component.tres" id="6_ynua5"]
+[ext_resource type="Resource" uid="uid://rp3mpjmisoyh" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/default_object_movement_component.tres" id="7_emhhu"]
+[ext_resource type="Resource" uid="uid://c8ulad7utgrg7" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/pre_blur_processing_stage.tres" id="8_0l0yw"]
 [ext_resource type="Script" path="res://assets/scripts/entities/interactiveObject/interactiveObject.gd" id="8_36425"]
 [ext_resource type="Texture2D" uid="uid://boc7cpthcn4yv" path="res://assets/textures/world/wood/wood1.png" id="9_be7mu"]
+[ext_resource type="Script" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/pre_blur_processor.gd" id="9_ixf4b"]
 [ext_resource type="AudioStream" uid="uid://kto2dqyucdyf" path="res://assets/music/menu/HHb2.mp3" id="10_8mobu"]
+[ext_resource type="Resource" uid="uid://bk5yd5plopwi2" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/simple_jf_blur_stage.tres" id="10_x6bcv"]
+[ext_resource type="Resource" uid="uid://bj3exhmsfcx4w" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jf_simple_stage.tres" id="11_bgk22"]
 [ext_resource type="AudioStream" uid="uid://ct6qupxdsjj37" path="res://assets/music/menu/polli.mp3" id="11_e14ge"]
 [ext_resource type="AudioStream" uid="uid://4fr4v3mmy3oj" path="res://assets/music/menu/Frenzy.mp3" id="12_lb63t"]
+[ext_resource type="Resource" uid="uid://co5k7plgmxepi" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jump_flood_neighbor_max_stage.tres" id="12_wt080"]
+[ext_resource type="Resource" uid="uid://dc5fr84ue3dn5" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jump_flood_overlay_stage.tres" id="13_1jpb2"]
 [ext_resource type="PackedScene" uid="uid://qlrpb47edm7y" path="res://assets/models/props/radio.gltf" id="13_444id"]
+[ext_resource type="Script" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/simple_jf_motion_blur.gd" id="14_ad4a7"]
+[ext_resource type="Resource" uid="uid://c10aboaly701b" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jump_flood_tile_max_x_stage.tres" id="15_1h0la"]
+[ext_resource type="Resource" uid="uid://cymk87e4nyxva" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jump_flood_tile_max_y_stage.tres" id="16_iucjp"]
 
 [sub_resource type="Resource" id="Resource_3bd3l"]
 script = ExtResource("2_vqmji")
@@ -23,6 +35,49 @@ worldType = 2
 spawnPawnsOnLoad = true
 playOnStart = false
 spawnType = 0
+
+[sub_resource type="CompositorEffect" id="CompositorEffect_pmh78"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = false
+needs_normal_roughness = false
+script = ExtResource("9_ixf4b")
+pre_blur_processor_stage = ExtResource("8_0l0yw")
+camera_rotation_component = ExtResource("6_ynua5")
+camera_movement_component = ExtResource("5_p37th")
+object_movement_component = ExtResource("7_emhhu")
+debug = false
+
+[sub_resource type="CompositorEffect" id="CompositorEffect_uxybo"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = false
+needs_normal_roughness = false
+script = ExtResource("14_ad4a7")
+tile_max_x_stage = ExtResource("15_1h0la")
+tile_max_y_stage = ExtResource("16_iucjp")
+construct_stage = ExtResource("11_bgk22")
+neighbor_max_stage = ExtResource("12_wt080")
+blur_stage = ExtResource("10_x6bcv")
+overlay_stage = ExtResource("13_1jpb2")
+perpen_error_threshold = 0.5
+sample_step_multiplier = 16
+step_exponent_modifier = 1.0
+JFA_pass_count = 3
+samples = 16
+intensity = 1.0
+center_fade = 0.0
+framerate_independent = true
+uncapped_independence = false
+target_constant_framerate = 60.0
+debug = false
+
+[sub_resource type="Compositor" id="Compositor_fvwrp"]
+compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_pmh78"), SubResource("CompositorEffect_uxybo")])
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_aahe4"]
 vertices = PackedVector3Array(-5.30895, 2.48462, -7.21613, 2.69105, 2.48462, -7.21613, 2.69105, 2.48462, -12.0161, -5.30895, 2.48462, -12.0161, -4.18895, -1.51538, -6.09613, 1.57105, -1.51538, -6.09613, 1.57105, -1.51538, -10.9761, -4.18895, -1.51538, -10.9761, -1.94895, 2.48462, 1.90387, 2.69105, 2.48462, 1.82387, 2.69105, 2.48462, 0.383874, -1.94895, 2.48462, 1.90387, 2.69105, 2.48462, 0.383874, 3.01105, 2.48462, -0.0161266, 3.01105, 2.48462, -0.0161266, 4.69105, 2.48462, -0.0961266, 4.69105, 2.48462, -6.09613, 3.01105, 2.48462, -6.17613, 2.69105, 2.48462, -6.57613, 2.69105, 2.48462, -7.21613, -5.30895, 2.48462, -7.21613, 3.01105, 2.48462, -0.0161266, 3.01105, 2.48462, -6.17613, 2.69105, 2.48462, -6.57613, -5.30895, 2.48462, -7.21613, -5.38895, 2.48462, -3.45613, -1.94895, 2.48462, 1.90387, 1.97105, -1.51538, -1.13613, 3.57105, -1.51538, -1.21613, 3.57105, -1.51538, -4.97613, 1.89105, -1.51538, -5.05613, 1.57105, -1.51538, -5.45613, 1.57105, -1.51538, -6.09613, -4.18895, -1.51538, -6.09613, 1.97105, -1.51538, -1.13613, 1.89105, -1.51538, -5.05613, 1.57105, -1.51538, -5.45613, -4.18895, -1.51538, -6.09613, -4.26895, -1.51538, -2.41613, -1.94895, 2.48462, 1.90387, -5.38895, 2.48462, -3.45613, -5.78895, 2.48462, -3.05613, -2.34895, 2.48462, 2.30387, -5.78895, 2.48462, -3.05613, -9.22895, 2.48462, -3.05613, -9.22895, 2.48462, 2.86387, -2.34895, 2.48462, 2.86387, -2.34895, 2.48462, 2.30387, 0.291054, -1.51538, 1.82387, 0.611053, -1.51538, 2.14387, 1.09105, -1.51538, 1.82387, 1.57105, -1.51538, -0.736126, 1.09105, -1.51538, 1.82387, 1.57105, -1.51538, 1.82387, 1.57105, -1.51538, -0.736126, 1.57105, -1.51538, -0.736126, 1.97105, -1.51538, -1.13613, -4.26895, -1.51538, -2.41613, -4.66895, -1.51538, -2.01613, -5.30895, -1.51538, -2.01613, -5.30895, -1.51538, 1.82387, -4.26895, -1.51538, -2.41613, -4.66895, -1.51538, -2.01613, -5.30895, -1.51538, 1.82387, 0.291054, -1.51538, 1.82387, 1.57105, -1.51538, -0.736126, -5.30895, -1.51538, 1.82387, -5.30895, -1.51538, -2.01613, -8.18895, -1.51538, -2.01613, -8.18895, -1.51538, 1.82387, -1.22895, 3.48462, 2.94387, -1.22895, 3.48462, 9.90387, 6.69105, 3.48462, 9.90387, 6.69105, 3.48462, 2.94387, 1.09105, -1.51538, 3.98387, 0.611053, -1.51538, 3.66387, 0.291054, -1.51538, 3.98387, -0.188947, -1.51538, 8.78387, 0.291054, -1.51538, 3.98387, -0.188947, -1.51538, 3.98387, -0.188947, -1.51538, 8.78387, 5.57105, -1.51538, 8.78387, 5.57105, -1.51538, 3.98387, 1.09105, -1.51538, 3.98387, -0.188947, -1.51538, 8.78387)
@@ -147,11 +202,8 @@ func toggleRadio(pawn:BasePawn):
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_aaqfd"]
 streams_count = 3
 stream_0/stream = ExtResource("10_8mobu")
-stream_0/weight = 1.0
 stream_1/stream = ExtResource("11_e14ge")
-stream_1/weight = 1.0
 stream_2/stream = ExtResource("12_lb63t")
-stream_2/weight = 1.0
 
 [sub_resource type="Gradient" id="Gradient_4cmjv"]
 
@@ -172,6 +224,9 @@ worldData = SubResource("Resource_3bd3l")
 [node name="pawnSpawn" parent="Spawns/playerSpawns" index="0" instance=ExtResource("2_v576b")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 3.679, 1.4042, -4.40262)
 pawnType = 0
+
+[node name="worldEnvironment" parent="Environment" index="0"]
+compositor = SubResource("Compositor_fvwrp")
 
 [node name="navigationRegion3d" type="NavigationRegion3D" parent="Geometry" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)

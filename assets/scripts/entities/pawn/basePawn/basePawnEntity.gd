@@ -501,7 +501,6 @@ func createRagdoll(impulse_bone : int = 0,killer:Node3D = null)->PawnRagdoll:
 			if child is RagdollBone:
 				ragdoll.ragdollSkeleton.set_bone_pose_position(child.get_bone_id(), pawnSkeleton.get_bone_pose_position(child.get_bone_id()))
 				ragdoll.ragdollSkeleton.set_bone_pose_rotation(child.get_bone_id(), pawnSkeleton.get_bone_pose_rotation(child.get_bone_id()))
-				child.rotation = pawnSkeleton.get_bone_pose_rotation(child.get_bone_id())
 				child.linear_velocity = currVel
 				child.angular_velocity = currVel
 				ragdoll.startRagdoll()

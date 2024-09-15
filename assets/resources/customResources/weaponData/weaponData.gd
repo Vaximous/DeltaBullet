@@ -7,7 +7,9 @@ class_name ItemData
 var defaultBulletTrail = load("res://assets/entities/bulletTrail/bulletTrail.tscn")
 @export_subgroup("Stats")
 ## Which category does this item belong in?
-@export_enum("Assault Rifles","Pistols","Shotguns","Throwables","Heavy","SMGs","Special") var saleCategory = 1
+enum Category{AssaultRifles,Pistols,Shotguns,Throwables,Heavy,SMG,Special}
+@export var saleCategory : Category = 1
+@export var price : int = 0
 ## Can this weapon be reloaded?
 @export var canBeReloaded:bool = true
 ## Maximum magazines for this specific weapon

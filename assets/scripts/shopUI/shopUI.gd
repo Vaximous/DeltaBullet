@@ -14,6 +14,7 @@ extends Control
 @onready var previewBGAnim : AnimationPlayer = $previewBG/animationPlayer
 @onready var shopNameLabel : Label = $topBar/topBarimage/shopName
 
+
 func initializeShop()->void:
 	disableAllTabs()
 	topBarAnim.play("new_animation")
@@ -21,10 +22,7 @@ func initializeShop()->void:
 	clearShopList()
 	if shopResource != null:
 		shopNameLabel.text = shopResource.shopName
-		for tabs in tabBar.get_tab_count():
-			for items in shopResource.itemsToSell.size():
-				if shopResource.itemsToSell[items].weaponResource.saleCategory.keys()[items] == tabBar.get_tab_title(tabs):
-					tabBar.set_tab_disabled(tabs,0)
+		enableTabs(shopResource.saleCategories)
 
 func clearShopList(tab:int=0)->void:
 	for index in itemHolder.get_children():
@@ -33,3 +31,8 @@ func clearShopList(tab:int=0)->void:
 func disableAllTabs()->void:
 	for tabs in tabBar.get_tab_count():
 		tabBar.set_tab_disabled(tabs,1)
+
+func enableTabs(shop_flags:int) -> void:
+	for tabs in tabBar.get_tab_count():
+		tabBar.set_tab_disabled(tabs, (1<<(tabs) & shop_flags) ==0)
+	return

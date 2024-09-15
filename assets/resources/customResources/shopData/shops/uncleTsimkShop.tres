@@ -7,5 +7,5 @@
 [resource]
 script = ExtResource("1_dawxm")
 shopName = &" Uncle Tsimks\' Shop"
-saleCategories = null
+saleCategories = 69
 itemsToSell = [ExtResource("1_oaxt3"), ExtResource("2_stfbb")]

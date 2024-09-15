@@ -1,5 +1,6 @@
 extends Component
 class_name HealthComponent
+signal HPisDead
 signal onDamaged(dealer,hitDirection)
 signal healthChanged
 signal healthDepleted(dealer:Node3D)
@@ -12,7 +13,11 @@ var lastDealer
 		emit_signal("healthChanged")
 	get:
 		return health
-@export var isDead:bool = false
+@export var isDead:bool = false:
+	set(value):
+		isDead = value
+		if isDead:
+			HPisDead.emit()
 var componentOwner
 var killerSignalEmitted :bool= false
 

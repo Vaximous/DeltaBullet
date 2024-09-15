@@ -119,7 +119,7 @@ func spawnPawn():
 			pawn.inputComponent = controller
 			pawn.checkComponents()
 			pawn.fixRot()
-			#controller.aiType = aiType
+			controller.pawnType = aiType
 			#controller.aiSkill = aiSkill
 			#controller.hatedPawnGroups = hatedGroups
 			pawn.add_to_group(spawnGroup)

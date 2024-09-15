@@ -1,7 +1,11 @@
-[gd_resource type="Resource" script_class="ShopData" load_steps=2 format=3 uid="uid://bp0sh4b0ptq40"]
+[gd_resource type="Resource" script_class="ShopData" load_steps=4 format=3 uid="uid://bp0sh4b0ptq40"]
 
 [ext_resource type="Script" path="res://assets/resources/customResources/shopData/shopData.gd" id="1_dawxm"]
+[ext_resource type="PackedScene" uid="uid://wtqya32cwdbk" path="res://assets/entities/weapons/Beretta/Beretta.tscn" id="1_oaxt3"]
+[ext_resource type="PackedScene" uid="uid://bidurnqgd1c74" path="res://assets/entities/weapons/m4/m4.tscn" id="2_stfbb"]
 
 [resource]
 script = ExtResource("1_dawxm")
 shopName = &" Uncle Tsimks\' Shop"
+saleCategories = null
+itemsToSell = [ExtResource("1_oaxt3"), ExtResource("2_stfbb")]

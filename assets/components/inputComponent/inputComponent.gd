@@ -45,6 +45,9 @@ func _process(_delta)->void:
 					if !controllingPawn == null:
 						if !controllingPawn.isPawnDead:
 							if controllingPawn.attachedCam != null:
+								if controllingPawn.currentItem:
+										if controllingPawn.currentItem.isAiming != true:
+											controllingPawn.currentItem.isAiming = true
 								controllingPawn.turnAmount = -controllingPawn.attachedCam.vertical.rotation.x
 								controllingPawn.freeAim = false
 								controllingPawn.freeAimTimer.stop()
@@ -57,6 +60,9 @@ func _process(_delta)->void:
 								controllingPawn.canRun = false
 				else:
 					if controllingPawn:
+						if controllingPawn.currentItem:
+							if controllingPawn.currentItem.isAiming != false:
+								controllingPawn.currentItem.isAiming = false
 						controllingPawn.meshLookAt = false
 						controllingPawn.canRun = true
 						if !controllingPawn.freeAim:

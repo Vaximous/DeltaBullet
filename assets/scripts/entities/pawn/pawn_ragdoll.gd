@@ -64,6 +64,7 @@ func _ready()-> void:
 		if pb.get_script() != null:
 			for b in physicsBones:
 				pb.exclusionArray.append(RID(b))
+				b.ownerSkeleton = ragdollSkeleton
 
 	deathSound.play()
 	if startOnInstance:

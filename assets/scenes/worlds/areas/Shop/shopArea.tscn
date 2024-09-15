@@ -78,6 +78,7 @@ func enableShop():
 		gameManager.activeCamera.hud.hudEnabled = false
 		gameManager.activeCamera.followingEntity.hide()
 		await Fade.fade_in(0.3, Color(0,0,0,1),\"GradientVertical\",false,true).finished
+		gameManager.initShop(load(\"res://assets/resources/customResources/shopData/shops/uncleTsimkShop.tres\"))
 
 func disableShop():
 		gameManager.activeCamera.followingEntity.show()
@@ -88,6 +89,7 @@ func disableShop():
 		gameManager.pauseMenu.canPause = true
 		gameManager.hideMouse()
 		gameManager.activeCamera.camera.make_current()
+		gameManager.removeShop()
 
 
 func _on_hitbox_damaged(amount, impulse, vector):
@@ -120,6 +122,8 @@ albedo_color = Color(0.54902, 0.54902, 0.54902, 1)
 [sub_resource type="Resource" id="Resource_0r7g6"]
 resource_local_to_scene = true
 script = ExtResource("5_ddfvh")
+useBulletTrail = true
+saleCategory = 1
 canBeReloaded = true
 weaponMagSize = 128
 ammoSize = 30
@@ -127,8 +131,11 @@ reloadTime = 0.5
 headDismember = false
 weaponDamage = 5.0
 weaponFireRate = 0.06
+bulletSpeed = 800.0
+bulletPenetration = 1.0
 weaponImpulse = 14.0
 weaponShots = 1
+ammoConsumption = 1
 useCustomCrosshairSize = true
 crosshairSizeOverride = Vector2(0.5, 0.5)
 forcedCrosshair = ExtResource("4_tvd5p")
@@ -159,6 +166,8 @@ height = 0.670525
 [sub_resource type="Resource" id="Resource_2rpfk"]
 resource_local_to_scene = true
 script = ExtResource("5_ddfvh")
+useBulletTrail = true
+saleCategory = 1
 canBeReloaded = true
 weaponMagSize = 128
 ammoSize = 30
@@ -166,8 +175,11 @@ reloadTime = 0.5
 headDismember = false
 weaponDamage = 6.0
 weaponFireRate = 0.2
+bulletSpeed = 800.0
+bulletPenetration = 1.0
 weaponImpulse = 16.0
 weaponShots = 1
+ammoConsumption = 1
 useCustomCrosshairSize = false
 crosshairSizeOverride = Vector2(0.8, 0.8)
 useFOV = false
@@ -193,6 +205,8 @@ bulletColor = Color(255, 255, 0, 255)
 [sub_resource type="Resource" id="Resource_o0urw"]
 resource_local_to_scene = true
 script = ExtResource("5_ddfvh")
+useBulletTrail = true
+saleCategory = 1
 canBeReloaded = true
 weaponMagSize = 128
 ammoSize = 30
@@ -200,8 +214,11 @@ reloadTime = 0.5
 headDismember = false
 weaponDamage = 9.0
 weaponFireRate = 0.09
+bulletSpeed = 800.0
+bulletPenetration = 1.0
 weaponImpulse = 15.0
 weaponShots = 1
+ammoConsumption = 1
 useCustomCrosshairSize = false
 crosshairSizeOverride = Vector2(0.8, 0.8)
 forcedCrosshair = ExtResource("9_q254j")
@@ -274,11 +291,8 @@ size = Vector3(1.10938, 2.01221, 0.111206)
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_7757a"]
 streams_count = 3
 stream_0/stream = ExtResource("10_j5crf")
-stream_0/weight = 1.0
 stream_1/stream = ExtResource("11_74cd2")
-stream_1/weight = 1.0
 stream_2/stream = ExtResource("12_rwpt3")
-stream_2/weight = 1.0
 
 [node name="worldBase" type="Node"]
 script = ExtResource("1_t2nyd")

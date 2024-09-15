@@ -21,12 +21,11 @@ transparency = 1
 cull_mode = 2
 albedo_color = Color(1, 0, 0, 0.309804)
 
-[sub_resource type="ImmediateMesh" id="ImmediateMesh_qcm2i"]
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_esnal"]
 
 [node name="aiComponent" type="Node3D" node_paths=PackedStringArray("pawnFSM", "navAgent", "visionTimer", "memoryManager")]
 script = ExtResource("4_gaqok")
 aimSpeed = 0.075
-pawnType = null
 pawnFSM = NodePath("pawnFSM")
 navAgent = NodePath("navAgent")
 visionTimer = NodePath("visionTimer")
@@ -62,6 +61,11 @@ detectionMaxThreshold = 100
 script = ExtResource("6_vgbdp")
 aiOwner = NodePath("../..")
 
+[node name="forceTargetReset" type="Timer" parent="pawnFSM/Wander"]
+process_callback = 0
+wait_time = 10.0
+autostart = true
+
 [node name="Attack" type="Node" parent="pawnFSM" node_paths=PackedStringArray("aiOwner")]
 script = ExtResource("7_m2cst")
 aiOwner = NodePath("../..")
@@ -76,9 +80,9 @@ aiOwner = NodePath("../..")
 
 [node name="navAgent" type="NavigationAgent3D" parent="."]
 target_desired_distance = 5.0
+path_height_offset = 0.1
 navigation_layers = 9
 avoidance_enabled = true
-radius = 0.3
 avoidance_layers = 9
 avoidance_mask = 9
 debug_path_custom_color = Color(0.239216, 0.745098, 0, 1)
@@ -115,10 +119,11 @@ debug_shape_custom_color = Color(1, 0.823529, 0, 1)
 
 [node name="visualMesh" type="MeshInstance3D" parent="."]
 material_override = SubResource("StandardMaterial3D_giynp")
-mesh = SubResource("ImmediateMesh_qcm2i")
+mesh = SubResource("ImmediateMesh_esnal")
 
 [connection signal="canSeeSomething" from="." to="." method="_on_can_see_something"]
 [connection signal="timeout" from="memorySpan" to="." method="_on_memory_span_timeout"]
+[connection signal="timeout" from="pawnFSM/Wander/forceTargetReset" to="pawnFSM/Wander" method="_on_force_target_reset_timeout"]
 [connection signal="target_reached" from="navAgent" to="." method="_on_nav_agent_target_reached"]
 [connection signal="velocity_computed" from="navAgent" to="." method="_on_nav_agent_velocity_computed"]
 [connection signal="timeout" from="visionTimer" to="." method="scan"]

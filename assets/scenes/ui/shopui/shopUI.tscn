@@ -1,0 +1,539 @@
+[gd_scene load_steps=24 format=3 uid="uid://dt5hl3d1g8pyc"]
+
+[ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="1_n1s24"]
+[ext_resource type="Script" path="res://assets/scripts/shopUI/shopUI.gd" id="2_w7wba"]
+[ext_resource type="FontFile" uid="uid://b3s7umd01feyu" path="res://assets/fonts/Carthage Pro Regular.ttf" id="3_tu6qn"]
+[ext_resource type="AudioStream" uid="uid://f2h70ga15l4e" path="res://assets/sounds/ui/notif1_new.wav" id="3_vi1bk"]
+[ext_resource type="PackedScene" uid="uid://ims5mb4jlsni" path="res://assets/scenes/ui/shopui/shopItem.tscn" id="3_x8qdb"]
+
+[sub_resource type="Gradient" id="Gradient_523ba"]
+offsets = PackedFloat32Array(0, 0.00985222, 0.497537, 0.847291)
+colors = PackedColorArray(0, 0.0705882, 0.0627451, 1, 0.415686, 0.0705882, 0.0705882, 1, 0.341176, 0.0823529, 0.00784314, 1, 0.0431373, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_36g7h"]
+gradient = SubResource("Gradient_523ba")
+fill_from = Vector2(0, 1)
+fill_to = Vector2(1, 1)
+
+[sub_resource type="Animation" id="Animation_5t6bp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("topBar/topBarimage/shopName:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(24, 10)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("topBar/topBarimage/shopName:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("topBar/topBarimage/shopName:size")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(724.89, 52)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("topBar/topBarimage/shopName:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("topBar/topBarimage:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("topBar/topBarimage:rotation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("topBar/topBarimage:size")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1602, 65)]
+}
+
+[sub_resource type="Animation" id="Animation_wtf11"]
+resource_name = "new_animation"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("topBar/topBarimage/shopName:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.2, 0.8),
+"transitions": PackedFloat32Array(0.277392, 1),
+"update": 0,
+"values": [Vector2(-64, 10), Vector2(24, 10)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("topBar/topBarimage/shopName:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.2, 0.8),
+"transitions": PackedFloat32Array(0.277392, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("topBar/topBarimage/shopName:size")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.2, 0.8),
+"transitions": PackedFloat32Array(0.277392, 1),
+"update": 0,
+"values": [Vector2(724.89, 52), Vector2(724.89, 52)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("topBar/topBarimage/shopName:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.3, 0.4, 1),
+"transitions": PackedFloat32Array(0.108819, 0.196146, 0.482968),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(0.813487, 0.0557759, 0.102404, 0.990852), Color(1, 1, 1, 0.990852)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("topBar/topBarimage:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(0.183011, 1),
+"update": 0,
+"values": [Vector2(0, -68), Vector2(0, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("topBar/topBarimage:rotation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("topBar/topBarimage:size")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0.1, 0.6),
+"transitions": PackedFloat32Array(0.176777, 1),
+"update": 0,
+"values": [Vector2(217, 65), Vector2(1602, 65)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_csp7a"]
+_data = {
+"RESET": SubResource("Animation_5t6bp"),
+"new_animation": SubResource("Animation_wtf11")
+}
+
+[sub_resource type="Gradient" id="Gradient_lofq7"]
+offsets = PackedFloat32Array(0, 0.0292398, 0.962343, 1)
+colors = PackedColorArray(0.301961, 0.301961, 0.301961, 0.627451, 0.377919, 0.377919, 0.377919, 1, 0.616751, 0.608018, 0.597974, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_big26"]
+gradient = SubResource("Gradient_lofq7")
+fill = 2
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2o57p"]
+texture = SubResource("GradientTexture2D_big26")
+
+[sub_resource type="Gradient" id="Gradient_y0hsx"]
+offsets = PackedFloat32Array(0, 0.684211, 1)
+colors = PackedColorArray(0.313726, 0, 0, 1, 0.447884, 0, 0, 1, 0.509804, 0, 0, 0.466667)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3r0xx"]
+gradient = SubResource("Gradient_y0hsx")
+fill_to = Vector2(0, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_h7f8e"]
+texture = SubResource("GradientTexture2D_3r0xx")
+
+[sub_resource type="Animation" id="Animation_y61yj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1076, 115)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_dwjxi"]
+resource_name = "in"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.170755, 0.133972),
+"update": 0,
+"values": [Vector2(559, 115), Vector2(1076, 115)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.25, 0.287175),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_7y7pm"]
+resource_name = "out"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.133972, 1),
+"update": 0,
+"values": [Vector2(1076, 115), Vector2(559, 115)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.287175, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vamxx"]
+_data = {
+"RESET": SubResource("Animation_y61yj"),
+"in": SubResource("Animation_dwjxi"),
+"out": SubResource("Animation_7y7pm")
+}
+
+[sub_resource type="Gradient" id="Gradient_6ilb3"]
+offsets = PackedFloat32Array(0, 0.0292398, 0.962343, 1)
+colors = PackedColorArray(0.301961, 0.301961, 0.301961, 0.627451, 0.377919, 0.377919, 0.377919, 1, 0.616751, 0.608018, 0.597974, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_o1lyv"]
+gradient = SubResource("Gradient_6ilb3")
+fill = 2
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_t67gv"]
+texture = SubResource("GradientTexture2D_o1lyv")
+
+[node name="shopUi" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme = ExtResource("1_n1s24")
+script = ExtResource("2_w7wba")
+
+[node name="topBar" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 1598.0
+offset_bottom = 61.0
+
+[node name="topBarimage" type="TextureRect" parent="topBar"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.071
+offset_right = 4.0
+offset_bottom = 60.669
+texture = SubResource("GradientTexture2D_36g7h")
+
+[node name="shopName" type="Label" parent="topBar/topBarimage"]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(724.89, 0)
+layout_mode = 2
+offset_left = 23.9999
+offset_top = 10.0
+offset_right = 748.89
+offset_bottom = 62.0
+theme_override_font_sizes/font_size = 51
+text = "SHOPNAME"
+vertical_alignment = 1
+
+[node name="topbarAnim" type="AnimationPlayer" parent="topBar"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_csp7a")
+}
+
+[node name="previewBG" type="Panel" parent="."]
+layout_mode = 2
+anchor_left = 0.971
+anchor_top = 0.128
+anchor_right = 0.971
+anchor_bottom = 0.989
+offset_left = -994.595
+offset_top = -0.200005
+offset_right = -517.595
+offset_bottom = -0.100037
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxTexture_2o57p")
+
+[node name="panel" type="Panel" parent="previewBG"]
+layout_mode = 2
+offset_left = 13.0
+offset_top = 26.0
+offset_right = 457.0
+offset_bottom = 301.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_h7f8e")
+
+[node name="subViewportContainer" type="SubViewportContainer" parent="previewBG/panel"]
+layout_mode = 2
+anchor_left = 0.033
+anchor_top = 0.033
+anchor_right = 0.033
+anchor_bottom = 0.975
+offset_left = -6.652
+offset_top = -0.0749998
+offset_right = 418.348
+offset_bottom = -0.125
+stretch = true
+
+[node name="subViewport" type="SubViewport" parent="previewBG/panel/subViewportContainer"]
+handle_input_locally = false
+size = Vector2i(425, 259)
+render_target_update_mode = 4
+
+[node name="itemDescriptor" type="Label" parent="previewBG"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 309.0
+offset_right = 453.0
+offset_bottom = 678.0
+theme_override_fonts/font = ExtResource("3_tu6qn")
+theme_override_font_sizes/font_size = 28
+text = "This is a good item."
+
+[node name="purchaseButton" type="Button" parent="previewBG"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.709
+anchor_top = 0.907
+anchor_right = 0.958
+anchor_bottom = 0.963
+offset_left = -0.193024
+offset_top = 0.0749512
+offset_right = 0.0339661
+offset_bottom = -0.325073
+text = "Purchase"
+
+[node name="animationPlayer" type="AnimationPlayer" parent="previewBG"]
+libraries = {
+"": SubResource("AnimationLibrary_vamxx")
+}
+
+[node name="BrowserBG" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.01
+anchor_top = 0.12
+anchor_right = 0.664
+anchor_bottom = 1.0
+offset_right = 0.599976
+offset_bottom = -6.0
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxTexture_t67gv")
+
+[node name="scrollContainer" type="ScrollContainer" parent="BrowserBG"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.03
+anchor_top = 0.029
+anchor_right = 0.865
+anchor_bottom = 0.975
+offset_left = -0.410002
+offset_top = 0.205999
+offset_right = 110.345
+offset_bottom = -0.350037
+
+[node name="itemHolder" type="VBoxContainer" parent="BrowserBG/scrollContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="shopItem" parent="BrowserBG/scrollContainer/itemHolder" instance=ExtResource("3_x8qdb")]
+layout_mode = 2
+
+[node name="shopItem2" parent="BrowserBG/scrollContainer/itemHolder" instance=ExtResource("3_x8qdb")]
+layout_mode = 2
+
+[node name="shopItem3" parent="BrowserBG/scrollContainer/itemHolder" instance=ExtResource("3_x8qdb")]
+layout_mode = 2
+
+[node name="shopItem4" parent="BrowserBG/scrollContainer/itemHolder" instance=ExtResource("3_x8qdb")]
+layout_mode = 2
+
+[node name="shopItem5" parent="BrowserBG/scrollContainer/itemHolder" instance=ExtResource("3_x8qdb")]
+layout_mode = 2
+
+[node name="shopItem6" parent="BrowserBG/scrollContainer/itemHolder" instance=ExtResource("3_x8qdb")]
+layout_mode = 2
+
+[node name="shopItem7" parent="BrowserBG/scrollContainer/itemHolder" instance=ExtResource("3_x8qdb")]
+layout_mode = 2
+
+[node name="shopItem8" parent="BrowserBG/scrollContainer/itemHolder" instance=ExtResource("3_x8qdb")]
+layout_mode = 2
+
+[node name="tabBar" type="TabBar" parent="BrowserBG"]
+layout_mode = 0
+offset_left = 25.0
+offset_top = -30.0
+offset_right = 1016.0
+offset_bottom = 10.0
+mouse_filter = 1
+current_tab = 0
+tab_count = 7
+tab_0/title = "Assault Rifles"
+tab_1/title = "Pistols"
+tab_2/title = "Shotguns"
+tab_3/title = "Throwables"
+tab_4/title = "Heavy"
+tab_5/title = "SMGs"
+tab_6/title = "Special"
+
+[node name="sound1" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_vi1bk")
+
+[connection signal="tab_changed" from="BrowserBG/tabBar" to="." method="clearShopList"]

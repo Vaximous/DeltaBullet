@@ -1,6 +1,7 @@
 @tool
 extends Node3D
 class_name AIComponent
+signal targetUnreachable
 signal onScan
 signal canSeeSomething
 signal interactSpeakTrigger
@@ -35,7 +36,10 @@ var isInDialogue : bool
 @export_subgroup("Identification")
 @export var pawnName : String
 @export var aimSpeed : float = 0.75
-@export_enum("Idle","Wander","Patrol") var pawnType = 0
+@export_enum("Idle","Wander","Patrol") var pawnType = 0:
+	set(value):
+		pawnType = value
+		setPawnType()
 @export_enum("High","Normal","Retarded") var aiSkill : int = 1:
 	set(value):
 		aiSkill = value
@@ -117,6 +121,7 @@ func _ready() -> void:
 	else:
 		visualMesh.visible = true
 		visualMesh.mesh = createFOVModel()
+	setPawnType()
 
 func createFOVModel()->ImmediateMesh:
 	var _mesh : ImmediateMesh = ImmediateMesh.new()
@@ -249,7 +254,7 @@ func scan()->void:
 func canSeeObject(object:Node3D)->bool:
 	var pawnRID : Array[RID] = []
 	pawnRID.append(pawnOwner.get_rid())
-	var dist = self.global_position.direction_to(object.global_position)
+	var dist = pawnOwner.global_position.direction_to(object.global_position)
 	var dotProd = dist.dot(-pawnOwner.pawnMesh.global_transform.basis.z)
 	if dotProd > 0:
 		var rayParams : PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.new()
@@ -376,10 +381,18 @@ func getTarget()->Node3D:
 	return memoryManager.bestMemory.memoryOwner
 
 func walkToPosition(to:Vector3)->void:
-	#print("%s is walking to %s"%[pawnName,to])
-	navAgent.target_position = to
-	newVelocity = (navAgent.get_next_path_position() - global_position).normalized()
-	navAgent.velocity = newVelocity
+	print("%s is walking to %s"%[pawnName,to])
+	await get_tree().process_frame
+	if navAgent.is_target_reachable():
+		print("%s to %s is reachable"%[pawnName,to])
+		newVelocity = (navAgent.get_next_path_position() - global_position).normalized()
+		navAgent.velocity = newVelocity
+	else:
+		print("%s to %s is not reachable"%[pawnName,to])
+		pawnOwner.direction = Vector3.ZERO
+		navAgent.set_velocity(Vector3.ZERO)
+		targetUnreachable.emit()
+
 
 func stopLookingAt()->void:
 	pawnOwner.meshLookAt = false
@@ -388,3 +401,13 @@ func lookAtPosition(lookat:Vector3)->void:
 	pawnOwner.meshLookAt = true
 	aimCast.look_at(lookat)
 	pawnOwner.meshRotation = aimCast.global_transform.basis.get_euler().y
+
+func setPawnType()->void:
+	await get_tree().process_frame
+	match pawnType:
+		0:
+			pawnFSM.change_state("Idle")
+		1:
+			pawnFSM.change_state("Wander")
+		2:
+			pawnFSM.change_state("Patrol")

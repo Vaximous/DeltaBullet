@@ -386,3 +386,17 @@ func scanForSaves(dirpath : String, max_depth : int = -1, _depth = 0) -> PackedS
 	else:
 		print("An error occurred when trying to access the path.")
 	return foundSaves
+
+func initShop(shopData:ShopData)->void:
+	removeShop()
+	var shopUI : PackedScene = load("res://assets/scenes/ui/shopui/shopUI.tscn")
+	var _shop = shopUI.instantiate()
+	_shop.add_to_group(&"shop")
+	_shop.shopResource = shopData
+	add_child(_shop)
+	_shop.initializeShop()
+
+func removeShop()->void:
+	for i in get_children():
+		if i.is_in_group(&"shop"):
+			i.queue_free()

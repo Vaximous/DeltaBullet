@@ -1,16 +1,16 @@
 extends InteractiveObject
 class_name Weapon
 
-@onready var collisionObject = $collisionObject
-@onready var animationTree = $AnimationTree
-@onready var animationPlayer = $AnimationPlayer
+@onready var collisionObject : CollisionShape3D = $collisionObject
+@onready var animationTree : AnimationTree = $AnimationTree
+@onready var animationPlayer : AnimationPlayer = $AnimationPlayer
 var weaponCast : RayCast3D
 var weaponCastEnd
 var weaponState
 var leftArmSpeed = 16
 var weaponRemoteState : AnimationNodeStateMachinePlayback
 var weaponRemoteStateLeft : AnimationNodeStateMachinePlayback
-var weaponAnimSet = false
+var weaponAnimSet : bool = false
 var weaponOwner : BasePawn = null:
 	set(value):
 		weaponOwner = value
@@ -50,19 +50,32 @@ var defaultBulletTrail = load("res://assets/entities/bulletTrail/bulletTrail.tsc
 @export var isReloading : bool = false:
 	set(value):
 		isReloading = value
+		checkWeaponBlend()
 		if isReloading:
 			#weaponOwner.setLeftHandFilter(true)
 			weaponOwner.setRightHandFilter(true)
 
-@export var collisionEnabled : bool= true
+@export var collisionEnabled : bool = true:
+	set(value):
+		collisionEnabled = value
+		if collisionEnabled and collisionObject != null:
+			collisionObject.disabled = false
+		else:
+			if collisionObject != null:
+				collisionObject.disabled = true
 @export var isEquipped : bool = false:
 	set(value):
 		isEquipped = value
+		checkWeaponBlend()
 		if value == true:
 			setEquipVariables()
-@export var isFiring :bool = false
+@export var isFiring :bool = false:
+	set(value):
+		isFiring = value
+		checkWeaponBlend()
 @export var isFreeAiming: bool = false:
 	set(value):
+		checkWeaponBlend()
 		if weaponOwner:
 			isFreeAiming = weaponOwner.freeAim
 			#weaponOwner.setLeftHandFilter(weaponResource.useLeftHandFreeAiming)
@@ -70,6 +83,8 @@ var defaultBulletTrail = load("res://assets/entities/bulletTrail/bulletTrail.tsc
 @export var isAiming :bool = false:
 	set(value):
 		isAiming = value
+		print(isAiming)
+		checkWeaponBlend()
 		if weaponOwner != null:
 			if value:
 				#weaponOwner.setLeftHandFilter(weaponResource.useLeftHandAiming)
@@ -80,9 +95,13 @@ var defaultBulletTrail = load("res://assets/entities/bulletTrail/bulletTrail.tsc
 		if value == true:
 			weaponOwner.isRunning = false
 @export var isBusy:bool  = false
-@export var isWeaponBlocked :bool = false
+@export var isWeaponBlocked :bool = false:
+	set(value):
+		isWeaponBlocked = value
+		weaponBlockedChange.emit()
 signal shot_fired
 signal dry_fired
+signal weaponBlockedChange
 
 # Called when the node enters the scene tree for the first time.
 func _ready()->void:
@@ -104,79 +123,90 @@ func _physics_process(delta)->void:
 				#Weapon Orientation
 				weaponMesh.position = weaponResource.weaponPositionOffset
 				weaponMesh.rotation = weaponResource.weaponRotationOffset
-
-				if weaponAnimSet and isEquipped:
-					if weaponRemoteState != null and weaponRemoteStateLeft != null:
-						if weaponResource.useWeaponSprintAnim:
-							if weaponOwner.isRunning and !isFiring and !isAiming and !weaponOwner.freeAim:
-									weaponRemoteState.travel("sprint")
-									weaponRemoteStateLeft.travel("sprint")
-
-						if !isFiring and !isAiming and !weaponOwner.freeAim and !isReloading:
-							if weaponRemoteState != null and weaponRemoteStateLeft != null:
-								weaponRemoteState.travel("idle")
-								weaponRemoteStateLeft.travel("idle")
-								if weaponResource.useLeftHandIdle and !weaponOwner.isArmingThrowable:
-									weaponOwner.animationTree.set("parameters/weaponBlend_Left_blend/blend_amount", lerpf(weaponOwner.animationTree.get("parameters/weaponBlend_Left_blend/blend_amount"), 1, leftArmSpeed*delta))
-								else:
-									weaponOwner.animationTree.set("parameters/weaponBlend_Left_blend/blend_amount", lerpf(weaponOwner.animationTree.get("parameters/weaponBlend_Left_blend/blend_amount"), 0, leftArmSpeed*delta))
-								if weaponResource.useRightHandIdle:
-									weaponResource.useRightHand = true
-								else:
-									weaponResource.useRightHand = false
-						if isReloading:
-							weaponRemoteState.travel("reload")
-							weaponRemoteStateLeft.travel("reload")
-							weaponOwner.animationTree.set("parameters/weaponBlend_Left_blend/blend_amount", lerpf(weaponOwner.animationTree.get("parameters/weaponBlend_Left_blend/blend_amount"), 1, leftArmSpeed*delta))
-							weaponOwner.setRightHandFilter(true)
-
-						if isAiming:
-							weaponOwner.isRunning = false
-							if weaponResource.useLeftHandAiming:
-								weaponOwner.animationTree.set("parameters/weaponBlend_Left_blend/blend_amount", lerpf(weaponOwner.animationTree.get("parameters/weaponBlend_Left_blend/blend_amount"), 1, leftArmSpeed*delta))
-							else:
-								weaponOwner.animationTree.set("parameters/weaponBlend_Left_blend/blend_amount", lerpf(weaponOwner.animationTree.get("parameters/weaponBlend_Left_blend/blend_amount"), 0, leftArmSpeed*delta))
-							if weaponResource.useRightHandAiming:
-								weaponResource.useRightHand = true
-							else:
-								weaponResource.useRightHand = false
-							if !weaponOwner.meshLookAt:
-								weaponOwner.meshLookAt = true
-							if !weaponOwner.preventWeaponFire:
-								if !isReloading:
-									if !weaponRemoteState.get_current_node() == "aim":
-										weaponRemoteState.travel("aim")
-										weaponRemoteStateLeft.travel("aim")
-							elif weaponOwner.preventWeaponFire and !isReloading:
-								weaponRemoteState.travel("idle")
-								weaponRemoteStateLeft.travel("idle")
-
-						if weaponOwner.freeAim and !isReloading:
-							if !weaponOwner.preventWeaponFire:
-								if !isReloading:
-									if !weaponRemoteState.get_current_node() == "aim":
-										weaponRemoteState.travel("aim")
-										weaponRemoteStateLeft.travel("aim")
-								if weaponResource.useLeftHandFreeAiming and !weaponOwner.isArmingThrowable:
-									weaponOwner.animationTree.set("parameters/weaponBlend_Left_blend/blend_amount", lerpf(weaponOwner.animationTree.get("parameters/weaponBlend_Left_blend/blend_amount"), 1, leftArmSpeed*delta))
-								else:
-									weaponOwner.animationTree.set("parameters/weaponBlend_Left_blend/blend_amount", lerpf(weaponOwner.animationTree.get("parameters/weaponBlend_Left_blend/blend_amount"), 0, leftArmSpeed*delta))
-								if weaponResource.useRightHandFreeAiming:
-									weaponResource.useRightHand = true
-								else:
-									weaponResource.useRightHand = false
-							elif weaponOwner.preventWeaponFire and !isReloading:
-								weaponRemoteState.travel("idle")
-								weaponRemoteStateLeft.travel("idle")
 			else:
-				weaponOwner.animationTree.set("parameters/weaponBlend_Left_blend/blend_amount", lerpf(weaponOwner.animationTree.get("parameters/weaponBlend_Left_blend/blend_amount"), 0, leftArmSpeed*delta))
 				collisionEnabled = false
 
-	if collisionEnabled:
-		collisionObject.disabled = false
-	else:
-		collisionObject.disabled = true
+func checkWeaponBlend()->void:
+	if weaponAnimSet and isEquipped:
+		if weaponRemoteState != null and weaponRemoteStateLeft != null:
+			if weaponResource.useWeaponSprintAnim:
+				if weaponOwner.isRunning and !isFiring and !isAiming and !weaponOwner.freeAim:
+						weaponRemoteState.travel("sprint")
+						weaponRemoteStateLeft.travel("sprint")
 
+			if !isFiring and !isAiming and !weaponOwner.freeAim and !isReloading:
+				if weaponRemoteState != null and weaponRemoteStateLeft != null:
+					weaponRemoteState.travel("idle")
+					weaponRemoteStateLeft.travel("idle")
+					if weaponResource.useLeftHandIdle and !weaponOwner.isArmingThrowable:
+						weaponOwner.enableLeftHand()
+					else:
+						weaponOwner.disableLeftHand()
+					if weaponResource.useRightHandIdle:
+						weaponResource.useRightHand = true
+					else:
+						weaponResource.useRightHand = false
+
+			elif isReloading:
+				weaponRemoteState.travel("reload")
+				weaponRemoteStateLeft.travel("reload")
+				weaponOwner.enableLeftHand()
+				weaponOwner.setRightHandFilter(true)
+
+			#elif isAiming:
+				#if !weaponOwner.preventWeaponFire:
+					#if !isReloading:
+						#if !weaponRemoteState.get_current_node() == "aim":
+							#weaponRemoteState.travel("aim")
+							#weaponRemoteStateLeft.travel("aim")
+				#weaponOwner.isRunning = false
+				#if weaponResource.useLeftHandAiming:
+					#weaponOwner.enableLeftHand()
+				#else:
+					#weaponOwner.disableLeftHand()
+				#if weaponResource.useRightHandAiming:
+					#weaponResource.useRightHand = true
+				#else:
+					#weaponResource.useRightHand = false
+				#if !weaponOwner.meshLookAt:
+					#weaponOwner.meshLookAt = true
+				#elif weaponOwner.preventWeaponFire and !isReloading:
+					#weaponRemoteState.travel("idle")
+					#weaponRemoteStateLeft.travel("idle")
+
+			elif weaponOwner.freeAim or isAiming:
+				if !weaponOwner.preventWeaponFire:
+					if !isReloading:
+						if !weaponRemoteState.get_current_node() == "aim":
+							weaponRemoteState.travel("aim")
+							weaponRemoteStateLeft.travel("aim")
+					if weaponOwner.freeAim:
+						if weaponResource.useLeftHandFreeAiming and !weaponOwner.isArmingThrowable:
+							weaponOwner.enableLeftHand()
+						else:
+							weaponOwner.disableLeftHand()
+						if weaponResource.useRightHandFreeAiming:
+							weaponResource.useRightHand = true
+						else:
+							weaponResource.useRightHand = false
+					elif isAiming:
+						weaponOwner.isRunning = false
+						if weaponResource.useLeftHandAiming:
+							weaponOwner.enableLeftHand()
+						else:
+							weaponOwner.disableLeftHand()
+						if weaponResource.useRightHandAiming:
+							weaponResource.useRightHand = true
+						else:
+							weaponResource.useRightHand = false
+						if !weaponOwner.meshLookAt:
+							weaponOwner.meshLookAt = true
+				elif weaponOwner.preventWeaponFire and !isReloading:
+					weaponRemoteState.travel("idle")
+					weaponRemoteStateLeft.travel("idle")
+	else:
+		if weaponOwner != null:
+			weaponOwner.disableLeftHand()
 
 func fire()->void:
 	if !isFireReady():
@@ -394,7 +424,10 @@ func resetWeaponMesh()->void:
 		collisionObject.rotation = weaponMesh.rotation
 
 func resetToDefault()->void:
-	resetWeaponMesh()
+	#resetWeaponMesh()
+	if weaponOwner:
+		if weaponOwner.weaponFireChanged.is_connected(checkWeaponBlend):
+			weaponOwner.weaponFireChanged.disconnect(checkWeaponBlend)
 	if weaponRemoteState != null:
 		weaponRemoteState.stop()
 	if weaponRemoteStateLeft != null:
@@ -412,8 +445,11 @@ func equipToPawn(pawn:BasePawn):
 			collisionEnabled = false
 			collisionObject.disabled = true
 			pawn.moveItemToWeapons(self)
+			#pawn.freeAimChanged.connect(checkFreeAim)
 			if objectUsed.is_connected(equipToPawn):
 				objectUsed.disconnect(equipToPawn)
+			if !pawn.weaponFireChanged.is_connected(checkWeaponBlend):
+				pawn.weaponFireChanged.connect(checkWeaponBlend)
 			if pawn.attachedCam:
 				var _notification = load("res://assets/scenes/ui/generalNotif/generalNotification.tscn").instantiate()
 				pawn.attachedCam.hud.gameNotifications.add_child(_notification)
@@ -490,3 +526,7 @@ func reloadWeapon()->void:
 			elif !isFiring and !isAiming and !weaponOwner.freeAim and !isReloading and weaponOwner != null:
 				#weaponOwner.setLeftHandFilter(weaponResource.useLeftHandIdle)
 				weaponOwner.setRightHandFilter(weaponResource.useRightHandIdle)
+
+func checkFreeAim()->void:
+	if weaponOwner:
+		isFreeAiming = weaponOwner.freeAim

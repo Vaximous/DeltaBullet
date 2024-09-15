@@ -4,7 +4,19 @@ signal isAsleep
 signal isAwake
 signal onHit(impulse,vector)
 @export_category("Ragdoll Bone")
+var ownerSkeleton : Skeleton3D
+@export var healthComponent : HealthComponent:
+	set(value):
+		healthComponent = value
 var bonePhysicsServer = PhysicsServer3D
+@export var canBeDismembered : bool = false:
+	set(value):
+		canBeDismembered = value
+		if canBeDismembered:
+			if healthComponent != null:
+				healthComponent.HPisDead.connect(dismemberBone)
+		else:
+			healthComponent.HPisDead.disconnect(dismemberBone)
 var torque : Vector3
 var boneState:bool:
 	set(value):
@@ -171,6 +183,12 @@ func hit(dmg, dealer=null, hitImpulse:Vector3 = Vector3.ZERO, hitPoint:Vector3 =
 	if get_bone_id() == 41:
 		if get_owner().activeRagdollEnabled:
 			get_owner().activeRagdollEnabled = false
+	if healthComponent != null:
+		healthComponent.damage(float(dmg),dealer)
+		if canBeDismembered:
+			if !healthComponent.HPisDead.is_connected(dismemberBone):
+				healthComponent.HPisDead.connect(dismemberBone)
+
 
 func hookes_law(displacement: Vector3, current_velocity: Vector3, stiffness: float, damping: float) -> Vector3:
 	return (stiffness * displacement) - (damping * current_velocity)
@@ -180,3 +198,17 @@ func createBlood()->void:
 	var blood = droplets.instantiate()
 	gameManager.world.worldMisc.add_child(blood)
 	blood.global_position = global_position
+
+func dismemberBone()->void:
+	##Unfortunately needs to be reworked
+
+	pass
+	#if gameManager.world != null:
+		#var modifiedPose : Transform3D = ownerSkeleton.get_bone_global_pose(get_bone_id())
+		#reparent(gameManager.world.worldMisc)
+		#modifiedPose = modifiedPose.scaled(Vector3.ONE * 0.001)
+		#modifiedPose.origin = ownerSkeleton.get_bone_global_pose(get_bone_id()).origin
+		#ownerSkeleton.set_bone_global_pose(get_bone_id(),modifiedPose)
+		#print("%s dismembered"%ownerSkeleton.get_bone_name(get_bone_id()))
+	#else:
+		#queue_free()

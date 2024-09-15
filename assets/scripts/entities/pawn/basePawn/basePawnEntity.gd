@@ -2,6 +2,8 @@ extends CharacterBody3D
 class_name BasePawn
 
 ##Signals
+signal weaponFireChanged
+signal freeAimChanged
 signal directionChanged
 signal controllerAssigned
 signal clothingChanged
@@ -140,7 +142,11 @@ signal cameraAttached
 				if !animationPlayer.is_playing():
 					animationPlayer.play(animationToForce)
 ##Allows the pawn to interact with the environment, move and have physics applied, etc..
-@export var freeAim : bool = false
+@export var freeAim : bool = false:
+	set(value):
+		if freeAim != value:
+			freeAim = value
+			freeAimChanged.emit()
 @export var pawnEnabled : bool = true
 @export var collisionEnabled : bool = true:
 	set(value):
@@ -152,7 +158,11 @@ signal cameraAttached
 signal pawnDied(pawnRagdoll:PawnRagdoll)
 @export var turnAmount : float
 @export var turnSpeed : float = 18.0
-var preventWeaponFire : bool = false
+var preventWeaponFire : bool = false:
+	set(value):
+		if preventWeaponFire != value:
+			preventWeaponFire = value
+			weaponFireChanged.emit()
 @export var isPawnDead : bool = false:
 	set(value):
 		isPawnDead = value
@@ -160,10 +170,18 @@ var preventWeaponFire : bool = false
 		return isPawnDead
 @export var isMoving : bool = false:
 	set(value):
+		if isMoving != value:
+			checkWeaponBlend()
 		isMoving = value
 		if !isMoving:
+			disableIdleSpaceBlend()
+			disableRunBlend()
 			if footstepSounds.playing:
 				footstepSounds.stop()
+		else:
+			if isRunning:
+				enableRunBlend()
+			enableIdleSpaceBlend()
 @export_subgroup("Movement")
 var goingUpHill : bool = false
 var goingDownHill : bool = false
@@ -172,10 +190,15 @@ var oldPos : float = 0.0
 @export var isRunning : bool = false:
 	set(value):
 		if velocityComponent:
+			if isRunning != value:
+				checkWeaponBlend()
 			isRunning = value
 			if isRunning:
 				velocityComponent.vMaxSpeed = defaultRunSpeed
+				if isMoving:
+					enableRunBlend()
 			else:
+				disableRunBlend()
 				velocityComponent.vMaxSpeed = defaultWalkSpeed
 @export var JUMP_VELOCITY : float = 4.5
 @export var defaultWalkSpeed : float = 3.0
@@ -185,7 +208,13 @@ var oldPos : float = 0.0
 @export_subgroup("Throwables")
 var throwableItem : Node
 var throwableAmount : int = 0
-var isArmingThrowable : bool = false
+var isArmingThrowable : bool = false:
+	set(value):
+		isArmingThrowable = value
+		if isArmingThrowable:
+			enableThrowableAnim()
+		else:
+			disableThrowableAnim()
 var canThrowThrowable : bool = true
 var isThrowing : bool = false
 @export_subgroup("Inventory")
@@ -202,7 +231,8 @@ var currentItem : InteractiveObject = null
 			currentItem.isAiming = false
 			equipWeapon(currentItemIndex)
 			currentItem.isAiming = false
-
+			currentItem.weaponOwner = self
+			enableRightHand()
 			if currentItem.weaponResource != null:
 				await get_tree().process_frame
 				if currentItem.weaponResource.leftHandParent:
@@ -227,7 +257,11 @@ var currentItem : InteractiveObject = null
 				Dialogic.VAR.set('playerHasWeaponEquipped',true)
 				#attachedCam.resetCamCast()
 		else:
+			disableRightHand()
+			disableLeftHand()
 			for weapon in itemHolder.get_children():
+				if weapon.isEquipped != false:
+						weapon.isEquipped = false
 				weapon.hide()
 			if attachedCam:
 				Dialogic.VAR.set('playerHasWeaponEquipped',false)
@@ -243,7 +277,11 @@ var currentItem : InteractiveObject = null
 ##Ragdoll to spawn when the pawn dies
 @export var ragdollScene : PackedScene
 ##Makes the mesh look at a certain thing, mainly used for aiming
-@export var meshLookAt : bool = false
+@export var meshLookAt : bool = false:
+	set(value):
+		#if meshLookAt != value:
+			#checkWeaponBlend()
+		meshLookAt = value
 @export var lastHitPart : int:
 	set(value):
 		lastHitPart = value
@@ -256,6 +294,16 @@ var currentItem : InteractiveObject = null
 		hitImpulse = Vector3.ZERO
 @export var hitVector : Vector3 = Vector3.ZERO
 @export_subgroup("Misc")
+const defaultTweenSpeed : float = 0.25
+const defaultTransitionType = Tween.TRANS_QUART
+const defaultEaseType = Tween.EASE_OUT
+var throwableTween : Tween
+var leftHandTween : Tween
+var rightHandTween : Tween
+var runTween : Tween
+var fallTween : Tween
+var idleSpaceTween : Tween
+var bodyIKTween : Tween
 var lastLeftBlend : AnimationNodeStateMachinePlayback
 ## First-person, just for shits and giggles
 var isFirstperson : bool = false:
@@ -301,11 +349,13 @@ func _physics_process(delta:float) -> void:
 #region FreeAim
 			if freeAim:
 				if !isFirstperson:
-					meshLookAt = true
+					if meshLookAt != true:
+						meshLookAt = true
 					bodyIK.start()
 					bodyIK.interpolation = lerpf(bodyIK.interpolation, 1, turnSpeed * delta)
 				else:
-					meshLookAt = true
+					if meshLookAt != true:
+						meshLookAt = true
 					if currentItem:
 						bodyIK.start()
 						bodyIK.interpolation = lerpf(bodyIK.interpolation, 1, turnSpeed * delta)
@@ -322,23 +372,7 @@ func _physics_process(delta:float) -> void:
 				else:
 					if currentItem.isAiming != false:
 						currentItem.isAiming = false
-				if isMoving and isRunning and is_on_floor() and !meshLookAt and !currentItem.weaponResource.useWeaponSprintAnim and !currentItem.isReloading and animationTree.active or currentItem == null:
-					animationTree.set("parameters/weaponBlend/blend_amount", lerpf(animationTree.get("parameters/weaponBlend/blend_amount"), 0, 4*delta))
-					animationTree.set("parameters/weaponBlend_Left_blend/blend_amount", lerpf(animationTree.get("parameters/weaponBlend_Left_blend/blend_amount"),0,12*delta))
-				else:
-					animationTree.set("parameters/weaponBlend/blend_amount", lerpf(animationTree.get("parameters/weaponBlend/blend_amount"), 1, 12*delta))
-			else:
-				for items in itemHolder.get_children():
-					if items.isEquipped != false:
-						items.isEquipped = false
-				animationTree.set("parameters/weaponBlend/blend_amount", lerpf(animationTree.get("parameters/weaponBlend/blend_amount"), 0, 12*delta))
-				animationTree.set("parameters/weaponBlend_Left_blend/blend_amount", lerpf(animationTree.get("parameters/weaponBlend_Left_blend/blend_amount"),0,12*delta))
 
-			if isArmingThrowable:
-				animationTree.set("parameters/leftThrowableBlend/blend_amount", lerpf(animationTree.get("parameters/leftThrowableBlend/blend_amount"),1,12*delta))
-				animationTree.set("parameters/weaponBlend_Left_blend/blend_amount", lerpf(animationTree.get("parameters/weaponBlend_Left_blend/blend_amount"),0,12*delta))
-			else:
-				animationTree.set("parameters/leftThrowableBlend/blend_amount", lerpf(animationTree.get("parameters/leftThrowableBlend/blend_amount"),0,12*delta))
 			#Mesh Rotation
 			doMeshRotation(delta)
 			# Add the gravity
@@ -387,18 +421,18 @@ func _physics_process(delta:float) -> void:
 					bodyIK.interpolation = lerpf(bodyIK.interpolation, 0, turnSpeed * delta)
 					if bodyIK.interpolation <= 0:
 						bodyIK.stop()
-					if isMoving:
-						if !isRunning:
-							if !velocityComponent == null:
-								animationTree.set("parameters/runBlend/blend_amount", lerpf(animationTree.get("parameters/runBlend/blend_amount"), 0.0, delta * velocityComponent.getAcceleration()))
-								animationTree.set("parameters/idleSpace/blend_position", lerpf(animationTree.get("parameters/idleSpace/blend_position"), 1, delta * velocityComponent.getAcceleration()))
-						if isRunning:
-							if !velocityComponent == null:
-								animationTree.set("parameters/runBlend/blend_amount", lerpf(animationTree.get("parameters/runBlend/blend_amount"), 1.0, delta * velocityComponent.getAcceleration()))
-					else:
-						if !velocityComponent == null:
-							animationTree.set("parameters/runBlend/blend_amount", lerpf(animationTree.get("parameters/runBlend/blend_amount"), 0.0, delta * velocityComponent.getAcceleration()))
-							animationTree.set("parameters/idleSpace/blend_position", lerp(animationTree.get("parameters/idleSpace/blend_position"), 0.0, delta * velocityComponent.getAcceleration()))
+					#if isMoving:
+						#if !isRunning:
+							#if !velocityComponent == null:
+								#animationTree.set("parameters/runBlend/blend_amount", lerpf(animationTree.get("parameters/runBlend/blend_amount"), 0.0, delta * velocityComponent.getAcceleration()))
+								#animationTree.set("parameters/idleSpace/blend_position", lerpf(animationTree.get("parameters/idleSpace/blend_position"), 1, delta * velocityComponent.getAcceleration()))
+						#if isRunning:
+							#if !velocityComponent == null:
+								#animationTree.set("parameters/runBlend/blend_amount", lerpf(animationTree.get("parameters/runBlend/blend_amount"), 1.0, delta * velocityComponent.getAcceleration()))
+					#else:
+						#if !velocityComponent == null:
+							#animationTree.set("parameters/runBlend/blend_amount", lerpf(animationTree.get("parameters/runBlend/blend_amount"), 0.0, delta * velocityComponent.getAcceleration()))
+							#animationTree.set("parameters/idleSpace/blend_position", lerp(animationTree.get("parameters/idleSpace/blend_position"), 0.0, delta * velocityComponent.getAcceleration()))
 		#Move the pawn accordingly
 		move_and_slide()
 
@@ -707,6 +741,8 @@ func equipWeapon(index:int) -> void:
 	if !equipSound.playing:
 		equipSound.play()
 	currentItem = itemInventory[index]
+	freeAimChanged.connect(currentItem.checkFreeAim)
+	weaponFireChanged.connect(checkWeaponBlend)
 	currentItem.weaponOwner = self
 	currentItem.isEquipped = true
 	currentItem.visible = true
@@ -722,6 +758,8 @@ func unequipWeapon() -> void:
 		weapon.hide()
 		weapon.resetToDefault()
 	if currentItem:
+		freeAimChanged.disconnect(currentItem.checkFreeAim)
+		weaponFireChanged.disconnect(currentItem.checkWeaponBlend)
 		currentItem.resetToDefault()
 		currentItem.weaponAnimSet = false
 		currentItem.isEquipped = false
@@ -1034,3 +1072,130 @@ func loadPawnFile(pawnFile:String = "player")->void:
 		checkItems()
 		pawnColor = Color(nodeData["pawnColorR"],nodeData["pawnColorG"],nodeData["pawnColorB"],1)
 		Console.add_rich_console_message("[color=green]Loaded Pawn File![/color]")
+
+func setThrowableBlendValue(value:float)->void:
+	animationTree.set("parameters/leftThrowableBlend/blend_amount",value)
+
+func setRightHandBlendValue(value:float)->void:
+	animationTree.set("parameters/weaponBlend/blend_amount",value)
+
+func setLeftHandBlendValue(value:float)->void:
+	animationTree.set("parameters/weaponBlend_Left_blend/blend_amount",value)
+
+func enableRunBlend()->void:
+	if runTween:
+		runTween.kill()
+	runTween = create_tween().bind_node(animationTree)
+	var currentBlend : float = animationTree.get("parameters/runBlend/blend_amount")
+	runTween.tween_method(setRunBlendValue,currentBlend,1,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+
+func disableRunBlend()->void:
+	if runTween:
+		runTween.kill()
+	runTween = create_tween().bind_node(animationTree)
+	var currentBlend : float = animationTree.get("parameters/runBlend/blend_amount")
+	runTween.tween_method(setRunBlendValue,currentBlend,0,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+
+func enableFallBlend()->void:
+	if fallTween:
+		fallTween.kill()
+	fallTween = create_tween().bind_node(animationTree)
+	var currentBlend : float = animationTree.get("parameters/fallBlend/blend_amount")
+	fallTween.tween_method(setFallBlendValue,currentBlend,1,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+
+func disableFallBlend()->void:
+	if fallTween:
+		fallTween.kill()
+	fallTween = create_tween().bind_node(animationTree)
+	var currentBlend : float = animationTree.get("parameters/fallBlend/blend_amount")
+	fallTween.tween_method(setFallBlendValue,currentBlend,0,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+
+func enableIdleSpaceBlend()->void:
+	if idleSpaceTween:
+		idleSpaceTween.kill()
+	idleSpaceTween = create_tween().bind_node(animationTree)
+	var currentBlend : float = animationTree.get("parameters/idleSpace/blend_position")
+	idleSpaceTween.tween_method(setIdleBlend,currentBlend,1,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+
+func disableIdleSpaceBlend()->void:
+	if idleSpaceTween:
+		idleSpaceTween.kill()
+	idleSpaceTween = create_tween().bind_node(animationTree)
+	var currentBlend : float = animationTree.get("parameters/idleSpace/blend_position")
+	idleSpaceTween.tween_method(setIdleBlend,currentBlend,0,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+
+func enableLeftHand()->void:
+	if leftHandTween:
+		leftHandTween.kill()
+	leftHandTween = create_tween().bind_node(animationTree)
+	var currentBlend : float = animationTree.get("parameters/weaponBlend_Left_blend/blend_amount")
+	leftHandTween.tween_method(setLeftHandBlendValue,currentBlend,1,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+	#tween.tween_callback(tween.kill)
+
+func enableRightHand()->void:
+	if rightHandTween:
+		rightHandTween.kill()
+	rightHandTween = create_tween().bind_node(animationTree)
+	var currentBlend : float = animationTree.get("parameters/weaponBlend/blend_amount")
+	rightHandTween.tween_method(setRightHandBlendValue,currentBlend,1,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+	#tween.tween_callback(tween.kill)
+
+func disableLeftHand()->void:
+	if leftHandTween:
+		leftHandTween.kill()
+	leftHandTween = create_tween().bind_node(animationTree)
+	var currentBlend : float = animationTree.get("parameters/weaponBlend_Left_blend/blend_amount")
+	leftHandTween.tween_method(setLeftHandBlendValue,currentBlend,0,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+	#tween.tween_callback(tween.kill)
+
+func disableRightHand()->void:
+	if rightHandTween:
+		rightHandTween.kill()
+	rightHandTween = create_tween().bind_node(animationTree)
+	var currentBlend : float = animationTree.get("parameters/weaponBlend/blend_amount")
+	rightHandTween.tween_method(setRightHandBlendValue,currentBlend,0,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+	#rightHandTween.tween_callback(tween.kill)
+
+func disableThrowableAnim()->void:
+		if throwableTween:
+			throwableTween.kill()
+		throwableTween = create_tween().bind_node(animationTree)
+		var currentBlend : float = animationTree.get("parameters/leftThrowableBlend/blend_amount")
+		throwableTween.tween_method(setThrowableBlendValue,currentBlend,0,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+
+func enableThrowableAnim()->void:
+		enableLeftHand()
+		if throwableTween:
+			throwableTween.kill()
+		throwableTween = create_tween().bind_node(animationTree)
+		var currentBlend : float = animationTree.get("parameters/leftThrowableBlend/blend_amount")
+		throwableTween.tween_method(setThrowableBlendValue,currentBlend,1,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+
+func checkWeaponBlend()->void:
+	pass
+
+func setFallBlendValue(value:float)->void:
+	animationTree.set("parameters/fallBlend/blend_amount",value)
+
+func setRunBlendValue(value:float)->void:
+	animationTree.set("parameters/runBlend/blend_amount",value)
+
+func setIdleBlend(value:float)->void:
+	animationTree.set("parameters/idleSpace/blend_position", value)
+
+func setBodyIKInterpolation(value:float)->void:
+	bodyIK.interpolation = value
+
+func disableBodyIK()->void:
+	if bodyIKTween:
+		bodyIKTween.kill()
+	bodyIKTween = create_tween().bind_node(animationTree)
+	await bodyIKTween.tween_method(setBodyIKInterpolation,bodyIK.interpolation,0,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType).finished
+	bodyIK.stop()
+
+func startBodyIK()->void:
+	if bodyIKTween:
+		bodyIKTween.kill()
+	bodyIKTween = create_tween().bind_node(animationTree)
+	await bodyIKTween.tween_method(setBodyIKInterpolation,bodyIK.interpolation,1,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType).finished
+	bodyIK.start()

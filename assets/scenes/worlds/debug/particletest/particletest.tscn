@@ -228,6 +228,7 @@ func _physics_process(delta)->void:
 resource_local_to_scene = true
 script = ExtResource("26_ev0fr")
 useBulletTrail = true
+saleCategory = 1
 canBeReloaded = true
 weaponMagSize = 128
 ammoSize = 30
@@ -274,12 +275,11 @@ pawnClothing = Array[PackedScene]([ExtResource("9_3ne02"), ExtResource("10_8dx3e
 pawnColor = Color(0, 0, 0.733333, 1)
 
 [node name="pawnSpawn" parent="Spawns/pawnSpawns" index="0" instance=ExtResource("2_d45q2")]
-transform = Transform3D(-0.999368, 0, -0.0355449, 0, 1, 0, 0.0355449, 0, -0.999368, 3.34917, 0.5, 5.71633)
+transform = Transform3D(-0.34687, 0, 0.937913, 0, 1, 0, -0.937913, 0, -0.34687, 2.90905, 0.5, 3.25139)
 pawnName = "Barf"
 
 [node name="pawnSpawn2" parent="Spawns/pawnSpawns" index="1" instance=ExtResource("2_d45q2")]
-transform = Transform3D(-0.870691, 0, -0.491831, 0, 1, 0, 0.491831, 0, -0.870691, 1.94332, 6.1694, 2.26838)
-active = false
+transform = Transform3D(-0.870691, 0, -0.491831, 0, 1, 0, 0.491831, 0, -0.870691, 1.94332, 37.658, -9.37791)
 pawnName = "Barf 2"
 
 [node name="worldEnvironment" parent="Environment" index="0"]

@@ -1,0 +1,243 @@
+[gd_scene load_steps=13 format=3 uid="uid://ims5mb4jlsni"]
+
+[ext_resource type="Script" path="res://assets/scenes/ui/shopui/shop_item.gd" id="1_hhb87"]
+[ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="1_j1f5m"]
+
+[sub_resource type="Gradient" id="Gradient_63los"]
+offsets = PackedFloat32Array(0, 0.0292398, 0.962343, 1)
+colors = PackedColorArray(0.301961, 0.301961, 0.301961, 0.627451, 0.377919, 0.377919, 0.377919, 1, 0.616751, 0.608018, 0.597974, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_se4pr"]
+gradient = SubResource("Gradient_63los")
+fill_from = Vector2(1, 1)
+repeat = 2
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_h7yfc"]
+texture = SubResource("GradientTexture2D_se4pr")
+
+[sub_resource type="Animation" id="Animation_n24de"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("panel:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(63, 94)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("panel:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-34, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_5mmls"]
+resource_name = "in"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/path = NodePath("panel:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.196146, 1),
+"update": 0,
+"values": [Vector2(63, 94), Vector2(92, 94)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.210224, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 0.571068, 0.508893, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("panel:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.183011, 1),
+"update": 0,
+"values": [Vector2(-35, 0), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_uow4b"]
+resource_name = "out"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/path = NodePath("panel:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.170755, 1),
+"update": 0,
+"values": [Vector2(92, 94), Vector2(63, 94)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.148651, 1),
+"update": 0,
+"values": [Color(1, 0.571068, 0.508893, 1), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("panel:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.0769466, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-35, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_q1i74"]
+_data = {
+"RESET": SubResource("Animation_n24de"),
+"in": SubResource("Animation_5mmls"),
+"out": SubResource("Animation_uow4b")
+}
+
+[sub_resource type="Gradient" id="Gradient_pmu2c"]
+offsets = PackedFloat32Array(0, 0.0292398, 0.34728, 1)
+colors = PackedColorArray(0.301961, 0.301961, 0.301961, 0.627451, 0.254902, 0, 0, 1, 0.474563, 8.36272e-07, 0.00667347, 1, 0.20868, 1.51913e-07, 2.40654e-08, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_miclo"]
+gradient = SubResource("Gradient_pmu2c")
+fill_from = Vector2(0, 1)
+fill_to = Vector2(1, 1)
+repeat = 2
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_u2iun"]
+texture = SubResource("GradientTexture2D_miclo")
+
+[node name="shopItem" type="Button"]
+custom_minimum_size = Vector2(696, 94)
+anchors_preset = -1
+anchor_right = 0.435
+anchor_bottom = 0.104
+offset_right = -6.10352e-05
+offset_bottom = 0.400002
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_styles/focus = SubResource("StyleBoxTexture_h7yfc")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxTexture_h7yfc")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_h7yfc")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxTexture_h7yfc")
+theme_override_styles/hover_pressed = SubResource("StyleBoxTexture_h7yfc")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxTexture_h7yfc")
+theme_override_styles/hover = SubResource("StyleBoxTexture_h7yfc")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxTexture_h7yfc")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_h7yfc")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxTexture_h7yfc")
+theme_override_styles/normal = SubResource("StyleBoxTexture_h7yfc")
+script = ExtResource("1_hhb87")
+
+[node name="shopIcon" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_bottom = 0.986
+offset_left = 44.0
+offset_top = 8.0
+offset_right = 122.0
+offset_bottom = -8.68401
+expand_mode = 1
+
+[node name="itemName" type="Label" parent="."]
+layout_mode = 0
+offset_left = 120.0
+offset_top = 6.0
+offset_right = 692.0
+offset_bottom = 48.0
+theme = ExtResource("1_j1f5m")
+theme_override_colors/font_color = Color(0.686275, 0, 0, 1)
+theme_override_font_sizes/font_size = 41
+text = "ITEM NAME"
+
+[node name="itemDescription" type="Label" parent="."]
+layout_mode = 0
+offset_left = 122.0
+offset_top = 47.0
+offset_right = 689.0
+offset_bottom = 89.0
+theme = ExtResource("1_j1f5m")
+theme_override_colors/font_color = Color(0.82606, 0.82606, 0.82606, 1)
+theme_override_font_sizes/font_size = 41
+text = "ITEM DESCRIPTION
+"
+
+[node name="itemStatus" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 0.064
+anchor_right = 1.0
+anchor_bottom = 0.064
+offset_left = -217.0
+offset_top = -0.0160003
+offset_right = -3.0
+offset_bottom = 41.984
+theme = ExtResource("1_j1f5m")
+theme_override_colors/font_color = Color(0.298039, 0.666667, 0, 1)
+theme_override_font_sizes/font_size = 35
+text = "$6,900
+"
+horizontal_alignment = 2
+
+[node name="animationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_q1i74")
+}
+
+[node name="panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_bottom = 1.0
+offset_left = -34.9999
+offset_right = 57.0001
+theme_override_styles/panel = SubResource("StyleBoxTexture_u2iun")
+
+[connection signal="mouse_entered" from="." to="animationPlayer" method="play" binds= ["in"]]
+[connection signal="mouse_exited" from="." to="animationPlayer" method="play" binds= ["out"]]

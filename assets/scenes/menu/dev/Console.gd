@@ -79,17 +79,17 @@ func warn_restricted(string : String) -> bool:
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("devConsole"):
 		console.hide()
-		await get_tree().process_frame
+		#await get_tree().process_frame
 		console.show()
-		gameManager.showMouse()
-		console.grab_focus()
-		input_field.grab_focus()
+		#gameManager.showMouse()
+		#console.grab_focus()
+		#input_field.grab_focus()
 
 
 func _on_window_window_input(event: InputEvent) -> void:
 	if event.is_action_pressed("devConsole"):
 		console.hide()
-		gameManager.hideMouse()
+		#gameManager.hideMouse()
 	if input_field.has_focus() and event.is_pressed():
 		display_autocompletion_results()
 		if event.as_text() == "Tab":
@@ -124,7 +124,8 @@ func clear() -> void:
 
 
 func _on_window_focus_entered() -> void:
-	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	#Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	pass
 
 func detect_autocomplete(new_text : String) -> void:
 	autocompletes.clear()
@@ -210,4 +211,4 @@ func null_catch(variable) -> bool:
 
 func _on_window_close_requested()->void:
 	console.hide()
-	gameManager.hideMouse()
+	#gameManager.hideMouse()

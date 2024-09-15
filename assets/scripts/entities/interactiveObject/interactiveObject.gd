@@ -11,4 +11,3 @@ var beenUsed:bool = false
 @export_subgroup("Object")
 @export_enum("Equippable","Interactive") var interactType : int = 0
 @export var canBeUsed : bool = false
-

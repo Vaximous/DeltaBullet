@@ -97,7 +97,6 @@ ssao_enabled = true
 ssil_intensity = 0.75
 sdfgi_use_occlusion = true
 sdfgi_y_scale = 2
-glow_enabled = true
 glow_normalized = true
 glow_bloom = 0.15
 glow_blend_mode = 1
@@ -1208,7 +1207,7 @@ weaponToEquip = 1
 hatedGroups = Array[StringName]([])
 spawnGroup = &"Civilian"
 animationToForce = &"PawnAnim/shopIdle1"
-pawnColor = Color(1, 0.74, 0.44, 1)
+pawnColor = Color(0.989497, 0.714754, 0.728352, 1)
 
 [node name="pawnSpawn9" parent="Spawns/pawnSpawns" index="10" instance=ExtResource("2_26w0h")]
 transform = Transform3D(0.862028, 0, -0.506862, 0, 1, 0, 0.506862, 0, 0.862028, 15.2265, 4.0432, 10.9844)

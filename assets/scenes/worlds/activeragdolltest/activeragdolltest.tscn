@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://1uuvtqrmyqus"]
+[gd_scene load_steps=48 format=3 uid="uid://1uuvtqrmyqus"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_fy66m"]
 [ext_resource type="PackedScene" uid="uid://boicvk4qeqmbd" path="res://assets/entities/pawnSpawn/pawnSpawn.tscn" id="2_mn033"]
@@ -24,6 +24,7 @@
 [ext_resource type="Script" path="res://assets/resources/PhysicsMaterials/DB_PhysicsMaterial.gd" id="17_15fkl"]
 [ext_resource type="Texture2D" uid="uid://bodygaior62dl" path="res://assets/textures/Developer_Textures/Light/texture_08.png" id="18_8tf33"]
 [ext_resource type="Script" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="22_js4nn"]
+[ext_resource type="Texture2D" uid="uid://ds3g0xorlwkrr" path="res://assets/textures/urban/swnjnwkwin7.tga" id="23_ng86g"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_14nxj"]
 streams_count = 2
@@ -196,6 +197,10 @@ func _ready():
 	phsbones = activeragarmature.get_children().filter(func(index): return index is PhysicalBone3D)
 
 "
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_effxa"]
+albedo_texture = ExtResource("23_ng86g")
+uv1_triplanar = true
 
 [sub_resource type="GDScript" id="GDScript_8s8wa"]
 resource_name = "Testy"
@@ -376,8 +381,11 @@ script = SubResource("GDScript_x30ca")
 physSkel = NodePath("Armature/Skeleton3D")
 animSkeleton = NodePath("../untitled/Armature/Skeleton3D")
 
+[node name="Cube" parent="Props/untitled2/Armature/Skeleton3D" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_effxa")
+
 [node name="Physical Bone Bone" type="PhysicalBone3D" parent="Props/untitled2/Armature/Skeleton3D" index="1" node_paths=PackedStringArray("animSkeleton")]
-transform = Transform3D(1, -2.18375e-21, -1.7752e-15, -1.7752e-15, -7.45058e-09, -1, 2.17052e-21, 1, -7.45058e-09, 0, 1.00071, -0.199311)
+transform = Transform3D(1, -2.17052e-21, -1.7752e-15, -1.7752e-15, -7.45058e-09, -1, 2.15729e-21, 1, -7.45058e-09, 0, 1.00071, -0.199311)
 collision_layer = 2
 collision_mask = 11
 joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.77646e-15, 1.62199e-05, 1.00071)

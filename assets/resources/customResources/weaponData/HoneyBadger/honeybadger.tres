@@ -8,6 +8,7 @@ resource_local_to_scene = true
 script = ExtResource("1_3lyem")
 useBulletTrail = true
 saleCategory = 1
+price = 0
 canBeReloaded = true
 weaponMagSize = 128
 ammoSize = 24

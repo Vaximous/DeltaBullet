@@ -354,23 +354,26 @@ fill_from = Vector2(0.5, 0.5)
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_t67gv"]
 texture = SubResource("GradientTexture2D_o1lyv")
 
-[node name="shopUi" type="Control"]
+[node name="Shop" type="CanvasLayer"]
+script = ExtResource("2_w7wba")
+
+[node name="shopUi" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 1
+mouse_filter = 2
 theme = ExtResource("1_n1s24")
-script = ExtResource("2_w7wba")
 
-[node name="topBar" type="Control" parent="."]
+[node name="topBar" type="Control" parent="shopUi"]
 anchors_preset = 0
 offset_right = 1598.0
 offset_bottom = 61.0
+mouse_filter = 2
 
-[node name="topBarimage" type="TextureRect" parent="topBar"]
+[node name="topBarimage" type="TextureRect" parent="shopUi/topBar"]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -379,7 +382,7 @@ offset_right = 4.0
 offset_bottom = 60.669
 texture = SubResource("GradientTexture2D_36g7h")
 
-[node name="shopName" type="Label" parent="topBar/topBarimage"]
+[node name="shopName" type="Label" parent="shopUi/topBar/topBarimage"]
 modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(724.89, 0)
 layout_mode = 2
@@ -391,13 +394,13 @@ theme_override_font_sizes/font_size = 51
 text = "SHOPNAME"
 vertical_alignment = 1
 
-[node name="topbarAnim" type="AnimationPlayer" parent="topBar"]
+[node name="topbarAnim" type="AnimationPlayer" parent="shopUi/topBar"]
 root_node = NodePath("../..")
 libraries = {
 "": SubResource("AnimationLibrary_csp7a")
 }
 
-[node name="previewBG" type="Panel" parent="."]
+[node name="previewBG" type="Panel" parent="shopUi"]
 layout_mode = 2
 anchor_left = 0.971
 anchor_top = 0.128
@@ -407,10 +410,10 @@ offset_left = -477.6
 offset_top = -0.200005
 offset_right = -0.599976
 offset_bottom = -0.100037
-mouse_filter = 1
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_2o57p")
 
-[node name="panel" type="Panel" parent="previewBG"]
+[node name="panel" type="Panel" parent="shopUi/previewBG"]
 layout_mode = 2
 offset_left = 13.0
 offset_top = 26.0
@@ -418,7 +421,7 @@ offset_right = 457.0
 offset_bottom = 301.0
 theme_override_styles/panel = SubResource("StyleBoxTexture_h7f8e")
 
-[node name="subViewportContainer" type="SubViewportContainer" parent="previewBG/panel"]
+[node name="subViewportContainer" type="SubViewportContainer" parent="shopUi/previewBG/panel"]
 layout_mode = 2
 anchor_left = 0.033
 anchor_top = 0.033
@@ -430,12 +433,12 @@ offset_right = 418.348
 offset_bottom = -0.125
 stretch = true
 
-[node name="subViewport" type="SubViewport" parent="previewBG/panel/subViewportContainer"]
+[node name="subViewport" type="SubViewport" parent="shopUi/previewBG/panel/subViewportContainer"]
 handle_input_locally = false
 size = Vector2i(425, 259)
 render_target_update_mode = 4
 
-[node name="itemDescriptor" type="Label" parent="previewBG"]
+[node name="itemDescriptor" type="Label" parent="shopUi/previewBG"]
 layout_mode = 0
 offset_left = 18.0
 offset_top = 309.0
@@ -445,7 +448,7 @@ theme_override_fonts/font = ExtResource("3_tu6qn")
 theme_override_font_sizes/font_size = 28
 text = "This is a good item."
 
-[node name="purchaseButton" type="Button" parent="previewBG"]
+[node name="purchaseButton" type="Button" parent="shopUi/previewBG"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.709
@@ -458,12 +461,12 @@ offset_right = 0.0339661
 offset_bottom = -0.325073
 text = "Purchase"
 
-[node name="animationPlayer" type="AnimationPlayer" parent="previewBG"]
+[node name="animationPlayer" type="AnimationPlayer" parent="shopUi/previewBG"]
 libraries = {
 "": SubResource("AnimationLibrary_vamxx")
 }
 
-[node name="BrowserBG" type="Panel" parent="."]
+[node name="BrowserBG" type="Panel" parent="shopUi"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.01
@@ -472,10 +475,10 @@ anchor_right = 0.664
 anchor_bottom = 1.0
 offset_right = 0.599976
 offset_bottom = -6.0
-mouse_filter = 1
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_t67gv")
 
-[node name="scrollContainer" type="ScrollContainer" parent="BrowserBG"]
+[node name="scrollContainer" type="ScrollContainer" parent="shopUi/BrowserBG"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.03
@@ -486,37 +489,47 @@ offset_left = -0.410002
 offset_top = 0.205999
 offset_right = 110.345
 offset_bottom = -0.350037
+mouse_filter = 2
 
-[node name="itemHolder" type="VBoxContainer" parent="BrowserBG/scrollContainer"]
+[node name="itemHolder" type="VBoxContainer" parent="shopUi/BrowserBG/scrollContainer"]
 clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 2
 
-[node name="shopItem" parent="BrowserBG/scrollContainer/itemHolder" instance=ExtResource("3_x8qdb")]
+[node name="shopItem" parent="shopUi/BrowserBG/scrollContainer/itemHolder" instance=ExtResource("3_x8qdb")]
 layout_mode = 2
+mouse_filter = 2
 
-[node name="shopItem2" parent="BrowserBG/scrollContainer/itemHolder" instance=ExtResource("3_x8qdb")]
+[node name="shopItem2" parent="shopUi/BrowserBG/scrollContainer/itemHolder" instance=ExtResource("3_x8qdb")]
 layout_mode = 2
+mouse_filter = 2
 
-[node name="shopItem3" parent="BrowserBG/scrollContainer/itemHolder" instance=ExtResource("3_x8qdb")]
+[node name="shopItem3" parent="shopUi/BrowserBG/scrollContainer/itemHolder" instance=ExtResource("3_x8qdb")]
 layout_mode = 2
+mouse_filter = 2
 
-[node name="shopItem4" parent="BrowserBG/scrollContainer/itemHolder" instance=ExtResource("3_x8qdb")]
+[node name="shopItem4" parent="shopUi/BrowserBG/scrollContainer/itemHolder" instance=ExtResource("3_x8qdb")]
 layout_mode = 2
+mouse_filter = 2
 
-[node name="shopItem5" parent="BrowserBG/scrollContainer/itemHolder" instance=ExtResource("3_x8qdb")]
+[node name="shopItem5" parent="shopUi/BrowserBG/scrollContainer/itemHolder" instance=ExtResource("3_x8qdb")]
 layout_mode = 2
+mouse_filter = 2
 
-[node name="shopItem6" parent="BrowserBG/scrollContainer/itemHolder" instance=ExtResource("3_x8qdb")]
+[node name="shopItem6" parent="shopUi/BrowserBG/scrollContainer/itemHolder" instance=ExtResource("3_x8qdb")]
 layout_mode = 2
+mouse_filter = 2
 
-[node name="shopItem7" parent="BrowserBG/scrollContainer/itemHolder" instance=ExtResource("3_x8qdb")]
+[node name="shopItem7" parent="shopUi/BrowserBG/scrollContainer/itemHolder" instance=ExtResource("3_x8qdb")]
 layout_mode = 2
+mouse_filter = 2
 
-[node name="shopItem8" parent="BrowserBG/scrollContainer/itemHolder" instance=ExtResource("3_x8qdb")]
+[node name="shopItem8" parent="shopUi/BrowserBG/scrollContainer/itemHolder" instance=ExtResource("3_x8qdb")]
 layout_mode = 2
+mouse_filter = 2
 
-[node name="tabBar" type="TabBar" parent="BrowserBG"]
+[node name="tabBar" type="TabBar" parent="shopUi/BrowserBG"]
 layout_mode = 0
 offset_left = 25.0
 offset_top = -30.0
@@ -533,7 +546,10 @@ tab_4/title = "Heavy"
 tab_5/title = "SMGs"
 tab_6/title = "Special"
 
-[node name="sound1" type="AudioStreamPlayer" parent="."]
+[node name="sound1" type="AudioStreamPlayer" parent="shopUi"]
 stream = ExtResource("3_vi1bk")
 
-[connection signal="tab_changed" from="BrowserBG/tabBar" to="." method="clearShopList"]
+[connection signal="tab_changed" from="shopUi/BrowserBG/tabBar" to="." method="buildItemList"]
+[connection signal="tab_changed" from="shopUi/BrowserBG/tabBar" to="shopUi" method="clearShopList"]
+[connection signal="tab_selected" from="shopUi/BrowserBG/tabBar" to="." method="clearShopList"]
+[connection signal="tab_selected" from="shopUi/BrowserBG/tabBar" to="." method="buildItemList"]

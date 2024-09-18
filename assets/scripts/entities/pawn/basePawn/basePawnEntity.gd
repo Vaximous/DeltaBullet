@@ -148,6 +148,11 @@ signal cameraAttached
 			freeAim = value
 			freeAimChanged.emit()
 @export var pawnEnabled : bool = true
+@export var animationPlayerSpeed : float = 1.0:
+	set(value):
+		animationPlayerSpeed = value
+		if animationPlayer !=null:
+			animationPlayer.speed_scale = value
 @export var collisionEnabled : bool = true:
 	set(value):
 		collisionEnabled = value

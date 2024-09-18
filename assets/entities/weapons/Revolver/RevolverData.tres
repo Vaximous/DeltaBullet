@@ -7,7 +7,8 @@
 script = ExtResource("1_1ufyd")
 useBulletTrail = true
 saleCategory = 1
-price = 0
+gritPrice = 0
+itemDescription = ""
 canBeReloaded = true
 weaponMagSize = 18
 ammoSize = 6

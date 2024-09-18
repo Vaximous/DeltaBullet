@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://ctyjq1f6284yy" path="res://assets/textures/pawn_tex/texture_Normal_OpenGL.jpg" id="5_sssv4"]
 [ext_resource type="Texture2D" uid="uid://d68y7icd86b3" path="res://assets/textures/pawn_tex/texture_Roughness.jpg" id="6_ie2lk"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tyn3f"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_npg4c"]
 resource_name = "MALE"
 cull_mode = 2
 diffuse_mode = 2
@@ -44,7 +44,7 @@ aiType = 0
 
 [node name="previewMesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
-material_override = SubResource("StandardMaterial3D_tyn3f")
+material_override = SubResource("StandardMaterial3D_npg4c")
 gi_mode = 0
 mesh = ExtResource("2_kp4hc")
 

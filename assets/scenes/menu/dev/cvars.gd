@@ -273,6 +273,13 @@ func loadMap(map)->void:
 		if map != "" or " ":
 			gameManager.loadWorld(str("%s.tscn"%map))
 
+
+func clear_persistent_data() -> void:
+	var fa = FileAccess.open(userDir + "persistence", FileAccess.WRITE)
+	if fa != null:
+		fa.flush()
+
+
 func maps()->void:
 	for m in get_tree().get_nodes_in_group(&"maplist"):
 		m.queue_free()

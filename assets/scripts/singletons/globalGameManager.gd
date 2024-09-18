@@ -51,6 +51,25 @@ func _ready()->void:
 		pass
 
 
+func get_persistent_data() -> Dictionary:
+	if !userDir.file_exists("persistence"):
+		var fa = FileAccess.open(userDir.get_current_dir() + "persistence", FileAccess.WRITE)
+		fa.flush()
+	var file = FileAccess.open_compressed(userDir.get_current_dir() + "persistence", FileAccess.READ, FileAccess.COMPRESSION_GZIP)
+	if file == null:
+		return {}
+	var data = file.get_var(true)
+	if data is Dictionary:
+		return data
+	return {}
+
+
+func write_persistent_data(data : Dictionary) -> void:
+	var file = FileAccess.open_compressed(userDir.get_current_dir() + "persistence", FileAccess.WRITE, FileAccess.COMPRESSION_GZIP)
+	file.store_var(data)
+	file.flush()
+
+
 func create_dialogue_camera() -> CutsceneCamera:
 	var new_cam = dialogue_cam.instantiate()
 	return new_cam

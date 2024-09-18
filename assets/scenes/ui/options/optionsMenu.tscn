@@ -9,38 +9,38 @@
 resource_name = "optionsNode"
 script/source = "extends Control
 
-@onready var msaaOption : MenuButton = $panelHolder/panel/optionsPanel/Video/vBoxContainer/msaa/msaaOptions
-@onready var shadowFilterQualityPopup : MenuButton = $panelHolder/panel/optionsPanel/Video/vBoxContainer/shadowFilterQuality/shadowFilterQualityOptions
-@onready var shadowQualityPopup : MenuButton = $panelHolder/panel/optionsPanel/Video/vBoxContainer/shadowQuality/shadowQuality
+@onready var msaaOption : MenuButton = $panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer/msaa/msaaOptions
+@onready var shadowFilterQualityPopup : MenuButton = $panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer/shadowFilterQuality/shadowFilterQualityOptions
+@onready var shadowQualityPopup : MenuButton = $panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer/shadowQuality/shadowQuality
 @onready var save_button : Button = $panelHolder/panel/saveSettings
 @onready var revert_button : Button = $panelHolder/panel/revertSettings
 const setting_remap : Dictionary = {
-	'graphics_vsync' = ^'panelHolder/panel/optionsPanel/Video/vBoxContainer/VSync:button_pressed',
-	'graphics_motion_blur' = ^'panelHolder/panel/optionsPanel/Video/vBoxContainer/motionBlur:button_pressed',
-	'graphics_fullscreen' = ^'panelHolder/panel/optionsPanel/Video/vBoxContainer/Fullscreen:button_pressed',
-	'graphics_fxaa' = ^'panelHolder/panel/optionsPanel/Video/vBoxContainer/fxaaToggle:button_pressed',
-	'graphics_Sdfgi' = ^'panelHolder/panel/optionsPanel/Video/vBoxContainer/sdfgiToggle:button_pressed',
-	'graphics_Ssil' = ^'panelHolder/panel/optionsPanel/Video/vBoxContainer/ssilToggle:button_pressed',
-	'graphics_Ssr' = ^'panelHolder/panel/optionsPanel/Video/vBoxContainer/ssrToggle:button_pressed',
-	'game_camera_screentilt_always' = ^'panelHolder/panel/optionsPanel/Game/vBoxContainer/alwaysCamRoll:button_pressed',
-	'game_show_fps' = ^'panelHolder/panel/optionsPanel/Game/vBoxContainer/showFPSButton:button_pressed',
-	'game_simple_crosshairs' = ^'panelHolder/panel/optionsPanel/Game/vBoxContainer/simpleCrosshairs:button_pressed',
-	'game_lowHP_ambience' = ^'panelHolder/panel/optionsPanel/Game/vBoxContainer/lowHPAmbience:button_pressed',
-	\"audio_MasterVolume\" = ^'panelHolder/panel/optionsPanel/Audio/vBoxContainer/masterVolSlider:value',
-	\"audio_MusicVolume\" = ^'panelHolder/panel/optionsPanel/Audio/vBoxContainer/musicSlider:value',
-	\"audio_UiVolume\" = ^'panelHolder/panel/optionsPanel/Audio/vBoxContainer/uiSlider:value',
-	\"audio_GameVolume\" = ^'panelHolder/panel/optionsPanel/Audio/vBoxContainer/soundsSlider:value',
-	\"game_ragdoll_remove_time\" = ^'panelHolder/panel/optionsPanel/Game/vBoxContainer/ragdollDeleteTime:value',
-	\"game_decal_remove_time\" = ^'panelHolder/panel/optionsPanel/Game/vBoxContainer/decalRemoveTimeSlider:value',
-	\"audio_ambience_volume\" = ^'panelHolder/panel/optionsPanel/Audio/vBoxContainer/AmbienceSlider:value'
+	'graphics_vsync' = ^'panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer/VSync:button_pressed',
+	'graphics_motion_blur' = ^'panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer/motionBlur:button_pressed',
+	'graphics_fullscreen' = ^'panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer/Fullscreen:button_pressed',
+	'graphics_fxaa' = ^'panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer/fxaaToggle:button_pressed',
+	'graphics_Sdfgi' = ^'panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer/sdfgiToggle:button_pressed',
+	'graphics_Ssil' = ^'panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer/ssilToggle:button_pressed',
+	'graphics_Ssr' = ^'panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer/ssrToggle:button_pressed',
+	'game_camera_screentilt_always' = ^'panelHolder/panel/optionsPanel/Game/marginContainer/vBoxContainer/alwaysCamRoll:button_pressed',
+	'game_show_fps' = ^'panelHolder/panel/optionsPanel/Game/marginContainer/vBoxContainer/showFPSButton:button_pressed',
+	'game_simple_crosshairs' = ^'panelHolder/panel/optionsPanel/Game/marginContainer/vBoxContainer/simpleCrosshairs:button_pressed',
+	'game_lowHP_ambience' = ^'panelHolder/panel/optionsPanel/Game/marginContainer/vBoxContainer/lowHPAmbience:button_pressed',
+	\"audio_MasterVolume\" = ^'panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/masterVolSlider:value',
+	\"audio_MusicVolume\" = ^'panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/musicSlider:value',
+	\"audio_UiVolume\" = ^'panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/uiSlider:value',
+	\"audio_GameVolume\" = ^'panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/soundsSlider:value',
+	\"game_ragdoll_remove_time\" = ^'panelHolder/panel/optionsPanel/Game/marginContainer/vBoxContainer/ragdollDeleteTime:value',
+	\"game_decal_remove_time\" = ^'panelHolder/panel/optionsPanel/Game/marginContainer/vBoxContainer/decalRemoveTimeSlider:value',
+	\"audio_ambience_volume\" = ^'panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/AmbienceSlider:value'
 }
 
 func _ready() -> void:
 	applyAudio()
 	setupMenuPopups()
 	UserConfig.configs_updated.connect(getSettingsFromConfig)
-	$panelHolder/panel/optionsPanel/Game/vBoxContainer/maxRagdolls/maxRagdollsAmount.text = str(UserConfig.game_ragdoll_remove_time)
-	$panelHolder/panel/optionsPanel/Game/vBoxContainer/decalRemoveTime/decalRemoveTimeAmt.text = str(UserConfig.game_decal_remove_time)
+	$panelHolder/panel/optionsPanel/Game/marginContainer/vBoxContainer/maxRagdolls/maxRagdollsAmount.text = str(UserConfig.game_ragdoll_remove_time)
+	$panelHolder/panel/optionsPanel/Game/marginContainer/vBoxContainer/decalRemoveTime/decalRemoveTimeAmt.text = str(UserConfig.game_decal_remove_time)
 
 func _process(delta)->void:
 	if visible:
@@ -124,11 +124,11 @@ func applyAudio()->void:
 
 
 func _on_ragdoll_delete_time_value_changed(value)->void:
-	$panelHolder/panel/optionsPanel/Game/vBoxContainer/maxRagdolls/maxRagdollsAmount.text = str(value)
+	$panelHolder/panel/optionsPanel/Game/marginContainer/vBoxContainer/maxRagdolls/maxRagdollsAmount.text = str(value)
 
 
 func _on_decal_remove_time_slider_value_changed(value)->void:
-	$panelHolder/panel/optionsPanel/Game/vBoxContainer/decalRemoveTime/decalRemoveTimeAmt.text = str(value)
+	$panelHolder/panel/optionsPanel/Game/marginContainer/vBoxContainer/decalRemoveTime/decalRemoveTimeAmt.text = str(value)
 
 func changeQualitytext(id)->void:
 	var selectedID = id
@@ -193,7 +193,7 @@ keycode = 4194305
 [sub_resource type="Shortcut" id="Shortcut_v2vor"]
 events = [SubResource("InputEventKey_60klc")]
 
-[sub_resource type="Image" id="Image_3lkbv"]
+[sub_resource type="Image" id="Image_7c4bw"]
 data = {
 "data": PackedByteArray(255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 96, 255, 255, 255, 97, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 96, 255, 255, 255, 97, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 96, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 97, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 96, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 97, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 97, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 97, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 96, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 96, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 97, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 97, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 96, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 96, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 97, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 97, 255, 255, 255, 96, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 96, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 97, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 96, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 97, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 96, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 96, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 97, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 96, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 97, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 96, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 96, 255, 255, 255, 97, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 97, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 96, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 96, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 97, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 97, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 96, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 96, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 97, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 97, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 97, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 96, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 97, 255, 255, 255, 191, 255, 255, 255, 191, 255, 255, 255, 96, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 97, 255, 255, 255, 96, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 97, 255, 255, 255, 96, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0),
 "format": "RGBA8",
@@ -203,7 +203,7 @@ data = {
 }
 
 [sub_resource type="ImageTexture" id="ImageTexture_lrq7s"]
-image = SubResource("Image_3lkbv")
+image = SubResource("Image_7c4bw")
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_1t3p6"]
 random_pitch = 1.2
@@ -264,7 +264,7 @@ stretch = true
 [node name="subViewport" type="SubViewport" parent="panelHolder/panel/textureRect/subViewportContainer"]
 own_world_3d = true
 handle_input_locally = false
-size = Vector2i(64, 64)
+size = Vector2i(960, 480)
 render_target_update_mode = 4
 
 [node name="Node3D" parent="panelHolder/panel/textureRect/subViewportContainer/subViewport" instance=ExtResource("2_b3bty")]
@@ -280,47 +280,51 @@ offset_bottom = -63.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_j35o7")
-current_tab = 1
+current_tab = 0
 
 [node name="Game" type="Control" parent="panelHolder/panel/optionsPanel"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
-[node name="vBoxContainer" type="VBoxContainer" parent="panelHolder/panel/optionsPanel/Game"]
+[node name="marginContainer" type="MarginContainer" parent="panelHolder/panel/optionsPanel/Game"]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.007
-anchor_right = 0.989
-anchor_bottom = 0.983
-offset_left = 0.287
-offset_right = -0.45105
-offset_bottom = 0.19397
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
 
-[node name="showFPSButton" type="CheckButton" parent="panelHolder/panel/optionsPanel/Game/vBoxContainer"]
+[node name="vBoxContainer" type="VBoxContainer" parent="panelHolder/panel/optionsPanel/Game/marginContainer"]
+layout_mode = 2
+
+[node name="showFPSButton" type="CheckButton" parent="panelHolder/panel/optionsPanel/Game/marginContainer/vBoxContainer"]
 layout_mode = 2
 text = "Show FPS"
 
-[node name="alwaysCamRoll" type="CheckButton" parent="panelHolder/panel/optionsPanel/Game/vBoxContainer"]
+[node name="alwaysCamRoll" type="CheckButton" parent="panelHolder/panel/optionsPanel/Game/marginContainer/vBoxContainer"]
 layout_mode = 2
 text = "Always Camera \"Roll\""
 
-[node name="lowHPAmbience" type="CheckButton" parent="panelHolder/panel/optionsPanel/Game/vBoxContainer"]
+[node name="lowHPAmbience" type="CheckButton" parent="panelHolder/panel/optionsPanel/Game/marginContainer/vBoxContainer"]
 layout_mode = 2
 text = "Low HP Ambience"
 
-[node name="simpleCrosshairs" type="CheckButton" parent="panelHolder/panel/optionsPanel/Game/vBoxContainer"]
+[node name="simpleCrosshairs" type="CheckButton" parent="panelHolder/panel/optionsPanel/Game/marginContainer/vBoxContainer"]
 layout_mode = 2
 text = "Simple Crosshairs
 "
 
-[node name="maxRagdolls" type="Label" parent="panelHolder/panel/optionsPanel/Game/vBoxContainer"]
+[node name="maxRagdolls" type="Label" parent="panelHolder/panel/optionsPanel/Game/marginContainer/vBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_rm30o")
 theme_override_font_sizes/font_size = 25
 text = "Ragdoll Disappear Time"
 
-[node name="maxRagdollsAmount" type="Label" parent="panelHolder/panel/optionsPanel/Game/vBoxContainer/maxRagdolls"]
+[node name="maxRagdollsAmount" type="Label" parent="panelHolder/panel/optionsPanel/Game/marginContainer/vBoxContainer/maxRagdolls"]
 layout_mode = 0
 offset_left = 902.0
 offset_top = 8.0
@@ -330,19 +334,19 @@ theme_override_fonts/font = ExtResource("2_rm30o")
 theme_override_font_sizes/font_size = 21
 text = "50"
 
-[node name="ragdollDeleteTime" type="HSlider" parent="panelHolder/panel/optionsPanel/Game/vBoxContainer"]
+[node name="ragdollDeleteTime" type="HSlider" parent="panelHolder/panel/optionsPanel/Game/marginContainer/vBoxContainer"]
 layout_mode = 2
 min_value = 1.0
 max_value = 999.0
 value = 25.0
 
-[node name="decalRemoveTime" type="Label" parent="panelHolder/panel/optionsPanel/Game/vBoxContainer"]
+[node name="decalRemoveTime" type="Label" parent="panelHolder/panel/optionsPanel/Game/marginContainer/vBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_rm30o")
 theme_override_font_sizes/font_size = 25
 text = "Decal Remove Time"
 
-[node name="decalRemoveTimeAmt" type="Label" parent="panelHolder/panel/optionsPanel/Game/vBoxContainer/decalRemoveTime"]
+[node name="decalRemoveTimeAmt" type="Label" parent="panelHolder/panel/optionsPanel/Game/marginContainer/vBoxContainer/decalRemoveTime"]
 layout_mode = 0
 offset_left = 902.0
 offset_top = 8.0
@@ -352,61 +356,65 @@ theme_override_fonts/font = ExtResource("2_rm30o")
 theme_override_font_sizes/font_size = 21
 text = "50"
 
-[node name="decalRemoveTimeSlider" type="HSlider" parent="panelHolder/panel/optionsPanel/Game/vBoxContainer"]
+[node name="decalRemoveTimeSlider" type="HSlider" parent="panelHolder/panel/optionsPanel/Game/marginContainer/vBoxContainer"]
 layout_mode = 2
 min_value = 1.0
 max_value = 999.0
 value = 25.0
 
 [node name="Video" type="Control" parent="panelHolder/panel/optionsPanel"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
-[node name="vBoxContainer" type="VBoxContainer" parent="panelHolder/panel/optionsPanel/Video"]
+[node name="marginContainer" type="MarginContainer" parent="panelHolder/panel/optionsPanel/Video"]
 layout_mode = 1
-anchors_preset = -1
-anchor_right = 0.985
-anchor_bottom = 0.996
-offset_left = 10.0
-offset_top = 7.0
-offset_right = 0.384949
-offset_bottom = -0.0720215
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
 
-[node name="Fullscreen" type="CheckButton" parent="panelHolder/panel/optionsPanel/Video/vBoxContainer"]
+[node name="vBoxContainer" type="VBoxContainer" parent="panelHolder/panel/optionsPanel/Video/marginContainer"]
+layout_mode = 2
+
+[node name="Fullscreen" type="CheckButton" parent="panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer"]
 layout_mode = 2
 text = "Fullscreen"
 
-[node name="motionBlur" type="CheckButton" parent="panelHolder/panel/optionsPanel/Video/vBoxContainer"]
+[node name="motionBlur" type="CheckButton" parent="panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer"]
 layout_mode = 2
 text = "Motion Blur"
 
-[node name="VSync" type="CheckButton" parent="panelHolder/panel/optionsPanel/Video/vBoxContainer"]
+[node name="VSync" type="CheckButton" parent="panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer"]
 layout_mode = 2
 text = "VSync"
 
-[node name="sdfgiToggle" type="CheckButton" parent="panelHolder/panel/optionsPanel/Video/vBoxContainer"]
+[node name="sdfgiToggle" type="CheckButton" parent="panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer"]
 layout_mode = 2
 text = "Signed distance field global illumination (SDFGI)"
 
-[node name="ssrToggle" type="CheckButton" parent="panelHolder/panel/optionsPanel/Video/vBoxContainer"]
+[node name="ssrToggle" type="CheckButton" parent="panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer"]
 layout_mode = 2
 text = "Screen-Space Reflections"
 
-[node name="ssilToggle" type="CheckButton" parent="panelHolder/panel/optionsPanel/Video/vBoxContainer"]
+[node name="ssilToggle" type="CheckButton" parent="panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer"]
 layout_mode = 2
 text = "Screen-Space Indirect Lighting"
 
-[node name="fxaaToggle" type="CheckButton" parent="panelHolder/panel/optionsPanel/Video/vBoxContainer"]
+[node name="fxaaToggle" type="CheckButton" parent="panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer"]
 layout_mode = 2
 text = "FXAA"
 
-[node name="shadowQuality" type="Control" parent="panelHolder/panel/optionsPanel/Video/vBoxContainer"]
+[node name="shadowQuality" type="Control" parent="panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer"]
 custom_minimum_size = Vector2(0, 33.905)
 layout_mode = 2
 
-[node name="shadowQualityLabel" type="Label" parent="panelHolder/panel/optionsPanel/Video/vBoxContainer/shadowQuality"]
+[node name="shadowQualityLabel" type="Label" parent="panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer/shadowQuality"]
 layout_mode = 0
 offset_left = 6.0
 offset_right = 150.0
@@ -415,7 +423,7 @@ theme_override_fonts/font = ExtResource("2_rm30o")
 theme_override_font_sizes/font_size = 24
 text = "Shadow Quality"
 
-[node name="shadowQuality" type="MenuButton" parent="panelHolder/panel/optionsPanel/Video/vBoxContainer/shadowQuality"]
+[node name="shadowQuality" type="MenuButton" parent="panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer/shadowQuality"]
 layout_mode = 0
 offset_left = 151.0
 offset_right = 945.0
@@ -435,11 +443,11 @@ popup/item_3/id = 3
 popup/item_4/text = "Very High"
 popup/item_4/id = 4
 
-[node name="shadowFilterQuality" type="Control" parent="panelHolder/panel/optionsPanel/Video/vBoxContainer"]
+[node name="shadowFilterQuality" type="Control" parent="panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer"]
 custom_minimum_size = Vector2(0, 37.905)
 layout_mode = 2
 
-[node name="shadowFilterQualityLabel" type="Label" parent="panelHolder/panel/optionsPanel/Video/vBoxContainer/shadowFilterQuality"]
+[node name="shadowFilterQualityLabel" type="Label" parent="panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer/shadowFilterQuality"]
 layout_mode = 0
 offset_left = 6.0
 offset_right = 150.0
@@ -448,7 +456,7 @@ theme_override_fonts/font = ExtResource("2_rm30o")
 theme_override_font_sizes/font_size = 24
 text = "Shadow Filter Quality"
 
-[node name="shadowFilterQualityOptions" type="MenuButton" parent="panelHolder/panel/optionsPanel/Video/vBoxContainer/shadowFilterQuality"]
+[node name="shadowFilterQualityOptions" type="MenuButton" parent="panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer/shadowFilterQuality"]
 layout_mode = 0
 offset_left = 151.0
 offset_right = 945.0
@@ -469,11 +477,11 @@ popup/item_4/id = 4
 popup/item_5/text = "Soft Very High"
 popup/item_5/id = 5
 
-[node name="msaa" type="Control" parent="panelHolder/panel/optionsPanel/Video/vBoxContainer"]
+[node name="msaa" type="Control" parent="panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer"]
 custom_minimum_size = Vector2(0, 37.905)
 layout_mode = 2
 
-[node name="msaaLabel" type="Label" parent="panelHolder/panel/optionsPanel/Video/vBoxContainer/msaa"]
+[node name="msaaLabel" type="Label" parent="panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer/msaa"]
 layout_mode = 0
 offset_left = 6.0
 offset_right = 150.0
@@ -482,7 +490,7 @@ theme_override_fonts/font = ExtResource("2_rm30o")
 theme_override_font_sizes/font_size = 24
 text = "MSAA"
 
-[node name="msaaOptions" type="MenuButton" parent="panelHolder/panel/optionsPanel/Video/vBoxContainer/msaa"]
+[node name="msaaOptions" type="MenuButton" parent="panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer/msaa"]
 layout_mode = 0
 offset_left = 44.0
 offset_right = 945.0
@@ -504,24 +512,25 @@ visible = false
 layout_mode = 2
 metadata/_tab_index = 2
 
-[node name="vBoxContainer" type="VBoxContainer" parent="panelHolder/panel/optionsPanel/Audio"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 7.0
-offset_right = -9.0
-offset_bottom = -3.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="marginContainer" type="MarginContainer" parent="panelHolder/panel/optionsPanel/Audio"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
 
-[node name="MasterVolLabel" type="Label" parent="panelHolder/panel/optionsPanel/Audio/vBoxContainer"]
+[node name="vBoxContainer" type="VBoxContainer" parent="panelHolder/panel/optionsPanel/Audio/marginContainer"]
+layout_mode = 2
+
+[node name="MasterVolLabel" type="Label" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_rm30o")
 theme_override_font_sizes/font_size = 36
 text = "Master Volume"
 
-[node name="MasterVolAmt" type="Label" parent="panelHolder/panel/optionsPanel/Audio/vBoxContainer/MasterVolLabel"]
+[node name="MasterVolAmt" type="Label" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/MasterVolLabel"]
 layout_mode = 0
 offset_left = 902.0
 offset_top = 26.0
@@ -531,18 +540,18 @@ theme_override_fonts/font = ExtResource("2_rm30o")
 theme_override_font_sizes/font_size = 21
 text = "50"
 
-[node name="masterVolSlider" type="HSlider" parent="panelHolder/panel/optionsPanel/Audio/vBoxContainer"]
+[node name="masterVolSlider" type="HSlider" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer"]
 layout_mode = 2
 min_value = -50.0
 max_value = 3.0
 
-[node name="MusicLabel" type="Label" parent="panelHolder/panel/optionsPanel/Audio/vBoxContainer"]
+[node name="MusicLabel" type="Label" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_rm30o")
 theme_override_font_sizes/font_size = 36
 text = "Music"
 
-[node name="MusicAmt" type="Label" parent="panelHolder/panel/optionsPanel/Audio/vBoxContainer/MusicLabel"]
+[node name="MusicAmt" type="Label" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/MusicLabel"]
 layout_mode = 0
 offset_left = 902.0
 offset_top = 26.0
@@ -552,19 +561,19 @@ theme_override_fonts/font = ExtResource("2_rm30o")
 theme_override_font_sizes/font_size = 21
 text = "50"
 
-[node name="musicSlider" type="HSlider" parent="panelHolder/panel/optionsPanel/Audio/vBoxContainer"]
+[node name="musicSlider" type="HSlider" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer"]
 layout_mode = 2
 min_value = -50.0
 max_value = 3.0
 
-[node name="Sounds" type="Label" parent="panelHolder/panel/optionsPanel/Audio/vBoxContainer"]
+[node name="Sounds" type="Label" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_rm30o")
 theme_override_font_sizes/font_size = 36
 text = "Sounds
 "
 
-[node name="SoundsAmount" type="Label" parent="panelHolder/panel/optionsPanel/Audio/vBoxContainer/Sounds"]
+[node name="SoundsAmount" type="Label" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/Sounds"]
 layout_mode = 0
 offset_left = 902.0
 offset_top = 26.0
@@ -574,19 +583,19 @@ theme_override_fonts/font = ExtResource("2_rm30o")
 theme_override_font_sizes/font_size = 21
 text = "50"
 
-[node name="soundsSlider" type="HSlider" parent="panelHolder/panel/optionsPanel/Audio/vBoxContainer"]
+[node name="soundsSlider" type="HSlider" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer"]
 layout_mode = 2
 min_value = -50.0
 max_value = 3.0
 
-[node name="Ui" type="Label" parent="panelHolder/panel/optionsPanel/Audio/vBoxContainer"]
+[node name="Ui" type="Label" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_rm30o")
 theme_override_font_sizes/font_size = 36
 text = "UI
 "
 
-[node name="UIAmount" type="Label" parent="panelHolder/panel/optionsPanel/Audio/vBoxContainer/Ui"]
+[node name="UIAmount" type="Label" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/Ui"]
 layout_mode = 0
 offset_left = 902.0
 offset_top = 26.0
@@ -596,19 +605,19 @@ theme_override_fonts/font = ExtResource("2_rm30o")
 theme_override_font_sizes/font_size = 21
 text = "50"
 
-[node name="uiSlider" type="HSlider" parent="panelHolder/panel/optionsPanel/Audio/vBoxContainer"]
+[node name="uiSlider" type="HSlider" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer"]
 layout_mode = 2
 min_value = -50.0
 max_value = 3.0
 
-[node name="Ambience" type="Label" parent="panelHolder/panel/optionsPanel/Audio/vBoxContainer"]
+[node name="Ambience" type="Label" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_rm30o")
 theme_override_font_sizes/font_size = 36
 text = "Ambience
 "
 
-[node name="AmbienceAmount" type="Label" parent="panelHolder/panel/optionsPanel/Audio/vBoxContainer/Ambience"]
+[node name="AmbienceAmount" type="Label" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/Ambience"]
 layout_mode = 0
 offset_left = 902.0
 offset_top = 26.0
@@ -618,7 +627,7 @@ theme_override_fonts/font = ExtResource("2_rm30o")
 theme_override_font_sizes/font_size = 21
 text = "50"
 
-[node name="AmbienceSlider" type="HSlider" parent="panelHolder/panel/optionsPanel/Audio/vBoxContainer"]
+[node name="AmbienceSlider" type="HSlider" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer"]
 layout_mode = 2
 min_value = -50.0
 max_value = 3.0
@@ -627,6 +636,11 @@ max_value = 3.0
 visible = false
 layout_mode = 2
 metadata/_tab_index = 3
+
+[node name="marginContainer" type="MarginContainer" parent="panelHolder/panel/optionsPanel"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 4
 
 [node name="saveSettings" type="Button" parent="panelHolder/panel"]
 layout_mode = 1
@@ -687,8 +701,8 @@ bus = &"UI"
 
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
 [connection signal="tab_clicked" from="panelHolder/panel/optionsPanel" to="." method="_on_options_panel_tab_clicked"]
-[connection signal="value_changed" from="panelHolder/panel/optionsPanel/Game/vBoxContainer/ragdollDeleteTime" to="." method="_on_ragdoll_delete_time_value_changed"]
-[connection signal="value_changed" from="panelHolder/panel/optionsPanel/Game/vBoxContainer/decalRemoveTimeSlider" to="." method="_on_decal_remove_time_slider_value_changed"]
+[connection signal="value_changed" from="panelHolder/panel/optionsPanel/Game/marginContainer/vBoxContainer/ragdollDeleteTime" to="." method="_on_ragdoll_delete_time_value_changed"]
+[connection signal="value_changed" from="panelHolder/panel/optionsPanel/Game/marginContainer/vBoxContainer/decalRemoveTimeSlider" to="." method="_on_decal_remove_time_slider_value_changed"]
 [connection signal="pressed" from="panelHolder/panel/saveSettings" to="." method="_on_save_pressed"]
 [connection signal="pressed" from="panelHolder/panel/revertSettings" to="." method="_on_revert_pressed"]
 [connection signal="pressed" from="closeButton" to="." method="_on_close_button_pressed"]

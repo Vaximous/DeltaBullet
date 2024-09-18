@@ -24,7 +24,6 @@ func _ready() -> void:
 			new_mesh.visible = true
 	pass # Replace with function body.
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pivot.global_rotation.y += delta * 0.02

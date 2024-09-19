@@ -551,5 +551,5 @@ stream = ExtResource("3_vi1bk")
 
 [connection signal="tab_changed" from="shopUi/BrowserBG/tabBar" to="." method="buildItemList"]
 [connection signal="tab_changed" from="shopUi/BrowserBG/tabBar" to="shopUi" method="clearShopList"]
-[connection signal="tab_selected" from="shopUi/BrowserBG/tabBar" to="." method="buildItemList"]
 [connection signal="tab_selected" from="shopUi/BrowserBG/tabBar" to="." method="clearShopList"]
+[connection signal="tab_selected" from="shopUi/BrowserBG/tabBar" to="." method="buildItemList"]

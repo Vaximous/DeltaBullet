@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://7idw8rtae15o"]
+[gd_scene load_steps=53 format=3 uid="uid://7idw8rtae15o"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_dmxbb"]
 [ext_resource type="PackedScene" uid="uid://n500uprpwbbk" path="res://assets/models/csgmodels/csgtruck.tscn" id="2_cg4ns"]
@@ -34,6 +34,7 @@
 [ext_resource type="Script" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/simple_jf_motion_blur.gd" id="20_3u1ko"]
 [ext_resource type="Resource" uid="uid://c10aboaly701b" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jump_flood_tile_max_x_stage.tres" id="21_qfex1"]
 [ext_resource type="Resource" uid="uid://cymk87e4nyxva" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jump_flood_tile_max_y_stage.tres" id="22_waxlx"]
+[ext_resource type="PackedScene" uid="uid://dnr0cbfhyguux" path="res://assets/particles/rain/rain_particles.tscn" id="23_s82mf"]
 [ext_resource type="PackedScene" uid="uid://bidurnqgd1c74" path="res://assets/entities/weapons/m4/m4.tscn" id="34_np7sb"]
 [ext_resource type="Texture2D" uid="uid://c7b38t83ckisx" path="res://assets/textures/crosshair/crosshair161.png" id="35_yjgqk"]
 [ext_resource type="Script" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="36_usxi5"]
@@ -390,6 +391,8 @@ enable_shadows = true
 
 [node name="directionalLight3d" parent="Environment" index="2"]
 transform = Transform3D(0.987762, -0.0973718, -0.12184, 0, -0.781183, 0.624302, -0.155969, -0.616662, -0.771623, 8.78045, 7.46465, 28.4235)
+
+[node name="RainParticles" parent="Environment" index="3" instance=ExtResource("23_s82mf")]
 
 [node name="navigationRegion3d" type="NavigationRegion3D" parent="Geometry" index="0"]
 navigation_mesh = SubResource("NavigationMesh_xybfb")

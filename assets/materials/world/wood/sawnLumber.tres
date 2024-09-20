@@ -1,0 +1,20 @@
+[gd_resource type="StandardMaterial3D" load_steps=7 format=3 uid="uid://3kllblh5ifi6"]
+
+[ext_resource type="Texture2D" uid="uid://cxwgrbjlkbbjv" path="res://assets/textures/areas/wood/sawnLumber_Albedo.png" id="1_aap5x"]
+[ext_resource type="Texture2D" uid="uid://bybbuf7v0c7et" path="res://assets/textures/areas/wood/sawnLumber_AO.png" id="2_e47w7"]
+[ext_resource type="Texture2D" uid="uid://dvmaqtg7go54x" path="res://assets/textures/areas/wood/sawnLumber_Height.png" id="3_m6jif"]
+[ext_resource type="Texture2D" uid="uid://da0qtikcw0kwm" path="res://assets/textures/areas/wood/sawnLumber_Metallic.png" id="4_ptaea"]
+[ext_resource type="Texture2D" uid="uid://4jvae4k8kvoo" path="res://assets/textures/areas/wood/sawnLumber_Normal.png" id="5_7gdv2"]
+[ext_resource type="Texture2D" uid="uid://lscokuqc7gqv" path="res://assets/textures/areas/wood/sawnLumber_Roughness.png" id="6_g1xx1"]
+
+[resource]
+albedo_texture = ExtResource("1_aap5x")
+metallic = 1.0
+metallic_texture = ExtResource("4_ptaea")
+roughness_texture = ExtResource("6_g1xx1")
+normal_enabled = true
+normal_texture = ExtResource("5_7gdv2")
+ao_enabled = true
+ao_texture = ExtResource("2_e47w7")
+heightmap_enabled = true
+heightmap_texture = ExtResource("3_m6jif")

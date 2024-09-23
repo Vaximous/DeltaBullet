@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://dnr0cbfhyguux"]
+[gd_scene load_steps=12 format=3 uid="uid://dnr0cbfhyguux"]
 
 [ext_resource type="Texture2D" uid="uid://d4flagxbsbgo6" path="res://assets/particles/rain/rain.png" id="1_bddg1"]
 [ext_resource type="Script" path="res://assets/particles/rain/rain_particles.gd" id="2_0bhh6"]
+[ext_resource type="Texture2D" uid="uid://ckgfb645ckguv" path="res://assets/particles/rain/rainsplash-spritesheet.png" id="3_eb2ri"]
 
 [sub_resource type="Gradient" id="Gradient_86vyc"]
 offsets = PackedFloat32Array(0, 0.309446, 0.628664, 1)
@@ -16,15 +17,21 @@ emission_shape = 3
 emission_box_extents = Vector3(16, 1, 16)
 direction = Vector3(0, -1, 0)
 spread = 0.0
-initial_velocity_min = 64.0
-initial_velocity_max = 64.0
+initial_velocity_min = 24.0
+initial_velocity_max = 24.0
+gravity = Vector3(0, 0, 0)
 scale_min = 5.0
 scale_max = 5.0
 color_ramp = SubResource("GradientTexture1D_ditct")
+collision_mode = 2
+sub_emitter_mode = 3
+sub_emitter_amount_at_collision = 2
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jt3t4"]
 transparency = 1
 diffuse_mode = 2
+vertex_color_use_as_albedo = true
+albedo_color = Color(1.5, 1.5, 1.5, 1)
 albedo_texture = ExtResource("1_bddg1")
 uv1_offset = Vector3(1.035, 0, 0)
 uv2_scale = Vector3(1.01, 1.01, 1.01)
@@ -37,10 +44,45 @@ distance_fade_max_distance = 15.0
 [sub_resource type="QuadMesh" id="QuadMesh_psmqi"]
 material = SubResource("StandardMaterial3D_jt3t4")
 
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_4juc7"]
+direction = Vector3(0, 1, 0)
+initial_velocity_min = 1.0
+initial_velocity_max = 8.0
+gravity = Vector3(0, -32, 0)
+scale_min = 0.2
+scale_max = 0.3
+anim_speed_min = 1.0
+anim_speed_max = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sj05r"]
+transparency = 1
+shading_mode = 2
+diffuse_mode = 2
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("3_eb2ri")
+uv2_scale = Vector3(1.01, 1.01, 1.01)
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 3
+particles_anim_v_frames = 2
+particles_anim_loop = false
+distance_fade_max_distance = 1.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_ij0jg"]
+material = SubResource("StandardMaterial3D_sj05r")
+
 [node name="RainParticles" type="GPUParticles3D"]
-amount = 512
-lifetime = 0.5
+amount = 256
+sub_emitter = NodePath("GPUParticles3D")
+collision_base_size = 0.1
 visibility_aabb = AABB(-66.2762, -53.0501, -97.7908, 132.552, 106.1, 195.582)
 process_material = SubResource("ParticleProcessMaterial_n1ldd")
 draw_pass_1 = SubResource("QuadMesh_psmqi")
 script = ExtResource("2_0bhh6")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+amount = 256
+lifetime = 0.3
+randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_4juc7")
+draw_pass_1 = SubResource("QuadMesh_ij0jg")

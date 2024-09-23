@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://wncyofb1f8i7"]
+[gd_scene load_steps=19 format=3 uid="uid://wncyofb1f8i7"]
 
 [ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="1_j35o7"]
 [ext_resource type="PackedScene" uid="uid://d3jnnvf434h3o" path="res://assets/scenes/ui/options/optionsEffect.tscn" id="2_b3bty"]
@@ -26,13 +26,13 @@ const setting_remap : Dictionary = {
 	'game_show_fps' = ^'panelHolder/panel/optionsPanel/Game/marginContainer/vBoxContainer/showFPSButton:button_pressed',
 	'game_simple_crosshairs' = ^'panelHolder/panel/optionsPanel/Game/marginContainer/vBoxContainer/simpleCrosshairs:button_pressed',
 	'game_lowHP_ambience' = ^'panelHolder/panel/optionsPanel/Game/marginContainer/vBoxContainer/lowHPAmbience:button_pressed',
-	\"audio_MasterVolume\" = ^'panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/masterVolSlider:value',
-	\"audio_MusicVolume\" = ^'panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/musicSlider:value',
-	\"audio_UiVolume\" = ^'panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/uiSlider:value',
-	\"audio_GameVolume\" = ^'panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/soundsSlider:value',
+	\"audio_MasterVolume\" = ^'panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer/hBoxContainer/masterVolSlider:value',
+	\"audio_MusicVolume\" = ^'panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer2/hBoxContainer/musicSlider:value',
+	\"audio_UiVolume\" = ^'panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer4/hBoxContainer/uiSlider:value',
+	\"audio_GameVolume\" = ^'panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer3/hBoxContainer/soundsSlider:value',
 	\"game_ragdoll_remove_time\" = ^'panelHolder/panel/optionsPanel/Game/marginContainer/vBoxContainer/ragdollDeleteTime:value',
 	\"game_decal_remove_time\" = ^'panelHolder/panel/optionsPanel/Game/marginContainer/vBoxContainer/decalRemoveTimeSlider:value',
-	\"audio_ambience_volume\" = ^'panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/AmbienceSlider:value'
+	\"audio_ambience_volume\" = ^'panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer5/hBoxContainer/AmbienceSlider:value'
 }
 
 func _ready() -> void:
@@ -176,6 +176,9 @@ fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.5, 0)
 metadata/_snap_enabled = true
 
+[sub_resource type="LabelSettings" id="LabelSettings_pfmxh"]
+font_size = 32
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bxvi1"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_t3v2y"]
@@ -280,9 +283,10 @@ offset_bottom = -63.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_j35o7")
-current_tab = 0
+current_tab = 2
 
 [node name="Game" type="Control" parent="panelHolder/panel/optionsPanel"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -508,14 +512,16 @@ popup/item_3/text = "8X"
 popup/item_3/id = 3
 
 [node name="Audio" type="Control" parent="panelHolder/panel/optionsPanel"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 2
 
 [node name="marginContainer" type="MarginContainer" parent="panelHolder/panel/optionsPanel/Audio"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
@@ -524,113 +530,120 @@ theme_override_constants/margin_bottom = 16
 [node name="vBoxContainer" type="VBoxContainer" parent="panelHolder/panel/optionsPanel/Audio/marginContainer"]
 layout_mode = 2
 
-[node name="MasterVolLabel" type="Label" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer"]
+[node name="vBoxContainer" type="VBoxContainer" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_rm30o")
-theme_override_font_sizes/font_size = 36
+
+[node name="label" type="Label" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer"]
+layout_mode = 2
 text = "Master Volume"
+label_settings = SubResource("LabelSettings_pfmxh")
 
-[node name="MasterVolAmt" type="Label" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/MasterVolLabel"]
-layout_mode = 0
-offset_left = 902.0
-offset_top = 26.0
-offset_right = 942.0
-offset_bottom = 51.0
-theme_override_fonts/font = ExtResource("2_rm30o")
-theme_override_font_sizes/font_size = 21
-text = "50"
-
-[node name="masterVolSlider" type="HSlider" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer"]
+[node name="hBoxContainer" type="HBoxContainer" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer"]
 layout_mode = 2
+
+[node name="masterVolSlider" type="HSlider" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer/hBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
 min_value = -50.0
 max_value = 3.0
 
-[node name="MusicLabel" type="Label" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer"]
+[node name="label" type="Label" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer/hBoxContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_rm30o")
-theme_override_font_sizes/font_size = 36
+text = "50"
+label_settings = SubResource("LabelSettings_pfmxh")
+
+[node name="vBoxContainer2" type="VBoxContainer" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer"]
+layout_mode = 2
+
+[node name="label" type="Label" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer2"]
+layout_mode = 2
 text = "Music"
+label_settings = SubResource("LabelSettings_pfmxh")
 
-[node name="MusicAmt" type="Label" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/MusicLabel"]
-layout_mode = 0
-offset_left = 902.0
-offset_top = 26.0
-offset_right = 942.0
-offset_bottom = 51.0
-theme_override_fonts/font = ExtResource("2_rm30o")
-theme_override_font_sizes/font_size = 21
-text = "50"
-
-[node name="musicSlider" type="HSlider" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer"]
+[node name="hBoxContainer" type="HBoxContainer" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer2"]
 layout_mode = 2
+
+[node name="musicSlider" type="HSlider" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer2/hBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
 min_value = -50.0
 max_value = 3.0
 
-[node name="Sounds" type="Label" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer"]
+[node name="label" type="Label" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer2/hBoxContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_rm30o")
-theme_override_font_sizes/font_size = 36
-text = "Sounds
-"
-
-[node name="SoundsAmount" type="Label" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/Sounds"]
-layout_mode = 0
-offset_left = 902.0
-offset_top = 26.0
-offset_right = 942.0
-offset_bottom = 51.0
-theme_override_fonts/font = ExtResource("2_rm30o")
-theme_override_font_sizes/font_size = 21
 text = "50"
+label_settings = SubResource("LabelSettings_pfmxh")
 
-[node name="soundsSlider" type="HSlider" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer"]
+[node name="vBoxContainer3" type="VBoxContainer" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer"]
 layout_mode = 2
+
+[node name="label" type="Label" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer3"]
+layout_mode = 2
+text = "Sound Effects"
+label_settings = SubResource("LabelSettings_pfmxh")
+
+[node name="hBoxContainer" type="HBoxContainer" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer3"]
+layout_mode = 2
+
+[node name="soundsSlider" type="HSlider" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer3/hBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
 min_value = -50.0
 max_value = 3.0
 
-[node name="Ui" type="Label" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer"]
+[node name="label" type="Label" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer3/hBoxContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_rm30o")
-theme_override_font_sizes/font_size = 36
-text = "UI
-"
-
-[node name="UIAmount" type="Label" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/Ui"]
-layout_mode = 0
-offset_left = 902.0
-offset_top = 26.0
-offset_right = 942.0
-offset_bottom = 51.0
-theme_override_fonts/font = ExtResource("2_rm30o")
-theme_override_font_sizes/font_size = 21
 text = "50"
+label_settings = SubResource("LabelSettings_pfmxh")
 
-[node name="uiSlider" type="HSlider" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer"]
+[node name="vBoxContainer4" type="VBoxContainer" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer"]
 layout_mode = 2
+
+[node name="label" type="Label" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer4"]
+layout_mode = 2
+text = "MENUS"
+label_settings = SubResource("LabelSettings_pfmxh")
+
+[node name="hBoxContainer" type="HBoxContainer" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer4"]
+layout_mode = 2
+
+[node name="uiSlider" type="HSlider" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer4/hBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
 min_value = -50.0
 max_value = 3.0
 
-[node name="Ambience" type="Label" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer"]
+[node name="label" type="Label" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer4/hBoxContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_rm30o")
-theme_override_font_sizes/font_size = 36
-text = "Ambience
-"
-
-[node name="AmbienceAmount" type="Label" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/Ambience"]
-layout_mode = 0
-offset_left = 902.0
-offset_top = 26.0
-offset_right = 942.0
-offset_bottom = 51.0
-theme_override_fonts/font = ExtResource("2_rm30o")
-theme_override_font_sizes/font_size = 21
 text = "50"
+label_settings = SubResource("LabelSettings_pfmxh")
 
-[node name="AmbienceSlider" type="HSlider" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer"]
+[node name="vBoxContainer5" type="VBoxContainer" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer"]
 layout_mode = 2
+
+[node name="label" type="Label" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer5"]
+layout_mode = 2
+text = "AMBIENCE"
+label_settings = SubResource("LabelSettings_pfmxh")
+
+[node name="hBoxContainer" type="HBoxContainer" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer5"]
+layout_mode = 2
+
+[node name="AmbienceSlider" type="HSlider" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer5/hBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
 min_value = -50.0
 max_value = 3.0
+
+[node name="label" type="Label" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer5/hBoxContainer"]
+layout_mode = 2
+text = "50"
+label_settings = SubResource("LabelSettings_pfmxh")
 
 [node name="Controls" type="Control" parent="panelHolder/panel/optionsPanel"]
 visible = false

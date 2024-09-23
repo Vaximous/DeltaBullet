@@ -1,0 +1,18 @@
+[gd_resource type="StandardMaterial3D" load_steps=6 format=3 uid="uid://cyr0imrye7biu"]
+
+[ext_resource type="Texture2D" uid="uid://o7lglyd5kc64" path="res://assets/textures/areas/ceiling/concreteCeiling_Albedo.png" id="1_de508"]
+[ext_resource type="Texture2D" uid="uid://4n7b5u6pi4ju" path="res://assets/textures/areas/ceiling/concreteCeiling_AO.png" id="2_lwmma"]
+[ext_resource type="Texture2D" uid="uid://q2yup3qnjtyh" path="res://assets/textures/areas/ceiling/concreteCeiling_Height.png" id="3_xrh8h"]
+[ext_resource type="Texture2D" uid="uid://nqy0e1egema" path="res://assets/textures/areas/ceiling/concreteCeiling_Normal.png" id="4_ui6p2"]
+[ext_resource type="Texture2D" uid="uid://dh7b1gkrhnkxk" path="res://assets/textures/areas/ceiling/concreteCeiling_Roughness.png" id="5_albks"]
+
+[resource]
+albedo_texture = ExtResource("1_de508")
+roughness_texture = ExtResource("5_albks")
+normal_enabled = true
+normal_texture = ExtResource("4_ui6p2")
+ao_enabled = true
+ao_light_affect = 0.94
+ao_texture = ExtResource("2_lwmma")
+heightmap_enabled = true
+heightmap_texture = ExtResource("3_xrh8h")

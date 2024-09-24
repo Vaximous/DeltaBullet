@@ -235,8 +235,8 @@ libraries = {
 layout_mode = 1
 anchors_preset = -1
 anchor_bottom = 1.0
-offset_left = -34.9999
-offset_right = 57.0001
+offset_left = -35.0
+offset_right = 28.0
 theme_override_styles/panel = SubResource("StyleBoxTexture_u2iun")
 
 [connection signal="mouse_entered" from="." to="animationPlayer" method="play" binds= ["in"]]

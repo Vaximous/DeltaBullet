@@ -9,7 +9,8 @@ var defaultBulletTrail = load("res://assets/entities/bulletTrail/bulletTrail.tsc
 enum Category{AssaultRifles,Pistols,Shotguns,Throwables,Heavy,SMG,Special}
 @export var saleCategory : Category = 1
 @export var gritPrice : int = 0
-@export var itemDescription : String
+@export var itemDescriptionShort : String
+@export_multiline var itemDescriptionLong : String
 @export_subgroup("Stats")
 ## Which category does this item belong in?
 ## Can this weapon be reloaded?

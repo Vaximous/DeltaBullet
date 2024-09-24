@@ -82,7 +82,7 @@ func _input(event: InputEvent) -> void:
 		#await get_tree().process_frame
 		console.show()
 		#gameManager.showMouse()
-		#console.grab_focus()
+		console.grab_focus()
 		#input_field.grab_focus()
 
 

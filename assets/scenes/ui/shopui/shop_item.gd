@@ -17,9 +17,15 @@ var isPurchased:bool = false:
 func purchase_item()->void:
 	pass
 
+func get_item_description_long() -> String:
+	if item.instantiate() is Weapon:
+		return item.instantiate().weaponResource.itemDescriptionLong
+	else:
+		return ""
+
 func get_item_description() -> String:
 	if item.instantiate() is Weapon:
-		return item.instantiate().weaponResource.itemDescription
+		return item.instantiate().weaponResource.itemDescriptionShort
 	else:
 		return ""
 

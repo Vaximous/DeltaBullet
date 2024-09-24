@@ -1,10 +1,11 @@
-[gd_scene load_steps=24 format=3 uid="uid://dt5hl3d1g8pyc"]
+[gd_scene load_steps=30 format=3 uid="uid://dt5hl3d1g8pyc"]
 
 [ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="1_n1s24"]
 [ext_resource type="Script" path="res://assets/scripts/shopUI/shopUI.gd" id="2_w7wba"]
 [ext_resource type="FontFile" uid="uid://b3s7umd01feyu" path="res://assets/fonts/Carthage Pro Regular.ttf" id="3_tu6qn"]
-[ext_resource type="AudioStream" uid="uid://f2h70ga15l4e" path="res://assets/sounds/ui/notif1_new.wav" id="3_vi1bk"]
 [ext_resource type="PackedScene" uid="uid://ims5mb4jlsni" path="res://assets/scenes/ui/shopui/shopItem.tscn" id="3_x8qdb"]
+[ext_resource type="FontFile" uid="uid://xmwjvmqspojb" path="res://assets/fonts/Grand_Aventure_Text.otf" id="4_sqkig"]
+[ext_resource type="AudioStream" uid="uid://crpcvvr4dupq6" path="res://assets/sounds/ui/slideOpen.wav" id="6_s2d3s"]
 
 [sub_resource type="Gradient" id="Gradient_523ba"]
 offsets = PackedFloat32Array(0, 0.00985222, 0.497537, 0.847291)
@@ -218,6 +219,27 @@ fill_to = Vector2(0, 1)
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_h7f8e"]
 texture = SubResource("GradientTexture2D_3r0xx")
 
+[sub_resource type="Environment" id="Environment_2f118"]
+ambient_light_source = 1
+reflected_light_source = 1
+glow_enabled = true
+
+[sub_resource type="World3D" id="World3D_hq7xm"]
+environment = SubResource("Environment_2f118")
+
+[sub_resource type="GDScript" id="GDScript_lgeb8"]
+resource_name = "previewMesh"
+script/source = "extends Node3D
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	rotation.y += 0.01
+"
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_3q6sw"]
+color = Color(0.282353, 0, 0, 1)
+thickness = 6
+
 [sub_resource type="Animation" id="Animation_y61yj"]
 length = 0.001
 tracks/0/type = "value"
@@ -256,6 +278,18 @@ tracks/2/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../../sound1:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_dwjxi"]
 resource_name = "in"
@@ -269,7 +303,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(0.170755, 0.133972),
 "update": 0,
-"values": [Vector2(559, 115), Vector2(1076, 115)]
+"values": [Vector2(-150, 0), Vector2(0, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -295,6 +329,18 @@ tracks/2/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../../sound1:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_7y7pm"]
 resource_name = "out"
@@ -308,7 +354,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(0.133972, 1),
 "update": 0,
-"values": [Vector2(1076, 115), Vector2(559, 115)]
+"values": [Vector2(0, 0), Vector2(-550, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -353,6 +399,11 @@ fill_from = Vector2(0.5, 0.5)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_t67gv"]
 texture = SubResource("GradientTexture2D_o1lyv")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_8lwrn"]
+random_pitch = 1.3
+streams_count = 1
+stream_0/stream = ExtResource("6_s2d3s")
 
 [node name="Shop" type="CanvasLayer"]
 script = ExtResource("2_w7wba")
@@ -400,55 +451,116 @@ libraries = {
 "": SubResource("AnimationLibrary_csp7a")
 }
 
-[node name="previewBG" type="Panel" parent="shopUi"]
-layout_mode = 2
-anchor_left = 0.971
+[node name="previewHolder" type="Control" parent="shopUi"]
+layout_mode = 1
+anchor_left = 0.672
 anchor_top = 0.128
 anchor_right = 0.971
 anchor_bottom = 0.989
-offset_left = -477.6
+offset_left = 0.799927
 offset_top = -0.200005
-offset_right = -0.599976
+offset_right = -0.600098
 offset_bottom = -0.100037
+
+[node name="previewBG" type="Panel" parent="shopUi/previewHolder"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_2o57p")
 
-[node name="panel" type="Panel" parent="shopUi/previewBG"]
+[node name="panel" type="Panel" parent="shopUi/previewHolder/previewBG"]
 layout_mode = 2
-offset_left = 13.0
-offset_top = 26.0
-offset_right = 457.0
-offset_bottom = 301.0
+anchor_left = 0.027
+anchor_top = 0.034
+anchor_right = 0.958
+anchor_bottom = 0.388
+offset_left = 0.120999
+offset_top = -0.350002
+offset_right = 0.0339661
+offset_bottom = 0.299988
 theme_override_styles/panel = SubResource("StyleBoxTexture_h7f8e")
 
-[node name="subViewportContainer" type="SubViewportContainer" parent="shopUi/previewBG/panel"]
+[node name="subViewportContainer" type="SubViewportContainer" parent="shopUi/previewHolder/previewBG/panel"]
 layout_mode = 2
 anchor_left = 0.033
 anchor_top = 0.033
-anchor_right = 0.033
-anchor_bottom = 0.975
+anchor_right = 0.975
+anchor_bottom = 1.0
 offset_left = -6.652
 offset_top = -0.0749998
-offset_right = 418.348
-offset_bottom = -0.125
+offset_right = 0.0999756
+offset_bottom = -7.0
 stretch = true
 
-[node name="subViewport" type="SubViewport" parent="shopUi/previewBG/panel/subViewportContainer"]
+[node name="subViewport" type="SubViewport" parent="shopUi/previewHolder/previewBG/panel/subViewportContainer"]
+own_world_3d = true
+world_3d = SubResource("World3D_hq7xm")
+transparent_bg = true
 handle_input_locally = false
+msaa_3d = 1
 size = Vector2i(425, 259)
 render_target_update_mode = 4
 
-[node name="itemDescriptor" type="Label" parent="shopUi/previewBG"]
-layout_mode = 0
-offset_left = 18.0
-offset_top = 309.0
-offset_right = 453.0
-offset_bottom = 678.0
+[node name="previewMesh" type="Node3D" parent="shopUi/previewHolder/previewBG/panel/subViewportContainer/subViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0623159, 0)
+script = SubResource("GDScript_lgeb8")
+
+[node name="camera3d" type="Camera3D" parent="shopUi/previewHolder/previewBG/panel/subViewportContainer/subViewport"]
+transform = Transform3D(1, 0, 0, 0, 0.97123, 0.238144, 0, -0.238144, 0.97123, 0, 0.414107, 1.72043)
+fov = 26.1
+
+[node name="itemDescriptor" type="Label" parent="shopUi/previewHolder/previewBG"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.038
+anchor_top = 0.458
+anchor_right = 0.95
+anchor_bottom = 0.875
+offset_left = -0.126001
+offset_top = 0.0499878
+offset_right = -0.150024
+offset_bottom = -0.125061
 theme_override_fonts/font = ExtResource("3_tu6qn")
 theme_override_font_sizes/font_size = 28
 text = "This is a good item."
+autowrap_mode = 2
 
-[node name="purchaseButton" type="Button" parent="shopUi/previewBG"]
+[node name="hSeparator" type="HSeparator" parent="shopUi/previewHolder/previewBG"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.034
+anchor_top = 0.434
+anchor_right = 0.969
+anchor_bottom = 0.457
+offset_left = -3.218
+offset_top = -0.350006
+offset_right = 1.78699
+offset_bottom = -0.175018
+theme_override_styles/separator = SubResource("StyleBoxLine_3q6sw")
+
+[node name="itemName" type="Label" parent="shopUi/previewHolder/previewBG"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.038
+anchor_top = 0.392
+anchor_right = 0.95
+anchor_bottom = 0.436
+offset_left = -0.126001
+offset_top = 0.199982
+offset_right = -0.150024
+offset_bottom = 0.0999756
+theme_override_fonts/font = ExtResource("4_sqkig")
+theme_override_font_sizes/font_size = 28
+text = "M4A1S"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="purchaseButton" type="Button" parent="shopUi/previewHolder/previewBG"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.709
@@ -461,10 +573,20 @@ offset_right = 0.0339661
 offset_bottom = -0.325073
 text = "Purchase"
 
-[node name="animationPlayer" type="AnimationPlayer" parent="shopUi/previewBG"]
+[node name="animationPlayer" type="AnimationPlayer" parent="shopUi/previewHolder/previewBG"]
 libraries = {
 "": SubResource("AnimationLibrary_vamxx")
 }
+
+[node name="closePreview" type="Button" parent="shopUi/previewHolder/previewBG"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -48.0
+offset_bottom = 43.0
+grow_horizontal = 0
+text = "x"
 
 [node name="BrowserBG" type="Panel" parent="shopUi"]
 layout_mode = 1
@@ -547,9 +669,9 @@ tab_5/title = "SMGs"
 tab_6/title = "Special"
 
 [node name="sound1" type="AudioStreamPlayer" parent="shopUi"]
-stream = ExtResource("3_vi1bk")
+stream = SubResource("AudioStreamRandomizer_8lwrn")
+volume_db = -15.0
+bus = &"UI"
 
-[connection signal="tab_changed" from="shopUi/BrowserBG/tabBar" to="." method="buildItemList"]
-[connection signal="tab_changed" from="shopUi/BrowserBG/tabBar" to="shopUi" method="clearShopList"]
-[connection signal="tab_selected" from="shopUi/BrowserBG/tabBar" to="." method="buildItemList"]
-[connection signal="tab_selected" from="shopUi/BrowserBG/tabBar" to="." method="clearShopList"]
+[connection signal="pressed" from="shopUi/previewHolder/previewBG/closePreview" to="." method="closePreview"]
+[connection signal="tab_selected" from="shopUi/BrowserBG/tabBar" to="." method="_on_tab_bar_tab_selected"]

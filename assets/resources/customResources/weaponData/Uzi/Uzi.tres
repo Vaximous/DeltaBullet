@@ -7,9 +7,9 @@
 resource_local_to_scene = true
 script = ExtResource("2_xq0ah")
 useBulletTrail = true
-saleCategory = 1
-gritPrice = 0
-itemDescription = ""
+saleCategory = 5
+gritPrice = 150
+itemDescription = "A gangster classic.."
 canBeReloaded = true
 weaponMagSize = 511
 ammoSize = 64

@@ -502,7 +502,7 @@ world_3d = SubResource("World3D_hq7xm")
 transparent_bg = true
 handle_input_locally = false
 msaa_3d = 1
-size = Vector2i(425, 259)
+size = Vector2i(424, 259)
 render_target_update_mode = 4
 
 [node name="previewMesh" type="Node3D" parent="shopUi/previewHolder/previewBG/panel/subViewportContainer/subViewport"]
@@ -673,5 +673,6 @@ stream = SubResource("AudioStreamRandomizer_8lwrn")
 volume_db = -15.0
 bus = &"UI"
 
+[connection signal="pressed" from="shopUi/previewHolder/previewBG/purchaseButton" to="." method="_on_purchase_button_pressed"]
 [connection signal="pressed" from="shopUi/previewHolder/previewBG/closePreview" to="." method="closePreview"]
 [connection signal="tab_selected" from="shopUi/BrowserBG/tabBar" to="." method="_on_tab_bar_tab_selected"]

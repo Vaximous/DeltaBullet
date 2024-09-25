@@ -1,9 +1,10 @@
-[gd_scene load_steps=17 format=3 uid="uid://ims5mb4jlsni"]
+[gd_scene load_steps=19 format=3 uid="uid://ims5mb4jlsni"]
 
 [ext_resource type="Script" path="res://assets/scenes/ui/shopui/shop_item.gd" id="1_hhb87"]
 [ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="1_j1f5m"]
 [ext_resource type="AudioStream" uid="uid://crpcvvr4dupq6" path="res://assets/sounds/ui/slideOpen.wav" id="3_w0iub"]
 [ext_resource type="AudioStream" uid="uid://c7v7iev137c2t" path="res://assets/sounds/ui/notif2_new.wav" id="4_sxe4e"]
+[ext_resource type="AudioStream" uid="uid://bqx5sk7ljcr3n" path="res://assets/sounds/ui/uiDecline.wav" id="5_wuegq"]
 
 [sub_resource type="Gradient" id="Gradient_63los"]
 offsets = PackedFloat32Array(0, 0.0292398, 0.962343, 1)
@@ -164,6 +165,11 @@ random_pitch = 1.5
 streams_count = 1
 stream_0/stream = ExtResource("4_sxe4e")
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_fjim2"]
+random_pitch = 1.5
+streams_count = 1
+stream_0/stream = ExtResource("5_wuegq")
+
 [node name="shopItem" type="Button"]
 custom_minimum_size = Vector2(696, 94)
 anchors_preset = -1
@@ -260,6 +266,12 @@ bus = &"UI"
 
 [node name="clickSound" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamRandomizer_xj7en")
+volume_db = -10.0
+pitch_scale = 3.0
+bus = &"UI"
+
+[node name="purchaseSound" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_fjim2")
 volume_db = -10.0
 pitch_scale = 3.0
 bus = &"UI"

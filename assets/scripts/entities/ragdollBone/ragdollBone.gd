@@ -116,15 +116,15 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 	boneState = state.sleeping
 	currentVelocity = state.get_linear_velocity()
 	contactCount = state.get_contact_count()
-	if audioCooldown > 0:
-			return
+	#if audioCooldown > 0:
+			#return
 	#print(bonePhysics)
-	if state.get_contact_count() > 0:
-		if exclusionArray.has(state.get_contact_collider(0)):
+	for contacts in state.get_contact_count():
+		if exclusionArray.has(state.get_contact_collider(contacts)):
 			return
-		var contactNormal = state.get_contact_local_normal(0)
-		var contactDot = state.get_contact_local_velocity_at_position(0).normalized().dot(contactNormal)
-		var contactForce = state.get_contact_local_velocity_at_position(0).length()
+		var contactNormal = state.get_contact_local_normal(contacts)
+		var contactDot = state.get_contact_local_velocity_at_position(contacts).normalized().dot(contactNormal)
+		var contactForce = state.get_contact_local_velocity_at_position(contacts).length()
 
 		audioStreamPlayer.attenuation_filter_db = lerp(-20, 0, clamp(abs(contactDot) * contactForce, 0, 1))
 		if contactForce > heavyImpactThreshold:
@@ -138,7 +138,6 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 					particle.rotation = self.rotation
 					particle.amount = randi_range(25,75)
 					createBlood()
-			return
 		elif contactForce > mediumImpactThreshold:
 			audioStreamPlayer.stream = mediumImpactSounds
 			audioStreamPlayer.play()
@@ -150,7 +149,6 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 					particle.rotation = self.rotation
 					particle.amount = randi_range(25,40)
 					createBlood()
-			return
 		elif contactForce > lightImpactThreshold:
 			audioStreamPlayer.stream = lightImpactSounds
 			var fac = (contactForce - lightImpactThreshold) / (mediumImpactThreshold - lightImpactThreshold)
@@ -163,7 +161,7 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 					var particle = globalParticles.createParticle("BloodSpurt",self.position)
 					particle.rotation = self.rotation
 					createBlood()
-		return
+
 
 #func _physics_process(delta)->void:
 	#if get_owner().visibleOnScreen:

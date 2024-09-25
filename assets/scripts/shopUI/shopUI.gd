@@ -66,6 +66,8 @@ func buildItemList()->void:
 					itemHolder.add_child(_shopItem)
 					_shopItem.setItemInfo()
 					_shopItem.pressed.connect(setShopItem.bind(_shopItem))
+					if _shopItem.doesHaveItem(gameManager.playerPawns[0]):
+						_shopItem.isPurchased = true
 
 func setShopItem(item:Button)->Button:
 	selectedItem = item
@@ -92,3 +94,10 @@ func _on_tab_bar_tab_selected(tab: int) -> void:
 
 func closePreview()->void:
 	selectedItem = null
+
+
+func _on_purchase_button_pressed() -> void:
+	if selectedItem:
+		selectedItem.purchase_item()
+		if selectedItem.isPurchased:
+			purchaseButton.disabled = true

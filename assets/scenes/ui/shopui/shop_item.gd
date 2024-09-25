@@ -7,15 +7,29 @@ extends Button
 @onready var statusLabel : Label = $itemStatus
 @onready var itemName : Label = $itemName
 @onready var itemDescription : Label = $itemDescription
+@onready var purchaseSound : AudioStreamPlayer = $purchaseSound
 
 var isPurchased:bool = false:
 	set(value):
 		isPurchased = value
 		statusLabel.text = "Purchased"
-		disabled = true
 
 func purchase_item()->void:
-	pass
+	if gameManager.playerPawns[0] != null:
+		if !isPurchased:
+			if item.instantiate() is Weapon:
+				var instancedItem = item.instantiate()
+				if gameManager.playerPawns[0].pawnCash >= instancedItem.weaponResource.gritPrice:
+					if !doesHaveItem(gameManager.playerPawns[0]):
+						purchaseSound.play()
+						isPurchased = true
+						gameManager.world.add_child(instancedItem)
+						instancedItem.equipToPawn(gameManager.playerPawns[0])
+						gameManager.notifyCheck("Purchased %s!"%instancedItem.objectName,4,5)
+						gameManager.playerPawns[0].pawnCash -= instancedItem.weaponResource.gritPrice
+				else:
+					gameManager.notify_warn("You do not have enough grit!",4,5)
+					print("Not enough grit!")
 
 func get_item_description_long() -> String:
 	if item.instantiate() is Weapon:
@@ -56,3 +70,9 @@ func _get_configuration_warnings() -> PackedStringArray:
 	if item.instantiate() != InteractiveObject:
 		return ["The item is not of type InteractiveObject."]
 	return []
+
+func doesHaveItem(pawn:BasePawn)->bool:
+	if pawn.itemNames.has(item.instantiate().objectName):
+		return true
+	else:
+		return false

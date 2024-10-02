@@ -3,7 +3,10 @@ class_name Hitbox
 var setup:bool = false
 signal damaged(amount,impulse,vector, dealer)
 @export_category("Hitbox")
-@export var healthComponent : HealthComponent
+@export var healthComponent : HealthComponent:
+	set(value):
+		healthComponent = value
+		addException(self)
 @export var hitboxDamageMult:float = 1.0
 var boneId:int
 # Called when the node enters the scene tree for the first time.
@@ -19,13 +22,18 @@ func _ready()->void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta)->void:
-	if healthComponent:
-		if !setup:
-			addException(self)
-			setup = true
+#func _process(_delta)->void:
+	#if healthComponent:
+		#if !setup:
+			#addException(self)
+			#setup = true
 
 func hit(dmg, dealer=null, hitImpulse:Vector3 = Vector3.ZERO, hitPoint:Vector3 = Vector3.ZERO)->void:
+	if healthComponent.componentOwner is BasePawn:
+		healthComponent.componentOwner.lastHitPart = boneId
+		healthComponent.componentOwner.hitImpulse = hitImpulse
+		healthComponent.componentOwner.hitVector = hitPoint
+
 	if is_in_group("Flesh"):
 		if dealer:
 			if dealer.attachedCam:
@@ -47,7 +55,7 @@ func hit(dmg, dealer=null, hitImpulse:Vector3 = Vector3.ZERO, hitPoint:Vector3 =
 					var splatterInstance = splatter.instantiate()
 					gameManager.world.worldMisc.add_child(splatterInstance)
 					splatterInstance.global_position = rayTest.get_collision_point()
-					print("blood landed on wall")
+					#print("blood landed on wall")
 					splatterInstance.rotation_degrees.z = randf_range(-180,180)
 					splatterInstance.look_at(colPoint-normal,Vector3(0,1,0))
 				rayTest.queue_free()
@@ -69,10 +77,7 @@ func hit(dmg, dealer=null, hitImpulse:Vector3 = Vector3.ZERO, hitPoint:Vector3 =
 
 	healthComponent.onDamaged.emit(dealer,hitImpulse)
 	healthComponent.damage(dmg * hitboxDamageMult, dealer)
-	if healthComponent.componentOwner is BasePawn:
-		healthComponent.componentOwner.lastHitPart = boneId
-		healthComponent.componentOwner.hitImpulse = hitImpulse
-		healthComponent.componentOwner.hitVector = hitPoint
+
 
 
 func getCollisionObject():

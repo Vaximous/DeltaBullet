@@ -9,12 +9,12 @@ class_name AnimatedControl
 		for i in value.size():
 			var meta_name = "blend_"+str(i)
 			set_meta(meta_name, get_meta(meta_name, 0.0))
-			print("Added meta %s" % meta_name)
+			#print("Added meta %s" % meta_name)
 		for over_meta in get_meta_list():
 			if over_meta.begins_with("blend_"):
 				var num = over_meta.split("_", false)[1]
 				if int(num) > value.size()-1:
-					print("Removed meta %s" % over_meta)
+					#print("Removed meta %s" % over_meta)
 					remove_meta(over_meta)
 		notify_property_list_changed.call_deferred()
 		target_controls = value

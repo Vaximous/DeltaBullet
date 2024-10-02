@@ -68,6 +68,10 @@ var defaultBulletTrail = load("res://assets/entities/bulletTrail/bulletTrail.tsc
 		isEquipped = value
 		checkWeaponBlend()
 		if value == true:
+			#Weapon Orientation
+			weaponMesh.position = weaponResource.weaponPositionOffset
+			weaponMesh.rotation = weaponResource.weaponRotationOffset
+			collisionEnabled = false
 			setEquipVariables()
 @export var isFiring :bool = false:
 	set(value):
@@ -83,7 +87,7 @@ var defaultBulletTrail = load("res://assets/entities/bulletTrail/bulletTrail.tsc
 @export var isAiming :bool = false:
 	set(value):
 		isAiming = value
-		print(isAiming)
+		#print(isAiming)
 		checkWeaponBlend()
 		if weaponOwner != null:
 			if value:
@@ -115,16 +119,16 @@ func _ready()->void:
 				weaponMesh.position = weaponResource.weaponPositionOffset
 				weaponMesh.rotation = weaponResource.weaponRotationOffset
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _physics_process(delta)->void:
-	if weaponResource:
-		if !weaponOwner == null:
-			if isEquipped:
-				#Weapon Orientation
-				weaponMesh.position = weaponResource.weaponPositionOffset
-				weaponMesh.rotation = weaponResource.weaponRotationOffset
-			else:
-				collisionEnabled = false
+## Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _physics_process(delta)->void:
+	#if weaponResource:
+		#if !weaponOwner == null:
+			#if isEquipped:
+				##Weapon Orientation
+				#weaponMesh.position = weaponResource.weaponPositionOffset
+				#weaponMesh.rotation = weaponResource.weaponRotationOffset
+			#else:
+				#collisionEnabled = false
 
 func checkWeaponBlend()->void:
 	if weaponAnimSet and isEquipped:
@@ -261,7 +265,7 @@ func fire()->void:
 
 
 func spawnProjectile(raycaster : RayCast3D) -> void:
-	print(raycaster.get_path())
+	#print(raycaster.get_path())
 	var bulletTrail : BulletTrail
 	if weaponResource.useBulletTrail:
 		bulletTrail = weaponResource.defaultBulletTrail.instantiate()
@@ -275,7 +279,7 @@ func spawnProjectile(raycaster : RayCast3D) -> void:
 	p.add_exception(weaponOwner)
 	for hitbox in weaponOwner.getAllHitboxes():
 		p.add_exception(hitbox)
-	print("%s == %s : %s" % [raycaster.get_collision_point(), ray_target_point, raycaster.get_collision_point() == ray_target_point])
+	#print("%s == %s : %s" % [raycaster.get_collision_point(), ray_target_point, raycaster.get_collision_point() == ray_target_point])
 	p.velocity = -(muzzlePoint.global_transform.origin - ray_target_point).normalized() * weaponResource.bulletSpeed
 	if bulletTrail != null:
 		gameManager.world.worldMisc.add_child(bulletTrail)

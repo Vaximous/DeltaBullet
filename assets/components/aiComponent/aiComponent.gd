@@ -354,7 +354,8 @@ func setExceptions()->void:
 		if aimCast !=null:
 			aimCast.add_exception(pawnOwner)
 			for hb in pawnOwner.getAllHitboxes():
-				aimCast.add_exception(hb.getCollisionObject())
+				if hb.getCollisionObject() is CollisionObject3D:
+					aimCast.add_exception(hb.getCollisionObject())
 
 func _on_can_see_something():
 	memoryManager.updateBrain(self)
@@ -381,14 +382,14 @@ func getTarget()->Node3D:
 	return memoryManager.bestMemory.memoryOwner
 
 func walkToPosition(to:Vector3)->void:
-	print("%s is walking to %s"%[pawnName,to])
+	#print("%s is walking to %s"%[pawnName,to])
 	await get_tree().process_frame
 	if navAgent.is_target_reachable():
-		print("%s to %s is reachable"%[pawnName,to])
+		#print("%s to %s is reachable"%[pawnName,to])
 		newVelocity = (navAgent.get_next_path_position() - global_position).normalized()
 		navAgent.velocity = newVelocity
 	else:
-		print("%s to %s is not reachable"%[pawnName,to])
+		#print("%s to %s is not reachable"%[pawnName,to])
 		pawnOwner.direction = Vector3.ZERO
 		navAgent.set_velocity(Vector3.ZERO)
 		targetUnreachable.emit()

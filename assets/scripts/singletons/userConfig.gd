@@ -57,7 +57,7 @@ var configs_loaded : bool = false
 signal finish_loading_configs
 signal configs_updated
 func _ready() -> void:
-	print(getSettingsDict())
+	#print(getSettingsDict())
 	loadConfigs()
 
 

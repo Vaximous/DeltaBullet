@@ -21,7 +21,7 @@ transparency = 1
 cull_mode = 2
 albedo_color = Color(1, 0, 0, 0.309804)
 
-[sub_resource type="ImmediateMesh" id="ImmediateMesh_ipaee"]
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_rn5k1"]
 
 [node name="aiComponent" type="Node3D" node_paths=PackedStringArray("pawnFSM", "navAgent", "visionTimer", "memoryManager")]
 script = ExtResource("4_gaqok")
@@ -119,12 +119,4 @@ debug_shape_custom_color = Color(1, 0.823529, 0, 1)
 
 [node name="visualMesh" type="MeshInstance3D" parent="."]
 material_override = SubResource("StandardMaterial3D_giynp")
-mesh = SubResource("ImmediateMesh_ipaee")
-
-[connection signal="canSeeSomething" from="." to="." method="_on_can_see_something"]
-[connection signal="timeout" from="memorySpan" to="." method="_on_memory_span_timeout"]
-[connection signal="timeout" from="pawnFSM/Wander/forceTargetReset" to="pawnFSM/Wander" method="_on_force_target_reset_timeout"]
-[connection signal="target_reached" from="navAgent" to="." method="_on_nav_agent_target_reached"]
-[connection signal="velocity_computed" from="navAgent" to="." method="_on_nav_agent_velocity_computed"]
-[connection signal="timeout" from="visionTimer" to="." method="scan"]
-[connection signal="timeout" from="visionTimer" to="aiMemoryManager" method="evaluateScores"]
+mesh = SubResource("ImmediateMesh_rn5k1")

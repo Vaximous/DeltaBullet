@@ -1,8 +1,8 @@
 extends RigidBody3D
 class_name InteractiveObject
 signal objectUsed(user)
-@onready var useSound : AudioStreamPlayer = $useSound
-@onready var useSound3D : AudioStreamPlayer3D = $useSound3D
+#@onready var useSound : AudioStreamPlayer = $useSound
+#@onready var useSound3D : AudioStreamPlayer3D = $useSound3D
 @export_category("Interactive Object")
 @export var objectName : String
 @export var customInteractText : String = ""

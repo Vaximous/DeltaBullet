@@ -1,4 +1,4 @@
-[gd_scene load_steps=214 format=4 uid="uid://b883b6dhrfe8q"]
+[gd_scene load_steps=218 format=4 uid="uid://b883b6dhrfe8q"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_5asdl"]
 [ext_resource type="Script" path="res://assets/resources/customResources/worldData/worldData.gd" id="2_7yxuj"]
@@ -51,6 +51,7 @@
 [ext_resource type="PackedScene" uid="uid://cn7cu77jr8mqg" path="res://assets/entities/props/radio.tscn" id="31_i7vfc"]
 [ext_resource type="PackedScene" uid="uid://n500uprpwbbk" path="res://assets/models/csgmodels/csgtruck.tscn" id="32_vqcav"]
 [ext_resource type="Texture2D" uid="uid://sr64p1aykopo" path="res://assets/textures/crosshair/crosshair004.png" id="37_xi52y"]
+[ext_resource type="Script" path="res://assets/scripts/entities/interactiveObject/interactiveObject.gd" id="52_tsgpd"]
 
 [sub_resource type="GDScript" id="GDScript_fxw7o"]
 resource_name = "TestScene"
@@ -693,6 +694,10 @@ size = Vector3(267.3, 108.116, 191.661)
 [sub_resource type="Resource" id="Resource_jqsg3"]
 script = ExtResource("22_28ln3")
 useBulletTrail = true
+saleCategory = 1
+gritPrice = 0
+itemDescriptionShort = ""
+itemDescriptionLong = ""
 canBeReloaded = true
 weaponMagSize = 128
 ammoSize = 30
@@ -999,6 +1004,10 @@ node_connections = [&"output", 0, &"weaponStateSpeed", &"weaponStateSpeed", 0, &
 resource_local_to_scene = true
 script = ExtResource("22_28ln3")
 useBulletTrail = true
+saleCategory = 1
+gritPrice = 0
+itemDescriptionShort = ""
+itemDescriptionLong = ""
 canBeReloaded = true
 weaponMagSize = 128
 ammoSize = 30
@@ -1043,6 +1052,10 @@ stream_0/stream = ExtResource("24_c1tf6")
 resource_local_to_scene = true
 script = ExtResource("22_28ln3")
 useBulletTrail = true
+saleCategory = 1
+gritPrice = 0
+itemDescriptionShort = ""
+itemDescriptionLong = ""
 canBeReloaded = true
 weaponMagSize = 128
 ammoSize = 24
@@ -1077,6 +1090,32 @@ useRightHandFreeAiming = true
 weaponPositionOffset = Vector3(-0.015, -0.335, 0.12)
 weaponRotationOffset = Vector3(-0.015, 0, -0.05)
 bulletColor = Color(1, 1, 0, 1)
+
+[sub_resource type="GDScript" id="GDScript_o0evo"]
+resource_name = "gotoTest"
+script/source = "extends Node3D
+@onready var interactive = $doorInteract
+
+
+func _ready():
+	interactive.objectUsed.connect(gotoTest)
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+
+func gotoTest(pawn:BasePawn):
+	interactive.remove_from_group(\"Interactable\")
+	musicManager.change_song_to(null,0.5)
+	await Fade.fade_out(0.3, Color(0,0,0,1),\"GradientVertical\",false,true).finished
+	gameManager.loadWorld(\"res://assets/scenes/worlds/areas/Shop/shopArea.tscn\")
+"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8fjwh"]
+albedo_color = Color(0.458824, 0.301961, 0.105882, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fxtgo"]
+size = Vector3(0.45166, 3.68561, 2.20422)
 
 [node name="worldBase" instance=ExtResource("1_5asdl")]
 script = SubResource("GDScript_fxw7o")
@@ -1646,6 +1685,31 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.40202, 5.07784, 29.1067)
 transform = Transform3D(0.868857, 0.434391, -0.23747, 0.273556, -0.0214696, 0.961616, 0.412619, -0.900468, -0.137484, 0.359257, 4.62726, 21.2877)
 weaponResource = SubResource("Resource_6sa46")
 collisionEnabled = true
+
+[node name="_Door_" type="Node3D" parent="Props" index="4"]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, -1.66364, 4.24796, 4.55104)
+script = SubResource("GDScript_o0evo")
+
+[node name="csgBox3d" type="CSGBox3D" parent="Props/_Door_" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0341816, 1.28217, -0.0261588)
+use_collision = true
+size = Vector3(0.220703, 3.56433, 2.26713)
+material = SubResource("StandardMaterial3D_8fjwh")
+
+[node name="doorInteract" type="RigidBody3D" parent="Props/_Door_" index="1" groups=["Interactable"]]
+collision_layer = 32
+collision_mask = 32
+lock_rotation = true
+freeze = true
+script = ExtResource("52_tsgpd")
+customInteractText = "Go to Test Level"
+useCustomInteractText = true
+interactType = 1
+canBeUsed = true
+
+[node name="collisionShape3d" type="CollisionShape3D" parent="Props/_Door_/doorInteract" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0930214, 1.3428, -0.0350943)
+shape = SubResource("BoxShape3D_fxtgo")
 
 [node name="marker3d" type="Marker3D" parent="Misc/WaypointNodes" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.6254, 4.89798, 1.98643)

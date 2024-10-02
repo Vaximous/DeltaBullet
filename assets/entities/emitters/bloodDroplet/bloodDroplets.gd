@@ -1,7 +1,7 @@
 extends RigidBody3D
 class_name BloodDroplet
 @onready var mesh : MeshInstance3D = $meshInstance3d
-@onready var area3D : Area3D = $area3d
+#@onready var area3D : Area3D = $area3d
 var bloodSpeed : float = 16.0
 var bloodStart : Vector3
 var bloodEnd : Vector3
@@ -49,7 +49,7 @@ func getClosestDroplet():
 		for blood in allBlood:
 			var distToThisDroplet = global_position.distance_to(blood.global_position)
 			var distToClosestDroplet = global_position.distance_to(_closestBlood.global_position)
-			print(distToThisDroplet)
+			#print(distToThisDroplet)
 			if (distToThisDroplet<0.7):
 				_closestBlood = blood
 				return _closestBlood

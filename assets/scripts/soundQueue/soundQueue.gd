@@ -10,14 +10,14 @@ var audioList : Array
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	if get_child_count() == 0:
-		print("No children found")
+		#print("No children found")
 		return
-	
+
 	var audioChild = get_child(0)
-	
+
 	if audioChild is AudioStreamPlayer3D:
 		audioList.append(audioChild.duplicate())
-		
+
 		for audios in soundCount:
 			var audioDup = audioChild.duplicate()
 			add_child(audioDup)
@@ -28,10 +28,10 @@ func _ready():
 func _get_configuration_warnings():
 	if get_child_count() == 0:
 		return String ("No children found")
-		
+
 	if !get_child(0) is AudioStreamPlayer3D:
 		return String ("Expecting an AudioStreamPlayer3D")
-	
+
 	return _get_configuration_warnings()
 
 

@@ -1,6 +1,7 @@
 extends CharacterBody3D
 class_name PlayerCamera
 signal cameraRotationUpdated
+signal setCamRot(camRotation:float)
 ##Variable Set
 var lowHP : bool = false
 var isFreecam : bool = true
@@ -107,8 +108,9 @@ var defaultZoomSpeed : float = 16.0
 var direction : Vector3 = Vector3.ZERO
 var camRot: float:
 	set(value):
-		camRot = value
-
+		if camRot != value:
+			camRot = value
+			setCamRot.emit(camRot)
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
@@ -278,8 +280,6 @@ func _physics_process(delta)->void:
 		if !inputComponent == null:
 			if inputComponent.getInputDir() != null:
 				direction = inputComponent.getInputDir().rotated(Vector3.UP, camRot)
-			else:
-				print(inputComponent.getInputDir())
 
 		if direction != Vector3.ZERO:
 			direction = direction.normalized()
@@ -297,19 +297,10 @@ func _physics_process(delta)->void:
 		move_and_slide()
 
 
-func _on_input_component_mouse_button_pressed(button)->void:
-	pass
-
-
-func _on_input_component_mouse_button_held(button)->void:
-	if button == 1:
-		print(button)
-
-
-func _on_input_component_on_mouse_motion(motion)->void:
-	if motion is InputEventMouseMotion:
-		motionX = rad_to_deg(-motion.relative.x * gameManager.mouseSens)
-		motionY = rad_to_deg(-motion.relative.y * gameManager.mouseSens)
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventMouseMotion:
+		motionX = rad_to_deg(-event.relative.x * gameManager.mouseSens)
+		motionY = rad_to_deg(-event.relative.y * gameManager.mouseSens)
 		castLerp = Vector3(motionY* recoilLookSpeed+0.01,motionX* recoilLookSpeed,0)
 		camPivot.rotation_degrees.y += motionX
 		vertical.rotation_degrees.x += motionY

@@ -34,7 +34,7 @@ func progressPath(details:Dictionary)->void:
 	aiOwner.walkToPosition(aiOwner.navAgent.get_next_path_position())
 
 func finishedPath()->void:
-	print("path finished")
+	#print("path finished")
 	aiOwner.pawnOwner.direction = Vector3.ZERO
 	aiOwner.navAgent.set_velocity(Vector3.ZERO)
 	await get_tree().create_timer(randf_range(0.5,5)).timeout

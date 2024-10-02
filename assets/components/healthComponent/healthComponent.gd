@@ -9,8 +9,14 @@ signal killedWithDismemberingWeapon
 var lastDealer
 @export var health:float = 100:
 	set(value):
+		healthChanged.emit()
+		if value <= 0:
+			healthDepleted.emit(lastDealer)
+			isDead = true
+			#HPisDead.emit()
+			#health = 0
+			await get_tree().process_frame
 		health = value
-		emit_signal("healthChanged")
 	get:
 		return health
 @export var isDead:bool = false:
@@ -25,23 +31,19 @@ var killerSignalEmitted :bool= false
 func _ready()->void:
 	componentOwner = get_owner()
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta)->void:
-	if !isDead:
-		if health <= 0:
-			health = 0
-			emit_signal("healthDepleted",lastDealer)
-			isDead = true
-			if lastDealer != null:
-				if lastDealer.currentItem != null:
-					if lastDealer.currentItem.weaponResource.headDismember:
-						killedWithDismemberingWeapon.emit()
-				if !killerSignalEmitted:
-					if componentOwner is BasePawn:
-						lastDealer.emit_signal("killedPawn")
-						killerSignalEmitted = true
-
 func damage(amount, dealer:Node3D = null)->void:
-	emit_signal("onDamaged",dealer)
-	health = health - amount
 	lastDealer = dealer
+	onDamaged.emit(dealer)
+	health = health - amount
+
+#func _on_health_depleted(dealer: Node3D) -> void:
+	#print("Dealer is %s"%dealer)
+	#lastDealer = dealer
+	#if lastDealer != null:
+		#if lastDealer.currentItem != null:
+			#if lastDealer.currentItem.weaponResource.headDismember:
+				#killedWithDismemberingWeapon.emit()
+		#if !killerSignalEmitted:
+			#if componentOwner is BasePawn:
+				#lastDealer.emit_signal("killedPawn")
+				#killerSignalEmitted = true

@@ -65,6 +65,7 @@ func _ready()-> void:
 			for b in physicsBones:
 				pb.exclusionArray.append(RID(b))
 				b.ownerSkeleton = ragdollSkeleton
+				b.ragdoll = self
 
 	deathSound.play()
 	if startOnInstance:
@@ -159,3 +160,6 @@ func _on_skeleton_3d_skeleton_updated() -> void:
 	for bones in ragdollSkeleton.get_bone_count():
 		#ragdollSkeleton.set_bone_rest(bones, savedPose[bones])
 		ragdollSkeleton.set_bone_pose(bones, savedPose[bones])
+
+func getBoneChildren(skeleton3d:Skeleton3D,bone:PhysicalBone3D)->Array:
+	return skeleton3d.get_bone_children(bone.get_bone_id())

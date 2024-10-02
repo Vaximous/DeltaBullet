@@ -55,7 +55,7 @@ func enableTabs(shop_flags:int) -> void:
 
 func buildItemList()->void:
 	await get_tree().process_frame
-	print(tabBar.current_tab)
+	#print(tabBar.current_tab)
 	var shopItem = load("res://assets/scenes/ui/shopui/shopItem.tscn")
 	if shopResource != null:
 		for items in shopResource.itemsToSell:

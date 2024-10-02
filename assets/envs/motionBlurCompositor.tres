@@ -5,19 +5,21 @@
 [ext_resource type="Resource" uid="uid://rp3mpjmisoyh" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/default_object_movement_component.tres" id="3_g2v7o"]
 [ext_resource type="Resource" uid="uid://c8ulad7utgrg7" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/pre_blur_processing_stage.tres" id="4_bluyl"]
 [ext_resource type="Script" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/pre_blur_processor.gd" id="5_7anbc"]
-[ext_resource type="Resource" uid="uid://ceav72kvj4qbw" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/realistic_jf_blur_stage.tres" id="6_ll3cx"]
-[ext_resource type="Resource" uid="uid://bj3exhmsfcx4w" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jf_simple_stage.tres" id="7_e0t5e"]
-[ext_resource type="Resource" uid="uid://co5k7plgmxepi" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jump_flood_neighbor_max_stage.tres" id="8_ec0v7"]
-[ext_resource type="Resource" uid="uid://dc5fr84ue3dn5" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jump_flood_overlay_stage.tres" id="9_45tcp"]
-[ext_resource type="Script" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/realistic_jf_motion_blur.gd" id="10_ny3a5"]
-[ext_resource type="Resource" uid="uid://c10aboaly701b" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jump_flood_tile_max_x_stage.tres" id="11_7lqiq"]
-[ext_resource type="Resource" uid="uid://cymk87e4nyxva" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jump_flood_tile_max_y_stage.tres" id="12_ux1ux"]
+[ext_resource type="Resource" uid="uid://dre56ajymywpr" path="res://addons/SphynxMotionBlurToolkit/Guertin/guertin_blur_stage.tres" id="6_hvy2o"]
+[ext_resource type="Resource" uid="uid://cvb65hfs2lrxo" path="res://addons/SphynxMotionBlurToolkit/Guertin/guertin_neighbor_max_stage.tres" id="7_ymvt1"]
+[ext_resource type="Resource" uid="uid://bidsfymvdyhek" path="res://addons/SphynxMotionBlurToolkit/Guertin/guertin_overlay_stage.tres" id="8_opk30"]
+[ext_resource type="Script" path="res://addons/SphynxMotionBlurToolkit/Guertin/guertin_motion_blur.gd" id="9_oa3ch"]
+[ext_resource type="Resource" uid="uid://dipvwksvqb3dm" path="res://addons/SphynxMotionBlurToolkit/Guertin/guertin_tile_max_x_stage.tres" id="10_3ali1"]
+[ext_resource type="Resource" uid="uid://bxfg45ubc2pv7" path="res://addons/SphynxMotionBlurToolkit/Guertin/guertin_tile_max_y_stage.tres" id="11_p4o1q"]
+[ext_resource type="Resource" uid="uid://bqehecsdgt70s" path="res://addons/SphynxMotionBlurToolkit/Guertin/guertin_tile_variance_stage.tres" id="12_fvgsb"]
 
 [sub_resource type="CompositorEffect" id="CompositorEffect_pmh78"]
 resource_local_to_scene = false
 resource_name = ""
 enabled = true
-effect_callback_type = 4
+effect_callback_type = 3
+access_resolved_color = false
+access_resolved_depth = false
 needs_motion_vectors = false
 needs_normal_roughness = false
 script = ExtResource("5_7anbc")
@@ -27,31 +29,34 @@ camera_movement_component = ExtResource("1_hiso8")
 object_movement_component = ExtResource("3_g2v7o")
 debug = false
 
-[sub_resource type="CompositorEffect" id="CompositorEffect_ty0m4"]
+[sub_resource type="CompositorEffect" id="CompositorEffect_h33q4"]
 resource_local_to_scene = false
 resource_name = ""
 enabled = true
-effect_callback_type = 4
+effect_callback_type = 3
+access_resolved_color = false
+access_resolved_depth = false
 needs_motion_vectors = false
 needs_normal_roughness = false
-script = ExtResource("10_ny3a5")
-tile_max_x_stage = ExtResource("11_7lqiq")
-tile_max_y_stage = ExtResource("12_ux1ux")
-construct_stage = ExtResource("7_e0t5e")
-neighbor_max_stage = ExtResource("8_ec0v7")
-blur_stage = ExtResource("6_ll3cx")
-overlay_stage = ExtResource("9_45tcp")
-perpen_error_threshold = 0.5
-sample_step_multiplier = 16
-step_exponent_modifier = 1.0
-JFA_pass_count = 3
+script = ExtResource("9_oa3ch")
+blur_stage = ExtResource("6_hvy2o")
+overlay_stage = ExtResource("8_opk30")
+tile_max_x_stage = ExtResource("10_3ali1")
+tile_max_y_stage = ExtResource("11_p4o1q")
+neighbor_max_stage = ExtResource("7_ymvt1")
+tile_variance_stage = ExtResource("12_fvgsb")
+tile_size = 40
+linear_falloff_slope = 1.0
+importance_bias = 40.0
+maximum_jitter_value = 0.95
+minimum_user_threshold = 1.5
 samples = 16
 intensity = 1.0
 center_fade = 0.0
 framerate_independent = true
-uncapped_independence = false
-target_constant_framerate = 60.0
+uncapped_independence = true
+target_constant_framerate = 30.0
 debug = false
 
 [resource]
-compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_pmh78"), SubResource("CompositorEffect_ty0m4")])
+compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_pmh78"), SubResource("CompositorEffect_h33q4")])

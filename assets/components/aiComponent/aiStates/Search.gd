@@ -35,4 +35,4 @@ func detectionIncrement()->void:
 		detectionAmount += 1 * int(detectionWeight)
 	else:
 		detectionAmount -= 1 * int(detectionWeight)
-	print(detectionAmount)
+	#print(detectionAmount)

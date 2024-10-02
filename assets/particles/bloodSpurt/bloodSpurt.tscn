@@ -54,8 +54,15 @@ sub_emitter_amount_at_collision = 1
 
 [sub_resource type="GDScript" id="GDScript_fb3dx"]
 script/source = "extends GPUParticles3D
-var remove : bool = false
+var remove : bool = false:
+	set(value):
+		remove = value
+		if value:
+			var tween = create_tween()
+			await tween.tween_property(bloodLand,\"transparency\",1.0,0.25).finished
+			queue_free()
 @onready var removeTimer : Timer = $timer
+@onready var bloodLand : GPUParticles3D = $bloodLand
 var landTexture : Array = [\"res://assets/materials/blood/bloodland1.tres\",\"res://assets/materials/blood/bloodland2.tres\",\"res://assets/materials/blood/bloodland3.tres\"]
 # Called when the node enters the scene tree for the first time.
 func _ready()->void:
@@ -71,13 +78,6 @@ func _ready()->void:
 	#self.process_material.initial_velocity_min = randf_range(1.1,5)
 	#self.process_material.initial_velocity_max = randf_range(self.process_material.initial_velocity_min,7)
 	#self.lifetime = randf_range(5,45)
-func _process(delta)->void:
-	if remove:
-		transparency = lerpf(transparency,1.0,4*delta)
-		$bloodLand.transparency = lerpf($bloodLand.transparency,1.0,4*delta)
-
-		if transparency >= 0.9:
-			queue_free()
 
 func _on_timer_timeout()->void:
 	remove = true

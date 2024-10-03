@@ -5,7 +5,7 @@ extends InteractiveObject
 func _ready()->void:
 	customInteractText = "Pick up $%s" %cashAmount
 	objectUsed.connect(pickupCash)
-	useSound.finished.connect(queue_free)
+	#useSound.finished.connect(queue_free)
 
 func pickupCash(pawn:BasePawn)->void:
 	if pawn.attachedCam:
@@ -13,7 +13,7 @@ func pickupCash(pawn:BasePawn)->void:
 		pawn.attachedCam.fireRecoil(randf_range(1.15,1.8),0.0,randf_range(1.15,1.8),true)
 	pawn.pawnCash += cashAmount
 	meshHolder.hide()
-	useSound.play()
+	#useSound.play()
 	canBeUsed = false
 	$collisionShape3d.disabled = true
 	#queue_free()

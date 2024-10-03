@@ -389,11 +389,11 @@ animSkeleton = NodePath("../untitled/Armature/Skeleton3D")
 surface_material_override/0 = SubResource("StandardMaterial3D_effxa")
 
 [node name="Physical Bone Bone" type="PhysicalBone3D" parent="Props/untitled2/Armature/Skeleton3D" index="1" node_paths=PackedStringArray("animSkeleton")]
-transform = Transform3D(1, -2.17052e-21, -1.7752e-15, -1.7752e-15, -7.45058e-09, -1, 2.15729e-21, 1, -7.45058e-09, 0, 1.00071, -0.199311)
+transform = Transform3D(1, -2.18376e-21, -1.7752e-15, -1.7752e-15, -7.45058e-09, -1, 2.17052e-21, 1, -7.45058e-09, 0, 1.00071, -0.199311)
 collision_layer = 2
 collision_mask = 11
 joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.77646e-15, 1.62199e-05, 1.00071)
-body_offset = Transform3D(1, -2.18376e-21, -1.7752e-15, -1.7752e-15, -7.45058e-09, -1, 2.17052e-21, 1, -7.45058e-09, 0, 1.00071, -1.62125e-05)
+body_offset = Transform3D(1, -2.18376e-21, -1.7752e-15, -1.7752e-15, -7.45058e-09, -1, 2.15729e-21, 1, -7.45058e-09, 0, 1.00071, -1.62125e-05)
 bone_name = "Bone"
 script = SubResource("GDScript_8s8wa")
 animSkeleton = NodePath("../../../../untitled/Armature/Skeleton3D")

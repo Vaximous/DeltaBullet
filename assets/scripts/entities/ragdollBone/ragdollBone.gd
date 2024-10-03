@@ -165,7 +165,7 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 				healthComponent.damage(contactForce + randi_range(0,16))
 			if hardImpactEffectEnabled:
 				if impactEffectHard == null:
-					await get_tree().process_frame
+					#await get_tree().process_frame
 					var particle = globalParticles.createParticle("BloodSpurt",self.position)
 					particle.rotation = self.rotation
 					particle.amount = randi_range(25,75)
@@ -178,7 +178,7 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 				healthComponent.damage(contactForce + randi_range(0,10))
 			if mediumImpactEffectEnabled:
 				if impactEffectMedium == null:
-					await get_tree().process_frame
+					#await get_tree().process_frame
 					var particle = globalParticles.createParticle("BloodSpurt",self.position)
 					particle.rotation = self.rotation
 					particle.amount = randi_range(25,40)
@@ -191,7 +191,7 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 			audioCooldown = 0.45
 			if lightImpactEffectEnabled:
 				if impactEffectLight == null:
-					await get_tree().process_frame
+					#await get_tree().process_frame
 					var particle = globalParticles.createParticle("BloodSpurt",self.position)
 					particle.rotation = self.rotation
 					createBlood()
@@ -266,4 +266,12 @@ func doPulverizeEffect()->void:
 	bloodSpurt.emitting = true
 	collision_layer = 0
 	collision_mask = 0
-	createBurstOfBlood(10,15,25)
+	#mass = 0.01
+	for childrenIDs in getBoneChildren(ragdoll.ragdollSkeleton,self):
+		var bone
+		bone = findPhysicsBone(childrenIDs)
+		if bone != null:
+			bone.collision_layer = 0
+			bone.collision_mask = 0
+			#findPhysicsBone(childrenIDs).mass = 0
+	#createBurstOfBlood(10,15,25)

@@ -3,7 +3,7 @@ extends InteractiveObject
 # Called when the node enters the scene tree for the first time.
 func _ready()->void:
 	objectUsed.connect(healPawn)
-	useSound.finished.connect(queue_free)
+	#useSound.finished.connect(queue_free)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta)->void:
@@ -25,6 +25,6 @@ func healPawn(pawn:BasePawn)->void:
 					gameManager.activeCamera.hud.gameNotifications.add_child(_notification)
 					_notification.doNotification(null,"Medkit", "Health fully recovered.")
 					gameManager.playSound(gameManager.getGlobalSound("healSound"))
-					useSound.play()
+					#useSound.play()
 				remove_from_group("Interactable")
 				beenUsed = true

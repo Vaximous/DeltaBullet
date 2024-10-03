@@ -1,15 +1,5 @@
 extends Component
 class_name InputComponent
-
-#Signals
-signal movementKeyPressed(key:String)
-signal actionPressed(button:InputEventKey)
-signal actionHeldDown(action:InputEventKey)
-signal mouseButtonPressed(button:InputEventMouseButton)
-signal mouseButtonHeld(button:InputEventMouseButton)
-signal onMouseMotion(motion:InputEventMouseMotion)
-signal onJoyMotion(motion:InputEventJoypadMotion)
-
 #Variables
 ##Enables the movement keys to be emitted
 var movementEnabled:bool = true
@@ -58,7 +48,7 @@ func _process(_delta)->void:
 										if controllingPawn.meshRotation:
 											controllingPawn.meshRotation = controllingPawn.attachedCam.camRot
 								controllingPawn.canRun = false
-				else:
+				if Input.is_action_just_released("gRightClick"):
 					if controllingPawn:
 						if controllingPawn.currentItem:
 							if controllingPawn.currentItem.isAiming != false:
@@ -74,10 +64,8 @@ func _process(_delta)->void:
 								if !Input.is_action_pressed("gRightClick"):
 									if !controllingPawn.freeAim:
 										controllingPawn.freeAim = true
-										controllingPawn.meshRotation = controllingPawn.attachedCam.camRot
-								if Dialogic.current_timeline == null:
-									controllingPawn.currentItem.fire()
-									controllingPawn.freeAimTimer.start()
+								controllingPawn.currentItem.fire()
+								controllingPawn.freeAimTimer.start()
 
 		if !controllingPawn == null:
 			if !controllingPawn.attachedCam == null:

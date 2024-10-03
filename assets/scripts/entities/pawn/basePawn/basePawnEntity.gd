@@ -161,6 +161,7 @@ signal cameraAttached
 			else:
 				meshLookAt = false
 			freeAimChanged.emit()
+			print(freeAim)
 @export var pawnEnabled : bool = true
 @export var animationPlayerSpeed : float = 1.0:
 	set(value):
@@ -1184,8 +1185,8 @@ func startBodyIK()->void:
 	if bodyIKTween:
 		bodyIKTween.kill()
 	bodyIKTween = create_tween().bind_node(animationTree)
-	await bodyIKTween.tween_method(setBodyIKInterpolation,bodyIK.interpolation,1,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType).finished
 	bodyIK.start()
+	bodyIKTween.tween_method(setBodyIKInterpolation,bodyIK.interpolation,1,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType).finished
 
 func checkMeshLookat()->void:
 	if meshLookAt:

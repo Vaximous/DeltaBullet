@@ -117,13 +117,13 @@ func _on_remove_timer_timeout()-> void:
 	queue_free()
 
 func doRagdollHeadshot()-> void:
-	var droplets : PackedScene = load("res://assets/entities/emitters/bloodDroplet/bloodDroplets.tscn")
-	for drop in randf_range(10,15):
-		if gameManager.world != null:
-			var blood : RigidBody3D = droplets.instantiate()
-			gameManager.world.worldMisc.add_child(blood)
-			blood.global_position = Vector3(headBone.global_position.x,headBone.global_position.y-1.4,headBone.global_position.z)
-			blood.apply_impulse(Vector3(randf_range(-10,10),randf_range(-10,10),randf_range(-10,10)) * randf_range(5,10))
+	#var droplets : PackedScene = load("res://assets/entities/emitters/bloodDroplet/bloodDroplets.tscn")
+	#for drop in randf_range(10,15):
+		#if gameManager.world != null:
+			#var blood : RigidBody3D = droplets.instantiate()
+			#gameManager.world.worldMisc.add_child(blood)
+			#blood.global_position = Vector3(headBone.global_position.x,headBone.global_position.y-1.4,headBone.global_position.z)
+			#blood.apply_impulse(Vector3(randf_range(-10,10),randf_range(-10,10),randf_range(-10,10)) * randf_range(5,10))
 
 	var destroyedHeads : Array = ["res://assets/models/pawn/male/headDestroyed1.tres","res://assets/models/pawn/male/headDestroyed2.tres","res://assets/models/pawn/male/headDestroyed3.tres"]
 	headshotsound.play()

@@ -21,10 +21,10 @@ var safe_mode := false:
 
 var autocomplete_search_index : int = 0
 var autocompletes : Array[String]
-
+var mouseState
 
 func _ready():
-	console.focus_entered.connect(setInput)
+	#console.focus_entered.connect(setInput)
 	console.hide()
 
 
@@ -78,18 +78,20 @@ func warn_restricted(string : String) -> bool:
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("devConsole"):
-		console.hide()
-		#await get_tree().process_frame
-		console.show()
-		#gameManager.showMouse()
-		console.grab_focus()
-		#input_field.grab_focus()
+		if console.visible:
+			console.hide()
+		else:
+			mouseState = Input.mouse_mode
+			console.show()
+			input_field.grab_focus()
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
 
 
 func _on_window_window_input(event: InputEvent) -> void:
 	if event.is_action_pressed("devConsole"):
 		console.hide()
-		#gameManager.hideMouse()
+		Input.mouse_mode = mouseState
 	if input_field.has_focus() and event.is_pressed():
 		display_autocompletion_results()
 		if event.as_text() == "Tab":

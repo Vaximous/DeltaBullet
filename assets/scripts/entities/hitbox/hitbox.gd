@@ -40,27 +40,27 @@ func hit(dmg, dealer=null, hitImpulse:Vector3 = Vector3.ZERO, hitPoint:Vector3 =
 				dealer.attachedCam.hud.getCrosshair().tintCrosshair(Color.RED)
 				dealer.attachedCam.hud.getCrosshair().addTilt(randf_range(-1,1))
 				dealer.attachedCam.camera.fov += 1.5
-		if hitImpulse:
-			var rayTest = RayCast3D.new()
-			gameManager.world.worldMisc.add_child(rayTest)
-			rayTest.global_position = hitPoint
-			rayTest.target_position = hitImpulse/10
-			await get_tree().process_frame
-			if rayTest.is_colliding():
-				var normal = rayTest.get_collision_normal()
-				var colPoint = rayTest.get_collision_point()
-				#Create Splatter
-				if normal != Vector3.UP:
-					var splatter = preload("res://assets/entities/bloodSplat/bloodSplat1.tscn")
-					var splatterInstance = splatter.instantiate()
-					gameManager.world.worldMisc.add_child(splatterInstance)
-					splatterInstance.global_position = rayTest.get_collision_point()
-					#print("blood landed on wall")
-					splatterInstance.rotation_degrees.z = randf_range(-180,180)
-					splatterInstance.look_at(colPoint-normal,Vector3(0,1,0))
-				rayTest.queue_free()
-			else:
-				rayTest.queue_free()
+		#if hitImpulse:
+			#var rayTest = RayCast3D.new()
+			#gameManager.world.worldMisc.add_child(rayTest)
+			#rayTest.global_position = hitPoint
+			#rayTest.target_position = hitImpulse/10
+			#await get_tree().process_frame
+			#if rayTest.is_colliding():
+				#var normal = rayTest.get_collision_normal()
+				#var colPoint = rayTest.get_collision_point()
+				##Create Splatter
+				#if normal != Vector3.UP:
+					#var splatter = preload("res://assets/entities/bloodSplat/bloodSplat1.tscn")
+					#var splatterInstance = splatter.instantiate()
+					#gameManager.world.worldMisc.add_child(splatterInstance)
+					#splatterInstance.global_position = rayTest.get_collision_point()
+					##print("blood landed on wall")
+					#splatterInstance.rotation_degrees.z = randf_range(-180,180)
+					#splatterInstance.look_at(colPoint-normal,Vector3(0,1,0))
+				#rayTest.queue_free()
+			#else:
+				#rayTest.queue_free()
 
 	if healthComponent.componentOwner:
 		if healthComponent.componentOwner is BasePawn:

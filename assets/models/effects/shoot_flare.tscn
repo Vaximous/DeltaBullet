@@ -35,7 +35,6 @@ func flare() -> void:
 	await get_tree().process_frame
 	await get_tree().process_frame
 	visible = false
-
 "
 
 [node name="ShootFlare" type="MeshInstance3D"]

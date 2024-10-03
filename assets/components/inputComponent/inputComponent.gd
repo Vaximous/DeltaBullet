@@ -57,7 +57,6 @@ func _process(_delta)->void:
 									if !controllingPawn.attachedCam == null:
 										if controllingPawn.meshRotation:
 											controllingPawn.meshRotation = controllingPawn.attachedCam.camRot
-								controllingPawn.isRunning = false
 								controllingPawn.canRun = false
 				else:
 					if controllingPawn:

@@ -386,7 +386,7 @@ func raycastHit(raycaster : RayCast3D = null):
 		#else:
 			#var bhole = globalParticles.spawnBulletHole("default",colliding,hitPoint,randf_range(0, 2),hitNormal)
 		if colliding.has_method(&"hit"):
-			colliding.hit(weaponResource.weaponDamage,weaponOwner,global_position.direction_to(hitPoint).normalized() * weaponResource.weaponImpulse,to_global(to_local(hitPoint)-position))
+			colliding.hit(weaponResource.weaponDamage,weaponOwner,raycaster.basis.z * weaponResource.weaponImpulse,to_global(to_local(hitPoint)-position))
 
 
 func getHitObject(raycaster : RayCast3D = null):

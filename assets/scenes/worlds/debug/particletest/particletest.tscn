@@ -306,9 +306,9 @@ size = Vector3(258, 1, 199)
 material = SubResource("StandardMaterial3D_cad6t")
 
 [node name="csgBox3d2" type="CSGBox3D" parent="Geometry/navigationRegion3d" index="1"]
-transform = Transform3D(1, 0, 0, 0, 0.991079, -0.133277, 0, 0.133277, 0.991079, 1.99634, 2.81046, 8.16924)
+transform = Transform3D(1, 0, 0, 0, 0.517325, -0.855789, 0, 0.855789, 0.517325, 1.99634, 9.14773, 21.7146)
 use_collision = true
-size = Vector3(9.4203, 6.67831, 0.538208)
+size = Vector3(9.4203, 41.0403, 0.538208)
 material = SubResource("StandardMaterial3D_2q1u2")
 metadata/physics_material_override = SubResource("PhysicsMaterial_t6kk3")
 

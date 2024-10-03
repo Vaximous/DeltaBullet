@@ -27,10 +27,9 @@ func createParticle(particle:String, pos:Vector3 = Vector3.ZERO, rot:Vector3 = V
 
 
 func spawnBulletHolePackedScene(scene : PackedScene, parent : Node, pos : Vector3 = Vector3.ZERO, rot : float = 0.0, normal : Vector3 = Vector3.ZERO):
-	if gameManager.world:
+	if gameManager.world and parent != null:
 		if scene != null:
 			var bHole = scene.instantiate()
-			await get_tree().process_frame
 			bHole.normal = normal
 			bHole.rot = rot
 			bHole.colPoint = pos

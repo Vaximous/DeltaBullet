@@ -78,7 +78,6 @@ func flare() -> void:
 	await get_tree().process_frame
 	await get_tree().process_frame
 	visible = false
-
 "
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_3v4mj"]

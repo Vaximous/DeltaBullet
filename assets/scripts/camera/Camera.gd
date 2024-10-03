@@ -132,8 +132,13 @@ func checkMotionBlur()->void:
 		if camera.compositor == null:
 			var comp = load("res://assets/envs/motionBlurCompositor.tres")
 			camera.compositor = comp
+		else:
+			camera.compositor.compositor_effects[0].set("enabled",true)
+			camera.compositor.compositor_effects[1].set("enabled",true)
 	else:
-		camera.compositor = null
+		if camera.compositor:
+			camera.compositor.compositor_effects[0].set("enabled",false)
+			camera.compositor.compositor_effects[1].set("enabled",false)
 
 func _input(_event)->void:
 	if Input.is_action_pressed("gRightClick"):

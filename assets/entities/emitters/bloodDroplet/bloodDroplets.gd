@@ -64,7 +64,6 @@ func getClosestDroplet():
 	#else:
 		#mesh.mesh.clear_surfaces()
 
-
 func _integrate_forces(state)->void:
 	contacts = state.get_contact_count()
 	if contacts > 0:

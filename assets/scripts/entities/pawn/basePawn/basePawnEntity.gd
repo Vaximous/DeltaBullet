@@ -31,7 +31,6 @@ var duplicated : Array
 @onready var componentHolder : Node3D = $Components
 @onready var boneAttatchementHolder : Node = $BoneAttatchments
 @onready var interactRaycast : RayCast3D = $Mesh/interactRaycast
-@onready var stepCast : ShapeCast3D = $Misc/floorShapecast
 
 ##IK
 @onready var bodyIK : SkeletonIK3D= $Mesh/MaleSkeleton/Skeleton3D/bodyIK
@@ -196,10 +195,6 @@ var preventWeaponFire : bool = false:
 #			disableRunBlend()
 			if footstepSounds.playing:
 				footstepSounds.stop()
-		else:
-			if isRunning:
-				enableRunBlend()
-			enableIdleSpaceBlend()
 @export_subgroup("Movement")
 @export var movementStates : Dictionary
 @export var canRun : bool = true
@@ -300,13 +295,11 @@ var currentItem : InteractiveObject = null
 @export var lastHitPart : int:
 	set(value):
 		lastHitPart = value
-		await get_tree().create_timer(0.5).timeout
-		lastHitPart = 0
+
 @export var hitImpulse : Vector3 = Vector3.ZERO:
 	set(value):
 		hitImpulse = value
-		await get_tree().create_timer(0.5).timeout
-		hitImpulse = Vector3.ZERO
+
 @export var hitVector : Vector3 = Vector3.ZERO
 @export_subgroup("Misc")
 const defaultTweenSpeed : float = 0.25
@@ -360,13 +353,14 @@ func _physics_process(delta:float) -> void:
 			if isCurrentlyMoving():
 				setDirection.emit(direction)
 
+			if fallDamageEnabled:
+				if floorcheck.is_colliding():
+					if velocity.y <= -15:
+						die(null)
+
+
 			#preventWeaponFire = aimBlockRaycast.is_colliding()
 #
-		#if fallDamageEnabled:
-			#if floorcheck.is_colliding():
-				#if velocity.y <= -15:
-					#if !isPawnDead:
-						#die(null)
 #
 		## Add the gravity
 		#if !is_on_floor():
@@ -511,7 +505,6 @@ func die(killer) -> void:
 	onPawnKilled.emit()
 	isPawnDead = true
 	killedPawn.emit()
-	await get_tree().process_frame
 	for hb in getAllHitboxes(): hb.queue_free()
 	queue_free()
 
@@ -539,16 +532,16 @@ func createRagdoll(impulse_bone : int = 0,killer = null)->PawnRagdoll:
 		#ragdoll.ragdollSkeleton.set_bone_rest(bones, pawnSkeleton.get_bone_pose(bones))
 		ragdoll.ragdollSkeleton.set_bone_global_pose(bones, pawnSkeleton.get_bone_global_pose(bones))
 		#ragdoll.physicalBoneSimulator.get_skeleton().set_bone_pose_rotation(bones, pawnSkeleton.get_bone_pose_rotation(bones))
+	ragdoll.startRagdoll()
 	for bones in ragdoll.physicalBoneSimulator.get_child_count():
 		var child = ragdoll.physicalBoneSimulator.get_child(bones)
 		if child is RagdollBone:
 			child.linear_velocity = currVel
 			child.angular_velocity = currVel
-			ragdoll.startRagdoll()
 			child.apply_central_impulse(currVel)
 			if child.get_bone_id() == impulse_bone:
 				#ragdoll.startRagdoll()
-				child.apply_impulse(hitImpulse * randf_range(1.5,2), hitVector)
+				child.apply_central_impulse(hitImpulse * randf_range(1.5,2))
 	pawnDied.emit(ragdoll)
 	ragdoll.checkClothingHider()
 	#ragdoll.startRagdoll()
@@ -557,7 +550,6 @@ func createRagdoll(impulse_bone : int = 0,killer = null)->PawnRagdoll:
 		if child is RagdollBone:
 			if child.get_bone_id() == impulse_bone:
 				if child.healthComponent and killer != null and killer.currentItem != null:
-					await get_tree().process_frame
 					child.healthComponent.damage(killer.currentItem.weaponResource.weaponDamage * randf_range(1.5,2),killer)
 	if impulse_bone == 41:
 		if killer != null:
@@ -569,9 +561,8 @@ func createRagdoll(impulse_bone : int = 0,killer = null)->PawnRagdoll:
 		headshottedPawn.emit()
 	if !attachedCam == null:
 		var cam = attachedCam
-		await get_tree().process_frame
-		await cam.unposessObject()
-		await cam.posessObject(ragdoll, ragdoll.rootCameraNode)
+		cam.unposessObject()
+		cam.posessObject(ragdoll, ragdoll.rootCameraNode)
 		ragdoll.removeTimer.stop()
 		for bones in ragdoll.physicalBoneSimulator.get_child_count():
 			if ragdoll.physicalBoneSimulator.get_child(bones) is RagdollBone:
@@ -1217,26 +1208,3 @@ func isCurrentlyMoving()->bool:
 
 func isOnGround()->bool:
 	return isGrounded || is_on_floor()
-
-func move(delta:float)->void:
-	stepCast.global_position.x = global_position.x + velocity.x * delta
-	stepCast.global_position.z = global_position.z + velocity.z * delta
-
-	if is_on_floor():
-		stepCast.target_position.y = -0.95
-	else:
-		stepCast.target_position.y = -0.45
-
-	var query : PhysicsShapeQueryParameters3D = PhysicsShapeQueryParameters3D.new()
-	query.exclude = [self]
-	query.shape = stepCast.shape
-	query.transform = stepCast.global_transform
-	var result = get_world_3d().direct_space_state.intersect_shape(query,1)
-	if !result:
-		stepCast.force_shapecast_update()
-
-	if stepCast.is_colliding() && velocity.y <= 0.0 && !result:
-		global_position.y = stepCast.get_collision_point(0).y
-		#velocity.y = 0.0
-
-	move_and_slide()

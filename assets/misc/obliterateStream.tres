@@ -1,0 +1,9 @@
+[gd_resource type="AudioStreamRandomizer" load_steps=2 format=3 uid="uid://ba1ryt3qk6f06"]
+
+[ext_resource type="AudioStream" uid="uid://dm7rc8vhqi7wj" path="res://assets/sounds/gore/obliterate.wav" id="1_0takf"]
+
+[resource]
+random_pitch = 1.2
+random_volume_offset_db = 0.5
+streams_count = 1
+stream_0/stream = ExtResource("1_0takf")

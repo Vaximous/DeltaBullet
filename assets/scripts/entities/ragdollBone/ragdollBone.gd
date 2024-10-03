@@ -161,6 +161,8 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 			audioStreamPlayer.stream = heavyImpactSounds
 			audioStreamPlayer.play()
 			audioCooldown = 0.45
+			if healthComponent:
+				healthComponent.damage(contactForce + randi_range(0,16))
 			if hardImpactEffectEnabled:
 				if impactEffectHard == null:
 					await get_tree().process_frame
@@ -172,6 +174,8 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 			audioStreamPlayer.stream = mediumImpactSounds
 			audioStreamPlayer.play()
 			audioCooldown = 0.45
+			if healthComponent:
+				healthComponent.damage(contactForce + randi_range(0,10))
 			if mediumImpactEffectEnabled:
 				if impactEffectMedium == null:
 					await get_tree().process_frame
@@ -199,7 +203,7 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 
 func hit(dmg, dealer=null, hitImpulse:Vector3 = Vector3.ZERO, hitPoint:Vector3 = Vector3.ZERO)->void:
 	emit_signal("onHit",hitImpulse,hitPoint)
-	apply_impulse(hitImpulse, hitPoint)
+	apply_central_impulse(hitImpulse)
 	if get_bone_id() == 41:
 		if get_owner().activeRagdollEnabled:
 			get_owner().activeRagdollEnabled = false
@@ -237,5 +241,29 @@ func findPhysicsBone(id:int)->PhysicalBone3D:
 			foundBone = bones
 	return foundBone
 
+func createBurstOfBlood(amountMin:int,amountMax:int,maxImpulse:int)->void:
+	var droplets : PackedScene = load("res://assets/entities/emitters/bloodDroplet/bloodDroplets.tscn")
+	for drop in randf_range(amountMin,amountMax):
+		if gameManager.world != null:
+			var blood : RigidBody3D = droplets.instantiate()
+			gameManager.world.worldMisc.add_child(blood)
+			blood.global_position = Vector3(global_position.x,global_position.y-1.4,global_position.z)
+			blood.apply_impulse(Vector3(randf_range(-maxImpulse,maxImpulse),randf_range(-maxImpulse,maxImpulse),randf_range(-maxImpulse,maxImpulse)) * randf_range(5,maxImpulse))
+
+
 func doPulverizeEffect()->void:
-	pass
+	var pulverizeSound : AudioStreamPlayer3D = AudioStreamPlayer3D.new()
+	pulverizeSound.stream = load("res://assets/misc/obliterateStream.tres")
+	pulverizeSound.bus = &"Sounds"
+	pulverizeSound.attenuation_filter_db = 0
+	pulverizeSound.volume_db = -5
+	add_child(pulverizeSound)
+	pulverizeSound.play()
+	var bloodSpurt : GPUParticles3D = load("res://assets/particles/bloodSpurt/bloodSpurt.tscn").instantiate()
+	gameManager.world.worldMisc.add_child(bloodSpurt)
+	bloodSpurt.global_position = global_position
+	bloodSpurt.amount = 50
+	bloodSpurt.emitting = true
+	collision_layer = 0
+	collision_mask = 0
+	createBurstOfBlood(10,15,25)

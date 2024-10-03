@@ -6,7 +6,7 @@ var movementEnabled:bool = true
 ##Enables the mouse action buttons to be emitted
 var mouseActionsEnabled:bool = true
 var mouseButtonInput:InputEventMouseButton = InputEventMouseButton.new()
-var inputDir = Vector3(Input.get_action_strength("gMoveRight") - Input.get_action_strength("gMoveLeft"), 0, Input.get_action_strength("gMoveBackward") - Input.get_action_strength("gMoveForward"))
+var inputDir : Vector3 = Vector3(Input.get_action_strength("gMoveRight") - Input.get_action_strength("gMoveLeft"), 0, Input.get_action_strength("gMoveBackward") - Input.get_action_strength("gMoveForward"))
 var controllingPawn : BasePawn
 
 func _ready()->void:

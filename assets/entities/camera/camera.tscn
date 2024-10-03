@@ -576,9 +576,6 @@ bus = &"Sounds"
 [node name="TabMenu" parent="." instance=ExtResource("19_jpkgf")]
 visible = false
 
-[connection signal="mouseButtonHeld" from="inputComponent" to="." method="_on_input_component_mouse_button_held"]
-[connection signal="mouseButtonPressed" from="inputComponent" to="." method="_on_input_component_mouse_button_pressed"]
-[connection signal="onMouseMotion" from="inputComponent" to="." method="_on_input_component_on_mouse_motion"]
 [connection signal="interactionFound" from="HUD" to="HUD/Interact/interactAnimPlayer" method="play"]
 [connection signal="interactionFound" from="HUD" to="HUD/Interact/audioStreamPlayer" method="play"]
 [connection signal="interactionFound" from="HUD" to="HUD/Interact/interactAnimPlayer" method="set_current_animation" binds= ["rollover"]]

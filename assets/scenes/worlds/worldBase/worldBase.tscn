@@ -67,3 +67,5 @@ spawn_path = NodePath("../../Pawns/Players")
 [node name="GamePauseMenu" parent="." instance=ExtResource("3_2mura")]
 
 [node name="mapLogic" type="Node" parent="."]
+
+[connection signal="worldLoaded" from="." to="." method="playSoundscape"]

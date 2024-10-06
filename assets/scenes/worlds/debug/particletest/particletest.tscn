@@ -1,11 +1,10 @@
-[gd_scene load_steps=60 format=3 uid="uid://bgy0ycoxec6p6"]
+[gd_scene load_steps=59 format=3 uid="uid://bgy0ycoxec6p6"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_rrsmc"]
 [ext_resource type="PackedScene" uid="uid://boicvk4qeqmbd" path="res://assets/entities/pawnSpawn/pawnSpawn.tscn" id="2_d45q2"]
 [ext_resource type="Script" path="res://assets/resources/customResources/worldData/worldData.gd" id="2_yse5r"]
 [ext_resource type="Texture2D" uid="uid://mbsy6cv3jimj" path="res://assets/scenes/worlds/debug/particletest/loading.png" id="3_vbqlr"]
 [ext_resource type="PackedScene" uid="uid://wtqya32cwdbk" path="res://assets/entities/weapons/Beretta/Beretta.tscn" id="4_c40k5"]
-[ext_resource type="PackedScene" uid="uid://dbqnhh5btxgqk" path="res://assets/entities/emitters/bloodDroplet/bloodDroplets.tscn" id="6_06gf1"]
 [ext_resource type="PackedScene" uid="uid://dsxt078giobel" path="res://assets/entities/weapons/Uzi/Uzi.tscn" id="6_tgu38"]
 [ext_resource type="PackedScene" uid="uid://bn07wnk5k005c" path="res://assets/entities/weapons/HoneyBadger/honeybadger.tscn" id="7_q40r8"]
 [ext_resource type="PackedScene" uid="uid://boh343kalvj5i" path="res://assets/entities/weapons/Revolver/Revolver.tscn" id="8_uwo5p"]
@@ -344,19 +343,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.57036, 2.80381, 2.56913)
 visible = false
 mesh = SubResource("SphereMesh_gh5mg")
 
-[node name="bloodDroplet" parent="Props" index="4" instance=ExtResource("6_06gf1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.45993, 2.10774, 3.29756)
-axis_lock_linear_x = true
-axis_lock_linear_y = true
-axis_lock_linear_z = true
-
-[node name="bloodDroplet2" parent="Props" index="5" instance=ExtResource("6_06gf1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.24038, 2.24739, 4.05783)
-axis_lock_linear_x = true
-axis_lock_linear_y = true
-axis_lock_linear_z = true
-
-[node name="M4" parent="Props" index="6" instance=ExtResource("24_n7adl")]
+[node name="M4" parent="Props" index="4" instance=ExtResource("24_n7adl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.31164, 2.04248, 5.08815)
 weaponResource = SubResource("Resource_gua43")
 collisionEnabled = true

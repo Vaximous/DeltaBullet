@@ -69,8 +69,13 @@ func getPlayerSpawnPoints(offset:Vector3 = Vector3(0,0,0), pickRandom:bool = tru
 		else:
 			return null
 
-func checkWorldType():
-	pass
+func playSoundscape()->void:
+	if worldData.soundScape:
+		var audioStreamPlayer : AudioStreamPlayer = AudioStreamPlayer.new()
+		add_child(audioStreamPlayer)
+		audioStreamPlayer.bus = 'Ambience'
+		audioStreamPlayer.stream = worldData.soundScape
+		audioStreamPlayer.play()
 
 func setupWorld()-> void:
 	if worldData != null:

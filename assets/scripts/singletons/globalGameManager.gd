@@ -34,6 +34,7 @@ var currentSave : String
 var dialogueCamLerpSpeed:float = 5.0
 var world : WorldScene
 var pauseMenu : PauseMenu
+var bloodDecal = preload("res://assets/entities/bloodSplat/bloodSplat1.tscn")
 
 #Multiplayer
 var isMultiplayerGame:bool = false
@@ -419,3 +420,25 @@ func removeShop()->void:
 	for i in get_children():
 		if i.is_in_group(&"shop"):
 			i.queue_free()
+
+func createSplat(gposition:Vector3 = Vector3.ZERO,normal:Vector3 = Vector3.ZERO,colPoint:Vector3 = Vector3.ZERO)->void:
+	if gameManager.world != null:
+		#print("col")
+		var _b = bloodDecal.instantiate()
+		gameManager.world.worldMisc.add_child(_b)
+		_b.rotate(normal,randf_range(0, 180)/PI)
+		_b.position = gposition
+		_b.look_at(colPoint + normal, Vector3.UP)
+		#queue_free()
+
+func sprayBlood(position:Vector3,amount:int,_maxDistance:int,distanceMultiplier:float = 1)->void:
+	randomize()
+	if world != null:
+		for rays in amount:
+			var directSpace : PhysicsDirectSpaceState3D = world.worldMisc.get_world_3d().direct_space_state
+			var ray = PhysicsRayQueryParameters3D.new()
+			var result : Dictionary
+			ray = ray.create(position,position + Vector3(randi_range(-_maxDistance,_maxDistance),randi_range(-_maxDistance,_maxDistance),randi_range(-_maxDistance,_maxDistance)*distanceMultiplier))
+			result = directSpace.intersect_ray(ray)
+			if result:
+				createSplat(result.position,result.normal,result.position)

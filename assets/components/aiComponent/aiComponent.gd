@@ -59,7 +59,6 @@ var isInDialogue : bool
 @export var navAgent : NavigationAgent3D
 @export var navPointGrabber : Area3D
 @export var visionTimer : Timer
-@onready var pawnGrabber : Area3D = $pawnGrabber
 @export_subgroup("Memory")
 @onready var memorySpanTimer : Timer = $memorySpan
 @export var memoryManager : AiMemoryManager:

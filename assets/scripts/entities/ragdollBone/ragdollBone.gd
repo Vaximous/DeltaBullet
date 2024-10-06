@@ -9,7 +9,8 @@ var ownerSkeleton : Skeleton3D
 var ragdoll : PawnRagdoll:
 	set(value):
 		ragdoll = value
-		ragdoll.ragdollSkeleton.skeleton_updated.connect(updateRagdollScale)
+		if !ragdoll.ragdollSkeleton.skeleton_updated.is_connected(updateRagdollScale):
+			ragdoll.ragdollSkeleton.skeleton_updated.connect(updateRagdollScale)
 @export var healthComponent : HealthComponent:
 	set(value):
 		healthComponent = value
@@ -169,7 +170,7 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 					var particle = globalParticles.createParticle("BloodSpurt",self.position)
 					particle.rotation = self.rotation
 					particle.amount = randi_range(25,75)
-					createBlood()
+					gameManager.sprayBlood(global_position,randi_range(1,3),50,2)
 		elif contactForce > mediumImpactThreshold:
 			audioStreamPlayer.stream = mediumImpactSounds
 			audioStreamPlayer.play()
@@ -182,7 +183,7 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 					var particle = globalParticles.createParticle("BloodSpurt",self.position)
 					particle.rotation = self.rotation
 					particle.amount = randi_range(25,40)
-					createBlood()
+					gameManager.sprayBlood(global_position,randi_range(1,3),50,2)
 		elif contactForce > lightImpactThreshold:
 			audioStreamPlayer.stream = lightImpactSounds
 			var fac = (contactForce - lightImpactThreshold) / (mediumImpactThreshold - lightImpactThreshold)
@@ -194,7 +195,7 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 					#await get_tree().process_frame
 					var particle = globalParticles.createParticle("BloodSpurt",self.position)
 					particle.rotation = self.rotation
-					createBlood()
+					gameManager.sprayBlood(global_position,randi_range(1,3),50,2)
 
 
 #func _physics_process(delta)->void:
@@ -216,11 +217,6 @@ func hit(dmg, dealer=null, hitImpulse:Vector3 = Vector3.ZERO, hitPoint:Vector3 =
 func hookes_law(displacement: Vector3, current_velocity: Vector3, stiffness: float, damping: float) -> Vector3:
 	return (stiffness * displacement) - (damping * current_velocity)
 
-func createBlood()->void:
-	var droplets : PackedScene = load("res://assets/entities/emitters/bloodDroplet/bloodDroplets.tscn")
-	var blood = droplets.instantiate()
-	gameManager.world.worldMisc.add_child(blood)
-	blood.global_position = global_position
 
 func pulverizeBone()->void:
 	ragdoll.ragdollSkeleton.set_bone_pose_scale(get_bone_id(),Vector3.ZERO)
@@ -241,7 +237,7 @@ func findPhysicsBone(id:int)->PhysicalBone3D:
 			foundBone = bones
 	return foundBone
 
-func createBurstOfBlood(amountMin:int,amountMax:int,maxImpulse:int)->void:
+func createBurstOfPhysicsBlood(amountMin:int,amountMax:int,maxImpulse:int)->void:
 	var droplets : PackedScene = load("res://assets/entities/emitters/bloodDroplet/bloodDroplets.tscn")
 	for drop in randf_range(amountMin,amountMax):
 		if gameManager.world != null:
@@ -266,6 +262,7 @@ func doPulverizeEffect()->void:
 	bloodSpurt.emitting = true
 	collision_layer = 0
 	collision_mask = 0
+	gameManager.sprayBlood(global_position,randi_range(3,15),500,1.2)
 	#mass = 0.01
 	for childrenIDs in getBoneChildren(ragdoll.ragdollSkeleton,self):
 		var bone

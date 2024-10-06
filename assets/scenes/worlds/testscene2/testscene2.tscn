@@ -60,15 +60,7 @@ var timer = Timer.new()
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	super()
-	timer.autostart = true
-	add_child(timer)
-	timer.start(15)
-	timer.timeout.connect(spawnshit)
-func spawnshit():
-	timer.start(15)
-	var spawn = pawnWorldSpawns.get_children().pick_random()
-	spawn.active = true
-	spawn.spawnPawn()
+	pass
 "
 
 [sub_resource type="Resource" id="Resource_2olfo"]

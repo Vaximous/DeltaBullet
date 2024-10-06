@@ -9,7 +9,6 @@
 [sub_resource type="GDScript" id="GDScript_3c2w4"]
 resource_name = "flesh"
 script/source = "extends BulletHole
-var droplets : PackedScene = load(\"res://assets/entities/emitters/bloodDroplet/bloodDroplets.tscn\")
 @onready var bloodSpurt : GPUParticles3D = $bloodSpurt
 var maxDropletAmount : int = 8
 var minDropletAmount : int = 2
@@ -24,12 +23,13 @@ func _ready() -> void:
 	bloodSpurt.rotate(normal,randf_range(0, 180)/PI)
 	bloodSpurt.global_position = colPoint
 	bloodSpurt.emitting = true
-	for drop in randf_range(minDropletAmount,maxDropletAmount):
-		if gameManager.world != null:
-			var blood : RigidBody3D = droplets.instantiate()
-			blood.global_position = colPoint
-			gameManager.world.worldMisc.add_child(blood)
-			blood.apply_impulse(Vector3(randf_range(-normal.x,normal.x),randf_range(-normal.y,normal.y),randf_range(-normal.z,normal.z)) * randf_range(minDropletForce,maxDropletForce))
+	gameManager.sprayBlood((colPoint + -normal),randi_range(1,15),50,1.2)
+	#for drop in randf_range(minDropletAmount,maxDropletAmount):
+		#if gameManager.world != null:
+			#var blood : RigidBody3D = droplets.instantiate()
+			#blood.global_position = colPoint
+			#gameManager.world.worldMisc.add_child(blood)
+			#blood.apply_impulse(Vector3(randf_range(-normal.x,normal.x),randf_range(-normal.y,normal.y),randf_range(-normal.z,normal.z)) * randf_range(minDropletForce,maxDropletForce))
 
 
 
@@ -41,11 +41,8 @@ func _on_blood_spurt_finished()->void:
 random_pitch = 1.6
 streams_count = 3
 stream_0/stream = ExtResource("2_aj8jf")
-stream_0/weight = 1.0
 stream_1/stream = ExtResource("3_il4om")
-stream_1/weight = 1.0
 stream_2/stream = ExtResource("5_3loew")
-stream_2/weight = 1.0
 
 [node name="bulletHole" type="Node3D"]
 script = SubResource("GDScript_3c2w4")

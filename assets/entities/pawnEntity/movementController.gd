@@ -52,9 +52,9 @@ func onSetCamRot(camRotation:float):
 func doMeshLookat(delta:float):
 	pawnControlling.canJump = false
 	pawnControlling.bodyIKMarker.rotation.x = pawnControlling.turnAmount
-	pawnControlling.bodyIKMarker.rotation_degrees.y = lerpf(pawnControlling.bodyIKMarker.rotation_degrees.y, pawnControlling.to_local(Vector3(0,180,0)).y, 16*delta)
+	#pawnControlling.bodyIKMarker.rotation_degrees.y = lerpf(pawnControlling.bodyIKMarker.rotation_degrees.y, pawnControlling.to_local(Vector3(0,180,0)).y, 16*delta)
 	pawnControlling.pawnMesh.rotation.y = lerp_angle(pawnControlling.pawnMesh.rotation.y, cameraRotation, 23 * delta)
-	pawnControlling.bodyIKMarker.rotation.z = lerpf(pawnControlling.bodyIKMarker.rotation.z, 0.0, 16*delta)
+	#pawnControlling.bodyIKMarker.rotation.z = lerpf(pawnControlling.bodyIKMarker.rotation.z, 0.0-pawnControlling.pawnMesh.rotation.y, 16*delta)
 
 func doMeshRotation(delta:float) -> void:
 	var targetRotation = atan2(-pawnControlling.velocity.x,-pawnControlling.velocity.z)

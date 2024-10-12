@@ -14,7 +14,6 @@ var maxDropletAmount : int = 8
 var minDropletAmount : int = 2
 var minDropletForce : float = 5.0
 var maxDropletForce : float = 18.5
-var previousDroplet : BloodDroplet = null
 
 func _ready() -> void:
 	var timer = get_tree().create_timer(UserConfig.game_decal_remove_time)
@@ -23,7 +22,7 @@ func _ready() -> void:
 	bloodSpurt.rotate(normal,randf_range(0, 180)/PI)
 	bloodSpurt.global_position = colPoint
 	bloodSpurt.emitting = true
-	gameManager.sprayBlood((colPoint + -normal),randi_range(1,15),50,1.2)
+	gameManager.sprayBlood((colPoint + -normal),randi_range(1,15),50,randf_range(1.0,1.7))
 	#for drop in randf_range(minDropletAmount,maxDropletAmount):
 		#if gameManager.world != null:
 			#var blood : RigidBody3D = droplets.instantiate()

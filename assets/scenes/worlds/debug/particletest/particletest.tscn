@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=3 uid="uid://bgy0ycoxec6p6"]
+[gd_scene load_steps=60 format=3 uid="uid://bgy0ycoxec6p6"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_rrsmc"]
 [ext_resource type="PackedScene" uid="uid://boicvk4qeqmbd" path="res://assets/entities/pawnSpawn/pawnSpawn.tscn" id="2_d45q2"]
@@ -266,6 +266,21 @@ weaponPositionOffset = Vector3(-0.015, 0.13, 0.075)
 weaponRotationOffset = Vector3(0, -1.74, -1.48)
 bulletColor = Color(1, 1, 0, 1)
 
+[sub_resource type="GDScript" id="GDScript_vmtxr"]
+resource_name = "particletestlogic"
+script/source = "extends Node
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	print($rayCast3d.collision_mask)
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+"
+
 [node name="worldBase" instance=ExtResource("1_rrsmc")]
 worldData = SubResource("Resource_ko4a2")
 
@@ -347,6 +362,11 @@ mesh = SubResource("SphereMesh_gh5mg")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.31164, 2.04248, 5.08815)
 weaponResource = SubResource("Resource_gua43")
 collisionEnabled = true
+
+[node name="mapLogic" parent="." index="7"]
+script = SubResource("GDScript_vmtxr")
+
+[node name="rayCast3d" type="RayCast3D" parent="mapLogic" index="0"]
 
 [connection signal="timeout" from="Props/csgBox3d/timer" to="Props/csgBox3d" method="_on_timer_timeout"]
 [connection signal="timeout" from="Props/csgBox3d2/timer" to="Props/csgBox3d2" method="_on_timer_timeout"]

@@ -438,7 +438,7 @@ func sprayBlood(position:Vector3,amount:int,_maxDistance:int,distanceMultiplier:
 			var directSpace : PhysicsDirectSpaceState3D = world.worldMisc.get_world_3d().direct_space_state
 			var ray = PhysicsRayQueryParameters3D.new()
 			var result : Dictionary
-			ray = ray.create(position,position + Vector3(randi_range(-_maxDistance,_maxDistance),randi_range(-_maxDistance,_maxDistance),randi_range(-_maxDistance,_maxDistance)*distanceMultiplier))
+			ray = ray.create(position,position + Vector3(randi_range(-_maxDistance,_maxDistance),randi_range(-_maxDistance,_maxDistance),randi_range(-_maxDistance,_maxDistance)*distanceMultiplier),1)
 			result = directSpace.intersect_ray(ray)
 			if result:
 				createSplat(result.position,result.normal,result.position)

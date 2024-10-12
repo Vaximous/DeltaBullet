@@ -121,27 +121,7 @@ func updateRagdollScale()->void:
 		#bonePulverized = true
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
-	if get_owner().activeRagdollEnabled:
-		if get_owner().targetSkeleton != null:
-			if activeRagdollBone:
-				var bonerot : Basis = get_owner().global_transform.basis * get_owner().ragdollSkeleton.get_bone_global_pose(get_bone_id()).basis
-				var bone2tr : Basis = bonerot.inverse() * self.transform.basis
-				var boneglobalpose_targskel :Transform3D= get_owner().targetSkeleton.get_bone_global_pose(get_bone_id())
-				var boneglobalpose_ragskel:Transform3D = get_owner().ragdollSkeleton.get_bone_global_pose(get_bone_id())
-				#get_owner().ragdollSkeleton.set_bone_pose_position(get_bone_id(),bone2tr.get_euler())
-				get_owner().ragdollSkeleton.set_bone_pose_position(get_bone_id(), get_owner().targetSkeleton.get_bone_pose_position(get_bone_id()))
-				get_owner().ragdollSkeleton.set_bone_pose_rotation(get_bone_id(), get_owner().targetSkeleton.get_bone_pose_rotation(get_bone_id()))
-				#var targtransfrm: Quaternion = get_owner().targetSkeleton.get_bone_pose_rotation(get_bone_id())
-				#var currtransform : Quaternion = get_owner().ragdollSkeleton.get_bone_pose_rotation(get_bone_id()).inverse()
-				#var rotdif = (targtransfrm.get_euler() * currtransform.get_euler().inverse() * activeRagdollForce)
-				#var targrot = boneglobalpose_targskel.basis.inverse() * boneglobalpose_ragskel.basis
 
-				var targetTransform : Transform3D = get_owner().targetSkeleton.get_bone_pose(get_bone_id())
-				var currentTransform : Transform3D = get_owner().ragdollSkeleton.get_bone_global_pose(get_bone_id()) * get_owner().targetSkeleton.get_bone_global_pose(get_bone_id()).inverse()
-				var rotationDifference : Basis = (targetTransform.basis * currentTransform.basis.inverse())
-				get_owner().ragdollSkeleton.set_bone_global_pose_override(get_bone_id(),get_owner().ragdollSkeleton.global_transform.affine_inverse() * targetTransform,1.0,true)
-				#var torque = hookes_law(rotationDifference.get_euler(),state.angular_velocity,500,10)
-				#state.apply_torque(rotationDifference.get_euler() * activeRagdollForce* state.step)
 	if bonePhysics == null:
 		bonePhysics = state
 	boneState = state.sleeping
@@ -170,7 +150,7 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 					var particle = globalParticles.createParticle("BloodSpurt",self.position)
 					particle.rotation = self.rotation
 					particle.amount = randi_range(25,75)
-					gameManager.sprayBlood(global_position,randi_range(1,3),50,2)
+					gameManager.sprayBlood(global_position,randi_range(1,3),10,1.2)
 		elif contactForce > mediumImpactThreshold:
 			audioStreamPlayer.stream = mediumImpactSounds
 			audioStreamPlayer.play()
@@ -183,7 +163,7 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 					var particle = globalParticles.createParticle("BloodSpurt",self.position)
 					particle.rotation = self.rotation
 					particle.amount = randi_range(25,40)
-					gameManager.sprayBlood(global_position,randi_range(1,3),50,2)
+					gameManager.sprayBlood(global_position,randi_range(1,3),10,1.2)
 		elif contactForce > lightImpactThreshold:
 			audioStreamPlayer.stream = lightImpactSounds
 			var fac = (contactForce - lightImpactThreshold) / (mediumImpactThreshold - lightImpactThreshold)
@@ -195,7 +175,7 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 					#await get_tree().process_frame
 					var particle = globalParticles.createParticle("BloodSpurt",self.position)
 					particle.rotation = self.rotation
-					gameManager.sprayBlood(global_position,randi_range(1,3),50,2)
+					gameManager.sprayBlood(global_position,randi_range(1,3),10,1.2)
 
 
 #func _physics_process(delta)->void:
@@ -258,7 +238,7 @@ func doPulverizeEffect()->void:
 	var bloodSpurt : GPUParticles3D = load("res://assets/particles/bloodSpurt/bloodSpurt.tscn").instantiate()
 	gameManager.world.worldMisc.add_child(bloodSpurt)
 	bloodSpurt.global_position = global_position
-	bloodSpurt.amount = 50
+	bloodSpurt.amount = randi_range(50,85)
 	bloodSpurt.emitting = true
 	collision_layer = 0
 	collision_mask = 0

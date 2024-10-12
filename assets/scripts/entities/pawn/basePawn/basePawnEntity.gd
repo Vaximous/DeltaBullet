@@ -358,8 +358,8 @@ func _physics_process(delta:float) -> void:
 					if velocity.y <= -15:
 						die(null)
 
+			preventWeaponFire = aimBlockRaycast.is_colliding()
 
-			#preventWeaponFire = aimBlockRaycast.is_colliding()
 #
 #
 		## Add the gravity
@@ -954,7 +954,6 @@ func flinch() -> void:
 		#bodyIKMarker.rotation.y += randf_range(-0.5,0.5)
 		bodyIKMarker.rotation.z += randf_range(-0.25,0.35)
 		disableBodyIK()
-
 
 func _on_health_component_on_damaged(dealer:Node3D, hitDirection:Vector3)->void:
 	flinch()

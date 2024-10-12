@@ -442,3 +442,17 @@ func sprayBlood(position:Vector3,amount:int,_maxDistance:int,distanceMultiplier:
 			result = directSpace.intersect_ray(ray)
 			if result:
 				createSplat(result.position,result.normal,result.position)
+
+func createBloodPool(position:Vector3,size:float=0.5)->void:
+	if world != null:
+		var directSpace : PhysicsDirectSpaceState3D = world.worldMisc.get_world_3d().direct_space_state
+		var ray = PhysicsRayQueryParameters3D.new()
+		var result : Dictionary
+		ray = ray.create(position,position + Vector3.DOWN,1)
+		result = directSpace.intersect_ray(ray)
+		if result:
+			var bloodPool = load("res://assets/entities/bloodPool/bloodPool.tscn")
+			var _bloodPool = bloodPool.instantiate()
+			world.worldMisc.add_child(_bloodPool)
+			_bloodPool.global_position = result.position
+			_bloodPool.startPool(size)

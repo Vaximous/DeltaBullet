@@ -107,7 +107,6 @@ func _process(delta):
 
 func _on_pawn_spawn_pawn_spawned(pawn):
 		activeRag.targetSkeleton = pawn.pawnSkeleton
-
 "
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_vuv2a"]
@@ -274,6 +273,7 @@ resource_name = "activerag"
 script/source = "extends Node
 var questPawns : Array[BasePawn] = []
 @onready var jerrySpawn : PawnSpawn = $\"../Spawns/pawnSpawns/pawnSpawn\"
+@onready var active = $\"../Props/pawnRagdoll\"
 var jerrySpawned : bool = false:
 	set(value):
 		jerrySpawned = value
@@ -286,6 +286,7 @@ var jerrySpawned : bool = false:
 func _ready()->void:
 	questManager.questProgression.connect(_questProgress.bind())
 	questManager.questActivated.connect(questCheck)
+
 
 func questCheck(id)->void:
 	print(id)
@@ -364,7 +365,12 @@ surface_material_override/0 = SubResource("StandardMaterial3D_vspf4")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000644684, 0.332275, 0.00296021)
 shape = SubResource("BoxShape3D_6khn8")
 
-[node name="untitled" parent="Props" index="0" instance=ExtResource("7_4j4hu")]
+[node name="pawnRagdoll" parent="Props" index="0" instance=ExtResource("15_4qgq4")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1.13853, 0.5, -0.267807)
+activeRagdollEnabled = true
+startOnInstance = true
+
+[node name="untitled" parent="Props" index="1" instance=ExtResource("7_4j4hu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.7448, 0.5, -3.38265)
 
 [node name="Skeleton3D" parent="Props/untitled/Armature" index="0"]
@@ -379,7 +385,7 @@ libraries = {
 "": SubResource("AnimationLibrary_crhox")
 }
 
-[node name="untitled2" parent="Props" index="1" node_paths=PackedStringArray("physSkel", "animSkeleton") instance=ExtResource("7_4j4hu")]
+[node name="untitled2" parent="Props" index="2" node_paths=PackedStringArray("physSkel", "animSkeleton") instance=ExtResource("7_4j4hu")]
 transform = Transform3D(1, 0, 0, 0, 0.996947, -0.0780763, 0, 0.0780763, 0.996947, -2.7448, 3.29518, 5.33373)
 script = SubResource("GDScript_x30ca")
 physSkel = NodePath("Armature/Skeleton3D")
@@ -389,11 +395,11 @@ animSkeleton = NodePath("../untitled/Armature/Skeleton3D")
 surface_material_override/0 = SubResource("StandardMaterial3D_effxa")
 
 [node name="Physical Bone Bone" type="PhysicalBone3D" parent="Props/untitled2/Armature/Skeleton3D" index="1" node_paths=PackedStringArray("animSkeleton")]
-transform = Transform3D(1, -2.18377e-21, -1.7752e-15, -1.7752e-15, -7.45058e-09, -1, 2.17052e-21, 1, -7.45058e-09, 0, 1.00071, -0.199311)
+transform = Transform3D(1, -2.17053e-21, -1.7752e-15, -1.7752e-15, -7.45058e-09, -1, 2.15729e-21, 1, -7.45058e-09, 0, 1.00071, -0.199311)
 collision_layer = 2
 collision_mask = 11
 joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.77646e-15, 1.62199e-05, 1.00071)
-body_offset = Transform3D(1, -2.17053e-21, -1.7752e-15, -1.7752e-15, -7.45058e-09, -1, 2.17052e-21, 1, -7.45058e-09, 0, 1.00071, -1.62125e-05)
+body_offset = Transform3D(1, -2.17053e-21, -1.7752e-15, -1.7752e-15, -7.45058e-09, -1, 2.15729e-21, 1, -7.45058e-09, 0, 1.00071, -1.62125e-05)
 bone_name = "Bone"
 script = SubResource("GDScript_8s8wa")
 animSkeleton = NodePath("../../../../untitled/Armature/Skeleton3D")
@@ -407,8 +413,8 @@ transform = Transform3D(1, 2.38418e-07, 4.56523e-13, -1.77636e-15, 1.92225e-06, 
 collision_layer = 2
 collision_mask = 11
 joint_type = 1
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.53674e-07, 3.30595e-05, 0.906664)
-body_offset = Transform3D(1, -2.13163e-13, -1.77636e-15, -1.77636e-15, 1.92225e-06, -1, 0, 1, 1.9297e-06, -9.53674e-07, 0.906665, -3.48091e-05)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.53674e-07, 3.30663e-05, 0.906664)
+body_offset = Transform3D(1, -2.41585e-13, -1.77636e-15, -1.77636e-15, 1.92225e-06, -1, 0, 1, 1.92225e-06, -9.53674e-07, 0.906665, -3.48091e-05)
 bone_name = "Bone.001"
 joint_constraints/bias = 0.3
 joint_constraints/damping = 1.0
@@ -420,11 +426,6 @@ matching_force = 5
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Props/untitled2/Armature/Skeleton3D/Physical Bone Bone_001" index="0"]
 transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, 0)
 shape = SubResource("CapsuleShape3D_vamy4")
-
-[node name="pawnRagdoll" parent="Props" index="2" instance=ExtResource("15_4qgq4")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1.25566, 0.940139, 1.10907)
-activeRagdollEnabled = true
-startOnInstance = true
 
 [node name="Beretta" parent="Props" index="3" instance=ExtResource("4_a2bgr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5649, 3.09809)

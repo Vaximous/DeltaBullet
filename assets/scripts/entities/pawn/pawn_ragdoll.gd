@@ -1,5 +1,6 @@
 extends Node3D
 class_name PawnRagdoll
+signal activeRagdollChanged(value:bool)
 
 var visibleOnScreen : bool = true
 ##Pawn Parts
@@ -26,13 +27,15 @@ var visibleOnScreen : bool = true
 @onready var physicalBoneSimulator : PhysicalBoneSimulator3D = $Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D:
 	set(value):
 		physicalBoneSimulator = value
-		physicalBoneSimulator.ragdoll = self
 @onready var ragdollMesh:Node3D = $Mesh
 var physicsBones : Array[PhysicalBone3D]
 @export_category("Ragdoll")
 var savedPose :Array[Transform3D]
 @export_subgroup("Active Ragdoll")
-@export var activeRagdollEnabled:bool = false
+@export var activeRagdollEnabled:bool = false:
+	set(value):
+		activeRagdollEnabled = value
+		activeRagdollChanged.emit(value)
 @export var targetSkeleton : Skeleton3D
 @export_subgroup("Behavior")
 ##Start simulation on create
@@ -71,6 +74,7 @@ func _ready()-> void:
 	if startOnInstance:
 		startRagdoll()
 
+	physicalBoneSimulator.ragdoll = self
 	checkClothingHider()
 
 func startRagdoll()-> void:

@@ -292,21 +292,22 @@ func get_hit_target(raycast : RayCast3D) -> Vector3:
 
 	var state : PhysicsDirectSpaceState3D = get_world_3d().direct_space_state
 	var rayq : PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.create(raycast.global_position, ray_target_point, 0b10000, [])
-	rayq.collide_with_areas = true
-	rayq.hit_back_faces = true
-	rayq.hit_from_inside = false
-	rayq.exclude.append(RID(weaponOwner))
-	for hitbox in weaponOwner.getAllHitboxes():
-		rayq.exclude.append(RID(hitbox))
-	var intersect = state.intersect_ray(rayq)
-	if !intersect.is_empty():
-		ray_target_point = intersect['position']
-	else:
-		rayq.collide_with_areas = false
-		rayq.collision_mask = raycast.collision_mask
-		intersect = state.intersect_ray(rayq)
+	if state != null:
+		rayq.collide_with_areas = true
+		rayq.hit_back_faces = true
+		rayq.hit_from_inside = false
+		rayq.exclude.append(RID(weaponOwner))
+		for hitbox in weaponOwner.getAllHitboxes():
+			rayq.exclude.append(RID(hitbox))
+		var intersect = state.intersect_ray(rayq)
 		if !intersect.is_empty():
 			ray_target_point = intersect['position']
+		else:
+			rayq.collide_with_areas = false
+			rayq.collision_mask = raycast.collision_mask
+			intersect = state.intersect_ray(rayq)
+			if !intersect.is_empty():
+				ray_target_point = intersect['position']
 	return ray_target_point
 
 

@@ -549,6 +549,7 @@ func createRagdoll(impulse_bone : int = 0,killer = null)->PawnRagdoll:
 		var child = ragdoll.physicalBoneSimulator.get_child(bones)
 		if child is RagdollBone:
 			if child.get_bone_id() == impulse_bone:
+				child.canBleed = true
 				if child.healthComponent and killer != null and killer.currentItem != null:
 					child.healthComponent.damage(killer.currentItem.weaponResource.weaponDamage * randf_range(1.5,2),killer)
 	if impulse_bone == 41:

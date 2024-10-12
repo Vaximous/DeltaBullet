@@ -5,7 +5,12 @@ signal isAwake
 signal onHit(impulse,vector)
 @export_category("Ragdoll Bone")
 var boneCooldownTimer : Timer = Timer.new()
-var ownerSkeleton : Skeleton3D
+var ownerSkeleton : Skeleton3D:
+	set(value):
+		ownerSkeleton = value
+		#if !get_owner().physicalBoneSimulator.modification_processed.is_connected(doActiveRagdoll):
+			#get_owner().physicalBoneSimulator.modification_processed.connect(doActiveRagdoll)
+			#print("connected")
 var ragdoll : PawnRagdoll:
 	set(value):
 		ragdoll = value
@@ -38,9 +43,14 @@ var boneState:bool:
 		boneState = value
 		if boneState == true:
 			isAsleep.emit()
+			if !hasBled and canBleed:
+				gameManager.createBloodPool(global_position,randf_range(0.3,1.6))
+				hasBled = true
 		else:
 			isAwake.emit()
 var whirrSound : bool = false
+var canBleed : bool = false
+var hasBled : bool = false
 @export var activeRagdollBone : bool = true
 @export var activeRagdollForce = 1
 @export_subgroup("Impact Hits")
@@ -127,7 +137,7 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 	boneState = state.sleeping
 	currentVelocity = state.get_linear_velocity()
 	contactCount = state.get_contact_count()
-	if audioCooldown > 0:
+	if audioCooldown > 0 or boneState == true:
 			return
 	#print(bonePhysics)
 	if state.get_contact_count() > 0 and !boneState:
@@ -183,6 +193,7 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 		#audioCooldown -= delta
 
 func hit(dmg, dealer=null, hitImpulse:Vector3 = Vector3.ZERO, hitPoint:Vector3 = Vector3.ZERO)->void:
+	canBleed = true
 	emit_signal("onHit",hitImpulse,hitPoint)
 	apply_central_impulse(hitImpulse)
 	if get_bone_id() == 41:
@@ -228,6 +239,7 @@ func createBurstOfPhysicsBlood(amountMin:int,amountMax:int,maxImpulse:int)->void
 
 
 func doPulverizeEffect()->void:
+	canBleed = true
 	var pulverizeSound : AudioStreamPlayer3D = AudioStreamPlayer3D.new()
 	pulverizeSound.stream = load("res://assets/misc/obliterateStream.tres")
 	pulverizeSound.bus = &"Sounds"
@@ -252,3 +264,9 @@ func doPulverizeEffect()->void:
 			bone.collision_mask = 0
 			#findPhysicsBone(childrenIDs).mass = 0
 	#createBurstOfBlood(10,15,25)
+
+func doActiveRagdoll(value:bool)->void:
+	if get_owner().targetSkeleton != null:
+		var boneTarget = get_owner().targetSkeleton.global_transform * get_owner().targetSkeleton.get_bone_global_pose(get_bone_id())
+		var boneTargetRotation = get_owner().targetSkeleton.quaternion * get_owner().targetSkeleton.get_bone_pose_rotation(get_bone_id())
+		print("%s Rotation : %s"%[name,boneTargetRotation])

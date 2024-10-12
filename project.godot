@@ -91,7 +91,7 @@ naming/scene_name_casing=1
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/SphynxMotionBlurToolkit/plugin.cfg", "res://addons/boujie_water_shader/plugin.cfg", "res://addons/cutscenemaker/plugin.cfg", "res://addons/debug_menu/plugin.cfg", "res://addons/dialogic/plugin.cfg", "res://addons/finite_state_machine/plugin.cfg", "res://addons/gdscriptlinesofcode/plugin.cfg", "res://addons/qodot/plugin.cfg", "res://addons/thread_pool/plugin.cfg")
+enabled=PackedStringArray("res://addons/SphynxMotionBlurToolkit/plugin.cfg", "res://addons/boujie_water_shader/plugin.cfg", "res://addons/cutscenemaker/plugin.cfg", "res://addons/debug_menu/plugin.cfg", "res://addons/dialogic/plugin.cfg", "res://addons/finite_state_machine/plugin.cfg", "res://addons/gdscriptlinesofcode/plugin.cfg", "res://addons/qodot/plugin.cfg")
 
 [file_customization]
 

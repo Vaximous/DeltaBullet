@@ -77,6 +77,7 @@ var bonePhysics : PhysicsDirectBodyState3D
 @export_subgroup("Information")
 @export var currentVelocity : Vector3
 @export var contactCount : int
+var initialRotation = get("joint_rotation")
 
 var audioStreamPlayer : AudioStreamPlayer3D
 var inAirStreamPlayer : AudioStreamPlayer3D
@@ -139,7 +140,23 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 	contactCount = state.get_contact_count()
 	if audioCooldown > 0 or boneState == true:
 			return
-	#print(bonePhysics)
+
+	if ragdoll.activeRagdollEnabled and !get_bone_id() == 0 and !get_bone_id() == -1 and ragdoll.targetSkeleton.get_bone_parent(get_bone_id()) > -1:
+		var boneBasis: Basis = ragdoll.targetSkeleton.get_bone_rest(get_bone_id()).basis
+		var jointTarget : Transform3D = get("joint_offset")
+		var parentBone = ragdoll.targetSkeleton.get_bone_parent(get_bone_id())
+		var parentRestGlobal = ragdoll.targetSkeleton.get_bone_global_rest(parentBone).basis
+		var targetLocalPose : Basis = ragdoll.targetSkeleton.get_bone_pose(get_bone_id()).basis
+		var globalRestPose : Basis = ragdoll.targetSkeleton.get_bone_global_rest(get_bone_id()).basis
+		var worldSpacePose = parentRestGlobal * targetLocalPose.inverse()
+		var rotationDifferenceWorldspace = worldSpacePose * globalRestPose
+		var poseJointspace = initialRotation.inverse() * worldSpacePose
+		var restJointspace = initialRotation.inverse() * globalRestPose
+		var jointspaceDifference = poseJointspace * restJointspace.inverse()
+
+		print(initialRotation)
+		state.apply_torque(rotationDifferenceWorldspace.get_euler() * 50)
+
 	if state.get_contact_count() > 0 and !boneState:
 		if exclusionArray.has(state.get_contact_collider(0)):
 			return
@@ -253,7 +270,8 @@ func doPulverizeEffect()->void:
 	bloodSpurt.amount = randi_range(50,85)
 	bloodSpurt.emitting = true
 	collision_layer = 0
-	collision_mask = 0
+	collision_mask = 1
+	joint_type = JOINT_TYPE_NONE
 	gameManager.sprayBlood(global_position,randi_range(3,15),500,1.2)
 	#mass = 0.01
 	for childrenIDs in getBoneChildren(ragdoll.ragdollSkeleton,self):

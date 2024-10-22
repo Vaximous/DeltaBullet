@@ -25,13 +25,10 @@ func _process(delta)->void:
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("gEscape"):
 		if canPause:
-			if Dialogic.current_timeline == null:
-				if visible:
-					unpauseGame()
-				else:
-					pauseGame()
+			if visible:
+				unpauseGame()
 			else:
-				Dialogic.end_timeline()
+				pauseGame()
 
 func _on_resume_button_pressed()->void:
 	unpauseGame()
@@ -54,7 +51,7 @@ func unpauseGame()->void:
 func pauseGame()->void:
 	resumeButton.focus_mode = 2
 	musicManager.pauseMusic()
-	Dialogic.end_timeline()
+	#Dialogic.end_timeline()
 	secondSound.play()
 	Input.mouse_mode = gameManager.get_meta(&"stored_mouse_mode", Input.MOUSE_MODE_CAPTURED)
 	gameManager.showMouse()

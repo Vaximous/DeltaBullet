@@ -55,16 +55,9 @@ var isInShop = false
 
 func _ready():
 #	shopHud.hide()
-	Dialogic.VAR.set('tsimkShopRadioDestroyed',false)
+	#Dialogic.VAR.set('tsimkShopRadioDestroyed',false)
 	shopCam.current = false
-	Dialogic.signal_event.connect(_on_dialogic_signal)
-
-func _on_dialogic_signal(argument:String):
-	if argument == \"tsimkShop\":
-		await Fade.fade_out(0.3, Color(0,0,0,1),\"GradientVertical\",false,true).finished
-		Dialogic.end_timeline()
-		enableShop()
-
+	#Dialogic.signal_event.connect(_on_dialogic_signal)
 
 
 func _unhandled_input(event):
@@ -99,10 +92,6 @@ func disableShop():
 		gameManager.hideMouse()
 		gameManager.activeCamera.camera.make_current()
 		gameManager.removeShop()
-
-
-func _on_hitbox_damaged(amount, impulse, vector):
-	Dialogic.VAR.set('tsimkShopRadioDestroyed',true)
 "
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_7757a"]

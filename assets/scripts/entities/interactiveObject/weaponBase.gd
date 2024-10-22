@@ -301,7 +301,10 @@ func get_hit_target(raycast : RayCast3D) -> Vector3:
 			rayq.exclude.append(RID(hitbox))
 		var intersect = state.intersect_ray(rayq)
 		if !intersect.is_empty():
-			ray_target_point = intersect['position']
+			if weaponOwner and !ray_target_point.z > weaponOwner.global_position.z:
+				ray_target_point = intersect['position']
+			else:
+				ray_target_point = intersect['position']
 		else:
 			rayq.collide_with_areas = false
 			rayq.collision_mask = raycast.collision_mask

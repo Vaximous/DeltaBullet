@@ -277,26 +277,30 @@ func getDirFromAngle(angleInDeg:float) -> Vector3:
 func ceaseAI() -> void:
 	navAgent.queue_free()
 	if isInDialogue:
-		Dialogic.end_timeline()
+		#Dialogic.end_timeline()
+		pass
 
 func addRaycastException(object:Node3D) -> void:
 	aimCast.add_exception(object)
 	#$pawnGrabber/rayCast3d.add_exception(object)
 
 func speakTrigger(dialogue) -> void:
-	if pawnOwner:
-		if !pawnOwner.isPawnDead:
-			if dialogue != "":
-				if Dialogic.current_timeline != null:
-					return
-				Dialogic.start(dialogue)
-				isInDialogue = true
-				if dialogueStartingCamera != null:
-					var dialogue_cam : Node3D = gameManager.create_dialogue_camera()
-					gameManager.world.add_child(dialogue_cam)
-					dialogue_cam.activate(get_viewport().get_camera_3d(), dialogueStartingCamera.position,dialogueStartingCamera.rotation)
-					Dialogic.timeline_ended.connect(dialogue_cam.remove)
-				get_viewport().set_input_as_handled()
+	##Replace Dialogic with a custom solution
+	pass
+
+	#if pawnOwner:
+		#if !pawnOwner.isPawnDead:
+			#if dialogue != "":
+				#if Dialogic.current_timeline != null:
+					#return
+				#Dialogic.start(dialogue)
+				#isInDialogue = true
+				#if dialogueStartingCamera != null:
+					#var dialogue_cam : Node3D = gameManager.create_dialogue_camera()
+					#gameManager.world.add_child(dialogue_cam)
+					#dialogue_cam.activate(get_viewport().get_camera_3d(), dialogueStartingCamera.position,dialogueStartingCamera.rotation)
+					#Dialogic.timeline_ended.connect(dialogue_cam.remove)
+				#get_viewport().set_input_as_handled()
 
 func setInteractablePawn(value:bool = false) -> void:
 	if value == true:

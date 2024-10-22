@@ -55,7 +55,7 @@ func _on_visible_on_screen_notifier_3d_screen_entered()->void:
 func _on_visible_on_screen_notifier_3d_screen_exited()->void:
 	hide()
 
-func grow():
+func grow()->void:
 	var tween = create_tween()
 	tween.set_ease(defaultEaseType)
 	tween.set_trans(defaultTransitionType)

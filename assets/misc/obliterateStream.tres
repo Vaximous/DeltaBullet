@@ -1,9 +1,13 @@
-[gd_resource type="AudioStreamRandomizer" load_steps=2 format=3 uid="uid://ba1ryt3qk6f06"]
+[gd_resource type="AudioStreamRandomizer" load_steps=4 format=3 uid="uid://ba1ryt3qk6f06"]
 
-[ext_resource type="AudioStream" uid="uid://dm7rc8vhqi7wj" path="res://assets/sounds/gore/obliterate.wav" id="1_0takf"]
+[ext_resource type="AudioStream" uid="uid://cvgy5v0r80fvn" path="res://assets/sounds/gore/fleshBurst2.wav" id="1_hfyty"]
+[ext_resource type="AudioStream" uid="uid://gdhos3k4431p" path="res://assets/sounds/gore/fleshBurst3.wav" id="2_au8ey"]
+[ext_resource type="AudioStream" uid="uid://bdgn3hubxkh56" path="res://assets/sounds/gore/fleshBurst.wav" id="3_diuhq"]
 
 [resource]
 random_pitch = 1.2
 random_volume_offset_db = 0.5
-streams_count = 1
-stream_0/stream = ExtResource("1_0takf")
+streams_count = 3
+stream_0/stream = ExtResource("1_hfyty")
+stream_1/stream = ExtResource("2_au8ey")
+stream_2/stream = ExtResource("3_diuhq")

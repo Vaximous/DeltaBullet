@@ -21,7 +21,7 @@ func pauseGame()->void:
 	tween.tween_property(backgroundElement,"modulate",Color.WHITE,0.065)
 	tween.tween_property(backgroundElement,"position",Vector2(0,0),0.065)
 	musicManager.pauseMusic()
-	Dialogic.end_timeline()
+	#Dialogic.end_timeline()
 	Input.mouse_mode = gameManager.get_meta(&"stored_mouse_mode", Input.MOUSE_MODE_CAPTURED)
 	gameManager.showMouse()
 	refreshBG()

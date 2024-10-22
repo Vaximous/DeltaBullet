@@ -68,7 +68,7 @@ func hit(dmg, dealer=null, hitImpulse:Vector3 = Vector3.ZERO, hitPoint:Vector3 =
 				healthComponent.componentOwner.attachedCam.camera.fov -= randf_range(1.8,4.8)
 				healthComponent.componentOwner.attachedCam.fireRecoil(randf_range(8,14),randf_range(1,4),randf_range(9,13),true)
 				healthComponent.componentOwner.attachedCam.fireVignette(1.2,Color.RED)
-				Dialogic.end_timeline()
+				#Dialogic.end_timeline()
 
 	if dealer:
 		emit_signal("damaged",dmg,hitImpulse,hitPoint, dealer)

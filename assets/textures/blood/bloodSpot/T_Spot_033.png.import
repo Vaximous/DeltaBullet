@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://d0shl7eyi7nd0"
-path="res://.godot/imported/T_Spot_033.png-4eff440f8b93aa62cb7c10a8c8d67d9b.ctex"
+path.s3tc="res://.godot/imported/T_Spot_033.png-4eff440f8b93aa62cb7c10a8c8d67d9b.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/textures/blood/bloodSpot/T_Spot_033.png"
-dest_files=["res://.godot/imported/T_Spot_033.png-4eff440f8b93aa62cb7c10a8c8d67d9b.ctex"]
+dest_files=["res://.godot/imported/T_Spot_033.png-4eff440f8b93aa62cb7c10a8c8d67d9b.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1

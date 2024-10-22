@@ -117,14 +117,14 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 func _ready()->void:
 	camera.make_current()
 	checkMotionBlur()
-	Dialogic.current_timeline = null
-	Dialogic.end_timeline()
+	#Dialogic.current_timeline = null
+	#Dialogic.end_timeline()
 	gameManager.activeCamera = self
 	currentFOV = gameManager.defaultFOV
 	gameManager.hideMouse()
 	aimFOV = currentFOV - zoomAmount
 	Fade.fade_in(0.3, Color(0,0,0,1),"GradientVertical",false,true)
-	Dialogic.timeline_started.connect(playTextAppearSound)
+	#Dialogic.timeline_started.connect(playTextAppearSound)
 	UserConfig.configs_updated.connect(checkMotionBlur)
 
 func checkMotionBlur()->void:

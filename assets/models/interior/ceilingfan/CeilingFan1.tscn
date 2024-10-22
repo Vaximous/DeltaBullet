@@ -1,0 +1,95 @@
+[gd_scene load_steps=8 format=3 uid="uid://di866eg0fde63"]
+
+[ext_resource type="PackedScene" uid="uid://dcswmv66wuv7q" path="res://assets/models/interior/ceilingfan/ceilingFan1.gltf" id="1_h757v"]
+
+[sub_resource type="GDScript" id="GDScript_larxg"]
+script/source = "@tool
+extends Node3D
+
+@export var spinSpeed : float = 1.0:
+	set(value):
+		spinSpeed = value
+		$animationPlayer.speed_scale = spinSpeed
+@export var lightOn : bool = true:
+	set(value):
+		lightOn = value
+		var n = get_node_or_null(^\"FanLight\")
+		if lightOn:
+			$fanBase/fanLight.material_override = lightOnMaterial
+			if n is Light3D:
+				n.light_energy = n.get_meta(&\"light_energy\", n.light_energy)
+		else:
+			$fanBase/fanLight.material_override = lightOffMaterial
+			if n is Light3D:
+				n.set_meta(&\"light_energy\", n.light_energy)
+				n.light_energy = 0.0
+
+
+@export var lightOnMaterial : StandardMaterial3D
+@export var lightOffMaterial : StandardMaterial3D
+"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wif0s"]
+shading_mode = 0
+albedo_color = Color(1.5, 1.19, 0.89, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0448m"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.568)
+roughness = 0.9
+backlight = Color(0.956863, 0, 0, 1)
+refraction_enabled = true
+
+[sub_resource type="Animation" id="Animation_n5aag"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("fanBase/fanSpinner:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_wh0h4"]
+resource_name = "fanspin"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("fanBase/fanSpinner:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 6.28319, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yeljg"]
+_data = {
+"RESET": SubResource("Animation_n5aag"),
+"fanspin": SubResource("Animation_wh0h4")
+}
+
+[node name="ceilingFan1" instance=ExtResource("1_h757v")]
+editor_description = "Adding a child node named \"FanLight\" of type Light3D will allow it to sync with the light's on/off state."
+script = SubResource("GDScript_larxg")
+lightOnMaterial = SubResource("StandardMaterial3D_wif0s")
+lightOffMaterial = SubResource("StandardMaterial3D_0448m")
+
+[node name="animationPlayer" type="AnimationPlayer" parent="." index="0"]
+libraries = {
+"": SubResource("AnimationLibrary_yeljg")
+}
+autoplay = "fanspin"
+
+[node name="fanLight" parent="fanBase" index="0"]
+material_override = SubResource("StandardMaterial3D_wif0s")
+
+[connection signal="ready" from="." to="animationPlayer" method="play" binds= [&"fanspin"]]

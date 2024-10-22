@@ -65,6 +65,12 @@ func get_persistent_data() -> Dictionary:
 	return {}
 
 
+func modify_persistent_data(key : String, value : Variant) -> void:
+	var data = get_persistent_data()
+	data[key] = value
+	write_persistent_data(data)
+
+
 func write_persistent_data(data : Dictionary) -> void:
 	var file = FileAccess.open_compressed(userDir.get_current_dir() + "persistence", FileAccess.WRITE, FileAccess.COMPRESSION_GZIP)
 	file.store_var(data)

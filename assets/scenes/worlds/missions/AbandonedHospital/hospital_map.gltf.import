@@ -1,0 +1,425 @@
+[remap]
+
+importer="scene"
+importer_version=1
+type="PackedScene"
+uid="uid://bqffl0bhp3lhf"
+path="res://.godot/imported/hospital_map.gltf-cf2e2a2cb1a5673c45ad926dec31035b.scn"
+
+[deps]
+
+source_file="res://assets/scenes/worlds/missions/AbandonedHospital/hospital_map.gltf"
+dest_files=["res://.godot/imported/hospital_map.gltf-cf2e2a2cb1a5673c45ad926dec31035b.scn"]
+
+[params]
+
+nodes/root_type=""
+nodes/root_name=""
+nodes/apply_root_scale=true
+nodes/root_scale=1.0
+nodes/import_as_skeleton_bones=false
+meshes/ensure_tangents=true
+meshes/generate_lods=true
+meshes/create_shadow_meshes=true
+meshes/light_baking=1
+meshes/lightmap_texel_size=0.2
+meshes/force_disable_compression=false
+skins/use_named_skins=true
+animation/import=true
+animation/fps=30
+animation/trimming=false
+animation/remove_immutable_tracks=true
+animation/import_rest_as_RESET=false
+import_script/path=""
+_subresources={
+"materials": {
+"Material.001": {
+"use_external/enabled": true,
+"use_external/path": "res://assets/scenes/worlds/missions/AbandonedHospital/Material.001.tres"
+},
+"Material.002": {
+"use_external/enabled": true,
+"use_external/path": "res://assets/scenes/worlds/missions/AbandonedHospital/Material.002.tres"
+}
+},
+"meshes": {
+"hospital_map_Cube_001": {
+"generate/lightmap_uv": 1,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
+"save_to_file/enabled": false,
+"save_to_file/path": ""
+},
+"hospital_map_DoorHandleAntiTamperGuardMesh": {
+"generate/lightmap_uv": 1,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
+"save_to_file/enabled": false,
+"save_to_file/path": ""
+},
+"hospital_map_DoorHandleBaseMesh": {
+"generate/lightmap_uv": 1,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
+"save_to_file/enabled": false,
+"save_to_file/path": ""
+},
+"hospital_map_DoorHandleHandleMesh": {
+"generate/lightmap_uv": 1,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
+"save_to_file/enabled": false,
+"save_to_file/path": ""
+},
+"hospital_map_DoorScannerMesh": {
+"generate/lightmap_uv": 1,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
+"save_to_file/enabled": false,
+"save_to_file/path": ""
+},
+"hospital_map_Plane": {
+"generate/lightmap_uv": 1,
+"generate/lods": 1,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
+"save_to_file/enabled": false,
+"save_to_file/path": ""
+},
+"hospital_map_Plane_002": {
+"generate/lightmap_uv": 1,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
+"save_to_file/enabled": false,
+"save_to_file/path": ""
+},
+"hospital_map_Plane_004": {
+"generate/lightmap_uv": 1,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
+"save_to_file/enabled": false,
+"save_to_file/path": ""
+},
+"hospital_map_Plane_009": {
+"generate/lightmap_uv": 1,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
+"save_to_file/enabled": false,
+"save_to_file/path": ""
+},
+"hospital_map_Plane_014": {
+"generate/lightmap_uv": 1,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
+"save_to_file/enabled": false,
+"save_to_file/path": ""
+},
+"hospital_map_Plane_017": {
+"generate/lightmap_uv": 1,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
+"save_to_file/enabled": false,
+"save_to_file/path": ""
+},
+"hospital_map_Plane_018": {
+"generate/lightmap_uv": 1,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
+"save_to_file/enabled": false,
+"save_to_file/path": ""
+},
+"hospital_map_Plane_020": {
+"generate/lightmap_uv": 1,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
+"save_to_file/enabled": false,
+"save_to_file/path": ""
+},
+"hospital_map_Plane_021": {
+"generate/lightmap_uv": 1,
+"generate/lods": 1,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
+"save_to_file/enabled": false,
+"save_to_file/path": ""
+},
+"hospital_map_Plane_023": {
+"generate/lightmap_uv": 1,
+"generate/lods": 1,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
+"save_to_file/enabled": false,
+"save_to_file/path": ""
+},
+"hospital_map_Plane_028": {
+"generate/lightmap_uv": 1,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
+"save_to_file/enabled": false,
+"save_to_file/path": ""
+},
+"hospital_map_Plane_029": {
+"generate/lightmap_uv": 1,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
+"save_to_file/enabled": false,
+"save_to_file/path": ""
+},
+"hospital_map_Plane_030": {
+"generate/lightmap_uv": 1,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
+"save_to_file/enabled": false,
+"save_to_file/path": ""
+},
+"hospital_map_Plane_031": {
+"generate/lightmap_uv": 1,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
+"save_to_file/enabled": false,
+"save_to_file/path": ""
+},
+"hospital_map_Plane_046": {
+"generate/lightmap_uv": 1,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
+"save_to_file/enabled": false,
+"save_to_file/path": ""
+},
+"hospital_map_Plane_047": {
+"generate/lightmap_uv": 1,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
+"save_to_file/enabled": false,
+"save_to_file/path": ""
+},
+"hospital_map_Plane_048": {
+"generate/lightmap_uv": 1,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
+"save_to_file/enabled": false,
+"save_to_file/path": ""
+},
+"hospital_map_Plane_051": {
+"generate/lightmap_uv": 1,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
+"save_to_file/enabled": false,
+"save_to_file/path": ""
+},
+"hospital_map_Plane_052": {
+"generate/lightmap_uv": 1,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
+"save_to_file/enabled": false,
+"save_to_file/path": ""
+},
+"hospital_map_Plane_054": {
+"generate/lightmap_uv": 1,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
+"save_to_file/enabled": false,
+"save_to_file/path": ""
+},
+"hospital_map_Plane_056": {
+"generate/lightmap_uv": 1,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
+"save_to_file/enabled": false,
+"save_to_file/path": ""
+},
+"hospital_map_SmallDoorFrameMesh": {
+"generate/lightmap_uv": 1,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
+"save_to_file/enabled": false,
+"save_to_file/path": ""
+},
+"hospital_map_SmallDoorGenericMesh": {
+"generate/lightmap_uv": 1,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
+"save_to_file/enabled": false,
+"save_to_file/path": ""
+}
+},
+"nodes": {
+"PATH:hospitalLevel/hospital_Basement": {
+"generate/physics": true
+},
+"PATH:hospitalLevel/hospital_Floor1": {
+"generate/physics": true
+},
+"PATH:hospitalLevel/hospital_Floor1/BigCurvedReceptionDesk": {
+"generate/physics": true
+},
+"PATH:hospitalLevel/hospital_Floor1/BigWallSign": {
+"generate/physics": true
+},
+"PATH:hospitalLevel/hospital_Floor1/BigassWindow_glass": {
+"generate/physics": true
+},
+"PATH:hospitalLevel/hospital_Floor1/BigassWindow_glass_001": {
+"generate/physics": true
+},
+"PATH:hospitalLevel/hospital_Floor1/CozyChair": {
+"generate/physics": true
+},
+"PATH:hospitalLevel/hospital_Floor1/SmallDoorFrame": {
+"generate/physics": true
+},
+"PATH:hospitalLevel/hospital_Floor1/SmallDoorFrame_001": {
+"generate/physics": true
+},
+"PATH:hospitalLevel/hospital_Floor1/SmallDoorFrame_002": {
+"generate/physics": true
+},
+"PATH:hospitalLevel/hospital_Floor1/SmallDoorGeneric": {
+"generate/physics": true
+},
+"PATH:hospitalLevel/hospital_Floor1/SmallDoorGeneric_001": {
+"generate/physics": true
+},
+"PATH:hospitalLevel/hospital_Floor1/SmallDoorGeneric_002": {
+"generate/physics": true
+},
+"PATH:hospitalLevel/hospital_Floor1/Staircase1": {
+"generate/physics": true
+},
+"PATH:hospitalLevel/hospital_Floor1/Staircase1/Staircase1_001": {
+"generate/physics": true
+},
+"PATH:hospitalLevel/hospital_Floor1/Staircase1/Staircase1_002": {
+"generate/physics": true
+},
+"PATH:hospitalLevel/hospital_Floor1/Staircase1/Staircase1_003": {
+"generate/physics": true
+},
+"PATH:hospitalLevel/hospital_Floor1/Staircase1/Staircase1_004": {
+"generate/physics": true
+},
+"PATH:hospitalLevel/hospital_Floor1/Staircase1/Staircase1_005": {
+"generate/physics": true
+},
+"PATH:hospitalLevel/hospital_Floor1/Staircase1/StaircaseRamp": {
+"generate/physics": true
+},
+"PATH:hospitalLevel/hospital_Floor1/Staircase1/StaircaseRamp_001": {
+"generate/physics": true
+},
+"PATH:hospitalLevel/hospital_Floor1/Staircase1/StaircaseRamp_002": {
+"generate/physics": true
+},
+"PATH:hospitalLevel/hospital_Floor1/Staircase1/StaircaseRamp_003": {
+"generate/physics": true
+},
+"PATH:hospitalLevel/hospital_Floor1/Staircase1/StaircaseRamp_004": {
+"generate/physics": true
+},
+"PATH:hospitalLevel/hospital_Floor1/Staircase1/StaircaseRamp_005": {
+"generate/physics": true
+},
+"PATH:hospitalLevel/hospital_Floor1/Staircase1/StaircaseRamp_006": {
+"generate/physics": true
+},
+"PATH:hospitalLevel/hospital_Floor1/Staircase1/StaircaseRamp_007": {
+"generate/physics": true
+},
+"PATH:hospitalLevel/hospital_Floor1/Staircase1/StaircaseRamp_008": {
+"generate/physics": true
+},
+"PATH:hospitalLevel/hospital_Floor1/f1Walls": {
+"generate/occluder": 1
+},
+"PATH:hospitalLevel/hospital_Floor1/f1Walls_001": {
+"generate/occluder": 1,
+"generate/physics": true
+},
+"PATH:hospitalLevel/hospital_Floor1/f1Walls_002": {
+"generate/occluder": 1,
+"generate/physics": true
+},
+"PATH:hospitalLevel/hospital_Floor1/f1Walls_003": {
+"generate/occluder": 1,
+"generate/physics": true
+},
+"PATH:hospitalLevel/hospital_Floor1/f1Walls_004": {
+"generate/occluder": 1,
+"generate/physics": true
+},
+"PATH:hospitalLevel/hospital_Floor1/f1Walls_005": {
+"generate/occluder": 1,
+"generate/physics": true
+},
+"PATH:hospitalLevel/hospital_Floor1/f1Walls_007": {
+"generate/occluder": 1,
+"generate/physics": true
+},
+"PATH:hospitalLevel/hospital_Floor1/f1Walls_008": {
+"generate/occluder": 1,
+"generate/physics": true
+},
+"PATH:hospitalLevel/hospital_Floor2": {
+"generate/physics": true
+},
+"PATH:hospitalLevel/hospital_Floor2/f2Walls": {
+"generate/occluder": 1,
+"generate/physics": true
+}
+}
+}
+gltf/naming_version=1
+gltf/embedded_image_handling=1

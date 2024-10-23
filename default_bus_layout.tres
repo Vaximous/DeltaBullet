@@ -10,12 +10,14 @@ feedback_level_db = -16.0
 
 [sub_resource type="AudioEffectReverb" id="AudioEffectReverb_pyhvs"]
 resource_name = "Reverb"
-predelay_feedback = 0.0
-room_size = 0.33
-damping = 0.0
-spread = 0.35
-dry = 0.24
-wet = 0.04
+predelay_msec = 115.0
+predelay_feedback = 0.51
+room_size = 0.73
+damping = 0.23
+spread = 0.29
+hipass = 0.33
+dry = 0.25
+wet = 0.12
 
 [sub_resource type="AudioEffectReverb" id="AudioEffectReverb_strwm"]
 resource_name = "Reverb"
@@ -41,7 +43,7 @@ bus/2/send = &"Master"
 bus/2/effect/0/effect = SubResource("AudioEffectDelay_idpdn")
 bus/2/effect/0/enabled = false
 bus/2/effect/1/effect = SubResource("AudioEffectReverb_pyhvs")
-bus/2/effect/1/enabled = false
+bus/2/effect/1/enabled = true
 bus/3/name = &"Music"
 bus/3/solo = false
 bus/3/mute = false

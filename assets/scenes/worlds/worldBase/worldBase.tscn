@@ -65,6 +65,7 @@ _spawnable_scenes = PackedStringArray("res://assets/entities/camera/camera.tscn"
 spawn_path = NodePath("../../Pawns/Players")
 
 [node name="GamePauseMenu" parent="." instance=ExtResource("3_2mura")]
+metadata/_edit_use_anchors_ = true
 
 [node name="mapLogic" type="Node" parent="."]
 

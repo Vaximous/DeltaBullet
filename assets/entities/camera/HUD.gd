@@ -32,10 +32,10 @@ var interactVisible:bool = false:
 func _ready()->void:
 	enableHud()
 	gameManager.getEventSignal("playerDied").connect(disableHud)
-	Dialogic.timeline_started.connect(disableHud)
-	Dialogic.timeline_ended.connect(enableHud)
-	Dialogic.timeline_started.connect(gameManager.showMouse)
-	Dialogic.timeline_ended.connect(gameManager.hideMouse)
+	#Dialogic.timeline_started.connect(disableHud)
+	#Dialogic.timeline_ended.connect(enableHud)
+	#Dialogic.timeline_started.connect(gameManager.showMouse)
+	#Dialogic.timeline_ended.connect(gameManager.hideMouse)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta)->void:

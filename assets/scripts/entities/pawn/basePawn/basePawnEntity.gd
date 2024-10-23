@@ -258,7 +258,7 @@ var currentItem : InteractiveObject = null
 					else:
 						attachedCam.hud.getCrosshair().setCrosshair(attachedCam.hud.getCrosshair().defaultCrosshair)
 				attachedCam.itemEquipOffsetToggle = true
-				Dialogic.VAR.set('playerHasWeaponEquipped',true)
+				#Dialogic.VAR.set('playerHasWeaponEquipped',true)
 				#attachedCam.resetCamCast()
 		else:
 			disableRightHand()
@@ -269,7 +269,7 @@ var currentItem : InteractiveObject = null
 						weapon.isEquipped = false
 				weapon.hide()
 			if attachedCam:
-				Dialogic.VAR.set('playerHasWeaponEquipped',false)
+				#Dialogic.VAR.set('playerHasWeaponEquipped',false)
 				attachedCam.itemEquipOffsetToggle = false
 				attachedCam.hud.getCrosshair().setCrosshair(null)
 				#attachedCam.resetCamCast()
@@ -484,7 +484,7 @@ func endAttachedCam()->void:
 		attachedCam.lowHP = false
 		attachedCam.hud.hudEnabled = false
 		attachedCam.resetCamCast()
-		Dialogic.end_timeline()
+		#Dialogic.end_timeline()
 
 func doKillEffect(deathDealer)->void:
 	if deathDealer != null:

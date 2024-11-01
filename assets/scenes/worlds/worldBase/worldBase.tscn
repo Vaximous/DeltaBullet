@@ -11,11 +11,11 @@ script/source = "extends Node
 	set(value):
 		worldEnv = value
 		UserConfig.configs_updated.connect(updateGraphics)
-func _ready():
+func _ready()->void:
 	updateGraphics()
 	UserConfig.configs_updated.connect(updateGraphics)
 
-func updateGraphics():
+func updateGraphics()->void:
 	worldEnv.get_environment().ssil_enabled = UserConfig.graphics_Ssil
 	worldEnv.get_environment().ssr_enabled = UserConfig.graphics_Ssr
 	worldEnv.get_environment().sdfgi_enabled = UserConfig.graphics_Sdfgi

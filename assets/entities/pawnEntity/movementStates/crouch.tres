@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_w6uja")
-movementID = 3
+movementID = 0
 movementSpeed = 0
 acceleration = 8.0
 animationSpeed = 1.0

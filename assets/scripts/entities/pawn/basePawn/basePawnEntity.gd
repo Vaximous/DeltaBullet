@@ -133,6 +133,19 @@ signal cameraAttached
 	get:
 		return attachedCam
 @export_subgroup("Behavior")
+@export var isCrouching : bool = false:
+	set(value):
+		isCrouching = value
+		var crouchSpeed = 0.35
+		if crouchSpaceTween:
+			crouchSpaceTween.kill()
+		crouchSpaceTween = create_tween()
+		if value:
+			crouchSpaceTween.parallel().tween_property(animationTree,"parameters/crouchBlend/blend_amount",1,crouchSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+			crouchSpaceTween.parallel().tween_property(animationTree,"parameters/crouchStrafeBlend/blend_amount",1,crouchSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+		else:
+			crouchSpaceTween.parallel().tween_property(animationTree,"parameters/crouchBlend/blend_amount",0,crouchSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+			crouchSpaceTween.parallel().tween_property(animationTree,"parameters/crouchStrafeBlend/blend_amount",0,crouchSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
 @export var fallDamageEnabled : bool = true
 @export var forceAnimation : bool = false:
 	set(value):
@@ -312,6 +325,7 @@ var rightHandTween : Tween
 var runTween : Tween
 var fallTween : Tween
 var idleSpaceTween : Tween
+var crouchSpaceTween : Tween
 var bodyIKTween : Tween
 var meshRotationTween : Tween
 var meshRotationTweenMovement : Tween

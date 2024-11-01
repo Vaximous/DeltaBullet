@@ -97,6 +97,11 @@ func _input(event: InputEvent) -> void:
 							if !controllingPawn.healthComponent.isDead:
 								controllingPawn.currentItemIndex = controllingPawn.currentItemIndex-1
 
+			if event.is_action_pressed("gCrouch"):
+				if controllingPawn.isCrouching:
+					controllingPawn.isCrouching = false
+				else:
+					controllingPawn.isCrouching = true
 
 			if event.is_action_pressed("gJump"):
 				#emit_signal("actionPressed", str(event.keycode))
@@ -139,10 +144,17 @@ func _input(event: InputEvent) -> void:
 					if controllingPawn.isCurrentlyMoving():
 						if Input.is_action_pressed("gSprint"):
 							controllingPawn.setMovementState.emit(controllingPawn.movementStates["sprint"])
+							controllingPawn.isCrouching = false
 						else:
-							controllingPawn.setMovementState.emit(controllingPawn.movementStates["walk"])
+							if !controllingPawn.isCrouching:
+								controllingPawn.setMovementState.emit(controllingPawn.movementStates["walk"])
+							else:
+								controllingPawn.setMovementState.emit(controllingPawn.movementStates["crouchWalk"])
 					else:
-						controllingPawn.setMovementState.emit(controllingPawn.movementStates["standing"])
+						if !controllingPawn.isCrouching:
+							controllingPawn.setMovementState.emit(controllingPawn.movementStates["standing"])
+						else:
+							controllingPawn.setMovementState.emit(controllingPawn.movementStates["crouch"])
 
 func isMouseHidden()->bool:
 	if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED or Input.get_mouse_mode() == Input.MOUSE_MODE_HIDDEN:

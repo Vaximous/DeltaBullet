@@ -20,6 +20,7 @@ func _physics_process(delta: float) -> void:
 		animationTree.set("parameters/fallBlend/blend_amount", lerpf(animationTree.get("parameters/fallBlend/blend_amount"), 1.0, delta * 12))
 
 	animationTree.set("parameters/aimSprintStrafe/blend_position",Vector2(-pawn.velocity.x, -pawn.velocity.z).rotated(mesh.rotation.y))
+	animationTree.set("parameters/crouchStrafe/blend_position",animationTree.get("parameters/aimSprintStrafe/blend_position"))
 	animationTree.set("parameters/strafeSpace/blend_position",animationTree.get("parameters/aimSprintStrafe/blend_position"))
 
 func _on_pawn_entity_set_movement_state(state: MovementState) -> void:
@@ -28,6 +29,10 @@ func _on_pawn_entity_set_movement_state(state: MovementState) -> void:
 	tweener = create_tween().set_ease(defaultEaseType).set_trans(defaultTransitionType)
 	tweener.tween_property(animationTree,"parameters/idleSpace/blend_position",state.movementID,defaultTweenSpeed)
 	tweener.parallel().tween_property(animationTree,"parameters/idleSpaceSpeed/scale",state.animationSpeed,0.7)
+
+	tweener.parallel().tween_property(animationTree,"parameters/crouchSpace/blend_position",state.movementID,defaultTweenSpeed)
+	tweener.parallel().tween_property(animationTree,"parameters/crouchScale/scale",state.animationSpeed,0.7)
+	tweener.parallel().tween_property(animationTree,"parameters/crouchStrafeScale/scale",state.animationSpeed,0.7)
 
 	match state.movementID:
 		1:

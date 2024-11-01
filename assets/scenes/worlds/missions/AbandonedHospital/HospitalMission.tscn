@@ -14,7 +14,7 @@
 [sub_resource type="Resource" id="Resource_7pmvn"]
 script = ExtResource("2_top7h")
 enableTimeCycle = false
-worldName = ""
+worldName = "Harvelona Hospital"
 worldDescription = ""
 worldType = 0
 spawnPawnsOnLoad = true
@@ -426,11 +426,17 @@ surface_material_override/0 = SubResource("StandardMaterial3D_86tbc")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/hospital_map/hospitalLevel/hospital_Floor1/CozyChair5/StaticBody3D" index="0"]
 shape = SubResource("ConcavePolygonShape3D_18vcu")
 
+[node name="CozyChair_001-rigid" parent="Geometry/hospital_map/hospitalLevel/hospital_Floor1" index="9"]
+collision_layer = 2
+collision_mask = 11
+
 [node name="CozyChair_001-rigid" parent="Geometry/hospital_map/hospitalLevel/hospital_Floor1/CozyChair_001-rigid" index="0"]
 gi_mode = 2
 
 [node name="CozyChair_001-rigid2" type="RigidBody3D" parent="Geometry/hospital_map/hospitalLevel/hospital_Floor1" index="10"]
 transform = Transform3D(0.0361422, 0, 0, 0, 0.0361422, 0, 0, 0, 0.0361422, -54.3111, 0.674453, -5.19822)
+collision_layer = 2
+collision_mask = 11
 
 [node name="CozyChair_001-rigid" type="MeshInstance3D" parent="Geometry/hospital_map/hospitalLevel/hospital_Floor1/CozyChair_001-rigid2" index="0"]
 gi_mode = 2

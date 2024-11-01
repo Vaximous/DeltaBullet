@@ -511,6 +511,8 @@ func doKillEffect(deathDealer)->void:
 				healthComponent.killerSignalEmitted = true
 
 func die(killer) -> void:
+	animationTree.set("parameters/standToCrouchAdd/add_amount", 0)
+	animationTree.set("parameters/standToCrouchStrafe/add_amount", 0)
 	doKillEffect(killer)
 	createRagdoll(lastHitPart, killer)
 	#moveDecalsToRagdoll(ragdoll)

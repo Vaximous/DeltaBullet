@@ -69,6 +69,7 @@ func getPlayerSpawnPoints(offset:Vector3 = Vector3(0,0,0), pickRandom:bool = tru
 		else:
 			return null
 
+
 func playSoundscape()->void:
 	if worldData.soundScape:
 		var audioStreamPlayer : AudioStreamPlayer = AudioStreamPlayer.new()
@@ -76,6 +77,7 @@ func playSoundscape()->void:
 		audioStreamPlayer.bus = 'Ambience'
 		audioStreamPlayer.stream = worldData.soundScape
 		audioStreamPlayer.play()
+
 
 func setupWorld()-> void:
 	if worldData != null:

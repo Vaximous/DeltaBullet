@@ -13,6 +13,7 @@ func _process(delta)->void:
 			pass
 			#queue_free()
 
+
 func healPawn(pawn:BasePawn)->void:
 	if !beenUsed:
 		if pawn:

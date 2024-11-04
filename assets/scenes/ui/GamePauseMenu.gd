@@ -22,7 +22,7 @@ func _process(delta)->void:
 		modulate = Color.TRANSPARENT
 		gradientBG.self_modulate = lerp(gradientBG.self_modulate,Color.TRANSPARENT,fadeSpeed*delta)
 
-func _input(event: InputEvent) -> void:
+func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("gEscape"):
 		if canPause:
 			if visible:

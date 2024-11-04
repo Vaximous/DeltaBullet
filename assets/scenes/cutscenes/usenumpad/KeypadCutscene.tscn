@@ -1,0 +1,380 @@
+[gd_scene load_steps=23 format=3 uid="uid://citgcktxewfra"]
+
+[ext_resource type="Texture2D" uid="uid://q4fg1iy2xxdc" path="res://assets/scenes/cutscenes/usenumpad/bg.PNG" id="1_4klvt"]
+[ext_resource type="Texture2D" uid="uid://lpmr0wx26kfv" path="res://assets/scenes/cutscenes/usenumpad/num1.PNG" id="2_borcg"]
+[ext_resource type="Texture2D" uid="uid://6bs24g3ustfh" path="res://assets/scenes/cutscenes/usenumpad/num2.PNG" id="3_dd1w5"]
+[ext_resource type="Texture2D" uid="uid://dq6yf0okq183d" path="res://assets/scenes/cutscenes/usenumpad/num3.PNG" id="4_rsfnx"]
+[ext_resource type="Texture2D" uid="uid://c2pit2qaimhjo" path="res://assets/scenes/cutscenes/usenumpad/num4.PNG" id="5_0173p"]
+[ext_resource type="Texture2D" uid="uid://ic1g4v1pg4yc" path="res://assets/scenes/cutscenes/usenumpad/num5.PNG" id="6_n00ky"]
+[ext_resource type="Texture2D" uid="uid://bp7mchswkq87g" path="res://assets/scenes/cutscenes/usenumpad/num6.PNG" id="7_qafk8"]
+[ext_resource type="Texture2D" uid="uid://ch7vbeh1c7qr6" path="res://assets/scenes/cutscenes/usenumpad/num7.PNG" id="8_jrnys"]
+[ext_resource type="Texture2D" uid="uid://dqtiyagqhdj0q" path="res://assets/scenes/cutscenes/usenumpad/num8.PNG" id="9_dp284"]
+[ext_resource type="Texture2D" uid="uid://bxd8t6k44ih0g" path="res://assets/scenes/cutscenes/usenumpad/num9.PNG" id="10_1g8nv"]
+[ext_resource type="Texture2D" uid="uid://dpqm8b0ahpggy" path="res://assets/scenes/cutscenes/usenumpad/error.PNG" id="11_mqw3g"]
+[ext_resource type="Texture2D" uid="uid://cm2lfot0oyds0" path="res://assets/scenes/cutscenes/usenumpad/lines.PNG" id="12_00lpa"]
+[ext_resource type="Texture2D" uid="uid://d0ycxecq5kqcx" path="res://assets/scenes/cutscenes/usenumpad/hand.png" id="13_c21mu"]
+[ext_resource type="Texture2D" uid="uid://p8lspuc4xuub" path="res://assets/scenes/cutscenes/usenumpad/numpad_dude.png" id="14_6rofu"]
+[ext_resource type="Texture2D" uid="uid://cvv2akapltqal" path="res://assets/scenes/cutscenes/usenumpad/vignette.PNG" id="15_j6u2y"]
+[ext_resource type="AudioStream" uid="uid://l7b84dxosxqx" path="res://assets/scenes/cutscenes/usenumpad/flashwind.mp3" id="17_5ip7t"]
+
+[sub_resource type="GDScript" id="GDScript_om8yj"]
+resource_name = "keypadcutscene"
+script/source = "extends InteractiveCutscene
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	$animationPlayer.play(\"start\")
+
+
+func _do() -> void:
+	canleave = false
+	await get_tree().create_timer(3.0).timeout
+	canleave = true
+	leave_cutscene()
+	return
+"
+
+[sub_resource type="GDScript" id="GDScript_n3la6"]
+resource_name = "proc"
+script/source = "extends Sprite2D
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	global_position = get_global_mouse_position()
+	pass
+"
+
+[sub_resource type="Animation" id="Animation_vrwyt"]
+resource_name = "start"
+length = 2.0
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("hand:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.5, 0.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("numpadDude:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(0.353554, 1),
+"update": 0,
+"values": [Vector2(-350, 1163), Vector2(229, 942)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("numpadDude:rotation")
+tracks/2/interp = 4
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(0.353554, 1),
+"update": 0,
+"values": [-0.385493, 0.00295233]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("colorRect:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("audioStreamPlayer:volume_db")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-80.0, -30.0]
+}
+
+[sub_resource type="Animation" id="Animation_q7dwb"]
+resource_name = "end"
+
+[sub_resource type="Animation" id="Animation_e1w2s"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("hand:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("numpadDude:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(207, 875)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("numpadDude:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("colorRect:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("audioStreamPlayer:volume_db")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-80.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_q2tm8"]
+_data = {
+"RESET": SubResource("Animation_e1w2s"),
+"end": SubResource("Animation_q7dwb"),
+"start": SubResource("Animation_vrwyt")
+}
+
+[node name="KeypadCutscene" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_om8yj")
+
+[node name="control" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="bg" type="TextureRect" parent="control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_4klvt")
+expand_mode = 1
+
+[node name="num1" type="TextureRect" parent="control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_borcg")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="num2" type="TextureRect" parent="control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_dd1w5")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="num3" type="TextureRect" parent="control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_rsfnx")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="num4" type="TextureRect" parent="control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_0173p")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="num5" type="TextureRect" parent="control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_n00ky")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="num6" type="TextureRect" parent="control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_qafk8")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="num7" type="TextureRect" parent="control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_jrnys")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="num8" type="TextureRect" parent="control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("9_dp284")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="num9" type="TextureRect" parent="control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_1g8nv")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="error" type="TextureRect" parent="control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("11_mqw3g")
+expand_mode = 1
+
+[node name="lines" type="TextureRect" parent="control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -0.00070265
+mouse_filter = 2
+texture = ExtResource("12_00lpa")
+expand_mode = 1
+
+[node name="hand" type="Sprite2D" parent="."]
+position = Vector2(1047, 723)
+texture = ExtResource("13_c21mu")
+offset = Vector2(-215, 530)
+script = SubResource("GDScript_n3la6")
+
+[node name="numpadDude" type="Sprite2D" parent="."]
+position = Vector2(207, 875)
+texture = ExtResource("14_6rofu")
+offset = Vector2(500, -500)
+
+[node name="vignette" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("15_j6u2y")
+expand_mode = 1
+metadata/_edit_lock_ = true
+
+[node name="colorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+metadata/_edit_lock_ = true
+
+[node name="animationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_q2tm8")
+}
+speed_scale = 0.5
+
+[node name="animationPlayer2" type="AnimationPlayer" parent="."]
+
+[node name="audioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("17_5ip7t")
+volume_db = -80.0
+autoplay = true

@@ -453,6 +453,7 @@ func equipToPawn(pawn:BasePawn):
 			collisionEnabled = false
 			collisionObject.disabled = true
 			pawn.moveItemToWeapons(self)
+			pawn.playGrabAnimation()
 			#pawn.freeAimChanged.connect(checkFreeAim)
 			if objectUsed.is_connected(equipToPawn):
 				objectUsed.disconnect(equipToPawn)
@@ -466,6 +467,7 @@ func equipToPawn(pawn:BasePawn):
 				pawn.equipSound.play()
 				pawn.attachedCam.fireRecoil(0,3.7,5.4,true)
 		else:
+			pawn.playGrabAnimation()
 			for weaponIndex in pawn.itemInventory.size():
 				if pawn.itemInventory[weaponIndex] != null:
 					if pawn.itemInventory[weaponIndex].objectName == self.objectName:

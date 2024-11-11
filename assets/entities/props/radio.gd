@@ -12,7 +12,8 @@ func _ready()->void:
 	objectUsed.connect(toggleRadio)
 
 func toggleRadio(pawn:BasePawn)->void:
-	pawn.playUseAnimation()
+	pawn.playInteractAnimation()
+	$click.play()
 	if pawn.attachedCam != null:
 		pawn.attachedCam.fireRecoil(randf_range(2.5,8.5),0,randf_range(12.5,15.5),true)
 	if !active:

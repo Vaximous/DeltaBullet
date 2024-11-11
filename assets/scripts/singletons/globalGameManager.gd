@@ -2,7 +2,30 @@ extends Node
 signal freeOrphans
 ## Global Game Manager Start
 var menuScenes = [preload("res://assets/scenes/menu/menuScenes/menuscene1.tscn"),preload("res://assets/scenes/menu/menuScenes/menuScene2.tscn"),preload("res://assets/scenes/menu/menuScenes/menuScene3.tscn")]
-
+var preloadTextureDirectories : Array = [
+	"res://assets/textures/blood/bloodPool/",
+	"res://assets/textures/blood/bloodSplat/",
+	"res://assets/textures/blood/bloodSpot/",
+	"res://assets/textures/bullet/holes/default/",
+	"res://assets/textures/bullet/holes/flesh/",
+	"res://assets/textures/crosshair/",
+	"res://assets/textures/Developer_Textures/Dark/",
+	"res://assets/textures/Developer_Textures/Green/",
+	"res://assets/textures/Developer_Textures/Light/",
+	"res://assets/textures/Developer_Textures/Orange/",
+	"res://assets/textures/Developer_Textures/Purple/",
+	"res://assets/textures/Developer_Textures/Red/",
+	"res://assets/textures/pawn_tex/",
+	"res://assets/textures/smoke/",
+	"res://assets/textures/urban/",
+	"res://assets/textures/ui/",
+	"res://assets/textures/areas/airduct/",
+	"res://assets/textures/areas/carpet/",
+	"res://assets/textures/areas/ceiling/",
+	"res://assets/textures/areas/marble/",
+	"res://assets/textures/areas/plaster/",
+	"res://assets/textures/areas/wood/"
+]
 #Global Sound Player
 var soundPlayer = AudioStreamPlayer.new()
 var sounds : Dictionary = {"healSound" = preload("res://assets/sounds/ui/rareItemFound.wav"),
@@ -462,3 +485,31 @@ func createBloodPool(position:Vector3,size:float=0.5)->void:
 			world.worldMisc.add_child(_bloodPool)
 			_bloodPool.global_position = result.position
 			_bloodPool.startPool(size)
+
+func preloadAllMaterials():
+	var materialsToLoad : Array = []
+	var texturesToLoad : Array = []
+	var materializer : MeshInstance3D = MeshInstance3D.new()
+	materializer.mesh = SphereMesh.new()
+	get_tree().current_scene.add_child(materializer)
+
+	##Start with textures first
+	for i in preloadTextureDirectories:
+		var files = DirAccess.open(i)
+		if files:
+			files.list_dir_begin()
+			var textureName : String = files.get_next()
+			while textureName != "":
+				textureName = files.get_next()
+				if textureName.get_extension() != "import" and !files.current_is_dir():
+					texturesToLoad.append(i+textureName)
+
+	##Get Materials Here
+
+	#Load the textures into memory
+	for t in texturesToLoad:
+		load(t)
+		#print("Loading %s.." %t)
+
+	#print(texturesToLoad)
+	return OK

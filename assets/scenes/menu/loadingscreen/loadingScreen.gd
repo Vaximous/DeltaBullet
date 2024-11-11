@@ -33,6 +33,7 @@ var sceneLoading
 var press = false
 
 func _ready() -> void:
+	gameManager.preloadAllMaterials()
 	gameManager.playerPawns.clear()
 	worldNameControl.hide()
 	await Fade.fade_in(0.3)

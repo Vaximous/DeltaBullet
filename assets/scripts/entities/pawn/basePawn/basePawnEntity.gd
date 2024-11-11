@@ -1263,5 +1263,15 @@ func dive()->void:
 	isDiving = true
 	#disableBodyIK()
 	#bodyIKMarker.position += diveDirection * diveForce
+
+func playInteractAnimation()->void:
+	animationTree.set("parameters/useType/transition_request", "interactL")
+	animationTree.set("parameters/useShot/request",AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+
 func playUseAnimation()->void:
+	animationTree.set("parameters/useType/transition_request", "useL")
+	animationTree.set("parameters/useShot/request",AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+
+func playGrabAnimation()->void:
+	animationTree.set("parameters/useType/transition_request", "grabL")
 	animationTree.set("parameters/useShot/request",AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)

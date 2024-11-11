@@ -22,6 +22,8 @@ func _physics_process(delta: float) -> void:
 	animationTree.set("parameters/aimSprintStrafe/blend_position",Vector2(-pawn.velocity.x, -pawn.velocity.z).rotated(mesh.rotation.y))
 	animationTree.set("parameters/crouchStrafe/blend_position",animationTree.get("parameters/aimSprintStrafe/blend_position"))
 	animationTree.set("parameters/strafeSpace/blend_position",animationTree.get("parameters/aimSprintStrafe/blend_position"))
+	if pawn.isDiving:
+		animationTree.set("parameters/diveSpace/blend_position",Vector2(-pawn.diveDirection.x, -pawn.diveDirection.z))
 
 func _on_pawn_entity_set_movement_state(state: MovementState) -> void:
 	if tweener:

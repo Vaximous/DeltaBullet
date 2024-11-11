@@ -37,6 +37,7 @@ var duplicated : Array
 @onready var bodyIKMarker : Marker3D = $Mesh/bodyIKMarker:
 	set(value):
 		bodyIKMarker = value
+		defaultBodyIKMarkerPosition = bodyIKMarker.position
 @onready var rightHandBone : BoneAttachment3D = $BoneAttatchments/rightHand
 @onready var leftHandBone : BoneAttachment3D = $BoneAttatchments/leftHand
 @onready var neckBone : BoneAttachment3D = $BoneAttatchments/Neck
@@ -174,7 +175,7 @@ signal cameraAttached
 			else:
 				meshLookAt = false
 			freeAimChanged.emit()
-			print(freeAim)
+			#print(freeAim)
 @export var pawnEnabled : bool = true
 @export var animationPlayerSpeed : float = 1.0:
 	set(value):
@@ -210,8 +211,33 @@ var preventWeaponFire : bool = false:
 			if footstepSounds.playing:
 				footstepSounds.stop()
 @export_subgroup("Movement")
+@export var diveForce : float = 6.5
+var diveDirection : Vector3
+@export var isDiving : bool = false:
+	set(value):
+		isDiving = value
+		if value:
+			diveDirection = direction
+			direction = Vector3.ZERO
+			velocity += diveDirection * diveForce
+			velocity.y += diveForce
+			animationTree.set("parameters/dive_transition/transition_request", "diving")
+			canRun = false
+			isRunning = false
+			isCrouching = false
+			meshLookAt = true
+			canJump = false
+
+
 @export var movementStates : Dictionary
-@export var canRun : bool = true
+@export var canRun : bool = true:
+	set(value):
+		if value:
+			if !isDiving:
+				canRun = value
+			else:
+				canRun = false
+
 @export var isRunning : bool = false:
 	set(value):
 		isRunning = value
@@ -292,6 +318,7 @@ var currentItem : InteractiveObject = null
 		emit_signal("clothingChanged")
 
 @export_subgroup("Mesh")
+@export var animationController : Node
 ##Ragdoll to spawn when the pawn dies
 @export var ragdollScene : PackedScene
 ##Makes the mesh look at a certain thing, mainly used for aiming
@@ -337,7 +364,7 @@ var isFirstperson : bool = false:
 		meshLookAt = value
 		freeAim = value
 var hitboxes : Array[Hitbox]
-
+var defaultBodyIKMarkerPosition : Vector3
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity : float = ProjectSettings.get_setting("physics/3d/default_gravity")
 
@@ -374,6 +401,11 @@ func _physics_process(delta:float) -> void:
 
 			preventWeaponFire = aimBlockRaycast.is_colliding()
 
+			if isDiving and !isOnGround():
+				freeAim = true
+			elif isDiving and isOnGround():
+				animationTree.set("parameters/dive_transition/transition_request", "not_diving")
+				isDiving = false
 #
 #
 		## Add the gravity
@@ -1225,4 +1257,11 @@ func isCurrentlyMoving()->bool:
 	return abs(direction.x) > 0 or abs(direction.z) > 0
 
 func isOnGround()->bool:
-	return isGrounded || is_on_floor()
+	return is_on_floor()
+
+func dive()->void:
+	isDiving = true
+	#disableBodyIK()
+	#bodyIKMarker.position += diveDirection * diveForce
+func playUseAnimation()->void:
+	animationTree.set("parameters/useShot/request",AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)

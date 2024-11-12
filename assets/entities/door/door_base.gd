@@ -1,14 +1,30 @@
 extends InteractiveObject
-@export_enum("Unlocked","Locked","Keypad") var lockType : int = 0
+@export_enum("Unlocked","Locked","Keypad") var lockType : int = 0:
+	set(value):
+		lockType = value
+		if !isDoorOpen:
+			match lockType:
+				0:
+					customInteractText = "Open Door"
+				1:
+					customInteractText = "Locked"
+				2:
+					customInteractText = "Use Keypad"
 @onready var openSound : AudioStreamPlayer3D = $openSound
 @onready var closeSound : AudioStreamPlayer3D = $closeSound
-var isDoorOpen : bool = false:
+@export var isDoorOpen : bool = false:
 	set(value):
 		isDoorOpen = value
 		if value:
 			customInteractText = "Close Door"
 		else:
-			customInteractText = "Open Door"
+			match lockType:
+				0:
+					customInteractText = "Open Door"
+				1:
+					customInteractText = "Locked"
+				2:
+					customInteractText = "Use Keypad"
 @export var doorCollision : CollisionShape3D
 @export var doorMesh : Node3D
 const defaultTweenSpeed : float = 0.25

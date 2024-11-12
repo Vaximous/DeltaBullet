@@ -643,6 +643,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, -34)
 
 [node name="doorBase" parent="Props" index="2" instance=ExtResource("12_7bo60")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -16.6452, 0, -48.524)
+lockType = 2
 
 [node name="big_reverb" type="Area3D" parent="Misc" index="4"]
 reverb_bus_enabled = true

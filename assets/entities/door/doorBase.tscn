@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=3 uid="uid://36wgm1ed6j3p"]
+
+[ext_resource type="Script" path="res://assets/entities/door/door_base.gd" id="1_p2444"]
+
+[node name="doorBase" type="RigidBody3D" node_paths=PackedStringArray("doorCollision", "doorMesh")]
+script = ExtResource("1_p2444")
+doorCollision = NodePath("collisionShape3d")
+doorMesh = NodePath("doorMesh")
+objectName = "Door"
+customInteractText = "Open Door"
+useCustomInteractText = true
+interactType = 1
+canBeUsed = true
+
+[node name="doorMesh" type="Node3D" parent="."]
+
+[node name="collisionShape3d" type="CollisionShape3D" parent="."]
+
+[node name="openSound" type="AudioStreamPlayer3D" parent="."]
+
+[node name="closeSound" type="AudioStreamPlayer3D" parent="."]

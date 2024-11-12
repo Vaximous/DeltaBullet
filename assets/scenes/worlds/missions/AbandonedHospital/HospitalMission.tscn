@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=4 uid="uid://c8sr5dinhonjs"]
+[gd_scene load_steps=47 format=4 uid="uid://c8sr5dinhonjs"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_puc7u"]
 [ext_resource type="Script" path="res://assets/resources/customResources/worldData/worldData.gd" id="2_top7h"]
@@ -7,11 +7,11 @@
 [ext_resource type="LightmapGIData" uid="uid://c3fdl2yams4k6" path="res://assets/scenes/worlds/missions/AbandonedHospital/HospitalMission.lmbake" id="6_c76ue"]
 [ext_resource type="Material" uid="uid://m75r5v2wuvuc" path="res://assets/scenes/worlds/missions/AbandonedHospital/Material.001.tres" id="6_pu22m"]
 [ext_resource type="PackedScene" uid="uid://bn07wnk5k005c" path="res://assets/entities/weapons/HoneyBadger/honeybadger.tscn" id="7_ofjna"]
-[ext_resource type="PackedScene" uid="uid://ccjm54ftqg7qc" path="res://assets/entities/interactiveObject/interactiveObject.tscn" id="7_xl6s2"]
 [ext_resource type="Texture2D" uid="uid://c7b38t83ckisx" path="res://assets/textures/crosshair/crosshair161.png" id="8_8rnes"]
 [ext_resource type="Script" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="9_gsaqh"]
 [ext_resource type="PackedScene" uid="uid://boh343kalvj5i" path="res://assets/entities/weapons/Revolver/Revolver.tscn" id="10_j38tr"]
 [ext_resource type="AudioStream" uid="uid://dueh83f2ybvgv" path="res://assets/sounds/ambient/515704_Destruction-Reigns.mp3" id="10_nsobe"]
+[ext_resource type="PackedScene" uid="uid://bb78dx0yknjep" path="res://assets/entities/door/keypadDoor.tscn" id="12_7bo60"]
 
 [sub_resource type="Resource" id="Resource_7pmvn"]
 script = ExtResource("2_top7h")
@@ -221,25 +221,6 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_k2m28")
-
-[sub_resource type="GDScript" id="GDScript_mvh13"]
-script/source = "extends InteractiveObject
-
-
-func _on_used() -> void:
-	print(\"Used\")
-	var cutscene = preload(\"res://assets/scenes/cutscenes/usenumpad/KeypadCutscene.tscn\").instantiate()
-	await Fade.fade_out(0.3, Color(0,0,0,1),\"GradientVertical\",false,true).finished
-	get_tree().current_scene.process_mode = Node.PROCESS_MODE_DISABLED #idk pause it or some shit
-	get_tree().root.add_child(cutscene)
-	cutscene.do()
-	Fade.fade_in(0.3, Color(0,0,0,1),\"GradientVertical\",false,true).finished
-	await cutscene.tree_exited
-	get_tree().current_scene.process_mode = Node.PROCESS_MODE_INHERIT #idk pause it or some shit
-"
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_55g7u"]
-size = Vector3(1.52426, 11.0815, 5.80524)
 
 [sub_resource type="Resource" id="Resource_oh7kv"]
 resource_local_to_scene = true
@@ -637,18 +618,9 @@ shape = SubResource("ConvexPolygonShape3D_jlxq4")
 [node name="f1Walls_010" parent="Geometry/hospital_map/hospitalLevel/hospital_Floor1" index="20"]
 mesh = SubResource("ArrayMesh_e0q2b")
 
-[node name="KeypadInteract" parent="Geometry/hospital_map/hospitalLevel/hospital_Floor1/SmallDoorGeneric/DoorScanner" index="0" instance=ExtResource("7_xl6s2")]
-freeze = true
-script = SubResource("GDScript_mvh13")
-objectName = "Keypad"
-customInteractText = "Use Keypad"
-useCustomInteractText = true
-interactType = 1
-canBeUsed = true
-
-[node name="collisionShape3d" type="CollisionShape3D" parent="Geometry/hospital_map/hospitalLevel/hospital_Floor1/SmallDoorGeneric/DoorScanner/KeypadInteract" index="2"]
-transform = Transform3D(1, 0, 0, 0, 0.999871, 0.018832, 0, -0.018832, 0.999871, 0.371056, 5.342, -2.76656)
-shape = SubResource("BoxShape3D_55g7u")
+[node name="SmallDoorGeneric" parent="Geometry/hospital_map/hospitalLevel/hospital_Floor1" index="28"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.6452, -2.34678, -48.524)
+visible = false
 
 [node name="hospital_Floor2" parent="Geometry/hospital_map/hospitalLevel" index="2"]
 material_override = SubResource("StandardMaterial3D_r3syq")
@@ -668,6 +640,9 @@ weaponResource = SubResource("Resource_oh7kv")
 
 [node name="Revolver" parent="Props" index="1" instance=ExtResource("10_j38tr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, -34)
+
+[node name="doorBase" parent="Props" index="2" instance=ExtResource("12_7bo60")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -16.6452, 0, -48.524)
 
 [node name="big_reverb" type="Area3D" parent="Misc" index="4"]
 reverb_bus_enabled = true
@@ -725,7 +700,5 @@ shape = SubResource("BoxShape3D_f5aog")
 stream = ExtResource("10_nsobe")
 volume_db = -43.358
 autoplay = true
-
-[connection signal="objectUsed" from="Geometry/hospital_map/hospitalLevel/hospital_Floor1/SmallDoorGeneric/DoorScanner/KeypadInteract" to="Geometry/hospital_map/hospitalLevel/hospital_Floor1/SmallDoorGeneric/DoorScanner/KeypadInteract" method="_on_used" unbinds=1]
 
 [editable path="Geometry/hospital_map"]

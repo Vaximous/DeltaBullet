@@ -11,4 +11,3 @@ func _ready()->void:
 	timer.timeout.connect(queue_free)
 	$particles/impactParticle.emitting = true
 	$particles/dirtParticles.emitting = true
-# Called every frame. 'delta' is the elapsed time since the previous frame.

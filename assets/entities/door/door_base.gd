@@ -1,46 +1,48 @@
-extends InteractiveObject
+extends Node3D
 @export_enum("Unlocked","Locked","Keypad") var lockType : int = 0:
 	set(value):
 		lockType = value
 		if !isDoorOpen:
 			match lockType:
 				0:
-					customInteractText = "Open Door"
+					interactiveObject.customInteractText = "Open Door"
 				1:
-					customInteractText = "Locked"
+					interactiveObject.customInteractText = "Locked"
 				2:
-					customInteractText = "Use Keypad"
+					interactiveObject.customInteractText = "Use Keypad"
 @onready var openSound : AudioStreamPlayer3D = $openSound
 @onready var closeSound : AudioStreamPlayer3D = $closeSound
+@onready var lockedSound : AudioStreamPlayer3D = $lockSound
 @export var isDoorOpen : bool = false:
 	set(value):
 		isDoorOpen = value
 		if value:
-			customInteractText = "Close Door"
+			interactiveObject.customInteractText = "Close Door"
 		else:
 			match lockType:
 				0:
-					customInteractText = "Open Door"
+					interactiveObject.customInteractText = "Open Door"
 				1:
-					customInteractText = "Locked"
+					interactiveObject.customInteractText = "Locked"
 				2:
-					customInteractText = "Use Keypad"
+					interactiveObject.customInteractText = "Use Keypad"
 @export var doorCollision : CollisionShape3D
+@export var interactiveObject : InteractiveObject
 @export var doorMesh : Node3D
-const defaultTweenSpeed : float = 0.25
-const defaultTransitionType = Tween.TRANS_QUART
+@export var doorOpenSpeed : float = 0.25
+const defaultTransitionType = Tween.TRANS_BACK
 const defaultEaseType = Tween.EASE_OUT
 var doorTween : Tween
 
 func _ready() -> void:
-	objectUsed.connect(openRequest)
+	interactiveObject.objectUsed.connect(openRequest)
 
 func openDoorFront()->void:
 	if doorTween:
 		doorTween.kill()
 	doorTween = create_tween()
 	openSound.play()
-	doorTween.tween_property(doorMesh,"rotation:y", getShortTweenAngle(doorMesh.rotation.y,90),0.5).set_trans(defaultTransitionType).set_ease(defaultEaseType)
+	doorTween.tween_property(doorMesh,"rotation:y", getShortTweenAngle(doorMesh.rotation.y,90),doorOpenSpeed).set_trans(defaultTransitionType).set_ease(defaultEaseType)
 	#doorTween.parallel().tween_property(doorCollision,"rotation:y", getShortTweenAngle(doorCollision.rotation.y,90),0.5).set_trans(defaultTransitionType).set_ease(defaultEaseType)
 
 func openDoorBack()->void:
@@ -48,7 +50,7 @@ func openDoorBack()->void:
 		doorTween.kill()
 	doorTween = create_tween()
 	openSound.play()
-	doorTween.tween_property(doorMesh,"rotation:y",getShortTweenAngle(doorMesh.rotation.y,-90),0.5).set_trans(defaultTransitionType).set_ease(defaultEaseType)
+	doorTween.tween_property(doorMesh,"rotation:y",getShortTweenAngle(doorMesh.rotation.y,-90),doorOpenSpeed).set_trans(defaultTransitionType).set_ease(defaultEaseType)
 	#doorTween.parallel().tween_property(doorCollision,"rotation:y", getShortTweenAngle(doorCollision.rotation.y,-90),0.5).set_trans(defaultTransitionType).set_ease(defaultEaseType)
 
 func closeDoor()->void:
@@ -56,8 +58,7 @@ func closeDoor()->void:
 		doorTween.kill()
 	doorTween = create_tween()
 	closeSound.play()
-	doorTween.tween_property(doorMesh,"rotation:y",0,0.5).set_trans(defaultTransitionType).set_ease(defaultEaseType)
-	doorTween.parallel().tween_property(doorCollision,"rotation:y",0,0.5).set_trans(defaultTransitionType).set_ease(defaultEaseType)
+	doorTween.tween_property(doorMesh,"rotation:y",0,doorOpenSpeed).set_trans(defaultTransitionType).set_ease(defaultEaseType)
 
 func getShortTweenAngle(currentAngle:float,targetAngle:float)->float:
 	return currentAngle + wrapf(targetAngle-currentAngle,-PI,PI)
@@ -74,7 +75,7 @@ func openRequest(pawn:BasePawn):
 				isDoorOpen = false
 				closeDoor()
 		2:
-			pawn.playUseAnimation()
+			pawn.playInteractAnimation()
 			if !isDoorOpen:
 				initializeKeypadScene()
 

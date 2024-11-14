@@ -1704,8 +1704,9 @@ canBeUsed = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0930214, 1.3428, -0.0350943)
 shape = SubResource("BoxShape3D_fxtgo")
 
-[node name="doorBase" parent="Props" index="5" instance=ExtResource("53_gn8tv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.66648, 3.98228, 24.815)
+[node name="keypadDoor" parent="Props" index="5" instance=ExtResource("53_gn8tv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.56063, 4.04291, 23.1296)
+doorOpenSpeed = 1.5
 
 [node name="marker3d" type="Marker3D" parent="Misc/WaypointNodes" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.6254, 4.89798, 1.98643)

@@ -1,11 +1,18 @@
-[gd_scene load_steps=30 format=3 uid="uid://dt5hl3d1g8pyc"]
+[gd_scene load_steps=35 format=3 uid="uid://dt5hl3d1g8pyc"]
 
 [ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="1_n1s24"]
+[ext_resource type="Script" path="res://assets/resources/customResources/shopData/shopData.gd" id="2_bykjx"]
 [ext_resource type="Script" path="res://assets/scripts/shopUI/shopUI.gd" id="2_w7wba"]
-[ext_resource type="FontFile" uid="uid://b3s7umd01feyu" path="res://assets/fonts/Carthage Pro Regular.ttf" id="3_tu6qn"]
+[ext_resource type="Texture2D" uid="uid://d2nrmdb8p2mjv" path="res://assets/textures/ui/statbar.png" id="3_fcqxl"]
 [ext_resource type="PackedScene" uid="uid://ims5mb4jlsni" path="res://assets/scenes/ui/shopui/shopItem.tscn" id="3_x8qdb"]
 [ext_resource type="FontFile" uid="uid://xmwjvmqspojb" path="res://assets/fonts/Grand_Aventure_Text.otf" id="4_sqkig"]
 [ext_resource type="AudioStream" uid="uid://crpcvvr4dupq6" path="res://assets/sounds/ui/slideOpen.wav" id="6_s2d3s"]
+
+[sub_resource type="Resource" id="Resource_j36xa"]
+script = ExtResource("2_bykjx")
+shopName = &" "
+saleCategories = 0
+itemsToSell = [null, null, null, null, null]
 
 [sub_resource type="Gradient" id="Gradient_523ba"]
 offsets = PackedFloat32Array(0, 0.00985222, 0.497537, 0.847291)
@@ -236,6 +243,18 @@ func _process(delta: float) -> void:
 	rotation.y += 0.01
 "
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_yn56l"]
+atlas = ExtResource("3_fcqxl")
+region = Rect2(0, 3, 512, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c6www"]
+atlas = ExtResource("3_fcqxl")
+region = Rect2(0, 62, 512, 26)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_suq20"]
+atlas = ExtResource("3_fcqxl")
+region = Rect2(0, 33, 512, 26)
+
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_3q6sw"]
 color = Color(0.282353, 0, 0, 1)
 thickness = 6
@@ -407,6 +426,7 @@ stream_0/stream = ExtResource("6_s2d3s")
 
 [node name="Shop" type="CanvasLayer"]
 script = ExtResource("2_w7wba")
+shopResource = SubResource("Resource_j36xa")
 
 [node name="shopUi" type="Control" parent="."]
 layout_mode = 3
@@ -467,6 +487,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 1076.0
+offset_top = 115.0
+offset_right = 1076.0
+offset_bottom = 115.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -513,21 +537,126 @@ script = SubResource("GDScript_lgeb8")
 transform = Transform3D(1, 0, 0, 0, 0.97123, 0.238144, 0, -0.238144, 0.97123, 0, 0.414107, 1.72043)
 fov = 26.1
 
-[node name="itemDescriptor" type="Label" parent="shopUi/previewHolder/previewBG"]
+[node name="marginContainer" type="MarginContainer" parent="shopUi/previewHolder/previewBG"]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.038
-anchor_top = 0.458
-anchor_right = 0.95
-anchor_bottom = 0.875
-offset_left = -0.126001
-offset_top = 0.0499878
-offset_right = -0.150024
-offset_bottom = -0.125061
-theme_override_fonts/font = ExtResource("3_tu6qn")
-theme_override_font_sizes/font_size = 28
-text = "This is a good item."
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 346.0
+offset_bottom = -72.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 4
+
+[node name="vBoxContainer" type="VBoxContainer" parent="shopUi/previewHolder/previewBG/marginContainer"]
+layout_mode = 2
+
+[node name="label" type="Label" parent="shopUi/previewHolder/previewBG/marginContainer/vBoxContainer"]
+layout_mode = 2
+text = "Stats"
+
+[node name="ItemStatsContainer" type="VBoxContainer" parent="shopUi/previewHolder/previewBG/marginContainer/vBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="vBoxContainer" type="VBoxContainer" parent="shopUi/previewHolder/previewBG/marginContainer/vBoxContainer/ItemStatsContainer"]
+layout_mode = 2
+
+[node name="label" type="Label" parent="shopUi/previewHolder/previewBG/marginContainer/vBoxContainer/ItemStatsContainer/vBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "FIRERATE"
+
+[node name="textureProgressBar" type="TextureProgressBar" parent="shopUi/previewHolder/previewBG/marginContainer/vBoxContainer/ItemStatsContainer/vBoxContainer"]
+layout_mode = 2
+max_value = 1.0
+step = 0.0
+value = 0.805
+nine_patch_stretch = true
+stretch_margin_left = 48
+stretch_margin_top = 12
+stretch_margin_right = 48
+stretch_margin_bottom = 12
+texture_under = SubResource("AtlasTexture_yn56l")
+texture_over = SubResource("AtlasTexture_c6www")
+texture_progress = SubResource("AtlasTexture_suq20")
+
+[node name="vBoxContainer2" type="VBoxContainer" parent="shopUi/previewHolder/previewBG/marginContainer/vBoxContainer/ItemStatsContainer"]
+layout_mode = 2
+
+[node name="label" type="Label" parent="shopUi/previewHolder/previewBG/marginContainer/vBoxContainer/ItemStatsContainer/vBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "SHIT"
+
+[node name="textureProgressBar" type="TextureProgressBar" parent="shopUi/previewHolder/previewBG/marginContainer/vBoxContainer/ItemStatsContainer/vBoxContainer2"]
+layout_mode = 2
+max_value = 1.0
+step = 0.0
+value = 0.115
+nine_patch_stretch = true
+stretch_margin_left = 48
+stretch_margin_top = 12
+stretch_margin_right = 48
+stretch_margin_bottom = 12
+texture_under = SubResource("AtlasTexture_yn56l")
+texture_over = SubResource("AtlasTexture_c6www")
+texture_progress = SubResource("AtlasTexture_suq20")
+
+[node name="vBoxContainer3" type="VBoxContainer" parent="shopUi/previewHolder/previewBG/marginContainer/vBoxContainer/ItemStatsContainer"]
+layout_mode = 2
+
+[node name="label" type="Label" parent="shopUi/previewHolder/previewBG/marginContainer/vBoxContainer/ItemStatsContainer/vBoxContainer3"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "COOLNESS"
+
+[node name="textureProgressBar" type="TextureProgressBar" parent="shopUi/previewHolder/previewBG/marginContainer/vBoxContainer/ItemStatsContainer/vBoxContainer3"]
+layout_mode = 2
+max_value = 1.0
+step = 0.0
+value = 1.0
+nine_patch_stretch = true
+stretch_margin_left = 48
+stretch_margin_top = 12
+stretch_margin_right = 48
+stretch_margin_bottom = 12
+texture_under = SubResource("AtlasTexture_yn56l")
+texture_over = SubResource("AtlasTexture_c6www")
+texture_progress = SubResource("AtlasTexture_suq20")
+
+[node name="hSeparator2" type="HSeparator" parent="shopUi/previewHolder/previewBG/marginContainer/vBoxContainer"]
+layout_mode = 2
+
+[node name="label2" type="Label" parent="shopUi/previewHolder/previewBG/marginContainer/vBoxContainer"]
+layout_mode = 2
+text = "Description"
+
+[node name="itemDescriptor" type="RichTextLabel" parent="shopUi/previewHolder/previewBG/marginContainer/vBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/normal_font_size = 24
+bbcode_enabled = true
+text = "This is a good item..
+It was made using the finest steel of the northern coast of the iron fields of the empire of the three people who made the game known as minecraft and forged from the fires of the place that was not too long ago forgotten and recently rediscovered by foragers and hunters and gatherers of there were many but not too many and yet to be discovered"
 autowrap_mode = 2
+
+[node name="hSeparator2" type="HSeparator" parent="shopUi/previewHolder/previewBG"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 15.0
+offset_top = -78.0
+offset_right = -15.0
+offset_bottom = -74.0
+grow_horizontal = 2
+grow_vertical = 0
 
 [node name="hSeparator" type="HSeparator" parent="shopUi/previewHolder/previewBG"]
 layout_mode = 1

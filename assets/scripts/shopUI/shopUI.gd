@@ -7,7 +7,7 @@ extends CanvasLayer
 @onready var previewBG : Panel = $shopUi/previewHolder/previewBG
 @onready var previewBGAnim : AnimationPlayer = $shopUi/previewHolder/previewBG/animationPlayer
 @onready var shopNameLabel : Label = $shopUi/topBar/topBarimage/shopName
-@onready var itemDescription : Label = $shopUi/previewHolder/previewBG/itemDescriptor
+@onready var itemDescription : RichTextLabel = %itemDescriptor
 @onready var purchaseButton : Button = $shopUi/previewHolder/previewBG/purchaseButton
 @onready var itemName : Label = $shopUi/previewHolder/previewBG/itemName
 var activeTab :int = 0
@@ -69,11 +69,13 @@ func buildItemList()->void:
 					if _shopItem.doesHaveItem(gameManager.playerPawns[0]):
 						_shopItem.isPurchased = true
 
+
 func setShopItem(item:Button)->Button:
 	selectedItem = item
 	itemDescription.text = item.get_item_description_long()
 	itemName.text = item.get_item_name()
 	return item
+
 
 func clearPreviewMesh()->void:
 	for i in previewMeshHolder.get_children():

@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://citgcktxewfra"]
+[gd_scene load_steps=24 format=3 uid="uid://citgcktxewfra"]
 
 [ext_resource type="Texture2D" uid="uid://q4fg1iy2xxdc" path="res://assets/scenes/cutscenes/usenumpad/bg.PNG" id="1_4klvt"]
 [ext_resource type="Texture2D" uid="uid://lpmr0wx26kfv" path="res://assets/scenes/cutscenes/usenumpad/num1.PNG" id="2_borcg"]
@@ -12,7 +12,6 @@
 [ext_resource type="Texture2D" uid="uid://bxd8t6k44ih0g" path="res://assets/scenes/cutscenes/usenumpad/num9.PNG" id="10_1g8nv"]
 [ext_resource type="Texture2D" uid="uid://dpqm8b0ahpggy" path="res://assets/scenes/cutscenes/usenumpad/error.PNG" id="11_mqw3g"]
 [ext_resource type="Texture2D" uid="uid://cm2lfot0oyds0" path="res://assets/scenes/cutscenes/usenumpad/lines.PNG" id="12_00lpa"]
-[ext_resource type="Texture2D" uid="uid://d0ycxecq5kqcx" path="res://assets/scenes/cutscenes/usenumpad/hand.png" id="13_c21mu"]
 [ext_resource type="Texture2D" uid="uid://p8lspuc4xuub" path="res://assets/scenes/cutscenes/usenumpad/numpad_dude.png" id="14_6rofu"]
 [ext_resource type="Texture2D" uid="uid://cvv2akapltqal" path="res://assets/scenes/cutscenes/usenumpad/vignette.PNG" id="15_j6u2y"]
 [ext_resource type="AudioStream" uid="uid://l7b84dxosxqx" path="res://assets/scenes/cutscenes/usenumpad/flashwind.mp3" id="17_5ip7t"]
@@ -34,6 +33,10 @@ func _do() -> void:
 	return
 "
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_i0o8b"]
+atlas = ExtResource("14_6rofu")
+region = Rect2(1217, 0, 703, 1080)
+
 [sub_resource type="GDScript" id="GDScript_n3la6"]
 resource_name = "proc"
 script/source = "extends Sprite2D
@@ -51,12 +54,18 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		vel = event.screen_velocity.normalized()
 
+
 func _physics_process(delta: float) -> void:
 	rotation_degrees = lerpf(rotation_degrees,vel.x * tiltAmount,delta*tiltSpeed)
+
 
 func addTilt(tilt:float = 0.0):
 	rotation += tilt
 "
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t33fy"]
+atlas = ExtResource("14_6rofu")
+region = Rect2(0, 0, 1075, 1080)
 
 [sub_resource type="Animation" id="Animation_e1w2s"]
 length = 0.001
@@ -150,7 +159,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 1.5),
 "transitions": PackedFloat32Array(0.353554, 1),
 "update": 0,
-"values": [Vector2(-350, 1163), Vector2(229, 942)]
+"values": [Vector2(-569, 1423), Vector2(-230, 939)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -346,13 +355,13 @@ expand_mode = 1
 
 [node name="hand" type="Sprite2D" parent="."]
 position = Vector2(1047, 723)
-texture = ExtResource("13_c21mu")
-offset = Vector2(-150, 250)
+texture = SubResource("AtlasTexture_i0o8b")
+offset = Vector2(-225.625, 536.37)
 script = SubResource("GDScript_n3la6")
 
 [node name="numpadDude" type="Sprite2D" parent="."]
 position = Vector2(207, 875)
-texture = ExtResource("14_6rofu")
+texture = SubResource("AtlasTexture_t33fy")
 offset = Vector2(500, -500)
 
 [node name="vignette" type="TextureRect" parent="."]

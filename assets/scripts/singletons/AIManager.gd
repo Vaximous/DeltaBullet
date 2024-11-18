@@ -7,6 +7,7 @@ var ai_process_counter : int = 0
 func _physics_process(_delta: float) -> void:
 	#Update the AI
 	if AIComponent.instances.size() > 0:
+		ai_process_counter += 1
 		var component = AIComponent.instances[ai_process_counter % AIComponent.instances.size()]
 		#Skip over non-processing AI nodes.
 		if !component.is_processing():

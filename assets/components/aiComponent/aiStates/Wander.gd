@@ -16,11 +16,13 @@ func on_enter()->void:
 	targetPosition = getRandomNavPoints().global_position
 	aiOwner.targetPathReached.connect(finishedPath)
 
+
 func getRandomNavPoints()->Marker3D:
 	if gameManager.world:
 		return gameManager.world.worldWaypoints.get_children().pick_random()
 	else:
 		return null
+
 
 func finishedPath()->void:
 	#print("path finished")

@@ -33,6 +33,11 @@ func on_physics_process(_delta: float) -> void:
 	pass
 
 
+# Handled by AIManager
+func on_ai_process() -> void:
+	pass
+
+
 # Called when there is an input event while this state is active.
 func on_input(_event: InputEvent) -> void:
 	pass

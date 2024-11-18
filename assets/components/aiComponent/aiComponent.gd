@@ -67,7 +67,6 @@ var pathPoint : int = 0
 		for state in pawnFSM.get_children():
 			if state is StateMachineState:
 				state.aiOwner = self
-@export var navAgent : NavigationAgent3D
 @export var navPointGrabber : Area3D
 @export var visionTimer : Timer
 @export_subgroup("Memory")
@@ -114,7 +113,18 @@ var meshAngle:float = 1:
 @export var currLocation:Vector3
 @export var newVelocity:Vector3
 @export_category("Debug")
+static var instances : Array[AIComponent]
 var posSpheres : Array = []
+
+
+func _enter_tree() -> void:
+	instances.append(self)
+
+
+func _exit_tree() -> void:
+	if instances.has(self):
+		instances.erase(self)
+
 
 func _ready() -> void:
 	if !Engine.is_editor_hint():
@@ -134,6 +144,7 @@ func _ready() -> void:
 	setPawnType()
 	setupNav()
 
+
 func _physics_process(delta: float) -> void:
 	if pathingToPosition:
 		var nextPoint : Vector3 = currentPath[pathPoint] - pawnOwner.global_position
@@ -148,6 +159,11 @@ func _physics_process(delta: float) -> void:
 				targetPathReached.emit()
 				pathingToPosition = false
 
+
+func _ai_process() -> void:
+	pawnFSM._ai_process()
+
+
 func createFOVModel()->ImmediateMesh:
 	var _mesh : ImmediateMesh = ImmediateMesh.new()
 	var FOVA = getDirFromAngle(-meshAngle/2)
@@ -159,6 +175,7 @@ func createFOVModel()->ImmediateMesh:
 	_mesh.surface_add_vertex(FOVB * meshDistance)
 	_mesh.surface_end()
 	return _mesh
+
 
 func createLOSWedge()->ArrayMesh:
 	var _mesh : ArrayMesh = ArrayMesh.new()
@@ -237,6 +254,7 @@ func createLOSWedge()->ArrayMesh:
 	_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES,arrays)
 	return _mesh
 
+
 func scan()->void:
 	if pawnOwner != null:
 		var pawnRID : Array[RID] = []
@@ -276,6 +294,7 @@ func scan()->void:
 		PhysicsServer3D.free_rid(shape)
 		onScan.emit()
 
+
 func canSeeObject(object:Node3D)->bool:
 	var pawnRID : Array[RID] = []
 	pawnRID.append(pawnOwner.get_rid())
@@ -297,18 +316,21 @@ func canSeeObject(object:Node3D)->bool:
 	else:
 		return false
 
+
 func getDirFromAngle(angleInDeg:float) -> Vector3:
 	return Vector3(sin(angleInDeg * deg_to_rad(angleInDeg)),0,cos(angleInDeg*deg_to_rad(angleInDeg)))
 
+
 func ceaseAI() -> void:
-	navAgent.queue_free()
 	if isInDialogue:
 		#Dialogic.end_timeline()
 		pass
 
+
 func addRaycastException(object:Node3D) -> void:
 	aimCast.add_exception(object)
 	#$pawnGrabber/rayCast3d.add_exception(object)
+
 
 func speakTrigger(dialogue) -> void:
 	##Replace Dialogic with a custom solution
@@ -328,6 +350,7 @@ func speakTrigger(dialogue) -> void:
 					#Dialogic.timeline_ended.connect(dialogue_cam.remove)
 				#get_viewport().set_input_as_handled()
 
+
 func setInteractablePawn(value:bool = false) -> void:
 	if value == true:
 		if pawnOwner:
@@ -338,41 +361,41 @@ func setInteractablePawn(value:bool = false) -> void:
 			pawnOwner.remove_from_group("Interactable")
 			interactSpeakTrigger.disconnect(speakTrigger)
 
+
 func setWeaponCast()->void:
 	if pawnOwner != null:
 		if pawnOwner.currentItem != null:
 			pawnOwner.currentItem.weaponCast = aimCast
 			pawnOwner.currentItem.weaponCastEnd = aimCastEnd
 
+
 func _on_nav_agent_velocity_computed(safe_velocity) -> void:
-	if navAgent:
-		if pawnOwner != null:
-			pawnOwner.direction = safe_velocity
+	if pawnOwner != null:
+		pawnOwner.direction = safe_velocity
+
 
 func enableDebugInfo()->void:
 	visualMesh.show()
 	pawnDebugLabel.visible = gameManager.pawnDebug
 	if pawnDebugLabel.visible:
 		pawnDebugLabel.position.y = 1
-		pawnDebugLabel.text = "Pawn Name - %s
+		pawnDebugLabel.text = """Pawn Name - %s
 		Has Target - %s
-		Pawn Skill - %s
-		Has Reached Target - %s
-		" %[pawnName,pawnHasTarget,aiSkill,navAgent.is_target_reached()]
+		Pawn Skill - %s""" %[pawnName,pawnHasTarget,aiSkill]
+
 
 func disableDebugInfo()->void:
 	visualMesh.hide()
 	pawnDebugLabel.visible = false
 
-func _on_nav_agent_target_reached() -> void:
-	pawnOwner.direction = Vector3.ZERO
-	navAgent.set_velocity(Vector3.ZERO)
 
 func enableAnimations() -> void:
 	pawnOwner.animationTree.active = true
 
+
 func disableAnimations() -> void:
 	pawnOwner.animationTree.active = false
+
 
 func setExceptions()->void:
 	if pawnOwner != null:
@@ -386,26 +409,34 @@ func setExceptions()->void:
 				if hb.getCollisionObject() is CollisionObject3D:
 					aimCast.add_exception(hb.getCollisionObject())
 
+
 func _on_memory_span_timeout():
 	memoryManager.forgetMemories(memorySpanTimer.wait_time-1)
+
 
 func getTargetPosition()->Vector3:
 	return memoryManager.bestMemory.memoryPosition
 
+
 func isTargetInSight()->bool:
 	return memoryManager.bestMemory.memoryAge < 0.5
+
 
 func getTargetDistance()->float:
 	return memoryManager.bestMemory.distance
 
+
 func hasTarget()->bool:
 	return memoryManager.bestMemory != null
+
 
 func getMemoryAge():
 	return memoryManager.bestMemory.memoryAge
 
+
 func getTarget()->Node3D:
 	return memoryManager.bestMemory.memoryOwner
+
 
 func goToPathPosition(path:PackedVector3Array,sprint:bool=false)->void:
 	if sprint:
@@ -427,6 +458,7 @@ func goToPathPosition(path:PackedVector3Array,sprint:bool=false)->void:
 	else:
 		goToPathPosition(path)
 
+
 func goToPosition(to:Vector3,sprint:bool=false)->void:
 	if sprint:
 		pawnOwner.setMovementState.emit(pawnOwner.movementStates["sprint"])
@@ -441,13 +473,16 @@ func goToPosition(to:Vector3,sprint:bool=false)->void:
 	pathingToPosition = true
 	pathPoint = 0
 
+
 func stopLookingAt()->void:
 	pawnOwner.meshLookAt = false
+
 
 func lookAtPosition(lookat:Vector3)->void:
 	pawnOwner.meshLookAt = true
 	aimCast.look_at(lookat)
 	pawnOwner.meshRotation = aimCast.global_transform.basis.get_euler().y
+
 
 func setPawnType()->void:
 	await get_tree().process_frame
@@ -459,12 +494,14 @@ func setPawnType()->void:
 		2:
 			pawnFSM.change_state("Patrol")
 
+
 func setPathPosition(pathPosition:Vector3)->PackedVector3Array:
 	var safePosition : Vector3 = NavigationServer3D.map_get_closest_point(navMap,pathPosition)
 	currentPath = NavigationServer3D.map_get_path(navMap,pawnOwner.global_position,pathPosition,true)
 	if gameManager.debugEnabled:
 		print(currentPath)
 	return currentPath
+
 
 func setupNav()->void:
 	navMap = get_world_3d().get_navigation_map()

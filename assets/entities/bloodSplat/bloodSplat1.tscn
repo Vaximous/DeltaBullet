@@ -34,13 +34,14 @@ var growSpeed : float = 0.0
 var maxSize : float = 0.4
 var defaultBloodSize : Vector3 = Vector3(0.3,0.3,0.3)
 @export var bloodTextures : Array[Texture2D] = []
+var splatTween : Tween
 #var bloodNormals : Array = [\"res://assets/textures/blood/bloodSplat/blood1_n.png\",\"res://assets/textures/blood/bloodSplat/blood2_n.png\",\"res://assets/textures/blood/bloodSplat/blood3_n.png\",\"res://assets/textures/blood/bloodSplat/blood4_n.png\"]
 # Called when the node enters the scene tree for the first time.
 func _ready()->void:
 	splatDecal.size = Vector3.ZERO
 	growSpeed = randf_range(growSpeedMin,growSpeedMax)
 	var timer = get_tree().create_timer(UserConfig.game_decal_remove_time)
-	timer.timeout.connect(queue_free)
+	timer.timeout.connect(deleteSplat)
 	maxSize = randf_range(defaultBloodSize.x,0.8)
 	var textureInt = randi_range(0,bloodTextures.size()-1)
 	splatDecal.texture_albedo = bloodTextures[textureInt]
@@ -48,6 +49,12 @@ func _ready()->void:
 	dropletSound.play()
 	grow()
 
+func deleteSplat()->void:
+	if splatTween:
+		splatTween.kill()
+	splatTween = create_tween().set_ease(defaultEaseType).set_trans(defaultTransitionType)
+	await splatTween.tween_property(splatDecal,\"modulate\",Color.TRANSPARENT,0.25).finished
+	queue_free()
 
 func _on_visible_on_screen_notifier_3d_screen_entered()->void:
 	show()

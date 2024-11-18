@@ -1,4 +1,4 @@
-[gd_scene load_steps=218 format=4 uid="uid://b883b6dhrfe8q"]
+[gd_scene load_steps=219 format=4 uid="uid://b883b6dhrfe8q"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_5asdl"]
 [ext_resource type="Script" path="res://assets/resources/customResources/worldData/worldData.gd" id="2_7yxuj"]
@@ -52,6 +52,7 @@
 [ext_resource type="PackedScene" uid="uid://n500uprpwbbk" path="res://assets/models/csgmodels/csgtruck.tscn" id="32_vqcav"]
 [ext_resource type="Texture2D" uid="uid://sr64p1aykopo" path="res://assets/textures/crosshair/crosshair004.png" id="37_xi52y"]
 [ext_resource type="Script" path="res://assets/scripts/entities/interactiveObject/interactiveObject.gd" id="52_tsgpd"]
+[ext_resource type="PackedScene" uid="uid://bb78dx0yknjep" path="res://assets/entities/door/keypadDoor.tscn" id="53_gn8tv"]
 
 [sub_resource type="GDScript" id="GDScript_fxw7o"]
 resource_name = "TestScene"
@@ -1142,6 +1143,7 @@ pawnColor = Color(1, 0.741176, 0.439216, 1)
 
 [node name="pawnSpawn11" parent="Spawns/pawnSpawns" index="1" instance=ExtResource("2_26w0h")]
 transform = Transform3D(-0.998996, 0, 0.0447871, 0, 1, 0, -0.0447871, 0, -0.998996, -19.1474, 4.23921, 6.34545)
+pawnName = "Bando"
 pawnWeapons = Array[PackedScene]([ExtResource("5_ugf6w")])
 equipWeaponOnSpawn = true
 weaponToEquip = 1
@@ -1671,7 +1673,7 @@ stream = SubResource("AudioStreamRandomizer_ej6dr")
 process_thread_group = 0
 
 [node name="radio" parent="Props" index="2" instance=ExtResource("31_i7vfc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.40202, 5.07784, 29.1067)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.40202, 5.15591, 30.3435)
 
 [node name="Honeybadger" parent="Props" index="3" instance=ExtResource("5_ugf6w")]
 transform = Transform3D(0.868857, 0.434391, -0.23747, 0.273556, -0.0214696, 0.961616, 0.412619, -0.900468, -0.137484, 0.359257, 4.62726, 21.2877)
@@ -1702,6 +1704,10 @@ canBeUsed = true
 [node name="collisionShape3d" type="CollisionShape3D" parent="Props/_Door_/doorInteract" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0930214, 1.3428, -0.0350943)
 shape = SubResource("BoxShape3D_fxtgo")
+
+[node name="keypadDoor" parent="Props" index="5" instance=ExtResource("53_gn8tv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.56063, 4.04291, 23.1296)
+doorOpenSpeed = 1.5
 
 [node name="marker3d" type="Marker3D" parent="Misc/WaypointNodes" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.6254, 4.89798, 1.98643)

@@ -1,0 +1,39 @@
+[gd_scene load_steps=3 format=3 uid="uid://36wgm1ed6j3p"]
+
+[ext_resource type="Script" path="res://assets/entities/door/door_base.gd" id="1_p2444"]
+[ext_resource type="Script" path="res://assets/scripts/entities/interactiveObject/interactiveObject.gd" id="2_ieweh"]
+
+[node name="doorBase" type="Node3D" node_paths=PackedStringArray("doorCollision", "interactiveObject", "doorMesh")]
+script = ExtResource("1_p2444")
+doorCollision = NodePath("doorMesh/interactionDoor/collisionShape3d")
+interactiveObject = NodePath("doorMesh/interactionDoor")
+doorMesh = NodePath("doorMesh")
+
+[node name="doorMesh" type="Node3D" parent="."]
+
+[node name="interactionDoor" type="RigidBody3D" parent="doorMesh" groups=["Interactable"]]
+script = ExtResource("2_ieweh")
+customInteractText = "Open Door"
+useCustomInteractText = true
+interactType = 1
+canBeUsed = true
+
+[node name="collisionShape3d" type="CollisionShape3D" parent="doorMesh/interactionDoor"]
+
+[node name="openSound" type="AudioStreamPlayer3D" parent="."]
+volume_db = -5.0
+max_polyphony = 3
+bus = &"Sounds"
+attenuation_filter_db = 0.0
+
+[node name="closeSound" type="AudioStreamPlayer3D" parent="."]
+volume_db = -5.0
+max_polyphony = 3
+bus = &"Sounds"
+attenuation_filter_db = 0.0
+
+[node name="lockSound" type="AudioStreamPlayer3D" parent="."]
+volume_db = -5.0
+max_polyphony = 3
+bus = &"Sounds"
+attenuation_filter_db = 0.0

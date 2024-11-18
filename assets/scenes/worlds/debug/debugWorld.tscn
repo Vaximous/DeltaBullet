@@ -188,11 +188,12 @@ func _process(delta):
 	pass
 
 func gotoHell(pawn:BasePawn):
+	pawn.playUseAnimation()
 	$audioStreamPlayer3d.play()
 	mesh.material_override.albedo_color = Color.GREEN
 	remove_from_group(\"Interactable\")
 	await Fade.fade_out(0.3, Color(0,0,0,1),\"GradientVertical\",false,true).finished
-	get_tree().change_scene_to_file(\"res://assets/scenes/worlds/debug/modeltest/DebugWorldTest.tscn\")
+	gameManager.loadWorld(\"res://assets/scenes/worlds/missions/AbandonedHospital/HospitalMission.tscn\")
 "
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dymuj"]

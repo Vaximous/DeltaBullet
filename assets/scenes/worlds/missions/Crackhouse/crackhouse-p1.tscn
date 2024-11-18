@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://7idw8rtae15o"]
+[gd_scene load_steps=54 format=3 uid="uid://7idw8rtae15o"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_dmxbb"]
 [ext_resource type="PackedScene" uid="uid://n500uprpwbbk" path="res://assets/models/csgmodels/csgtruck.tscn" id="2_cg4ns"]
@@ -36,6 +36,7 @@
 [ext_resource type="Resource" uid="uid://cymk87e4nyxva" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jump_flood_tile_max_y_stage.tres" id="22_waxlx"]
 [ext_resource type="PackedScene" uid="uid://dnr0cbfhyguux" path="res://assets/particles/rain/rain_particles.tscn" id="23_s82mf"]
 [ext_resource type="PackedScene" uid="uid://bidurnqgd1c74" path="res://assets/entities/weapons/m4/m4.tscn" id="34_np7sb"]
+[ext_resource type="PackedScene" uid="uid://bb78dx0yknjep" path="res://assets/entities/door/keypadDoor.tscn" id="35_o5jg7"]
 [ext_resource type="Texture2D" uid="uid://c7b38t83ckisx" path="res://assets/textures/crosshair/crosshair161.png" id="35_yjgqk"]
 [ext_resource type="Script" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="36_usxi5"]
 
@@ -418,11 +419,11 @@ collision_mask = 0
 size = Vector3(1.6, 2.7, 4)
 
 [node name="csgBox3d41" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgBox3d40" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, -0.65, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, -0.723242, -0.078598)
 operation = 2
 use_collision = true
 collision_mask = 0
-size = Vector3(3, 3, 2.5)
+size = Vector3(3, 2.85352, 2.09995)
 
 [node name="csgBox3d38" type="CSGBox3D" parent="Geometry/navigationRegion3d" index="3"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 16.1358, -0.0887699, -1.11151)
@@ -1002,17 +1003,37 @@ bus = &"Ambience"
 area_mask = 2147483648
 attenuation_filter_cutoff_hz = 9790.0
 
-[node name="M4" parent="Props" index="0" instance=ExtResource("34_np7sb")]
+[node name="keypadDoor" parent="Props" index="0" instance=ExtResource("35_o5jg7")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 16.4359, 0.564029, 15.2706)
+visible = false
+
+[node name="keypadDoor2" parent="Props" index="1" instance=ExtResource("35_o5jg7")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 16.4359, 0.652608, 16.6346)
+visible = false
+
+[node name="SmallDoorGeneric" parent="Props/keypadDoor2/doorMesh" index="0"]
+transform = Transform3D(1.31134e-07, 8.74228e-08, 1, 7.64274e-15, -1, 8.74228e-08, 1, -3.82137e-15, -1.31134e-07, 0.724754, 2, 0)
+
+[node name="DoorHandleAntiTamperGuard" parent="Props/keypadDoor2/doorMesh/SmallDoorGeneric" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.155, 0.08)
+
+[node name="DoorHandleBase" parent="Props/keypadDoor2/doorMesh/SmallDoorGeneric/DoorHandleAntiTamperGuard" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.07, 0)
+
+[node name="DoorScanner" parent="Props/keypadDoor2/doorMesh/SmallDoorGeneric" index="1"]
+transform = Transform3D(0.189628, -2.93248e-15, -3.31556e-08, 3.27079e-16, -0.189628, 1.32245e-08, -3.31556e-08, -1.32245e-08, -0.189628, -0.018, 2.097, -1.806)
+
+[node name="M4" parent="Props" index="2" instance=ExtResource("34_np7sb")]
 transform = Transform3D(-0.151409, -0.98248, 0.108671, -0.375573, 0.158874, 0.913074, -0.914341, 0.0974334, -0.393048, 15.1958, 1.26909, 25.4442)
 weaponResource = SubResource("Resource_6dmke")
 collisionEnabled = true
 
-[node name="M4_2" parent="Props" index="1" instance=ExtResource("34_np7sb")]
+[node name="M4_2" parent="Props" index="3" instance=ExtResource("34_np7sb")]
 transform = Transform3D(0.614023, 0.789288, 0, -0.789288, 0.614023, 0, 0, 0, 1, 3.52862, 1.16458, 29.6756)
 weaponResource = SubResource("Resource_tobrt")
 collisionEnabled = true
 
-[node name="Revolver" parent="Props" index="2" instance=ExtResource("3_k4wxf")]
+[node name="Revolver" parent="Props" index="4" instance=ExtResource("3_k4wxf")]
 transform = Transform3D(1, 0, 0, 0, 0.0472634, -0.998882, 0, 0.998882, 0.0472634, 40.898, 1.49579, 28.528)
 collisionEnabled = true
 
@@ -1103,3 +1124,5 @@ script = SubResource("GDScript_ipreh")
 transform = Transform3D(0.329582, 0.353965, -0.875263, -0.124736, 0.935259, 0.331258, 0.935851, 0, 0.352397, 12.5989, 2.03279, 17.5056)
 
 [connection signal="triggerActivated" from="Misc/Triggers/pawnTrigger" to="Misc/Triggers/node" method="startBeginning"]
+
+[editable path="Props/keypadDoor2"]

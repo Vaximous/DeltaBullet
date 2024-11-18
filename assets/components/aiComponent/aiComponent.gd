@@ -1,6 +1,8 @@
 @tool
 extends Node3D
 class_name AIComponent
+signal targetPathReached
+signal pathPointReached
 signal targetUnreachable
 signal onScan
 signal canSeeSomething
@@ -30,6 +32,15 @@ signal visibleObject(object:Node3D,visibleposition:Vector3)
 @export_enum("Dialogue") var interactType : int = 0
 @export var isInteractable : bool = false
 var isInDialogue : bool
+@export_category("Path")
+var currentPath : PackedVector3Array
+var navMap : RID
+var pathingToPosition : bool = false:
+	set(value):
+		pathingToPosition = value
+		if !value:
+			pawnOwner.direction = Vector3.ZERO
+var pathPoint : int = 0
 @export_category("Dialogue")
 @export var dialogueStartingCamera : Marker3D
 @export var dialogueString : String
@@ -64,7 +75,7 @@ var isInDialogue : bool
 @export var memoryManager : AiMemoryManager:
 	set(value):
 		memoryManager = value
-		memoryManager.brainOwner = self
+		#memoryManager.brainOwner = self
 #@export var memorySpan : float = 10.0
 @export_subgroup("FOV Mesh")
 var meshAngle:float = 1:
@@ -121,6 +132,21 @@ func _ready() -> void:
 		visualMesh.visible = true
 		visualMesh.mesh = createFOVModel()
 	setPawnType()
+	setupNav()
+
+func _physics_process(delta: float) -> void:
+	if pathingToPosition:
+		var nextPoint : Vector3 = currentPath[pathPoint] - pawnOwner.global_position
+		if nextPoint.length_squared() > 1.0:
+			pawnOwner.direction = (nextPoint.normalized()*delta)
+		else:
+			if pathPoint < (currentPath.size() - 1):
+				pathPointReached.emit()
+				pathPoint += 1
+				_physics_process(delta)
+			else:
+				targetPathReached.emit()
+				pathingToPosition = false
 
 func createFOVModel()->ImmediateMesh:
 	var _mesh : ImmediateMesh = ImmediateMesh.new()
@@ -360,9 +386,6 @@ func setExceptions()->void:
 				if hb.getCollisionObject() is CollisionObject3D:
 					aimCast.add_exception(hb.getCollisionObject())
 
-func _on_can_see_something():
-	memoryManager.updateBrain(self)
-
 func _on_memory_span_timeout():
 	memoryManager.forgetMemories(memorySpanTimer.wait_time-1)
 
@@ -384,19 +407,39 @@ func getMemoryAge():
 func getTarget()->Node3D:
 	return memoryManager.bestMemory.memoryOwner
 
-func walkToPosition(to:Vector3)->void:
-	#print("%s is walking to %s"%[pawnName,to])
-	await get_tree().process_frame
-	if navAgent.is_target_reachable():
-		#print("%s to %s is reachable"%[pawnName,to])
-		newVelocity = (navAgent.get_next_path_position() - global_position).normalized()
-		navAgent.velocity = newVelocity
+func goToPathPosition(path:PackedVector3Array,sprint:bool=false)->void:
+	if sprint:
+		pawnOwner.setMovementState.emit(pawnOwner.movementStates["sprint"])
+		pawnOwner.isCrouching = false
 	else:
-		#print("%s to %s is not reachable"%[pawnName,to])
-		pawnOwner.direction = Vector3.ZERO
-		navAgent.set_velocity(Vector3.ZERO)
-		targetUnreachable.emit()
+		if pawnOwner.isCrouching:
+			pawnOwner.setMovementState.emit(pawnOwner.movementStates["crouchWalk"])
+		else:
+			pawnOwner.setMovementState.emit(pawnOwner.movementStates["walk"])
 
+	for p in path:
+		pawnOwner.direction = p
+		await pawnOwner.position.is_equal_approx(p)
+
+	path.clear()
+	if sprint:
+		goToPathPosition(path,true)
+	else:
+		goToPathPosition(path)
+
+func goToPosition(to:Vector3,sprint:bool=false)->void:
+	if sprint:
+		pawnOwner.setMovementState.emit(pawnOwner.movementStates["sprint"])
+		pawnOwner.isCrouching = false
+	else:
+		if pawnOwner.isCrouching:
+			pawnOwner.setMovementState.emit(pawnOwner.movementStates["crouchWalk"])
+		else:
+			pawnOwner.setMovementState.emit(pawnOwner.movementStates["walk"])
+
+	setPathPosition(to)
+	pathingToPosition = true
+	pathPoint = 0
 
 func stopLookingAt()->void:
 	pawnOwner.meshLookAt = false
@@ -415,3 +458,14 @@ func setPawnType()->void:
 			pawnFSM.change_state("Wander")
 		2:
 			pawnFSM.change_state("Patrol")
+
+func setPathPosition(pathPosition:Vector3)->PackedVector3Array:
+	var safePosition : Vector3 = NavigationServer3D.map_get_closest_point(navMap,pathPosition)
+	currentPath = NavigationServer3D.map_get_path(navMap,pawnOwner.global_position,pathPosition,true)
+	if gameManager.debugEnabled:
+		print(currentPath)
+	return currentPath
+
+func setupNav()->void:
+	navMap = get_world_3d().get_navigation_map()
+	print("Nav Set")

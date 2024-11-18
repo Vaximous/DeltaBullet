@@ -26,7 +26,6 @@ script/source = "extends InteractiveCutscene
 func _ready() -> void:
 	$animationPlayer.play(\"start\")
 
-
 func _do() -> void:
 	canleave = false
 	await get_tree().create_timer(3.0).timeout
@@ -38,12 +37,25 @@ func _do() -> void:
 [sub_resource type="GDScript" id="GDScript_n3la6"]
 resource_name = "proc"
 script/source = "extends Sprite2D
+var tiltSpeed : float = 10
+var tiltAmount : float = 10
+var vel : Vector2
 
+func _ready() -> void:
+	#if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
+		#Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		pass
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _input(event: InputEvent) -> void:
 	global_position = get_global_mouse_position()
-	pass
+	if event is InputEventMouseMotion:
+		vel = event.screen_velocity.normalized()
+
+func _physics_process(delta: float) -> void:
+	rotation_degrees = lerpf(rotation_degrees,vel.x * tiltAmount,delta*tiltSpeed)
+
+func addTilt(tilt:float = 0.0):
+	rotation += tilt
 "
 
 [sub_resource type="Animation" id="Animation_e1w2s"]
@@ -335,7 +347,7 @@ expand_mode = 1
 [node name="hand" type="Sprite2D" parent="."]
 position = Vector2(1047, 723)
 texture = ExtResource("13_c21mu")
-offset = Vector2(-215, 530)
+offset = Vector2(-150, 250)
 script = SubResource("GDScript_n3la6")
 
 [node name="numpadDude" type="Sprite2D" parent="."]
@@ -356,6 +368,7 @@ expand_mode = 1
 metadata/_edit_lock_ = true
 
 [node name="colorRect" type="ColorRect" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

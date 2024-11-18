@@ -129,12 +129,12 @@ func doRagdollHeadshot()-> void:
 			#blood.global_position = Vector3(headBone.global_position.x,headBone.global_position.y-1.4,headBone.global_position.z)
 			#blood.apply_impulse(Vector3(randf_range(-10,10),randf_range(-10,10),randf_range(-10,10)) * randf_range(5,10))
 
-	var destroyedHeads : Array = ["res://assets/models/pawn/male/headDestroyed1.tres","res://assets/models/pawn/male/headDestroyed2.tres","res://assets/models/pawn/male/headDestroyed3.tres"]
+	var destroyedHeads : Array = [preload("res://assets/models/pawn/male/headDestroyed1.tres"),preload("res://assets/models/pawn/male/headDestroyed2.tres"),preload("res://assets/models/pawn/male/headDestroyed3.tres")]
 	headshotsound.play()
 	deathSound.stop()
 	obliterateSound.play()
 	#print_rich("[color=red]BOOM HEADSHOT!!!!!!")
-	head.mesh = load(destroyedHeads.pick_random())
+	head.mesh = destroyedHeads.pick_random()
 	var particle = globalParticles.createParticle("BloodSpurt",Vector3(headBone.global_position.x,headBone.global_position.y-1.4,headBone.global_position.z))
 	particle.rotation = headBone.global_rotation
 	particle.amount = randi_range(25,75)

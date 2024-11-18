@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=4 uid="uid://c8sr5dinhonjs"]
+[gd_scene load_steps=47 format=4 uid="uid://c8sr5dinhonjs"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_puc7u"]
 [ext_resource type="Script" path="res://assets/resources/customResources/worldData/worldData.gd" id="2_top7h"]
@@ -12,7 +12,6 @@
 [ext_resource type="PackedScene" uid="uid://boh343kalvj5i" path="res://assets/entities/weapons/Revolver/Revolver.tscn" id="10_j38tr"]
 [ext_resource type="AudioStream" uid="uid://dueh83f2ybvgv" path="res://assets/sounds/ambient/515704_Destruction-Reigns.mp3" id="10_nsobe"]
 [ext_resource type="PackedScene" uid="uid://bb78dx0yknjep" path="res://assets/entities/door/keypadDoor.tscn" id="12_7bo60"]
-[ext_resource type="Script" path="res://assets/entities/door/door_base.gd" id="12_ylgkx"]
 
 [sub_resource type="Resource" id="Resource_7pmvn"]
 script = ExtResource("2_top7h")
@@ -643,15 +642,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, -34)
 
 [node name="keypadDoor" parent="Props" index="2" instance=ExtResource("12_7bo60")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -16.6452, 0, -48.524)
-script = null
-
-[node name="interactionDoor" parent="Props/keypadDoor/doorMesh" index="1" node_paths=PackedStringArray("doorCollision", "doorMesh")]
-script = ExtResource("12_ylgkx")
-lockType = 1
-isDoorOpen = false
-doorCollision = NodePath("collisionShape3d")
-doorMesh = NodePath("..")
-doorOpenSpeed = 0.25
+lockType = 2
 
 [node name="big_reverb" type="Area3D" parent="Misc" index="4"]
 reverb_bus_enabled = true
@@ -709,6 +700,6 @@ shape = SubResource("BoxShape3D_f5aog")
 stream = ExtResource("10_nsobe")
 volume_db = -43.358
 autoplay = true
+bus = &"Music"
 
 [editable path="Geometry/hospital_map"]
-[editable path="Props/keypadDoor"]

@@ -83,10 +83,22 @@ var direction : Vector3 = Vector3.ZERO:
 			direction = value
 			#print(direction)
 			directionChanged.emit()
+			setDirection.emit(direction)
 		if value != Vector3.ZERO:
 			direction = direction.normalized()
+			if isRunning:
+				setMovementState.emit(movementStates["sprint"])
+			else:
+				if isCrouching:
+					setMovementState.emit(movementStates["crouchWalk"])
+				else:
+					setMovementState.emit(movementStates["walk"])
 			isMoving = true
 		else:
+			if isCrouching:
+				setMovementState.emit(movementStates["crouch"])
+			else:
+				setMovementState.emit(movementStates["standing"])
 			isMoving = false
 		#if direction != Vector3.ZERO:
 			#doMeshRotation()

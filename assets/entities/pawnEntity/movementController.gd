@@ -46,10 +46,10 @@ func onMovementStateSet(state:MovementState)->void:
 func onMovementDirectionSet(direction:Vector3)->void:
 	movementDirection = direction.rotated(Vector3.UP,cameraRotation)
 
-func onSetCamRot(camRotation:float):
+func onSetCamRot(camRotation:float)->void:
 	cameraRotation = camRotation
 
-func doMeshLookat(delta:float):
+func doMeshLookat(delta:float)->void:
 	pawnControlling.canJump = false
 	pawnControlling.bodyIKMarker.rotation.x = pawnControlling.turnAmount
 	#pawnControlling.bodyIKMarker.rotation_degrees.y = lerpf(pawnControlling.bodyIKMarker.rotation_degrees.y, pawnControlling.to_local(Vector3(0,180,0)).y, 16*delta)

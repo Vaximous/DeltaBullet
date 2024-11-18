@@ -1143,6 +1143,7 @@ pawnColor = Color(1, 0.741176, 0.439216, 1)
 
 [node name="pawnSpawn11" parent="Spawns/pawnSpawns" index="1" instance=ExtResource("2_26w0h")]
 transform = Transform3D(-0.998996, 0, 0.0447871, 0, 1, 0, -0.0447871, 0, -0.998996, -19.1474, 4.23921, 6.34545)
+pawnName = "Bando"
 pawnWeapons = Array[PackedScene]([ExtResource("5_ugf6w")])
 equipWeaponOnSpawn = true
 weaponToEquip = 1
@@ -1672,7 +1673,7 @@ stream = SubResource("AudioStreamRandomizer_ej6dr")
 process_thread_group = 0
 
 [node name="radio" parent="Props" index="2" instance=ExtResource("31_i7vfc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.40202, 5.07784, 29.1067)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.40202, 5.15591, 30.3435)
 
 [node name="Honeybadger" parent="Props" index="3" instance=ExtResource("5_ugf6w")]
 transform = Transform3D(0.868857, 0.434391, -0.23747, 0.273556, -0.0214696, 0.961616, 0.412619, -0.900468, -0.137484, 0.359257, 4.62726, 21.2877)

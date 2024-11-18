@@ -92,6 +92,10 @@ func disableShop():
 		gameManager.hideMouse()
 		gameManager.activeCamera.camera.make_current()
 		gameManager.removeShop()
+
+
+func _on_pawn_spawn_pawn_spawned(pawn: BasePawn) -> void:
+	pawn.inputComponent.interactSpeakTrigger.connect(enableShop)
 "
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_7757a"]
@@ -471,6 +475,7 @@ transform = Transform3D(-0.390105, 0, 0.92077, 0, 1, 0, -0.92077, 0, -0.390105, 
 
 [node name="GamePauseMenu" parent="." instance=ExtResource("18_jge35")]
 
+[connection signal="pawnSpawned" from="Spawns/pawnSpawns/pawnSpawn" to="Geometry/navigationRegion3d/ShopBg" method="_on_pawn_spawn_pawn_spawned"]
 [connection signal="damaged" from="Geometry/navigationRegion3d/interactiveObject/hitbox" to="Geometry/navigationRegion3d/ShopBg" method="_on_hitbox_damaged"]
 
 [editable path="Geometry/navigationRegion3d/interactiveObject"]

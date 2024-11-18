@@ -22,11 +22,14 @@ var pawnScene = load("res://assets/entities/pawnEntity/pawnEntity.tscn").duplica
 	set(value):
 		worldData = value
 
+
 func _init()->void:
 	gameManager.freeOrphans.connect(free_me_orphan)
 
+
 func _enter_tree()->void:
 	gameManager.world = self
+
 
 func _ready()->void:
 	gameManager.pauseMenu = pauseControl
@@ -51,6 +54,7 @@ func _ready()->void:
 					if pawn is PawnSpawn:
 						pawn.spawnPawn()
 
+
 func getSpawnPoints(offset:Vector3 = Vector3(0,0,0), pickRandom:bool = true, spawn_idx:int = 0):
 	if pickRandom:
 		var spawnZone = pawnWorldSpawns.get_children().pick_random()
@@ -59,6 +63,7 @@ func getSpawnPoints(offset:Vector3 = Vector3(0,0,0), pickRandom:bool = true, spa
 				return spawnZone
 	else:
 		pass
+
 
 func getPlayerSpawnPoints(offset:Vector3 = Vector3(0,0,0), pickRandom:bool = true, spawn_idx:int = 0):
 	if pickRandom:
@@ -89,6 +94,7 @@ func setupWorld()-> void:
 				print_rich("[color=red]The soundscape.. Its null retard.[/color]")
 	else:
 		print_rich("[color=red]Set the world data for this world!!![/color]")
+
 
 func free_me_orphan()->void:
 	if not is_inside_tree():

@@ -12,7 +12,7 @@
 script = ExtResource("2_bykjx")
 shopName = &" "
 saleCategories = 0
-itemsToSell = [null, null, null, null, null]
+itemsToSell = Array[PackedScene]([])
 
 [sub_resource type="Gradient" id="Gradient_523ba"]
 offsets = PackedFloat32Array(0, 0.00985222, 0.497537, 0.847291)

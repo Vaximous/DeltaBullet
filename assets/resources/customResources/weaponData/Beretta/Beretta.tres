@@ -1,45 +1,43 @@
-[gd_resource type="Resource" script_class="ItemData" load_steps=2 format=3 uid="uid://wy0gfijhuuwl"]
+[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3 uid="uid://wy0gfijhuuwl"]
 
 [ext_resource type="Script" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="1_h8ja1"]
+[ext_resource type="Resource" uid="uid://b0yr3ub2hmc2l" path="res://assets/resources/customResources/weaponData/Beretta/BerettaDisplay.tres" id="1_x8bm3"]
 
 [resource]
 resource_local_to_scene = true
 script = ExtResource("1_h8ja1")
-useBulletTrail = true
-saleCategory = 1
-gritPrice = 0
-itemDescriptionShort = "Standard Pistol."
-itemDescriptionLong = "Good 'ol reliable. Decent pistol, bullets travel pretty far and gives a decent punch."
-canBeReloaded = true
+useBulletTrail = null
+displayData = ExtResource("1_x8bm3")
+canBeReloaded = null
 weaponMagSize = 64
 ammoSize = 8
 reloadTime = 1.86
-headDismember = false
+headDismember = null
 weaponDamage = 6.0
 weaponFireRate = 0.2
-bulletSpeed = 800.0
+bulletSpeed = null
 bulletPenetration = 0.1
 weaponImpulse = 18.0
-weaponShots = 1
-ammoConsumption = 1
-useCustomCrosshairSize = false
-crosshairSizeOverride = Vector2(0.8, 0.8)
+weaponShots = null
+ammoConsumption = null
+useCustomCrosshairSize = null
+crosshairSizeOverride = null
 useFOV = true
 fovShotAmount = 0.7
 weaponRecoil = Vector3(5, 8, 0.25)
-weaponRecoilStrength = 8.0
+weaponRecoilStrength = null
 weaponSpread = 0.055
-weaponRecoilStrengthAim = 4.0
+weaponRecoilStrengthAim = null
 weaponSpreadAim = 0.05
-leftHandParent = false
-rightHandParent = true
-useWeaponSprintAnim = false
+leftHandParent = null
+rightHandParent = null
+useWeaponSprintAnim = null
 useLeftHandIdle = false
-useRightHandIdle = true
-useLeftHandAiming = true
-useRightHandAiming = true
+useRightHandIdle = null
+useLeftHandAiming = null
+useRightHandAiming = null
 useLeftHandFreeAiming = false
-useRightHandFreeAiming = true
+useRightHandFreeAiming = null
 weaponPositionOffset = Vector3(0, -0.185, 0.055)
 weaponRotationOffset = Vector3(0, -1.63, -1.505)
-bulletColor = Color(1, 1, 0, 1)
+bulletColor = null

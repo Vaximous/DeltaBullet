@@ -10,4 +10,4 @@
 script = ExtResource("1_dawxm")
 shopName = &" Uncle Tsimks\' Shop"
 saleCategories = 35
-itemsToSell = [ExtResource("1_oaxt3"), ExtResource("2_stfbb"), ExtResource("3_752br"), ExtResource("4_nqad3")]
+itemsToSell = Array[PackedScene]([ExtResource("1_oaxt3"), ExtResource("2_stfbb"), ExtResource("3_752br"), ExtResource("4_nqad3")])

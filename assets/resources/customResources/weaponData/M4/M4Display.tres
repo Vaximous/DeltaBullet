@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemDisplayData" load_steps=2 format=3 uid="uid://bxx56mrt1hj5e"]
+
+[ext_resource type="Script" path="res://assets/resources/customResources/weaponDisplayData/weaponDisplayData.gd" id="1_kd2km"]
+
+[resource]
+script = ExtResource("1_kd2km")
+saleCategory = 0
+gritPrice = 0
+itemDescriptionShort = "A high calibre beast of a rifle."
+itemDescriptionLong = "The M4A3.. Deadly at long distances and even up close. Although a skilled marksman would be able to use this in any situation, it's decent fire rate coupled with ample damage would obliterate anyone standing in front of its muzzle. It packs a punch, not only in its fire power but it's recoil as well."
+damage = 0.449
+fireRate = 0.301
+penetration = 0.244

@@ -1,5 +1,8 @@
 extends CanvasLayer
 @export_category("Shop UI")
+@onready var damageBar : TextureProgressBar = $shopUi/previewHolder/previewBG/marginContainer/vBoxContainer/ItemStatsContainer/damageContainer/textureProgressBar
+@onready var penetrationBar : TextureProgressBar = $shopUi/previewHolder/previewBG/marginContainer/vBoxContainer/ItemStatsContainer/penetrationContainer/textureProgressBar
+@onready var fireRateBar : TextureProgressBar = $shopUi/previewHolder/previewBG/marginContainer/vBoxContainer/ItemStatsContainer/FireRateContainer/textureProgressBar
 @onready var previewMeshHolder : Node3D = $shopUi/previewHolder/previewBG/panel/subViewportContainer/subViewport/previewMesh
 @onready var tabBar : TabBar = $shopUi/BrowserBG/tabBar
 @onready var itemHolder : BoxContainer = $shopUi/BrowserBG/scrollContainer/itemHolder
@@ -60,7 +63,7 @@ func buildItemList()->void:
 	if shopResource != null:
 		for items in shopResource.itemsToSell:
 			if items.instantiate() is Weapon:
-				if tabBar.current_tab == items.instantiate().weaponResource.saleCategory:
+				if tabBar.current_tab == items.instantiate().weaponResource.displayData.saleCategory:
 					var _shopItem : Button = shopItem.instantiate()
 					_shopItem.item = items
 					itemHolder.add_child(_shopItem)
@@ -74,8 +77,22 @@ func setShopItem(item:Button)->Button:
 	selectedItem = item
 	itemDescription.text = item.get_item_description_long()
 	itemName.text = item.get_item_name()
+	setDamageValue(item.get_item_damage())
+	setFireRateValue(item.get_item_fire_rate())
+	setPenetrationValue(item.get_item_penetration())
 	return item
 
+func setPenetrationValue(value:float)->void:
+	var tween = create_tween()
+	tween.tween_property(penetrationBar,"value",value,0.25).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+
+func setDamageValue(value:float)->void:
+	var tween = create_tween()
+	tween.tween_property(damageBar,"value",value,0.25).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+
+func setFireRateValue(value:float)->void:
+	var tween = create_tween()
+	tween.tween_property(fireRateBar,"value",value,0.25).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 
 func clearPreviewMesh()->void:
 	for i in previewMeshHolder.get_children():
@@ -96,7 +113,6 @@ func _on_tab_bar_tab_selected(tab: int) -> void:
 
 func closePreview()->void:
 	selectedItem = null
-
 
 func _on_purchase_button_pressed() -> void:
 	if selectedItem:

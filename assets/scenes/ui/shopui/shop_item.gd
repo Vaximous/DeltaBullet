@@ -19,35 +19,53 @@ func purchase_item()->void:
 		if !isPurchased:
 			if item.instantiate() is Weapon:
 				var instancedItem = item.instantiate()
-				if gameManager.playerPawns[0].pawnCash >= instancedItem.weaponResource.gritPrice:
+				if gameManager.playerPawns[0].pawnCash >= instancedItem.weaponResource.displayData.gritPrice:
 					if !doesHaveItem(gameManager.playerPawns[0]):
 						purchaseSound.play()
 						isPurchased = true
 						gameManager.world.add_child(instancedItem)
 						instancedItem.equipToPawn(gameManager.playerPawns[0])
 						gameManager.notifyCheck("Purchased %s!"%instancedItem.objectName,4,5)
-						gameManager.playerPawns[0].pawnCash -= instancedItem.weaponResource.gritPrice
+						gameManager.playerPawns[0].pawnCash -= instancedItem.weaponResource.displayData.gritPrice
 				else:
 					gameManager.notify_warn("You do not have enough grit!",4,5)
 					print("Not enough grit!")
 
 func get_item_description_long() -> String:
 	if item.instantiate() is Weapon:
-		return item.instantiate().weaponResource.itemDescriptionLong
+		return item.instantiate().weaponResource.displayData.itemDescriptionLong
 	else:
 		return ""
 
 func get_item_description() -> String:
 	if item.instantiate() is Weapon:
-		return item.instantiate().weaponResource.itemDescriptionShort
+		return item.instantiate().weaponResource.displayData.itemDescriptionShort
 	else:
 		return ""
 
 func get_item_price() -> int:
 	if item.instantiate() is Weapon:
-		return item.instantiate().weaponResource.gritPrice
+		return item.instantiate().weaponResource.displayData.gritPrice
 	else:
 		return 0
+
+func get_item_fire_rate() -> float:
+	if item.instantiate() is InteractiveObject:
+		return item.instantiate().weaponResource.displayData.fireRate
+	else:
+		return 0.0
+
+func get_item_damage() -> float:
+	if item.instantiate() is InteractiveObject:
+		return item.instantiate().weaponResource.displayData.damage
+	else:
+		return 0.0
+
+func get_item_penetration() -> float:
+	if item.instantiate() is InteractiveObject:
+		return item.instantiate().weaponResource.displayData.penetration
+	else:
+		return 0.0
 
 func get_item_name() -> String:
 	if item.instantiate() is InteractiveObject:
@@ -57,7 +75,7 @@ func get_item_name() -> String:
 
 func get_item_data() -> ItemData:
 	if item.instantiate() is Weapon:
-		return item.item.instantiate().weaponResource
+		return item.item.instantiate().weaponResource.displayData
 	else:
 		return null
 

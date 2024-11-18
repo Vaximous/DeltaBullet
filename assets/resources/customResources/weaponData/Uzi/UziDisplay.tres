@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemDisplayData" load_steps=2 format=3 uid="uid://r6qkb05upxjv"]
+
+[ext_resource type="Script" path="res://assets/resources/customResources/weaponDisplayData/weaponDisplayData.gd" id="1_5rpht"]
+
+[resource]
+script = ExtResource("1_5rpht")
+saleCategory = 5
+gritPrice = 0
+itemDescriptionShort = "Low Power, High fire rate."
+itemDescriptionLong = "A staple of gangster culture, the UZI packs little damage with it's weaker calibre ammo bullets. But that's made up for with it's intense fire rate and hella amounts of ammo in a mag. This fucker right here serves a specific purpose, mowing down un-armored assholes with ease."
+damage = 0.196
+fireRate = 0.699
+penetration = 0.021

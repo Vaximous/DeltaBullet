@@ -1,28 +1,26 @@
-[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3 uid="uid://cqlbuo5rnaqs5"]
+[gd_resource type="Resource" script_class="ItemData" load_steps=4 format=3 uid="uid://cqlbuo5rnaqs5"]
 
+[ext_resource type="Resource" uid="uid://bxx56mrt1hj5e" path="res://assets/resources/customResources/weaponData/M4/M4Display.tres" id="1_hivbl"]
 [ext_resource type="Texture2D" uid="uid://c7b38t83ckisx" path="res://assets/textures/crosshair/crosshair161.png" id="1_l3itt"]
 [ext_resource type="Script" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="2_jsw5u"]
 
 [resource]
 resource_local_to_scene = true
 script = ExtResource("2_jsw5u")
-useBulletTrail = true
-saleCategory = 0
-gritPrice = 0
-itemDescriptionShort = ""
-itemDescriptionLong = ""
-canBeReloaded = true
-weaponMagSize = 128
-ammoSize = 30
+useBulletTrail = null
+displayData = ExtResource("1_hivbl")
+canBeReloaded = null
+weaponMagSize = null
+ammoSize = null
 reloadTime = 1.9
-headDismember = false
+headDismember = null
 weaponDamage = 7.9
 weaponFireRate = 0.1
-bulletSpeed = 800.0
-bulletPenetration = 1.0
+bulletSpeed = null
+bulletPenetration = null
 weaponImpulse = 27.0
-weaponShots = 1
-ammoConsumption = 1
+weaponShots = null
+ammoConsumption = null
 useCustomCrosshairSize = true
 crosshairSizeOverride = Vector2(0.6, 0.6)
 forcedCrosshair = ExtResource("1_l3itt")
@@ -31,17 +29,17 @@ fovShotAmount = 0.8
 weaponRecoil = Vector3(5, 9, 3)
 weaponRecoilStrength = 7.0
 weaponSpread = 0.09
-weaponRecoilStrengthAim = 4.0
+weaponRecoilStrengthAim = null
 weaponSpreadAim = 0.07
-leftHandParent = false
-rightHandParent = true
+leftHandParent = null
+rightHandParent = null
 useWeaponSprintAnim = true
-useLeftHandIdle = true
-useRightHandIdle = true
-useLeftHandAiming = true
-useRightHandAiming = true
-useLeftHandFreeAiming = true
-useRightHandFreeAiming = true
+useLeftHandIdle = null
+useRightHandIdle = null
+useLeftHandAiming = null
+useRightHandAiming = null
+useLeftHandFreeAiming = null
+useRightHandFreeAiming = null
 weaponPositionOffset = Vector3(-0.015, 0.13, 0.075)
 weaponRotationOffset = Vector3(0, -1.74, -1.48)
-bulletColor = Color(1, 1, 0, 1)
+bulletColor = null

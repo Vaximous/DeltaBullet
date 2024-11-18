@@ -1,29 +1,27 @@
-[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3 uid="uid://f30cnkk8nnpb"]
+[gd_resource type="Resource" script_class="ItemData" load_steps=4 format=3 uid="uid://f30cnkk8nnpb"]
 
 [ext_resource type="Script" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="1_1ufyd"]
 [ext_resource type="Texture2D" uid="uid://bado0y6x8is5j" path="res://assets/textures/crosshair/crosshair008.png" id="1_22a00"]
+[ext_resource type="Resource" uid="uid://chv5hapb5gdq5" path="res://assets/entities/weapons/Revolver/revolverDisplay.tres" id="1_v5w1c"]
 
 [resource]
 script = ExtResource("1_1ufyd")
-useBulletTrail = true
-saleCategory = 1
-gritPrice = 0
-itemDescriptionShort = "g"
-itemDescriptionLong = "you [b]need[/b] to buy this gun"
-canBeReloaded = true
+useBulletTrail = null
+displayData = ExtResource("1_v5w1c")
+canBeReloaded = null
 weaponMagSize = 18
 ammoSize = 6
-reloadTime = 0.5
+reloadTime = null
 headDismember = true
 weaponDamage = 75.0
 weaponFireRate = 0.8
-bulletSpeed = 800.0
+bulletSpeed = null
 bulletPenetration = 1000.0
 weaponImpulse = 50.0
-weaponShots = 1
-ammoConsumption = 1
-useCustomCrosshairSize = false
-crosshairSizeOverride = Vector2(0.8, 0.8)
+weaponShots = null
+ammoConsumption = null
+useCustomCrosshairSize = null
+crosshairSizeOverride = null
 forcedCrosshair = ExtResource("1_22a00")
 useFOV = true
 fovShotAmount = 5.5
@@ -31,16 +29,16 @@ weaponRecoil = Vector3(45, 45, 9)
 weaponRecoilStrength = 6.0
 weaponSpread = 0.9
 weaponRecoilStrengthAim = 7.0
-weaponSpreadAim = 0.25
-leftHandParent = false
-rightHandParent = true
+weaponSpreadAim = null
+leftHandParent = null
+rightHandParent = null
 useWeaponSprintAnim = true
 useLeftHandIdle = false
-useRightHandIdle = true
+useRightHandIdle = null
 useLeftHandAiming = false
-useRightHandAiming = true
+useRightHandAiming = null
 useLeftHandFreeAiming = false
-useRightHandFreeAiming = true
+useRightHandFreeAiming = null
 weaponPositionOffset = Vector3(-0.005, -0.285, 0.075)
 weaponRotationOffset = Vector3(3.125, -1.58, 0.125)
-bulletColor = Color(1, 1, 0, 1)
+bulletColor = null

@@ -63,13 +63,13 @@ var remove : bool = false:
 			queue_free()
 @onready var removeTimer : Timer = $timer
 @onready var bloodLand : GPUParticles3D = $bloodLand
-var landTexture : Array = [\"res://assets/materials/blood/bloodland1.tres\",\"res://assets/materials/blood/bloodland2.tres\",\"res://assets/materials/blood/bloodland3.tres\"]
+var landTexture : Array = [preload(\"res://assets/materials/blood/bloodland1.tres\"),preload(\"res://assets/materials/blood/bloodland2.tres\"),preload(\"res://assets/materials/blood/bloodland3.tres\")]
 # Called when the node enters the scene tree for the first time.
 func _ready()->void:
 	#removeTimer.wait_time = UserConfig.game_decal_remove_time
 	removeTimer.start()
-	$bloodLand.material_overlay = load(landTexture.pick_random())
-	#randomize()
+	$bloodLand.material_overlay = landTexture.pick_random()
+	#randomize(
 	amount = randi_range(6,20)
 	$bloodLand.amount = amount
 	$bloodSmoke.emitting = true

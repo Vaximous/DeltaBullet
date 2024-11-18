@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemDisplayData" load_steps=2 format=3 uid="uid://chv5hapb5gdq5"]
+
+[ext_resource type="Script" path="res://assets/resources/customResources/weaponDisplayData/weaponDisplayData.gd" id="1_yvjbf"]
+
+[resource]
+script = ExtResource("1_yvjbf")
+saleCategory = 1
+gritPrice = 0
+itemDescriptionShort = "Six-Shooter classic."
+itemDescriptionLong = "This high powered magnum beast can rip through anything, from walls to a skull. If you're caught on the end of the barrel of this fucker you may as well kiss your ass goodbye. There's no way in hell you're surviving a bullet from this bastard, I'll tell you that."
+damage = 0.936
+fireRate = 0.047
+penetration = 0.654

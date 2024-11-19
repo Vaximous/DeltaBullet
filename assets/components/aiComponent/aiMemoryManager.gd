@@ -28,10 +28,12 @@ func evaluateScores()->void:
 		if (bestMemory == null || memory.score > bestMemory.score):
 			bestMemory = memory
 
+
 func calculateScore(memory:Memory)->float:
 	var distanceScore : float = normalizeValues(memory.distance,brainOwner.meshDistance) * distanceWeight
 	var ageScore : float = normalizeValues(memory.memoryAge,brainOwner.memorySpanTimer.wait_time) * memoryAgeWeight
 	return ageScore + distanceScore
+
 
 func forgetMemories(olderThan:float)->void:
 	var oldMemories = aiMemories.filter(func(mem): return mem.memoryAge > olderThan)
@@ -42,11 +44,13 @@ func forgetMemories(olderThan:float)->void:
 		if mem.memoryOwner == null:
 			aiMemories.remove_at(aiMemories.find(mem))
 
+
 func updateBrain(ai:AIComponent)->void:
 	if ai != null:
 		for tgt in ai.visibleObjects:
 			refreshMemories(tgt,ai.pawnOwner)
 			brainUpdated.emit()
+
 
 func refreshMemories(target:Node3D,sensorOwner:Node3D)->void:
 	if getMemory(target) != null:
@@ -60,11 +64,13 @@ func refreshMemories(target:Node3D,sensorOwner:Node3D)->void:
 	else:
 		createMemory(target,sensorOwner)
 
+
 func getMemory(memoryObject:Node3D)->Memory:
 	for _memory in aiMemories:
 		if _memory.memoryOwner == memoryObject:
 			return _memory
 	return null
+
 
 func createMemory(object:Node3D,sensorOwner:Node3D)->Memory:
 	if !aiMemories.size() >= maxMemories:
@@ -79,6 +85,7 @@ func createMemory(object:Node3D,sensorOwner:Node3D)->Memory:
 		return _memory
 	else:
 		return null
+
 
 class Memory extends RefCounted:
 	var memoryAge : float:

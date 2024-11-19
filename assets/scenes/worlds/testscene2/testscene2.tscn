@@ -1,4 +1,4 @@
-[gd_scene load_steps=219 format=4 uid="uid://b883b6dhrfe8q"]
+[gd_scene load_steps=220 format=4 uid="uid://b883b6dhrfe8q"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_5asdl"]
 [ext_resource type="Script" path="res://assets/resources/customResources/worldData/worldData.gd" id="2_7yxuj"]
@@ -53,6 +53,7 @@
 [ext_resource type="Texture2D" uid="uid://sr64p1aykopo" path="res://assets/textures/crosshair/crosshair004.png" id="37_xi52y"]
 [ext_resource type="Script" path="res://assets/scripts/entities/interactiveObject/interactiveObject.gd" id="52_tsgpd"]
 [ext_resource type="PackedScene" uid="uid://bb78dx0yknjep" path="res://assets/entities/door/keypadDoor.tscn" id="53_gn8tv"]
+[ext_resource type="PackedScene" uid="uid://xsp3epet6kyl" path="res://assets/components/NavPOIMarkers/NavPOIMarker.tscn" id="54_6uuxf"]
 
 [sub_resource type="GDScript" id="GDScript_fxw7o"]
 resource_name = "TestScene"
@@ -1635,6 +1636,9 @@ objectName = "Omega Rooga"
 mesh = SubResource("ArrayMesh_o3xf6")
 surface_material_override/0 = SubResource("StandardMaterial3D_6er6t")
 
+[node name="marker3d" parent="Props/Revolver/Mesh" index="0"]
+visible = false
+
 [node name="AnimationTree" parent="Props/Revolver" index="3"]
 tree_root = SubResource("AnimationNodeBlendTree_chsc2")
 
@@ -1786,6 +1790,57 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.4993, 4.87562, 35.8038)
 
 [node name="marker3d30" type="Marker3D" parent="Misc/WaypointNodes" index="29"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.0373, 4.87562, 35.8038)
+
+[node name="Cover" parent="Misc/AIPOI" index="0" instance=ExtResource("54_6uuxf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.323095, 4.75862, 21.8569)
+
+[node name="Cover2" parent="Misc/AIPOI" index="1" instance=ExtResource("54_6uuxf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.202255, 4.75862, 16.9302)
+
+[node name="Cover3" parent="Misc/AIPOI" index="2" instance=ExtResource("54_6uuxf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.113053, 4.75862, 5.63723)
+
+[node name="Cover8" parent="Misc/AIPOI" index="3" instance=ExtResource("54_6uuxf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.1131, 4.75862, 21.6372)
+
+[node name="Cover9" parent="Misc/AIPOI" index="4" instance=ExtResource("54_6uuxf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.88556, 4.75862, 29.7358)
+
+[node name="Cover10" parent="Misc/AIPOI" index="5" instance=ExtResource("54_6uuxf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.03698, 4.75862, 28.8412)
+
+[node name="Cover11" parent="Misc/AIPOI" index="6" instance=ExtResource("54_6uuxf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.95513, 4.75862, 19.3301)
+
+[node name="Cover12" parent="Misc/AIPOI" index="7" instance=ExtResource("54_6uuxf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.0493, 4.75862, 22.5655)
+
+[node name="Cover13" parent="Misc/AIPOI" index="8" instance=ExtResource("54_6uuxf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.0493, 4.75862, 19.5655)
+
+[node name="Cover14" parent="Misc/AIPOI" index="9" instance=ExtResource("54_6uuxf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.2018, 4.75862, 11.4199)
+
+[node name="Cover17" parent="Misc/AIPOI" index="10" instance=ExtResource("54_6uuxf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.5661, 4.75862, 12.7371)
+
+[node name="Cover15" parent="Misc/AIPOI" index="11" instance=ExtResource("54_6uuxf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.0572, 4.75862, -1.74029)
+
+[node name="Cover16" parent="Misc/AIPOI" index="12" instance=ExtResource("54_6uuxf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.2097, 4.75862, -0.352391)
+
+[node name="Cover5" parent="Misc/AIPOI" index="13" instance=ExtResource("54_6uuxf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.88516, 4.75862, 2.89759)
+
+[node name="Cover6" parent="Misc/AIPOI" index="14" instance=ExtResource("54_6uuxf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.402, 4.75862, -4.69097)
+
+[node name="Cover7" parent="Misc/AIPOI" index="15" instance=ExtResource("54_6uuxf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.8594, 4.75862, -21.3781)
+
+[node name="Cover4" parent="Misc/AIPOI" index="16" instance=ExtResource("54_6uuxf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.933709, 4.75862, 4.29028)
 
 [connection signal="area_entered" from="Geometry/killzone" to="Geometry/killzone" method="_on_area_entered"]
 

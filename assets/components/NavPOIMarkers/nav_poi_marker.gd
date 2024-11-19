@@ -12,3 +12,5 @@ enum POIType {COVER, FLANK, HOLD, RETREAT}
 @export_range(1, 5) var score : int = 5
 ##Active toggle.
 @export var active : bool = false
+##Outside of this range, the AI won't consider it as a viable position.
+@export var consideration_range : float = 15.0

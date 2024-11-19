@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://xsp3epet6kyl"]
+
+[ext_resource type="Script" path="res://assets/components/NavPOIMarkers/nav_poi_marker.gd" id="1_81xjh"]
+
+[node name="NavPOIMarker" type="Marker3D"]
+script = ExtResource("1_81xjh")

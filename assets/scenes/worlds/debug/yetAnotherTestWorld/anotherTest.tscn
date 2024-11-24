@@ -68,7 +68,7 @@ bulletColor = null
 worldData = SubResource("Resource_6vxwt")
 
 [node name="pawnSpawn" parent="Spawns/playerSpawns" index="0" instance=ExtResource("4_0r0wx")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -10.5022, 1.5, 0.518274)
+transform = Transform3D(-0.9394, 0, -0.342824, 0, 1, 0, 0.342824, 0, -0.9394, -4.5511, 7.41036, -7.90682)
 pawnType = 0
 
 [node name="pawnSpawn" parent="Spawns/pawnSpawns" index="0" instance=ExtResource("4_0r0wx")]
@@ -112,7 +112,7 @@ size = Vector3(3.27371, 6.17981, 4.72327)
 material = ExtResource("3_sg61b")
 
 [node name="Wall4" type="CSGBox3D" parent="Geometry/navigationRegion3d/ground" index="2"]
-transform = Transform3D(0.116584, 0, -0.993181, -0.134893, 0.990734, -0.0158344, 0.983977, 0.135819, 0.115504, -9.06171, 3.19825, -12.2794)
+transform = Transform3D(0.116584, 8.33452e-10, -0.993181, 0.0195171, 0.999807, 0.00229101, 0.992989, -0.0196511, 0.116562, -9.06171, 3.19825, -12.2794)
 use_collision = true
 size = Vector3(3.27371, 6.17981, 4.72327)
 material = ExtResource("3_sg61b")

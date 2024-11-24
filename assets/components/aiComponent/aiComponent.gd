@@ -48,7 +48,7 @@ var pathPoint : int = 0
 @export_subgroup("Identification")
 @export var pawnName : String
 @export var aimSpeed : float = 0.75
-@export_enum("Idle","Wander","Patrol") var pawnType = 0:
+@export_enum("Idle","Wander","Patrol") var pawnType :int = 0:
 	set(value):
 		pawnType = value
 		setPawnType()

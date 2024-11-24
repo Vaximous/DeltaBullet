@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://bwsdqwu6x0g5y"]
+[gd_scene load_steps=25 format=3 uid="uid://bwsdqwu6x0g5y"]
 
 [ext_resource type="Texture2D" uid="uid://bec1o4nxcwu58" path="res://assets/textures/bullet/holes/flesh/flesh1.png" id="1_0wp7x"]
 [ext_resource type="AudioStream" uid="uid://0bwly86406fp" path="res://assets/sounds/gore/flesh4.wav" id="2_aj8jf"]
@@ -11,12 +11,6 @@
 [sub_resource type="GDScript" id="GDScript_3c2w4"]
 resource_name = "flesh"
 script/source = "extends BulletHole
-@onready var bloodSpurt : GPUParticles3D = $bloodSpurt
-
-
-func _on_blood_spurt_finished()->void:
-	bloodSpurt.queue_free()
-
 
 func _on_bullet_hole_emitted() -> void:
 	gameManager.sprayBlood((colPoint + -normal),randi_range(1,15),50,randf_range(1.0,1.7))
@@ -29,48 +23,53 @@ stream_0/stream = ExtResource("2_aj8jf")
 stream_1/stream = ExtResource("3_il4om")
 stream_2/stream = ExtResource("5_3loew")
 
-[sub_resource type="Curve" id="Curve_wtamv"]
-_data = [Vector2(0.00980393, 1), 0.0, -3.05128, 0, 0, Vector2(0.921569, 0), -0.275909, 0.0, 0, 0]
+[sub_resource type="Curve" id="Curve_6p4e6"]
+_data = [Vector2(0.00980393, 1), 0.0, -3.05128, 0, 0, Vector2(0.495098, 0), -0.275909, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_he7j2"]
-curve = SubResource("Curve_wtamv")
+[sub_resource type="CurveTexture" id="CurveTexture_8hrxf"]
+curve = SubResource("Curve_6p4e6")
 
-[sub_resource type="Gradient" id="Gradient_ra2vh"]
-colors = PackedColorArray(0.470588, 0, 0, 1, 1, 0, 0, 1)
+[sub_resource type="Gradient" id="Gradient_cbu73"]
+offsets = PackedFloat32Array(0.0215054, 1)
+colors = PackedColorArray(0.392157, 0, 0, 1, 0.827451, 0, 0, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_hb051"]
-gradient = SubResource("Gradient_ra2vh")
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ieg6t"]
+gradient = SubResource("Gradient_cbu73")
 
-[sub_resource type="Curve" id="Curve_cslyc"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_1sojh"]
+gradient = SubResource("Gradient_cbu73")
+
+[sub_resource type="Curve" id="Curve_nx3pv"]
 max_value = 2.0
-_data = [Vector2(0, 1.05494), 0.0, -3.12487, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 0.131868), 0.0, 2.33233, 0, 0, Vector2(1, 0.0219779), -2.55396, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_iasca"]
-curve = SubResource("Curve_cslyc")
+[sub_resource type="CurveTexture" id="CurveTexture_l3vwq"]
+curve = SubResource("Curve_nx3pv")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_l34uh"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_jrqab"]
+lifetime_randomness = 1.0
 particle_flag_align_y = true
 angle_min = 1.07288e-05
 angle_max = 110.0
 direction = Vector3(0, 1, 0)
-spread = 18.621
-initial_velocity_min = 2.5
-initial_velocity_max = 2.5
-gravity = Vector3(0, -6.84, 0)
+spread = 17.605
+flatness = 0.085
+initial_velocity_min = 1.55
+initial_velocity_max = 3.15
+gravity = Vector3(0, -3.715, 0)
 scale_min = 0.0
-scale_max = 0.7
-scale_curve = SubResource("CurveTexture_iasca")
-color_ramp = SubResource("GradientTexture1D_hb051")
-alpha_curve = SubResource("CurveTexture_he7j2")
-anim_offset_min = 1.0
-anim_offset_max = 1.0
+scale_max = 0.35
+scale_curve = SubResource("CurveTexture_l3vwq")
+color_ramp = SubResource("GradientTexture1D_1sojh")
+color_initial_ramp = SubResource("GradientTexture1D_ieg6t")
+alpha_curve = SubResource("CurveTexture_8hrxf")
 collision_mode = 2
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a30b1"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2xigv"]
 transparency = 1
-albedo_color = Color(0.607843, 0, 0, 1)
+vertex_color_use_as_albedo = true
 albedo_texture = ExtResource("6_taqq3")
 billboard_mode = 3
 billboard_keep_scale = true
@@ -78,33 +77,39 @@ particles_anim_h_frames = 3
 particles_anim_v_frames = 3
 particles_anim_loop = false
 
-[sub_resource type="QuadMesh" id="QuadMesh_oeew6"]
-material = SubResource("StandardMaterial3D_a30b1")
+[sub_resource type="QuadMesh" id="QuadMesh_paboh"]
+material = SubResource("StandardMaterial3D_2xigv")
 size = Vector2(0.3, 0.3)
 
-[sub_resource type="Gradient" id="Gradient_wjbw4"]
-colors = PackedColorArray(0.576471, 0, 0, 1, 0.32549, 0, 0, 1)
+[sub_resource type="Curve" id="Curve_qmtuf"]
+_data = [Vector2(0, 1), 0.0, 0.263736, 0, 0, Vector2(1, 0), -1.4011, 0.0, 0, 0]
+point_count = 2
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_qy2ej"]
-gradient = SubResource("Gradient_wjbw4")
+[sub_resource type="CurveTexture" id="CurveTexture_ncr33"]
+curve = SubResource("Curve_qmtuf")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_i2hcq"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_bla3e"]
+lifetime_randomness = 1.0
 particle_flag_align_y = true
 angle_min = 1.07288e-05
 angle_max = 110.0
+velocity_pivot = Vector3(0, 0.54, 0)
 direction = Vector3(0, 1, 0)
-spread = 12.545
-initial_velocity_min = 2.9
-initial_velocity_max = 2.9
-gravity = Vector3(0, -6.615, 0)
-scale_curve = SubResource("CurveTexture_iasca")
-color_ramp = SubResource("GradientTexture1D_qy2ej")
-alpha_curve = SubResource("CurveTexture_he7j2")
+spread = 13.005
+initial_velocity_min = 1.5
+initial_velocity_max = 3.0
+gravity = Vector3(0, -1.125, 0)
+scale_min = 0.95
+scale_max = 0.95
+scale_curve = SubResource("CurveTexture_ncr33")
+color_ramp = SubResource("GradientTexture1D_ieg6t")
+color_initial_ramp = SubResource("GradientTexture1D_ieg6t")
+alpha_curve = SubResource("CurveTexture_8hrxf")
 anim_offset_min = 1.0
 anim_offset_max = 1.0
 collision_mode = 2
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8l6r7"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lxou4"]
 transparency = 1
 vertex_color_use_as_albedo = true
 albedo_texture = ExtResource("7_he520")
@@ -115,8 +120,8 @@ particles_anim_h_frames = 1
 particles_anim_v_frames = 1
 particles_anim_loop = false
 
-[sub_resource type="QuadMesh" id="QuadMesh_8sr7c"]
-material = SubResource("StandardMaterial3D_8l6r7")
+[sub_resource type="QuadMesh" id="QuadMesh_4bxaj"]
+material = SubResource("StandardMaterial3D_lxou4")
 size = Vector2(0.3, 0.3)
 
 [node name="bulletHole_Flesh" type="Node3D" node_paths=PackedStringArray("decal", "particleArray", "soundArray")]
@@ -147,26 +152,26 @@ attenuation_filter_db = 0.0
 top_level = true
 
 [node name="impactParticle" type="GPUParticles3D" parent="."]
-visible = false
 emitting = false
 amount = 19
 one_shot = true
 speed_scale = 1.8
 explosiveness = 1.0
+randomness = 1.0
 fixed_fps = 0
-process_material = SubResource("ParticleProcessMaterial_l34uh")
-draw_pass_1 = SubResource("QuadMesh_oeew6")
+process_material = SubResource("ParticleProcessMaterial_jrqab")
+draw_pass_1 = SubResource("QuadMesh_paboh")
 
 [node name="smokeParticle" type="GPUParticles3D" parent="."]
-visible = false
 emitting = false
-amount = 15
+amount = 14
 one_shot = true
+preprocess = 0.01
 speed_scale = 1.8
 explosiveness = 1.0
 fixed_fps = 0
-process_material = SubResource("ParticleProcessMaterial_i2hcq")
-draw_pass_1 = SubResource("QuadMesh_8sr7c")
+process_material = SubResource("ParticleProcessMaterial_bla3e")
+draw_pass_1 = SubResource("QuadMesh_4bxaj")
 
 [connection signal="bulletHoleEmitted" from="." to="." method="_on_bullet_hole_emitted"]
 [connection signal="finished" from="bloodSpurt" to="." method="_on_blood_spurt_finished"]

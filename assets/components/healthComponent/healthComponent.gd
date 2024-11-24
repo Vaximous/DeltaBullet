@@ -1,12 +1,12 @@
 extends Component
 class_name HealthComponent
 signal HPisDead
-signal onDamaged(dealer,hitDirection)
+signal onDamaged(dealer:Node3D,hitDirection:Vector3)
 signal healthChanged
 signal healthDepleted(dealer:Node3D)
 signal killedWithDismemberingWeapon
 @export_category("Component")
-var lastDealer
+var lastDealer : Node3D
 @export var health:float = 100:
 	set(value):
 		healthChanged.emit()
@@ -24,14 +24,14 @@ var lastDealer
 		isDead = value
 		if isDead:
 			HPisDead.emit()
-var componentOwner
+var componentOwner : Node3D
 var killerSignalEmitted :bool= false
 
 # Called when the node enters the scene tree for the first time.
 func _ready()->void:
 	componentOwner = get_owner()
 
-func damage(amount, dealer:Node3D = null)->void:
+func damage(amount:float, dealer:Node3D = null)->void:
 	lastDealer = dealer
 	onDamaged.emit(dealer, Vector3.ZERO)
 	health = health - amount

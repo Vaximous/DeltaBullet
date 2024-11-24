@@ -1,6 +1,6 @@
 [gd_resource type="PhysicsMaterial" script_class="DB_PhysicsMaterial" load_steps=3 format=3 uid="uid://cmhe4vqpbtu0e"]
 
-[ext_resource type="PackedScene" uid="uid://bwsdqwu6x0g5y" path="res://assets/entities/bulletHoles/flesh/flesh.tscn" id="1_7j7ng"]
+[ext_resource type="PackedScene" uid="uid://cj1va0l7e2wcb" path="res://assets/entities/bulletHoles/flesh/BulletHole_Flesh.tscn" id="1_jsvil"]
 [ext_resource type="Script" path="res://assets/resources/PhysicsMaterials/DB_PhysicsMaterial.gd" id="2_vopb5"]
 
 [resource]
@@ -8,4 +8,4 @@ resource_name = "FleshPhysicsMaterial"
 script = ExtResource("2_vopb5")
 penetration_resistance = 25.0
 penetration_entry_cost = 25.0
-bullet_hole = ExtResource("1_7j7ng")
+bullet_hole = ExtResource("1_jsvil")

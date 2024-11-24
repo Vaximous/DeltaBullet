@@ -20,7 +20,7 @@
 _data = [Vector2(0.00980393, 1), 0.0, -3.05128, 0, 0, Vector2(0.495098, 0), -0.275909, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_he7j2"]
+[sub_resource type="CurveTexture" id="CurveTexture_gg3bw"]
 curve = SubResource("Curve_13615")
 
 [sub_resource type="Curve" id="Curve_cia6p"]
@@ -28,10 +28,11 @@ max_value = 2.0
 _data = [Vector2(0, 0.131868), 0.0, 2.33233, 0, 0, Vector2(1, 0.0219779), -2.55396, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_iasca"]
+[sub_resource type="CurveTexture" id="CurveTexture_gdaea"]
 curve = SubResource("Curve_cia6p")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_b0f7p"]
+lifetime_randomness = 1.0
 particle_flag_align_y = true
 angle_min = 1.07288e-05
 angle_max = 110.0
@@ -39,17 +40,17 @@ direction = Vector3(0, 1, 0)
 spread = 17.605
 flatness = 0.085
 initial_velocity_min = 1.55
-initial_velocity_max = 2.15
+initial_velocity_max = 3.15
 gravity = Vector3(0, -3.715, 0)
 scale_min = 0.0
 scale_max = 0.35
-scale_curve = SubResource("CurveTexture_iasca")
-alpha_curve = SubResource("CurveTexture_he7j2")
+scale_curve = SubResource("CurveTexture_gdaea")
+alpha_curve = SubResource("CurveTexture_gg3bw")
 anim_offset_min = 1.0
 anim_offset_max = 1.0
 collision_mode = 2
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0p3bf"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_olvil"]
 transparency = 1
 albedo_texture = ExtResource("2_eo3j3")
 billboard_mode = 3
@@ -59,35 +60,36 @@ particles_anim_v_frames = 3
 particles_anim_loop = false
 
 [sub_resource type="QuadMesh" id="QuadMesh_sy737"]
-material = SubResource("StandardMaterial3D_0p3bf")
+material = SubResource("StandardMaterial3D_olvil")
 size = Vector2(0.3, 0.3)
 
 [sub_resource type="Curve" id="Curve_wk2qm"]
 _data = [Vector2(0, 1), 0.0, 0.263736, 0, 0, Vector2(1, 0), -1.4011, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_cnpb0"]
+[sub_resource type="CurveTexture" id="CurveTexture_urjbs"]
 curve = SubResource("Curve_wk2qm")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1p6ig"]
+lifetime_randomness = 1.0
 particle_flag_align_y = true
 angle_min = 1.07288e-05
 angle_max = 110.0
 velocity_pivot = Vector3(0, 0.54, 0)
 direction = Vector3(0, 1, 0)
 spread = 13.005
-initial_velocity_min = 0.95
-initial_velocity_max = 1.55
+initial_velocity_min = 1.5
+initial_velocity_max = 3.0
 gravity = Vector3(0, -1.125, 0)
 scale_min = 0.95
 scale_max = 0.95
-scale_curve = SubResource("CurveTexture_cnpb0")
-alpha_curve = SubResource("CurveTexture_he7j2")
+scale_curve = SubResource("CurveTexture_urjbs")
+alpha_curve = SubResource("CurveTexture_gg3bw")
 anim_offset_min = 1.0
 anim_offset_max = 1.0
 collision_mode = 2
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8l6r7"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mdmi3"]
 transparency = 1
 vertex_color_use_as_albedo = true
 albedo_texture = ExtResource("3_226le")
@@ -99,7 +101,7 @@ particles_anim_v_frames = 1
 particles_anim_loop = false
 
 [sub_resource type="QuadMesh" id="QuadMesh_70vys"]
-material = SubResource("StandardMaterial3D_8l6r7")
+material = SubResource("StandardMaterial3D_mdmi3")
 size = Vector2(0.3, 0.3)
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_8eltn"]
@@ -137,8 +139,9 @@ draw_pass_1 = SubResource("QuadMesh_sy737")
 
 [node name="smokeParticle" type="GPUParticles3D" parent="." index="1"]
 emitting = false
-amount = 6
+amount = 14
 one_shot = true
+preprocess = 0.01
 speed_scale = 1.8
 explosiveness = 1.0
 fixed_fps = 0

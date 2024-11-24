@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://2nj1n64cy47e"]
+[gd_scene load_steps=17 format=3 uid="uid://2nj1n64cy47e"]
 
 [ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="1_kx7nb"]
 [ext_resource type="Script" path="res://assets/scenes/ui/customization/clothingEquipPreview.gd" id="2_uwnix"]
@@ -11,6 +11,13 @@ colors = PackedColorArray(0, 0, 0, 0, 0.188235, 0, 0, 1)
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_02n5f"]
 gradient = SubResource("Gradient_b6ksk")
 fill_from = Vector2(1, 1)
+
+[sub_resource type="Environment" id="Environment_7ifj3"]
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+
+[sub_resource type="World3D" id="World3D_3pxu0"]
+environment = SubResource("Environment_7ifj3")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1lwbg"]
 transparency = 1
@@ -30,6 +37,21 @@ outline_size = 2
 outline_color = Color(0, 0, 0, 1)
 shadow_size = 6
 shadow_color = Color(0, 0, 0, 0.431373)
+
+[sub_resource type="Animation" id="Animation_h1xa5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("backgroundPanel/topBar:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(147, 207)]
+}
 
 [sub_resource type="Animation" id="Animation_psy11"]
 resource_name = "buffer"
@@ -59,21 +81,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(0.31864, 1),
 "update": 0,
 "values": [Vector2(147, 206.905), Vector2(147, 17)]
-}
-
-[sub_resource type="Animation" id="Animation_h1xa5"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("backgroundPanel/topBar:size")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(147, 207)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_hvgav"]
@@ -123,7 +130,10 @@ offset_right = 149.0
 stretch = true
 
 [node name="subViewport" type="SubViewport" parent="backgroundPanel/subViewportContainer"]
+own_world_3d = true
+world_3d = SubResource("World3D_3pxu0")
 transparent_bg = true
+handle_input_locally = false
 msaa_3d = 3
 scaling_3d_scale = 1.13
 size = Vector2i(147, 202)
@@ -174,8 +184,8 @@ layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.974
 anchor_bottom = 1.025
-offset_right = -0.0740051
-offset_bottom = -0.0500183
+offset_right = -0.0739899
+offset_bottom = -0.0499878
 
 [node name="animationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

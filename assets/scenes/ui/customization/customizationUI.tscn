@@ -63,9 +63,11 @@ clothingItem = ExtResource("4_jnw8h")
 
 [node name="clothingItemButton2" parent="menuRight" instance=ExtResource("3_m5e2e")]
 layout_mode = 1
+anchor_right = 0.0
+anchor_bottom = 0.0
 offset_left = 193.0
-offset_right = 293.175
-offset_bottom = 0.623993
+offset_right = 344.0
+offset_bottom = 202.0
 clothingItem = ExtResource("4_lk8ax")
 
 [node name="textureRect" type="TextureRect" parent="."]

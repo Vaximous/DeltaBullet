@@ -1,9 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://ccnq3cc8k6nt5"]
+[gd_scene load_steps=19 format=3 uid="uid://ccnq3cc8k6nt5"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_iq3s1"]
 [ext_resource type="Script" path="res://assets/resources/customResources/worldData/worldData.gd" id="2_gqs4i"]
 [ext_resource type="Material" uid="uid://6hc0pjapu32g" path="res://assets/materials/devMaterials/developer/checkerboard_material.tres" id="3_sg61b"]
 [ext_resource type="PackedScene" uid="uid://boicvk4qeqmbd" path="res://assets/entities/pawnSpawn/pawnSpawn.tscn" id="4_0r0wx"]
+[ext_resource type="Texture2D" uid="uid://d0f0crtwpmoka" path="res://assets/textures/panoramas/panoramatest1.png" id="4_7ph80"]
 [ext_resource type="PackedScene" uid="uid://dvmmlj4mvj88r" path="res://assets/entities/aiMarker/aiMarker.tscn" id="5_bh8tr"]
 [ext_resource type="PackedScene" uid="uid://dsxt078giobel" path="res://assets/entities/weapons/Uzi/Uzi.tscn" id="5_gs5af"]
 [ext_resource type="Resource" uid="uid://r6qkb05upxjv" path="res://assets/resources/customResources/weaponData/Uzi/UziDisplay.tres" id="6_k77gc"]
@@ -19,6 +20,47 @@ worldType = 0
 spawnPawnsOnLoad = true
 playOnStart = false
 spawnType = 0
+
+[sub_resource type="Gradient" id="Gradient_6voip"]
+colors = PackedColorArray(0, 0, 0, 1, 0.996078, 0.941176, 0.811765, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_iun5n"]
+gradient = SubResource("Gradient_6voip")
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_xihyl"]
+panorama = ExtResource("4_7ph80")
+
+[sub_resource type="Sky" id="Sky_nj1fe"]
+sky_material = SubResource("PanoramaSkyMaterial_xihyl")
+
+[sub_resource type="Environment" id="Environment_a8ts2"]
+background_mode = 2
+sky = SubResource("Sky_nj1fe")
+reflected_light_source = 1
+tonemap_mode = 3
+tonemap_exposure = 0.9
+ssao_enabled = true
+ssil_intensity = 0.75
+sdfgi_use_occlusion = true
+sdfgi_y_scale = 2
+glow_normalized = true
+glow_bloom = 0.15
+glow_blend_mode = 1
+fog_light_energy = 0.0
+fog_sun_scatter = 0.17
+fog_density = 0.009
+fog_sky_affect = 0.765
+fog_height = 96.8
+fog_height_density = 0.089
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.0282
+volumetric_fog_albedo = Color(0.848227, 0.767118, 0.651965, 1)
+volumetric_fog_length = 89.05
+volumetric_fog_detail_spread = 1.66435
+adjustment_enabled = true
+adjustment_brightness = 0.9
+adjustment_saturation = 1.15
+adjustment_color_correction = SubResource("GradientTexture1D_iun5n")
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_2388r"]
 vertices = PackedVector3Array(-24.8428, 2, -10.0655, -7.84277, 2, -10.0655, -7.59277, 2, -10.5655, -5.34277, 2, -10.8155, -5.59277, 2, -32.5655, -24.8428, 2, -32.5655, -2.34277, 2, -11.0655, -2.34277, 2, -32.5655, -1.59277, 2, -9.81545, -1.34277, 2, -6.81545, 4.40723, 2, -5.81545, 5.65723, 2, -8.81545, 6.65723, 2, -9.31545, 6.65723, 2, -32.5655, 10.1572, 2, -6.56545, 8.40723, 2, -2.56545, 12.9072, 2, -1.81545, 15.9072, 2, -9.06545, 10.1572, 2, -7.81545, 16.9072, 2, -9.56545, 16.9072, 2, -32.5655, 19.9072, 2, -8.56545, 20.4072, 2, -7.56545, 33.6572, 2, -7.56545, 33.6572, 2, -32.5655, -24.8428, 2, -7.81545, -7.59277, 2, -8.06545, -6.34277, 7.5, -6.31545, -2.59277, 7.5, -6.81545, -2.84277, 7.75, -9.06545, -6.84277, 7.75, -8.81545, 11.9072, 2.5, 2.93455, 13.1572, 2.5, 3.93455, 14.4072, 2.5, 3.93455, 19.1572, 2.5, -6.81545, 18.9072, 2.5, -7.81545, 16.9072, 2.5, -8.56545, -24.8428, 2, 9.68455, -15.8428, 2, 9.68455, -14.0928, 2, 6.93455, -7.34277, 2, -6.31545, -12.8428, 2, 6.68455, 8.90723, 7.75, -6.56545, 8.90723, 7.75, -7.31545, 6.65723, 7.75, -8.06545, 5.15723, 7.75, -4.81545, 7.40723, 7.75, -3.56545, 11.1572, 2, 4.18455, -1.84277, 2, 15.4345, -1.84277, 2, 16.1845, 13.9072, 2, 5.43455, 33.6572, 2, 40.6845, 15.1572, 2, 5.18455, -4.09277, 2, 18.9345, -4.59277, 2, 40.6845, -4.59277, 2, 18.9345, 3.90723, 2, -4.81545, 7.15723, 2, -2.31545, 10.6572, 2, 2.93455, 10.6572, 2, 3.93455, 4.40723, 2, -3.56545, -2.59277, 2, -6.06545, -6.84277, 2, -5.81545, -8.84277, 2, 9.68455, -12.3428, 5.25, 8.18455, -13.3428, 5.25, 7.93455, -14.5928, 5.25, 9.43455, -14.0928, 5.25, 10.4345, -4.84277, 5.25, 17.6845, -3.09277, 5.25, 15.9345, -14.5928, 2, 11.4345, -24.8428, 2, 40.6845)
@@ -83,6 +125,9 @@ aiType = 1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.23665, 1.5, 9.65867)
 aiType = 1
 
+[node name="worldEnvironment" parent="Environment" index="0"]
+environment = SubResource("Environment_a8ts2")
+
 [node name="reflectionProbe" parent="Environment" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09741, 11.4137, 5.65805)
 size = Vector3(62.2935, 20, 42.2525)
@@ -93,34 +138,34 @@ transform = Transform3D(0.381993, 0.645039, -0.661821, -0.128021, 0.746158, 0.65
 [node name="navigationRegion3d" type="NavigationRegion3D" parent="Geometry" index="0"]
 navigation_mesh = SubResource("NavigationMesh_2388r")
 
-[node name="ground" type="CSGBox3D" parent="Geometry/navigationRegion3d" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.44403, 1, 4.1167)
-use_collision = true
-size = Vector3(59.5736, 1, 74.3643)
-material = ExtResource("3_sg61b")
-
-[node name="Wall1" type="CSGBox3D" parent="Geometry/navigationRegion3d/ground" index="0"]
-transform = Transform3D(0.916872, 0, -0.399181, 0, 1, 0, 0.399181, 0, 0.916872, 11.1661, 0.608345, -6.25495)
+[node name="Wall1" type="CSGBox3D" parent="Geometry/navigationRegion3d" index="0"]
+transform = Transform3D(0.916872, 0, -0.399181, 0, 1, 0, 0.399181, 0, 0.916872, 15.6101, 1.60835, -2.13825)
 use_collision = true
 size = Vector3(3.27371, 1, 13.5757)
 material = ExtResource("3_sg61b")
 
-[node name="Wall3" type="CSGBox3D" parent="Geometry/navigationRegion3d/ground" index="1"]
-transform = Transform3D(0.916872, 0, -0.399181, 0, 1, 0, 0.399181, 0, 0.916872, 2.65632, 3.19825, -9.97228)
+[node name="Wall3" type="CSGBox3D" parent="Geometry/navigationRegion3d" index="1"]
+transform = Transform3D(0.916872, 0, -0.399181, 0, 1, 0, 0.399181, 0, 0.916872, 7.10035, 4.19825, -5.85558)
 use_collision = true
 size = Vector3(3.27371, 6.17981, 4.72327)
 material = ExtResource("3_sg61b")
 
-[node name="Wall4" type="CSGBox3D" parent="Geometry/navigationRegion3d/ground" index="2"]
-transform = Transform3D(0.116584, 8.33452e-10, -0.993181, 0.0195171, 0.999807, 0.00229101, 0.992989, -0.0196511, 0.116562, -9.06171, 3.19825, -12.2794)
+[node name="Wall4" type="CSGBox3D" parent="Geometry/navigationRegion3d" index="2"]
+transform = Transform3D(0.116584, 8.33452e-10, -0.993181, 0.0195171, 0.999807, 0.00229101, 0.992989, -0.0196511, 0.116562, -4.61768, 4.19825, -8.16268)
 use_collision = true
 size = Vector3(3.27371, 6.17981, 4.72327)
 material = ExtResource("3_sg61b")
 
-[node name="Wall2" type="CSGBox3D" parent="Geometry/navigationRegion3d/ground" index="3"]
-transform = Transform3D(0.622883, 0, 0.782315, 0, 1, 0, -0.782315, 0, 0.622883, -13.3608, 2.0503, 8.62429)
+[node name="Wall2" type="CSGBox3D" parent="Geometry/navigationRegion3d" index="3"]
+transform = Transform3D(0.622883, 0, 0.782315, 0, 1, 0, -0.782315, 0, 0.622883, -8.91677, 3.0503, 12.741)
 use_collision = true
 size = Vector3(3.27371, 3.88391, 13.5757)
+material = ExtResource("3_sg61b")
+
+[node name="ground" type="CSGBox3D" parent="Geometry/navigationRegion3d" index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.44403, -895.199, 4.1167)
+use_collision = true
+size = Vector3(59.5736, 1793.4, 74.3643)
 material = ExtResource("3_sg61b")
 
 [node name="Uzi" parent="Props" index="0" instance=ExtResource("5_gs5af")]

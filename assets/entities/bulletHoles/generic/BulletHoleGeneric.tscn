@@ -75,7 +75,6 @@ lifetime_randomness = 1.0
 particle_flag_align_y = true
 angle_min = 1.07288e-05
 angle_max = 110.0
-velocity_pivot = Vector3(0, 0.54, 0)
 direction = Vector3(0, 1, 0)
 spread = 13.005
 initial_velocity_min = 1.5

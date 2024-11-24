@@ -59,8 +59,9 @@ func initializeBulletHole()->void:
 
 	#Emit the particles
 	for particles in particleArray:
-		particles.look_at(colPoint + normal, Vector3.UP)
-		particles.rotate(normal,randf_range(0, 180)/PI)
+		if !normal.dot(Vector3.UP) > 0.001:
+			particles.look_at(colPoint + normal, Vector3.UP)
+			particles.rotate(normal,randf_range(0, 180)/PI)
 
 		#Forces the position of the particles to be set to the collision point (Wont be used much, is an old thing)
 		if forceGlobalPosition:

@@ -1,12 +1,14 @@
-[gd_scene load_steps=19 format=3 uid="uid://ccnq3cc8k6nt5"]
+[gd_scene load_steps=21 format=3 uid="uid://ccnq3cc8k6nt5"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_iq3s1"]
 [ext_resource type="Script" path="res://assets/resources/customResources/worldData/worldData.gd" id="2_gqs4i"]
 [ext_resource type="Material" uid="uid://6hc0pjapu32g" path="res://assets/materials/devMaterials/developer/checkerboard_material.tres" id="3_sg61b"]
 [ext_resource type="PackedScene" uid="uid://boicvk4qeqmbd" path="res://assets/entities/pawnSpawn/pawnSpawn.tscn" id="4_0r0wx"]
 [ext_resource type="Texture2D" uid="uid://d0f0crtwpmoka" path="res://assets/textures/panoramas/panoramatest1.png" id="4_7ph80"]
+[ext_resource type="PackedScene" uid="uid://wtqya32cwdbk" path="res://assets/entities/weapons/Beretta/Beretta.tscn" id="4_rig7i"]
 [ext_resource type="PackedScene" uid="uid://dvmmlj4mvj88r" path="res://assets/entities/aiMarker/aiMarker.tscn" id="5_bh8tr"]
 [ext_resource type="PackedScene" uid="uid://dsxt078giobel" path="res://assets/entities/weapons/Uzi/Uzi.tscn" id="5_gs5af"]
+[ext_resource type="PackedScene" uid="uid://bidurnqgd1c74" path="res://assets/entities/weapons/m4/m4.tscn" id="5_wnt7o"]
 [ext_resource type="Resource" uid="uid://r6qkb05upxjv" path="res://assets/resources/customResources/weaponData/Uzi/UziDisplay.tres" id="6_k77gc"]
 [ext_resource type="Texture2D" uid="uid://rnjqykyxts43" path="res://assets/textures/crosshair/crosshair037.png" id="7_1sogm"]
 [ext_resource type="Script" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="8_hfkws"]
@@ -119,10 +121,23 @@ aiType = 1
 
 [node name="pawnSpawn2" parent="Spawns/pawnSpawns" index="1" instance=ExtResource("4_0r0wx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.23665, 1.5, 9.65867)
+pawnWeapons = Array[PackedScene]([ExtResource("4_rig7i")])
+equipWeaponOnSpawn = true
+weaponToEquip = 1
 aiType = 1
 
-[node name="pawnSpawn3" parent="Spawns/pawnSpawns" index="2" instance=ExtResource("4_0r0wx")]
+[node name="pawnSpawn4" parent="Spawns/pawnSpawns" index="2" instance=ExtResource("4_0r0wx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.23665, 1.5, 9.65867)
+pawnWeapons = Array[PackedScene]([ExtResource("4_rig7i")])
+equipWeaponOnSpawn = true
+weaponToEquip = 1
+aiType = 1
+
+[node name="pawnSpawn3" parent="Spawns/pawnSpawns" index="3" instance=ExtResource("4_0r0wx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.23665, 1.5, 9.65867)
+pawnWeapons = Array[PackedScene]([ExtResource("5_wnt7o")])
+equipWeaponOnSpawn = true
+weaponToEquip = 1
 aiType = 1
 
 [node name="worldEnvironment" parent="Environment" index="0"]

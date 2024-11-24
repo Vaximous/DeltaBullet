@@ -6,17 +6,20 @@ signal healthChanged
 signal healthDepleted(dealer:Node3D)
 signal killedWithDismemberingWeapon
 @export_category("Component")
-var lastDealer : Node3D
+var lastDealer : Node3D = null
 @export var health:float = 100:
 	set(value):
 		healthChanged.emit()
-		if value <= 0:
-			healthDepleted.emit(lastDealer)
+		health = value
+		if health <= 0:
+			await get_tree().process_frame
+			if lastDealer!=null:
+				healthDepleted.emit(lastDealer)
+			else:
+				healthDepleted.emit(null)
 			isDead = true
 			#HPisDead.emit()
 			#health = 0
-			await get_tree().process_frame
-		health = value
 	get:
 		return health
 @export var isDead:bool = false:

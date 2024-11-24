@@ -148,7 +148,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09741, 11.4137, 5.65805)
 size = Vector3(62.2935, 20, 42.2525)
 
 [node name="directionalLight3d" parent="Environment" index="2"]
-transform = Transform3D(0.381993, 0.645039, -0.661821, -0.128021, 0.746158, 0.653345, 0.915255, -0.164846, 0.367605, 0, 4.67884, 0)
+transform = Transform3D(0.381993, 0.645038, -0.661821, -0.128021, 0.746158, 0.653345, 0.915255, -0.164846, 0.367605, -9.47455, 11.6074, 0)
 
 [node name="navigationRegion3d" type="NavigationRegion3D" parent="Geometry" index="0"]
 navigation_mesh = SubResource("NavigationMesh_2388r")

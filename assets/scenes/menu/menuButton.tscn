@@ -4,15 +4,15 @@
 [ext_resource type="AudioStream" uid="uid://d1pr7ltc6f600" path="res://assets/sounds/ui/uiappear.wav" id="2_s0xtq"]
 [ext_resource type="AudioStream" uid="uid://dmifxlb0c387l" path="res://assets/sounds/ui/uiclick.wav" id="3_fwsfw"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lp1is"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1lmnn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_x4efl"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dd2hg"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d72n3"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_x4efl"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1lmnn"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lp1is"]
 
 [sub_resource type="GDScript" id="GDScript_amc6w"]
 resource_name = "menuButton"
@@ -246,25 +246,25 @@ offset_bottom = -0.400002
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
-theme_override_colors/font_color = Color(0, 0, 0, 0)
-theme_override_colors/font_pressed_color = Color(0, 0, 0, 0)
-theme_override_colors/font_hover_color = Color(0, 0, 0, 0)
-theme_override_colors/font_focus_color = Color(0, 0, 0, 0)
-theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 0)
 theme_override_colors/font_disabled_color = Color(0, 0, 0, 0)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 0)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 0)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 0)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 0)
+theme_override_colors/font_color = Color(0, 0, 0, 0)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
 theme_override_colors/icon_normal_color = Color(0, 0, 0, 0)
+theme_override_colors/icon_focus_color = Color(0, 0, 0, 0)
 theme_override_colors/icon_pressed_color = Color(0, 0, 0, 0)
 theme_override_colors/icon_hover_color = Color(0, 0, 0, 0)
 theme_override_colors/icon_hover_pressed_color = Color(0, 0, 0, 0)
-theme_override_colors/icon_focus_color = Color(0, 0, 0, 0)
 theme_override_colors/icon_disabled_color = Color(0, 0, 0, 0)
 theme_override_font_sizes/font_size = 1
-theme_override_styles/normal = SubResource("StyleBoxEmpty_lp1is")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_1lmnn")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_x4efl")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_dd2hg")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_d72n3")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_x4efl")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_1lmnn")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_lp1is")
 text = "PLAY"
 script = SubResource("GDScript_amc6w")
 
@@ -272,8 +272,8 @@ script = SubResource("GDScript_amc6w")
 layout_mode = 1
 anchors_preset = -1
 anchor_bottom = 1.043
-offset_right = 100.0
-offset_bottom = 49.0
+offset_right = 85.0
+offset_bottom = -3.15
 texture = SubResource("GradientTexture1D_su33n")
 expand_mode = 1
 

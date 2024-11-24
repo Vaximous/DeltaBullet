@@ -16,7 +16,8 @@ func on_exit():
 func on_enter()->void:
 	aiOwner.pathingToPosition = false
 	aiOwner.currentPath.clear()
-	attackTimer.timeout.connect(toggleShooting)
+	if !attackTimer.timeout.is_connected(toggleShooting):
+		attackTimer.timeout.connect(toggleShooting)
 	attackTimer.wait_time = randf_range(0.05,0.6)
 	moveTimer.wait_time = randf_range(1,5)
 	attackTimer.start()

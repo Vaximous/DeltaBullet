@@ -570,7 +570,7 @@ func die(killer) -> void:
 	animationTree.set("parameters/standToCrouchAdd/add_amount", 0)
 	animationTree.set("parameters/standToCrouchStrafe/add_amount", 0)
 	doKillEffect(killer)
-	createRagdoll(lastHitPart, killer)
+	await createRagdoll(lastHitPart, killer)
 	#moveDecalsToRagdoll(ragdoll)
 	endPawn()
 	endAttachedCam()
@@ -586,25 +586,32 @@ func _on_health_component_health_depleted(dealer:BasePawn) -> void:
 	else:
 		die(null)
 
+
+func setRagdollPose(ragdoll:PawnRagdoll)->void:
+	for bones in ragdoll.ragdollSkeleton.get_bone_count():
+		ragdoll.ragdollSkeleton.set_bone_global_pose(bones, pawnSkeleton.get_bone_global_pose(bones))
+
+func setRagdollPositionAndRotation(ragdoll:PawnRagdoll)->void:
+	ragdoll.global_transform = pawnMesh.global_transform
+	ragdoll.rotation = pawnMesh.rotation
+	ragdoll.targetSkeleton = pawnSkeleton
+
 func createRagdoll(impulse_bone : int = 0,killer = null)->PawnRagdoll:
 	var currVel = velocity
 	var ragdoll = ragdollScene.instantiate()
 	collisionEnabled = false
 	self.hide()
-	ragdoll.global_transform = pawnMesh.global_transform
-	ragdoll.rotation = pawnMesh.rotation
-	ragdoll.targetSkeleton = pawnSkeleton
+	setRagdollPositionAndRotation(ragdoll)
 	gameManager.world.worldMisc.add_child(ragdoll)
 	#moveDecalsToRagdoll(ragdoll)
 	moveClothesToRagdoll(ragdoll)
 	ragdoll.setPawnMaterial(currentPawnMat)
-	ragdoll.ragdollSkeleton.animate_physical_bones = true
-	for bones in ragdoll.ragdollSkeleton.get_bone_count():
-		ragdoll.savedPose.append(pawnSkeleton.get_bone_pose(bones))
-		#ragdoll.ragdollSkeleton.set_bone_rest(bones, pawnSkeleton.get_bone_pose(bones))
-		ragdoll.ragdollSkeleton.set_bone_global_pose(bones, pawnSkeleton.get_bone_global_pose(bones))
-		#ragdoll.physicalBoneSimulator.get_skeleton().set_bone_pose_rotation(bones, pawnSkeleton.get_bone_pose_rotation(bones))
+
+
+	setRagdollPose(ragdoll)
 	ragdoll.startRagdoll()
+
+
 	for bones in ragdoll.physicalBoneSimulator.get_child_count():
 		var child = ragdoll.physicalBoneSimulator.get_child(bones)
 		if child is RagdollBone:
@@ -614,9 +621,13 @@ func createRagdoll(impulse_bone : int = 0,killer = null)->PawnRagdoll:
 			if child.get_bone_id() == impulse_bone:
 				#ragdoll.startRagdoll()
 				child.apply_central_impulse(hitImpulse * randf_range(1.5,2))
+
+
 	pawnDied.emit(ragdoll)
 	ragdoll.checkClothingHider()
 	#ragdoll.startRagdoll()
+
+
 	for bones in ragdoll.physicalBoneSimulator.get_child_count():
 		var child = ragdoll.physicalBoneSimulator.get_child(bones)
 		if child is RagdollBone:
@@ -624,6 +635,8 @@ func createRagdoll(impulse_bone : int = 0,killer = null)->PawnRagdoll:
 				child.canBleed = true
 				if child.healthComponent and killer != null and killer.currentItem != null:
 					child.healthComponent.damage(killer.currentItem.weaponResource.weaponDamage * randf_range(1.5,2),killer)
+
+
 	if impulse_bone == 41:
 		if killer != null:
 			if killer.currentItem != null:
@@ -632,6 +645,8 @@ func createRagdoll(impulse_bone : int = 0,killer = null)->PawnRagdoll:
 			if killer.attachedCam != null:
 				killer.attachedCam.doHeadshotEffect()
 		headshottedPawn.emit()
+
+
 	if !attachedCam == null:
 		var cam = attachedCam
 		cam.unposessObject()
@@ -641,13 +656,18 @@ func createRagdoll(impulse_bone : int = 0,killer = null)->PawnRagdoll:
 			if ragdoll.physicalBoneSimulator.get_child(bones) is RagdollBone:
 				cam.camSpring.add_excluded_object(ragdoll.physicalBoneSimulator.get_child(bones).get_rid())
 		attachedCam = null
+
+
 	if ragdoll.activeRagdollEnabled:
 		if impulse_bone == 41:
 			ragdoll.activeRagdollEnabled = false
 		forceAnimation = true
 		animationToForce = "PawnAnim/WritheRightKneeBack"
+
+
 	if collisionShape != null:
 		collisionShape.queue_free()
+
 	return ragdoll
 
 func checkItems()->void:

@@ -528,3 +528,9 @@ func setSoundVariables(sound:AudioStreamPlayer3D,bus:StringName = &"Sounds")->vo
 	sound.bus = bus
 	sound.attenuation_filter_db = 0
 	sound.attenuation_filter_cutoff_hz = 3000
+
+func create_surface_transform(origin : Vector3, incoming_vector : Vector3, surface_normal : Vector3) -> Transform3D:
+	var y = surface_normal
+	var x = incoming_vector.cross(surface_normal)
+	var z = surface_normal.cross(x)
+	return Transform3D(x.normalized(), y.normalized(), z.normalized(), origin)

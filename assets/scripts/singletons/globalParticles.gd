@@ -26,19 +26,21 @@ func createParticle(particle:String, pos:Vector3 = Vector3.ZERO, rot:Vector3 = V
 				return particleToCreate
 
 
-func spawnBulletHolePackedScene(scene : PackedScene, parent : Node, pos : Vector3 = Vector3.ZERO, rot : float = 0.0, normal : Vector3 = Vector3.ZERO):
+func spawnBulletHolePackedScene(scene : PackedScene, parent : Node, pos : Vector3 = Vector3.ZERO, rot : float = 0.0, normal : Vector3 = Vector3.ZERO,bulletVel : Vector3 = Vector3.ZERO):
 	if gameManager.world and parent != null:
 		if scene != null:
-			var bHole = scene.instantiate()
+			var bHole : BulletHole = scene.instantiate()
 			bHole.normal = normal
 			bHole.rot = rot
 			bHole.colPoint = pos
+			bHole.bulletVelocity = bulletVel
 			parent.add_child(bHole)
-			bHole.global_position = pos
-			bHole.rotate(normal,rot/PI)
-			if normal != Vector3.UP:
-				bHole.look_at(pos + normal, Vector3.UP)
-				bHole.global_transform = bHole.global_transform.rotated_local(Vector3.RIGHT, PI/2.0)
+			#bHole.global_position = pos
+
+			#bHole.decal.rotate(normal,rot/PI)
+			#if normal != Vector3.UP:
+			#bHole.look_at(bHole.global_transform.origin + normal)
+				#bHole.global_transform = bHole.global_transform.rotated_local(Vector3.RIGHT, PI/2.0)
 			return bHole
 
 

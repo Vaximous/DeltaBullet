@@ -63,6 +63,7 @@ clothingItem = ExtResource("4_jnw8h")
 
 [node name="clothingItemButton2" parent="menuRight" instance=ExtResource("3_m5e2e")]
 layout_mode = 1
+anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
 offset_left = 193.0

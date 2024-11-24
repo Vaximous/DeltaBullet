@@ -2,6 +2,7 @@ extends Node3D
 class_name BulletHole
 signal bulletHoleEmitted
 @export_category("Bullet Hole")
+var bulletVelocity : Vector3
 @export var forceGlobalPosition : bool = false
 @export var bulletTextures : Array[Texture2D]
 @export var decal : Decal
@@ -34,6 +35,9 @@ func deleteHole()->void:
 
 
 func initializeBulletHole()->void:
+	#Make particle emitters face the direction of the normal
+	global_transform = gameManager.create_surface_transform(colPoint,bulletVelocity,-normal)
+
 	#Set Decal Scale
 	setDecalScale()
 
@@ -59,15 +63,14 @@ func initializeBulletHole()->void:
 
 	#Emit the particles
 	for particles in particleArray:
-		if !normal.dot(Vector3.UP) > 0.001:
-			particles.look_at(colPoint + normal, Vector3.UP)
 		#Forces the position of the particles to be set to the collision point (Wont be used much, is an old thing)
 		if forceGlobalPosition:
-			particles.global_position = colPoint
+			particles.global_transform.origin = colPoint
 
-		particles.rotate(normal,randf_range(0, 180)/PI)
+		#Turns the particle on
 		particles.emitting = true
 
 
 func setDecalScale()->void:
+	scale = Vector3.ONE
 	decal.scale = Vector3(decalSize,decalSize,decalSize)

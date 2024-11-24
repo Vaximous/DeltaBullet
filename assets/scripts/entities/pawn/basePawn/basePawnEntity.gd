@@ -587,6 +587,17 @@ func _on_health_component_health_depleted(dealer:BasePawn) -> void:
 		die(null)
 
 
+func applyRagdollImpulse(ragdoll:PawnRagdoll,currentVelocity:Vector3,impulseBone:int = 0)->void:
+	for bones in ragdoll.physicalBoneSimulator.get_child_count():
+		var child = ragdoll.physicalBoneSimulator.get_child(bones)
+		if child is RagdollBone:
+			child.linear_velocity = currentVelocity
+			child.angular_velocity = currentVelocity
+			child.apply_central_impulse(currentVelocity)
+			if child.get_bone_id() == impulseBone:
+				#ragdoll.startRagdoll()
+				child.apply_central_impulse(hitImpulse * randf_range(1.5,2))
+
 func setRagdollPose(ragdoll:PawnRagdoll)->void:
 	for bones in ragdoll.ragdollSkeleton.get_bone_count():
 		ragdoll.ragdollSkeleton.set_bone_global_pose(bones, pawnSkeleton.get_bone_global_pose(bones))
@@ -612,15 +623,7 @@ func createRagdoll(impulse_bone : int = 0,killer = null)->PawnRagdoll:
 	ragdoll.startRagdoll()
 
 
-	for bones in ragdoll.physicalBoneSimulator.get_child_count():
-		var child = ragdoll.physicalBoneSimulator.get_child(bones)
-		if child is RagdollBone:
-			child.linear_velocity = currVel
-			child.angular_velocity = currVel
-			child.apply_central_impulse(currVel)
-			if child.get_bone_id() == impulse_bone:
-				#ragdoll.startRagdoll()
-				child.apply_central_impulse(hitImpulse * randf_range(1.5,2))
+	applyRagdollImpulse(ragdoll,currVel,impulse_bone)
 
 
 	pawnDied.emit(ragdoll)

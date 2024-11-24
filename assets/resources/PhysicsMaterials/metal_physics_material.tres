@@ -1,0 +1,11 @@
+[gd_resource type="PhysicsMaterial" script_class="DB_PhysicsMaterial" load_steps=3 format=3 uid="uid://cc5ltv4umlj8t"]
+
+[ext_resource type="PackedScene" uid="uid://uj7i3l2a7qy3" path="res://assets/entities/bulletHoles/generic/BulletHoleGeneric.tscn" id="1_pkq2h"]
+[ext_resource type="Script" path="res://assets/resources/PhysicsMaterials/DB_PhysicsMaterial.gd" id="2_wewhs"]
+
+[resource]
+resource_name = "GenericPhysicsMaterial"
+script = ExtResource("2_wewhs")
+penetration_resistance = 600.0
+penetration_entry_cost = 200.0
+bullet_hole = ExtResource("1_pkq2h")

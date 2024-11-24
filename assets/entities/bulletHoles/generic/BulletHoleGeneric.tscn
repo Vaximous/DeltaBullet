@@ -17,7 +17,7 @@
 [ext_resource type="AudioStream" uid="uid://bfdiiv7w5bdca" path="res://assets/sounds/impact/dirt/bullet_impact_dirt_05.wav" id="15_0v70h"]
 
 [sub_resource type="Curve" id="Curve_13615"]
-_data = [Vector2(0.00980393, 1), 0.0, -3.05128, 0, 0, Vector2(0.921569, 0), -0.275909, 0.0, 0, 0]
+_data = [Vector2(0.00980393, 1), 0.0, -3.05128, 0, 0, Vector2(0.495098, 0), -0.275909, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="CurveTexture" id="CurveTexture_he7j2"]
@@ -36,8 +36,10 @@ particle_flag_align_y = true
 angle_min = 1.07288e-05
 angle_max = 110.0
 direction = Vector3(0, 1, 0)
-spread = 24.959
-initial_velocity_max = 2.05
+spread = 17.605
+flatness = 0.085
+initial_velocity_min = 1.55
+initial_velocity_max = 2.15
 gravity = Vector3(0, -3.715, 0)
 scale_min = 0.0
 scale_max = 0.35
@@ -71,12 +73,14 @@ curve = SubResource("Curve_wk2qm")
 particle_flag_align_y = true
 angle_min = 1.07288e-05
 angle_max = 110.0
+velocity_pivot = Vector3(0, 0.54, 0)
 direction = Vector3(0, 1, 0)
 spread = 13.005
-initial_velocity_max = 1.95
+initial_velocity_min = 0.95
+initial_velocity_max = 1.55
 gravity = Vector3(0, -1.125, 0)
-scale_min = 0.7
-scale_max = 0.7
+scale_min = 0.95
+scale_max = 0.95
 scale_curve = SubResource("CurveTexture_cnpb0")
 alpha_curve = SubResource("CurveTexture_he7j2")
 anim_offset_min = 1.0

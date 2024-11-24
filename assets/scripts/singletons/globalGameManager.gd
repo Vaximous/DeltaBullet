@@ -452,13 +452,10 @@ func removeShop()->void:
 			i.queue_free()
 
 func createSplat(gposition:Vector3 = Vector3.ZERO,normal:Vector3 = Vector3.ZERO,colPoint:Vector3 = Vector3.ZERO)->void:
-	await get_tree().process_frame
 	if gameManager.world != null:
 		#print("col")
 		var _b = bloodDecal.instantiate()
 		gameManager.world.worldMisc.add_child(_b)
-		await get_tree().process_frame
-		await get_tree().process_frame
 		_b.rotate(normal,randf_range(0, 180)/PI)
 		_b.position = gposition
 		if (colPoint + normal).dot(Vector3.UP) > 0.0000000000000000000001:

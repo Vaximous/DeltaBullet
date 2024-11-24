@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://2nj1n64cy47e"]
+[gd_scene load_steps=15 format=3 uid="uid://2nj1n64cy47e"]
 
 [ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="1_kx7nb"]
 [ext_resource type="Script" path="res://assets/scenes/ui/customization/clothingEquipPreview.gd" id="2_uwnix"]
@@ -31,7 +31,59 @@ outline_color = Color(0, 0, 0, 1)
 shadow_size = 6
 shadow_color = Color(0, 0, 0, 0.431373)
 
-[node name="clothingItemButton" type="MarginContainer" node_paths=PackedStringArray("itemText", "pawnHolder", "examplePawn")]
+[sub_resource type="Animation" id="Animation_psy11"]
+resource_name = "buffer"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("backgroundPanel/topBar:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0333333, 0.4),
+"transitions": PackedFloat32Array(0.196146, 1),
+"update": 0,
+"values": [Vector2(147, 17), Vector2(147, 206.905)]
+}
+
+[sub_resource type="Animation" id="Animation_3xnob"]
+resource_name = "buffer_done"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("backgroundPanel/topBar:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(0.31864, 1),
+"update": 0,
+"values": [Vector2(147, 206.905), Vector2(147, 17)]
+}
+
+[sub_resource type="Animation" id="Animation_h1xa5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("backgroundPanel/topBar:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(147, 207)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hvgav"]
+_data = {
+"RESET": SubResource("Animation_h1xa5"),
+"buffer": SubResource("Animation_psy11"),
+"buffer_done": SubResource("Animation_3xnob")
+}
+
+[node name="clothingItemButton" type="MarginContainer" node_paths=PackedStringArray("itemText", "pawnHolder", "animationPlayer", "examplePawn")]
 custom_minimum_size = Vector2(151, 202)
 anchors_preset = -1
 anchor_right = 0.095
@@ -42,6 +94,7 @@ theme = ExtResource("1_kx7nb")
 script = ExtResource("2_uwnix")
 itemText = NodePath("backgroundPanel/bottomArea/ItemText")
 pawnHolder = NodePath("backgroundPanel/subViewportContainer/subViewport/node3d")
+animationPlayer = NodePath("animationPlayer")
 examplePawn = NodePath("backgroundPanel/subViewportContainer/subViewport/node3d/pawnEntity")
 
 [node name="backgroundPanel" type="Panel" parent="."]
@@ -71,7 +124,6 @@ stretch = true
 
 [node name="subViewport" type="SubViewport" parent="backgroundPanel/subViewportContainer"]
 transparent_bg = true
-handle_input_locally = false
 msaa_3d = 3
 scaling_3d_scale = 1.13
 size = Vector2i(147, 202)
@@ -116,3 +168,16 @@ text = "Longcoat"
 label_settings = SubResource("LabelSettings_fk6vo")
 horizontal_alignment = 1
 justification_flags = 162
+
+[node name="topBar" type="Panel" parent="backgroundPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.974
+anchor_bottom = 1.025
+offset_right = -0.0740051
+offset_bottom = -0.0500183
+
+[node name="animationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_hvgav")
+}

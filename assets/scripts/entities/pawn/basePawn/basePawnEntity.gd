@@ -690,7 +690,6 @@ func checkClothes()->void:
 			clothingInventory.append(clothes)
 			clothes.itemSkeleton = pawnSkeleton.get_path()
 			clothes.remapSkeleton()
-
 	checkClothingHider()
 
 func moveClothesToRagdoll(moveto:Node3D) -> void:

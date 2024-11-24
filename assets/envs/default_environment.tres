@@ -1,6 +1,6 @@
 [gd_resource type="Environment" load_steps=6 format=3 uid="uid://dnig6jq4e6pjs"]
 
-[ext_resource type="Texture2D" uid="uid://b35duytn55243" path="res://assets/textures/panoramas/panoramatest2.png" id="1_u1fwq"]
+[ext_resource type="Texture2D" uid="uid://d0f0crtwpmoka" path="res://assets/textures/panoramas/panoramatest1.png" id="1_uyiot"]
 
 [sub_resource type="Gradient" id="Gradient_6voip"]
 colors = PackedColorArray(0, 0, 0, 1, 0.996078, 0.941176, 0.811765, 1)
@@ -9,7 +9,7 @@ colors = PackedColorArray(0, 0, 0, 1, 0.996078, 0.941176, 0.811765, 1)
 gradient = SubResource("Gradient_6voip")
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_xihyl"]
-panorama = ExtResource("1_u1fwq")
+panorama = ExtResource("1_uyiot")
 
 [sub_resource type="Sky" id="Sky_nj1fe"]
 sky_material = SubResource("PanoramaSkyMaterial_xihyl")

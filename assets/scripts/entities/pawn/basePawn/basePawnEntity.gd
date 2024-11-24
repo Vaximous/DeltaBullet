@@ -557,7 +557,16 @@ func doKillEffect(deathDealer)->void:
 				deathDealer.killedPawn.emit()
 				healthComponent.killerSignalEmitted = true
 
+func moveHitboxDecals(parent:Node3D = gameManager.world.worldParticles) ->void:
+	if gameManager.world != null:
+		for boxes in getAllHitboxes():
+			for decals in boxes.get_children():
+				if decals is BulletHole:
+					decals.reparent(parent)
+
+
 func die(killer) -> void:
+	moveHitboxDecals()
 	animationTree.set("parameters/standToCrouchAdd/add_amount", 0)
 	animationTree.set("parameters/standToCrouchStrafe/add_amount", 0)
 	doKillEffect(killer)
@@ -586,7 +595,7 @@ func createRagdoll(impulse_bone : int = 0,killer = null)->PawnRagdoll:
 	ragdoll.rotation = pawnMesh.rotation
 	ragdoll.targetSkeleton = pawnSkeleton
 	gameManager.world.worldMisc.add_child(ragdoll)
-	moveDecalsToRagdoll(ragdoll)
+	#moveDecalsToRagdoll(ragdoll)
 	moveClothesToRagdoll(ragdoll)
 	ragdoll.setPawnMaterial(currentPawnMat)
 	ragdoll.ragdollSkeleton.animate_physical_bones = true

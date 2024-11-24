@@ -77,10 +77,12 @@ func openRequest(pawn:BasePawn):
 		2:
 			pawn.playInteractAnimation()
 			if !isDoorOpen:
-				initializeKeypadScene()
+				initializeKeypadScene(pawn)
 
-func initializeKeypadScene()->void:
+func initializeKeypadScene(pawn:BasePawn = null)->void:
 	var cutscene = preload("res://assets/scenes/cutscenes/usenumpad/KeypadCutscene.tscn").instantiate()
+	if pawn != null:
+		cutscene.pawnColor = pawn.pawnColor
 	await Fade.fade_out(0.3, Color(0,0,0,1),"GradientVertical",false,true).finished
 	get_tree().current_scene.process_mode = Node.PROCESS_MODE_DISABLED #idk pause it or some shit
 	get_tree().root.add_child(cutscene)

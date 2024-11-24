@@ -43,9 +43,6 @@ var boneState:bool:
 		boneState = value
 		if boneState == true:
 			isAsleep.emit()
-			if !hasBled and canBleed:
-				gameManager.createBloodPool(global_position,randf_range(0.3,1.6))
-				hasBled = true
 		else:
 			isAwake.emit()
 var whirrSound : bool = false
@@ -96,6 +93,7 @@ func _ready()-> void:
 	if canBeDismembered and healthComponent:
 		if !healthComponent.HPisDead.is_connected(pulverizeBone):
 			healthComponent.HPisDead.connect(pulverizeBone)
+	add_child(boneCooldownTimer)
 	boneCooldownTimer.stop()
 	boneCooldownTimer.wait_time = 0.15
 	boneCooldownTimer.autostart = false
@@ -112,6 +110,7 @@ func _ready()-> void:
 	audioStreamPlayer.bus = &"Sounds"
 	audioStreamPlayer.attenuation_filter_db = 0
 	audioStreamPlayer.attenuation_filter_cutoff_hz = 3000
+	#isAsleep.connect(doBleed)
 	if inAirSound != null:
 		inAirStreamPlayer = AudioStreamPlayer3D.new()
 		add_child(inAirStreamPlayer)
@@ -132,7 +131,6 @@ func updateRagdollScale()->void:
 		#bonePulverized = true
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
-
 	if bonePhysics == null:
 		bonePhysics = state
 	boneState = state.sleeping
@@ -140,22 +138,6 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 	contactCount = state.get_contact_count()
 	if audioCooldown > 0 or boneState == true:
 			return
-
-	if ragdoll.activeRagdollEnabled and !get_bone_id() == 0 and !get_bone_id() == -1 and ragdoll.targetSkeleton.get_bone_parent(get_bone_id()) > -1:
-		var boneBasis: Basis = ragdoll.targetSkeleton.get_bone_rest(get_bone_id()).basis
-		var jointTarget : Transform3D = get("joint_offset")
-		var parentBone = ragdoll.targetSkeleton.get_bone_parent(get_bone_id())
-		var parentRestGlobal = ragdoll.targetSkeleton.get_bone_global_rest(parentBone).basis
-		var targetLocalPose : Basis = ragdoll.targetSkeleton.get_bone_pose(get_bone_id()).basis
-		var globalRestPose : Basis = ragdoll.targetSkeleton.get_bone_global_rest(get_bone_id()).basis
-		var worldSpacePose = parentRestGlobal * targetLocalPose.inverse()
-		var rotationDifferenceWorldspace = worldSpacePose * globalRestPose
-		var poseJointspace = initialRotation.inverse() * worldSpacePose
-		var restJointspace = initialRotation.inverse() * globalRestPose
-		var jointspaceDifference = poseJointspace * restJointspace.inverse()
-
-		print(initialRotation)
-		state.apply_torque(rotationDifferenceWorldspace.get_euler() * 50)
 
 	if state.get_contact_count() > 0 and !boneState:
 		if exclusionArray.has(state.get_contact_collider(0)):
@@ -282,6 +264,12 @@ func doPulverizeEffect()->void:
 			bone.collision_mask = 0
 			#findPhysicsBone(childrenIDs).mass = 0
 	#createBurstOfBlood(10,15,25)
+
+func doBleed()->void:
+	if !hasBled and canBleed:
+		gameManager.createBloodPool(global_position,randf_range(0.3,1.6))
+		hasBled = true
+
 
 func doActiveRagdoll(value:bool)->void:
 	if get_owner().targetSkeleton != null:

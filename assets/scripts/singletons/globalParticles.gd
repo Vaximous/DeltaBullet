@@ -3,7 +3,7 @@ const particles = {"BloodSpurt" : preload("res://assets/particles/bloodSpurt/blo
 					"BloodStream" : preload("res://assets/particles/bloodSpurt/bloodStream.tscn")
 					}
 const bulletHoles = {"Flesh": preload("res://assets/entities/bulletHoles/flesh/flesh.tscn"),
-"default":preload("res://assets/entities/bulletHoles/default/BulletHole.tscn") }
+"default":preload("res://assets/entities/bulletHoles/generic/BulletHoleGeneric.tscn") }
 
 func detectMaterial(object:Object):
 	if object:

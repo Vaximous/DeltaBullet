@@ -33,7 +33,7 @@ func _ready()->void:
 
 func damage(amount, dealer:Node3D = null)->void:
 	lastDealer = dealer
-	onDamaged.emit(dealer)
+	onDamaged.emit(dealer, Vector3.ZERO)
 	health = health - amount
 
 #func _on_health_depleted(dealer: Node3D) -> void:

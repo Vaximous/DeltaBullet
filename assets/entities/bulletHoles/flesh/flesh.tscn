@@ -1,39 +1,25 @@
-[gd_scene load_steps=8 format=3 uid="uid://bwsdqwu6x0g5y"]
+[gd_scene load_steps=24 format=3 uid="uid://bwsdqwu6x0g5y"]
 
 [ext_resource type="Texture2D" uid="uid://bec1o4nxcwu58" path="res://assets/textures/bullet/holes/flesh/flesh1.png" id="1_0wp7x"]
 [ext_resource type="AudioStream" uid="uid://0bwly86406fp" path="res://assets/sounds/gore/flesh4.wav" id="2_aj8jf"]
 [ext_resource type="AudioStream" uid="uid://cvjrwmws0pggm" path="res://assets/sounds/gore/fleshimpact1.wav" id="3_il4om"]
 [ext_resource type="AudioStream" uid="uid://c574uajy46jny" path="res://assets/sounds/gore/fleshimpact3.wav" id="5_3loew"]
 [ext_resource type="PackedScene" uid="uid://bpp4s1vikjdv8" path="res://assets/particles/bloodSpurt/bloodSpurt.tscn" id="5_dw2ms"]
+[ext_resource type="Texture2D" uid="uid://brx3kup0o5hrn" path="res://assets/textures/impact/genericDebrisImpact.png" id="6_taqq3"]
+[ext_resource type="Texture2D" uid="uid://bnxl6jqwci6w3" path="res://assets/textures/smoke/smokeLoopAlpha.png" id="7_he520"]
 
 [sub_resource type="GDScript" id="GDScript_3c2w4"]
 resource_name = "flesh"
 script/source = "extends BulletHole
 @onready var bloodSpurt : GPUParticles3D = $bloodSpurt
-var maxDropletAmount : int = 8
-var minDropletAmount : int = 2
-var minDropletForce : float = 5.0
-var maxDropletForce : float = 18.5
-
-func _ready() -> void:
-	var timer = get_tree().create_timer(UserConfig.game_decal_remove_time)
-	timer.timeout.connect(queue_free)
-	bloodSpurt.look_at(colPoint + normal, Vector3.UP)
-	bloodSpurt.rotate(normal,randf_range(0, 180)/PI)
-	bloodSpurt.global_position = colPoint
-	bloodSpurt.emitting = true
-	gameManager.sprayBlood((colPoint + -normal),randi_range(1,15),50,randf_range(1.0,1.7))
-	#for drop in randf_range(minDropletAmount,maxDropletAmount):
-		#if gameManager.world != null:
-			#var blood : RigidBody3D = droplets.instantiate()
-			#blood.global_position = colPoint
-			#gameManager.world.worldMisc.add_child(blood)
-			#blood.apply_impulse(Vector3(randf_range(-normal.x,normal.x),randf_range(-normal.y,normal.y),randf_range(-normal.z,normal.z)) * randf_range(minDropletForce,maxDropletForce))
-
 
 
 func _on_blood_spurt_finished()->void:
 	bloodSpurt.queue_free()
+
+
+func _on_bullet_hole_emitted() -> void:
+	gameManager.sprayBlood((colPoint + -normal),randi_range(1,15),50,randf_range(1.0,1.7))
 "
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_w6ra4"]
@@ -43,21 +29,114 @@ stream_0/stream = ExtResource("2_aj8jf")
 stream_1/stream = ExtResource("3_il4om")
 stream_2/stream = ExtResource("5_3loew")
 
-[node name="bulletHole" type="Node3D"]
+[sub_resource type="Curve" id="Curve_wtamv"]
+_data = [Vector2(0.00980393, 1), 0.0, -3.05128, 0, 0, Vector2(0.921569, 0), -0.275909, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_he7j2"]
+curve = SubResource("Curve_wtamv")
+
+[sub_resource type="Gradient" id="Gradient_ra2vh"]
+colors = PackedColorArray(0.470588, 0, 0, 1, 1, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_hb051"]
+gradient = SubResource("Gradient_ra2vh")
+
+[sub_resource type="Curve" id="Curve_cslyc"]
+max_value = 2.0
+_data = [Vector2(0, 1.05494), 0.0, -3.12487, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_iasca"]
+curve = SubResource("Curve_cslyc")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_l34uh"]
+particle_flag_align_y = true
+angle_min = 1.07288e-05
+angle_max = 110.0
+direction = Vector3(0, 1, 0)
+spread = 18.621
+initial_velocity_min = 2.5
+initial_velocity_max = 2.5
+gravity = Vector3(0, -6.84, 0)
+scale_min = 0.0
+scale_max = 0.7
+scale_curve = SubResource("CurveTexture_iasca")
+color_ramp = SubResource("GradientTexture1D_hb051")
+alpha_curve = SubResource("CurveTexture_he7j2")
+anim_offset_min = 1.0
+anim_offset_max = 1.0
+collision_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a30b1"]
+transparency = 1
+albedo_color = Color(0.607843, 0, 0, 1)
+albedo_texture = ExtResource("6_taqq3")
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 3
+particles_anim_v_frames = 3
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_oeew6"]
+material = SubResource("StandardMaterial3D_a30b1")
+size = Vector2(0.3, 0.3)
+
+[sub_resource type="Gradient" id="Gradient_wjbw4"]
+colors = PackedColorArray(0.576471, 0, 0, 1, 0.32549, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_qy2ej"]
+gradient = SubResource("Gradient_wjbw4")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_i2hcq"]
+particle_flag_align_y = true
+angle_min = 1.07288e-05
+angle_max = 110.0
+direction = Vector3(0, 1, 0)
+spread = 12.545
+initial_velocity_min = 2.9
+initial_velocity_max = 2.9
+gravity = Vector3(0, -6.615, 0)
+scale_curve = SubResource("CurveTexture_iasca")
+color_ramp = SubResource("GradientTexture1D_qy2ej")
+alpha_curve = SubResource("CurveTexture_he7j2")
+anim_offset_min = 1.0
+anim_offset_max = 1.0
+collision_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8l6r7"]
+transparency = 1
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("7_he520")
+metallic_specular = 0.0
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_8sr7c"]
+material = SubResource("StandardMaterial3D_8l6r7")
+size = Vector2(0.3, 0.3)
+
+[node name="bulletHole_Flesh" type="Node3D" node_paths=PackedStringArray("decal", "particleArray", "soundArray")]
 script = SubResource("GDScript_3c2w4")
+forceGlobalPosition = true
+decal = NodePath("decal")
+particleArray = [NodePath("bloodSpurt"), NodePath("impactParticle"), NodePath("smokeParticle")]
+soundArray = [NodePath("audioStreamPlayer3d")]
+decalSize = 1.0
+audioVolume = 2.0
 
 [node name="decal" type="Decal" parent="."]
 layers = 24
+sorting_offset = 1.0
 size = Vector3(0.132018, 0.15534, 0.117771)
 texture_albedo = ExtResource("1_0wp7x")
-
-[node name="timer" type="Timer" parent="."]
-wait_time = 15.0
 
 [node name="audioStreamPlayer3d" type="AudioStreamPlayer3D" parent="."]
 stream = SubResource("AudioStreamRandomizer_w6ra4")
 volume_db = -0.11
-max_db = 0.85
 pitch_scale = 0.75
 autoplay = true
 max_polyphony = 3
@@ -67,4 +146,27 @@ attenuation_filter_db = 0.0
 [node name="bloodSpurt" parent="." instance=ExtResource("5_dw2ms")]
 top_level = true
 
+[node name="impactParticle" type="GPUParticles3D" parent="."]
+visible = false
+emitting = false
+amount = 19
+one_shot = true
+speed_scale = 1.8
+explosiveness = 1.0
+fixed_fps = 0
+process_material = SubResource("ParticleProcessMaterial_l34uh")
+draw_pass_1 = SubResource("QuadMesh_oeew6")
+
+[node name="smokeParticle" type="GPUParticles3D" parent="."]
+visible = false
+emitting = false
+amount = 15
+one_shot = true
+speed_scale = 1.8
+explosiveness = 1.0
+fixed_fps = 0
+process_material = SubResource("ParticleProcessMaterial_i2hcq")
+draw_pass_1 = SubResource("QuadMesh_8sr7c")
+
+[connection signal="bulletHoleEmitted" from="." to="." method="_on_bullet_hole_emitted"]
 [connection signal="finished" from="bloodSpurt" to="." method="_on_blood_spurt_finished"]

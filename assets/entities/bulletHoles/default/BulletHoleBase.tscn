@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://dend7ate7mq6e"]
+
+[ext_resource type="Script" path="res://assets/entities/bulletHoles/default/BulletHole.gd" id="1_t8p33"]
+
+[node name="bulletHole_Base" type="Node3D" node_paths=PackedStringArray("decal")]
+script = ExtResource("1_t8p33")
+decal = NodePath("decal")
+
+[node name="decal" type="Decal" parent="."]
+distance_fade_enabled = true

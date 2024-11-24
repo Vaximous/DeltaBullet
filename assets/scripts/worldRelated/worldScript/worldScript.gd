@@ -2,7 +2,7 @@ extends Node
 class_name WorldScene
 signal worldLoaded
 
-var pawnScene = load("res://assets/entities/pawnEntity/pawnEntity.tscn").duplicate()
+
 @onready var worldSpawns : Node = $Spawns
 @onready var playerWorldSpawns : Node = $Spawns/playerSpawns
 @onready var pawnWorldSpawns : Node = $Spawns/pawnSpawns
@@ -64,6 +64,14 @@ func getSpawnPoints(offset:Vector3 = Vector3(0,0,0), pickRandom:bool = true, spa
 	else:
 		pass
 
+
+func getWaypoints(waypointType:int = 0)->Array:
+	var waypointArray : Array
+	for i in worldWaypoints.get_children():
+		if i is AIMarker:
+			if i.markerType == waypointType:
+				waypointArray.append(i)
+	return waypointArray
 
 func getPlayerSpawnPoints(offset:Vector3 = Vector3(0,0,0), pickRandom:bool = true, spawn_idx:int = 0):
 	if pickRandom:

@@ -20,7 +20,7 @@
 [ext_resource type="PackedScene" uid="uid://b4v8dskvpby4c" path="res://assets/entities/clothing/Hair/Hair2.tscn" id="14_bhjxw"]
 [ext_resource type="PackedScene" uid="uid://di4i31dg7lojx" path="res://assets/entities/pawnEntity/ragdoll/pawnRagdoll.tscn" id="15_4qgq4"]
 [ext_resource type="PackedScene" uid="uid://nyee136gj7vd" path="res://assets/entities/clothing/longSleeve/long_sleeved_jacket.tscn" id="15_wjsdj"]
-[ext_resource type="PackedScene" uid="uid://dend7ate7mq6e" path="res://assets/entities/bulletHoles/default/BulletHole.tscn" id="17_4tm44"]
+[ext_resource type="PackedScene" uid="uid://dend7ate7mq6e" path="res://assets/entities/bulletHoles/default/BulletHoleBase.tscn" id="17_4tm44"]
 [ext_resource type="Script" path="res://assets/resources/PhysicsMaterials/DB_PhysicsMaterial.gd" id="17_15fkl"]
 [ext_resource type="Texture2D" uid="uid://bodygaior62dl" path="res://assets/textures/Developer_Textures/Light/texture_08.png" id="18_8tf33"]
 [ext_resource type="Script" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="22_js4nn"]

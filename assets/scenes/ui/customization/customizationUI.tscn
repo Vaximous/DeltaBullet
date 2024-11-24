@@ -1,7 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://iftsfle430nr"]
+[gd_scene load_steps=8 format=3 uid="uid://iftsfle430nr"]
 
 [ext_resource type="Script" path="res://assets/scenes/ui/customization/customizationUI.gd" id="1_2bhr7"]
 [ext_resource type="PackedScene" uid="uid://ctrswootky6q7" path="res://assets/scenes/ui/customization/customizationWorld.tscn" id="1_sgpgn"]
+[ext_resource type="PackedScene" uid="uid://2nj1n64cy47e" path="res://assets/scenes/ui/customization/customizationClothing.tscn" id="3_m5e2e"]
+[ext_resource type="PackedScene" uid="uid://d10o2e44ltrnl" path="res://assets/entities/clothing/ArmoredShirt/armor_shirt.tscn" id="4_jnw8h"]
+[ext_resource type="PackedScene" uid="uid://jwq6tye7ok4r" path="res://assets/entities/clothing/Glasses/SiftinShades/SiftinShades.tscn" id="4_lk8ax"]
 
 [sub_resource type="Gradient" id="Gradient_clvtb"]
 colors = PackedColorArray(0.407843, 0, 0, 1, 0.309804, 0, 0, 0)
@@ -19,6 +22,7 @@ grow_vertical = 2
 script = ExtResource("1_2bhr7")
 
 [node name="subViewportContainer" type="SubViewportContainer" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -31,9 +35,10 @@ stretch = true
 handle_input_locally = false
 msaa_3d = 1
 size = Vector2i(1600, 900)
-render_target_update_mode = 4
+render_target_update_mode = 0
 
 [node name="customizationWorld" parent="subViewportContainer/subViewport" instance=ExtResource("1_sgpgn")]
+visible = false
 
 [node name="animationPlayer" type="AnimationPlayer" parent="."]
 
@@ -46,6 +51,22 @@ anchor_bottom = 0.999
 offset_left = -535.0
 offset_bottom = -0.100037
 grow_horizontal = 0
+
+[node name="clothingItemButton" parent="menuRight" instance=ExtResource("3_m5e2e")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 151.0
+offset_bottom = 202.0
+clothingItem = ExtResource("4_jnw8h")
+
+[node name="clothingItemButton2" parent="menuRight" instance=ExtResource("3_m5e2e")]
+layout_mode = 1
+offset_left = 193.0
+offset_right = 293.175
+offset_bottom = 0.623993
+clothingItem = ExtResource("4_lk8ax")
 
 [node name="textureRect" type="TextureRect" parent="."]
 modulate = Color(0.764706, 0.596078, 0, 1)

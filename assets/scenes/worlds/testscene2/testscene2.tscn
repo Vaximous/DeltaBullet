@@ -1,4 +1,4 @@
-[gd_scene load_steps=219 format=4 uid="uid://b883b6dhrfe8q"]
+[gd_scene load_steps=221 format=4 uid="uid://b883b6dhrfe8q"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_5asdl"]
 [ext_resource type="Script" path="res://assets/resources/customResources/worldData/worldData.gd" id="2_7yxuj"]
@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://bb5qvdslt6004" path="res://assets/entities/clothing/Pants/armored_pants.tscn" id="9_msab0"]
 [ext_resource type="PackedScene" uid="uid://b026rv1louhqg" path="res://assets/entities/clothing/Longcoats/longCoat.tscn" id="13_cq42m"]
 [ext_resource type="PackedScene" uid="uid://bap501mpmqgb" path="res://assets/entities/clothing/Gloves/right_glove_fingerless.tscn" id="13_pdeob"]
+[ext_resource type="PackedScene" uid="uid://bidurnqgd1c74" path="res://assets/entities/weapons/m4/m4.tscn" id="13_wcusi"]
 [ext_resource type="PackedScene" uid="uid://b8ttgknyh8e3m" path="res://assets/entities/clothing/Tuxedo/Tuxedo.tscn" id="15_ivnks"]
 [ext_resource type="Script" path="res://addons/qodot/src/nodes/qodot_map.gd" id="15_mg4k1"]
 [ext_resource type="PackedScene" uid="uid://nyee136gj7vd" path="res://assets/entities/clothing/longSleeve/long_sleeved_jacket.tscn" id="16_bxgbc"]
@@ -53,6 +54,7 @@
 [ext_resource type="Texture2D" uid="uid://sr64p1aykopo" path="res://assets/textures/crosshair/crosshair004.png" id="37_xi52y"]
 [ext_resource type="Script" path="res://assets/scripts/entities/interactiveObject/interactiveObject.gd" id="52_tsgpd"]
 [ext_resource type="PackedScene" uid="uid://bb78dx0yknjep" path="res://assets/entities/door/keypadDoor.tscn" id="53_gn8tv"]
+[ext_resource type="PackedScene" uid="uid://dvmmlj4mvj88r" path="res://assets/entities/aiMarker/aiMarker.tscn" id="54_gk0ih"]
 
 [sub_resource type="GDScript" id="GDScript_fxw7o"]
 resource_name = "TestScene"
@@ -1132,7 +1134,7 @@ pawnColor = Color(1, 0.741176, 0.439216, 1)
 [node name="pawnSpawn11" parent="Spawns/pawnSpawns" index="1" instance=ExtResource("2_26w0h")]
 transform = Transform3D(-0.998996, 0, 0.0447871, 0, 1, 0, -0.0447871, 0, -0.998996, -19.1474, 4.23921, 6.34545)
 pawnName = "Bando"
-pawnWeapons = Array[PackedScene]([ExtResource("5_ugf6w")])
+pawnWeapons = Array[PackedScene]([ExtResource("6_ni6f6")])
 equipWeaponOnSpawn = true
 weaponToEquip = 1
 aiType = 1
@@ -1150,7 +1152,7 @@ pawnColor = Color(1, 0.74, 0.44, 1)
 
 [node name="pawnSpawn14" parent="Spawns/pawnSpawns" index="3" instance=ExtResource("2_26w0h")]
 transform = Transform3D(-0.872078, 0, 0.489367, 0, 1, 0, -0.489367, 0, -0.872078, 21.0801, 4.24221, 20.0754)
-pawnWeapons = Array[PackedScene]([ExtResource("4_obu2t")])
+pawnWeapons = Array[PackedScene]([ExtResource("13_wcusi")])
 pawnClothing = Array[PackedScene]([ExtResource("7_mcian")])
 equipWeaponOnSpawn = true
 weaponToEquip = 1
@@ -1162,11 +1164,11 @@ pawnColor = Color(0.898039, 0.772549, 0.662745, 1)
 transform = Transform3D(-0.656323, 0, -0.754481, 0, 1, 0, 0.754481, 0, -0.656323, -19.7794, 4.08233, 37.0557)
 active = false
 pawnName = "Booger"
-pawnWeapons = Array[PackedScene]([ExtResource("3_glhev"), ExtResource("5_ugf6w"), ExtResource("4_obu2t")])
+pawnWeapons = Array[PackedScene]([ExtResource("3_glhev"), ExtResource("13_wcusi"), ExtResource("4_obu2t")])
 pawnClothing = Array[PackedScene]([ExtResource("9_kyyf3"), ExtResource("13_cq42m")])
 aiSkill = 0
 equipWeaponOnSpawn = true
-weaponToEquip = 2
+weaponToEquip = 1
 isInteractable = true
 aiType = 1
 hatedGroups = Array[StringName]([&"Hostile"])
@@ -1697,95 +1699,107 @@ shape = SubResource("BoxShape3D_fxtgo")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.56063, 4.04291, 23.1296)
 doorOpenSpeed = 1.5
 
-[node name="marker3d" type="Marker3D" parent="Misc/WaypointNodes" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.6254, 4.89798, 1.98643)
+[node name="aiMarker" parent="Misc/WaypointNodes" index="0" instance=ExtResource("54_gk0ih")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.0722, 4.17083, 42.0469)
 
-[node name="marker3d2" type="Marker3D" parent="Misc/WaypointNodes" index="1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.6254, 4.89798, -8.34058)
+[node name="aiMarker2" parent="Misc/WaypointNodes" index="1" instance=ExtResource("54_gk0ih")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.0722, 4.17083, 27.0469)
 
-[node name="marker3d3" type="Marker3D" parent="Misc/WaypointNodes" index="2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.64459, 4.89798, -6.70484)
+[node name="aiMarker3" parent="Misc/WaypointNodes" index="2" instance=ExtResource("54_gk0ih")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.0722, 4.17083, 9.04686)
 
-[node name="marker3d4" type="Marker3D" parent="Misc/WaypointNodes" index="3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.4204, 4.89798, -5.04279)
+[node name="aiMarker4" parent="Misc/WaypointNodes" index="3" instance=ExtResource("54_gk0ih")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.0722, 4.17083, 12.0469)
 
-[node name="marker3d5" type="Marker3D" parent="Misc/WaypointNodes" index="4"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.4204, 4.89798, -0.962389)
+[node name="aiMarker5" parent="Misc/WaypointNodes" index="4" instance=ExtResource("54_gk0ih")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.0722, 4.17083, 22.1814)
 
-[node name="marker3d6" type="Marker3D" parent="Misc/WaypointNodes" index="5"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.09568, 4.89798, -0.962389)
+[node name="aiMarker6" parent="Misc/WaypointNodes" index="5" instance=ExtResource("54_gk0ih")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.9278, 4.17083, 25.1814)
 
-[node name="marker3d7" type="Marker3D" parent="Misc/WaypointNodes" index="6"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.39443, 4.87562, 0.400231)
+[node name="aiMarker7" parent="Misc/WaypointNodes" index="6" instance=ExtResource("54_gk0ih")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.9278, 4.17083, 25.1814)
 
-[node name="marker3d8" type="Marker3D" parent="Misc/WaypointNodes" index="7"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.99144, 4.87562, 4.41765)
+[node name="aiMarker8" parent="Misc/WaypointNodes" index="7" instance=ExtResource("54_gk0ih")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.9278, 4.17083, 2.18142)
 
-[node name="marker3d9" type="Marker3D" parent="Misc/WaypointNodes" index="8"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.33357, 4.87562, 13.0938)
+[node name="aiMarker9" parent="Misc/WaypointNodes" index="8" instance=ExtResource("54_gk0ih")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.9278, 4.17083, 10.1814)
 
-[node name="marker3d10" type="Marker3D" parent="Misc/WaypointNodes" index="9"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.41967, 4.87562, -6.08028)
+[node name="aiMarker10" parent="Misc/WaypointNodes" index="9" instance=ExtResource("54_gk0ih")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.327869, 4.17083, 10.1814)
 
-[node name="marker3d11" type="Marker3D" parent="Misc/WaypointNodes" index="10"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.953664, 4.87562, -9.95322)
+[node name="aiMarker11" parent="Misc/WaypointNodes" index="10" instance=ExtResource("54_gk0ih")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.327869, 4.17083, -0.818579)
 
-[node name="marker3d12" type="Marker3D" parent="Misc/WaypointNodes" index="11"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.29477, 4.87562, -9.95322)
+[node name="aiMarker34" parent="Misc/WaypointNodes" index="11" instance=ExtResource("54_gk0ih")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.32787, 4.17083, -2.81858)
 
-[node name="marker3d13" type="Marker3D" parent="Misc/WaypointNodes" index="12"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.3965, 4.87562, -15.2613)
+[node name="aiMarker12" parent="Misc/WaypointNodes" index="12" instance=ExtResource("54_gk0ih")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.6721, 4.17083, -0.818579)
 
-[node name="marker3d14" type="Marker3D" parent="Misc/WaypointNodes" index="13"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.834938, 4.87562, -18.1078)
+[node name="aiMarker27" parent="Misc/WaypointNodes" index="13" instance=ExtResource("54_gk0ih")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.6721, 4.17083, -0.818579)
 
-[node name="marker3d15" type="Marker3D" parent="Misc/WaypointNodes" index="14"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.59407, 4.87562, -13.4619)
+[node name="aiMarker28" parent="Misc/WaypointNodes" index="14" instance=ExtResource("54_gk0ih")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.6721, 4.17083, -6.81858)
 
-[node name="marker3d16" type="Marker3D" parent="Misc/WaypointNodes" index="15"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.68401, 4.87562, -32.2166)
+[node name="aiMarker29" parent="Misc/WaypointNodes" index="15" instance=ExtResource("54_gk0ih")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.6721, 4.17083, -6.81858)
 
-[node name="marker3d17" type="Marker3D" parent="Misc/WaypointNodes" index="16"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.68401, 4.87562, -24.2166)
+[node name="aiMarker13" parent="Misc/WaypointNodes" index="16" instance=ExtResource("54_gk0ih")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.6721, 4.17083, -30.8186)
 
-[node name="marker3d18" type="Marker3D" parent="Misc/WaypointNodes" index="17"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.6781, 4.87562, -28.2163)
+[node name="aiMarker14" parent="Misc/WaypointNodes" index="17" instance=ExtResource("54_gk0ih")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.6721, 4.17083, -14.8186)
 
-[node name="marker3d19" type="Marker3D" parent="Misc/WaypointNodes" index="18"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.18491, 4.87562, 25.7745)
+[node name="aiMarker15" parent="Misc/WaypointNodes" index="18" instance=ExtResource("54_gk0ih")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.67213, 4.17083, -23.8186)
 
-[node name="marker3d20" type="Marker3D" parent="Misc/WaypointNodes" index="19"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.6094, 4.87562, 25.688)
+[node name="aiMarker30" parent="Misc/WaypointNodes" index="19" instance=ExtResource("54_gk0ih")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.67213, 4.17083, -32.8186)
 
-[node name="marker3d21" type="Marker3D" parent="Misc/WaypointNodes" index="20"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.6765, 4.87562, 9.78761)
+[node name="aiMarker31" parent="Misc/WaypointNodes" index="20" instance=ExtResource("54_gk0ih")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.67213, 4.17083, -32.8186)
 
-[node name="marker3d22" type="Marker3D" parent="Misc/WaypointNodes" index="21"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.5662, 4.87562, 9.20595)
+[node name="aiMarker32" parent="Misc/WaypointNodes" index="21" instance=ExtResource("54_gk0ih")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.67213, 4.17083, -24.8186)
 
-[node name="marker3d23" type="Marker3D" parent="Misc/WaypointNodes" index="22"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.5183, 4.87562, 2.41226)
+[node name="aiMarker33" parent="Misc/WaypointNodes" index="22" instance=ExtResource("54_gk0ih")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.67213, 4.17083, -28.8186)
 
-[node name="marker3d24" type="Marker3D" parent="Misc/WaypointNodes" index="23"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.2623, 4.87562, 25.3372)
+[node name="aiMarker16" parent="Misc/WaypointNodes" index="23" instance=ExtResource("54_gk0ih")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.67213, 4.17083, -15.8186)
 
-[node name="marker3d25" type="Marker3D" parent="Misc/WaypointNodes" index="24"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.8734, 4.87562, 25.7589)
+[node name="aiMarker17" parent="Misc/WaypointNodes" index="24" instance=ExtResource("54_gk0ih")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.45694, 4.17083, -15.8186)
 
-[node name="marker3d26" type="Marker3D" parent="Misc/WaypointNodes" index="25"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.0967, 4.87562, 9.93464)
+[node name="aiMarker18" parent="Misc/WaypointNodes" index="25" instance=ExtResource("54_gk0ih")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.45694, 4.17083, -10.8186)
 
-[node name="marker3d27" type="Marker3D" parent="Misc/WaypointNodes" index="26"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.5823, 4.87562, 17.5405)
+[node name="aiMarker19" parent="Misc/WaypointNodes" index="26" instance=ExtResource("54_gk0ih")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.54306, 4.17083, -10.8186)
 
-[node name="marker3d28" type="Marker3D" parent="Misc/WaypointNodes" index="27"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.314, 4.87562, 12.9862)
+[node name="aiMarker20" parent="Misc/WaypointNodes" index="27" instance=ExtResource("54_gk0ih")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.4569, 4.17083, 0.181421)
 
-[node name="marker3d29" type="Marker3D" parent="Misc/WaypointNodes" index="28"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.4993, 4.87562, 35.8038)
+[node name="aiMarker21" parent="Misc/WaypointNodes" index="28" instance=ExtResource("54_gk0ih")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.4569, 4.17083, 9.18142)
 
-[node name="marker3d30" type="Marker3D" parent="Misc/WaypointNodes" index="29"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.0373, 4.87562, 35.8038)
+[node name="aiMarker22" parent="Misc/WaypointNodes" index="29" instance=ExtResource("54_gk0ih")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.4569, 4.17083, 9.18142)
+
+[node name="aiMarker23" parent="Misc/WaypointNodes" index="30" instance=ExtResource("54_gk0ih")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.4569, 4.17083, 9.18142)
+
+[node name="aiMarker24" parent="Misc/WaypointNodes" index="31" instance=ExtResource("54_gk0ih")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.4569, 4.17083, 29.1814)
+
+[node name="aiMarker25" parent="Misc/WaypointNodes" index="32" instance=ExtResource("54_gk0ih")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.45694, 4.17083, 29.1814)
+
+[node name="aiMarker26" parent="Misc/WaypointNodes" index="33" instance=ExtResource("54_gk0ih")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.45694, 4.17083, 23.1814)
 
 [connection signal="area_entered" from="Geometry/killzone" to="Geometry/killzone" method="_on_area_entered"]
 

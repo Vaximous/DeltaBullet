@@ -1,0 +1,118 @@
+[gd_scene load_steps=11 format=3 uid="uid://2nj1n64cy47e"]
+
+[ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="1_kx7nb"]
+[ext_resource type="Script" path="res://assets/scenes/ui/customization/clothingEquipPreview.gd" id="2_uwnix"]
+[ext_resource type="PackedScene" uid="uid://bg8aarggcxwa8" path="res://assets/entities/pawnEntity/pawnEntity.tscn" id="3_sqnta"]
+[ext_resource type="FontFile" uid="uid://b3s7umd01feyu" path="res://assets/fonts/Carthage Pro Regular.ttf" id="4_8imb8"]
+
+[sub_resource type="Gradient" id="Gradient_b6ksk"]
+colors = PackedColorArray(0, 0, 0, 0, 0.188235, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_02n5f"]
+gradient = SubResource("Gradient_b6ksk")
+fill_from = Vector2(1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1lwbg"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0)
+
+[sub_resource type="Gradient" id="Gradient_jat1a"]
+offsets = PackedFloat32Array(0, 0.995455, 1)
+colors = PackedColorArray(0.505882, 0, 0.0470588, 0.784314, 0.439216, 0.0784314, 0, 0, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_7o1a6"]
+gradient = SubResource("Gradient_jat1a")
+
+[sub_resource type="LabelSettings" id="LabelSettings_fk6vo"]
+font = ExtResource("4_8imb8")
+font_size = 18
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 6
+shadow_color = Color(0, 0, 0, 0.431373)
+
+[node name="clothingItemButton" type="MarginContainer" node_paths=PackedStringArray("itemText", "pawnHolder", "examplePawn")]
+custom_minimum_size = Vector2(151, 202)
+anchors_preset = -1
+anchor_right = 0.095
+anchor_bottom = 0.224
+offset_right = -1.52588e-05
+offset_bottom = 0.399994
+theme = ExtResource("1_kx7nb")
+script = ExtResource("2_uwnix")
+itemText = NodePath("backgroundPanel/bottomArea/ItemText")
+pawnHolder = NodePath("backgroundPanel/subViewportContainer/subViewport/node3d")
+examplePawn = NodePath("backgroundPanel/subViewportContainer/subViewport/node3d/pawnEntity")
+
+[node name="backgroundPanel" type="Panel" parent="."]
+layout_mode = 2
+
+[node name="textureRect" type="TextureRect" parent="backgroundPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.039
+anchor_top = 0.035
+anchor_right = 0.954
+anchor_bottom = 0.995
+offset_left = 0.072
+offset_top = -0.0700002
+offset_right = 0.991989
+offset_bottom = 0.00999451
+texture = SubResource("GradientTexture2D_02n5f")
+expand_mode = 1
+
+[node name="subViewportContainer" type="SubViewportContainer" parent="backgroundPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_right = 149.0
+stretch = true
+
+[node name="subViewport" type="SubViewport" parent="backgroundPanel/subViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+msaa_3d = 3
+scaling_3d_scale = 1.13
+size = Vector2i(147, 2)
+render_target_update_mode = 4
+
+[node name="node3d" type="Node3D" parent="backgroundPanel/subViewportContainer/subViewport"]
+
+[node name="csgBox3d" type="CSGBox3D" parent="backgroundPanel/subViewportContainer/subViewport/node3d"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.556445, 0)
+use_collision = true
+collision_layer = 255
+collision_mask = 15
+material = SubResource("StandardMaterial3D_1lwbg")
+
+[node name="pawnEntity" parent="backgroundPanel/subViewportContainer/subViewport/node3d" instance=ExtResource("3_sqnta")]
+pawnColor = Color(1, 1, 1, 1)
+forceAnimation = true
+animationToForce = "PawnAnim/Idle"
+pawnEnabled = false
+
+[node name="camera3d" type="Camera3D" parent="backgroundPanel/subViewportContainer/subViewport"]
+transform = Transform3D(-0.766711, 0.211272, -0.606233, 0.0237522, 0.952988, 0.302077, 0.641553, 0.217206, -0.735685, -0.500804, 1.62699, -0.529846)
+
+[node name="bottomArea" type="TextureRect" parent="backgroundPanel"]
+layout_mode = 2
+anchor_top = 0.787
+anchor_right = 0.993
+anchor_bottom = 1.005
+offset_top = 0.0259857
+offset_right = 0.0639954
+offset_bottom = -0.00999451
+texture = SubResource("GradientTexture1D_7o1a6")
+expand_mode = 1
+
+[node name="ItemText" type="Label" parent="backgroundPanel/bottomArea"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 144.0
+grow_vertical = 2
+text = "Longcoat"
+label_settings = SubResource("LabelSettings_fk6vo")
+horizontal_alignment = 1
+justification_flags = 162

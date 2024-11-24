@@ -85,6 +85,7 @@ bloodTextures = Array[Texture2D]([ExtResource("1_3l6hn"), ExtResource("2_t3m5m")
 
 [node name="bloodSplat1" type="Decal" parent="." groups=["bloodDecal"]]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+sorting_offset = 2.0
 size = Vector3(0.3, 0.3, 0.3)
 emission_energy = 5.35
 distance_fade_enabled = true

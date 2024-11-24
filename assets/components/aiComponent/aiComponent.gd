@@ -19,6 +19,7 @@ signal visibleObject(object:Node3D,visibleposition:Vector3)
 @onready var aimCastEnd : Marker3D = $aiAimcast/aiAimcastEnd
 @onready var pawnDebugLabel : Label3D = $debugPawnStats
 @export_category("AI Component")
+var targetedPawn : BasePawn
 @export var pawnOwner : BasePawn:
 	set(value):
 		pawnOwner = value
@@ -162,6 +163,7 @@ func _physics_process(delta: float) -> void:
 
 func _ai_process() -> void:
 	pawnFSM._ai_process()
+	print("Processing..")
 
 
 func createFOVModel()->ImmediateMesh:
@@ -336,20 +338,6 @@ func speakTrigger(dialogue) -> void:
 	##Replace Dialogic with a custom solution
 	pass
 
-	#if pawnOwner:
-		#if !pawnOwner.isPawnDead:
-			#if dialogue != "":
-				#if Dialogic.current_timeline != null:
-					#return
-				#Dialogic.start(dialogue)
-				#isInDialogue = true
-				#if dialogueStartingCamera != null:
-					#var dialogue_cam : Node3D = gameManager.create_dialogue_camera()
-					#gameManager.world.add_child(dialogue_cam)
-					#dialogue_cam.activate(get_viewport().get_camera_3d(), dialogueStartingCamera.position,dialogueStartingCamera.rotation)
-					#Dialogic.timeline_ended.connect(dialogue_cam.remove)
-				#get_viewport().set_input_as_handled()
-
 
 func setInteractablePawn(value:bool = false) -> void:
 	if value == true:
@@ -460,15 +448,7 @@ func goToPathPosition(path:PackedVector3Array,sprint:bool=false)->void:
 
 
 func goToPosition(to:Vector3,sprint:bool=false)->void:
-	if sprint:
-		pawnOwner.setMovementState.emit(pawnOwner.movementStates["sprint"])
-		pawnOwner.isCrouching = false
-	else:
-		if pawnOwner.isCrouching:
-			pawnOwner.setMovementState.emit(pawnOwner.movementStates["crouchWalk"])
-		else:
-			pawnOwner.setMovementState.emit(pawnOwner.movementStates["walk"])
-
+	pawnOwner.isRunning = sprint
 	setPathPosition(to)
 	pathingToPosition = true
 	pathPoint = 0
@@ -479,9 +459,10 @@ func stopLookingAt()->void:
 
 
 func lookAtPosition(lookat:Vector3)->void:
+	var tween = create_tween()
 	pawnOwner.meshLookAt = true
 	aimCast.look_at(lookat)
-	pawnOwner.meshRotation = aimCast.global_transform.basis.get_euler().y
+	tween.tween_property(pawnOwner,"meshRotation",gameManager.getShortTweenAngle(pawnOwner.meshRotation,aimCast.global_transform.basis.get_euler().y),aimSpeed).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CIRC)
 
 
 func setPawnType()->void:
@@ -491,6 +472,9 @@ func setPawnType()->void:
 			pawnFSM.change_state("Idle")
 		1:
 			pawnFSM.change_state("Wander")
+			for i in pawnOwner.getAllHitboxes():
+				if !i.damaged.is_connected(pawnDamaged):
+					i.damaged.connect(pawnDamaged)
 		2:
 			pawnFSM.change_state("Patrol")
 
@@ -506,3 +490,9 @@ func setPathPosition(pathPosition:Vector3)->PackedVector3Array:
 func setupNav()->void:
 	navMap = get_world_3d().get_navigation_map()
 	print("Nav Set")
+
+func pawnDamaged(amount,impulse,vector, dealer)->void:
+	if dealer:
+		lookAtPosition(dealer.global_position)
+		pawnFSM.change_state("Attack")
+		targetedPawn = dealer

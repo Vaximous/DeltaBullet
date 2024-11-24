@@ -1,0 +1,147 @@
+[gd_scene load_steps=13 format=3 uid="uid://ccnq3cc8k6nt5"]
+
+[ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_iq3s1"]
+[ext_resource type="Script" path="res://assets/resources/customResources/worldData/worldData.gd" id="2_gqs4i"]
+[ext_resource type="Material" uid="uid://6hc0pjapu32g" path="res://assets/materials/devMaterials/developer/checkerboard_material.tres" id="3_sg61b"]
+[ext_resource type="PackedScene" uid="uid://boicvk4qeqmbd" path="res://assets/entities/pawnSpawn/pawnSpawn.tscn" id="4_0r0wx"]
+[ext_resource type="PackedScene" uid="uid://dvmmlj4mvj88r" path="res://assets/entities/aiMarker/aiMarker.tscn" id="5_bh8tr"]
+[ext_resource type="PackedScene" uid="uid://dsxt078giobel" path="res://assets/entities/weapons/Uzi/Uzi.tscn" id="5_gs5af"]
+[ext_resource type="Resource" uid="uid://r6qkb05upxjv" path="res://assets/resources/customResources/weaponData/Uzi/UziDisplay.tres" id="6_k77gc"]
+[ext_resource type="Texture2D" uid="uid://rnjqykyxts43" path="res://assets/textures/crosshair/crosshair037.png" id="7_1sogm"]
+[ext_resource type="Script" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="8_hfkws"]
+
+[sub_resource type="Resource" id="Resource_6vxwt"]
+script = ExtResource("2_gqs4i")
+enableTimeCycle = false
+worldName = "Another Test Palace"
+worldDescription = ""
+worldType = 0
+spawnPawnsOnLoad = true
+playOnStart = false
+spawnType = 0
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_2388r"]
+vertices = PackedVector3Array(-24.8428, 2, 9.68457, -15.8428, 2, 9.68457, -13.8428, 2, 6.68457, -12.5928, 2, 6.68457, -2.34277, 2, 14.9346, 10.6572, 2, 3.68457, 15.6572, 2, -8.56543, 16.9072, 2, -9.56543, 16.9072, 2, -32.5654, -24.8428, 2, -32.5654, 19.9072, 2, -8.56543, 20.4072, 2, -7.56543, 33.6572, 2, -7.56543, 33.6572, 2, -32.5654, 11.9072, 2.5, 2.93457, 13.1572, 2.5, 3.93457, 14.4072, 2.5, 3.93457, 19.1572, 2.5, -6.81543, 18.9072, 2.5, -7.81543, 16.9072, 2.5, -8.56543, -1.84277, 2, 15.1846, -1.84277, 2, 16.1846, 13.9072, 2, 5.43457, 33.6572, 2, 40.6846, 15.1572, 2, 5.18457, -4.09277, 2, 18.9346, -4.59277, 2, 40.6846, -4.59277, 2, 18.9346, -12.3428, 2.5, 8.18457, -13.3428, 2.5, 7.93457, -14.5928, 2.5, 9.43457, -14.0928, 2.5, 10.4346, -4.84277, 2.5, 17.6846, -3.09277, 2.5, 15.9346, -14.5928, 2, 11.4346, -24.8428, 2, 40.6846)
+polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(4, 3, 5), PackedInt32Array(7, 6, 8), PackedInt32Array(8, 6, 2), PackedInt32Array(8, 2, 0), PackedInt32Array(8, 0, 9), PackedInt32Array(3, 2, 5), PackedInt32Array(5, 2, 6), PackedInt32Array(12, 11, 10), PackedInt32Array(10, 7, 12), PackedInt32Array(12, 7, 8), PackedInt32Array(12, 8, 13), PackedInt32Array(15, 14, 16), PackedInt32Array(16, 14, 17), PackedInt32Array(17, 14, 18), PackedInt32Array(18, 14, 19), PackedInt32Array(20, 4, 5), PackedInt32Array(20, 5, 21), PackedInt32Array(21, 5, 22), PackedInt32Array(25, 24, 26), PackedInt32Array(26, 24, 23), PackedInt32Array(23, 24, 12), PackedInt32Array(22, 24, 21), PackedInt32Array(21, 24, 25), PackedInt32Array(26, 27, 25), PackedInt32Array(24, 11, 12), PackedInt32Array(29, 28, 30), PackedInt32Array(30, 28, 31), PackedInt32Array(31, 28, 32), PackedInt32Array(32, 28, 33), PackedInt32Array(0, 1, 34), PackedInt32Array(34, 27, 0), PackedInt32Array(0, 27, 26), PackedInt32Array(0, 26, 35)]
+
+[sub_resource type="Resource" id="Resource_eich3"]
+resource_local_to_scene = true
+script = ExtResource("8_hfkws")
+useBulletTrail = null
+displayData = ExtResource("6_k77gc")
+canBeReloaded = null
+weaponMagSize = 511
+ammoSize = 64
+reloadTime = 1.5
+headDismember = null
+weaponDamage = null
+weaponFireRate = 0.065
+bulletSpeed = null
+bulletPenetration = null
+weaponImpulse = 14.0
+weaponShots = null
+ammoConsumption = null
+useCustomCrosshairSize = true
+crosshairSizeOverride = Vector2(0.5, 0.5)
+forcedCrosshair = ExtResource("7_1sogm")
+useFOV = true
+fovShotAmount = 0.2
+weaponRecoil = Vector3(3, 7, 5)
+weaponRecoilStrength = 4.0
+weaponSpread = 0.08
+weaponRecoilStrengthAim = null
+weaponSpreadAim = 0.05
+leftHandParent = null
+rightHandParent = null
+useWeaponSprintAnim = null
+useLeftHandIdle = false
+useRightHandIdle = null
+useLeftHandAiming = false
+useRightHandAiming = null
+useLeftHandFreeAiming = false
+useRightHandFreeAiming = null
+weaponPositionOffset = Vector3(-0.02, -0.08, 0.105)
+weaponRotationOffset = Vector3(-0.02, -1.7, -1.605)
+bulletColor = null
+
+[node name="worldBase" instance=ExtResource("1_iq3s1")]
+worldData = SubResource("Resource_6vxwt")
+
+[node name="pawnSpawn" parent="Spawns/playerSpawns" index="0" instance=ExtResource("4_0r0wx")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -10.5022, 1.5, 0.518274)
+pawnType = 0
+
+[node name="pawnSpawn" parent="Spawns/pawnSpawns" index="0" instance=ExtResource("4_0r0wx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.76335, 1.5, 9.65867)
+
+[node name="pawnSpawn2" parent="Spawns/pawnSpawns" index="1" instance=ExtResource("4_0r0wx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.23665, 1.5, 9.65867)
+aiType = 1
+
+[node name="pawnSpawn3" parent="Spawns/pawnSpawns" index="2" instance=ExtResource("4_0r0wx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.23665, 1.5, 9.65867)
+
+[node name="reflectionProbe" parent="Environment" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09741, 11.4137, 5.65805)
+size = Vector3(62.2935, 20, 42.2525)
+
+[node name="directionalLight3d" parent="Environment" index="2"]
+transform = Transform3D(0.617105, -0.321972, 0.717994, -8.6239e-09, 0.912456, 0.409175, -0.786881, -0.252504, 0.563081, 0, 4.67884, 0)
+
+[node name="navigationRegion3d" type="NavigationRegion3D" parent="Geometry" index="0"]
+navigation_mesh = SubResource("NavigationMesh_2388r")
+
+[node name="ground" type="CSGBox3D" parent="Geometry/navigationRegion3d" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.44403, 1, 4.1167)
+use_collision = true
+size = Vector3(59.5736, 1, 74.3643)
+material = ExtResource("3_sg61b")
+
+[node name="Wall1" type="CSGBox3D" parent="Geometry/navigationRegion3d/ground" index="0"]
+transform = Transform3D(0.916872, 0, -0.399181, 0, 1, 0, 0.399181, 0, 0.916872, 11.1661, 0.608345, -6.25495)
+use_collision = true
+size = Vector3(3.27371, 1, 13.5757)
+material = ExtResource("3_sg61b")
+
+[node name="Wall2" type="CSGBox3D" parent="Geometry/navigationRegion3d/ground" index="1"]
+transform = Transform3D(0.622883, 0, 0.782315, 0, 1, 0, -0.782315, 0, 0.622883, -13.3608, 0.608345, 8.62429)
+use_collision = true
+size = Vector3(3.27371, 1, 13.5757)
+material = ExtResource("3_sg61b")
+
+[node name="Uzi" parent="Props" index="0" instance=ExtResource("5_gs5af")]
+transform = Transform3D(0.721047, -0.348327, 0.598965, 0.26794, 0.937373, 0.222575, -0.638983, 0, 0.769221, -10.1281, 2.71492, 10.9329)
+weaponResource = SubResource("Resource_eich3")
+
+[node name="aiMarker" parent="Misc/WaypointNodes" index="0" instance=ExtResource("5_bh8tr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.626718, 1.5, 2.90188)
+
+[node name="aiMarker2" parent="Misc/WaypointNodes" index="1" instance=ExtResource("5_bh8tr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.3733, 1.5, 2.90188)
+
+[node name="aiMarker3" parent="Misc/WaypointNodes" index="2" instance=ExtResource("5_bh8tr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.3733, 1.5, 2.90188)
+
+[node name="aiMarker4" parent="Misc/WaypointNodes" index="3" instance=ExtResource("5_bh8tr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.3733, 1.5, 17.9019)
+
+[node name="aiMarker5" parent="Misc/WaypointNodes" index="4" instance=ExtResource("5_bh8tr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.6267, 1.5, 17.9019)
+
+[node name="aiMarker6" parent="Misc/WaypointNodes" index="5" instance=ExtResource("5_bh8tr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.6267, 1.5, -9.09812)
+
+[node name="aiMarker7" parent="Misc/WaypointNodes" index="6" instance=ExtResource("5_bh8tr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.62672, 1.5, -9.09812)
+
+[node name="aiMarker8" parent="Misc/WaypointNodes" index="7" instance=ExtResource("5_bh8tr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.3733, 1.5, -9.09812)
+
+[node name="aiMarker9" parent="Misc/WaypointNodes" index="8" instance=ExtResource("5_bh8tr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.3733, 1.5, -9.09812)
+
+[node name="aiMarker10" parent="Misc/WaypointNodes" index="9" instance=ExtResource("5_bh8tr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.3733, 1.5, 3.90188)
+
+[node name="aiMarker11" parent="Misc/WaypointNodes" index="10" instance=ExtResource("5_bh8tr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.3854, 1.5, 3.90188)

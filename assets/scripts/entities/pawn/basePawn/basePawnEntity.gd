@@ -118,6 +118,8 @@ var currentPawnMat : StandardMaterial3D
 var raycaster : RayCast3D
 #Base Components - Components required for this entity to even be used
 @export_subgroup("Base Components")
+@export var animationController : Node
+@export var movementController : Node
 @export var healthComponent : HealthComponent
 @export_subgroup("Sub-Components")
 @export var inputComponent : Node:
@@ -330,7 +332,6 @@ var currentItem : InteractiveObject = null
 		emit_signal("clothingChanged")
 
 @export_subgroup("Mesh")
-@export var animationController : Node
 ##Ragdoll to spawn when the pawn dies
 @export var ragdollScene : PackedScene
 ##Makes the mesh look at a certain thing, mainly used for aiming
@@ -368,6 +369,7 @@ var crouchSpaceTween : Tween
 var bodyIKTween : Tween
 var meshRotationTween : Tween
 var meshRotationTweenMovement : Tween
+var flinchTween : Tween
 var lastLeftBlend : AnimationNodeStateMachinePlayback
 ## First-person, just for shits and giggles
 var isFirstperson : bool = false:
@@ -537,6 +539,7 @@ func endPawn()->void:
 
 func endAttachedCam()->void:
 	if !attachedCam == null:
+		attachedCam.stopCameraRecoil()
 		attachedCam.cameraRotationUpdated.disconnect(doMeshRotation)
 		gameManager.getEventSignal("playerDied").emit()
 		attachedCam.lowHP = false
@@ -818,8 +821,10 @@ func unequipWeapon() -> void:
 		weapon.hide()
 		weapon.resetToDefault()
 	if currentItem:
-		freeAimChanged.disconnect(currentItem.checkFreeAim)
-		weaponFireChanged.disconnect(currentItem.checkWeaponBlend)
+		if freeAimChanged.is_connected(currentItem.checkFreeAim):
+			freeAimChanged.disconnect(currentItem.checkFreeAim)
+		if weaponFireChanged.is_connected(currentItem.checkWeaponBlend):
+			weaponFireChanged.disconnect(currentItem.checkWeaponBlend)
 		currentItem.resetToDefault()
 		currentItem.weaponAnimSet = false
 		currentItem.isEquipped = false
@@ -914,9 +919,10 @@ func moveItemToWeapons(item:Weapon) -> void:
 
 func setPawnMaterial() -> void:
 	currentPawnMat.albedo_color = pawnColor
-	for mesh in pawnSkeleton.get_children():
-		if mesh is MeshInstance3D:
-			mesh.set_surface_override_material(0,currentPawnMat)
+	if pawnSkeleton != null:
+		for mesh in pawnSkeleton.get_children():
+			if mesh is MeshInstance3D:
+				mesh.set_surface_override_material(0,currentPawnMat)
 
 func setupPawnColor() -> void:
 	if pawnColor != Color(1.0,0.76,0.00,1.0):
@@ -1008,13 +1014,20 @@ func doMeshRotation() -> void:
 		#pawnMesh.rotation.z = lerpf(pawnMesh.rotation.z, 0, 12*delta)
 
 func flinch() -> void:
+	if flinchTween:
+		flinchTween.kill()
+	flinchTween = create_tween()
 	if !healthComponent.health <= 10 or !lastHitPart == 41:
-		bodyIK.start()
-		bodyIK.interpolation = 1
+		if !meshLookAt:
+			bodyIK.start()
+			bodyIK.interpolation = 1
 		bodyIKMarker.rotation.x += randf_range(-0.1,0.35)
-		#bodyIKMarker.rotation.y += randf_range(-0.5,0.5)
 		bodyIKMarker.rotation.z += randf_range(-0.25,0.35)
-		disableBodyIK()
+		flinchTween.parallel().tween_property(bodyIKMarker,"rotation:x",0,1).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+		flinchTween.parallel().tween_property(bodyIKMarker,"rotation:z",0,1).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+		#bodyIKMarker.rotation.y += randf_range(-0.5,0.5)
+		if !meshLookAt:
+			disableBodyIK()
 
 func _on_health_component_on_damaged(dealer:Node3D, hitDirection:Vector3)->void:
 	flinch()

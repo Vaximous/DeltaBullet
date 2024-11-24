@@ -21,11 +21,11 @@ transparency = 1
 cull_mode = 2
 albedo_color = Color(1, 0, 0, 0.309804)
 
-[sub_resource type="ImmediateMesh" id="ImmediateMesh_ufxh6"]
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_fkirk"]
 
 [node name="aiComponent" type="Node3D" node_paths=PackedStringArray("pawnFSM", "visionTimer", "memoryManager")]
 script = ExtResource("4_gaqok")
-aimSpeed = 0.075
+aimSpeed = 2.0
 pawnFSM = NodePath("pawnFSM")
 visionTimer = NodePath("visionTimer")
 memoryManager = NodePath("aiMemoryManager")
@@ -69,6 +69,10 @@ autostart = true
 script = ExtResource("7_m2cst")
 aiOwner = NodePath("../..")
 
+[node name="attackTimer" type="Timer" parent="pawnFSM/Attack"]
+
+[node name="moveTimer" type="Timer" parent="pawnFSM/Attack"]
+
 [node name="FindCover" type="Node" parent="pawnFSM" node_paths=PackedStringArray("aiOwner")]
 script = ExtResource("8_bgtfw")
 aiOwner = NodePath("../..")
@@ -100,15 +104,14 @@ Has Detected -
 "
 
 [node name="aiAimcast" type="RayCast3D" parent="."]
-target_position = Vector3(0, 0, -250)
+target_position = Vector3(0, 0, -1)
 collision_mask = 23
-collide_with_areas = true
 debug_shape_custom_color = Color(1, 0.823529, 0, 1)
 
 [node name="aiAimcastEnd" type="Marker3D" parent="aiAimcast"]
 
 [node name="visualMesh" type="MeshInstance3D" parent="."]
 material_override = SubResource("StandardMaterial3D_giynp")
-mesh = SubResource("ImmediateMesh_ufxh6")
+mesh = SubResource("ImmediateMesh_fkirk")
 
 [connection signal="timeout" from="pawnFSM/Wander/forceTargetReset" to="pawnFSM/Wander" method="_on_force_target_reset_timeout"]

@@ -37,6 +37,7 @@ Notifications="*res://assets/scripts/singletons/Notifications.tscn"
 DebugMenu="*res://addons/debug_menu/debug_menu.tscn"
 cutsceneManager="*res://assets/scripts/singletons/cutsceneManager.gd"
 questManager="*res://assets/scripts/singletons/questManager.gd"
+AiManager="*res://assets/scripts/singletons/AIManager.gd"
 
 [debug]
 

@@ -452,10 +452,12 @@ func removeShop()->void:
 			i.queue_free()
 
 func createSplat(gposition:Vector3 = Vector3.ZERO,normal:Vector3 = Vector3.ZERO,colPoint:Vector3 = Vector3.ZERO)->void:
+	await get_tree().process_frame
 	if gameManager.world != null:
 		#print("col")
 		var _b = bloodDecal.instantiate()
 		gameManager.world.worldMisc.add_child(_b)
+		#_b.global_transform = gameManager.create_surface_transform(colPoint,Vector3(1,0,0),normal)
 		_b.rotate(normal,randf_range(0, 180)/PI)
 		_b.position = gposition
 		if (colPoint + normal).dot(Vector3.UP) > 0.0000000000000000000001:
@@ -471,7 +473,7 @@ func sprayBlood(position:Vector3,amount:int,_maxDistance:int,distanceMultiplier:
 			var result : Dictionary
 			ray = ray.create(position,position + Vector3(randi_range(-_maxDistance,_maxDistance),randi_range(-_maxDistance,_maxDistance),randi_range(-_maxDistance,_maxDistance)*distanceMultiplier),1)
 			result = directSpace.intersect_ray(ray)
-			if result and result.normal.dot(Vector3.UP) > 0.0000000000000000000001:
+			if result and result.normal.dot(Vector3.UP) > 0.001:
 				createSplat(result.position,result.normal,result.position)
 
 func createBloodPool(position:Vector3,size:float=0.5)->void:
@@ -531,6 +533,7 @@ func setSoundVariables(sound:AudioStreamPlayer3D,bus:StringName = &"Sounds")->vo
 
 func create_surface_transform(origin : Vector3, incoming_vector : Vector3, surface_normal : Vector3) -> Transform3D:
 	var y = surface_normal
-	var x = incoming_vector.cross(surface_normal)
-	var z = surface_normal.cross(x)
-	return Transform3D(x.normalized(), y.normalized(), z.normalized(), origin)
+	var z = incoming_vector.cross(surface_normal)
+	var x = surface_normal.cross(z)
+	var tf := Transform3D(x.normalized(), y.normalized(), z.normalized(), origin).rotated_local(Vector3.UP, PI/2)
+	return tf

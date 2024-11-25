@@ -36,7 +36,7 @@ func deleteHole()->void:
 
 func initializeBulletHole()->void:
 	#Make particle emitters face the direction of the normal
-	global_transform = gameManager.create_surface_transform(colPoint,bulletVelocity,-normal)
+	global_transform = gameManager.create_surface_transform(colPoint,bulletVelocity,normal)
 
 	#Set Decal Scale
 	setDecalScale()
@@ -72,5 +72,5 @@ func initializeBulletHole()->void:
 
 
 func setDecalScale()->void:
-	scale = Vector3.ONE
+	#scale = Vector3.ONE
 	decal.scale = Vector3(decalSize,decalSize,decalSize)

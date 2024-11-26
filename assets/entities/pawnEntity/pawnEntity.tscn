@@ -1,4 +1,4 @@
-[gd_scene load_steps=156 format=4 uid="uid://bg8aarggcxwa8"]
+[gd_scene load_steps=144 format=4 uid="uid://bg8aarggcxwa8"]
 
 [ext_resource type="Script" path="res://assets/scripts/entities/pawn/basePawn/basePawnEntity.gd" id="1_rjm04"]
 [ext_resource type="Resource" uid="uid://1xbs1ip7mf1j" path="res://assets/resources/pawnRelated/pawnDefaultCamData.tres" id="2_pnnqo"]
@@ -674,69 +674,6 @@ filters = ["MaleSkeleton/Skeleton3D:L_Foot", "MaleSkeleton/Skeleton3D:L_Forearm"
 
 [sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_wmj2h"]
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_gp2t3"]
-animation = &"PawnAnim/dive_lookRight_forward"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8vuc7"]
-animation = &"PawnAnim/dive_lookLeft_forward"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_3w20k"]
-animation = &"PawnAnim/dive_forward"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_s4kwv"]
-animation = &"PawnAnim/dive_backward"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_befgf"]
-animation = &"PawnAnim/dive_lookLeft_forward_up"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_qe8ed"]
-animation = &"PawnAnim/dive_lookRight_forward_up"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_pvbeg"]
-animation = &"PawnAnim/dive_forward"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_007yt"]
-animation = &"PawnAnim/dive_backward_left"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_en281"]
-animation = &"PawnAnim/dive_backward_right"
-
-[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_gs8gl"]
-blend_point_0/node = SubResource("AnimationNodeAnimation_gp2t3")
-blend_point_0/pos = Vector2(-1, 0)
-blend_point_1/node = SubResource("AnimationNodeAnimation_8vuc7")
-blend_point_1/pos = Vector2(1, 0)
-blend_point_2/node = SubResource("AnimationNodeAnimation_3w20k")
-blend_point_2/pos = Vector2(0, 1)
-blend_point_3/node = SubResource("AnimationNodeAnimation_s4kwv")
-blend_point_3/pos = Vector2(0, -1)
-blend_point_4/node = SubResource("AnimationNodeAnimation_befgf")
-blend_point_4/pos = Vector2(-1, 1)
-blend_point_5/node = SubResource("AnimationNodeAnimation_qe8ed")
-blend_point_5/pos = Vector2(1, 1)
-blend_point_6/node = SubResource("AnimationNodeAnimation_pvbeg")
-blend_point_6/pos = Vector2(0, 0)
-blend_point_7/node = SubResource("AnimationNodeAnimation_007yt")
-blend_point_7/pos = Vector2(-1, -1)
-blend_point_8/node = SubResource("AnimationNodeAnimation_en281")
-blend_point_8/pos = Vector2(1, -1)
-
-[sub_resource type="Curve" id="Curve_c57t6"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 2.34387, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="AnimationNodeTransition" id="AnimationNodeTransition_mqdj7"]
-xfade_time = 0.25
-xfade_curve = SubResource("Curve_c57t6")
-input_0/name = "diving"
-input_0/auto_advance = false
-input_0/break_loop_at_end = false
-input_0/reset = true
-input_1/name = "not_diving"
-input_1/auto_advance = false
-input_1/break_loop_at_end = false
-input_1/reset = true
-
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_flkpv"]
 animation = &"PawnAnim/Fall"
 
@@ -931,7 +868,7 @@ node_connections = [&"output", 0, &"BlendSpace1D"]
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_vfk3n"]
 resource_local_to_scene = true
 resource_name = "PawnAnimTree"
-graph_offset = Vector2(278.122, 182.295)
+graph_offset = Vector2(448.293, -142.817)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_xaqd1")
 nodes/Animation/position = Vector2(-1540, -320)
 "nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_ux6wa")
@@ -958,10 +895,6 @@ nodes/crouchStrafeBlend/node = SubResource("AnimationNodeBlend2_r1mel")
 nodes/crouchStrafeBlend/position = Vector2(-800, -80)
 nodes/crouchStrafeScale/node = SubResource("AnimationNodeTimeScale_wmj2h")
 nodes/crouchStrafeScale/position = Vector2(-1000, 60)
-nodes/diveSpace/node = SubResource("AnimationNodeBlendSpace2D_gs8gl")
-nodes/diveSpace/position = Vector2(-360, -720)
-nodes/dive_transition/node = SubResource("AnimationNodeTransition_mqdj7")
-nodes/dive_transition/position = Vector2(280, -460)
 nodes/fallAnim/node = SubResource("AnimationNodeAnimation_flkpv")
 nodes/fallAnim/position = Vector2(-560, -160)
 nodes/fallBlend/node = SubResource("AnimationNodeBlend2_6vg4h")
@@ -984,7 +917,7 @@ nodes/leftArmed_Throw/node = SubResource("AnimationNodeOneShot_jtfhk")
 nodes/leftArmed_Throw/position = Vector2(120, 0)
 nodes/leftThrowableBlend/node = SubResource("AnimationNodeBlend2_ndkj3")
 nodes/leftThrowableBlend/position = Vector2(800, -200)
-nodes/output/position = Vector2(2200, -140)
+nodes/output/position = Vector2(2520, -140)
 nodes/standToCrouchAdd/node = SubResource("AnimationNodeAdd2_4xbud")
 nodes/standToCrouchAdd/position = Vector2(-1040, -460)
 nodes/standToCrouchStrafe/node = SubResource("AnimationNodeAdd2_cxt27")
@@ -1000,7 +933,7 @@ nodes/useLeft/position = Vector2(920, 140)
 nodes/useScale/node = SubResource("AnimationNodeTimeScale_81h7w")
 nodes/useScale/position = Vector2(1140, 20)
 nodes/useShot/node = SubResource("AnimationNodeOneShot_xejv0")
-nodes/useShot/position = Vector2(1900, -280)
+nodes/useShot/position = Vector2(1780, -280)
 nodes/useType/node = SubResource("AnimationNodeTransition_u7xl1")
 nodes/useType/position = Vector2(1540, -60)
 nodes/weaponBlend/node = SubResource("AnimationNodeBlend2_0lac3")
@@ -1011,7 +944,7 @@ nodes/weaponBlend_left/node = SubResource("AnimationNodeBlendTree_u1tbr")
 nodes/weaponBlend_left/position = Vector2(700, 80)
 nodes/weaponState/node = SubResource("AnimationNodeBlendTree_ku2o8")
 nodes/weaponState/position = Vector2(-120, -80)
-node_connections = [&"aimSprintScale", 0, &"aimSprintStrafe", &"aimTransition", 0, &"fallBlend", &"aimTransition", 1, &"strafeType", &"crouchBlend", 0, &"idleSpaceSpeed", &"crouchBlend", 1, &"standToCrouchAdd", &"crouchScale", 0, &"crouchSpace", &"crouchStrafeBlend", 0, &"strafeSpace", &"crouchStrafeBlend", 1, &"crouchStrafeScale", &"crouchStrafeScale", 0, &"standToCrouchStrafe", &"dive_transition", 0, &"diveSpace", &"dive_transition", 1, &"aimTransition", &"fallBlend", 0, &"jumpshot", &"fallBlend", 1, &"fallAnim", &"grabScale", 0, &"grabLeft", &"idleSpaceSpeed", 0, &"idleSpace", &"interactScale", 0, &"interactL", &"jumpshot", 0, &"crouchBlend", &"jumpshot", 1, &"Jump", &"leftArmed_Throw", 0, &"armed", &"leftArmed_Throw", 1, &"throw", &"leftThrowableBlend", 0, &"weaponBlend", &"leftThrowableBlend", 1, &"leftArmed_Throw", &"output", 0, &"useShot", &"standToCrouchAdd", 0, &"crouchScale", &"standToCrouchAdd", 1, &"Animation", &"standToCrouchStrafe", 0, &"crouchStrafe", &"standToCrouchStrafe", 1, &"Animation 2", &"strafeType", 0, &"crouchStrafeBlend", &"strafeType", 1, &"aimSprintScale", &"useScale", 0, &"useLeft", &"useShot", 0, &"weaponBlend_Left_blend", &"useShot", 1, &"useType", &"useType", 0, &"useScale", &"useType", 1, &"grabScale", &"useType", 2, &"interactScale", &"weaponBlend", 0, &"dive_transition", &"weaponBlend", 1, &"weaponState", &"weaponBlend_Left_blend", 0, &"leftThrowableBlend", &"weaponBlend_Left_blend", 1, &"weaponBlend_left"]
+node_connections = [&"aimSprintScale", 0, &"aimSprintStrafe", &"aimTransition", 0, &"fallBlend", &"aimTransition", 1, &"strafeType", &"crouchBlend", 0, &"idleSpaceSpeed", &"crouchBlend", 1, &"standToCrouchAdd", &"crouchScale", 0, &"crouchSpace", &"crouchStrafeBlend", 0, &"strafeSpace", &"crouchStrafeBlend", 1, &"crouchStrafeScale", &"crouchStrafeScale", 0, &"standToCrouchStrafe", &"fallBlend", 0, &"jumpshot", &"fallBlend", 1, &"fallAnim", &"grabScale", 0, &"grabLeft", &"idleSpaceSpeed", 0, &"idleSpace", &"interactScale", 0, &"interactL", &"jumpshot", 0, &"crouchBlend", &"jumpshot", 1, &"Jump", &"leftArmed_Throw", 0, &"armed", &"leftArmed_Throw", 1, &"throw", &"leftThrowableBlend", 0, &"weaponBlend", &"leftThrowableBlend", 1, &"leftArmed_Throw", &"output", 0, &"useShot", &"standToCrouchAdd", 0, &"crouchScale", &"standToCrouchAdd", 1, &"Animation", &"standToCrouchStrafe", 0, &"crouchStrafe", &"standToCrouchStrafe", 1, &"Animation 2", &"strafeType", 0, &"crouchStrafeBlend", &"strafeType", 1, &"aimSprintScale", &"useScale", 0, &"useLeft", &"useShot", 0, &"weaponBlend_Left_blend", &"useShot", 1, &"useType", &"useType", 0, &"useScale", &"useType", 1, &"grabScale", &"useType", 2, &"interactScale", &"weaponBlend", 0, &"aimTransition", &"weaponBlend", 1, &"weaponState", &"weaponBlend_Left_blend", 0, &"leftThrowableBlend", &"weaponBlend_Left_blend", 1, &"weaponBlend_left"]
 
 [sub_resource type="Animation" id="Animation_0274p"]
 length = 0.001
@@ -1828,7 +1761,6 @@ stream_3/stream = ExtResource("21_qdyh2")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 collision_layer = 8
 collision_mask = 9
-floor_snap_length = 0.0
 script = ExtResource("1_rjm04")
 animationController = NodePath("Components/AnimationController")
 movementController = NodePath("Components/MovementController")
@@ -2446,10 +2378,6 @@ parameters/crouchSpace/blend_position = -0.0504626
 parameters/crouchStrafe/blend_position = Vector2(0, 0)
 parameters/crouchStrafeBlend/blend_amount = 0.0
 parameters/crouchStrafeScale/scale = 1.0
-parameters/diveSpace/blend_position = Vector2(0.998193, 0.0126582)
-parameters/dive_transition/current_state = "not_diving"
-parameters/dive_transition/transition_request = ""
-parameters/dive_transition/current_index = 1
 parameters/fallBlend/blend_amount = 0.0
 parameters/grabScale/scale = 0.8
 parameters/idleSpace/blend_position = 0.00191755
@@ -2492,7 +2420,7 @@ playback_default_blend_time = 0.5
 [node name="BoneAttatchments" type="Node" parent="."]
 
 [node name="UpperChest" type="BoneAttachment3D" parent="BoneAttatchments"]
-transform = Transform3D(-0.995869, 0.0129736, 0.0898651, 0.00931478, 0.999098, -0.0410228, -0.0903199, -0.0400164, -0.995092, -0.0259507, 1.2173, 0.102209)
+transform = Transform3D(-0.995816, 0.0121443, 0.0905669, 0.0126039, 0.999894, 0.00449902, -0.0905063, 0.00562163, -0.995864, -0.0268123, 1.21648, 0.095597)
 bone_name = "Spine_2"
 bone_idx = 2
 use_external_skeleton = true
@@ -2510,7 +2438,7 @@ transform = Transform3D(1, 0.000917837, -0.000180729, -0.000919151, 0.999976, -0
 shape = SubResource("BoxShape3D_w6p0i")
 
 [node name="LeftThigh" type="BoneAttachment3D" parent="BoneAttatchments"]
-transform = Transform3D(-0.989617, -0.143291, 0.0117854, 0.14221, -0.987567, -0.0666263, 0.0211864, -0.0642564, 0.997708, -0.0789135, 0.877375, 0.08106)
+transform = Transform3D(-0.989668, -0.14316, 0.00861803, 0.141915, -0.986148, -0.0855791, 0.0207507, -0.0834693, 0.996293, -0.0788674, 0.877412, 0.0817004)
 bone_name = "L_UpperLeg"
 bone_idx = 43
 use_external_skeleton = true
@@ -2528,7 +2456,7 @@ transform = Transform3D(1, -0.0001721, -0.000722682, 0.000163683, 0.999931, -0.0
 shape = SubResource("BoxShape3D_muxfy")
 
 [node name="LeftFoot" type="BoneAttachment3D" parent="BoneAttatchments"]
-transform = Transform3D(0.976502, -0.211745, -0.0401529, -0.1356, -0.748376, 0.649198, -0.167523, -0.628499, -0.759533, -0.166172, 0.0990729, 0.188694)
+transform = Transform3D(0.976795, -0.21057, -0.0392085, -0.134096, -0.74387, 0.654667, -0.167029, -0.634217, -0.754875, -0.16608, 0.0995937, 0.181303)
 bone_name = "L_Foot"
 bone_idx = 45
 use_external_skeleton = true
@@ -2546,7 +2474,7 @@ transform = Transform3D(0.996118, -0.0495916, -0.0727553, -0.0264164, 0.619915, 
 shape = SubResource("BoxShape3D_4f318")
 
 [node name="LeftKnee" type="BoneAttachment3D" parent="BoneAttatchments"]
-transform = Transform3D(-0.996009, -0.0727241, 0.0518497, 0.0857909, -0.940513, 0.328674, 0.0248635, 0.33182, 0.943015, -0.136885, 0.477835, 0.0550638)
+transform = Transform3D(-0.996065, -0.0727406, 0.0507497, 0.0854271, -0.940738, 0.328125, 0.023875, 0.331179, 0.943265, -0.136786, 0.478447, 0.0479312)
 bone_name = "L_LowerLeg"
 bone_idx = 44
 use_external_skeleton = true
@@ -2564,7 +2492,7 @@ transform = Transform3D(0.99998, 0.00553635, -0.00307082, -0.00557011, 0.999923,
 shape = SubResource("BoxShape3D_wvs88")
 
 [node name="RightThigh" type="BoneAttachment3D" parent="BoneAttatchments"]
-transform = Transform3D(-0.96313, 0.220184, -0.154632, -0.157227, -0.926924, -0.340658, -0.218346, -0.303776, 0.927384, 0.0208111, 0.876701, 0.095104)
+transform = Transform3D(-0.963552, 0.21981, -0.152517, -0.154999, -0.923258, -0.351464, -0.218075, -0.315004, 0.923694, 0.0208565, 0.876666, 0.0957457)
 bone_name = "R_UpperLeg"
 bone_idx = 47
 use_external_skeleton = true
@@ -2582,7 +2510,7 @@ transform = Transform3D(1, -0.0001721, -0.000722682, 0.000163683, 0.999931, -0.0
 shape = SubResource("BoxShape3D_li7f8")
 
 [node name="RightFoot" type="BoneAttachment3D" parent="BoneAttatchments"]
-transform = Transform3D(0.931891, 0.317985, 0.174637, 0.0608282, -0.611486, 0.788882, 0.357656, -0.72453, -0.589185, 0.150633, 0.101117, -0.0205534)
+transform = Transform3D(0.93251, 0.318416, 0.170497, 0.0598396, -0.601684, 0.796459, 0.356206, -0.732504, -0.580134, 0.150678, 0.102523, -0.0292535)
 bone_name = "R_Foot"
 bone_idx = 49
 use_external_skeleton = true
@@ -2600,7 +2528,7 @@ transform = Transform3D(0.998476, 0.0490302, 0.0254299, -0.023974, 0.799504, -0.
 shape = SubResource("BoxShape3D_86emg")
 
 [node name="RightKnee" type="BoneAttachment3D" parent="BoneAttatchments"]
-transform = Transform3D(-0.973128, 0.101168, -0.206875, -0.102705, -0.994684, -0.0033718, -0.206124, 0.0179808, 0.978359, 0.109891, 0.501695, -0.0277946)
+transform = Transform3D(-0.973541, 0.101543, -0.204735, -0.100628, -0.99479, -0.0149494, -0.205194, 0.00606338, 0.9787, 0.109785, 0.503144, -0.0316953)
 bone_name = "R_LowerLeg"
 bone_idx = 48
 use_external_skeleton = true
@@ -2618,7 +2546,7 @@ transform = Transform3D(0.99998, 0.00553635, -0.00307082, -0.00557011, 0.999923,
 shape = SubResource("BoxShape3D_betfr")
 
 [node name="Stomach" type="BoneAttachment3D" parent="BoneAttatchments"]
-transform = Transform3D(-0.993376, 0.0409026, 0.107381, 0.0298092, 0.994223, -0.102956, -0.110975, -0.0990734, -0.988856, -0.0343805, 1.01239, 0.122628)
+transform = Transform3D(-0.993902, 0.0360493, 0.104204, 0.0215033, 0.990254, -0.137485, -0.108148, -0.134406, -0.984991, -0.0342418, 1.01239, 0.123297)
 bone_name = "Spine_1"
 bone_idx = 1
 use_external_skeleton = true
@@ -2637,7 +2565,7 @@ transform = Transform3D(0.999999, 0.00165, 0.000776134, -0.00164237, 0.999954, -
 shape = SubResource("BoxShape3D_q4n8k")
 
 [node name="Hips" type="BoneAttachment3D" parent="BoneAttatchments"]
-transform = Transform3D(-0.990207, -0.0284453, 0.136681, 0.00669755, 0.968217, 0.250022, -0.139449, 0.248489, -0.958544, -0.0304041, 0.877047, 0.0878915)
+transform = Transform3D(-0.9902, -0.0277809, 0.136867, 0.00741004, 0.968184, 0.250129, -0.139461, 0.248692, -0.95849, -0.0303583, 0.877049, 0.0885325)
 bone_name = "Spine_0"
 bone_idx = 0
 use_external_skeleton = true
@@ -2655,7 +2583,7 @@ transform = Transform3D(0.99987, -0.0159997, 0.00229539, 0.0160897, 0.971644, -0
 shape = SubResource("BoxShape3D_mt6l4")
 
 [node name="Neck" type="BoneAttachment3D" parent="BoneAttatchments"]
-transform = Transform3D(-0.996074, 0.0131961, 0.087537, 0.00452405, 0.995106, -0.0985433, -0.0884127, -0.0977605, -0.991258, -0.022527, 1.48096, 0.0916491)
+transform = Transform3D(-0.995468, 0.0260717, 0.0914526, 0.0181119, 0.996043, -0.0868145, -0.0933578, -0.0847647, -0.992001, -0.0236075, 1.48035, 0.0970806)
 bone_name = "Neck"
 bone_idx = 41
 use_external_skeleton = true
@@ -2674,7 +2602,7 @@ transform = Transform3D(0.996059, -0.00524351, -0.0885375, 0.00235683, 0.999463,
 shape = SubResource("SphereShape3D_srvle")
 
 [node name="leftHand" type="BoneAttachment3D" parent="BoneAttatchments"]
-transform = Transform3D(0.450521, -0.0145972, -0.89264, 0.179285, -0.977991, 0.106481, -0.874554, -0.208007, -0.438005, -0.20227, 0.948678, 0.0474005)
+transform = Transform3D(0.432657, -0.0213122, -0.9013, 0.218552, -0.967395, 0.12779, -0.874643, -0.252269, -0.413909, -0.202588, 0.948566, 0.0460535)
 bone_name = "L_Hand"
 bone_idx = 6
 use_external_skeleton = true
@@ -2692,7 +2620,7 @@ transform = Transform3D(0.999645, -0.0179707, 0.0196984, 0.0176868, 0.999739, 0.
 shape = SubResource("BoxShape3D_v17pk")
 
 [node name="rightHand" type="BoneAttachment3D" parent="BoneAttatchments"]
-transform = Transform3D(0.215019, 0.168581, 0.961952, -0.0686261, -0.979912, 0.187073, 0.974187, -0.106223, -0.199141, 0.143079, 0.951021, 0.14935)
+transform = Transform3D(0.230275, 0.161649, 0.959608, -0.044288, -0.983311, 0.176274, 0.972108, -0.0830742, -0.219283, 0.142465, 0.950736, 0.147671)
 bone_name = "R_Hand"
 bone_idx = 25
 use_external_skeleton = true
@@ -2721,7 +2649,7 @@ transform = Transform3D(0.930377, -0.0761231, -0.358616, 0.120768, 0.987244, 0.1
 shape = SubResource("BoxShape3D_ols6b")
 
 [node name="leftArm" type="BoneAttachment3D" parent="BoneAttatchments"]
-transform = Transform3D(0.788074, -0.109796, -0.605681, -0.082374, -0.993894, 0.0729914, -0.609999, -0.0076307, -0.792326, -0.159283, 1.44582, 0.106889)
+transform = Transform3D(0.784122, -0.106477, -0.611377, -0.0686667, -0.993978, 0.0850416, -0.616753, -0.0247025, -0.78673, -0.16039, 1.4452, 0.112048)
 bone_name = "L_UpperArm"
 bone_idx = 4
 use_external_skeleton = true
@@ -2739,7 +2667,7 @@ transform = Transform3D(1, 1.84751e-07, 2.38419e-07, -4.1211e-08, 1, 1.26893e-08
 shape = SubResource("BoxShape3D_uya4a")
 
 [node name="leftForearm" type="BoneAttachment3D" parent="BoneAttatchments"]
-transform = Transform3D(0.818066, -0.0606912, -0.571902, 0.080961, -0.972334, 0.218997, -0.569369, -0.225456, -0.790537, -0.18677, 1.197, 0.104979)
+transform = Transform3D(0.813452, -0.0608541, -0.578429, 0.0877602, -0.970256, 0.225498, -0.574944, -0.234194, -0.783934, -0.187047, 1.19636, 0.105864)
 bone_name = "L_Forearm"
 bone_idx = 5
 use_external_skeleton = true
@@ -2757,7 +2685,7 @@ transform = Transform3D(0.999991, 0, 0, -5.51343e-07, 1, -1.49012e-08, 4.85778e-
 shape = SubResource("BoxShape3D_c5hhn")
 
 [node name="rightArm" type="BoneAttachment3D" parent="BoneAttatchments"]
-transform = Transform3D(0.550079, 0.0438166, 0.833951, 0.208433, -0.974208, -0.0863016, 0.808654, 0.221302, -0.545023, 0.109777, 1.44548, 0.137942)
+transform = Transform3D(0.553791, 0.0453831, 0.831407, 0.198745, -0.976844, -0.0790627, 0.80856, 0.209027, -0.549985, 0.10877, 1.44512, 0.143362)
 bone_name = "R_UpperArm"
 bone_idx = 23
 use_external_skeleton = true
@@ -2774,7 +2702,7 @@ transform = Transform3D(0.687935, -0.150469, 0.71001, 0.120799, 0.988371, 0.0924
 shape = SubResource("BoxShape3D_5goft")
 
 [node name="rightForearm" type="BoneAttachment3D" parent="BoneAttatchments"]
-transform = Transform3D(0.591568, 0.0874449, 0.801498, -0.0880024, -0.981126, 0.171999, 0.801418, -0.172269, -0.572722, 0.120747, 1.20159, 0.193345)
+transform = Transform3D(0.595618, 0.0874482, 0.798492, -0.0999662, -0.978227, 0.181704, 0.797003, -0.188034, -0.573922, 0.120132, 1.20056, 0.195692)
 bone_name = "R_Forearm"
 bone_idx = 24
 use_external_skeleton = true

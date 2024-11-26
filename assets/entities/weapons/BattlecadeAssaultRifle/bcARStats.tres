@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemDisplayData" load_steps=2 format=3 uid="uid://nbth0uf3slwn"]
+
+[ext_resource type="Script" path="res://assets/resources/customResources/weaponDisplayData/weaponDisplayData.gd" id="1_q0jpa"]
+
+[resource]
+script = ExtResource("1_q0jpa")
+saleCategory = 0
+gritPrice = 0
+itemDescriptionShort = "An odd.. robotic.. rifle?"
+itemDescriptionLong = "This rifle seems to belong to some sort of robotic fighter? Found in a destroyed arena with dozens of heavy metal limbs scattered across the combat field. It's unknown where this thing originated, probably in a lab of some sort but one thing is for certain. It's heavy and huge as hell, and while it's bullets don't pack that much of a punch it still goes right through you and fast as hell at that. "
+damage = 0.053
+fireRate = 0.63
+penetration = 0.195

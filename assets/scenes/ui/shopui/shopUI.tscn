@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://dt5hl3d1g8pyc"]
+[gd_scene load_steps=38 format=3 uid="uid://dt5hl3d1g8pyc"]
 
 [ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="1_n1s24"]
 [ext_resource type="Script" path="res://assets/resources/customResources/shopData/shopData.gd" id="2_bykjx"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://ims5mb4jlsni" path="res://assets/scenes/ui/shopui/shopItem.tscn" id="3_x8qdb"]
 [ext_resource type="FontFile" uid="uid://xmwjvmqspojb" path="res://assets/fonts/Grand_Aventure_Text.otf" id="4_sqkig"]
 [ext_resource type="FontFile" uid="uid://b3s7umd01feyu" path="res://assets/fonts/Carthage Pro Regular.ttf" id="4_uttbu"]
+[ext_resource type="FontFile" uid="uid://com86cy2htbbq" path="res://assets/fonts/CreatoDisplay-Regular.otf" id="6_127t2"]
 [ext_resource type="AudioStream" uid="uid://crpcvvr4dupq6" path="res://assets/sounds/ui/slideOpen.wav" id="6_s2d3s"]
 
 [sub_resource type="Resource" id="Resource_j36xa"]
@@ -228,7 +229,8 @@ fill_to = Vector2(0, 1)
 texture = SubResource("GradientTexture2D_3r0xx")
 
 [sub_resource type="Environment" id="Environment_2f118"]
-ambient_light_source = 1
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
 reflected_light_source = 1
 glow_enabled = true
 
@@ -655,7 +657,11 @@ horizontal_alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_font_sizes/normal_font_size = 24
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/normal_font = ExtResource("6_127t2")
+theme_override_font_sizes/normal_font_size = 27
 theme_override_styles/normal = SubResource("StyleBoxFlat_mhcs7")
 bbcode_enabled = true
 text = "This is a good item..

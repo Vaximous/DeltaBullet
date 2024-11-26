@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://ccnq3cc8k6nt5"]
+[gd_scene load_steps=22 format=3 uid="uid://ccnq3cc8k6nt5"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_iq3s1"]
 [ext_resource type="Script" path="res://assets/resources/customResources/worldData/worldData.gd" id="2_gqs4i"]
@@ -12,6 +12,7 @@
 [ext_resource type="Resource" uid="uid://r6qkb05upxjv" path="res://assets/resources/customResources/weaponData/Uzi/UziDisplay.tres" id="6_k77gc"]
 [ext_resource type="Texture2D" uid="uid://rnjqykyxts43" path="res://assets/textures/crosshair/crosshair037.png" id="7_1sogm"]
 [ext_resource type="Script" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="8_hfkws"]
+[ext_resource type="PackedScene" uid="uid://bgk584lddf4aa" path="res://assets/entities/weapons/BattlecadeAssaultRifle/BattlecadeAssaultRifle.tscn" id="12_wtwgc"]
 
 [sub_resource type="Resource" id="Resource_6vxwt"]
 script = ExtResource("2_gqs4i")
@@ -186,6 +187,10 @@ material = ExtResource("3_sg61b")
 [node name="Uzi" parent="Props" index="0" instance=ExtResource("5_gs5af")]
 transform = Transform3D(0.721047, -0.348327, 0.598965, 0.26794, 0.937373, 0.222575, -0.638983, 0, 0.769221, -9.71416, 2.71492, 9.35189)
 weaponResource = SubResource("Resource_eich3")
+
+[node name="BattlecadeAssaultRifle" parent="Props" index="1" instance=ExtResource("12_wtwgc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.48657, 15.2846, -7.25441)
+collisionEnabled = true
 
 [node name="aiMarker" parent="Misc/WaypointNodes" index="0" instance=ExtResource("5_bh8tr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.626718, 1.5, 2.90188)

@@ -52,6 +52,7 @@ var defaultFOV : int = 90
 
 #World
 var bloodPool = preload("res://assets/entities/bloodPool/bloodPool.tscn")
+var poolDecals : Array = [preload("res://assets/textures/blood/bloodPool/T_Pool_001.png"), preload("res://assets/textures/blood/bloodPool/T_Pool_002.png"), preload("res://assets/textures/blood/bloodPool/T_Pool_003.png"), preload("res://assets/textures/blood/bloodPool/T_Pool_004.png"), preload("res://assets/textures/blood/bloodPool/T_Pool_005.png"), preload("res://assets/textures/blood/bloodPool/T_Pool_006.png"), preload("res://assets/textures/blood/bloodPool/T_Pool_007.png"), preload("res://assets/textures/blood/bloodPool/T_Pool_008.png"), preload("res://assets/textures/blood/bloodPool/T_Pool_009.png"), preload("res://assets/textures/blood/bloodPool/T_Pool_010.png")]
 var tempImages : Array = ["res://assets/scenes/ui/saveloadmenu/save1.png","res://assets/scenes/ui/saveloadmenu/save2.png","res://assets/scenes/ui/saveloadmenu/save3.png","res://assets/scenes/ui/saveloadmenu/save4.png","res://assets/misc/db7.png"]
 var saveOverwrite : String
 var currentSave : String

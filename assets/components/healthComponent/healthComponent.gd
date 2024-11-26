@@ -11,13 +11,7 @@ var lastDealer : Node3D = null
 	set(value):
 		healthChanged.emit()
 		health = value
-		if health <= 0:
-			await get_tree().process_frame
-			if lastDealer!=null:
-				healthDepleted.emit(lastDealer)
-			else:
-				healthDepleted.emit(null)
-			isDead = true
+		healthCheck()
 			#HPisDead.emit()
 			#health = 0
 	get:
@@ -33,6 +27,16 @@ var killerSignalEmitted :bool= false
 # Called when the node enters the scene tree for the first time.
 func _ready()->void:
 	componentOwner = get_owner()
+
+func healthCheck()->void:
+	if health <= 0:
+		await get_tree().process_frame
+		health = 0
+		if lastDealer!=null:
+			healthDepleted.emit(lastDealer)
+		else:
+			healthDepleted.emit(null)
+		isDead = true
 
 func damage(amount:float, dealer:Node3D = null)->void:
 	lastDealer = dealer

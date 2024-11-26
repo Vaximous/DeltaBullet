@@ -1,0 +1,167 @@
+[gd_scene load_steps=38 format=3 uid="uid://bgk584lddf4aa"]
+
+[ext_resource type="PackedScene" uid="uid://cpd5r8bmx2885" path="res://assets/entities/weapons/weaponBase.tscn" id="1_140ft"]
+[ext_resource type="Resource" uid="uid://mspc5c8w8fqi" path="res://assets/entities/weapons/BattlecadeAssaultRifle/bcARData.tres" id="2_hmlkw"]
+[ext_resource type="ArrayMesh" uid="uid://cnqt41d8xeuui" path="res://assets/entities/weapons/BattlecadeAssaultRifle/bcAssaultRifle.res" id="3_sepsf"]
+[ext_resource type="Animation" uid="uid://d1v5ctkn0snr1" path="res://assets/animations/pawn/BattlecadeRifleAim.res" id="4_wypj0"]
+[ext_resource type="Animation" uid="uid://bvvo2vyqekr4o" path="res://assets/animations/pawn/BattlecadeRifleReload.res" id="5_kjs77"]
+[ext_resource type="Animation" uid="uid://cvd8u6kwdf0kj" path="res://assets/animations/pawn/BattlecadeRifleFire.res" id="6_qj88c"]
+[ext_resource type="Animation" uid="uid://4hyae6bomtel" path="res://assets/animations/pawn/BattlecadeRifleIdle.res" id="7_kract"]
+[ext_resource type="AudioStream" uid="uid://bukhlxn8gad1w" path="res://assets/sounds/weapons/bcassaultRifle/bcAssaultRiflefire_1.wav" id="8_3iuom"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_cl5qe"]
+points = PackedVector3Array(-0.0216012, -0.149575, 0.0683584, -0.0216012, -0.143036, 0.0442365, 0.0206785, -0.149575, 0.0683584, -0.0101112, -0.126844, 0.231422, -0.0259028, -0.0557997, 0.416598, -0.0379854, -0.0263617, 0.106471, -0.0379854, -0.0263617, -0.0463812, -0.0420002, 0.0145258, -0.214671, 0.0206785, -0.143036, 0.0442365, -0.0216012, -0.124976, -0.0220182, 0.0258977, -0.0557997, 0.416598, 0.0100966, -0.126844, 0.231422, 0.0419952, 0.0145258, -0.214671, 0.0556359, 0.059126, -0.0339183, 0.0556359, 0.059126, -0.022581, -0.0183607, -0.0633449, 0.419734, -0.0259028, -0.0450689, 0.427372, -0.0420002, 0.0145258, 0.147237, -0.0420002, 0.0453052, -0.214671, -0.0189055, 0.0336641, -0.386499, 0.0206785, -0.124976, -0.0220182, -0.00526477, 0.0185738, -0.385133, -7.29784e-06, 0.0155318, -0.385133, 0.0258977, -0.0450689, 0.427372, 0.0183556, -0.0633449, 0.419734, 0.0188909, 0.0336641, -0.386499, 0.0419952, 0.0453052, -0.214671, 0.0556551, 0.0614015, -0.0331142, 0.0556551, 0.0614015, -0.0233851, 0.0258977, 0.063174, 0.427372, -0.0183607, -0.0482067, 0.43493, -0.0259028, 0.063174, 0.427372, -0.0420002, 0.0453052, 0.147317, -0.0296786, 0.0722761, -0.179534, -0.02813, 0.0702161, -0.257608, -0.0189055, 0.0554851, -0.386499, -0.0353089, 0.0739288, 0.0871735, -7.29784e-06, 0.0227416, -0.386499, 0.00525974, 0.0185738, -0.385133, 0.0183556, -0.0482067, 0.43493, 0.0188909, 0.0554851, -0.386499, 0.028125, 0.0702161, -0.257608, 0.0205542, 0.0845639, -0.257608, 0.025783, 0.0933306, 0.101245, 0.025783, 0.0933306, 0.113064, -7.29784e-06, 0.0781206, 0.427372, -7.29784e-06, 0.0694257, 0.43493, 0.0183556, 0.0588146, 0.43493, -0.0183607, 0.0588146, 0.43493, -0.0353089, 0.0739288, 0.123115, -0.0257881, 0.0933306, 0.113064, -0.0205688, 0.0845639, -0.257608, -0.0257881, 0.0933306, 0.101245, -7.29784e-06, 0.0663837, -0.386499, -0.0076163, 0.0951271, -0.253106, 0.00760171, 0.0951271, -0.253106, 0.00760171, 0.0951271, -0.241286, -0.0076163, 0.0951271, -0.241286)
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ybwpt"]
+animation = &"weaponAnims/aim"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_j08dw"]
+animation = &"weaponAnims/fire"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_u51jk"]
+animation = &"weaponAnims/idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_hie0f"]
+animation = &"weaponAnims/reload"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fvckn"]
+animation = &"WeaponAnims/sprint"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_syl42"]
+animation = &"WeaponAnims/unequip"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_5ul8h"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_gga4p"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_7mtao"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_sftbu"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_2yi56"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_mh4se"]
+xfade_time = 0.05
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_7n2o2"]
+xfade_time = 0.05
+
+[sub_resource type="Curve" id="Curve_8l1uk"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 1.4, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_va47p"]
+xfade_time = 0.5
+xfade_curve = SubResource("Curve_8l1uk")
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="Curve" id="Curve_udpny"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.992064, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_umbs7"]
+xfade_time = 0.08
+xfade_curve = SubResource("Curve_udpny")
+
+[sub_resource type="Curve" id="Curve_x6fid"]
+_data = [Vector2(0, 0), 0.0, 1.4, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_3kfwd"]
+xfade_time = 0.25
+xfade_curve = SubResource("Curve_x6fid")
+
+[sub_resource type="Curve" id="Curve_65g1e"]
+_data = [Vector2(0, 0), 0.0, 1.4, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_hxj8i"]
+xfade_time = 0.3
+xfade_curve = SubResource("Curve_65g1e")
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_q1np0"]
+states/End/position = Vector2(1041, 100)
+states/aim/node = SubResource("AnimationNodeAnimation_ybwpt")
+states/aim/position = Vector2(619, 191)
+states/fire/node = SubResource("AnimationNodeAnimation_j08dw")
+states/fire/position = Vector2(619, 302)
+states/idle/node = SubResource("AnimationNodeAnimation_u51jk")
+states/idle/position = Vector2(619, 100)
+states/reload/node = SubResource("AnimationNodeAnimation_hie0f")
+states/reload/position = Vector2(805, 176)
+states/sprint/node = SubResource("AnimationNodeAnimation_fvckn")
+states/sprint/position = Vector2(619, -13)
+states/unequip/node = SubResource("AnimationNodeAnimation_syl42")
+states/unequip/position = Vector2(843, 100)
+transitions = ["sprint", "idle", SubResource("AnimationNodeStateMachineTransition_5ul8h"), "idle", "sprint", SubResource("AnimationNodeStateMachineTransition_gga4p"), "idle", "unequip", SubResource("AnimationNodeStateMachineTransition_7mtao"), "unequip", "End", SubResource("AnimationNodeStateMachineTransition_sftbu"), "Start", "idle", SubResource("AnimationNodeStateMachineTransition_2yi56"), "idle", "aim", SubResource("AnimationNodeStateMachineTransition_mh4se"), "aim", "fire", SubResource("AnimationNodeStateMachineTransition_7n2o2"), "fire", "aim", SubResource("AnimationNodeStateMachineTransition_va47p"), "aim", "idle", SubResource("AnimationNodeStateMachineTransition_umbs7"), "idle", "reload", SubResource("AnimationNodeStateMachineTransition_3kfwd"), "reload", "idle", SubResource("AnimationNodeStateMachineTransition_hxj8i")]
+graph_offset = Vector2(14, 110)
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_uy32p"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_wbn7x"]
+resource_name = "battlecadeARTree"
+graph_offset = Vector2(-587.917, 91.4713)
+nodes/output/position = Vector2(380, 140)
+nodes/weaponState/node = SubResource("AnimationNodeStateMachine_q1np0")
+nodes/weaponState/position = Vector2(-180, 120)
+nodes/weaponStateSpeed/node = SubResource("AnimationNodeTimeScale_uy32p")
+nodes/weaponStateSpeed/position = Vector2(80, 100)
+node_connections = [&"output", 0, &"weaponStateSpeed", &"weaponStateSpeed", 0, &"weaponState"]
+
+[sub_resource type="Animation" id="Animation_de73y"]
+resource_name = "new_animation"
+
+[sub_resource type="Animation" id="Animation_bqsep"]
+
+[sub_resource type="Animation" id="Animation_0n52y"]
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1qweh"]
+_data = {
+"aim": ExtResource("4_wypj0"),
+"equip": SubResource("Animation_de73y"),
+"fire": ExtResource("6_qj88c"),
+"idle": ExtResource("7_kract"),
+"reload": ExtResource("5_kjs77"),
+"sprint": SubResource("Animation_bqsep"),
+"unequip": SubResource("Animation_0n52y")
+}
+
+[node name="BattlecadeAssaultRifle" node_paths=PackedStringArray("weaponMesh", "muzzlePoint") instance=ExtResource("1_140ft")]
+weaponMesh = NodePath("rifleMesh")
+weaponResource = ExtResource("2_hmlkw")
+muzzlePoint = NodePath("rifleMesh/muzzle")
+objectName = "Fightbot Rifle"
+
+[node name="collisionObject" parent="." index="0"]
+shape = SubResource("ConvexPolygonShape3D_cl5qe")
+
+[node name="rifleMesh" type="MeshInstance3D" parent="." index="1"]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, 0)
+mesh = ExtResource("3_sepsf")
+blend_shapes/OpenEject = 0.0
+
+[node name="muzzle" type="Marker3D" parent="rifleMesh" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0403128, -0.389985)
+
+[node name="AnimationTree" parent="." index="2"]
+tree_root = SubResource("AnimationNodeBlendTree_wbn7x")
+parameters/weaponStateSpeed/scale = 1.0
+
+[node name="AnimationPlayer" parent="." index="3"]
+libraries = {
+"weaponAnims": SubResource("AnimationLibrary_1qweh")
+}
+
+[node name="shot" type="AudioStreamPlayer3D" parent="." index="6"]
+stream = ExtResource("8_3iuom")
+bus = &"Sounds"
+attenuation_filter_db = 0.0
+
+[connection signal="shot_fired" from="." to="shot" method="play"]

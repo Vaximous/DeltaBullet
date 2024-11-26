@@ -283,7 +283,8 @@ func spawnProjectile(raycaster : RayCast3D) -> void:
 	p.velocity = -(muzzlePoint.global_transform.origin - ray_target_point).normalized() * weaponResource.bulletSpeed
 	if bulletTrail != null:
 		gameManager.world.worldMisc.add_child(bulletTrail)
-		bulletTrail.initTrail(muzzlePoint.global_position, ray_target_point)
+		if p != null:
+			bulletTrail.initTrail(muzzlePoint.global_position, ray_target_point)
 	return
 
 
@@ -427,9 +428,9 @@ func getRayColPoint(raycaster : RayCast3D = null):
 
 func resetWeaponMesh()->void:
 	if weaponMesh:
-		weaponMesh.position = position
-		weaponMesh.rotation = rotation
-		collisionObject.rotation = weaponMesh.rotation
+		weaponMesh.position = Vector3.ZERO
+		weaponMesh.rotation = Vector3.ZERO
+		#collisionObject.rotation = Vector3.ZERO
 
 func resetToDefault()->void:
 	#resetWeaponMesh()

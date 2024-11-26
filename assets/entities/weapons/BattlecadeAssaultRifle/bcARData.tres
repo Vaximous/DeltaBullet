@@ -1,0 +1,42 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3 uid="uid://mspc5c8w8fqi"]
+
+[ext_resource type="Resource" uid="uid://nbth0uf3slwn" path="res://assets/entities/weapons/BattlecadeAssaultRifle/bcARStats.tres" id="1_niglr"]
+[ext_resource type="Script" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="2_g1vh5"]
+
+[resource]
+script = ExtResource("2_g1vh5")
+useBulletTrail = true
+displayData = ExtResource("1_niglr")
+canBeReloaded = true
+weaponMagSize = 390
+ammoSize = 46
+reloadTime = 2.55
+headDismember = false
+weaponDamage = 3.5
+weaponFireRate = 0.075
+bulletSpeed = 800.0
+bulletPenetration = 1.0
+weaponImpulse = 16.0
+weaponShots = 1
+ammoConsumption = 1
+useCustomCrosshairSize = false
+crosshairSizeOverride = Vector2(0.8, 0.8)
+useFOV = false
+fovShotAmount = 1.5
+weaponRecoil = Vector3(2, 4, 4)
+weaponRecoilStrength = 5.0
+weaponSpread = 0.09
+weaponRecoilStrengthAim = 3.0
+weaponSpreadAim = 0.045
+leftHandParent = false
+rightHandParent = true
+useWeaponSprintAnim = false
+useLeftHandIdle = true
+useRightHandIdle = true
+useLeftHandAiming = true
+useRightHandAiming = true
+useLeftHandFreeAiming = true
+useRightHandFreeAiming = true
+weaponPositionOffset = Vector3(-0.005, -0.355, 0.125)
+weaponRotationOffset = Vector3(-1.42, -3.44, 0.429)
+bulletColor = Color(1, 1, 0, 1)

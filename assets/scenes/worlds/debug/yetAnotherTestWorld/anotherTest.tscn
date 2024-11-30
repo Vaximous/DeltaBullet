@@ -1,8 +1,7 @@
-[gd_scene load_steps=29 format=3 uid="uid://ccnq3cc8k6nt5"]
+[gd_scene load_steps=28 format=3 uid="uid://ccnq3cc8k6nt5"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_iq3s1"]
 [ext_resource type="Script" path="res://assets/resources/customResources/worldData/worldData.gd" id="2_gqs4i"]
-[ext_resource type="Texture2D" uid="uid://dvfkpbe83xcf4" path="res://assets/textures/panoramas/panoramatest3.png" id="3_l2nmq"]
 [ext_resource type="Material" uid="uid://6hc0pjapu32g" path="res://assets/materials/devMaterials/developer/checkerboard_material.tres" id="3_sg61b"]
 [ext_resource type="PackedScene" uid="uid://boicvk4qeqmbd" path="res://assets/entities/pawnSpawn/pawnSpawn.tscn" id="4_0r0wx"]
 [ext_resource type="Texture2D" uid="uid://d0f0crtwpmoka" path="res://assets/textures/panoramas/panoramatest1.png" id="4_7ph80"]
@@ -21,7 +20,7 @@
 [ext_resource type="PackedScene" uid="uid://bgk584lddf4aa" path="res://assets/entities/weapons/BattlecadeAssaultRifle/BattlecadeAssaultRifle.tscn" id="12_wtwgc"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_882n8"]
-panorama = ExtResource("3_l2nmq")
+panorama = ExtResource("4_7ph80")
 
 [sub_resource type="Resource" id="Resource_6vxwt"]
 script = ExtResource("2_gqs4i")
@@ -65,7 +64,8 @@ fog_density = 0.009
 fog_sky_affect = 0.765
 fog_height = 96.8
 fog_height_density = 0.089
-volumetric_fog_density = 0.0282
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.0
 volumetric_fog_albedo = Color(0.848227, 0.767118, 0.651965, 1)
 volumetric_fog_length = 89.05
 volumetric_fog_detail_spread = 1.66435

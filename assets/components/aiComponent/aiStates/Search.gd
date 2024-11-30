@@ -17,6 +17,7 @@ func on_enter()->void:
 	timer.start()
 	timer.timeout.connect(detectionIncrement)
 
+
 func on_ai_process()->void:
 	if detectionAmount > 35:
 		aiOwner.walkToPosition(aiOwner.getTargetPosition())
@@ -27,6 +28,7 @@ func on_ai_process()->void:
 		detectionAmount = 0
 		timer.stop()
 		change_state("Attack")
+
 
 func detectionIncrement()->void:
 	timer.start()

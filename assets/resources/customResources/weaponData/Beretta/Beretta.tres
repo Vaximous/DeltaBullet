@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3 uid="uid://wy0gfijhuuwl"]
 
 [ext_resource type="Script" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="1_h8ja1"]
-[ext_resource type="Resource" uid="uid://b0yr3ub2hmc2l" path="res://assets/resources/customResources/weaponData/Beretta/BerettaDisplay.tres" id="1_x8bm3"]
+[ext_resource type="Resource" path="res://assets/resources/customResources/weaponData/Beretta/BerettaDisplay.tres" id="1_x8bm3"]
 
 [resource]
 resource_local_to_scene = true

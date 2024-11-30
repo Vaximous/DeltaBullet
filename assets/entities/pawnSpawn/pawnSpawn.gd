@@ -62,17 +62,21 @@ func pawnTypeColor(value)->void:
 		if value == 0:
 			previewMesh.material_override.albedo_color = Color.GREEN
 
-func spawnPawn():
+func spawnPawn(forceParent : Node = null):
 	if active:
-		var pawn : BasePawn = gameManager.world.pawnScene.instantiate()
+		var pawn : BasePawn = gameManager.pawnScene.instantiate()
 		#Player Pawn
-		var pawnSpawns = gameManager.world.pawnWorldSpawns.get_children()
-		var pawnPlayerSpawns = gameManager.world.playerWorldSpawns.get_children()
+		if forceParent == null:
+			var pawnSpawns = gameManager.world.pawnWorldSpawns.get_children()
+			var pawnPlayerSpawns = gameManager.world.playerWorldSpawns.get_children()
 		if pawnType == 0:
 			if active:
 				var playerControllerComponent = load("res://assets/components/inputComponent/inputComponent.tscn")
 				var controller = playerControllerComponent.instantiate()
-				gameManager.world.playerPawns.add_child(pawn)
+				if forceParent == null:
+					gameManager.world.playerPawns.add_child(pawn)
+				else:
+					forceParent.add_child(pawn)
 				pawn.global_position.x = global_position.x
 				pawn.global_position.y = global_position.y + 1
 				pawn.global_position.z = global_position.z
@@ -82,6 +86,7 @@ func spawnPawn():
 				pawn.checkComponents()
 				pawn.fixRot()
 				pawn.add_to_group(&"Player")
+				pawn.healthComponent.health = 450
 				if gameManager.currentSave != "" or gameManager.currentSave != " " or gameManager.currentSave != null:
 					var pawnFile = FileAccess.open(gameManager.currentSave,FileAccess.READ)
 					if pawnFile != null:
@@ -110,7 +115,10 @@ func spawnPawn():
 			#Pawn
 			var aiControllerComponent = load("res://assets/components/aiComponent/aiComponent.tscn")
 			var controller : AIComponent = aiControllerComponent.instantiate()
-			gameManager.world.worldPawns.add_child(pawn)
+			if forceParent == null:
+				gameManager.world.worldPawns.add_child(pawn)
+			else:
+				forceParent.add_child(pawn)
 			pawn.global_position.x = global_position.x
 			pawn.global_position.y = global_position.y + 1
 			pawn.global_position.z = global_position.z

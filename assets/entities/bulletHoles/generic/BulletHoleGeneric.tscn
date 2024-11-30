@@ -1,0 +1,158 @@
+[gd_scene load_steps=30 format=3 uid="uid://uj7i3l2a7qy3"]
+
+[ext_resource type="PackedScene" uid="uid://dend7ate7mq6e" path="res://assets/entities/bulletHoles/default/BulletHoleBase.tscn" id="1_nlopu"]
+[ext_resource type="Texture2D" uid="uid://brx3kup0o5hrn" path="res://assets/textures/impact/genericDebrisImpact.png" id="2_eo3j3"]
+[ext_resource type="Texture2D" uid="uid://6ta70dakowrf" path="res://assets/textures/bullet/holes/default/concreteHole1.png" id="2_voo5d"]
+[ext_resource type="Texture2D" uid="uid://3hufiahjxg0k" path="res://assets/textures/bullet/holes/default/concreteHole2.png" id="3_8a72t"]
+[ext_resource type="Texture2D" uid="uid://bnxl6jqwci6w3" path="res://assets/textures/smoke/smokeLoopAlpha.png" id="3_226le"]
+[ext_resource type="Texture2D" uid="uid://df8gw0y1jcffu" path="res://assets/textures/bullet/holes/default/concreteHole3.png" id="4_6cm8d"]
+[ext_resource type="Texture2D" uid="uid://cll70lsug1mur" path="res://assets/textures/bullet/holes/default/concreteHole4.png" id="5_xyt5t"]
+[ext_resource type="AudioStream" uid="uid://b04v2x3e3djyi" path="res://assets/sounds/impact/concrete/bullet_impact_concrete_brick_02.wav" id="8_q6vxl"]
+[ext_resource type="AudioStream" uid="uid://dgo8fv3oc1tg4" path="res://assets/sounds/impact/concrete/bullet_impact_concrete_brick_03.wav" id="9_w6tqb"]
+[ext_resource type="AudioStream" uid="uid://be4yqedksdu6y" path="res://assets/sounds/impact/concrete/bullet_impact_concrete_brick_04.wav" id="10_rgoli"]
+[ext_resource type="AudioStream" uid="uid://dvu5nxxi5a35" path="res://assets/sounds/impact/concrete/bullet_impact_concrete_brick_05.wav" id="11_e8qfw"]
+[ext_resource type="AudioStream" uid="uid://c5yl5k1ct5k8a" path="res://assets/sounds/impact/dirt/bullet_impact_dirt_01.wav" id="12_flf5i"]
+[ext_resource type="AudioStream" uid="uid://ddlhe7j7j0535" path="res://assets/sounds/impact/dirt/bullet_impact_dirt_02.wav" id="13_hyq5t"]
+[ext_resource type="AudioStream" uid="uid://csycc1tnifxqy" path="res://assets/sounds/impact/dirt/bullet_impact_dirt_03.wav" id="14_5v04f"]
+[ext_resource type="AudioStream" uid="uid://bfdiiv7w5bdca" path="res://assets/sounds/impact/dirt/bullet_impact_dirt_05.wav" id="15_0v70h"]
+
+[sub_resource type="Curve" id="Curve_13615"]
+_data = [Vector2(0.00980393, 1), 0.0, -3.05128, 0, 0, Vector2(0.495098, 0), -0.275909, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_gg3bw"]
+curve = SubResource("Curve_13615")
+
+[sub_resource type="Curve" id="Curve_cia6p"]
+max_value = 2.0
+_data = [Vector2(0, 0.131868), 0.0, 2.33233, 0, 0, Vector2(1, 0.0219779), -2.55396, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_gdaea"]
+curve = SubResource("Curve_cia6p")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_b0f7p"]
+lifetime_randomness = 1.0
+particle_flag_align_y = true
+angle_min = 1.07288e-05
+angle_max = 110.0
+direction = Vector3(0, 1, 0)
+spread = 17.605
+flatness = 0.085
+initial_velocity_min = 1.55
+initial_velocity_max = 3.15
+gravity = Vector3(0, -3.715, 0)
+scale_min = 0.0
+scale_max = 0.35
+scale_curve = SubResource("CurveTexture_gdaea")
+alpha_curve = SubResource("CurveTexture_gg3bw")
+anim_offset_min = 1.0
+anim_offset_max = 1.0
+collision_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_olvil"]
+transparency = 1
+albedo_texture = ExtResource("2_eo3j3")
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 3
+particles_anim_v_frames = 3
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_sy737"]
+material = SubResource("StandardMaterial3D_olvil")
+size = Vector2(0.3, 0.3)
+
+[sub_resource type="Curve" id="Curve_wk2qm"]
+_data = [Vector2(0, 1), 0.0, 0.263736, 0, 0, Vector2(1, 0), -1.4011, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_urjbs"]
+curve = SubResource("Curve_wk2qm")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1p6ig"]
+lifetime_randomness = 1.0
+particle_flag_align_y = true
+angle_min = 1.07288e-05
+angle_max = 110.0
+direction = Vector3(0, 1, 0)
+spread = 13.005
+initial_velocity_min = 1.5
+initial_velocity_max = 3.0
+gravity = Vector3(0, -1.125, 0)
+scale_min = 0.95
+scale_max = 0.95
+scale_curve = SubResource("CurveTexture_urjbs")
+alpha_curve = SubResource("CurveTexture_gg3bw")
+anim_offset_min = 1.0
+anim_offset_max = 1.0
+collision_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mdmi3"]
+transparency = 1
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("3_226le")
+metallic_specular = 0.0
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_70vys"]
+material = SubResource("StandardMaterial3D_mdmi3")
+size = Vector2(0.3, 0.3)
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_8eltn"]
+random_pitch = 1.25
+streams_count = 4
+stream_0/stream = ExtResource("8_q6vxl")
+stream_1/stream = ExtResource("9_w6tqb")
+stream_2/stream = ExtResource("10_rgoli")
+stream_3/stream = ExtResource("11_e8qfw")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_wh3o0"]
+random_pitch = 1.25
+streams_count = 4
+stream_0/stream = ExtResource("12_flf5i")
+stream_1/stream = ExtResource("13_hyq5t")
+stream_2/stream = ExtResource("14_5v04f")
+stream_3/stream = ExtResource("15_0v70h")
+
+[node name="bulletHole_Generic" node_paths=PackedStringArray("particleArray", "soundArray") instance=ExtResource("1_nlopu")]
+bulletTextures = Array[Texture2D]([ExtResource("2_voo5d"), ExtResource("3_8a72t"), ExtResource("4_6cm8d"), ExtResource("5_xyt5t")])
+particleArray = [NodePath("impactParticle"), NodePath("smokeParticle")]
+soundArray = [NodePath("concreteSounds"), NodePath("dirtSounds")]
+decalSize = 0.055
+audioVolume = -15.115
+
+[node name="impactParticle" type="GPUParticles3D" parent="." index="0"]
+emitting = false
+amount = 19
+one_shot = true
+speed_scale = 1.8
+explosiveness = 1.0
+fixed_fps = 0
+process_material = SubResource("ParticleProcessMaterial_b0f7p")
+draw_pass_1 = SubResource("QuadMesh_sy737")
+
+[node name="smokeParticle" type="GPUParticles3D" parent="." index="1"]
+emitting = false
+amount = 14
+one_shot = true
+preprocess = 0.01
+speed_scale = 1.8
+explosiveness = 1.0
+fixed_fps = 0
+process_material = SubResource("ParticleProcessMaterial_1p6ig")
+draw_pass_1 = SubResource("QuadMesh_70vys")
+
+[node name="concreteSounds" type="AudioStreamPlayer3D" parent="." index="3"]
+stream = SubResource("AudioStreamRandomizer_8eltn")
+volume_db = -5.0
+bus = &"Sounds"
+
+[node name="dirtSounds" type="AudioStreamPlayer3D" parent="." index="4"]
+stream = SubResource("AudioStreamRandomizer_wh3o0")
+volume_db = -5.0
+bus = &"Sounds"

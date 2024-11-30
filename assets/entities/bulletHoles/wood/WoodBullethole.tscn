@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://dke6il0mgsflx"]
 
-[ext_resource type="PackedScene" uid="uid://dend7ate7mq6e" path="res://assets/entities/bulletHoles/default/BulletHole.tscn" id="1_s80kj"]
+[ext_resource type="PackedScene" uid="uid://dend7ate7mq6e" path="res://assets/entities/bulletHoles/default/BulletHoleBase.tscn" id="1_s80kj"]
 [ext_resource type="Texture2D" uid="uid://nhhxiwiqoaqk" path="res://assets/textures/world/wood/wood3.png" id="2_01me5"]
 
 [sub_resource type="Curve" id="Curve_7enyd"]

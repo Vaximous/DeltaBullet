@@ -17,12 +17,16 @@ var castLerp : Vector3 = Vector3.ZERO
 		cameraData = value
 		if cameraData != null:
 			hud.hudEnabled = cameraData.isHudEnabled
-@export var followingEntity : Node3D
+@export var followingEntity : Node3D:
+	set(value):
+		followingEntity = value
 @export var followNode : Node3D:
 	set(value):
 		followNode = value
 		if followingEntity is BasePawn:
 			followingEntity.interactRaycast = interactCast
+			if hud:
+				hud.healthBar.max_value = followingEntity.healthComponent.health
 			if !followingEntity.killedPawn.is_connected(emitKilleffect):
 				followingEntity.killedPawn.connect(emitKilleffect)
 	get:
@@ -356,6 +360,11 @@ func getAttachedOwner():
 		return followNode.get_parent().get_owner()
 	else:
 		return false
+
+
+func stopCameraRecoil()->void:
+	camTargetRot = Vector3.ZERO
+	camRecoil = Vector3.ZERO
 
 func fireRecoil(setRecoilX:float = 0.0,setRecoilY:float = 0.0,setRecoilZ:float = 0.0,useSetRecoil:bool = false)->void:
 	if setRecoilX:

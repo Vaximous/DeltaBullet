@@ -1,13 +1,14 @@
-[gd_resource type="Resource" script_class="ShopData" load_steps=6 format=3 uid="uid://bp0sh4b0ptq40"]
+[gd_resource type="Resource" script_class="ShopData" load_steps=7 format=3 uid="uid://bp0sh4b0ptq40"]
 
 [ext_resource type="Script" path="res://assets/resources/customResources/shopData/shopData.gd" id="1_dawxm"]
 [ext_resource type="PackedScene" uid="uid://wtqya32cwdbk" path="res://assets/entities/weapons/Beretta/Beretta.tscn" id="1_oaxt3"]
 [ext_resource type="PackedScene" uid="uid://bidurnqgd1c74" path="res://assets/entities/weapons/m4/m4.tscn" id="2_stfbb"]
 [ext_resource type="PackedScene" uid="uid://dsxt078giobel" path="res://assets/entities/weapons/Uzi/Uzi.tscn" id="3_752br"]
 [ext_resource type="PackedScene" uid="uid://boh343kalvj5i" path="res://assets/entities/weapons/Revolver/Revolver.tscn" id="4_nqad3"]
+[ext_resource type="PackedScene" uid="uid://bgk584lddf4aa" path="res://assets/entities/weapons/BattlecadeAssaultRifle/BattlecadeAssaultRifle.tscn" id="5_tqosw"]
 
 [resource]
 script = ExtResource("1_dawxm")
 shopName = &" Uncle Tsimks\' Shop"
 saleCategories = 35
-itemsToSell = Array[PackedScene]([ExtResource("1_oaxt3"), ExtResource("2_stfbb"), ExtResource("3_752br"), ExtResource("4_nqad3")])
+itemsToSell = Array[PackedScene]([ExtResource("1_oaxt3"), ExtResource("2_stfbb"), ExtResource("3_752br"), ExtResource("4_nqad3"), ExtResource("5_tqosw")])

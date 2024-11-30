@@ -14,12 +14,13 @@ var targetPosition : Vector3 = Vector3.ZERO:
 
 func on_enter()->void:
 	targetPosition = getRandomNavPoints().global_position
-	aiOwner.targetPathReached.connect(finishedPath)
+	if !aiOwner.targetPathReached.is_connected(finishedPath):
+		aiOwner.targetPathReached.connect(finishedPath)
 
 
-func getRandomNavPoints()->Marker3D:
+func getRandomNavPoints()->AIMarker:
 	if gameManager.world:
-		return gameManager.world.worldWaypoints.get_children().pick_random()
+		return gameManager.world.getWaypoints(0).pick_random()
 	else:
 		return null
 

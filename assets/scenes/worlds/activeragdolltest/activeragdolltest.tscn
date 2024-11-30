@@ -20,7 +20,7 @@
 [ext_resource type="PackedScene" uid="uid://b4v8dskvpby4c" path="res://assets/entities/clothing/Hair/Hair2.tscn" id="14_bhjxw"]
 [ext_resource type="PackedScene" uid="uid://di4i31dg7lojx" path="res://assets/entities/pawnEntity/ragdoll/pawnRagdoll.tscn" id="15_4qgq4"]
 [ext_resource type="PackedScene" uid="uid://nyee136gj7vd" path="res://assets/entities/clothing/longSleeve/long_sleeved_jacket.tscn" id="15_wjsdj"]
-[ext_resource type="PackedScene" uid="uid://dend7ate7mq6e" path="res://assets/entities/bulletHoles/default/BulletHole.tscn" id="17_4tm44"]
+[ext_resource type="PackedScene" uid="uid://dend7ate7mq6e" path="res://assets/entities/bulletHoles/default/BulletHoleBase.tscn" id="17_4tm44"]
 [ext_resource type="Script" path="res://assets/resources/PhysicsMaterials/DB_PhysicsMaterial.gd" id="17_15fkl"]
 [ext_resource type="Texture2D" uid="uid://bodygaior62dl" path="res://assets/textures/Developer_Textures/Light/texture_08.png" id="18_8tf33"]
 [ext_resource type="Script" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="22_js4nn"]
@@ -83,8 +83,11 @@ vertices = PackedVector3Array(5.26401, 1, -5.7359, 5.26401, 1, -4.2359, 77.514, 
 polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(4, 3, 5), PackedInt32Array(5, 3, 6), PackedInt32Array(8, 7, 9), PackedInt32Array(9, 7, 10), PackedInt32Array(11, 13, 12), PackedInt32Array(15, 14, 16), PackedInt32Array(16, 14, 17), PackedInt32Array(18, 21, 19), PackedInt32Array(19, 21, 20), PackedInt32Array(24, 23, 22), PackedInt32Array(26, 25, 27), PackedInt32Array(27, 25, 28), PackedInt32Array(28, 25, 29)]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ooyfj"]
+albedo_color = Color(1, 0.761369, 0.717776, 1)
 albedo_texture = ExtResource("8_4h1k2")
+metallic = 0.55
 metallic_specular = 0.0
+roughness = 0.0
 clearcoat = 0.26
 clearcoat_roughness = 0.0
 uv1_triplanar = true
@@ -209,14 +212,19 @@ script/source = "extends PhysicalBone3D
 @export var matching_force = 1
 
 func _integrate_forces(state):
-	var targtransfrm: Transform3D = animSkeleton.global_transform * animSkeleton.get_bone_global_pose(get_bone_id())
-	var currtransform : Transform3D = physSkel.global_transform * physSkel.get_bone_global_pose(get_bone_id())
-	var rotdif : Basis = (targtransfrm.basis * currtransform.basis.inverse())
-	var torque = hookes_law(rotdif.get_euler(),angular_velocity,4000,80)
-	state.angular_velocity = rotdif.get_euler() * 1
+	#var targtransfrm: Transform3D = animSkeleton.global_transform * animSkeleton.get_bone_global_pose(get_bone_id())
+	#var currtransform : Transform3D = physSkel.global_transform * physSkel.get_bone_global_pose(get_bone_id())
+	#var rotdif : Basis = (targtransfrm.basis * currtransform.basis.inverse())
+	#var torque = hookes_law(rotdif.get_euler(),angular_velocity,4000,80)
+	#state.angular_velocity = rotdif.get_euler() * 1
+	pass
 
 func hookes_law(displacement: Vector3, current_velocity: Vector3, stiffness: float, damping: float) -> Vector3:
 	return (stiffness * displacement) - (damping * current_velocity)
+
+
+func torqueCalc(positionVector:Vector3, force:Vector3):
+	return (positionVector * force)
 "
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_c28eq"]
@@ -230,10 +238,6 @@ height = 2.39488
 resource_local_to_scene = true
 script = ExtResource("22_js4nn")
 useBulletTrail = true
-saleCategory = 1
-gritPrice = 0
-itemDescriptionShort = ""
-itemDescriptionLong = ""
 canBeReloaded = true
 weaponMagSize = 64
 ammoSize = 8
@@ -326,6 +330,7 @@ pawnWeapons = Array[PackedScene]([ExtResource("4_a2bgr"), ExtResource("5_pk0d2")
 pawnClothing = Array[PackedScene]([ExtResource("14_bhjxw"), ExtResource("15_wjsdj"), ExtResource("10_ogp5d")])
 equipWeaponOnSpawn = true
 weaponToEquip = 2
+aiType = 1
 pawnHP = 3500
 pawnColor = Color(0.926594, 0.735976, 0.847277, 1)
 
@@ -398,7 +403,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_effxa")
 transform = Transform3D(1, -2.17053e-21, -1.7752e-15, -1.7752e-15, -7.45058e-09, -1, 2.15729e-21, 1, -7.45058e-09, 0, 1.00071, -0.199311)
 collision_layer = 2
 collision_mask = 11
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.77646e-15, 1.622e-05, 1.00071)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.77646e-15, 1.62199e-05, 1.00071)
 body_offset = Transform3D(1, -2.17053e-21, -1.7752e-15, -1.7752e-15, -7.45058e-09, -1, 2.17052e-21, 1, -7.45058e-09, 0, 1.00071, -1.62125e-05)
 bone_name = "Bone"
 script = SubResource("GDScript_8s8wa")
@@ -413,8 +418,8 @@ transform = Transform3D(1, 2.38418e-07, 4.60076e-13, -1.77636e-15, 1.9446e-06, -
 collision_layer = 2
 collision_mask = 11
 joint_type = 1
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.53674e-07, 3.30528e-05, 0.906665)
-body_offset = Transform3D(1, -2.27374e-13, -3.55271e-15, -1.77636e-15, 1.93715e-06, -1, 0, 1, 1.93715e-06, -9.53674e-07, 0.906665, -3.48091e-05)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.53674e-07, 3.3046e-05, 0.906664)
+body_offset = Transform3D(1, -2.27374e-13, -3.55271e-15, -1.77636e-15, 1.9446e-06, -1, 0, 1, 1.9446e-06, -9.53674e-07, 0.906665, -3.48091e-05)
 bone_name = "Bone.001"
 joint_constraints/bias = 0.3
 joint_constraints/damping = 1.0

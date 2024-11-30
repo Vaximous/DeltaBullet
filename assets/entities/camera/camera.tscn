@@ -115,7 +115,7 @@ shader_parameter/multiplier = 0.25
 shader_parameter/softness = 0.9
 
 [sub_resource type="Gradient" id="Gradient_jat1a"]
-offsets = PackedFloat32Array(0, 0.994737, 1)
+offsets = PackedFloat32Array(0, 0.995455, 1)
 colors = PackedColorArray(0.505882, 0, 0.0470588, 0.784314, 0.439216, 0.0784314, 0, 0, 1, 1, 1, 0)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_l0xuj"]

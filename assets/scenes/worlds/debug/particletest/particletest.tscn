@@ -22,7 +22,7 @@
 [ext_resource type="Texture2D" uid="uid://budtgret7s7vx" path="res://assets/textures/urban/Brick-Wall-05-Normal.tga" id="14_54g3l"]
 [ext_resource type="Resource" uid="uid://cslvcweyejh3c" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/default_camera_movement_component.tres" id="15_sdv7v"]
 [ext_resource type="Resource" uid="uid://iru8ynu04i00" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/default_camera_rotation_component.tres" id="16_pscay"]
-[ext_resource type="PackedScene" uid="uid://dend7ate7mq6e" path="res://assets/entities/bulletHoles/default/BulletHole.tscn" id="17_5q6o5"]
+[ext_resource type="PackedScene" uid="uid://dend7ate7mq6e" path="res://assets/entities/bulletHoles/default/BulletHoleBase.tscn" id="17_5q6o5"]
 [ext_resource type="Resource" uid="uid://rp3mpjmisoyh" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/default_object_movement_component.tres" id="17_ssj5l"]
 [ext_resource type="Resource" uid="uid://c8ulad7utgrg7" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/pre_blur_processing_stage.tres" id="18_50ig5"]
 [ext_resource type="Script" path="res://assets/resources/PhysicsMaterials/DB_PhysicsMaterial.gd" id="18_y1uao"]

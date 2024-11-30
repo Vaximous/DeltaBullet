@@ -35,7 +35,6 @@ _data = {
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_latvr"]
 streams_count = 1
 stream_0/stream = ExtResource("2_dmwe3")
-stream_0/weight = 1.0
 
 [node name="weaponBase" type="RigidBody3D" groups=["Interactable"]]
 collision_layer = 32

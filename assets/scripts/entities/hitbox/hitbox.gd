@@ -80,7 +80,7 @@ func hit(dmg, dealer=null, hitImpulse:Vector3 = Vector3.ZERO, hitPoint:Vector3 =
 
 
 
-func getCollisionObject():
+func getCollisionObject()->CollisionObject3D:
 	if get_child(0) is CollisionObject3D:
 		return get_child(0)
 	else:

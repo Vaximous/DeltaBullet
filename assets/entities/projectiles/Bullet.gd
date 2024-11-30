@@ -42,7 +42,7 @@ func _physics_process(delta: float) -> void:
 func enter_material(material : DB_PhysicsMaterial, hit_data : Dictionary) -> void:
 	#print(">> Entered material %s" % material)
 	inside_material = material
-	globalParticles.spawnBulletHolePackedScene(material.bullet_hole, hit_data['col'], hit_data['col_point'], randf_range(0, TAU), hit_data['col_normal'])
+	globalParticles.spawnBulletHolePackedScene(material.bullet_hole, hit_data['col'], hit_data['col_point'], randf_range(0, TAU), hit_data['col_normal'],hit_data['velocity'])
 	var col : Object = hit_data['col']
 	if col.has_method(&"hit"):
 		if projectile_owner is Weapon:

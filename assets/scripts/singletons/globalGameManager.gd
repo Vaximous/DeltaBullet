@@ -1,6 +1,7 @@
 extends Node
 signal freeOrphans
 ## Global Game Manager Start
+var pawnScene = preload("res://assets/entities/pawnEntity/pawnEntity.tscn").duplicate()
 var menuScenes = [preload("res://assets/scenes/menu/menuScenes/menuscene1.tscn"),preload("res://assets/scenes/menu/menuScenes/menuScene2.tscn"),preload("res://assets/scenes/menu/menuScenes/menuScene3.tscn")]
 var preloadTextureDirectories : Array = [
 	"res://assets/textures/blood/bloodPool/",
@@ -50,7 +51,8 @@ var deadzone : float = 0.1
 var defaultFOV : int = 90
 
 #World
-
+var bloodPool = preload("res://assets/entities/bloodPool/bloodPool.tscn")
+var poolDecals : Array = [preload("res://assets/textures/blood/bloodPool/T_Pool_001.png"), preload("res://assets/textures/blood/bloodPool/T_Pool_002.png"), preload("res://assets/textures/blood/bloodPool/T_Pool_003.png"), preload("res://assets/textures/blood/bloodPool/T_Pool_004.png"), preload("res://assets/textures/blood/bloodPool/T_Pool_005.png"), preload("res://assets/textures/blood/bloodPool/T_Pool_006.png"), preload("res://assets/textures/blood/bloodPool/T_Pool_007.png"), preload("res://assets/textures/blood/bloodPool/T_Pool_008.png"), preload("res://assets/textures/blood/bloodPool/T_Pool_009.png"), preload("res://assets/textures/blood/bloodPool/T_Pool_010.png")]
 var tempImages : Array = ["res://assets/scenes/ui/saveloadmenu/save1.png","res://assets/scenes/ui/saveloadmenu/save2.png","res://assets/scenes/ui/saveloadmenu/save3.png","res://assets/scenes/ui/saveloadmenu/save4.png","res://assets/misc/db7.png"]
 var saveOverwrite : String
 var currentSave : String
@@ -451,13 +453,17 @@ func removeShop()->void:
 			i.queue_free()
 
 func createSplat(gposition:Vector3 = Vector3.ZERO,normal:Vector3 = Vector3.ZERO,colPoint:Vector3 = Vector3.ZERO)->void:
+	await get_tree().process_frame
 	if gameManager.world != null:
 		#print("col")
 		var _b = bloodDecal.instantiate()
 		gameManager.world.worldMisc.add_child(_b)
+		#_b.global_transform = gameManager.create_surface_transform(colPoint,Vector3(1,0,0),normal)
 		_b.rotate(normal,randf_range(0, 180)/PI)
 		_b.position = gposition
-		_b.look_at(colPoint + normal, Vector3.UP)
+		if !_b.global_transform.origin.is_equal_approx(colPoint + normal):
+			#print((colPoint + normal).dot(Vector3.UP))
+			_b.look_at(colPoint + normal, Vector3.UP)
 		#queue_free()
 
 func sprayBlood(position:Vector3,amount:int,_maxDistance:int,distanceMultiplier:float = 1)->void:
@@ -480,7 +486,6 @@ func createBloodPool(position:Vector3,size:float=0.5)->void:
 		ray = ray.create(position,position + Vector3.DOWN,1)
 		result = directSpace.intersect_ray(ray)
 		if result:
-			var bloodPool = load("res://assets/entities/bloodPool/bloodPool.tscn")
 			var _bloodPool = bloodPool.instantiate()
 			world.worldMisc.add_child(_bloodPool)
 			_bloodPool.global_position = result.position
@@ -513,3 +518,24 @@ func preloadAllMaterials():
 
 	#print(texturesToLoad)
 	return OK
+
+func getShortTweenAngle(currentAngle:float,targetAngle:float)->float:
+	return currentAngle + wrapf(targetAngle-currentAngle,-PI,PI)
+
+
+func setSoundVariables(sound:AudioStreamPlayer3D,bus:StringName = &"Sounds")->void:
+	#Set the sound's variables to sound correctly and not muffled as well as assigning it to a bus if its not already.
+	sound.max_polyphony = 2
+	#sound.max_db = 15
+	sound.max_distance = 0
+	sound.unit_size = 10
+	sound.bus = bus
+	sound.attenuation_filter_db = 0
+	sound.attenuation_filter_cutoff_hz = 3000
+
+func create_surface_transform(origin : Vector3, incoming_vector : Vector3, surface_normal : Vector3) -> Transform3D:
+	var y = surface_normal
+	var z = incoming_vector.cross(surface_normal)
+	var x = surface_normal.cross(z)
+	var tf := Transform3D(x.normalized(), y.normalized(), z.normalized(), origin).rotated_local(Vector3.UP, PI/2)
+	return tf

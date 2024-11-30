@@ -16,7 +16,7 @@ func _ready()->void:
 	InputMap.action_set_deadzone("gLookRight",gameManager.deadzone)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta)->void:
+func _process(_delta:float)->void:
 	if isMouseHidden():
 		if mouseActionsEnabled:
 			if Input.is_action_pressed("gThrowThrowable"):
@@ -71,7 +71,7 @@ func _process(_delta)->void:
 				if controllingPawn.freeAim:
 					controllingPawn.turnAmount = -controllingPawn.attachedCam.vertical.rotation.x
 
-func getInputDir():
+func getInputDir()->Vector3:
 	if isMouseHidden():
 		inputDir = Vector3(Input.get_action_strength("gMoveRight") - Input.get_action_strength("gMoveLeft"), 0, Input.get_action_strength("gMoveBackward") - Input.get_action_strength("gMoveForward"))
 		return inputDir

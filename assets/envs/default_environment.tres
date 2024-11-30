@@ -1,23 +1,22 @@
 [gd_resource type="Environment" load_steps=6 format=3 uid="uid://dnig6jq4e6pjs"]
 
+[ext_resource type="Texture2D" uid="uid://d0f0crtwpmoka" path="res://assets/textures/panoramas/panoramatest1.png" id="1_uyiot"]
+
 [sub_resource type="Gradient" id="Gradient_6voip"]
 colors = PackedColorArray(0, 0, 0, 1, 0.996078, 0.941176, 0.811765, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_iun5n"]
 gradient = SubResource("Gradient_6voip")
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_5c8eq"]
-load_path = "res://.godot/imported/panoramatest3.png-95241e7d825bbc8e58d5ec42bdc6509f.bptc.ctex"
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_xihyl"]
+panorama = ExtResource("1_uyiot")
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_cai2t"]
-panorama = SubResource("CompressedTexture2D_5c8eq")
-
-[sub_resource type="Sky" id="Sky_rsjjd"]
-sky_material = SubResource("PanoramaSkyMaterial_cai2t")
+[sub_resource type="Sky" id="Sky_nj1fe"]
+sky_material = SubResource("PanoramaSkyMaterial_xihyl")
 
 [resource]
 background_mode = 2
-sky = SubResource("Sky_rsjjd")
+sky = SubResource("Sky_nj1fe")
 reflected_light_source = 1
 tonemap_mode = 3
 tonemap_exposure = 0.9
@@ -34,7 +33,7 @@ fog_density = 0.009
 fog_sky_affect = 0.765
 fog_height = 96.8
 fog_height_density = 0.089
-volumetric_fog_density = 0.0997
+volumetric_fog_density = 0.2457
 volumetric_fog_albedo = Color(0.848227, 0.767118, 0.651965, 1)
 adjustment_enabled = true
 adjustment_brightness = 0.9

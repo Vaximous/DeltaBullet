@@ -20,13 +20,12 @@ signal headshottedPawn
 #Threading
 var thread1 : Thread = Thread.new()
 var thread2 : Thread = Thread.new()
-var duplicated : Array
 #Sounds
 @onready var soundHolder : Node3D = $Sounds
 @onready var equipSound : AudioStreamPlayer3D = $Sounds/equipSound
 @onready var footstepSounds : AudioStreamPlayer3D = $Sounds/footsteps
 ##Onready
-@onready var onScreenNotifier : VisibleOnScreenNotifier3D = $visibleOnScreenNotifier3d
+@onready var onScreenNotifier : VisibleOnScreenNotifier3D = $Mesh/visibleOnScreenNotifier3d
 @onready var footstepMaterialChecker : RayCast3D = $Misc/footstepMaterialChecker
 @onready var componentHolder : Node3D = $Components
 @onready var boneAttatchementHolder : Node = $BoneAttatchments
@@ -118,6 +117,8 @@ var currentPawnMat : StandardMaterial3D
 var raycaster : RayCast3D
 #Base Components - Components required for this entity to even be used
 @export_subgroup("Base Components")
+@export var animationController : Node
+@export var movementController : Node
 @export var healthComponent : HealthComponent
 @export_subgroup("Sub-Components")
 @export var inputComponent : Node:
@@ -330,7 +331,6 @@ var currentItem : InteractiveObject = null
 		emit_signal("clothingChanged")
 
 @export_subgroup("Mesh")
-@export var animationController : Node
 ##Ragdoll to spawn when the pawn dies
 @export var ragdollScene : PackedScene
 ##Makes the mesh look at a certain thing, mainly used for aiming
@@ -368,6 +368,7 @@ var crouchSpaceTween : Tween
 var bodyIKTween : Tween
 var meshRotationTween : Tween
 var meshRotationTweenMovement : Tween
+var flinchTween : Tween
 var lastLeftBlend : AnimationNodeStateMachinePlayback
 ## First-person, just for shits and giggles
 var isFirstperson : bool = false:
@@ -539,6 +540,7 @@ func endPawn()->void:
 
 func endAttachedCam()->void:
 	if !attachedCam == null:
+		attachedCam.stopCameraRecoil()
 		attachedCam.cameraRotationUpdated.disconnect(doMeshRotation)
 		gameManager.getEventSignal("playerDied").emit()
 		attachedCam.lowHP = false
@@ -556,11 +558,20 @@ func doKillEffect(deathDealer)->void:
 				deathDealer.killedPawn.emit()
 				healthComponent.killerSignalEmitted = true
 
+func moveHitboxDecals(parent:Node3D = gameManager.world.worldParticles) ->void:
+	if gameManager.world != null:
+		for boxes in getAllHitboxes():
+			for decals in boxes.get_children():
+				if decals is BulletHole:
+					decals.reparent(parent)
+
+
 func die(killer) -> void:
+	moveHitboxDecals()
 	animationTree.set("parameters/standToCrouchAdd/add_amount", 0)
 	animationTree.set("parameters/standToCrouchStrafe/add_amount", 0)
 	doKillEffect(killer)
-	createRagdoll(lastHitPart, killer)
+	await createRagdoll(lastHitPart, killer)
 	#moveDecalsToRagdoll(ragdoll)
 	endPawn()
 	endAttachedCam()
@@ -654,37 +665,51 @@ func _on_health_component_health_depleted(dealer:BasePawn) -> void:
 	else:
 		die(null)
 
+
+func applyRagdollImpulse(ragdoll:PawnRagdoll,currentVelocity:Vector3,impulseBone:int = 0)->void:
+	for bones in ragdoll.physicalBoneSimulator.get_child_count():
+		var child = ragdoll.physicalBoneSimulator.get_child(bones)
+		if child is RagdollBone:
+			child.linear_velocity = currentVelocity
+			child.angular_velocity = currentVelocity
+			child.apply_central_impulse(currentVelocity)
+			if child.get_bone_id() == impulseBone:
+				#ragdoll.startRagdoll()
+				child.apply_central_impulse(hitImpulse * randf_range(1.5,2))
+
+func setRagdollPose(ragdoll:PawnRagdoll)->void:
+	for bones in ragdoll.ragdollSkeleton.get_bone_count():
+		ragdoll.ragdollSkeleton.set_bone_global_pose(bones, pawnSkeleton.get_bone_global_pose(bones))
+
+func setRagdollPositionAndRotation(ragdoll:PawnRagdoll)->void:
+	ragdoll.global_transform = pawnMesh.global_transform
+	ragdoll.rotation = pawnMesh.rotation
+	ragdoll.targetSkeleton = pawnSkeleton
+
 func createRagdoll(impulse_bone : int = 0,killer = null)->PawnRagdoll:
 	var currVel = velocity
 	var ragdoll = ragdollScene.instantiate()
 	collisionEnabled = false
 	self.hide()
-	ragdoll.global_transform = pawnMesh.global_transform
-	ragdoll.rotation = pawnMesh.rotation
-	ragdoll.targetSkeleton = pawnSkeleton
+	setRagdollPositionAndRotation(ragdoll)
 	gameManager.world.worldMisc.add_child(ragdoll)
-	moveDecalsToRagdoll(ragdoll)
+	#moveDecalsToRagdoll(ragdoll)
 	moveClothesToRagdoll(ragdoll)
 	ragdoll.setPawnMaterial(currentPawnMat)
-	ragdoll.ragdollSkeleton.animate_physical_bones = true
-	for bones in ragdoll.ragdollSkeleton.get_bone_count():
-		ragdoll.savedPose.append(pawnSkeleton.get_bone_pose(bones))
-		#ragdoll.ragdollSkeleton.set_bone_rest(bones, pawnSkeleton.get_bone_pose(bones))
-		ragdoll.ragdollSkeleton.set_bone_global_pose(bones, pawnSkeleton.get_bone_global_pose(bones))
-		#ragdoll.physicalBoneSimulator.get_skeleton().set_bone_pose_rotation(bones, pawnSkeleton.get_bone_pose_rotation(bones))
+
+
+	setRagdollPose(ragdoll)
 	ragdoll.startRagdoll()
-	for bones in ragdoll.physicalBoneSimulator.get_child_count():
-		var child = ragdoll.physicalBoneSimulator.get_child(bones)
-		if child is RagdollBone:
-			child.linear_velocity = currVel
-			child.angular_velocity = currVel
-			child.apply_central_impulse(currVel)
-			if child.get_bone_id() == impulse_bone:
-				#ragdoll.startRagdoll()
-				child.apply_central_impulse(hitImpulse * randf_range(1.5,2))
+
+
+	applyRagdollImpulse(ragdoll,currVel,impulse_bone)
+
+
 	pawnDied.emit(ragdoll)
 	ragdoll.checkClothingHider()
 	#ragdoll.startRagdoll()
+
+
 	for bones in ragdoll.physicalBoneSimulator.get_child_count():
 		var child = ragdoll.physicalBoneSimulator.get_child(bones)
 		if child is RagdollBone:
@@ -692,6 +717,8 @@ func createRagdoll(impulse_bone : int = 0,killer = null)->PawnRagdoll:
 				child.canBleed = true
 				if child.healthComponent and killer != null and killer.currentItem != null:
 					child.healthComponent.damage(killer.currentItem.weaponResource.weaponDamage * randf_range(1.5,2),killer)
+
+
 	if impulse_bone == 41:
 		if killer != null:
 			if killer.currentItem != null:
@@ -700,6 +727,8 @@ func createRagdoll(impulse_bone : int = 0,killer = null)->PawnRagdoll:
 			if killer.attachedCam != null:
 				killer.attachedCam.doHeadshotEffect()
 		headshottedPawn.emit()
+
+
 	if !attachedCam == null:
 		var cam = attachedCam
 		cam.unposessObject()
@@ -709,13 +738,18 @@ func createRagdoll(impulse_bone : int = 0,killer = null)->PawnRagdoll:
 			if ragdoll.physicalBoneSimulator.get_child(bones) is RagdollBone:
 				cam.camSpring.add_excluded_object(ragdoll.physicalBoneSimulator.get_child(bones).get_rid())
 		attachedCam = null
+
+
 	if ragdoll.activeRagdollEnabled:
 		if impulse_bone == 41:
 			ragdoll.activeRagdollEnabled = false
 		forceAnimation = true
 		animationToForce = "PawnAnim/WritheRightKneeBack"
+
+
 	if collisionShape != null:
 		collisionShape.queue_free()
+
 	return ragdoll
 
 func checkItems()->void:
@@ -738,7 +772,6 @@ func checkClothes()->void:
 			clothingInventory.append(clothes)
 			clothes.itemSkeleton = pawnSkeleton.get_path()
 			clothes.remapSkeleton()
-
 	checkClothingHider()
 
 func moveClothesToRagdoll(moveto:Node3D) -> void:
@@ -898,8 +931,10 @@ func unequipWeapon() -> void:
 		weapon.hide()
 		weapon.resetToDefault()
 	if currentItem:
-		freeAimChanged.disconnect(currentItem.checkFreeAim)
-		weaponFireChanged.disconnect(currentItem.checkWeaponBlend)
+		if freeAimChanged.is_connected(currentItem.checkFreeAim):
+			freeAimChanged.disconnect(currentItem.checkFreeAim)
+		if weaponFireChanged.is_connected(currentItem.checkWeaponBlend):
+			weaponFireChanged.disconnect(currentItem.checkWeaponBlend)
 		currentItem.resetToDefault()
 		currentItem.weaponAnimSet = false
 		currentItem.isEquipped = false
@@ -994,22 +1029,21 @@ func moveItemToWeapons(item:Weapon) -> void:
 
 func setPawnMaterial() -> void:
 	currentPawnMat.albedo_color = pawnColor
-	for mesh in pawnSkeleton.get_children():
-		if mesh is MeshInstance3D:
-			mesh.set_surface_override_material(0,currentPawnMat)
+	if pawnSkeleton != null:
+		for mesh in pawnSkeleton.get_children():
+			if mesh is MeshInstance3D:
+				mesh.set_surface_override_material(0,currentPawnMat)
 
 func setupPawnColor() -> void:
 	if pawnColor != Color(1.0,0.76,0.00,1.0):
 		if !currentPawnMat:
 			currentPawnMat = defaultPawnMaterial.duplicate()
-			duplicated.append(currentPawnMat)
 			setPawnMaterial()
 
 func setupAnimationTree() -> void:
 	if animationTree:
 		var dupRoot = animationTree.tree_root.duplicate()
 		animationTree.tree_root = dupRoot
-		duplicated.append(dupRoot)
 
 func setRunBlendFilters(value:bool) -> void:
 	var filterBlend = animationTree.tree_root.get_node("weaponBlend")
@@ -1088,21 +1122,27 @@ func doMeshRotation() -> void:
 		#pawnMesh.rotation.z = lerpf(pawnMesh.rotation.z, 0, 12*delta)
 
 func flinch() -> void:
-	if !healthComponent.health <= 10 or !lastHitPart == 41:
-		bodyIK.start()
-		bodyIK.interpolation = 1
-		bodyIKMarker.rotation.x += randf_range(-0.1,0.35)
-		#bodyIKMarker.rotation.y += randf_range(-0.5,0.5)
-		bodyIKMarker.rotation.z += randf_range(-0.25,0.35)
-		disableBodyIK()
+	animationTree.set("parameters/flinchSpace/blend_position",Vector2(randf_range(-1,1),randf_range(-0.25,1)))
+	animationTree.set("parameters/flinchShot/request",AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+
+	##Old flinch
+	#if flinchTween:
+		#flinchTween.kill()
+	#flinchTween = create_tween()
+	#if !healthComponent.health <= 10 or !lastHitPart == 41:
+		#if !meshLookAt:
+			#bodyIK.start()
+			#bodyIK.interpolation = 1
+		#bodyIKMarker.rotation.x += randf_range(-0.1,0.35)
+		#bodyIKMarker.rotation.z += randf_range(-0.25,0.35)
+		#flinchTween.parallel().tween_property(bodyIKMarker,"rotation:x",0,1).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+		#flinchTween.parallel().tween_property(bodyIKMarker,"rotation:z",0,1).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+		##bodyIKMarker.rotation.y += randf_range(-0.5,0.5)
+		#if !meshLookAt:
+			#disableBodyIK()
 
 func _on_health_component_on_damaged(dealer:Node3D, hitDirection:Vector3)->void:
 	flinch()
-
-func _exit_tree()->void:
-	for i in duplicated.size():
-		if duplicated[i] is Node:
-			duplicated[i].queue_free()
 
 func armThrowable()->void:
 	if canThrowThrowable and !isArmingThrowable and throwableAmount>0:

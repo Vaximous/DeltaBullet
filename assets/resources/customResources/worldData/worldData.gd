@@ -2,6 +2,8 @@ extends Resource
 class_name WorldData
 signal worldTypeChanged
 @export_category("World Identity")
+## What texture will the sky be in this world?
+@export var skyTexture : PanoramaSkyMaterial
 ## Is time of day enabled in this world?
 @export var enableTimeCycle :bool= false
 ##What is this worlds name?
@@ -24,4 +26,3 @@ signal worldTypeChanged
 @export_category("Debug Parameters")
 ##Spawn Type to use when loading the scene
 @export_enum("Player","Camera","None") var spawnType :int= 0
-

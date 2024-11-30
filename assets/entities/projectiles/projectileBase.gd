@@ -45,6 +45,7 @@ func update_target(target_p : Vector3) -> void:
 func gather_collision_info() -> Dictionary:
 	var hit : Dictionary = {}
 	if is_colliding():
+		hit['velocity'] = velocity
 		hit['col'] = get_collider()
 		hit['col_point'] = get_collision_point()
 		hit['col_normal'] = get_collision_normal()

@@ -656,7 +656,7 @@ func do_stairs(delta) -> void:
 					var pre_position = global_position
 					position.y += stair_top_collision.position.y - obs_ray_info.from.y
 					#move player forward onto step
-					position += (step_ray_dir * (step_check_distance * 0.2))
+					position += (step_ray_dir * (step_check_distance * 0.5))
 					#interpolate_visual_position(pre_position - global_position)
 					return
 			if gameManager.debugEnabled:

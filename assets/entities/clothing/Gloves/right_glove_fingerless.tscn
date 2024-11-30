@@ -5,6 +5,7 @@
 
 [node name="RightGloveFingerless" instance=ExtResource("1_uhnu2")]
 clothingType = 4
+itemName = "Fingerless Glove (Right)"
 
 [node name="clothingMesh" parent="." index="0"]
 extra_cull_margin = 5.0

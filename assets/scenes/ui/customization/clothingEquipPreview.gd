@@ -2,6 +2,7 @@ extends MarginContainer
 @export var itemText : Label
 @export var pawnHolder : Node3D
 @export var animationPlayer : AnimationPlayer
+@export var viewportCamera : Camera3D
 @export var examplePawn : BasePawn:
 	set(value):
 		examplePawn = value
@@ -31,4 +32,22 @@ func initClothingItem()->void:
 		examplePawn.checkClothes()
 		examplePawn.setPawnMaterial()
 		examplePawn.show()
+		setCameraPosition()
 		animationPlayer.play("buffer_done")
+
+
+func setCameraPosition()->void:
+	if viewportCamera != null and clothingItem != null:
+		match clothingItem.instantiate().clothingType:
+			0:
+				viewportCamera.position.y = 1.835
+			1:
+				viewportCamera.position.y = 1.835
+			2:
+				viewportCamera.position.y = 1.835
+			3:
+				viewportCamera.position.y = 1.625
+			4:
+				viewportCamera.position.y = 1.025
+			5:
+				viewportCamera.position.y = 1.025

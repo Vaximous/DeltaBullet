@@ -1,16 +1,35 @@
-[gd_scene load_steps=8 format=3 uid="uid://iftsfle430nr"]
+[gd_scene load_steps=18 format=3 uid="uid://iftsfle430nr"]
 
 [ext_resource type="Script" path="res://assets/scenes/ui/customization/customizationUI.gd" id="1_2bhr7"]
 [ext_resource type="PackedScene" uid="uid://ctrswootky6q7" path="res://assets/scenes/ui/customization/customizationWorld.tscn" id="1_sgpgn"]
 [ext_resource type="PackedScene" uid="uid://2nj1n64cy47e" path="res://assets/scenes/ui/customization/customizationClothing.tscn" id="3_m5e2e"]
 [ext_resource type="PackedScene" uid="uid://d10o2e44ltrnl" path="res://assets/entities/clothing/ArmoredShirt/armor_shirt.tscn" id="4_jnw8h"]
 [ext_resource type="PackedScene" uid="uid://jwq6tye7ok4r" path="res://assets/entities/clothing/Glasses/SiftinShades/SiftinShades.tscn" id="4_lk8ax"]
+[ext_resource type="PackedScene" uid="uid://b026rv1louhqg" path="res://assets/entities/clothing/Longcoats/longCoat.tscn" id="6_3d7ru"]
+[ext_resource type="PackedScene" uid="uid://cgghffeqks1ac" path="res://assets/entities/clothing/Gloves/left_glove_fingerless.tscn" id="7_h6386"]
+[ext_resource type="PackedScene" uid="uid://bap501mpmqgb" path="res://assets/entities/clothing/Gloves/right_glove_fingerless.tscn" id="8_kdgw1"]
+[ext_resource type="PackedScene" uid="uid://cyo2gkchgm6il" path="res://assets/entities/clothing/Hair/Hair1.tscn" id="9_dsji8"]
+[ext_resource type="PackedScene" uid="uid://b4v8dskvpby4c" path="res://assets/entities/clothing/Hair/Hair2.tscn" id="10_052vf"]
+[ext_resource type="PackedScene" uid="uid://b8ttgknyh8e3m" path="res://assets/entities/clothing/Tuxedo/Tuxedo.tscn" id="11_tklms"]
+[ext_resource type="PackedScene" uid="uid://bb5qvdslt6004" path="res://assets/entities/clothing/Pants/armored_pants.tscn" id="12_m43qx"]
 
 [sub_resource type="Gradient" id="Gradient_clvtb"]
 colors = PackedColorArray(0.407843, 0, 0, 1, 0.309804, 0, 0, 0)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_b2dxp"]
 gradient = SubResource("Gradient_clvtb")
+
+[sub_resource type="Gradient" id="Gradient_jxvns"]
+offsets = PackedFloat32Array(0.0555556, 1)
+colors = PackedColorArray(0.372549, 0, 0, 1, 0.184314, 0, 0, 0.176471)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_gwsgk"]
+gradient = SubResource("Gradient_jxvns")
+fill_from = Vector2(1, 1)
+fill_to = Vector2(0.188034, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_h8b2a"]
+texture = SubResource("GradientTexture2D_gwsgk")
 
 [node name="customizationUi" type="Control"]
 layout_mode = 3
@@ -22,7 +41,6 @@ grow_vertical = 2
 script = ExtResource("1_2bhr7")
 
 [node name="subViewportContainer" type="SubViewportContainer" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -35,48 +53,18 @@ stretch = true
 handle_input_locally = false
 msaa_3d = 1
 size = Vector2i(1600, 900)
-render_target_update_mode = 0
+render_target_update_mode = 4
 
 [node name="customizationWorld" parent="subViewportContainer/subViewport" instance=ExtResource("1_sgpgn")]
-visible = false
 
 [node name="animationPlayer" type="AnimationPlayer" parent="."]
-
-[node name="menuRight" type="Panel" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 1.0
-anchor_right = 1.0
-anchor_bottom = 0.999
-offset_left = -535.0
-offset_bottom = -0.100037
-grow_horizontal = 0
-
-[node name="clothingItemButton" parent="menuRight" instance=ExtResource("3_m5e2e")]
-layout_mode = 0
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_right = 151.0
-offset_bottom = 202.0
-clothingItem = ExtResource("4_jnw8h")
-
-[node name="clothingItemButton2" parent="menuRight" instance=ExtResource("3_m5e2e")]
-layout_mode = 1
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 193.0
-offset_right = 344.0
-offset_bottom = 202.0
-clothingItem = ExtResource("4_lk8ax")
 
 [node name="textureRect" type="TextureRect" parent="."]
 modulate = Color(0.764706, 0.596078, 0, 1)
 layout_mode = 0
-offset_left = -7.0
+offset_left = -1.0
 offset_top = -4.0
-offset_right = 395.0
+offset_right = 515.0
 offset_bottom = 96.0
 texture = SubResource("GradientTexture1D_b2dxp")
 
@@ -88,3 +76,113 @@ offset_right = 301.0
 offset_bottom = 59.0
 theme_override_font_sizes/font_size = 51
 text = "CUSTOMIZATION"
+
+[node name="catalogControl" type="Control" parent="."]
+layout_mode = 2
+anchors_preset = 0
+anchor_left = 0.712
+anchor_right = 1.0
+anchor_bottom = 0.997
+offset_left = -0.200073
+offset_bottom = -0.300049
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="topBar" type="PanelContainer" parent="catalogControl"]
+custom_minimum_size = Vector2(0, 74.84)
+layout_mode = 2
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -464.0
+offset_right = -3.0
+offset_bottom = 74.84
+size_flags_vertical = 0
+
+[node name="panel" type="Panel" parent="catalogControl/topBar"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_h8b2a")
+
+[node name="buttons" type="HBoxContainer" parent="catalogControl/topBar"]
+custom_minimum_size = Vector2(0, 74.84)
+layout_mode = 2
+size_flags_vertical = 0
+alignment = 1
+
+[node name="hairButton" type="Button" parent="catalogControl/topBar/buttons"]
+layout_mode = 2
+text = "Hair
+"
+
+[node name="headwearButton" type="Button" parent="catalogControl/topBar/buttons"]
+layout_mode = 2
+text = "Hats"
+
+[node name="facewearButton" type="Button" parent="catalogControl/topBar/buttons"]
+layout_mode = 2
+text = "Face"
+
+[node name="bodyButton" type="Button" parent="catalogControl/topBar/buttons"]
+layout_mode = 2
+text = "Body
+"
+
+[node name="pantsButton" type="Button" parent="catalogControl/topBar/buttons"]
+layout_mode = 2
+text = "Pants
+"
+
+[node name="catalogOptions" type="MarginContainer" parent="catalogControl"]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -464.0
+offset_top = 83.0
+offset_right = -3.0
+offset_bottom = -3.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="menuRight" type="Panel" parent="catalogControl/catalogOptions"]
+layout_mode = 2
+
+[node name="itemContainer" type="GridContainer" parent="catalogControl/catalogOptions"]
+layout_mode = 2
+columns = 3
+
+[node name="clothingItemButton" parent="catalogControl/catalogOptions/itemContainer" instance=ExtResource("3_m5e2e")]
+layout_mode = 2
+clothingItem = ExtResource("4_jnw8h")
+
+[node name="clothingItemButton2" parent="catalogControl/catalogOptions/itemContainer" instance=ExtResource("3_m5e2e")]
+layout_mode = 2
+clothingItem = ExtResource("4_lk8ax")
+
+[node name="clothingItemButton3" parent="catalogControl/catalogOptions/itemContainer" instance=ExtResource("3_m5e2e")]
+layout_mode = 2
+clothingItem = ExtResource("6_3d7ru")
+
+[node name="clothingItemButton4" parent="catalogControl/catalogOptions/itemContainer" instance=ExtResource("3_m5e2e")]
+layout_mode = 2
+clothingItem = ExtResource("7_h6386")
+
+[node name="clothingItemButton5" parent="catalogControl/catalogOptions/itemContainer" instance=ExtResource("3_m5e2e")]
+layout_mode = 2
+clothingItem = ExtResource("8_kdgw1")
+
+[node name="clothingItemButton6" parent="catalogControl/catalogOptions/itemContainer" instance=ExtResource("3_m5e2e")]
+layout_mode = 2
+clothingItem = ExtResource("9_dsji8")
+
+[node name="clothingItemButton7" parent="catalogControl/catalogOptions/itemContainer" instance=ExtResource("3_m5e2e")]
+layout_mode = 2
+clothingItem = ExtResource("10_052vf")
+
+[node name="clothingItemButton8" parent="catalogControl/catalogOptions/itemContainer" instance=ExtResource("3_m5e2e")]
+layout_mode = 2
+clothingItem = ExtResource("11_tklms")
+
+[node name="clothingItemButton9" parent="catalogControl/catalogOptions/itemContainer" instance=ExtResource("3_m5e2e")]
+layout_mode = 2
+clothingItem = ExtResource("12_m43qx")

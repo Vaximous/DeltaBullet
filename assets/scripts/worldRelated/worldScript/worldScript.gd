@@ -94,6 +94,9 @@ func playSoundscape()->void:
 
 func setupWorld()-> void:
 	if worldData != null:
+		#Set the sky texture
+		if worldData.skyTexture:
+			worldSky.environment.sky.sky_material = worldData.skyTexture.duplicate()
 		##Soundscape
 		if worldData.playOnStart:
 			if !worldData.soundScape == null:

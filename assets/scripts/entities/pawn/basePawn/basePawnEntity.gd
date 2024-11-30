@@ -20,13 +20,12 @@ signal headshottedPawn
 #Threading
 var thread1 : Thread = Thread.new()
 var thread2 : Thread = Thread.new()
-var duplicated : Array
 #Sounds
 @onready var soundHolder : Node3D = $Sounds
 @onready var equipSound : AudioStreamPlayer3D = $Sounds/equipSound
 @onready var footstepSounds : AudioStreamPlayer3D = $Sounds/footsteps
 ##Onready
-@onready var onScreenNotifier : VisibleOnScreenNotifier3D = $visibleOnScreenNotifier3d
+@onready var onScreenNotifier : VisibleOnScreenNotifier3D = $Mesh/visibleOnScreenNotifier3d
 @onready var footstepMaterialChecker : RayCast3D = $Misc/footstepMaterialChecker
 @onready var componentHolder : Node3D = $Components
 @onready var boneAttatchementHolder : Node = $BoneAttatchments
@@ -959,14 +958,12 @@ func setupPawnColor() -> void:
 	if pawnColor != Color(1.0,0.76,0.00,1.0):
 		if !currentPawnMat:
 			currentPawnMat = defaultPawnMaterial.duplicate()
-			duplicated.append(currentPawnMat)
 			setPawnMaterial()
 
 func setupAnimationTree() -> void:
 	if animationTree:
 		var dupRoot = animationTree.tree_root.duplicate()
 		animationTree.tree_root = dupRoot
-		duplicated.append(dupRoot)
 
 func setRunBlendFilters(value:bool) -> void:
 	var filterBlend = animationTree.tree_root.get_node("weaponBlend")
@@ -1045,28 +1042,27 @@ func doMeshRotation() -> void:
 		#pawnMesh.rotation.z = lerpf(pawnMesh.rotation.z, 0, 12*delta)
 
 func flinch() -> void:
-	if flinchTween:
-		flinchTween.kill()
-	flinchTween = create_tween()
-	if !healthComponent.health <= 10 or !lastHitPart == 41:
-		if !meshLookAt:
-			bodyIK.start()
-			bodyIK.interpolation = 1
-		bodyIKMarker.rotation.x += randf_range(-0.1,0.35)
-		bodyIKMarker.rotation.z += randf_range(-0.25,0.35)
-		flinchTween.parallel().tween_property(bodyIKMarker,"rotation:x",0,1).set_ease(defaultEaseType).set_trans(defaultTransitionType)
-		flinchTween.parallel().tween_property(bodyIKMarker,"rotation:z",0,1).set_ease(defaultEaseType).set_trans(defaultTransitionType)
-		#bodyIKMarker.rotation.y += randf_range(-0.5,0.5)
-		if !meshLookAt:
-			disableBodyIK()
+	animationTree.set("parameters/flinchSpace/blend_position",Vector2(randf_range(-1,1),randf_range(-0.25,1)))
+	animationTree.set("parameters/flinchShot/request",AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+
+	##Old flinch
+	#if flinchTween:
+		#flinchTween.kill()
+	#flinchTween = create_tween()
+	#if !healthComponent.health <= 10 or !lastHitPart == 41:
+		#if !meshLookAt:
+			#bodyIK.start()
+			#bodyIK.interpolation = 1
+		#bodyIKMarker.rotation.x += randf_range(-0.1,0.35)
+		#bodyIKMarker.rotation.z += randf_range(-0.25,0.35)
+		#flinchTween.parallel().tween_property(bodyIKMarker,"rotation:x",0,1).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+		#flinchTween.parallel().tween_property(bodyIKMarker,"rotation:z",0,1).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+		##bodyIKMarker.rotation.y += randf_range(-0.5,0.5)
+		#if !meshLookAt:
+			#disableBodyIK()
 
 func _on_health_component_on_damaged(dealer:Node3D, hitDirection:Vector3)->void:
 	flinch()
-
-func _exit_tree()->void:
-	for i in duplicated.size():
-		if duplicated[i] is Node:
-			duplicated[i].queue_free()
 
 func armThrowable()->void:
 	if canThrowThrowable and !isArmingThrowable and throwableAmount>0:

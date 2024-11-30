@@ -461,7 +461,8 @@ func createSplat(gposition:Vector3 = Vector3.ZERO,normal:Vector3 = Vector3.ZERO,
 		#_b.global_transform = gameManager.create_surface_transform(colPoint,Vector3(1,0,0),normal)
 		_b.rotate(normal,randf_range(0, 180)/PI)
 		_b.position = gposition
-		if (colPoint + normal).dot(Vector3.UP) > 0.0000000000000000000001:
+		if !_b.global_transform.origin.is_equal_approx(colPoint + normal):
+			#print((colPoint + normal).dot(Vector3.UP))
 			_b.look_at(colPoint + normal, Vector3.UP)
 		#queue_free()
 
@@ -474,7 +475,7 @@ func sprayBlood(position:Vector3,amount:int,_maxDistance:int,distanceMultiplier:
 			var result : Dictionary
 			ray = ray.create(position,position + Vector3(randi_range(-_maxDistance,_maxDistance),randi_range(-_maxDistance,_maxDistance),randi_range(-_maxDistance,_maxDistance)*distanceMultiplier),1)
 			result = directSpace.intersect_ray(ray)
-			if result and result.normal.dot(Vector3.UP) > 0.001:
+			if result:
 				createSplat(result.position,result.normal,result.position)
 
 func createBloodPool(position:Vector3,size:float=0.5)->void:

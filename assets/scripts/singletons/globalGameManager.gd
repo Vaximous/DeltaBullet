@@ -320,6 +320,11 @@ func enablePlayer()->void:
 			activeCamera.followingEntity.inputComponent.mouseActionsEnabled = true
 
 func loadWorld(worldscene:String, fadein:bool = false)->void:
+	temporaryPawnInfo.clear()
+	for p in playerPawns:
+		if p !=null:
+			var info = p.savePawnInformation()
+			temporaryPawnInfo.append(info)
 	musicManager.change_song_to(null)
 	var loader = load("res://assets/scenes/menu/loadingscreen/loadingScreen.tscn")
 	var inst = loader.instantiate()
@@ -377,6 +382,7 @@ func loadGame(save:String)->void:
 				var nodeData = json.get_data()
 				currentSave = save
 				loadWorld(nodeData["scene"])
+				temporaryPawnInfo.clear()
 		else:
 			Console.add_rich_console_message("[color=red]Unable to find that save![/color]")
 
@@ -442,6 +448,7 @@ func scanForSaves(dirpath : String, max_depth : int = -1, _depth = 0) -> PackedS
 func initCustomization(pawn:BasePawn)->void:
 	removeShop()
 	removeCustomization()
+	gameManager.pauseMenu.canPause = false
 	var customizationUI : PackedScene = load("res://assets/scenes/ui/customization/customizationUI.tscn")
 	var _customizationUI = customizationUI.instantiate()
 	_customizationUI.add_to_group(&"customizationUI")
@@ -455,6 +462,7 @@ func removeCustomization()->void:
 	for i in get_children():
 		if i.is_in_group(&"customizationUI"):
 			i.queue_free()
+	#gameManager.pauseMenu.canPause = true
 
 
 func initShop(pawn:BasePawn,shopData:ShopData)->void:
@@ -472,6 +480,7 @@ func removeShop()->void:
 	for i in get_children():
 		if i.is_in_group(&"shop"):
 			i.queue_free()
+	#gameManager.pauseMenu.canPause = true
 
 func createSplat(gposition:Vector3 = Vector3.ZERO,normal:Vector3 = Vector3.ZERO,colPoint:Vector3 = Vector3.ZERO)->void:
 	await get_tree().process_frame

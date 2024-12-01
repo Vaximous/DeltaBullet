@@ -55,6 +55,14 @@ func getSelectedSectionID(button:Button)->int:
 			id = buttonid
 	return id
 
+func _exit_tree() -> void:
+	gameManager.hideMouse()
+	gameManager.pauseMenu.canPause = true
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("gEscape"):
+		gameManager.removeCustomization()
+
 
 func setPreviewAppearance()->void:
 	if clothingPawn:

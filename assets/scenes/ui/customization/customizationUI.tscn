@@ -1,7 +1,8 @@
-[gd_scene load_steps=33 format=3 uid="uid://iftsfle430nr"]
+[gd_scene load_steps=37 format=3 uid="uid://iftsfle430nr"]
 
 [ext_resource type="Script" path="res://assets/scenes/ui/customization/customizationUI.gd" id="1_2bhr7"]
 [ext_resource type="PackedScene" uid="uid://ctrswootky6q7" path="res://assets/scenes/ui/customization/customizationWorld.tscn" id="1_sgpgn"]
+[ext_resource type="Shader" path="res://assets/scripts/shaders/ui_blur.gdshader" id="2_jrjiw"]
 [ext_resource type="PackedScene" uid="uid://2nj1n64cy47e" path="res://assets/scenes/ui/customization/customizationClothing.tscn" id="3_m5e2e"]
 [ext_resource type="Texture2D" uid="uid://bn80p3jko0k42" path="res://assets/textures/ui/customization/faceButton.png" id="3_sge17"]
 [ext_resource type="Texture2D" uid="uid://c4vv3virnhurd" path="res://assets/textures/ui/customization/shirtButton.png" id="4_66qj6"]
@@ -16,6 +17,16 @@
 [ext_resource type="PackedScene" uid="uid://b8ttgknyh8e3m" path="res://assets/entities/clothing/Tuxedo/Tuxedo.tscn" id="11_tklms"]
 [ext_resource type="PackedScene" uid="uid://bb5qvdslt6004" path="res://assets/entities/clothing/Pants/armored_pants.tscn" id="12_m43qx"]
 [ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="16_b72eo"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uggvv"]
+shader = ExtResource("2_jrjiw")
+shader_parameter/blur_amount = 2.0
+shader_parameter/tint = Color(0.314316, 0.314316, 0.314316, 1)
+
+[sub_resource type="Gradient" id="Gradient_e62h6"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_odfyh"]
+gradient = SubResource("Gradient_e62h6")
 
 [sub_resource type="Animation" id="Animation_6nk7h"]
 resource_name = "titlebarIn"
@@ -55,6 +66,30 @@ tracks/2/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(0.576471, 0, 0, 1), Color(1, 1, 1, 1)]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../blur:material:shader_parameter/blur_amount")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [2.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../blur:self_modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(0.217638, 0.329877),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_wcnyg"]
 length = 0.001
@@ -93,6 +128,18 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../blur:material:shader_parameter/blur_amount")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [2.0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_rnnv7"]
@@ -150,6 +197,16 @@ layer = 2
 script = ExtResource("1_2bhr7")
 buttonHolder = NodePath("customizationUi/catalogControl/topBar/buttons")
 clothingButtonsHolder = NodePath("customizationUi/catalogControl/catalogOptions/itemContainer")
+
+[node name="blur" type="TextureRect" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+material = SubResource("ShaderMaterial_uggvv")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture1D_odfyh")
 
 [node name="customizationUi" type="Control" parent="."]
 layout_mode = 3
@@ -319,7 +376,7 @@ theme = ExtResource("16_b72eo")
 [node name="marginContainer" type="MarginContainer" parent="customizationUi/customizationLabel"]
 clip_contents = true
 layout_mode = 0
-offset_right = 584.0
+offset_right = 281.0
 offset_bottom = 80.0
 
 [node name="textureRect" type="TextureRect" parent="customizationUi/customizationLabel/marginContainer"]

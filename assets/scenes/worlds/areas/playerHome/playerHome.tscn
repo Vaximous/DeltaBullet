@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=3 uid="uid://bkuvk0ydswjvb"]
+[gd_scene load_steps=60 format=3 uid="uid://bkuvk0ydswjvb"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_ypyko"]
 [ext_resource type="ArrayMesh" uid="uid://tsr0mvorfnj" path="res://assets/scenes/worlds/areas/playerHome/playerHomeFitted.tres" id="2_kyvid"]
@@ -24,6 +24,7 @@
 [ext_resource type="Script" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/simple_jf_motion_blur.gd" id="14_ad4a7"]
 [ext_resource type="Resource" uid="uid://c10aboaly701b" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jump_flood_tile_max_x_stage.tres" id="15_1h0la"]
 [ext_resource type="Resource" uid="uid://cymk87e4nyxva" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jump_flood_tile_max_y_stage.tres" id="16_iucjp"]
+[ext_resource type="Script" path="res://assets/scenes/worlds/areas/playerHome/player_closet.gd" id="20_13iaj"]
 
 [sub_resource type="Resource" id="Resource_3bd3l"]
 script = ExtResource("2_vqmji")
@@ -297,6 +298,7 @@ material = SubResource("StandardMaterial3D_j06ed")
 
 [node name="PlayerCloset" type="Node3D" parent="Props/Temporary" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.19959, 1.89809, 8.51674)
+script = ExtResource("20_13iaj")
 
 [node name="csgBox3d" type="CSGBox3D" parent="Props/Temporary/PlayerCloset" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.141663, 0.643829, -0.273682)
@@ -546,5 +548,7 @@ material_override = SubResource("StandardMaterial3D_3pega")
 [node name="collisionShape3d" type="CollisionShape3D" parent="Props/Temporary/LivingRoomStuff/table/radio/interactiveObject" index="1"]
 transform = Transform3D(1, 0, -1.49012e-08, 0, 1, 0, 1.49012e-08, 0, 1, 0.0692141, 0.156887, 0.0191963)
 shape = SubResource("BoxShape3D_4n7f0")
+
+[connection signal="objectUsed" from="Props/Temporary/PlayerCloset/closetInteraction" to="Props/Temporary/PlayerCloset" method="_onClosetUsed"]
 
 [editable path="Props/Temporary/LivingRoomStuff/table/radio/interactiveObject/radio"]

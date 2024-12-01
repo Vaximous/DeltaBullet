@@ -87,18 +87,21 @@ func spawnPawn(forceParent : Node = null):
 				pawn.fixRot()
 				pawn.add_to_group(&"Player")
 				pawn.healthComponent.health = 450
-				if gameManager.currentSave != "" or gameManager.currentSave != " " or gameManager.currentSave != null:
-					var pawnFile = FileAccess.open(gameManager.currentSave,FileAccess.READ)
-					if pawnFile != null:
-						while pawnFile.get_position() < pawnFile.get_length():
-							var string = pawnFile.get_line()
-							var json = JSON.new()
-							var result = json.parse(string)
-							if not result == OK:
-								Console.add_rich_console_message("[color=red]Couldn't Parse %s![/color]"%string)
-								return
-							var nodeData = json.get_data()
-							pawn.loadPawnFile(nodeData["pawnToLoad"])
+				if gameManager.temporaryPawnInfo.size() <= 0:
+					if gameManager.currentSave != "" or gameManager.currentSave != " " or gameManager.currentSave != null:
+						var pawnFile = FileAccess.open(gameManager.currentSave,FileAccess.READ)
+						if pawnFile != null:
+							while pawnFile.get_position() < pawnFile.get_length():
+								var string = pawnFile.get_line()
+								var json = JSON.new()
+								var result = json.parse(string)
+								if not result == OK:
+									Console.add_rich_console_message("[color=red]Couldn't Parse %s![/color]"%string)
+									return
+								var nodeData = json.get_data()
+								pawn.loadPawnFile(nodeData["pawnToLoad"])
+				elif gameManager.temporaryPawnInfo.size() > 0:
+					pawn.loadPawnInfo(gameManager.temporaryPawnInfo[0])
 				#for clothing in pawnClothing.size():
 					#if pawnClothing[clothing] != null:
 						#var clothingSpawn = pawnClothing[clothing]

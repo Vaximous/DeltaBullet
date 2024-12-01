@@ -64,6 +64,7 @@ func _exit_tree() -> void:
 	gameManager.hideMouse()
 	gameManager.pauseMenu.canPause = true
 	clothingPawn.checkClothes()
+	gameManager.saveTemporaryPawnInfo()
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("gEscape"):
@@ -111,6 +112,7 @@ func toggleItem(item)->void:
 			equipClothingToPawn(item.clothingItem)
 	setPreviewAppearance()
 	#clothingPawn.checkClothes()
+
 
 func equipClothingToPawn(item:PackedScene)->void:
 	if clothingPawn and item:

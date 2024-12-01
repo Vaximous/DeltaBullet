@@ -1220,15 +1220,17 @@ func savePawnInformation()->String:
 			saveWeaponAmmo.append(itemInventory[weapons].currentAmmo)
 			saveWeaponMags.append(itemInventory[weapons].currentMagSize)
 	saveClothes.clear()
-	purchasedClothes.clear()
+	#purchasedClothes.clear()
 
-	#for clothes in clothingInventory.size():
-		#purchasedClothes.append(purchasedClothing[clothes].get_scene_file_path())
+	for clothes in purchasedClothing.size():
+		if !purchasedClothes.has(purchasedClothing[clothes]):
+			purchasedClothes.append(purchasedClothing[clothes])
 
 	for clothes in clothingInventory.size():
 		if clothingInventory[clothes] != null:
 			saveClothes.append(clothingInventory[clothes].get_scene_file_path())
-			purchasedClothes.append(clothingInventory[clothes].get_scene_file_path())
+			if !purchasedClothes.has(clothingInventory[clothes].get_scene_file_path()):
+				purchasedClothes.append(clothingInventory[clothes].get_scene_file_path())
 	var pwnDict = {
 		"clothes" : saveClothes,
 		"purchasedClothes" : purchasedClothes,

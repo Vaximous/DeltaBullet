@@ -319,12 +319,17 @@ func enablePlayer()->void:
 			activeCamera.followingEntity.inputComponent.movementEnabled = true
 			activeCamera.followingEntity.inputComponent.mouseActionsEnabled = true
 
-func loadWorld(worldscene:String, fadein:bool = false)->void:
-	temporaryPawnInfo.clear()
+
+func saveTemporaryPawnInfo()->void:
+	if playerPawns.size()>=1:
+		temporaryPawnInfo.clear()
 	for p in playerPawns:
 		if p !=null:
 			var info = p.savePawnInformation()
 			temporaryPawnInfo.append(info)
+
+func loadWorld(worldscene:String, fadein:bool = false)->void:
+	saveTemporaryPawnInfo()
 	musicManager.change_song_to(null)
 	var loader = load("res://assets/scenes/menu/loadingscreen/loadingScreen.tscn")
 	var inst = loader.instantiate()

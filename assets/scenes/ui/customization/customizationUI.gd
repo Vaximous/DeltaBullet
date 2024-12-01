@@ -1,10 +1,14 @@
-extends Control
+extends CanvasLayer
 var selectedSection : int = 2
-var clothingPawn : BasePawn
-@onready var animationTitlebar : AnimationPlayer = $animationPlayer
+var clothingPawn : BasePawn:
+	set(value):
+		clothingPawn = value
+		setPreviewAppearance()
+		setupButtons()
+@onready var animationTitlebar : AnimationPlayer = $customizationUi/animationPlayer
+@onready var characterPreviewWorld = $customizationUi/characterPreviewContainer/subViewportContainer/subViewport/customizationWorld
 @export var buttonHolder : HBoxContainer
 @export var clothingButtonsHolder : GridContainer
-
 const defaultTweenSpeed : float = 0.25
 const defaultTransitionType = Tween.TRANS_QUART
 const defaultEaseType = Tween.EASE_OUT
@@ -12,6 +16,8 @@ const defaultEaseType = Tween.EASE_OUT
 func _ready() -> void:
 	setupButtons()
 	animationTitlebar.play("titlebarIn")
+	gameManager.showMouse()
+
 
 func enlargeControlScale(control:Control)->void:
 	var tween = create_tween()
@@ -50,8 +56,19 @@ func getSelectedSectionID(button:Button)->int:
 	return id
 
 
+func setPreviewAppearance()->void:
+	if clothingPawn:
+		characterPreviewWorld.customCharacter.loadPawnInfo(clothingPawn.savePawnInformation())
+
+
 func generateClothingOptions(pawn:BasePawn)->void:
+	var clothingItem = load("res://assets/scenes/ui/customization/customizationClothing.tscn")
 	##Clear the current catalog
 	clearClothingItems()
 
 	##Grab what clothing items the pawn has purchased and create clothing item options from it as well as making sure it matches the current category
+	for clothing in pawn.purchasedClothing:
+		var itemLoad = load(clothing)
+		var button = clothingItem.instantiate()
+		button.clothingItem = itemLoad
+		clothingButtonsHolder.add_child(button)

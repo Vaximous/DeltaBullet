@@ -325,6 +325,8 @@ var currentItem : InteractiveObject = null
 				attachedCam.itemEquipOffsetToggle = false
 				attachedCam.hud.getCrosshair().setCrosshair(null)
 				#attachedCam.resetCamCast()
+@export var purchasedClothing : Array
+
 @export var clothingInventory : Array:
 	set(value):
 		clothingInventory = value
@@ -1165,13 +1167,21 @@ func throwThrowable()->void:
 		isThrowing = false
 		isArmingThrowable = false
 
-func savePawnFile(pawnFile:String = "player")->String:
+func savePawnFile(pawnInfo:String,pawnFilename:String = "player")->String:
 	Console.add_rich_console_message("[color=green]Saving Pawn to File..[/color]")
-	var path = FileAccess.open("%s.pwn"%pawnFile,FileAccess.WRITE)
+	var path = FileAccess.open("%s.pwn"%pawnFilename,FileAccess.WRITE)
+	path.store_line(pawnInfo)
+	Console.add_rich_console_message("[color=green]Saved Pawn info to file![/color]")
+	return "%s.pwn"%pawnFilename
+
+
+func savePawnInformation()->String:
+	Console.add_rich_console_message("[color=green]Saving Pawn Info..[/color]")
 	var saveWeapons : Array
 	var saveWeaponAmmo : Array
 	var saveWeaponMags : Array
 	var saveClothes : Array
+	var purchasedClothes : Array
 	saveWeapons.clear()
 	for weapons in itemInventory.size():
 		if itemInventory[weapons] != null:
@@ -1179,10 +1189,17 @@ func savePawnFile(pawnFile:String = "player")->String:
 			saveWeaponAmmo.append(itemInventory[weapons].currentAmmo)
 			saveWeaponMags.append(itemInventory[weapons].currentMagSize)
 	saveClothes.clear()
+	purchasedClothes.clear()
+
+	#for clothes in clothingInventory.size():
+		#purchasedClothes.append(purchasedClothing[clothes].get_scene_file_path())
+
 	for clothes in clothingInventory.size():
 		saveClothes.append(clothingInventory[clothes].get_scene_file_path())
+		purchasedClothes.append(clothingInventory[clothes].get_scene_file_path())
 	var pwnDict = {
 		"clothes" : saveClothes,
+		"purchasedClothes" : purchasedClothes,
 		"items" : saveWeapons,
 		"itemAmmo" : saveWeaponAmmo,
 		"itemMags" : saveWeaponMags,
@@ -1191,9 +1208,9 @@ func savePawnFile(pawnFile:String = "player")->String:
 		"pawnColorB" : pawnColor.b,
 	}
 	var stringy = JSON.stringify(pwnDict)
-	path.store_line(stringy)
-	Console.add_rich_console_message("[color=green]Saved Pawn File![/color]")
-	return "%s.pwn"%pawnFile
+	Console.add_rich_console_message("[color=green]Saved Pawn info![/color]")
+	return stringy
+
 
 func loadPawnFile(pawnFile:String = "player")->void:
 	if not FileAccess.file_exists(pawnFile):
@@ -1201,6 +1218,14 @@ func loadPawnFile(pawnFile:String = "player")->void:
 		print(pawnFile)
 		return
 
+	var pwnFile = FileAccess.open(pawnFile,FileAccess.READ)
+	while pwnFile.get_position() < pwnFile.get_length():
+		var string = pwnFile.get_line()
+		loadPawnInfo(string)
+
+
+func loadPawnInfo(pawnInfo:String)->void:
+	purchasedClothing.clear()
 	clothingInventory.clear()
 	itemInventory.clear()
 	for clothes in clothingHolder.get_children():
@@ -1208,46 +1233,47 @@ func loadPawnFile(pawnFile:String = "player")->void:
 	for weapons in itemHolder.get_children():
 		weapons.queue_free()
 	itemInventory.append(null)
-	var pwnFile = FileAccess.open(pawnFile,FileAccess.READ)
-	while pwnFile.get_position() < pwnFile.get_length():
-		var string = pwnFile.get_line()
-		var json = JSON.new()
-		var result = json.parse(string)
 
-		if not result == OK:
-			Console.add_rich_console_message("[color=red]Couldn't Parse %s![/color]"%string)
-			return
+	var json = JSON.new()
+	var result = json.parse(pawnInfo)
 
-		var nodeData : Variant = json.get_data()
+	if not result == OK:
+		Console.add_rich_console_message("[color=red]Couldn't Parse %s![/color]"%pawnInfo)
+		return
 
-		##Create Inventory Items/Clothes
-		var itemAmmo : Array
-		var itemMags : Array
-		if nodeData["itemAmmo"] != null:
-			itemAmmo = nodeData["itemAmmo"]
-		if nodeData["itemMags"] != null:
-			itemMags = nodeData["itemMags"]
+	var nodeData : Variant = json.get_data()
 
-		var items : Array = nodeData["items"]
-		for item in items:
-			var index : int = items.find(item)
-			var inventoryItem : Weapon = load(item).instantiate()
-			itemHolder.add_child(inventoryItem)
-			if nodeData["itemAmmo"] != null and nodeData["itemMags"] != null:
-				if itemAmmo.size() >0:
-					inventoryItem.currentAmmo = itemAmmo[index]
-				if itemMags.size() >0:
-					inventoryItem.currentMagSize = itemMags[index]
+	##Create Inventory Items/Clothes
+	var itemAmmo : Array
+	var itemMags : Array
+	if nodeData["itemAmmo"] != null:
+		itemAmmo = nodeData["itemAmmo"]
+	if nodeData["itemMags"] != null:
+		itemMags = nodeData["itemMags"]
+
+	var items : Array = nodeData["items"]
+	for item in items:
+		var index : int = items.find(item)
+		var inventoryItem : Weapon = load(item).instantiate()
+		itemHolder.add_child(inventoryItem)
+		if nodeData["itemAmmo"] != null and nodeData["itemMags"] != null:
+			if itemAmmo.size() >0:
+				inventoryItem.currentAmmo = itemAmmo[index]
+			if itemMags.size() >0:
+				inventoryItem.currentMagSize = itemMags[index]
 
 
-		for clothing in nodeData["clothes"]:
-				var clothingItem = load(clothing).instantiate()
-				clothingHolder.add_child(clothingItem)
+	if nodeData["purchasedClothes"] != null:
+		purchasedClothing = nodeData["purchasedClothes"]
 
-		checkClothes()
-		checkItems()
-		pawnColor = Color(nodeData["pawnColorR"],nodeData["pawnColorG"],nodeData["pawnColorB"],1)
-		Console.add_rich_console_message("[color=green]Loaded Pawn File![/color]")
+	for clothing in nodeData["clothes"]:
+			var clothingItem = load(clothing).instantiate()
+			clothingHolder.add_child(clothingItem)
+
+	checkClothes()
+	checkItems()
+	pawnColor = Color(nodeData["pawnColorR"],nodeData["pawnColorG"],nodeData["pawnColorB"],1)
+	Console.add_rich_console_message("[color=green]Loaded Pawn File![/color]")
 
 func setThrowableBlendValue(value:float)->void:
 	animationTree.set("parameters/leftThrowableBlend/blend_amount",value)

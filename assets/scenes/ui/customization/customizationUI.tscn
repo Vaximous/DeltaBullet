@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://iftsfle430nr"]
+[gd_scene load_steps=33 format=3 uid="uid://iftsfle430nr"]
 
 [ext_resource type="Script" path="res://assets/scenes/ui/customization/customizationUI.gd" id="1_2bhr7"]
 [ext_resource type="PackedScene" uid="uid://ctrswootky6q7" path="res://assets/scenes/ui/customization/customizationWorld.tscn" id="1_sgpgn"]
@@ -101,6 +101,13 @@ _data = {
 "titlebarIn": SubResource("Animation_6nk7h")
 }
 
+[sub_resource type="Environment" id="Environment_qpku8"]
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+
+[sub_resource type="World3D" id="World3D_eb65e"]
+environment = SubResource("Environment_qpku8")
+
 [sub_resource type="Gradient" id="Gradient_jxvns"]
 offsets = PackedFloat32Array(0.0555556, 1)
 colors = PackedColorArray(0.372549, 0, 0, 1, 0.184314, 0, 0, 0.176471)
@@ -138,23 +145,26 @@ colors = PackedColorArray(0.282353, 0, 0, 1, 0.368627, 0, 0, 1, 0.556863, 0, 0, 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_j2xud"]
 gradient = SubResource("Gradient_odbsi")
 
-[node name="customizationUi" type="Control" node_paths=PackedStringArray("buttonHolder", "clothingButtonsHolder")]
+[node name="Customization" type="CanvasLayer" node_paths=PackedStringArray("buttonHolder", "clothingButtonsHolder")]
+layer = 2
+script = ExtResource("1_2bhr7")
+buttonHolder = NodePath("customizationUi/catalogControl/topBar/buttons")
+clothingButtonsHolder = NodePath("customizationUi/catalogControl/catalogOptions/itemContainer")
+
+[node name="customizationUi" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_2bhr7")
-buttonHolder = NodePath("catalogControl/topBar/buttons")
-clothingButtonsHolder = NodePath("catalogControl/catalogOptions/itemContainer")
 
-[node name="animationPlayer" type="AnimationPlayer" parent="."]
+[node name="animationPlayer" type="AnimationPlayer" parent="customizationUi"]
 libraries = {
 "": SubResource("AnimationLibrary_rnnv7")
 }
 
-[node name="characterPreviewContainer" type="MarginContainer" parent="."]
+[node name="characterPreviewContainer" type="MarginContainer" parent="customizationUi"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.278
@@ -166,23 +176,25 @@ offset_top = 0.0999985
 offset_right = -0.200073
 offset_bottom = 0.299988
 
-[node name="panel" type="Panel" parent="characterPreviewContainer"]
+[node name="panel" type="Panel" parent="customizationUi/characterPreviewContainer"]
 layout_mode = 2
 
-[node name="subViewportContainer" type="SubViewportContainer" parent="characterPreviewContainer"]
+[node name="subViewportContainer" type="SubViewportContainer" parent="customizationUi/characterPreviewContainer"]
 layout_mode = 2
 stretch = true
 
-[node name="subViewport" type="SubViewport" parent="characterPreviewContainer/subViewportContainer"]
+[node name="subViewport" type="SubViewport" parent="customizationUi/characterPreviewContainer/subViewportContainer"]
+own_world_3d = true
+world_3d = SubResource("World3D_eb65e")
 transparent_bg = true
 handle_input_locally = false
 msaa_3d = 1
 size = Vector2i(662, 794)
 render_target_update_mode = 4
 
-[node name="customizationWorld" parent="characterPreviewContainer/subViewportContainer/subViewport" instance=ExtResource("1_sgpgn")]
+[node name="customizationWorld" parent="customizationUi/characterPreviewContainer/subViewportContainer/subViewport" instance=ExtResource("1_sgpgn")]
 
-[node name="catalogControl" type="Control" parent="."]
+[node name="catalogControl" type="Control" parent="customizationUi"]
 layout_mode = 2
 anchors_preset = 0
 anchor_left = 0.712
@@ -193,7 +205,7 @@ offset_bottom = -0.300049
 grow_horizontal = 0
 grow_vertical = 2
 
-[node name="topBar" type="PanelContainer" parent="catalogControl"]
+[node name="topBar" type="PanelContainer" parent="customizationUi/catalogControl"]
 custom_minimum_size = Vector2(0, 74.84)
 layout_mode = 2
 anchor_left = 1.0
@@ -203,11 +215,11 @@ offset_right = -3.0
 offset_bottom = 74.84
 size_flags_vertical = 0
 
-[node name="panel" type="Panel" parent="catalogControl/topBar"]
+[node name="panel" type="Panel" parent="customizationUi/catalogControl/topBar"]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_h8b2a")
 
-[node name="buttons" type="HBoxContainer" parent="catalogControl/topBar"]
+[node name="buttons" type="HBoxContainer" parent="customizationUi/catalogControl/topBar"]
 custom_minimum_size = Vector2(0, 74.84)
 layout_mode = 2
 size_flags_vertical = 0
@@ -215,34 +227,34 @@ theme = SubResource("Theme_itbcj")
 theme_override_constants/separation = 25
 alignment = 1
 
-[node name="hairButton" type="Button" parent="catalogControl/topBar/buttons"]
+[node name="hairButton" type="Button" parent="customizationUi/catalogControl/topBar/buttons"]
 layout_mode = 2
 text = "Hair
 "
 icon_alignment = 1
 
-[node name="headwearButton" type="Button" parent="catalogControl/topBar/buttons"]
+[node name="headwearButton" type="Button" parent="customizationUi/catalogControl/topBar/buttons"]
 layout_mode = 2
 text = "Hats"
 icon_alignment = 1
 
-[node name="facewearButton" type="Button" parent="catalogControl/topBar/buttons"]
+[node name="facewearButton" type="Button" parent="customizationUi/catalogControl/topBar/buttons"]
 clip_contents = true
 layout_mode = 2
 icon = ExtResource("3_sge17")
 icon_alignment = 1
 
-[node name="bodyButton" type="Button" parent="catalogControl/topBar/buttons"]
+[node name="bodyButton" type="Button" parent="customizationUi/catalogControl/topBar/buttons"]
 layout_mode = 2
 icon = ExtResource("4_66qj6")
 icon_alignment = 1
 
-[node name="pantsButton" type="Button" parent="catalogControl/topBar/buttons"]
+[node name="pantsButton" type="Button" parent="customizationUi/catalogControl/topBar/buttons"]
 layout_mode = 2
 icon = ExtResource("5_spumi")
 icon_alignment = 1
 
-[node name="catalogOptions" type="MarginContainer" parent="catalogControl"]
+[node name="catalogOptions" type="MarginContainer" parent="customizationUi/catalogControl"]
 layout_mode = 1
 anchors_preset = 11
 anchor_left = 1.0
@@ -255,67 +267,67 @@ offset_bottom = -3.0
 grow_horizontal = 0
 grow_vertical = 2
 
-[node name="menuRight" type="Panel" parent="catalogControl/catalogOptions"]
+[node name="menuRight" type="Panel" parent="customizationUi/catalogControl/catalogOptions"]
 layout_mode = 2
 
-[node name="itemContainer" type="GridContainer" parent="catalogControl/catalogOptions"]
+[node name="itemContainer" type="GridContainer" parent="customizationUi/catalogControl/catalogOptions"]
 layout_mode = 2
 columns = 3
 
-[node name="clothingItemButton" parent="catalogControl/catalogOptions/itemContainer" instance=ExtResource("3_m5e2e")]
+[node name="clothingItemButton" parent="customizationUi/catalogControl/catalogOptions/itemContainer" instance=ExtResource("3_m5e2e")]
 layout_mode = 2
 clothingItem = ExtResource("4_jnw8h")
 
-[node name="clothingItemButton2" parent="catalogControl/catalogOptions/itemContainer" instance=ExtResource("3_m5e2e")]
+[node name="clothingItemButton2" parent="customizationUi/catalogControl/catalogOptions/itemContainer" instance=ExtResource("3_m5e2e")]
 layout_mode = 2
 clothingItem = ExtResource("4_lk8ax")
 
-[node name="clothingItemButton3" parent="catalogControl/catalogOptions/itemContainer" instance=ExtResource("3_m5e2e")]
+[node name="clothingItemButton3" parent="customizationUi/catalogControl/catalogOptions/itemContainer" instance=ExtResource("3_m5e2e")]
 layout_mode = 2
 clothingItem = ExtResource("6_3d7ru")
 
-[node name="clothingItemButton4" parent="catalogControl/catalogOptions/itemContainer" instance=ExtResource("3_m5e2e")]
+[node name="clothingItemButton4" parent="customizationUi/catalogControl/catalogOptions/itemContainer" instance=ExtResource("3_m5e2e")]
 layout_mode = 2
 clothingItem = ExtResource("7_h6386")
 
-[node name="clothingItemButton5" parent="catalogControl/catalogOptions/itemContainer" instance=ExtResource("3_m5e2e")]
+[node name="clothingItemButton5" parent="customizationUi/catalogControl/catalogOptions/itemContainer" instance=ExtResource("3_m5e2e")]
 layout_mode = 2
 clothingItem = ExtResource("8_kdgw1")
 
-[node name="clothingItemButton6" parent="catalogControl/catalogOptions/itemContainer" instance=ExtResource("3_m5e2e")]
+[node name="clothingItemButton6" parent="customizationUi/catalogControl/catalogOptions/itemContainer" instance=ExtResource("3_m5e2e")]
 layout_mode = 2
 clothingItem = ExtResource("9_dsji8")
 
-[node name="clothingItemButton7" parent="catalogControl/catalogOptions/itemContainer" instance=ExtResource("3_m5e2e")]
+[node name="clothingItemButton7" parent="customizationUi/catalogControl/catalogOptions/itemContainer" instance=ExtResource("3_m5e2e")]
 layout_mode = 2
 clothingItem = ExtResource("10_052vf")
 
-[node name="clothingItemButton8" parent="catalogControl/catalogOptions/itemContainer" instance=ExtResource("3_m5e2e")]
+[node name="clothingItemButton8" parent="customizationUi/catalogControl/catalogOptions/itemContainer" instance=ExtResource("3_m5e2e")]
 layout_mode = 2
 clothingItem = ExtResource("11_tklms")
 
-[node name="clothingItemButton9" parent="catalogControl/catalogOptions/itemContainer" instance=ExtResource("3_m5e2e")]
+[node name="clothingItemButton9" parent="customizationUi/catalogControl/catalogOptions/itemContainer" instance=ExtResource("3_m5e2e")]
 layout_mode = 2
 clothingItem = ExtResource("12_m43qx")
 
-[node name="customizationLabel" type="Control" parent="."]
+[node name="customizationLabel" type="Control" parent="customizationUi"]
 anchors_preset = 0
 offset_right = 505.0
 offset_bottom = 80.0
 theme = ExtResource("16_b72eo")
 
-[node name="marginContainer" type="MarginContainer" parent="customizationLabel"]
+[node name="marginContainer" type="MarginContainer" parent="customizationUi/customizationLabel"]
 clip_contents = true
 layout_mode = 0
 offset_right = 584.0
 offset_bottom = 80.0
 
-[node name="textureRect" type="TextureRect" parent="customizationLabel/marginContainer"]
+[node name="textureRect" type="TextureRect" parent="customizationUi/customizationLabel/marginContainer"]
 modulate = Color(1, 1, 1, 0.133333)
 layout_mode = 2
 texture = SubResource("GradientTexture1D_j2xud")
 
-[node name="label" type="Label" parent="customizationLabel/marginContainer"]
+[node name="label" type="Label" parent="customizationUi/customizationLabel/marginContainer"]
 clip_contents = true
 layout_mode = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.376471)

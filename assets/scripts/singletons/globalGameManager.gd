@@ -43,6 +43,7 @@ var pawnDebug : bool = false
 var userDir = DirAccess.open("user://")
 
 #Ingame
+var temporaryPawnInfo : Array
 var playerPosition : Vector3 = Vector3.ZERO
 var playerPawns : Array[BasePawn] = []
 var controllerSens : float = 0.015
@@ -344,7 +345,7 @@ func saveGame(saveName:String = "Save1"):
 		var screenshot = get_viewport().get_texture().get_image()
 		screenshot.save_png("user://saves/%s/%s.png"%[saveName,saveName])
 		print("user://saves/%s/%s.png"%[saveName,saveName])
-		var pawnFile = playerPawns[0].savePawnFile("user://saves/%s/%s"%[saveName,saveName])
+		var pawnFile = playerPawns[0].savePawnFile(playerPawns[0].savePawnInformation(),"user://saves/%s/%s"%[saveName,saveName])
 		var saveDict : Dictionary = {
 			"saveName" : saveName,
 			"saveLocation" : gameManager.world.worldData.worldName,
@@ -438,8 +439,27 @@ func scanForSaves(dirpath : String, max_depth : int = -1, _depth = 0) -> PackedS
 		print("An error occurred when trying to access the path.")
 	return foundSaves
 
-func initShop(shopData:ShopData)->void:
+func initCustomization(pawn:BasePawn)->void:
 	removeShop()
+	removeCustomization()
+	var customizationUI : PackedScene = load("res://assets/scenes/ui/customization/customizationUI.tscn")
+	var _customizationUI = customizationUI.instantiate()
+	_customizationUI.add_to_group(&"customizationUI")
+	add_child(_customizationUI)
+	#hideAllPlayers()
+	_customizationUI.clothingPawn = pawn
+	_customizationUI.generateClothingOptions(pawn)
+
+
+func removeCustomization()->void:
+	for i in get_children():
+		if i.is_in_group(&"customizationUI"):
+			i.queue_free()
+
+
+func initShop(pawn:BasePawn,shopData:ShopData)->void:
+	removeShop()
+	removeCustomization()
 	var shopUI : PackedScene = load("res://assets/scenes/ui/shopui/shopUI.tscn")
 	var _shop = shopUI.instantiate()
 	_shop.add_to_group(&"shop")

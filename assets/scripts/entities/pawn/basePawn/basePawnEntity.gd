@@ -773,6 +773,8 @@ func checkItems()->void:
 			itemNames.append(items.objectName)
 
 func checkClothes()->void:
+	setBodyVisibility(true)
+	clothingInventory.clear()
 	for clothes in clothingHolder.get_children():
 		if !clothingInventory.has(clothes):
 			clothingInventory.append(clothes)
@@ -787,7 +789,36 @@ func moveClothesToRagdoll(moveto:Node3D) -> void:
 		clothes.remapSkeleton()
 	return
 
+func setBodyVisibility(value:bool):
+	if value:
+		head.show()
+		rightUpperArm.show()
+		leftUpperArm.show()
+		shoulders.show()
+		leftForearm.show()
+		rightForearm.show()
+		upperChest.show()
+		lowerBody.show()
+		leftUpperLeg.show()
+		rightUpperLeg.show()
+		rightLowerLeg.show()
+		leftLowerLeg.show()
+	else:
+		head.hide()
+		rightUpperArm.hide()
+		leftUpperArm.hide()
+		shoulders.hide()
+		leftForearm.hide()
+		rightForearm.hide()
+		upperChest.hide()
+		lowerBody.hide()
+		leftUpperLeg.hide()
+		rightUpperLeg.hide()
+		rightLowerLeg.hide()
+		leftLowerLeg.hide()
+
 func checkClothingHider() -> void:
+	setBodyVisibility(true)
 	for clothes in clothingHolder.get_children():
 		if clothes is ClothingItem:
 			if clothes.head:
@@ -1195,8 +1226,9 @@ func savePawnInformation()->String:
 		#purchasedClothes.append(purchasedClothing[clothes].get_scene_file_path())
 
 	for clothes in clothingInventory.size():
-		saveClothes.append(clothingInventory[clothes].get_scene_file_path())
-		purchasedClothes.append(clothingInventory[clothes].get_scene_file_path())
+		if clothingInventory[clothes] != null:
+			saveClothes.append(clothingInventory[clothes].get_scene_file_path())
+			purchasedClothes.append(clothingInventory[clothes].get_scene_file_path())
 	var pwnDict = {
 		"clothes" : saveClothes,
 		"purchasedClothes" : purchasedClothes,
@@ -1232,6 +1264,7 @@ func loadPawnInfo(pawnInfo:String)->void:
 		clothes.queue_free()
 	for weapons in itemHolder.get_children():
 		weapons.queue_free()
+	setBodyVisibility(true)
 	itemInventory.append(null)
 
 	var json = JSON.new()

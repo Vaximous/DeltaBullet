@@ -1,9 +1,10 @@
-[gd_scene load_steps=28 format=3 uid="uid://2nj1n64cy47e"]
+[gd_scene load_steps=29 format=3 uid="uid://2nj1n64cy47e"]
 
 [ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="1_kx7nb"]
 [ext_resource type="Script" path="res://assets/scenes/ui/customization/clothingEquipPreview.gd" id="2_uwnix"]
 [ext_resource type="PackedScene" uid="uid://bg8aarggcxwa8" path="res://assets/entities/pawnEntity/pawnEntity.tscn" id="3_sqnta"]
 [ext_resource type="FontFile" uid="uid://b3s7umd01feyu" path="res://assets/fonts/Carthage Pro Regular.ttf" id="4_8imb8"]
+[ext_resource type="Texture2D" uid="uid://c2al3bxets5mo" path="res://assets/scripts/singletons/notifs/accept_button.png" id="5_wr0bn"]
 
 [sub_resource type="Gradient" id="Gradient_b6ksk"]
 colors = PackedColorArray(0, 0, 0, 0, 0.188235, 0, 0, 1)
@@ -209,7 +210,7 @@ anchors_preset = -1
 anchor_right = 0.974
 anchor_bottom = 1.025
 offset_right = -0.0739899
-offset_bottom = -0.0499878
+offset_bottom = -190.05
 
 [node name="button" type="Button" parent="backgroundPanel"]
 layout_mode = 2
@@ -226,6 +227,14 @@ theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_88p3t")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_mfmp6")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxTexture_fuvv5")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_15qff")
+
+[node name="equippedIcon" type="TextureRect" parent="backgroundPanel"]
+visible = false
+layout_mode = 0
+offset_right = 24.0
+offset_bottom = 24.0
+texture = ExtResource("5_wr0bn")
+expand_mode = 1
 
 [node name="animationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

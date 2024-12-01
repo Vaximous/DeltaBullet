@@ -29,6 +29,57 @@ shader_parameter/tint = Color(0.314316, 0.314316, 0.314316, 1)
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_odfyh"]
 gradient = SubResource("Gradient_e62h6")
 
+[sub_resource type="Animation" id="Animation_wcnyg"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("customizationLabel/marginContainer:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(584, 80)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("customizationLabel/marginContainer/textureRect:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.133333)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("customizationLabel/marginContainer/label:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../blur:material:shader_parameter/blur_amount")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [2.0]
+}
+
 [sub_resource type="Animation" id="Animation_6nk7h"]
 resource_name = "titlebarIn"
 tracks/0/type = "value"
@@ -90,57 +141,6 @@ tracks/4/keys = {
 "transitions": PackedFloat32Array(0.217638, 0.329877),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_wcnyg"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("customizationLabel/marginContainer:size")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(584, 80)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("customizationLabel/marginContainer/textureRect:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 0.133333)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("customizationLabel/marginContainer/label:modulate")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("../blur:material:shader_parameter/blur_amount")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [2.0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_rnnv7"]
@@ -256,7 +256,7 @@ world_3d = SubResource("World3D_eb65e")
 transparent_bg = true
 handle_input_locally = false
 msaa_3d = 1
-size = Vector2i(662, 794)
+size = Vector2i(661, 794)
 render_target_update_mode = 4
 
 [node name="customizationWorld" parent="customizationUi/characterPreviewContainer/subViewportContainer/subViewport" instance=ExtResource("1_sgpgn")]
@@ -433,7 +433,7 @@ theme = ExtResource("16_b72eo")
 [node name="marginContainer" type="MarginContainer" parent="customizationUi/customizationLabel"]
 clip_contents = true
 layout_mode = 0
-offset_right = 281.0
+offset_right = 584.0
 offset_bottom = 80.0
 
 [node name="textureRect" type="TextureRect" parent="customizationUi/customizationLabel/marginContainer"]

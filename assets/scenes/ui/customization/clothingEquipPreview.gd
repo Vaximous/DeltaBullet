@@ -1,4 +1,13 @@
 extends MarginContainer
+@onready var equippedIcon : TextureRect = $backgroundPanel/equippedIcon
+@export var isEquipped : bool = false:
+	set(value):
+		isEquipped = value
+		if equippedIcon:
+			if isEquipped:
+				equippedIcon.show()
+			else:
+				equippedIcon.hide()
 @export var button : Button
 @export var itemText : Label
 @export var pawnHolder : Node3D

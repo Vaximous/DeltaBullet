@@ -43,6 +43,7 @@ func setupButtons()->void:
 			buttons.pressed.connect(generateClothingOptions.bind(clothingPawn))
 
 
+
 func clearClothingItems()->void:
 	for items in clothingButtonsHolder.get_children():
 		items.queue_free()
@@ -62,6 +63,7 @@ func getSelectedSectionID(button:Button)->int:
 func _exit_tree() -> void:
 	gameManager.hideMouse()
 	gameManager.pauseMenu.canPause = true
+	clothingPawn.checkClothes()
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("gEscape"):
@@ -71,6 +73,7 @@ func _input(event: InputEvent) -> void:
 func setPreviewAppearance()->void:
 	if clothingPawn:
 		characterPreviewWorld.customCharacter.loadPawnInfo(clothingPawn.savePawnInformation())
+
 
 
 func setSectionLabel(section:int = 0)->void:
@@ -88,6 +91,49 @@ func setSectionLabel(section:int = 0)->void:
 				sectionLabel.text = "Pants"
 
 
+func checkClothingItem(item:PackedScene)->bool:
+	var boolean : bool = false
+	if item and clothingPawn:
+		for i in clothingPawn.clothingInventory:
+			if i != null:
+				if i.scene_file_path == item.instantiate().scene_file_path:
+					boolean = true
+	return boolean
+
+
+func toggleItem(item)->void:
+	if item:
+		if item.isEquipped:
+			item.isEquipped = false
+			unequipClothingFromPawn(item.clothingItem)
+		else:
+			item.isEquipped = true
+			equipClothingToPawn(item.clothingItem)
+	setPreviewAppearance()
+	#clothingPawn.checkClothes()
+
+func equipClothingToPawn(item:PackedScene)->void:
+	if clothingPawn and item:
+		var itemInstance = item.instantiate()
+		clothingPawn.clothingHolder.add_child(itemInstance)
+		clothingPawn.checkClothes()
+		setPreviewAppearance()
+
+func unequipClothingFromPawn(item:PackedScene)->void:
+	if clothingPawn and item:
+		var filePath = item.instantiate().scene_file_path
+		for clothing in clothingPawn.clothingInventory:
+			if clothing.scene_file_path == filePath:
+				clothingPawn.clothingInventory.erase(clothing)
+				clothing.queue_free()
+				#clothingPawn.clothingInventory.remove_at(clothingInt)
+		clothingPawn.setBodyVisibility(true)
+		clothingPawn.clothingInventory.clear()
+		await get_tree().process_frame
+		clothingPawn.checkClothes()
+		setPreviewAppearance()
+
+
 func generateClothingOptions(pawn:BasePawn)->void:
 	var clothingItem = load("res://assets/scenes/ui/customization/customizationClothing.tscn")
 	##Clear the current catalog
@@ -101,3 +147,5 @@ func generateClothingOptions(pawn:BasePawn)->void:
 				var button = clothingItem.instantiate()
 				button.clothingItem = itemLoad
 				clothingButtonsHolder.add_child(button)
+				button.isEquipped = checkClothingItem(itemLoad)
+				button.button.pressed.connect(toggleItem.bind(button))

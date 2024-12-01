@@ -4,6 +4,7 @@
 [ext_resource type="ArrayMesh" uid="uid://b78i7mpafeo74" path="res://assets/models/pawn/clothing/hair/hair01.res" id="2_37p3b"]
 
 [node name="Hair1" instance=ExtResource("1_d8v58")]
+clothingCategory = 0
 clothingType = 2
 itemName = "Hair01"
 

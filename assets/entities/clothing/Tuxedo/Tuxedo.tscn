@@ -4,6 +4,7 @@
 [ext_resource type="ArrayMesh" uid="uid://d3rv5yq88pndc" path="res://assets/models/pawn/clothing/tuxJacket/tuxJacket.res" id="2_gbdvn"]
 
 [node name="Tuxedo" instance=ExtResource("1_hrm4a")]
+clothingCategory = 3
 clothingType = 3
 itemName = "Tuxedo Jacket"
 shoulders = true

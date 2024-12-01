@@ -9,6 +9,7 @@ albedo_color = Color(0.196078, 0.196078, 0.196078, 1)
 
 [node name="clothingBase" type="Node3D"]
 script = ExtResource("1_338rr")
+clothingCategory = 0
 clothingType = 2
 itemName = "Hair 2"
 

@@ -4,6 +4,7 @@
 [ext_resource type="ArrayMesh" uid="uid://ckjykxfmouq24" path="res://assets/models/pawn/clothing/longcoat/longcoat.res" id="2_5u5ny"]
 
 [node name="longCoat" instance=ExtResource("1_lrm3o")]
+clothingCategory = 3
 clothingType = 3
 itemName = "Longcoat"
 shoulders = true

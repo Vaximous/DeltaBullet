@@ -4,6 +4,7 @@
 [ext_resource type="ArrayMesh" uid="uid://bcbun28b6ujb5" path="res://assets/models/pawn/clothing/armorShirt/armorShirt.res" id="2_7cdnu"]
 
 [node name="ArmorShirt" instance=ExtResource("1_d4rwr")]
+clothingCategory = 3
 clothingType = 3
 itemName = "Armored Shirt"
 shoulders = true

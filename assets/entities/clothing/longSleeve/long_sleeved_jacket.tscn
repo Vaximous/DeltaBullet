@@ -4,6 +4,7 @@
 [ext_resource type="ArrayMesh" uid="uid://bmyjpv3lxkb36" path="res://assets/models/pawn/clothing/longSleeve/longSleeveJacket.res" id="2_elf14"]
 
 [node name="longSleevedJacket" instance=ExtResource("1_a52lg")]
+clothingCategory = 3
 clothingType = 3
 itemName = "Long Sleeve Jacket"
 shoulders = true

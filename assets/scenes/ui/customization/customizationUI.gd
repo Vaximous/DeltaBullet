@@ -1,5 +1,8 @@
 extends CanvasLayer
-var selectedSection : int = 2
+@export_enum("Hair","Headwear","Facewear","Body","Pants")var selectedSection : int = 2:
+	set(value):
+		selectedSection = value
+		setSectionLabel(value)
 var clothingPawn : BasePawn:
 	set(value):
 		clothingPawn = value
@@ -9,12 +12,13 @@ var clothingPawn : BasePawn:
 @onready var characterPreviewWorld = $customizationUi/characterPreviewContainer/subViewportContainer/subViewport/customizationWorld
 @export var buttonHolder : HBoxContainer
 @export var clothingButtonsHolder : GridContainer
+@export var sectionLabel : Label
 const defaultTweenSpeed : float = 0.25
 const defaultTransitionType = Tween.TRANS_QUART
 const defaultEaseType = Tween.EASE_OUT
 
 func _ready() -> void:
-	setupButtons()
+	#setupButtons()
 	animationTitlebar.play("titlebarIn")
 	gameManager.showMouse()
 
@@ -69,14 +73,31 @@ func setPreviewAppearance()->void:
 		characterPreviewWorld.customCharacter.loadPawnInfo(clothingPawn.savePawnInformation())
 
 
+func setSectionLabel(section:int = 0)->void:
+	if sectionLabel:
+		match selectedSection:
+			0:
+				sectionLabel.text = "Hair"
+			1:
+				sectionLabel.text = "Hats"
+			2:
+				sectionLabel.text = "Face"
+			3:
+				sectionLabel.text = "Body"
+			4:
+				sectionLabel.text = "Pants"
+
+
 func generateClothingOptions(pawn:BasePawn)->void:
 	var clothingItem = load("res://assets/scenes/ui/customization/customizationClothing.tscn")
 	##Clear the current catalog
 	clearClothingItems()
 
 	##Grab what clothing items the pawn has purchased and create clothing item options from it as well as making sure it matches the current category
-	for clothing in pawn.purchasedClothing:
-		var itemLoad = load(clothing)
-		var button = clothingItem.instantiate()
-		button.clothingItem = itemLoad
-		clothingButtonsHolder.add_child(button)
+	if pawn != null:
+		for clothing in pawn.purchasedClothing:
+			var itemLoad = load(clothing)
+			if itemLoad.instantiate().clothingCategory == selectedSection:
+				var button = clothingItem.instantiate()
+				button.clothingItem = itemLoad
+				clothingButtonsHolder.add_child(button)

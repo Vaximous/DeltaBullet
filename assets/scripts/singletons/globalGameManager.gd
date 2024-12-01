@@ -445,6 +445,7 @@ func initShop(shopData:ShopData)->void:
 	_shop.add_to_group(&"shop")
 	_shop.shopResource = shopData
 	add_child(_shop)
+	hideAllPlayers()
 	_shop.initializeShop()
 
 func removeShop()->void:
@@ -539,3 +540,17 @@ func create_surface_transform(origin : Vector3, incoming_vector : Vector3, surfa
 	var x = surface_normal.cross(z)
 	var tf := Transform3D(x.normalized(), y.normalized(), z.normalized(), origin).rotated_local(Vector3.UP, PI/2)
 	return tf
+
+
+func hideAllPlayers()->void:
+	for players in playerPawns:
+		players.hide()
+		if players.currentItem:
+			players.currentItem.hide()
+
+
+func showAllPlayers()->void:
+	for players in playerPawns:
+		players.show()
+		if players.currentItem:
+					players.currentItem.show()

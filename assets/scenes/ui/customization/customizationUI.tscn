@@ -1,10 +1,13 @@
-[gd_scene load_steps=18 format=3 uid="uid://iftsfle430nr"]
+[gd_scene load_steps=31 format=3 uid="uid://iftsfle430nr"]
 
 [ext_resource type="Script" path="res://assets/scenes/ui/customization/customizationUI.gd" id="1_2bhr7"]
 [ext_resource type="PackedScene" uid="uid://ctrswootky6q7" path="res://assets/scenes/ui/customization/customizationWorld.tscn" id="1_sgpgn"]
 [ext_resource type="PackedScene" uid="uid://2nj1n64cy47e" path="res://assets/scenes/ui/customization/customizationClothing.tscn" id="3_m5e2e"]
+[ext_resource type="Texture2D" uid="uid://bn80p3jko0k42" path="res://assets/textures/ui/customization/faceButton.png" id="3_sge17"]
+[ext_resource type="Texture2D" uid="uid://c4vv3virnhurd" path="res://assets/textures/ui/customization/shirtButton.png" id="4_66qj6"]
 [ext_resource type="PackedScene" uid="uid://d10o2e44ltrnl" path="res://assets/entities/clothing/ArmoredShirt/armor_shirt.tscn" id="4_jnw8h"]
 [ext_resource type="PackedScene" uid="uid://jwq6tye7ok4r" path="res://assets/entities/clothing/Glasses/SiftinShades/SiftinShades.tscn" id="4_lk8ax"]
+[ext_resource type="Texture2D" uid="uid://cxaqryfq1g77g" path="res://assets/textures/ui/customization/pantsButton.png" id="5_spumi"]
 [ext_resource type="PackedScene" uid="uid://b026rv1louhqg" path="res://assets/entities/clothing/Longcoats/longCoat.tscn" id="6_3d7ru"]
 [ext_resource type="PackedScene" uid="uid://cgghffeqks1ac" path="res://assets/entities/clothing/Gloves/left_glove_fingerless.tscn" id="7_h6386"]
 [ext_resource type="PackedScene" uid="uid://bap501mpmqgb" path="res://assets/entities/clothing/Gloves/right_glove_fingerless.tscn" id="8_kdgw1"]
@@ -12,12 +15,91 @@
 [ext_resource type="PackedScene" uid="uid://b4v8dskvpby4c" path="res://assets/entities/clothing/Hair/Hair2.tscn" id="10_052vf"]
 [ext_resource type="PackedScene" uid="uid://b8ttgknyh8e3m" path="res://assets/entities/clothing/Tuxedo/Tuxedo.tscn" id="11_tklms"]
 [ext_resource type="PackedScene" uid="uid://bb5qvdslt6004" path="res://assets/entities/clothing/Pants/armored_pants.tscn" id="12_m43qx"]
+[ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="16_b72eo"]
 
-[sub_resource type="Gradient" id="Gradient_clvtb"]
-colors = PackedColorArray(0.407843, 0, 0, 1, 0.309804, 0, 0, 0)
+[sub_resource type="Animation" id="Animation_6nk7h"]
+resource_name = "titlebarIn"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("customizationLabel/marginContainer:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.25, 1),
+"update": 0,
+"values": [Vector2(281, 80), Vector2(584, 80)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("customizationLabel/marginContainer/textureRect:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(0.129408, 0.116629),
+"update": 0,
+"values": [Color(1, 1, 1, 0.133333), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("customizationLabel/marginContainer/label:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.233333, 0.466667),
+"transitions": PackedFloat32Array(0.0717937, -0.5, -2),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(0.576471, 0, 0, 1), Color(1, 1, 1, 1)]
+}
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_b2dxp"]
-gradient = SubResource("Gradient_clvtb")
+[sub_resource type="Animation" id="Animation_wcnyg"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("customizationLabel/marginContainer:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(584, 80)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("customizationLabel/marginContainer/textureRect:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.133333)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("customizationLabel/marginContainer/label:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rnnv7"]
+_data = {
+"RESET": SubResource("Animation_wcnyg"),
+"titlebarIn": SubResource("Animation_6nk7h")
+}
 
 [sub_resource type="Gradient" id="Gradient_jxvns"]
 offsets = PackedFloat32Array(0.0555556, 1)
@@ -31,7 +113,32 @@ fill_to = Vector2(0.188034, 1)
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_h8b2a"]
 texture = SubResource("GradientTexture2D_gwsgk")
 
-[node name="customizationUi" type="Control"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r3rhk"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dp8bk"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nmmhv"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0jhp1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_186f8"]
+
+[sub_resource type="Theme" id="Theme_itbcj"]
+Button/colors/icon_normal_color = Color(1, 1, 1, 1)
+Button/styles/disabled = SubResource("StyleBoxEmpty_r3rhk")
+Button/styles/focus = SubResource("StyleBoxEmpty_dp8bk")
+Button/styles/hover = SubResource("StyleBoxEmpty_nmmhv")
+Button/styles/normal = SubResource("StyleBoxEmpty_0jhp1")
+Button/styles/pressed = SubResource("StyleBoxEmpty_186f8")
+
+[sub_resource type="Gradient" id="Gradient_odbsi"]
+offsets = PackedFloat32Array(0, 0.15, 0.510714, 1)
+colors = PackedColorArray(0.282353, 0, 0, 1, 0.368627, 0, 0, 1, 0.556863, 0, 0, 0.368627, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_j2xud"]
+gradient = SubResource("Gradient_odbsi")
+
+[node name="customizationUi" type="Control" node_paths=PackedStringArray("buttonHolder", "clothingButtonsHolder")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -39,43 +146,41 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_2bhr7")
-
-[node name="subViewportContainer" type="SubViewportContainer" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-stretch = true
-
-[node name="subViewport" type="SubViewport" parent="subViewportContainer"]
-handle_input_locally = false
-msaa_3d = 1
-size = Vector2i(1600, 900)
-render_target_update_mode = 4
-
-[node name="customizationWorld" parent="subViewportContainer/subViewport" instance=ExtResource("1_sgpgn")]
+buttonHolder = NodePath("catalogControl/topBar/buttons")
+clothingButtonsHolder = NodePath("catalogControl/catalogOptions/itemContainer")
 
 [node name="animationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_rnnv7")
+}
 
-[node name="textureRect" type="TextureRect" parent="."]
-modulate = Color(0.764706, 0.596078, 0, 1)
-layout_mode = 0
-offset_left = -1.0
-offset_top = -4.0
-offset_right = 515.0
-offset_bottom = 96.0
-texture = SubResource("GradientTexture1D_b2dxp")
+[node name="characterPreviewContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.278
+anchor_top = 0.101
+anchor_right = 0.692
+anchor_bottom = 0.983
+offset_left = 0.199951
+offset_top = 0.0999985
+offset_right = -0.200073
+offset_bottom = 0.299988
 
-[node name="label" type="Label" parent="textureRect"]
-layout_mode = 0
-offset_left = 20.0
-offset_top = 7.0
-offset_right = 301.0
-offset_bottom = 59.0
-theme_override_font_sizes/font_size = 51
-text = "CUSTOMIZATION"
+[node name="panel" type="Panel" parent="characterPreviewContainer"]
+layout_mode = 2
+
+[node name="subViewportContainer" type="SubViewportContainer" parent="characterPreviewContainer"]
+layout_mode = 2
+stretch = true
+
+[node name="subViewport" type="SubViewport" parent="characterPreviewContainer/subViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+msaa_3d = 1
+size = Vector2i(662, 794)
+render_target_update_mode = 4
+
+[node name="customizationWorld" parent="characterPreviewContainer/subViewportContainer/subViewport" instance=ExtResource("1_sgpgn")]
 
 [node name="catalogControl" type="Control" parent="."]
 layout_mode = 2
@@ -106,30 +211,36 @@ theme_override_styles/panel = SubResource("StyleBoxTexture_h8b2a")
 custom_minimum_size = Vector2(0, 74.84)
 layout_mode = 2
 size_flags_vertical = 0
+theme = SubResource("Theme_itbcj")
+theme_override_constants/separation = 25
 alignment = 1
 
 [node name="hairButton" type="Button" parent="catalogControl/topBar/buttons"]
 layout_mode = 2
 text = "Hair
 "
+icon_alignment = 1
 
 [node name="headwearButton" type="Button" parent="catalogControl/topBar/buttons"]
 layout_mode = 2
 text = "Hats"
+icon_alignment = 1
 
 [node name="facewearButton" type="Button" parent="catalogControl/topBar/buttons"]
+clip_contents = true
 layout_mode = 2
-text = "Face"
+icon = ExtResource("3_sge17")
+icon_alignment = 1
 
 [node name="bodyButton" type="Button" parent="catalogControl/topBar/buttons"]
 layout_mode = 2
-text = "Body
-"
+icon = ExtResource("4_66qj6")
+icon_alignment = 1
 
 [node name="pantsButton" type="Button" parent="catalogControl/topBar/buttons"]
 layout_mode = 2
-text = "Pants
-"
+icon = ExtResource("5_spumi")
+icon_alignment = 1
 
 [node name="catalogOptions" type="MarginContainer" parent="catalogControl"]
 layout_mode = 1
@@ -186,3 +297,31 @@ clothingItem = ExtResource("11_tklms")
 [node name="clothingItemButton9" parent="catalogControl/catalogOptions/itemContainer" instance=ExtResource("3_m5e2e")]
 layout_mode = 2
 clothingItem = ExtResource("12_m43qx")
+
+[node name="customizationLabel" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 505.0
+offset_bottom = 80.0
+theme = ExtResource("16_b72eo")
+
+[node name="marginContainer" type="MarginContainer" parent="customizationLabel"]
+clip_contents = true
+layout_mode = 0
+offset_right = 584.0
+offset_bottom = 80.0
+
+[node name="textureRect" type="TextureRect" parent="customizationLabel/marginContainer"]
+modulate = Color(1, 1, 1, 0.133333)
+layout_mode = 2
+texture = SubResource("GradientTexture1D_j2xud")
+
+[node name="label" type="Label" parent="customizationLabel/marginContainer"]
+clip_contents = true
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.376471)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/outline_size = 1
+theme_override_constants/shadow_outline_size = 5
+theme_override_font_sizes/font_size = 66
+text = "Customization"

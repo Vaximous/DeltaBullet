@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://2nj1n64cy47e"]
+[gd_scene load_steps=28 format=3 uid="uid://2nj1n64cy47e"]
 
 [ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="1_kx7nb"]
 [ext_resource type="Script" path="res://assets/scenes/ui/customization/clothingEquipPreview.gd" id="2_uwnix"]
@@ -89,6 +89,28 @@ _data = {
 "buffer_done": SubResource("Animation_3xnob")
 }
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_86cvr"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_421p7"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ct1ns"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wm1gk"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dwc62"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4h103"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_b1tsn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_88p3t"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mfmp6"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fuvv5"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ifnx0"]
+
 [node name="clothingItemButton" type="MarginContainer" node_paths=PackedStringArray("itemText", "pawnHolder", "animationPlayer", "viewportCamera", "examplePawn")]
 custom_minimum_size = Vector2(151, 202)
 anchors_preset = -1
@@ -137,6 +159,7 @@ handle_input_locally = false
 msaa_3d = 3
 scaling_3d_scale = 1.13
 size = Vector2i(147, 202)
+render_target_update_mode = 4
 
 [node name="node3d" type="Node3D" parent="backgroundPanel/subViewportContainer/subViewport"]
 
@@ -191,3 +214,17 @@ offset_bottom = -0.0499878
 libraries = {
 "": SubResource("AnimationLibrary_hvgav")
 }
+
+[node name="button" type="Button" parent="."]
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_86cvr")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_421p7")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_ct1ns")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_wm1gk")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_dwc62")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_4h103")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_b1tsn")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_88p3t")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_mfmp6")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxTexture_fuvv5")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ifnx0")

@@ -107,6 +107,10 @@ func setPreviewMesh(mesh:PackedScene)->void:
 		previewMesh.freeze = true
 
 
+func _exit_tree() -> void:
+	gameManager.showAllPlayers()
+
+
 func _on_tab_bar_tab_selected(tab: int) -> void:
 	clearShopList()
 	buildItemList()

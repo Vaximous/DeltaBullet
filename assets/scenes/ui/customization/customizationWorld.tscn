@@ -5,16 +5,17 @@
 [ext_resource type="PackedScene" uid="uid://cmyxa8pfmhpcy" path="res://assets/components/inputComponent/inputComponent.tscn" id="3_ax8xa"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kfmsv"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0)
 
 [sub_resource type="Environment" id="Environment_e7eu0"]
-background_mode = 1
-background_color = Color(1, 1, 1, 1)
-reflected_light_source = 1
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 0.7
 ssao_enabled = true
 ssao_intensity = 1.0
 ssao_power = 3.95852
 ssao_detail = 5.0
-fog_enabled = true
 fog_light_color = Color(0.951441, 0.956499, 0.964452, 1)
 
 [node name="customizationWorld" type="Node3D"]
@@ -30,7 +31,7 @@ material = SubResource("StandardMaterial3D_kfmsv")
 environment = SubResource("Environment_e7eu0")
 
 [node name="pawnEntity" parent="." instance=ExtResource("1_ch2jg")]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 1.18655, -0.45583)
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0.24698, -0.45583)
 
 [node name="spotLight3d" type="SpotLight3D" parent="."]
 transform = Transform3D(0.992265, 0.071421, -0.101535, -7.34382e-09, 0.817919, 0.575334, 0.124138, -0.570883, 0.811592, -0.729325, 2.63393, 1.60217)
@@ -44,8 +45,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.428882)
 [node name="vertOffset" type="Node3D" parent="horizOffset"]
 
 [node name="customizationCam" type="Camera3D" parent="horizOffset/vertOffset"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.59371, 2.06761)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1571, 2.06761)
+fov = 52.1
 
 [node name="inputComponent" parent="." instance=ExtResource("3_ax8xa")]
-
-[connection signal="onMouseMotion" from="inputComponent" to="." method="_on_input_component_on_mouse_motion"]

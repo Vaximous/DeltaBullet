@@ -64,6 +64,7 @@ func _on_pressed()->void:
 			await Fade.fade_out(0.3, Color(0,0,0,1),"GradientVertical",false,true).finished
 			#gameManager.notifyCheck("'%s' Sucessfully Loaded."%saveName.text, 2, 1.5)
 			gameManager.loadGame(saveFile)
+			gameManager.clearTemporaryPawnInfo()
 		2:
 			gameManager.getEventSignal("overwriteSave").emit()
 			gameManager.saveOverwrite = saveName.text

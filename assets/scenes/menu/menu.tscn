@@ -10,6 +10,7 @@ script/source = "extends Node
 
 # Called when the node enters the scene tree for the first time.
 func _ready()->void:
+	gameManager.clearTemporaryPawnInfo()
 	if has_seen_prologue():
 		var menu = load(\"res://assets/scenes/menu/menuScenes/prePrologueMenuScene.tscn\").instantiate()
 		add_child(menu)

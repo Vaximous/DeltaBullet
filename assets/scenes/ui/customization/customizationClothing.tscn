@@ -1,10 +1,12 @@
-[gd_scene load_steps=29 format=3 uid="uid://2nj1n64cy47e"]
+[gd_scene load_steps=33 format=3 uid="uid://2nj1n64cy47e"]
 
 [ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="1_kx7nb"]
 [ext_resource type="Script" path="res://assets/scenes/ui/customization/clothingEquipPreview.gd" id="2_uwnix"]
 [ext_resource type="PackedScene" uid="uid://bg8aarggcxwa8" path="res://assets/entities/pawnEntity/pawnEntity.tscn" id="3_sqnta"]
 [ext_resource type="FontFile" uid="uid://b3s7umd01feyu" path="res://assets/fonts/Carthage Pro Regular.ttf" id="4_8imb8"]
 [ext_resource type="Texture2D" uid="uid://c2al3bxets5mo" path="res://assets/scripts/singletons/notifs/accept_button.png" id="5_wr0bn"]
+[ext_resource type="AudioStream" uid="uid://bijncj6jexoln" path="res://assets/sounds/ui/select1.wav" id="6_t3f8f"]
+[ext_resource type="AudioStream" uid="uid://b5rkc064kjvpg" path="res://assets/sounds/ui/select2.wav" id="7_xgkw7"]
 
 [sub_resource type="Gradient" id="Gradient_b6ksk"]
 colors = PackedColorArray(0, 0, 0, 0, 0.188235, 0, 0, 1)
@@ -111,6 +113,16 @@ _data = {
 "buffer": SubResource("Animation_psy11"),
 "buffer_done": SubResource("Animation_3xnob")
 }
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_vcg60"]
+random_pitch = 1.05
+streams_count = 1
+stream_0/stream = ExtResource("6_t3f8f")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_kme6p"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("7_xgkw7")
 
 [node name="clothingItemButton" type="MarginContainer" node_paths=PackedStringArray("button", "itemText", "pawnHolder", "animationPlayer", "viewportCamera", "examplePawn")]
 custom_minimum_size = Vector2(151, 202)
@@ -240,3 +252,17 @@ expand_mode = 1
 libraries = {
 "": SubResource("AnimationLibrary_hvgav")
 }
+
+[node name="hoverSound" type="AudioStreamPlayer" parent="."]
+
+[node name="equipSound" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_vcg60")
+volume_db = -15.0
+bus = &"UI"
+
+[node name="unequipSound" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_kme6p")
+volume_db = -15.0
+bus = &"UI"
+
+[connection signal="pressed" from="backgroundPanel/button" to="." method="playSound"]

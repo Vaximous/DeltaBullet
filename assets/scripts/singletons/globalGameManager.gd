@@ -320,13 +320,16 @@ func enablePlayer()->void:
 			activeCamera.followingEntity.inputComponent.mouseActionsEnabled = true
 
 
+func clearTemporaryPawnInfo()->void:
+	temporaryPawnInfo.clear()
+
 func saveTemporaryPawnInfo()->void:
-	if playerPawns.size()>=1:
-		temporaryPawnInfo.clear()
-	for p in playerPawns:
-		if p !=null:
-			var info = p.savePawnInformation()
-			temporaryPawnInfo.append(info)
+	for p in playerPawns.size():
+		if playerPawns[p] !=null:
+			clearTemporaryPawnInfo()
+			var info = playerPawns[p].savePawnInformation()
+			temporaryPawnInfo.insert(p,info)
+			#temporaryPawnInfo.append(info)
 
 func loadWorld(worldscene:String, fadein:bool = false)->void:
 	saveTemporaryPawnInfo()
@@ -387,7 +390,7 @@ func loadGame(save:String)->void:
 				var nodeData = json.get_data()
 				currentSave = save
 				loadWorld(nodeData["scene"])
-				temporaryPawnInfo.clear()
+				#temporaryPawnInfo.clear()
 		else:
 			Console.add_rich_console_message("[color=red]Unable to find that save![/color]")
 

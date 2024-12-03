@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://iftsfle430nr"]
+[gd_scene load_steps=43 format=3 uid="uid://iftsfle430nr"]
 
 [ext_resource type="Script" path="res://assets/scenes/ui/customization/customizationUI.gd" id="1_2bhr7"]
 [ext_resource type="PackedScene" uid="uid://ctrswootky6q7" path="res://assets/scenes/ui/customization/customizationWorld.tscn" id="1_sgpgn"]
@@ -18,6 +18,9 @@
 [ext_resource type="PackedScene" uid="uid://b8ttgknyh8e3m" path="res://assets/entities/clothing/Tuxedo/Tuxedo.tscn" id="11_tklms"]
 [ext_resource type="PackedScene" uid="uid://bb5qvdslt6004" path="res://assets/entities/clothing/Pants/armored_pants.tscn" id="12_m43qx"]
 [ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="16_b72eo"]
+[ext_resource type="AudioStream" uid="uid://cqe18pm85upwh" path="res://assets/sounds/clothingEquip/cequip1.wav" id="19_ftujg"]
+[ext_resource type="AudioStream" uid="uid://cpw3gvbo8plnb" path="res://assets/sounds/clothingEquip/cequip2.wav" id="20_7m2el"]
+[ext_resource type="AudioStream" uid="uid://cpvk80t257gca" path="res://assets/sounds/clothingEquip/cequip3.wav" id="21_0w8tm"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_uggvv"]
 shader = ExtResource("2_jrjiw")
@@ -200,6 +203,13 @@ colors = PackedColorArray(0.282353, 0, 0, 1, 0.368627, 0, 0, 1, 0.556863, 0, 0, 
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_j2xud"]
 gradient = SubResource("Gradient_odbsi")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_k1rsh"]
+random_pitch = 1.02
+streams_count = 3
+stream_0/stream = ExtResource("19_ftujg")
+stream_1/stream = ExtResource("20_7m2el")
+stream_2/stream = ExtResource("21_0w8tm")
 
 [node name="Customization" type="CanvasLayer" node_paths=PackedStringArray("buttonHolder", "clothingButtonsHolder", "sectionLabel")]
 layer = 2
@@ -451,3 +461,8 @@ theme_override_constants/outline_size = 1
 theme_override_constants/shadow_outline_size = 5
 theme_override_font_sizes/font_size = 66
 text = "Customization"
+
+[node name="equipSounds" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_k1rsh")
+max_polyphony = 2
+bus = &"UI"

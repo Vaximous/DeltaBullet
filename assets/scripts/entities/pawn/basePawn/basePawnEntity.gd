@@ -604,9 +604,9 @@ func do_stairs(delta) -> void:
 		flat_vel.rotated(Vector3.UP, PI/3),
 		flat_vel.rotated(Vector3.UP, -PI/3),
 		]
-	if gameManager.debugEnabled:
-		print(input_direction)
-		print(flat_vel)
+	#if gameManager.debugEnabled:
+		#print(input_direction)
+		#print(flat_vel)
 	for direction in check_directions:
 		var step_ray_dir := direction * step_check_distance
 		#if step_ray_dir.dot(Vector3(velocity.x, 0, velocity.z).normalized()) < 0.5:
@@ -620,8 +620,8 @@ func do_stairs(delta) -> void:
 		var first_collision = direct_state.intersect_ray(obs_ray_info)
 		#print("Ray from %s to %s" % [obs_ray_info.from, obs_ray_info.to])
 		if !first_collision.is_empty():
-			if gameManager.debugEnabled:
-				print("Ray hit something.")
+			#if gameManager.debugEnabled:
+				#print("Ray hit something.")
 			if not first_collision["collider"] is StaticBody3D and not first_collision["collider"] is CSGShape3D:
 				continue
 			if first_collision["normal"].angle_to(Vector3.UP) < 1.39626:
@@ -634,8 +634,8 @@ func do_stairs(delta) -> void:
 					return
 				if first_collision["normal"].angle_to(Vector3.UP) < 1.39626:
 					return
-			if gameManager.debugEnabled:
-				print("Ready to climb up step.")
+			#if gameManager.debugEnabled:
+				#print("Ready to climb up step.")
 			#From that first collision point, we now check if 'min_stair_depth' is met
 			#at the the 'max_step_height'
 			var depth_check : PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.new()
@@ -661,8 +661,8 @@ func do_stairs(delta) -> void:
 					position += (step_ray_dir * (step_check_distance * 0.5))
 					#interpolate_visual_position(pre_position - global_position)
 					return
-			if gameManager.debugEnabled:
-				print("Couldn't climb up the step.")
+			#if gameManager.debugEnabled:
+				#print("Couldn't climb up the step.")
 
 
 func _on_health_component_health_depleted(dealer:BasePawn) -> void:

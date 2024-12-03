@@ -145,7 +145,8 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 		var contactNormal = state.get_contact_local_normal(0)
 		var contactDot = state.get_contact_local_velocity_at_position(0).normalized().dot(contactNormal)
 		var contactForce = state.get_contact_local_velocity_at_position(0).length()
-
+		if gameManager.debugEnabled:
+			print("%s Contact Force : %s"%[name,contactForce])
 		audioStreamPlayer.attenuation_filter_db = lerp(-20, 0, clamp(abs(contactDot) * contactForce, 0, 1))
 		if contactForce > heavyImpactThreshold:
 			audioStreamPlayer.stream = heavyImpactSounds
@@ -156,6 +157,9 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 			if hardImpactEffectEnabled:
 				if impactEffectHard == null:
 					#await get_tree().process_frame
+					if canBeDismembered:
+						healthComponent.damage(900,null)
+						pulverizeBone()
 					var particle = globalParticles.createParticle("BloodSpurt",self.position)
 					particle.rotation = self.rotation
 					particle.amount = randi_range(25,75)

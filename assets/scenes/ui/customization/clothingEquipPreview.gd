@@ -1,4 +1,6 @@
 extends MarginContainer
+@onready var equippedSound : AudioStreamPlayer = $equipSound
+@onready var unequipSound : AudioStreamPlayer = $unequipSound
 @onready var equippedIcon : TextureRect = $backgroundPanel/equippedIcon
 @export var isEquipped : bool = false:
 	set(value):
@@ -66,6 +68,13 @@ func setupButton()->void:
 		pivot_offset = size/2
 		button.mouse_entered.connect(enlargeControlScale.bind(self))
 		button.mouse_exited.connect(resetControlScale.bind(self))
+
+
+func playSound()->void:
+	if isEquipped:
+		unequipSound.play()
+	else:
+		equippedSound.play()
 
 
 func setCameraPosition()->void:

@@ -1,4 +1,7 @@
 extends CanvasLayer
+@onready var blur = $blur
+@onready var customizationUI : Control = $customizationUi
+@onready var equipSound : AudioStreamPlayer = $equipSounds
 @export_enum("Hair","Headwear","Facewear","Body","Pants")var selectedSection : int = 2:
 	set(value):
 		selectedSection = value
@@ -68,7 +71,7 @@ func _exit_tree() -> void:
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("gEscape"):
-		gameManager.removeCustomization()
+		fadeOut()
 
 
 func setPreviewAppearance()->void:
@@ -102,8 +105,15 @@ func checkClothingItem(item:PackedScene)->bool:
 	return boolean
 
 
+func fadeOut()->void:
+	var tween = create_tween()
+	tween.parallel().tween_property(blur,"modulate",Color.TRANSPARENT,0.25).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+	await tween.parallel().tween_property(customizationUI,"modulate",Color.TRANSPARENT,0.25).set_ease(defaultEaseType).set_trans(defaultTransitionType).finished
+	gameManager.removeCustomization()
+
 func toggleItem(item)->void:
 	if item:
+		equipSound.play()
 		if item.isEquipped:
 			item.isEquipped = false
 			unequipClothingFromPawn(item.clothingItem)

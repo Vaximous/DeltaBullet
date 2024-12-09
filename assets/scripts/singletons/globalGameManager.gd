@@ -490,19 +490,23 @@ func removeShop()->void:
 			i.queue_free()
 	#gameManager.pauseMenu.canPause = true
 
-func createSplat(gposition:Vector3 = Vector3.ZERO,normal:Vector3 = Vector3.ZERO,colPoint:Vector3 = Vector3.ZERO)->void:
+
+func doDeathEffect()->void:
 	await get_tree().process_frame
-	if gameManager.world != null:
-		#print("col")
-		var _b = bloodDecal.instantiate()
-		gameManager.world.worldMisc.add_child(_b)
-		#_b.global_transform = gameManager.create_surface_transform(colPoint,Vector3(1,0,0),normal)
-		_b.rotate(normal,randf_range(0, 180)/PI)
-		_b.position = gposition
-		if !_b.global_transform.origin.is_equal_approx(colPoint + normal):
-			#print((colPoint + normal).dot(Vector3.UP))
-			_b.look_at(colPoint + normal, Vector3.UP)
-		#queue_free()
+	const defaultTransitionType = Tween.TRANS_QUART
+	const defaultEaseType = Tween.EASE_OUT
+	var tween = create_tween()
+	Engine.time_scale = 0.25
+	tween.tween_property(Engine,"time_scale",1,1.5).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+
+
+func createSplat(gposition:Vector3 = Vector3.ZERO,normal:Vector3 = Vector3.ZERO,colPoint:Vector3 = Vector3.ZERO)->void:
+	var _b = bloodDecal.instantiate()
+	world.worldMisc.add_child(_b)
+	_b.position = gposition
+	if !Vector3.UP.is_equal_approx(normal.normalized()):
+		_b.transform.basis = _b.transform.basis.looking_at(normal.normalized())
+	_b.rotate(normal,randf_range(0, 2)*PI)
 
 func sprayBlood(position:Vector3,amount:int,_maxDistance:int,distanceMultiplier:float = 1)->void:
 	randomize()
@@ -590,4 +594,25 @@ func showAllPlayers()->void:
 	for players in playerPawns:
 		players.show()
 		if players.currentItem:
-					players.currentItem.show()
+			players.currentItem.show()
+
+
+func pick_weighted(weightedArray:Array) -> int:
+	#Sum all of the odds
+	var sum := get_weight_sum(weightedArray)
+	var random_selector = randf_range(0, sum)
+	#Subtract each element until random_selector is 0
+	var chosen_index : int = 0
+	for idx in weightedArray.size():
+		random_selector -= weightedArray[idx]
+		if random_selector <= 0.0:
+			chosen_index = idx
+			break
+	return chosen_index
+
+
+func get_weight_sum(weightedArray) -> float:
+	var sum : float
+	for i in weightedArray:
+		sum += i
+	return sum

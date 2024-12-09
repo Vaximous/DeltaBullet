@@ -200,13 +200,25 @@ use_collision = true
 size = Vector3(3.27371, 6.17981, 4.72327)
 material = ExtResource("3_sg61b")
 
-[node name="Wall2" type="CSGBox3D" parent="Geometry/navigationRegion3d" index="3"]
+[node name="Wall6" type="CSGBox3D" parent="Geometry/navigationRegion3d" index="3"]
+transform = Transform3D(0.116584, 8.33452e-10, -0.993181, 0.0195171, 0.999807, 0.00229101, 0.992989, -0.0196511, 0.116562, -10.6638, 6.10524, -21.8863)
+use_collision = true
+size = Vector3(7.40882, 11.6476, 13.2454)
+material = ExtResource("3_sg61b")
+
+[node name="Wall5" type="CSGBox3D" parent="Geometry/navigationRegion3d" index="4"]
+transform = Transform3D(0.116584, 9.19825e-10, -0.993181, -0.457846, 0.887405, -0.0537443, 0.881354, 0.46099, 0.103458, -5.41424, 9.28724, -14.2329)
+use_collision = true
+size = Vector3(10.6706, 0.505432, 4.72327)
+material = ExtResource("3_sg61b")
+
+[node name="Wall2" type="CSGBox3D" parent="Geometry/navigationRegion3d" index="5"]
 transform = Transform3D(0.622883, 0, 0.782315, 0, 1, 0, -0.782315, 0, 0.622883, -8.91677, 3.0503, 12.741)
 use_collision = true
 size = Vector3(3.27371, 3.88391, 13.5757)
 material = ExtResource("3_sg61b")
 
-[node name="csgCombiner3d" type="CSGCombiner3D" parent="Geometry/navigationRegion3d" index="4"]
+[node name="csgCombiner3d" type="CSGCombiner3D" parent="Geometry/navigationRegion3d" index="6"]
 transform = Transform3D(0.999206, 0, 0.0398531, 0, 1, 0, -0.0398531, 0, 0.999206, 5.73819, 3.85398, 18.1434)
 use_collision = true
 
@@ -239,7 +251,7 @@ material = ExtResource("3_sg61b")
 [node name="keypadDoor" parent="Geometry/navigationRegion3d/csgCombiner3d" index="4" instance=ExtResource("8_8q3c1")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.691761, -2.35295, -4.63394)
 
-[node name="ground" type="CSGBox3D" parent="Geometry/navigationRegion3d" index="5"]
+[node name="ground" type="CSGBox3D" parent="Geometry/navigationRegion3d" index="7"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.44403, -895.199, 4.1167)
 use_collision = true
 size = Vector3(59.5736, 1793.4, 74.3643)

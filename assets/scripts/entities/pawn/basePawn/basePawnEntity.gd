@@ -401,6 +401,8 @@ func _ready() -> void:
 	fixRot()
 	setupPawnColor()
 	setupAnimationTree()
+	if !gameManager.getEventSignal("playerDied").is_connected(gameManager.doDeathEffect):
+		gameManager.getEventSignal("playerDied").connect(gameManager.doDeathEffect)
 	#getAllHitboxes()
 
 func _physics_process(delta:float) -> void:
@@ -540,8 +542,9 @@ func endPawn()->void:
 	$remover.start()
 	footstepSounds.queue_free()
 
+
 func endAttachedCam()->void:
-	if !attachedCam == null:
+	if attachedCam != null:
 		attachedCam.stopCameraRecoil()
 		attachedCam.cameraRotationUpdated.disconnect(doMeshRotation)
 		gameManager.getEventSignal("playerDied").emit()
@@ -549,6 +552,7 @@ func endAttachedCam()->void:
 		attachedCam.hud.hudEnabled = false
 		attachedCam.resetCamCast()
 		#Dialogic.end_timeline()
+
 
 func doKillEffect(deathDealer)->void:
 	if deathDealer != null:
@@ -569,14 +573,13 @@ func moveHitboxDecals(parent:Node3D = gameManager.world.worldParticles) ->void:
 
 
 func die(killer) -> void:
+	createRagdoll(lastHitPart, killer)
 	moveHitboxDecals()
 	animationTree.set("parameters/standToCrouchAdd/add_amount", 0)
 	animationTree.set("parameters/standToCrouchStrafe/add_amount", 0)
 	doKillEffect(killer)
-	await createRagdoll(lastHitPart, killer)
 	#moveDecalsToRagdoll(ragdoll)
 	endPawn()
-	endAttachedCam()
 	onPawnKilled.emit()
 	isPawnDead = true
 	killedPawn.emit()
@@ -666,6 +669,7 @@ func do_stairs(delta) -> void:
 
 
 func _on_health_component_health_depleted(dealer:BasePawn) -> void:
+	await get_tree().process_frame
 	if dealer != null:
 		die(dealer)
 	else:
@@ -673,15 +677,14 @@ func _on_health_component_health_depleted(dealer:BasePawn) -> void:
 
 
 func applyRagdollImpulse(ragdoll:PawnRagdoll,currentVelocity:Vector3,impulseBone:int = 0)->void:
-	for bones in ragdoll.physicalBoneSimulator.get_child_count():
-		var child = ragdoll.physicalBoneSimulator.get_child(bones)
-		if child is RagdollBone:
-			child.linear_velocity = currentVelocity
-			child.angular_velocity = currentVelocity
-			child.apply_central_impulse(currentVelocity)
-			if child.get_bone_id() == impulseBone:
+	for bones in ragdoll.physicalBoneSimulator.get_children():
+		if bones is RagdollBone:
+			bones.linear_velocity = currentVelocity
+			bones.angular_velocity = currentVelocity
+			bones.apply_central_impulse(currentVelocity)
+			if bones.get_bone_id() == impulseBone:
 				#ragdoll.startRagdoll()
-				child.apply_central_impulse(hitImpulse * randf_range(1.5,2))
+				bones.apply_central_impulse(hitImpulse * randf_range(1.5,2))
 
 func setRagdollPose(ragdoll:PawnRagdoll)->void:
 	for bones in ragdoll.ragdollSkeleton.get_bone_count():
@@ -697,13 +700,10 @@ func createRagdoll(impulse_bone : int = 0,killer = null)->PawnRagdoll:
 	var ragdoll = ragdollScene.instantiate()
 	collisionEnabled = false
 	self.hide()
-	setRagdollPositionAndRotation(ragdoll)
 	gameManager.world.worldMisc.add_child(ragdoll)
-	#moveDecalsToRagdoll(ragdoll)
+	setRagdollPositionAndRotation(ragdoll)
 	moveClothesToRagdoll(ragdoll)
 	ragdoll.setPawnMaterial(currentPawnMat)
-
-
 	setRagdollPose(ragdoll)
 	ragdoll.startRagdoll()
 
@@ -743,6 +743,7 @@ func createRagdoll(impulse_bone : int = 0,killer = null)->PawnRagdoll:
 		for bones in ragdoll.physicalBoneSimulator.get_child_count():
 			if ragdoll.physicalBoneSimulator.get_child(bones) is RagdollBone:
 				cam.camSpring.add_excluded_object(ragdoll.physicalBoneSimulator.get_child(bones).get_rid())
+		endAttachedCam()
 		attachedCam = null
 
 

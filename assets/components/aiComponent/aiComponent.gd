@@ -137,8 +137,6 @@ func _ready() -> void:
 		await get_tree().process_frame
 		if isInteractable:
 			setInteractablePawn(true)
-		if pawnOwner:
-			pawnOwner.healthComponent.healthDepleted.connect(ceaseAI)
 	else:
 		visualMesh.visible = true
 		visualMesh.mesh = createFOVModel()
@@ -162,8 +160,8 @@ func _physics_process(delta: float) -> void:
 
 
 func _ai_process() -> void:
-	pawnFSM._ai_process()
 	print("Processing..")
+	pawnFSM._ai_process()
 
 
 func createFOVModel()->ImmediateMesh:
@@ -322,11 +320,6 @@ func canSeeObject(object:Node3D)->bool:
 func getDirFromAngle(angleInDeg:float) -> Vector3:
 	return Vector3(sin(angleInDeg * deg_to_rad(angleInDeg)),0,cos(angleInDeg*deg_to_rad(angleInDeg)))
 
-
-func ceaseAI() -> void:
-	if isInDialogue:
-		#Dialogic.end_timeline()
-		pass
 
 
 func addRaycastException(object:Node3D) -> void:

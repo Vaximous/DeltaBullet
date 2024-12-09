@@ -140,6 +140,7 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 			return
 
 	if state.get_contact_count() > 0 and !boneState:
+		await get_tree().process_frame
 		if exclusionArray.has(state.get_contact_collider(0)):
 			return
 		var contactNormal = state.get_contact_local_normal(0)
@@ -156,7 +157,7 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 				healthComponent.damage(contactForce + randi_range(0,16))
 			if hardImpactEffectEnabled:
 				if impactEffectHard == null:
-					#await get_tree().process_frame
+					await get_tree().process_frame
 					if canBeDismembered:
 						healthComponent.damage(900,null)
 						pulverizeBone()
@@ -172,7 +173,7 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 				healthComponent.damage(contactForce + randi_range(0,10))
 			if mediumImpactEffectEnabled:
 				if impactEffectMedium == null:
-					#await get_tree().process_frame
+					await get_tree().process_frame
 					var particle = globalParticles.createParticle("BloodSpurt",self.position)
 					particle.rotation = self.rotation
 					particle.amount = randi_range(25,40)
@@ -185,7 +186,7 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 			audioCooldown = 0.45
 			if lightImpactEffectEnabled:
 				if impactEffectLight == null:
-					#await get_tree().process_frame
+					await get_tree().process_frame
 					var particle = globalParticles.createParticle("BloodSpurt",self.position)
 					particle.rotation = self.rotation
 					gameManager.sprayBlood(global_position,randi_range(1,3),10,1.2)
@@ -213,6 +214,7 @@ func hookes_law(displacement: Vector3, current_velocity: Vector3, stiffness: flo
 
 
 func pulverizeBone()->void:
+	#await get_tree().process_frame
 	ragdoll.ragdollSkeleton.set_bone_pose_scale(get_bone_id(),Vector3.ZERO)
 	ragdoll.ragdollSkeleton.force_update_bone_child_transform(get_bone_id())
 	if bonePulverized != true:

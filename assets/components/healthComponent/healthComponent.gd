@@ -29,13 +29,14 @@ func _ready()->void:
 	componentOwner = get_owner()
 
 func healthCheck()->void:
-	if health <= 0:
+	if health <= 0 and is_instance_valid(self):
 		await get_tree().process_frame
 		health = 0
-		if lastDealer!=null:
+		if lastDealer!=null and is_instance_valid(self) and is_instance_valid(lastDealer):
 			healthDepleted.emit(lastDealer)
 		else:
-			healthDepleted.emit(null)
+			if is_instance_valid(self):
+				healthDepleted.emit(null)
 		isDead = true
 
 func damage(amount:float, dealer:Node3D = null)->void:

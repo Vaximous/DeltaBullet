@@ -74,7 +74,7 @@ func _ready()-> void:
 	if startOnInstance:
 		startRagdoll()
 
-	physicalBoneSimulator.ragdoll = self
+	#physicalBoneSimulator.ragdoll = self
 	checkClothingHider()
 
 func startRagdoll()-> void:

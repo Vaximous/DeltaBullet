@@ -494,12 +494,13 @@ func removeShop()->void:
 
 
 func doDeathEffect()->void:
-	await get_tree().process_frame
-	const defaultTransitionType = Tween.TRANS_QUART
-	const defaultEaseType = Tween.EASE_OUT
-	var tween = create_tween()
-	Engine.time_scale = 0.25
-	tween.tween_property(Engine,"time_scale",1,1.5).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+	if UserConfig.game_slow_motion_death:
+		await get_tree().process_frame
+		const defaultTransitionType = Tween.TRANS_QUART
+		const defaultEaseType = Tween.EASE_OUT
+		var tween = create_tween()
+		Engine.time_scale = 0.25
+		tween.tween_property(Engine,"time_scale",1,1.5).set_ease(defaultEaseType).set_trans(defaultTransitionType)
 
 
 func createSplat(gposition:Vector3 = Vector3.ZERO,normal:Vector3 = Vector3.ZERO,colPoint:Vector3 = Vector3.ZERO)->void:

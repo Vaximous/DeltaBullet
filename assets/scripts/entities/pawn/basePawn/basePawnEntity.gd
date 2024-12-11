@@ -17,9 +17,6 @@ signal onPawnKilled
 signal hitboxAssigned(hitbox:Hitbox)
 signal headshottedPawn
 
-#Threading
-var thread1 : Thread = Thread.new()
-var thread2 : Thread = Thread.new()
 #Sounds
 @onready var soundHolder : Node3D = $Sounds
 @onready var equipSound : AudioStreamPlayer3D = $Sounds/equipSound
@@ -103,7 +100,7 @@ var direction : Vector3 = Vector3.ZERO:
 			#doMeshRotation()
 var meshRotation : float = 0.0:
 	set(value):
-		if value != meshRotation:
+		if value != meshRotation and !isPawnDead:
 			meshRotation = value
 			#doMeshRotation()
 ##Component Setup
@@ -412,7 +409,6 @@ func _physics_process(delta:float) -> void:
 			if isCurrentlyMoving():
 				setDirection.emit(direction)
 
-
 			if fallDamageEnabled:
 				if floorcheck.is_colliding():
 					if velocity.y <= -15:
@@ -425,78 +421,7 @@ func _physics_process(delta:float) -> void:
 			elif isDiving and isOnGround():
 				animationTree.set("parameters/dive_transition/transition_request", "not_diving")
 				isDiving = false
-#
-#
-		## Add the gravity
-		#if !is_on_floor():
-			#canJump = false
-			#velocity.y -= gravity * delta
-#
-		#if is_on_floor():
-			#isJumping = false
-			#animationTree.set("parameters/fallBlend/blend_amount", lerpf(animationTree.get("parameters/fallBlend/blend_amount"), 0.0, delta * 12))
-			##animationTree.set("parameters/jumpBlend/blend_amount", lerpf(animationTree.get("parameters/jumpBlend/blend_amount"), 0.0, delta * 12))
-			#if !meshLookAt:
-				#canJump = true
-			#elif meshLookAt and isFirstperson and animationTree.active:
-				#canJump = true
-#
-		#if !velocityComponent == null:
-			#velocity.x = velocityComponent.accelerateToVel(direction, delta, true, false, false).x
-			#velocity.z = velocityComponent.accelerateToVel(direction, delta, false, false, true).z
 
-		#Jump Animation
-			#if animationTree.active:
-				#if !is_on_floor():
-					#if velocity.y > 0:
-						#if animationTree.get("parameters/jumpshot/active") == false:
-							#animationTree.set("parameters/jumpshot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
-					#else:
-						#animationTree.set("parameters/jumpshot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FADE_OUT)
-						#animationTree.set("parameters/fallBlend/blend_amount", lerpf(animationTree.get("parameters/fallBlend/blend_amount"), 1.0, delta * 12))
-#
-				#animationTree.set("parameters/aimSprintStrafe/blend_position",Vector2(-velocity.x, -velocity.z).rotated(meshRotation))
-				#animationTree.set("parameters/strafeSpace/blend_position",animationTree.get("parameters/aimSprintStrafe/blend_position"))
-				#if meshLookAt:
-					##bodyIK.start()
-					##bodyIK.interpolation = lerpf(bodyIK.interpolation, 1, turnSpeed * delta)
-					#if is_on_floor():
-						#animationTree.set("parameters/aimTransition/transition_request", "aiming")
-						#if !isRunning:
-							#animationTree.set("parameters/strafeType/transition_request", "walking")
-						#else:
-							#animationTree.set("parameters/strafeType/transition_request", "running")
-					#else:
-						#animationTree.set("parameters/aimTransition/transition_request", "notAiming")
-				#else:
-					#animationTree.set("parameters/aimTransition/transition_request", "notAiming")
-
-					#bodyIK.interpolation = lerpf(bodyIK.interpolation, 0, turnSpeed * delta)
-					#if bodyIK.interpolation <= 0:
-						#bodyIK.stop()
-					#if isMoving:
-						#if !isRunning:
-							#if !velocityComponent == null:
-								#animationTree.set("parameters/runBlend/blend_amount", lerpf(animationTree.get("parameters/runBlend/blend_amount"), 0.0, delta * velocityComponent.getAcceleration()))
-								#animationTree.set("parameters/idleSpace/blend_position", lerpf(animationTree.get("parameters/idleSpace/blend_position"), 1, delta * velocityComponent.getAcceleration()))
-						#if isRunning:
-							#if !velocityComponent == null:
-								#animationTree.set("parameters/runBlend/blend_amount", lerpf(animationTree.get("parameters/runBlend/blend_amount"), 1.0, delta * velocityComponent.getAcceleration()))
-					#else:
-						#if !velocityComponent == null:
-							#animationTree.set("parameters/runBlend/blend_amount", lerpf(animationTree.get("parameters/runBlend/blend_amount"), 0.0, delta * velocityComponent.getAcceleration()))
-							#animationTree.set("parameters/idleSpace/blend_position", lerp(animationTree.get("parameters/idleSpace/blend_position"), 0.0, delta * velocityComponent.getAcceleration()))
-		#Move the pawn accordingly
-		#move_and_slide()
-
-		#Player movement
-		#if inputComponent:
-			#if inputComponent is Component:
-				#if inputComponent.movementEnabled:
-					#if Dialogic.current_timeline == null:
-						#direction = inputComponent.getInputDir().rotated(Vector3.UP, meshRotation)
-					#else:
-						#direction = Vector3.ZERO
 
 ##Checks to see if any required components (Base components) Are null
 func checkComponents():
@@ -558,7 +483,7 @@ func endAttachedCam()->void:
 
 
 func doKillEffect(deathDealer)->void:
-	if deathDealer != null:
+	if deathDealer != null and !deathDealer.isPawnDead and is_instance_valid(deathDealer):
 		if deathDealer.currentItem != null:
 			if deathDealer.currentItem.weaponResource.headDismember:
 				healthComponent.killedWithDismemberingWeapon.emit()
@@ -576,18 +501,20 @@ func moveHitboxDecals(parent:Node3D = gameManager.world.worldParticles) ->void:
 
 
 func die(killer) -> void:
-	createRagdoll(lastHitPart, killer)
-	moveHitboxDecals()
-	animationTree.set("parameters/standToCrouchAdd/add_amount", 0)
-	animationTree.set("parameters/standToCrouchStrafe/add_amount", 0)
-	doKillEffect(killer)
-	#moveDecalsToRagdoll(ragdoll)
-	endPawn()
-	onPawnKilled.emit()
-	isPawnDead = true
-	killedPawn.emit()
-	for hb in getAllHitboxes(): hb.queue_free()
-	queue_free()
+	if is_instance_valid(self) and !isPawnDead:
+		isPawnDead = true
+		killAllTweens()
+		createRagdoll(lastHitPart, killer)
+		moveHitboxDecals()
+		animationTree.set("parameters/standToCrouchAdd/add_amount", 0)
+		animationTree.set("parameters/standToCrouchStrafe/add_amount", 0)
+		doKillEffect(killer)
+		#moveDecalsToRagdoll(ragdoll)
+		endPawn()
+		onPawnKilled.emit()
+		#killedPawn.emit()
+		#self.queue_free()
+		self.call_deferred('queue_free')
 
 
 
@@ -673,10 +600,11 @@ func do_stairs(delta) -> void:
 
 func _on_health_component_health_depleted(dealer:BasePawn) -> void:
 	await get_tree().process_frame
-	if dealer != null:
-		die(dealer)
-	else:
-		die(null)
+	if !isPawnDead:
+		if dealer != null:
+			die(dealer)
+		else:
+			die(null)
 
 
 func applyRagdollImpulse(ragdoll:PawnRagdoll,currentVelocity:Vector3,impulseBone:int = 0)->void:
@@ -866,6 +794,32 @@ func moveDecalsToRagdoll(ragdoll:PawnRagdoll)->bool:
 
 func getAllHitboxes() -> Array[Hitbox]:
 	return hitboxes
+
+
+func killAllTweens()->void:
+	if throwableTween:
+		throwableTween.kill()
+	if leftHandTween:
+		leftHandTween.kill()
+	if rightHandTween:
+		rightHandTween.kill()
+	if runTween:
+		runTween.kill()
+	if fallTween:
+		fallTween.kill()
+	if idleSpaceTween:
+		idleSpaceTween.kill()
+	if crouchSpaceTween:
+		crouchSpaceTween.kill()
+	if bodyIKTween:
+		bodyIKTween.kill()
+	if meshRotationTween:
+		meshRotationTween.kill()
+	if meshRotationTweenMovement:
+		meshRotationTweenMovement.kill()
+	if flinchTween:
+		flinchTween.kill()
+
 
 func jump() -> void:
 	playFootstepAudio()

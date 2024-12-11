@@ -392,11 +392,11 @@ func resetCamCast()->void:
 	camCast.position = Vector3.ZERO
 
 func emitKilleffect()->void:
-	camera.fov += randf_range(2.0,3.0)
+	camera.fov += randf_range(2.0,3.5)
 	killSound.play()
 	killEffect = true
 	fireRecoil(0,0,randf_range(0.5,0.8))
-	fireVignette(0.9,Color.LIGHT_CORAL)
+	fireVignette(0.9,Color.DARK_RED)
 	hud.getCrosshair().tintCrosshair(Color.RED)
 	hud.getCrosshair().addSize(1.5)
 

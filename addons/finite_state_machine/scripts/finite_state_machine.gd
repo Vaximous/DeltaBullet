@@ -87,6 +87,11 @@ func _exit_tree() -> void:
 		current_state.state_exited.emit()
 
 
+func get_state(state:NodePath)->StateMachineState:
+	var getState := get_node(state) as StateMachineState
+	return getState
+
+
 # Changes state to the one at the given path relative to the state machine node. This function can
 # be used instead of setting 'current_state' directly to change to a state with the given name.
 # If the node at the given path is not a StateMachineState node, the current state won't be changed

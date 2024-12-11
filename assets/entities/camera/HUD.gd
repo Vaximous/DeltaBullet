@@ -23,6 +23,7 @@ var slidingCrosshairPos : Vector2 = Vector2.ZERO
 @onready var bulletTimeOff : AudioStreamPlayer = $bulletTimeFlash/bulletTimeOff
 @onready var fpsLabel = $FPSCounter/label
 @onready var interactAnim = $Interact/interactAnimPlayer
+var flashTween : Tween
 var interactVisible:bool = false:
 	set(value):
 		interactVisible = value
@@ -42,11 +43,13 @@ func _ready()->void:
 
 
 func flashColor(color:Color)->void:
-	var tween = create_tween()
+	if flashTween:
+		flashTween.kill()
+	flashTween = create_tween()
 	const defaultTransitionType = Tween.TRANS_QUART
 	const defaultEaseType = Tween.EASE_OUT
 	bulletTimeFlash.color = color
-	tween.tween_property(bulletTimeFlash,"color",Color.TRANSPARENT,1).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+	flashTween.parallel().tween_property(bulletTimeFlash,"color",Color.TRANSPARENT,1).set_ease(defaultEaseType).set_trans(defaultTransitionType)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta)->void:

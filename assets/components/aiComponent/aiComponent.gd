@@ -487,5 +487,6 @@ func setupNav()->void:
 func pawnDamaged(amount,impulse,vector, dealer)->void:
 	if dealer:
 		lookAtPosition(dealer.global_position)
-		pawnFSM.change_state("Attack")
+		if pawnFSM.current_state != pawnFSM.get_state("Attack"):
+			pawnFSM.change_state("Attack")
 		targetedPawn = dealer

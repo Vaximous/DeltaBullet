@@ -18,9 +18,9 @@ func _ready()->void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta:float)->void:
 	if isMouseHidden():
-		if mouseActionsEnabled:
+		if mouseActionsEnabled and is_instance_valid(controllingPawn):
 			if Input.is_action_pressed("gThrowThrowable"):
-				if controllingPawn:
+				if is_instance_valid(controllingPawn):
 					controllingPawn.freeAim = true
 					if !controllingPawn.isArmingThrowable and !controllingPawn.isThrowing:
 						controllingPawn.meshRotation = controllingPawn.attachedCam.camRot

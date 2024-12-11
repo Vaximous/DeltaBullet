@@ -41,11 +41,11 @@ func _ready()->void:
 	#Dialogic.timeline_ended.connect(gameManager.hideMouse)
 
 
-func flashBulletTime()->void:
+func flashColor(color:Color)->void:
 	var tween = create_tween()
 	const defaultTransitionType = Tween.TRANS_QUART
 	const defaultEaseType = Tween.EASE_OUT
-	bulletTimeFlash.color = Color.WHITE
+	bulletTimeFlash.color = color
 	tween.tween_property(bulletTimeFlash,"color",Color.TRANSPARENT,1).set_ease(defaultEaseType).set_trans(defaultTransitionType)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

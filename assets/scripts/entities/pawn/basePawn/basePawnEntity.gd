@@ -545,7 +545,9 @@ func endPawn()->void:
 
 func endAttachedCam()->void:
 	if attachedCam != null:
-		gameManager.bulletTime = false
+		if gameManager.bulletTime:
+			gameManager.bulletTime = false
+		attachedCam.hud.flashColor(Color.DARK_RED)
 		attachedCam.stopCameraRecoil()
 		attachedCam.cameraRotationUpdated.disconnect(doMeshRotation)
 		gameManager.getEventSignal("playerDied").emit()

@@ -569,7 +569,7 @@ func getShortTweenAngle(currentAngle:float,targetAngle:float)->float:
 
 func disableBulletTime()->void:
 	if activeCamera:
-		activeCamera.hud.flashBulletTime()
+		activeCamera.hud.flashColor(Color.WHITE)
 		activeCamera.hud.bulletTimeOff.play()
 	await get_tree().process_frame
 	const defaultTransitionType = Tween.TRANS_QUART
@@ -580,7 +580,7 @@ func disableBulletTime()->void:
 
 func enableBulletTime()->void:
 	if activeCamera:
-		activeCamera.hud.flashBulletTime()
+		activeCamera.hud.flashColor(Color.WHITE)
 		activeCamera.hud.bulletTimeOn.play()
 	const defaultTransitionType = Tween.TRANS_QUART
 	const defaultEaseType = Tween.EASE_OUT

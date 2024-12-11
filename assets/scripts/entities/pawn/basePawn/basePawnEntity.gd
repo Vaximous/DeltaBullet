@@ -600,8 +600,8 @@ func do_stairs(delta) -> void:
 
 func _on_health_component_health_depleted(dealer:BasePawn) -> void:
 	await get_tree().process_frame
-	if !isPawnDead:
-		if dealer != null:
+	if !isPawnDead and is_instance_valid(self):
+		if is_instance_valid(dealer):
 			die(dealer)
 		else:
 			die(null)
@@ -1137,7 +1137,8 @@ func flinch() -> void:
 			#disableBodyIK()
 
 func _on_health_component_on_damaged(dealer:Node3D, hitDirection:Vector3)->void:
-	flinch()
+	if is_instance_valid(self) and !isPawnDead:
+		flinch()
 
 func armThrowable()->void:
 	if canThrowThrowable and !isArmingThrowable and throwableAmount>0:

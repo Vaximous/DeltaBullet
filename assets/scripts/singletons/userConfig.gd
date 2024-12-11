@@ -1,6 +1,7 @@
 extends Node
 
 #game configs
+var game_slow_motion_death : bool = false
 var game_lowHP_ambience : bool = false
 var game_show_fps : bool = false
 var game_camera_screentilt_always : bool = false

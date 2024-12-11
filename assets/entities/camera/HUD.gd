@@ -18,6 +18,9 @@ var slidingCrosshairPos : Vector2 = Vector2.ZERO
 @export var hudEnabled = true
 @onready var healthBar = $hpBar
 @onready var fpsControl = $FPSCounter
+@onready var bulletTimeFlash : ColorRect = $bulletTimeFlash
+@onready var bulletTimeOn : AudioStreamPlayer = $bulletTimeFlash/bulletTimeOn
+@onready var bulletTimeOff : AudioStreamPlayer = $bulletTimeFlash/bulletTimeOff
 @onready var fpsLabel = $FPSCounter/label
 @onready var interactAnim = $Interact/interactAnimPlayer
 var interactVisible:bool = false:
@@ -36,6 +39,14 @@ func _ready()->void:
 	#Dialogic.timeline_ended.connect(enableHud)
 	#Dialogic.timeline_started.connect(gameManager.showMouse)
 	#Dialogic.timeline_ended.connect(gameManager.hideMouse)
+
+
+func flashBulletTime()->void:
+	var tween = create_tween()
+	const defaultTransitionType = Tween.TRANS_QUART
+	const defaultEaseType = Tween.EASE_OUT
+	bulletTimeFlash.color = Color.WHITE
+	tween.tween_property(bulletTimeFlash,"color",Color.TRANSPARENT,1).set_ease(defaultEaseType).set_trans(defaultTransitionType)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta)->void:

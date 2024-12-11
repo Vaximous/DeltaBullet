@@ -43,6 +43,8 @@ var pawnDebug : bool = false
 var userDir = DirAccess.open("user://")
 
 #Ingame
+var bulletTime : bool = false
+var canBulletTime : bool = true
 var temporaryPawnInfo : Array
 var playerPosition : Vector3 = Vector3.ZERO
 var playerPawns : Array[BasePawn] = []
@@ -563,6 +565,28 @@ func preloadAllMaterials():
 
 func getShortTweenAngle(currentAngle:float,targetAngle:float)->float:
 	return currentAngle + wrapf(targetAngle-currentAngle,-PI,PI)
+
+
+func disableBulletTime()->void:
+	if activeCamera:
+		activeCamera.hud.flashBulletTime()
+		activeCamera.hud.bulletTimeOff.play()
+	await get_tree().process_frame
+	const defaultTransitionType = Tween.TRANS_QUART
+	const defaultEaseType = Tween.EASE_OUT
+	var tween = create_tween()
+	tween.parallel().tween_property(Engine,"time_scale",1,2).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+	bulletTime = false
+
+func enableBulletTime()->void:
+	if activeCamera:
+		activeCamera.hud.flashBulletTime()
+		activeCamera.hud.bulletTimeOn.play()
+	const defaultTransitionType = Tween.TRANS_QUART
+	const defaultEaseType = Tween.EASE_OUT
+	var tween = create_tween()
+	tween.parallel().tween_property(Engine,"time_scale",0.55,1.5).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+	bulletTime = true
 
 
 func setSoundVariables(sound:AudioStreamPlayer3D,bus:StringName = &"Sounds")->void:

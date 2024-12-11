@@ -109,6 +109,11 @@ func _input(event: InputEvent) -> void:
 					if controllingPawn.canJump:
 						controllingPawn.jump()
 
+			if event.is_action_pressed("gBulletTimeToggle"):
+				#emit_signal("actionPressed", str(event.keycode))
+				if controllingPawn:
+					controllingPawn.toggleBulletTime()
+
 			if event.is_action_pressed("gReloadWeapon"):
 				#emit_signal("actionPressed", str(event.keycode))
 				if controllingPawn:

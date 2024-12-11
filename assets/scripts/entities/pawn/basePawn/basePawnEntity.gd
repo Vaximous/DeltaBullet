@@ -545,6 +545,7 @@ func endPawn()->void:
 
 func endAttachedCam()->void:
 	if attachedCam != null:
+		gameManager.bulletTime = false
 		attachedCam.stopCameraRecoil()
 		attachedCam.cameraRotationUpdated.disconnect(doMeshRotation)
 		gameManager.getEventSignal("playerDied").emit()
@@ -1461,6 +1462,21 @@ func dive()->void:
 	isDiving = true
 	#disableBodyIK()
 	#bodyIKMarker.position += diveDirection * diveForce
+
+
+func setBulletTime(value:bool)->void:
+	if value:
+		gameManager.enableBulletTime()
+	else:
+		gameManager.disableBulletTime()
+
+
+func toggleBulletTime()->void:
+	if gameManager.bulletTime:
+		setBulletTime(false)
+	else:
+		if gameManager.canBulletTime:
+			setBulletTime(true)
 
 func playInteractAnimation()->void:
 	animationTree.set("parameters/useType/transition_request", "interactL")

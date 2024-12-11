@@ -1,0 +1,515 @@
+[gd_scene load_steps=28 format=3 uid="uid://1d1rfqprpnrb"]
+
+[ext_resource type="Script" path="res://assets/entities/camera/HUD.gd" id="1_on6xd"]
+[ext_resource type="FontFile" uid="uid://xmwjvmqspojb" path="res://assets/fonts/Grand_Aventure_Text.otf" id="2_tf7jg"]
+[ext_resource type="Texture2D" uid="uid://dc3fkfugwvtla" path="res://assets/textures/misc/company-logo (1).png" id="3_4nkiw"]
+[ext_resource type="Texture2D" uid="uid://birbjoai58xb7" path="res://assets/textures/crosshair/crosshair001.png" id="4_uhc5s"]
+[ext_resource type="AudioStream" uid="uid://d3eqn61hfgwuf" path="res://assets/sounds/playerhurt/playerhurtambience.wav" id="5_dhgxm"]
+[ext_resource type="Texture2D" uid="uid://bkhy36pmg4nfi" path="res://assets/textures/ui/hpBar.png" id="6_0pnxc"]
+[ext_resource type="Texture2D" uid="uid://btlv87lcgekb7" path="res://assets/textures/ui/healthbar.png" id="7_mtxcq"]
+[ext_resource type="Texture2D" uid="uid://btse3nqgw3085" path="res://assets/textures/ui/ammoBar.png" id="8_x878b"]
+[ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="9_bxaeg"]
+[ext_resource type="FontFile" uid="uid://b3s7umd01feyu" path="res://assets/fonts/Carthage Pro Regular.ttf" id="10_siy77"]
+[ext_resource type="AudioStream" uid="uid://doah0b50uqi2n" path="res://assets/sounds/ui/uiSoft.wav" id="11_mgkvc"]
+[ext_resource type="AudioStream" uid="uid://08mwbmwvrolu" path="res://assets/sounds/ui/uiAppear2.wav" id="12_vhfnq"]
+[ext_resource type="AudioStream" uid="uid://d0dglkiwj36a3" path="res://assets/sounds/misc/bullettimeon.wav" id="13_paei5"]
+[ext_resource type="AudioStream" uid="uid://d3dmtb1tyo4ct" path="res://assets/sounds/misc/bullettimeoff.wav" id="14_i7djv"]
+
+[sub_resource type="Theme" id="Theme_wcn1k"]
+default_font = ExtResource("2_tf7jg")
+
+[sub_resource type="GDScript" id="GDScript_quas3"]
+resource_name = "crosshair"
+script/source = "extends TextureRect
+const  defaultCrosshair = preload(\"res://assets/textures/crosshair/crosshair001.png\")
+var positionOverride = get_viewport_rect().size/2 - pivot_offset
+const defaultCrosshairSize : Vector2 = Vector2(0.8,0.8)
+var crosshairSize : Vector2 = Vector2(0.8,0.8)
+var crosshairSizeSpeed = 0.07
+const defaultTint : Color = Color.WHITE
+var tiltSpeed = 15.0
+var tintSpeed = 2.5
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	positionOverride = get_viewport_rect().size/2 - pivot_offset
+	setCrosshair(defaultCrosshair)
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _physics_process(delta):
+	if UserConfig.game_crosshair_dynamic_position:
+		setOverride()
+	rotation = lerpf(rotation,0.0,delta*tiltSpeed)
+	scale = lerp(scale,crosshairSize,crosshairSizeSpeed)
+	#self.scale = clamp(scale,Vector2(0.005,0.005),Vector2(10.5,10.5))
+	self_modulate =  lerp(self_modulate,defaultTint,tintSpeed*delta)
+
+
+func setOverride():
+	if positionOverride != null:
+		position = positionOverride - pivot_offset
+	else:
+		position = get_viewport_rect().size/2 - pivot_offset
+
+func addSize(sizeAmount:float = 0.1):
+	self.scale += Vector2(sizeAmount,sizeAmount)
+
+func tintCrosshair(tint:Color):
+	self_modulate = tint
+
+func setCrosshair(crosshairTexture):
+	if crosshairTexture != null:
+		texture = crosshairTexture
+	else:
+		texture = defaultCrosshair
+
+func addTilt(tilt:float = 0.0):
+	rotation += tilt
+"
+
+[sub_resource type="Shader" id="Shader_1wy2d"]
+code = "shader_type canvas_item;
+uniform vec4 color: source_color;
+uniform float multiplier = 0.2;
+uniform float softness = 3.0;
+
+void fragment() {
+	float value = distance(UV,vec2(0.5));
+	COLOR = vec4(color.rgb,smoothstep(multiplier,softness,value));
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5giah"]
+shader = SubResource("Shader_1wy2d")
+shader_parameter/color = Color(0, 0, 0, 1)
+shader_parameter/multiplier = 0.43
+shader_parameter/softness = 0.9
+
+[sub_resource type="Shader" id="Shader_kenmw"]
+code = "shader_type canvas_item;
+uniform vec4 color: source_color;
+uniform float multiplier = 0.2;
+uniform float softness = 3.0;
+
+void fragment() {
+	float value = distance(UV,vec2(0.5));
+	COLOR = vec4(color.rgb,smoothstep(multiplier,softness,value));
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_b2o42"]
+shader = SubResource("Shader_kenmw")
+shader_parameter/color = Color(0.666667, 0, 0, 1)
+shader_parameter/multiplier = 0.25
+shader_parameter/softness = 0.9
+
+[sub_resource type="Gradient" id="Gradient_jat1a"]
+offsets = PackedFloat32Array(0, 0.995455, 1)
+colors = PackedColorArray(0.505882, 0, 0.0470588, 0.784314, 0.439216, 0.0784314, 0, 0, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_l0xuj"]
+gradient = SubResource("Gradient_jat1a")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_pjbx3"]
+texture = SubResource("GradientTexture1D_l0xuj")
+
+[sub_resource type="Animation" id="Animation_jcse6"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("panel:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(205, 25)]
+}
+
+[sub_resource type="Animation" id="Animation_1hh6o"]
+resource_name = "rolldown"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("panel:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.495688),
+"transitions": PackedFloat32Array(0.196146, 1),
+"update": 0,
+"values": [Vector2(205, 25), Vector2(5, 25)]
+}
+
+[sub_resource type="Animation" id="Animation_tl6cg"]
+resource_name = "rollover"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("panel:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.153893, 1),
+"update": 0,
+"values": [Vector2(5, 25), Vector2(205, 25)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_uw0ow"]
+_data = {
+"RESET": SubResource("Animation_jcse6"),
+"rolldown": SubResource("Animation_1hh6o"),
+"rollover": SubResource("Animation_tl6cg")
+}
+
+[node name="HUD" type="Control" node_paths=PackedStringArray("crosshair")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 1
+script = ExtResource("1_on6xd")
+interactionOffset = Vector2(65.58, 0)
+crosshair = NodePath("Crosshair")
+
+[node name="WIP" type="Label" parent="."]
+visible = false
+self_modulate = Color(1, 1, 1, 0.611765)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -350.5
+offset_right = 350.5
+offset_bottom = 37.0
+grow_horizontal = 2
+theme = SubResource("Theme_wcn1k")
+theme_override_font_sizes/font_size = 33
+text = "WORK IN PROGRESS - DOES NOT REPRESENT THE FINAL LOOK OF THE GAME"
+
+[node name="Logo" type="TextureRect" parent="."]
+self_modulate = Color(1, 1, 1, 0.372549)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -167.0
+offset_top = -268.0
+offset_bottom = -85.0
+grow_horizontal = 0
+grow_vertical = 0
+texture = ExtResource("3_4nkiw")
+expand_mode = 1
+
+[node name="Crosshair" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -36.0
+offset_top = -36.0
+offset_right = 36.0
+offset_bottom = 36.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(36.255, 36.145)
+texture = ExtResource("4_uhc5s")
+script = SubResource("GDScript_quas3")
+
+[node name="vignette" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_5giah")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="lowHP" type="AudioStreamPlayer" parent="vignette"]
+stream = ExtResource("5_dhgxm")
+volume_db = -30.23
+pitch_scale = 1.75
+bus = &"Sounds"
+
+[node name="killVignette" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_b2o42")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="healthTexture" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0.639216)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -77.0
+offset_right = 535.0
+offset_bottom = 27.0
+grow_vertical = 0
+scale = Vector2(0.745, 0.745)
+texture = ExtResource("6_0pnxc")
+expand_mode = 2
+
+[node name="hpBG" type="TextureProgressBar" parent="."]
+modulate = Color(0.207843, 0.054902, 0, 1)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 3.0
+offset_top = -66.0
+offset_right = 509.0
+offset_bottom = 24.0
+grow_vertical = 0
+scale = Vector2(0.745, 0.745)
+step = 0.0
+value = 100.0
+nine_patch_stretch = true
+stretch_margin_left = 190
+stretch_margin_right = 275
+texture_progress = ExtResource("7_mtxcq")
+
+[node name="hpBar" type="TextureProgressBar" parent="."]
+modulate = Color(0.639216, 0.054902, 0, 1)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 3.0
+offset_top = -66.0
+offset_right = 509.0
+offset_bottom = 24.0
+grow_vertical = 0
+scale = Vector2(0.745, 0.745)
+step = 0.0
+value = 62.595
+nine_patch_stretch = true
+stretch_margin_left = 190
+stretch_margin_right = 275
+texture_progress = ExtResource("7_mtxcq")
+
+[node name="weaponBar" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -242.0
+offset_top = -88.0
+grow_horizontal = 0
+grow_vertical = 0
+texture = ExtResource("8_x878b")
+expand_mode = 2
+
+[node name="currentAmmoCount" type="Label" parent="weaponBar"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = 225.0
+offset_top = 30.0
+offset_right = 265.0
+offset_bottom = -11.0
+grow_vertical = 2
+rotation = 0.785397
+theme = ExtResource("9_bxaeg")
+theme_override_font_sizes/font_size = 46
+text = "30"
+
+[node name="currentMagCount" type="Label" parent="weaponBar"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = 199.0
+offset_top = 56.0
+offset_right = 242.0
+offset_bottom = 8.0
+grow_vertical = 2
+rotation = 0.785397
+theme = ExtResource("9_bxaeg")
+theme_override_colors/font_color = Color(0.593134, 0.593134, 0.593134, 1)
+theme_override_font_sizes/font_size = 26
+text = "128"
+
+[node name="weaponName" type="Label" parent="weaponBar"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = 31.0
+offset_top = -12.0
+offset_right = 240.0
+offset_bottom = -68.0
+grow_vertical = 2
+theme = ExtResource("9_bxaeg")
+theme_override_font_sizes/font_size = 31
+text = "Honeybadger"
+horizontal_alignment = 2
+vertical_alignment = 1
+text_direction = 1
+
+[node name="weaponIcon" type="TextureRect" parent="weaponBar"]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 5.0
+offset_right = 170.0
+offset_bottom = 87.0
+
+[node name="FPSCounter" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -62.0
+offset_bottom = 39.0
+grow_horizontal = 0
+
+[node name="colorRect" type="ColorRect" parent="FPSCounter"]
+layout_mode = 0
+offset_right = 62.0
+offset_bottom = 38.0
+color = Color(0.133333, 0.133333, 0.133333, 0.788235)
+
+[node name="label" type="Label" parent="FPSCounter"]
+layout_mode = 0
+offset_left = 5.0
+offset_right = 70.0
+offset_bottom = 37.0
+theme_override_fonts/font = ExtResource("10_siy77")
+text = "FPS:"
+vertical_alignment = 1
+
+[node name="Interact" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="panel" type="Panel" parent="Interact"]
+layout_mode = 0
+offset_left = -5.0
+offset_top = 43.0
+offset_right = 200.0
+offset_bottom = 68.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_pjbx3")
+
+[node name="richTextLabel" type="RichTextLabel" parent="Interact/panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = -3.171
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_top = 79.275
+offset_right = 209.5
+mouse_filter = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.513726)
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_outline_size = 4
+theme_override_fonts/normal_font = ExtResource("10_siy77")
+bbcode_enabled = true
+text = "Use \"Item\""
+
+[node name="interactAnimPlayer" type="AnimationPlayer" parent="Interact"]
+libraries = {
+"": SubResource("AnimationLibrary_uw0ow")
+}
+speed_scale = 1.733
+
+[node name="audioStreamPlayer" type="AudioStreamPlayer" parent="Interact"]
+stream = ExtResource("11_mgkvc")
+volume_db = -15.0
+pitch_scale = 2.0
+bus = &"UI"
+
+[node name="textboxAppearSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_vhfnq")
+volume_db = -10.0
+bus = &"UI"
+
+[node name="questNotification" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_bottom = 0.141
+offset_right = 553.0
+offset_bottom = 0.0999832
+grow_vertical = 2
+
+[node name="marginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 0.613
+anchor_right = 1.0
+anchor_bottom = 0.613
+offset_left = -428.0
+offset_top = -170.7
+offset_bottom = 171.3
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="control" type="Control" parent="marginContainer"]
+layout_mode = 2
+
+[node name="gameNotifications" type="VBoxContainer" parent="marginContainer/control"]
+layout_mode = 2
+offset_right = 428.0
+offset_bottom = 412.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="bulletTimeFlash" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+color = Color(1, 1, 1, 0)
+
+[node name="bulletTimeOn" type="AudioStreamPlayer" parent="bulletTimeFlash"]
+stream = ExtResource("13_paei5")
+volume_db = -7.0
+bus = &"UI"
+
+[node name="bulletTimeOff" type="AudioStreamPlayer" parent="bulletTimeFlash"]
+stream = ExtResource("14_i7djv")
+volume_db = -7.0
+bus = &"UI"
+
+[connection signal="interactionFound" from="." to="Interact/interactAnimPlayer" method="play"]
+[connection signal="interactionFound" from="." to="Interact/audioStreamPlayer" method="play"]
+[connection signal="interactionFound" from="." to="Interact/interactAnimPlayer" method="set_current_animation" binds= ["rollover"]]
+[connection signal="interactionunFound" from="." to="Interact/interactAnimPlayer" method="play"]
+[connection signal="interactionunFound" from="." to="Interact/interactAnimPlayer" method="set_current_animation" binds= ["rolldown"]]

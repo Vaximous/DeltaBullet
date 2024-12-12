@@ -45,8 +45,6 @@ class_name duplicatorComponent
 
 var dup_pool : Array[Node]
 
-func _init()->void:
-	gameManager.freeOrphans.connect(free_me_orphan)
 
 func _ready() -> void:
 	if use_pooling:

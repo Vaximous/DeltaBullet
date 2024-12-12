@@ -145,61 +145,61 @@ func updateRagdollScale()->void:
 		pulverizeBone()
 		#bonePulverized = true
 
-#func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
-	#boneState = state.sleeping
-	#if audioCooldown > 0 or boneState == true:
-			#return
-#
-	#if state.get_contact_count() > 0 and !boneState and ragdoll != null:
-		#if exclusionArray.has(state.get_contact_collider(0)):
-			#return
-		##var contactNormal = state.get_contact_local_normal(0)
-		##var contactDot = state.get_contact_local_velocity_at_position(0).normalized().dot(contactNormal)
-		#var contactForce = state.get_contact_local_velocity_at_position(0).length()
-		##contactForce = clampf(contactForce,0,heavyImpactThreshold)
-		#if gameManager.debugEnabled:
-			#print("%s Contact Force : %s"%[name,contactForce])
-		##audioStreamPlayer.attenuation_filter_db = lerp(-20, 0, clamp(abs(contactDot) * contactForce, 0, 1))
-		#if contactForce > heavyImpactThreshold:
-			#audioStreamPlayer.stream = heavyImpactSounds
-			#audioStreamPlayer.play()
-			#audioCooldown = 0.45
-			#if healthComponent:
-				#healthComponent.damage(contactForce + randi_range(0,16))
-			#if hardImpactEffectEnabled:
-				#if impactEffectHard == null:
-					#if canBeDismembered:
-						#healthComponent.damage(900,null)
-						#pulverizeBone()
-					#var particle = globalParticles.createParticle("BloodSpurt",self.position)
-					#particle.rotation = self.rotation
-					##particle.amount = randi_range(25,75)
-					#gameManager.sprayBlood(global_position,randi_range(1,3),10,1.2)
-		#elif contactForce > mediumImpactThreshold:
-			#audioStreamPlayer.stream = mediumImpactSounds
-			#audioStreamPlayer.play()
-			#audioCooldown = 0.45
-			#if healthComponent:
-				#healthComponent.damage(contactForce + randi_range(0,10))
-			#if mediumImpactEffectEnabled:
-				#if impactEffectMedium == null:
-					##await get_tree().process_frame
-					#var particle = globalParticles.createParticle("BloodSpurt",self.position)
-					#particle.rotation = self.rotation
-					##particle.amount = randi_range(25,40)
-					#gameManager.sprayBlood(global_position,randi_range(1,3),10,1.2)
-		#elif contactForce > lightImpactThreshold:
-			#audioStreamPlayer.stream = lightImpactSounds
-			##var fac = (contactForce - lightImpactThreshold) / (mediumImpactThreshold - lightImpactThreshold)
-			##audioStreamPlayer.volume_db = lerp(-2, 5, fac)
-			#audioStreamPlayer.play()
-			#audioCooldown = 0.45
-			#if lightImpactEffectEnabled:
-				#if impactEffectLight == null:
-					##await get_tree().process_frame
-					#var particle = globalParticles.createParticle("BloodSpurt",self.position)
-					#particle.rotation = self.rotation
-					#gameManager.sprayBlood(global_position,randi_range(1,3),10,1.2)
+func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
+	boneState = state.sleeping
+	if audioCooldown > 0 or boneState == true:
+			return
+
+	if state.get_contact_count() > 0 and !boneState and ragdoll != null:
+		if exclusionArray.has(state.get_contact_collider(0)):
+			return
+		#var contactNormal = state.get_contact_local_normal(0)
+		#var contactDot = state.get_contact_local_velocity_at_position(0).normalized().dot(contactNormal)
+		var contactForce = state.get_contact_local_velocity_at_position(0).length()
+		#contactForce = clampf(contactForce,0,heavyImpactThreshold)
+		if gameManager.debugEnabled:
+			print("%s Contact Force : %s"%[name,contactForce])
+		#audioStreamPlayer.attenuation_filter_db = lerp(-20, 0, clamp(abs(contactDot) * contactForce, 0, 1))
+		if contactForce > heavyImpactThreshold:
+			audioStreamPlayer.stream = heavyImpactSounds
+			audioStreamPlayer.play()
+			audioCooldown = 0.45
+			if healthComponent:
+				healthComponent.damage(contactForce + randi_range(0,16))
+			if hardImpactEffectEnabled:
+				if impactEffectHard == null:
+					if canBeDismembered:
+						healthComponent.damage(900,null)
+						pulverizeBone()
+					var particle = globalParticles.createParticle("BloodSpurt",self.position)
+					particle.rotation = self.rotation
+					#particle.amount = randi_range(25,75)
+					gameManager.sprayBlood(global_position,randi_range(1,3),10,1.2)
+		elif contactForce > mediumImpactThreshold:
+			audioStreamPlayer.stream = mediumImpactSounds
+			audioStreamPlayer.play()
+			audioCooldown = 0.45
+			if healthComponent:
+				healthComponent.damage(contactForce + randi_range(0,10))
+			if mediumImpactEffectEnabled:
+				if impactEffectMedium == null:
+					#await get_tree().process_frame
+					var particle = globalParticles.createParticle("BloodSpurt",self.position)
+					particle.rotation = self.rotation
+					#particle.amount = randi_range(25,40)
+					gameManager.sprayBlood(global_position,randi_range(1,3),10,1.2)
+		elif contactForce > lightImpactThreshold:
+			audioStreamPlayer.stream = lightImpactSounds
+			#var fac = (contactForce - lightImpactThreshold) / (mediumImpactThreshold - lightImpactThreshold)
+			#audioStreamPlayer.volume_db = lerp(-2, 5, fac)
+			audioStreamPlayer.play()
+			audioCooldown = 0.45
+			if lightImpactEffectEnabled:
+				if impactEffectLight == null:
+					#await get_tree().process_frame
+					var particle = globalParticles.createParticle("BloodSpurt",self.position)
+					particle.rotation = self.rotation
+					gameManager.sprayBlood(global_position,randi_range(1,3),10,1.2)
 
 
 #func _physics_process(delta)->void:
@@ -207,7 +207,7 @@ func updateRagdollScale()->void:
 		#audioCooldown -= delta
 
 func hit(dmg, dealer=null, hitImpulse:Vector3 = Vector3.ZERO, hitPoint:Vector3 = Vector3.ZERO)->void:
-	canBleed = true
+	#canBleed = true
 	emit_signal("onHit",hitImpulse,hitPoint)
 	apply_central_impulse(hitImpulse)
 	if get_bone_id() == 41:

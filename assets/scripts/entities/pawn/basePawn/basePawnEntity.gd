@@ -942,9 +942,6 @@ func unequipWeapon() -> void:
 func _on_free_aim_timer_timeout() -> void:
 	freeAim = false
 
-func _on_remover_timeout() -> void:
-	queue_free()
-
 func removeComponents() -> void:
 	inputComponent = null
 

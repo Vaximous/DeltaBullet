@@ -75,12 +75,12 @@ signal headshottedPawn
 
 var direction : Vector3 = Vector3.ZERO:
 	set(value):
-		if direction != value:
+		if direction != value and is_instance_valid(self):
 			direction = value
 			#print(direction)
 			directionChanged.emit()
 			setDirection.emit(direction)
-		if value != Vector3.ZERO:
+		if value != Vector3.ZERO and is_instance_valid(self):
 			direction = direction.normalized()
 			if isRunning:
 				setMovementState.emit(movementStates["sprint"])
@@ -100,7 +100,7 @@ var direction : Vector3 = Vector3.ZERO:
 			#doMeshRotation()
 var meshRotation : float = 0.0:
 	set(value):
-		if value != meshRotation and !isPawnDead:
+		if value != meshRotation and !isPawnDead and is_instance_valid(self):
 			meshRotation = value
 			#doMeshRotation()
 ##Component Setup
@@ -214,12 +214,14 @@ var preventWeaponFire : bool = false:
 		return isPawnDead
 @export var isMoving : bool = false:
 	set(value):
-		isMoving = value
-		if !isMoving:
-#			disableIdleSpaceBlend()
-#			disableRunBlend()
-			if footstepSounds.playing:
-				footstepSounds.stop()
+		if is_instance_valid(self):
+			isMoving = value
+			if !isMoving:
+	#			disableIdleSpaceBlend()
+	#			disableRunBlend()
+				if footstepSounds != null:
+					if footstepSounds.playing:
+						footstepSounds.stop()
 @export_subgroup("Movement")
 @export var diveForce : float = 6.5
 var diveDirection : Vector3
@@ -404,7 +406,7 @@ func _ready() -> void:
 
 func _physics_process(delta:float) -> void:
 	if pawnEnabled:
-		if !isPawnDead:
+		if !isPawnDead and is_instance_valid(self):
 			do_stairs(delta)
 			if isCurrentlyMoving():
 				setDirection.emit(direction)
@@ -464,7 +466,6 @@ func endPawn()->void:
 	currentItem = null
 	pawnEnabled = false
 	collisionEnabled = false
-	$remover.start()
 	footstepSounds.queue_free()
 
 
@@ -505,16 +506,17 @@ func die(killer) -> void:
 		isPawnDead = true
 		killAllTweens()
 		createRagdoll(lastHitPart, killer)
+		pawnEnabled = false
 		moveHitboxDecals()
 		animationTree.set("parameters/standToCrouchAdd/add_amount", 0)
 		animationTree.set("parameters/standToCrouchStrafe/add_amount", 0)
 		doKillEffect(killer)
 		#moveDecalsToRagdoll(ragdoll)
 		endPawn()
+		deleteAllHitboxes()
 		onPawnKilled.emit()
 		#killedPawn.emit()
-		#self.queue_free()
-		self.call_deferred('queue_free')
+		queue_free()
 
 
 
@@ -1426,6 +1428,11 @@ func setBulletTime(value:bool)->void:
 		gameManager.enableBulletTime()
 	else:
 		gameManager.disableBulletTime()
+
+
+func deleteAllHitboxes():
+	for hb in getAllHitboxes():
+		hb.queue_free()
 
 
 func toggleBulletTime()->void:

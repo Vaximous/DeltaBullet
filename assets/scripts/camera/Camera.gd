@@ -374,13 +374,14 @@ func fireRecoil(setRecoilX:float = 0.0,setRecoilY:float = 0.0,setRecoilZ:float =
 	if setRecoilZ:
 		camRecoil.z += setRecoilZ
 	if !useSetRecoil:
-		camTargetRot = Vector3(camRecoil.x, randf_range(0.0,camRecoil.y), randf_range(0.0,camRecoil.z) )
+		camTargetRot += Vector3(camRecoil.x, randf_range(0.0,camRecoil.y), randf_range(0.0,camRecoil.z) )
 	else:
-		camTargetRot = Vector3(setRecoilX, randf_range(-setRecoilY,setRecoilY), randf_range(-setRecoilZ,setRecoilZ) )
+		camTargetRot += Vector3(setRecoilX, randf_range(-setRecoilY,setRecoilY), randf_range(-setRecoilZ,setRecoilZ) )
 	if !isZoomed:
 		camera.fov += randf_range(0.8,1.6)
 	else:
 		camera.fov += randf_range(0.1,0.8)
+
 func applyWeaponSpread(spread)->void:
 	camCast.rotation += Vector3(randf_range(0.0, spread),randf_range(-spread, spread),0)
 	hud.getCrosshair().addSize(0.85)
@@ -392,12 +393,12 @@ func resetCamCast()->void:
 	camCast.position = Vector3.ZERO
 
 func emitKilleffect()->void:
-	camera.fov += randf_range(2.0,3.5)
+	camera.fov += randf_range(3.0,3.5)
 	killSound.play()
 	killEffect = true
-	fireRecoil(0,0,randf_range(0.5,0.8))
+	fireRecoil(0,0,randf_range(-20.8,21.2))
 	fireVignette(0.9,Color.DARK_RED)
-	hud.getCrosshair().tintCrosshair(Color.RED)
+	hud.getCrosshair().tintCrosshair(Color.DARK_RED)
 	hud.getCrosshair().addSize(1.5)
 
 func doHeadshotEffect()->void:

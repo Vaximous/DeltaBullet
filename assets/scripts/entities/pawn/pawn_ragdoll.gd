@@ -61,14 +61,8 @@ signal cameraAttached
 func _ready()-> void:
 	removeTimer.wait_time = UserConfig.game_ragdoll_remove_time
 	removeTimer.start()
-	for bones in physicalBoneSimulator.get_children().filter(func(x): return x is PhysicalBone3D):
-		physicsBones.append(bones)
-	for pb in physicsBones:
-		if pb.get_script() != null:
-			for b in physicsBones:
-				pb.exclusionArray.append(RID(b))
-				b.ownerSkeleton = ragdollSkeleton
-				b.ragdoll = self
+	appendPhysicalBoneArray()
+	setBoneOwners()
 
 	deathSound.play()
 	if startOnInstance:
@@ -77,8 +71,20 @@ func _ready()-> void:
 	#physicalBoneSimulator.ragdoll = self
 	checkClothingHider()
 
+func setBoneOwners()->void:
+	for pb in physicsBones:
+			if pb.get_script() != null:
+				for b in physicsBones:
+					pb.exclusionArray.append(RID(b))
+					b.ownerSkeleton = ragdollSkeleton
+					b.ragdoll = self
+
+func appendPhysicalBoneArray()->void:
+	for bones in physicalBoneSimulator.get_children().filter(func(x): return x is PhysicalBone3D):
+		physicsBones.append(bones)
+
 func startRagdoll()-> void:
-	ragdollSkeleton.animate_physical_bones = true
+	#ragdollSkeleton.animate_physical_bones = true
 	physicalBoneSimulator.physical_bones_start_simulation()
 	checkClothingHider()
 

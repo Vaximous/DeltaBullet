@@ -4,7 +4,7 @@ signal isAsleep
 signal isAwake
 signal onHit(impulse,vector)
 @export_category("Ragdoll Bone")
-var boneCooldownTimer : Timer = Timer.new()
+var boneCooldownTimer : Timer
 var ownerSkeleton : Skeleton3D:
 	set(value):
 		ownerSkeleton = value
@@ -90,27 +90,16 @@ var exclusionArray : Array[RID]
 
 # Called when the node enters the scene tree for the first time.
 func _ready()-> void:
+	bonePhysicsServer.body_set_max_contacts_reported(RID(self), 1)
 	if canBeDismembered and healthComponent:
 		if !healthComponent.HPisDead.is_connected(pulverizeBone):
 			healthComponent.HPisDead.connect(pulverizeBone)
-	add_child(boneCooldownTimer)
-	boneCooldownTimer.stop()
-	boneCooldownTimer.wait_time = 0.15
-	boneCooldownTimer.autostart = false
-	boneCooldownTimer.one_shot = false
-	boneCooldownTimer.timeout.connect(subtractBoneCooldown)
-	bonePhysicsServer.body_set_max_contacts_reported(RID(self), 1)
-	audioStreamPlayer = AudioStreamPlayer3D.new()
-	add_child(audioStreamPlayer)
-	set_meta(&"physics_material_override", preload("res://assets/resources/PhysicsMaterials/flesh_physics_material.tres"))
-	audioStreamPlayer.max_polyphony = 2
-	audioStreamPlayer.max_db = 15
-	audioStreamPlayer.max_distance = 32
-	audioStreamPlayer.unit_size = 0.5
-	audioStreamPlayer.bus = &"Sounds"
-	audioStreamPlayer.attenuation_filter_db = 0
-	audioStreamPlayer.attenuation_filter_cutoff_hz = 3000
+	setBoneCooldownTimer()
+	createAudioPlayer()
 	#isAsleep.connect(doBleed)
+
+
+func createInAirAudio()->void:
 	if inAirSound != null:
 		inAirStreamPlayer = AudioStreamPlayer3D.new()
 		add_child(inAirStreamPlayer)
@@ -125,30 +114,52 @@ func _ready()-> void:
 		inAirStreamPlayer.attenuation_filter_cutoff_hz = 6000
 		inAirStreamPlayer.play()
 
+
+func setBoneCooldownTimer()->void:
+	await get_tree().process_frame
+	boneCooldownTimer = Timer.new()
+	add_child(boneCooldownTimer)
+	boneCooldownTimer.stop()
+	boneCooldownTimer.wait_time = 0.15
+	boneCooldownTimer.autostart = false
+	boneCooldownTimer.one_shot = false
+	boneCooldownTimer.timeout.connect(subtractBoneCooldown)
+
+
+func createAudioPlayer()->void:
+	await get_tree().process_frame
+	audioStreamPlayer = AudioStreamPlayer3D.new()
+	add_child(audioStreamPlayer)
+	set_meta(&"physics_material_override", preload("res://assets/resources/PhysicsMaterials/flesh_physics_material.tres"))
+	audioStreamPlayer.max_polyphony = 2
+	audioStreamPlayer.max_db = 15
+	audioStreamPlayer.max_distance = 32
+	audioStreamPlayer.unit_size = 0.5
+	audioStreamPlayer.bus = &"Sounds"
+	audioStreamPlayer.attenuation_filter_db = 0
+	audioStreamPlayer.attenuation_filter_cutoff_hz = 3000
+
+
 func updateRagdollScale()->void:
 	if healthComponent.isDead and canBeDismembered:
 		pulverizeBone()
 		#bonePulverized = true
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
-	if bonePhysics == null:
-		bonePhysics = state
 	boneState = state.sleeping
-	currentVelocity = state.get_linear_velocity()
-	contactCount = state.get_contact_count()
 	if audioCooldown > 0 or boneState == true:
 			return
 
-	if state.get_contact_count() > 0 and !boneState:
-		await get_tree().process_frame
+	if state.get_contact_count() > 0 and !boneState and ragdoll != null:
 		if exclusionArray.has(state.get_contact_collider(0)):
 			return
-		var contactNormal = state.get_contact_local_normal(0)
-		var contactDot = state.get_contact_local_velocity_at_position(0).normalized().dot(contactNormal)
+		#var contactNormal = state.get_contact_local_normal(0)
+		#var contactDot = state.get_contact_local_velocity_at_position(0).normalized().dot(contactNormal)
 		var contactForce = state.get_contact_local_velocity_at_position(0).length()
+		#contactForce = clampf(contactForce,0,heavyImpactThreshold)
 		if gameManager.debugEnabled:
 			print("%s Contact Force : %s"%[name,contactForce])
-		audioStreamPlayer.attenuation_filter_db = lerp(-20, 0, clamp(abs(contactDot) * contactForce, 0, 1))
+		#audioStreamPlayer.attenuation_filter_db = lerp(-20, 0, clamp(abs(contactDot) * contactForce, 0, 1))
 		if contactForce > heavyImpactThreshold:
 			audioStreamPlayer.stream = heavyImpactSounds
 			audioStreamPlayer.play()
@@ -157,13 +168,12 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 				healthComponent.damage(contactForce + randi_range(0,16))
 			if hardImpactEffectEnabled:
 				if impactEffectHard == null:
-					await get_tree().process_frame
 					if canBeDismembered:
 						healthComponent.damage(900,null)
 						pulverizeBone()
 					var particle = globalParticles.createParticle("BloodSpurt",self.position)
 					particle.rotation = self.rotation
-					particle.amount = randi_range(25,75)
+					#particle.amount = randi_range(25,75)
 					gameManager.sprayBlood(global_position,randi_range(1,3),10,1.2)
 		elif contactForce > mediumImpactThreshold:
 			audioStreamPlayer.stream = mediumImpactSounds
@@ -173,20 +183,20 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 				healthComponent.damage(contactForce + randi_range(0,10))
 			if mediumImpactEffectEnabled:
 				if impactEffectMedium == null:
-					await get_tree().process_frame
+					#await get_tree().process_frame
 					var particle = globalParticles.createParticle("BloodSpurt",self.position)
 					particle.rotation = self.rotation
-					particle.amount = randi_range(25,40)
+					#particle.amount = randi_range(25,40)
 					gameManager.sprayBlood(global_position,randi_range(1,3),10,1.2)
 		elif contactForce > lightImpactThreshold:
 			audioStreamPlayer.stream = lightImpactSounds
-			var fac = (contactForce - lightImpactThreshold) / (mediumImpactThreshold - lightImpactThreshold)
-			audioStreamPlayer.volume_db = lerp(-2, 5, fac)
+			#var fac = (contactForce - lightImpactThreshold) / (mediumImpactThreshold - lightImpactThreshold)
+			#audioStreamPlayer.volume_db = lerp(-2, 5, fac)
 			audioStreamPlayer.play()
 			audioCooldown = 0.45
 			if lightImpactEffectEnabled:
 				if impactEffectLight == null:
-					await get_tree().process_frame
+					#await get_tree().process_frame
 					var particle = globalParticles.createParticle("BloodSpurt",self.position)
 					particle.rotation = self.rotation
 					gameManager.sprayBlood(global_position,randi_range(1,3),10,1.2)

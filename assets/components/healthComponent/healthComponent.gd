@@ -26,7 +26,8 @@ var killerSignalEmitted :bool= false
 
 # Called when the node enters the scene tree for the first time.
 func _ready()->void:
-	componentOwner = get_owner()
+	if is_instance_valid(get_owner()):
+		componentOwner = get_owner()
 
 func healthCheck()->void:
 	if health <= 0 and is_instance_valid(self):

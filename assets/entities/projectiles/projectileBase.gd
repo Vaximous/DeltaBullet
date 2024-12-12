@@ -26,6 +26,7 @@ func step(movement : Vector3) -> Dictionary:
 
 func expire_by_distance() -> bool:
 	if distance_traveled >= max_distance:
+		velocity = Vector3.ZERO
 		queue_free()
 		return true
 	return false

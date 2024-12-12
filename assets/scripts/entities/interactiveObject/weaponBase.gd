@@ -283,7 +283,13 @@ func spawnProjectile(raycaster : RayCast3D) -> void:
 	p.velocity = -(muzzlePoint.global_transform.origin - ray_target_point).normalized() * weaponResource.bulletSpeed
 	if bulletTrail != null:
 		gameManager.world.worldMisc.add_child(bulletTrail)
-		if p != null:
+		var ray = PhysicsRayQueryParameters3D.new()
+		ray.from = muzzlePoint.global_position
+		ray.to = ray_target_point
+		var result = get_world_3d().direct_space_state.intersect_ray(ray)
+		if result:
+			bulletTrail.initTrail(muzzlePoint.global_position, result.position)
+		else:
 			bulletTrail.initTrail(muzzlePoint.global_position, ray_target_point)
 	return
 

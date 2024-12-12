@@ -455,7 +455,7 @@ func lookAtPosition(lookat:Vector3)->void:
 	var tween = create_tween()
 	pawnOwner.meshLookAt = true
 	aimCast.look_at(lookat)
-	pawnOwner.turnAmount = -aimCast.rotation.x
+	pawnOwner.turnAmount = (-aimCast.rotation.x) + 0.1
 	tween.tween_property(pawnOwner,"meshRotation",gameManager.getShortTweenAngle(pawnOwner.meshRotation,aimCast.global_transform.basis.get_euler().y),aimSpeed).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CIRC)
 
 

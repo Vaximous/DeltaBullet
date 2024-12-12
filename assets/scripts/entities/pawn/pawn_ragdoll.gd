@@ -35,7 +35,7 @@ var savedPose :Array[Transform3D]
 @export var activeRagdollEnabled:bool = false:
 	set(value):
 		activeRagdollEnabled = value
-		activeRagdollChanged.emit(value)
+		#activeRagdollChanged.emit(value)
 @export var targetSkeleton : Skeleton3D
 @export_subgroup("Behavior")
 ##Start simulation on create

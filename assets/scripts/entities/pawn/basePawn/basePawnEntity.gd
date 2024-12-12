@@ -458,6 +458,8 @@ func checkComponents():
 		return null
 
 func endPawn()->void:
+	direction = Vector3.ZERO
+	velocity = Vector3.ZERO
 	removeComponents()
 	dropWeapon()
 	if currentItem:
@@ -466,6 +468,8 @@ func endPawn()->void:
 	currentItem = null
 	pawnEnabled = false
 	collisionEnabled = false
+	animationPlayer.queue_free()
+	animationController.queue_free()
 	footstepSounds.queue_free()
 
 
@@ -943,7 +947,9 @@ func _on_free_aim_timer_timeout() -> void:
 	freeAim = false
 
 func removeComponents() -> void:
-	inputComponent = null
+	if inputComponent:
+		inputComponent.queue_free()
+		inputComponent = null
 
 func checkFootstepMateral() -> void:
 	if footstepMaterialChecker.is_colliding():

@@ -1,5 +1,4 @@
 extends Node
-signal freeOrphans
 ## Global Game Manager Start
 var pawnScene = preload("res://assets/entities/pawnEntity/pawnEntity.tscn").duplicate()
 var menuScenes = [preload("res://assets/scenes/menu/menuScenes/menuscene1.tscn"),preload("res://assets/scenes/menu/menuScenes/menuScene2.tscn"),preload("res://assets/scenes/menu/menuScenes/menuScene3.tscn")]
@@ -27,6 +26,7 @@ var preloadTextureDirectories : Array = [
 	"res://assets/textures/areas/plaster/",
 	"res://assets/textures/areas/wood/"
 ]
+signal freeOrphans
 #Global Sound Player
 var soundPlayer = AudioStreamPlayer.new()
 var sounds : Dictionary = {"healSound" = preload("res://assets/sounds/ui/rareItemFound.wav"),
@@ -34,6 +34,7 @@ var sounds : Dictionary = {"healSound" = preload("res://assets/sounds/ui/rareIte
 			}
 
 #Misc
+var orphanedData := []
 var richPresenceEnabled:bool = false
 var activeCamera = null
 var debugEnabled:bool = false
@@ -70,15 +71,37 @@ var isMultiplayerGame:bool = false
 
 const dialogue_cam : PackedScene = preload("res://assets/entities/camera/DialogueCamera.tscn")
 
+func _enter_tree() -> void:
+	get_tree().connect("node_added",orphanedData.append)
+
 # Called when the node enters the scene tree for the first time.
 func _ready()->void:
 	initializeSteam()
+	soundPlayer.name = "globalSoundPlayer"
 	if !userDir.dir_exists("saves"):
 		userDir.make_dir("saves")
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	soundPlayer.bus = "Sounds"
 	if richPresenceEnabled:
 		pass
+
+
+func freeOrphanNodes():
+	var keep := []
+	for node in orphanedData:
+		if is_instance_valid(node):
+			if !node.is_inside_tree() and not node.is_queued_for_deletion():
+				print("Deleted : %s"%node)
+				orphanedData.erase(node)
+				node.queue_free()
+			#else:
+				#keep.append(node)
+
+	#print("Kept : %s"%keep)
+	#orphanedData = keep
+	freeOrphans.emit()
+
+
 
 
 func get_persistent_data() -> Dictionary:
@@ -335,22 +358,18 @@ func saveTemporaryPawnInfo()->void:
 			#temporaryPawnInfo.append(info)
 
 func loadWorld(worldscene:String, fadein:bool = false)->void:
+	freeOrphanNodes()
 	saveTemporaryPawnInfo()
 	musicManager.change_song_to(null)
 	var loader = load("res://assets/scenes/menu/loadingscreen/loadingScreen.tscn")
 	var inst = loader.instantiate()
 	if fadein:
 		await Fade.fade_in(0.5).finished
-		get_tree().current_scene.queue_free()
-		#get_tree().change_scene_to_packed(loader)
-	else:
-		get_tree().current_scene.queue_free()
-		#get_tree().change_scene_to_packed(loader)
+	freeOrphanNodes()
+	get_tree().current_scene.queue_free()
+	get_tree().current_scene = null
 	get_tree().root.add_child(inst)
 	inst.sceneToLoad = worldscene
-
-func freeOrphanNodes():
-	freeOrphans.emit()
 
 func saveGame(saveName:String = "Save1"):
 	if world != null:
@@ -495,20 +514,19 @@ func removeShop()->void:
 
 
 func doDeathEffect()->void:
+	const defaultTransitionType = Tween.TRANS_QUART
+	const defaultEaseType = Tween.EASE_OUT
+	if deathTween:
+		deathTween.kill()
+	deathTween = create_tween()
 	if UserConfig.game_slow_motion_death:
-		await get_tree().process_frame
-		const defaultTransitionType = Tween.TRANS_QUART
-		const defaultEaseType = Tween.EASE_OUT
-		if deathTween:
-			deathTween.kill()
-		deathTween = create_tween()
 		Engine.time_scale = 0.25
-		deathTween.tween_property(Engine,"time_scale",1,1.5).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+	deathTween.tween_property(Engine,"time_scale",1,1.5).set_ease(defaultEaseType).set_trans(defaultTransitionType)
 
 
-func createSplat(gposition:Vector3 = Vector3.ZERO,normal:Vector3 = Vector3.ZERO,colPoint:Vector3 = Vector3.ZERO)->void:
+func createSplat(gposition:Vector3 = Vector3.ZERO,normal:Vector3 = Vector3.ZERO,colPoint:Vector3 = Vector3.ZERO,parent : Node3D = world.worldMisc)->void:
 	var _b = bloodDecal.instantiate()
-	world.worldMisc.add_child(_b)
+	parent.add_child(_b)
 	_b.position = gposition
 	if !Vector3.UP.is_equal_approx(normal.normalized()):
 		_b.transform.basis = _b.transform.basis.looking_at(normal.normalized())
@@ -524,6 +542,7 @@ func sprayBlood(position:Vector3,amount:int,_maxDistance:int,distanceMultiplier:
 			ray = ray.create(position,position + Vector3(randi_range(-_maxDistance,_maxDistance),randi_range(-_maxDistance,_maxDistance),randi_range(-_maxDistance,_maxDistance)*distanceMultiplier),1)
 			result = directSpace.intersect_ray(ray)
 			if result:
+				await get_tree().process_frame
 				createSplat(result.position,result.normal,result.position)
 
 func createBloodPool(position:Vector3,size:float=0.5)->void:
@@ -575,7 +594,6 @@ func disableBulletTime()->void:
 	if activeCamera:
 		activeCamera.hud.flashColor(Color.WHITE)
 		activeCamera.hud.bulletTimeOff.play()
-	await get_tree().process_frame
 	const defaultTransitionType = Tween.TRANS_QUART
 	const defaultEaseType = Tween.EASE_OUT
 	if deathTween:

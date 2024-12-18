@@ -170,9 +170,7 @@ own_world_3d = true
 world_3d = SubResource("World3D_3pxu0")
 transparent_bg = true
 handle_input_locally = false
-msaa_3d = 3
-scaling_3d_scale = 1.13
-size = Vector2i(147, 2)
+size = Vector2i(147, 202)
 render_target_update_mode = 4
 
 [node name="node3d" type="Node3D" parent="backgroundPanel/subViewportContainer/subViewport"]
@@ -222,7 +220,7 @@ anchors_preset = -1
 anchor_right = 0.974
 anchor_bottom = 1.025
 offset_right = -0.0739899
-offset_bottom = -190.05
+offset_bottom = -0.0499878
 
 [node name="button" type="Button" parent="backgroundPanel"]
 layout_mode = 2

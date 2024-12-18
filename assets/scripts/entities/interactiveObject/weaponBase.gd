@@ -286,6 +286,7 @@ func spawnProjectile(raycaster : RayCast3D) -> void:
 		var ray = PhysicsRayQueryParameters3D.new()
 		ray.from = muzzlePoint.global_position
 		ray.to = ray_target_point
+		ray.collision_mask = raycaster.collision_mask
 		var result = get_world_3d().direct_space_state.intersect_ray(ray)
 		if result:
 			bulletTrail.initTrail(muzzlePoint.global_position, result.position)
@@ -518,16 +519,15 @@ func reloadWeapon()->void:
 	#await get_tree().process_frame
 	weaponRemoteState.stop()
 	weaponRemoteStateLeft.stop()
-	if canReloadWeapon and !isReloading and weaponResource.canBeReloaded and isEquipped and !weaponOwner.isArmingThrowable:
+	if canReloadWeapon and !isReloading and weaponResource.canBeReloaded and isEquipped and !weaponOwner.isArmingThrowable and is_instance_valid(weaponResource):
 		var firedShots = weaponResource.ammoSize - currentAmmo
 		weaponRemoteState.travel("reload")
 		weaponRemoteState.next()
 		weaponRemoteStateLeft.travel("reload")
 		weaponRemoteStateLeft.next()
 		isReloading = true
-		var timer = get_tree().create_timer(weaponResource.reloadTime)
 		canReloadWeapon = false
-		await timer.timeout
+		await get_tree().create_timer(weaponResource.reloadTime).timeout
 		isReloading = false
 		currentMagSize -= firedShots
 		currentAmmo += firedShots

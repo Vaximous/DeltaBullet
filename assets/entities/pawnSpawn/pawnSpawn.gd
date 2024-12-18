@@ -86,7 +86,7 @@ func spawnPawn(forceParent : Node = null):
 				pawn.checkComponents()
 				pawn.fixRot()
 				pawn.add_to_group(&"Player")
-				pawn.healthComponent.health = 450
+				pawn.healthComponent.setHealth(450)
 				if gameManager.temporaryPawnInfo.size() <= 0:
 					if gameManager.currentSave != "" or gameManager.currentSave != " " or gameManager.currentSave != null:
 						var pawnFile = FileAccess.open(gameManager.currentSave,FileAccess.READ)
@@ -167,7 +167,7 @@ func spawnPawn(forceParent : Node = null):
 				pawn.currentItemIndex = weaponToEquip
 			if pawnColor != Color(1.0,0.74,0.44,1.0):
 				pawn.pawnColor = pawnColor
-			pawn.healthComponent.health = pawnHP
+			pawn.healthComponent.setHealth(pawnHP)
 		pawnSpawned.emit(pawn)
 		return pawn
 

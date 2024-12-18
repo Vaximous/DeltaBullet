@@ -75,6 +75,7 @@ func setBoneOwners()->void:
 	for pb in physicsBones:
 			if pb.get_script() != null:
 				for b in physicsBones:
+					pass
 					pb.exclusionArray.append(RID(b))
 					b.ownerSkeleton = ragdollSkeleton
 					b.ragdoll = self
@@ -143,7 +144,7 @@ func doRagdollHeadshot()-> void:
 	head.mesh = destroyedHeads.pick_random()
 	var particle = globalParticles.createParticle("BloodSpurt",Vector3(headBone.global_position.x,headBone.global_position.y-1.4,headBone.global_position.z))
 	particle.rotation = headBone.global_rotation
-	particle.amount = randi_range(25,75)
+	particle.amount = randi_range(25,35)
 	for clothes in self.get_children():
 		if clothes is ClothingItem:
 			if clothes.clothingType == 0 or clothes.clothingType == 1:
@@ -165,6 +166,96 @@ func _on_visible_on_screen_notifier_3d_screen_exited()-> void:
 	visibleOnScreen = false
 	hide()
 
+
+func moveClothesToRagdoll(pawn:BasePawn) -> void:
+	if is_instance_valid(pawn):
+		for clothes in pawn.clothingHolder.get_children():
+			clothes.itemSkeleton = ragdollSkeleton.get_path()
+			clothes.reparent(self)
+			clothes.remapSkeleton()
+		return
+
+
+func setRagdollPose(pawn:BasePawn)->void:
+	for bones in ragdollSkeleton.get_bone_count():
+		ragdollSkeleton.set_bone_global_pose(bones, pawn.pawnSkeleton.get_bone_global_pose(bones))
+
+
+func applyRagdollImpulse(pawn:BasePawn,currentVelocity:Vector3,impulseBone:int = 0,hitImpulse:Vector3 = Vector3.ZERO)->void:
+	for bones in physicalBoneSimulator.get_children():
+		if bones is RagdollBone:
+			bones.linear_velocity = currentVelocity
+			bones.angular_velocity = currentVelocity
+			bones.apply_central_impulse(currentVelocity)
+			if bones.get_bone_id() == impulseBone:
+				#ragdoll.startRagdoll()
+				bones.apply_central_impulse(hitImpulse * randf_range(1.5,2))
+
+
+func initializeRagdoll(pawn:BasePawn,pawnvelocity:Vector3 = Vector3.ZERO,lastHit:int=0,impulse:Vector3 = Vector3.ZERO,killer = null)->void:
+	if is_instance_valid(pawn):
+		setRagdollPositionAndRotation(pawn)
+		moveClothesToRagdoll(pawn)
+		setRagdollPose(pawn)
+		startRagdoll()
+		applyRagdollImpulse(pawn,pawnvelocity,lastHit,impulse)
+		checkClothingHider()
+		damageBoneHitboxes(lastHit,killer)
+		headshotCheck(lastHit,killer,pawn)
+		attachedCamCheck(pawn)
+		activeRagdollDeathCheck(lastHit,pawn)
+		if pawn.currentPawnMat:
+			setPawnMaterial(pawn.currentPawnMat.duplicate())
+
+
+func attachedCamCheck(pawn:BasePawn)->void:
+	if !pawn.attachedCam == null:
+		var cam = pawn.attachedCam
+		cam.unposessObject()
+		cam.posessObject(self, rootCameraNode)
+		removeTimer.stop()
+		for bones in physicalBoneSimulator.get_child_count():
+			if physicalBoneSimulator.get_child(bones) is RagdollBone:
+				cam.camSpring.add_excluded_object(physicalBoneSimulator.get_child(bones).get_rid())
+		pawn.endAttachedCam()
+		pawn.attachedCam = null
+
+
+func activeRagdollDeathCheck(impulse_bone:int,pawn:BasePawn)->void:
+	if activeRagdollEnabled:
+		if impulse_bone == 41:
+			activeRagdollEnabled = false
+		pawn.forceAnimation = true
+		pawn.animationToForce = "PawnAnim/WritheRightKneeBack"
+
+
+func headshotCheck(impulse_bone:int,killer,pawn:BasePawn)->void:
+	if impulse_bone == 41:
+		if killer != null:
+			if killer.currentItem != null:
+				if killer.currentItem.weaponResource.headDismember:
+					doRagdollHeadshot()
+			if killer.attachedCam != null:
+				killer.attachedCam.doHeadshotEffect()
+		pawn.headshottedPawn.emit()
+
+
+
+func damageBoneHitboxes(impulse_bone:int,killer)->void:
+	for bones in physicalBoneSimulator.get_child_count():
+		var child = physicalBoneSimulator.get_child(bones)
+		if child is RagdollBone:
+			if child.get_bone_id() == impulse_bone:
+				child.canBleed = true
+				if child.healthComponent and killer != null and killer.currentItem != null:
+					child.healthComponent.damage(killer.currentItem.weaponResource.weaponDamage * randf_range(1.5,2),killer)
+
+
+func setRagdollPositionAndRotation(pawn:BasePawn)->void:
+	if is_instance_valid(pawn):
+		global_transform = pawn.pawnMesh.global_transform
+		rotation = pawn.pawnMesh.rotation
+		targetSkeleton = pawn.pawnSkeleton
 
 func _on_skeleton_3d_skeleton_updated() -> void:
 	for bones in ragdollSkeleton.get_bone_count():

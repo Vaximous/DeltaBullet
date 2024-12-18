@@ -1,4 +1,5 @@
 extends Node
+@export var enabled : bool = true
 var meshRotationTween : Tween
 var meshRotationTweenMovement : Tween
 @export var pawnControlling : BasePawn:
@@ -14,34 +15,36 @@ var cameraRotation : float
 var gravity : float = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 func _physics_process(delta: float) -> void:
-	if pawnControlling.pawnEnabled and !pawnControlling.isPawnDead:
-		velocity.x = speed * movementDirection.normalized().x
-		velocity.z = speed * movementDirection.normalized().z
+	if enabled:
+		if pawnControlling.pawnEnabled and !pawnControlling.isPawnDead:
+			velocity.x = speed * movementDirection.normalized().x
+			velocity.z = speed * movementDirection.normalized().z
 
-		if not pawnControlling.is_on_floor():
-			pawnControlling.velocity.y -= gravity * delta
+			if not pawnControlling.is_on_floor():
+				pawnControlling.velocity.y -= gravity * delta
 
-		if !pawnControlling.is_on_floor():
-			pawnControlling.canJump = false
-		else:
-			pawnControlling.canJump = true
+			if !pawnControlling.is_on_floor():
+				pawnControlling.canJump = false
+			else:
+				pawnControlling.canJump = true
 
-		pawnControlling.velocity.z = pawnControlling.velocity.lerp(velocity,acceleration*delta).z
-		pawnControlling.velocity.x = pawnControlling.velocity.lerp(velocity,acceleration*delta).x
+			pawnControlling.velocity.z = pawnControlling.velocity.lerp(velocity,acceleration*delta).z
+			pawnControlling.velocity.x = pawnControlling.velocity.lerp(velocity,acceleration*delta).x
 
-		if velocity != Vector3.ZERO and !pawnControlling.meshLookAt:
-			doMeshRotation(delta)
-		elif pawnControlling.meshLookAt:
-			doMeshLookat(delta)
+			if velocity != Vector3.ZERO and !pawnControlling.meshLookAt:
+				doMeshRotation(delta)
+			elif pawnControlling.meshLookAt:
+				doMeshLookat(delta)
 
-		pawnControlling.move_and_slide()
+			pawnControlling.move_and_slide()
 
 func onMovementStateSet(state:MovementState)->void:
-	speed = state.movementSpeed
-	acceleration = state.acceleration
-	if pawnControlling.attachedCam and pawnControlling:
-		if !pawnControlling.attachedCam.setCamRot.is_connected(onSetCamRot):
-			pawnControlling.attachedCam.setCamRot.connect(onSetCamRot)
+	if enabled:
+		speed = state.movementSpeed
+		acceleration = state.acceleration
+		if pawnControlling.attachedCam and pawnControlling:
+			if !pawnControlling.attachedCam.setCamRot.is_connected(onSetCamRot):
+				pawnControlling.attachedCam.setCamRot.connect(onSetCamRot)
 
 func onMovementDirectionSet(direction:Vector3)->void:
 	movementDirection = direction.rotated(Vector3.UP,cameraRotation)

@@ -21,7 +21,6 @@ func parseMap()->void:
 			mapIcon.texture = load(gameManager.tempImages.pick_random())
 	else:
 		queue_free()
-	gameManager.freeOrphanNodes()
 
 func hoverOn()->void:
 	hoverSound.play()
@@ -40,4 +39,3 @@ func _on_pressed()->void:
 		hoverSound.stop()
 	await Fade.fade_out(0.3, Color(0,0,0,1),"GradientVertical",false,true).finished
 	gameManager.loadWorld(sceneLoad)
-	gameManager.freeOrphanNodes()

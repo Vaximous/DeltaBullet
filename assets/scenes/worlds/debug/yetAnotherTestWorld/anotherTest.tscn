@@ -167,7 +167,6 @@ pawnWeapons = Array[PackedScene]([ExtResource("5_wnt7o")])
 pawnClothing = Array[PackedScene]([ExtResource("6_71o2e"), ExtResource("7_u38u0"), ExtResource("8_00u34"), ExtResource("9_mvwmk")])
 equipWeaponOnSpawn = true
 weaponToEquip = 1
-aiType = 1
 
 [node name="worldEnvironment" parent="Environment" index="0"]
 environment = SubResource("Environment_a8ts2")

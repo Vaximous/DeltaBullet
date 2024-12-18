@@ -145,23 +145,25 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if pathingToPosition:
-		var nextPoint : Vector3 = currentPath[pathPoint] - pawnOwner.global_position
-		if nextPoint.length_squared() > 1.0:
-			pawnOwner.direction = (nextPoint.normalized()*delta)
-		else:
-			if pathPoint < (currentPath.size() - 1):
-				pathPointReached.emit()
-				pathPoint += 1
-				_physics_process(delta)
+	if is_instance_valid(self) and is_instance_valid(pawnOwner) and !pawnOwner.isPawnDead:
+		if pathingToPosition:
+			var nextPoint : Vector3 = currentPath[pathPoint] - pawnOwner.global_position
+			if nextPoint.length_squared() > 1.0:
+				pawnOwner.direction = (nextPoint.normalized()*delta)
 			else:
-				targetPathReached.emit()
-				pathingToPosition = false
+				if pathPoint < (currentPath.size() - 1):
+					pathPointReached.emit()
+					pathPoint += 1
+					_physics_process(delta)
+				else:
+					targetPathReached.emit()
+					pathingToPosition = false
 
 
 func _ai_process() -> void:
-	print("Processing..")
-	pawnFSM._ai_process()
+	if is_instance_valid(self) and is_instance_valid(pawnOwner) and !pawnOwner.isPawnDead:
+		print("Processing..")
+		pawnFSM._ai_process()
 
 
 func createFOVModel()->ImmediateMesh:
@@ -486,7 +488,7 @@ func setupNav()->void:
 	print("Nav Set")
 
 func pawnDamaged(amount,impulse,vector, dealer)->void:
-	if dealer:
+	if is_instance_valid(dealer):
 		lookAtPosition(dealer.global_position)
 		if pawnFSM.current_state != pawnFSM.get_state("Attack"):
 			pawnFSM.change_state("Attack")

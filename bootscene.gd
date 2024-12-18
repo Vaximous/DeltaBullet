@@ -8,7 +8,7 @@ func _ready() -> void:
 		get_tree().change_scene_to_file("res://assets/scenes/menu/logo.tscn")
 		return
 	get_tree().change_scene_to_file("res://assets/scenes/cutscenes/PrologueChapterCutscene.tscn")
-	pass # Replace with function body.
+
 
 
 func has_seen_prologue() -> bool:

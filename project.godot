@@ -41,8 +41,9 @@ AiManager="*res://assets/scripts/singletons/AIManager.gd"
 
 [debug]
 
-gdscript/warnings/unused_parameter=0
-gdscript/warnings/untyped_declaration=1
+file_logging/enable_file_logging=true
+file_logging/max_log_files=10
+settings/stdout/verbose_stdout=true
 
 [dialogic]
 
@@ -80,6 +81,7 @@ layout/default_style="res://assets/scripts/dialogic/themes/Default.tres"
 
 window/size/viewport_width=1600
 window/size/viewport_height=900
+window/size/initial_position_type=0
 window/subwindows/embed_subwindows=false
 mouse_cursor/custom_image="res://assets/textures/misc/cursor.png"
 
@@ -314,12 +316,17 @@ gBulletTimeToggle={
 3d_physics/layer_5="Hitbox"
 3d_physics/layer_6="Interactive"
 
+[network]
+
+limits/debugger/max_chars_per_second=132768
+
 [physics]
 
 common/physics_ticks_per_second=120
+common/physics_jitter_fix=2.0
 3d/physics_engine="JoltPhysics3D"
 3d/default_gravity=16.8
-jolt_3d/sleep/time_threshold=0.25
+jolt_3d/sleep/time_threshold=0.2
 
 [rendering]
 

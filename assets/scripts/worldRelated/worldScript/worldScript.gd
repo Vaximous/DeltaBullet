@@ -23,19 +23,17 @@ signal worldLoaded
 		worldData = value
 
 
-func _init()->void:
-	gameManager.freeOrphans.connect(free_me_orphan)
-
 
 func _enter_tree()->void:
 	gameManager.world = self
+	gameManager.freeOrphanNodes()
 
 
 func _ready()->void:
+	gameManager.freeOrphanNodes()
 	gameManager.pauseMenu = pauseControl
 	emit_signal("worldLoaded")
 	gameManager.getEventSignal("contractRefresh").emit()
-	gameManager.freeOrphanNodes()
 	setupWorld()
 	##Spawn a player at a point.
 	if !gameManager.isMultiplayerGame:
@@ -53,6 +51,12 @@ func _ready()->void:
 				if pawn != null:
 					if pawn is PawnSpawn:
 						pawn.spawnPawn()
+
+
+func orphanDelete()->void:
+	for i in get_children():
+		remove_child(i)
+	queue_free()
 
 
 func getSpawnPoints(offset:Vector3 = Vector3(0,0,0), pickRandom:bool = true, spawn_idx:int = 0):
@@ -93,6 +97,7 @@ func playSoundscape()->void:
 
 
 func setupWorld()-> void:
+	gameManager.freeOrphanNodes()
 	if worldData != null:
 		#Set the sky texture
 		if worldData.skyTexture:
@@ -105,8 +110,3 @@ func setupWorld()-> void:
 				print_rich("[color=red]The soundscape.. Its null retard.[/color]")
 	else:
 		print_rich("[color=red]Set the world data for this world!!![/color]")
-
-
-func free_me_orphan()->void:
-	if not is_inside_tree():
-		queue_free()

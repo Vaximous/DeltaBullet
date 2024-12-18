@@ -7,15 +7,7 @@ signal healthDepleted(dealer:Node3D)
 signal killedWithDismemberingWeapon
 @export_category("Component")
 var lastDealer : Node3D = null
-@export var health:float = 100:
-	set(value):
-		healthChanged.emit()
-		health = value
-		healthCheck()
-			#HPisDead.emit()
-			#health = 0
-	get:
-		return health
+@export var health:float = 100
 @export var isDead:bool = false:
 	set(value):
 		isDead = value
@@ -29,10 +21,18 @@ func _ready()->void:
 	if is_instance_valid(get_owner()):
 		componentOwner = get_owner()
 
+
+func setHealth(value:float)->float:
+	healthChanged.emit()
+	health = value
+	healthCheck()
+	return health
+
+
 func healthCheck()->void:
 	if health <= 0 and is_instance_valid(self):
 		await get_tree().process_frame
-		health = 0
+		setHealth(0)
 		if lastDealer!=null and is_instance_valid(self) and is_instance_valid(lastDealer):
 			healthDepleted.emit(lastDealer)
 		else:
@@ -41,9 +41,10 @@ func healthCheck()->void:
 		isDead = true
 
 func damage(amount:float, dealer:Node3D = null)->void:
-	lastDealer = dealer
-	onDamaged.emit(dealer, Vector3.ZERO)
-	health = health - amount
+	if is_instance_valid(self):
+		lastDealer = dealer
+		onDamaged.emit(dealer, Vector3.ZERO)
+		setHealth(health - amount)
 
 #func _on_health_depleted(dealer: Node3D) -> void:
 	#print("Dealer is %s"%dealer)

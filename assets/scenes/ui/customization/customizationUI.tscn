@@ -266,7 +266,7 @@ world_3d = SubResource("World3D_eb65e")
 transparent_bg = true
 handle_input_locally = false
 msaa_3d = 1
-size = Vector2i(2, 2)
+size = Vector2i(661, 794)
 render_target_update_mode = 4
 
 [node name="customizationWorld" parent="customizationUi/characterPreviewContainer/subViewportContainer/subViewport" instance=ExtResource("1_sgpgn")]

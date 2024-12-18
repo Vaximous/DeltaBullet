@@ -23,7 +23,6 @@ signal headshottedPawn
 @onready var footstepSounds : AudioStreamPlayer3D = $Sounds/footsteps
 ##Onready
 @onready var onScreenNotifier : VisibleOnScreenNotifier3D = $Mesh/visibleOnScreenNotifier3d
-@onready var footstepMaterialChecker : RayCast3D = $Misc/footstepMaterialChecker
 @onready var componentHolder : Node3D = $Components
 @onready var boneAttatchementHolder : Node = $BoneAttatchments
 @onready var interactRaycast : RayCast3D = $Mesh/interactRaycast
@@ -75,27 +74,30 @@ signal headshottedPawn
 
 var direction : Vector3 = Vector3.ZERO:
 	set(value):
-		if direction != value and is_instance_valid(self):
-			direction = value
-			#print(direction)
-			directionChanged.emit()
-			setDirection.emit(direction)
-		if value != Vector3.ZERO and is_instance_valid(self):
-			direction = direction.normalized()
-			if isRunning:
-				setMovementState.emit(movementStates["sprint"])
-			else:
-				if isCrouching:
-					setMovementState.emit(movementStates["crouchWalk"])
+		if direction != value:
+			if is_instance_valid(self):
+				direction = value
+				#print(direction)
+				directionChanged.emit()
+				setDirection.emit(direction)
+		if value != Vector3.ZERO:
+			if is_instance_valid(self):
+				direction = direction.normalized()
+				if isRunning:
+					setMovementState.emit(movementStates["sprint"])
 				else:
-					setMovementState.emit(movementStates["walk"])
-			isMoving = true
+					if isCrouching:
+						setMovementState.emit(movementStates["crouchWalk"])
+					else:
+						setMovementState.emit(movementStates["walk"])
+				isMoving = true
 		else:
-			if isCrouching:
-				setMovementState.emit(movementStates["crouch"])
-			else:
-				setMovementState.emit(movementStates["standing"])
-			isMoving = false
+			if is_instance_valid(self):
+				if isCrouching:
+					setMovementState.emit(movementStates["crouch"])
+				else:
+					setMovementState.emit(movementStates["standing"])
+				isMoving = false
 		#if direction != Vector3.ZERO:
 			#doMeshRotation()
 var meshRotation : float = 0.0:
@@ -223,32 +225,13 @@ var preventWeaponFire : bool = false:
 					if footstepSounds.playing:
 						footstepSounds.stop()
 @export_subgroup("Movement")
-@export var diveForce : float = 6.5
-var diveDirection : Vector3
-@export var isDiving : bool = false:
-	set(value):
-		isDiving = value
-		if value:
-			diveDirection = direction
-			direction = Vector3.ZERO
-			velocity += diveDirection * diveForce
-			velocity.y += diveForce
-			animationTree.set("parameters/dive_transition/transition_request", "diving")
-			canRun = false
-			isRunning = false
-			isCrouching = false
-			meshLookAt = true
-			canJump = false
-
-
 @export var movementStates : Dictionary
 @export var canRun : bool = true:
 	set(value):
 		if value:
-			if !isDiving:
-				canRun = value
-			else:
-				canRun = false
+			canRun = value
+		else:
+			canRun = false
 
 @export var isRunning : bool = false:
 	set(value):
@@ -278,52 +261,53 @@ var itemNames : Array
 var currentItem : InteractiveObject = null
 @export var currentItemIndex : int = 0:
 	set(value):
-		currentItemIndex = clamp(value, 0, itemInventory.size()-1)
-		currentItem = itemInventory[currentItemIndex]
-		if !currentItem == null:
-			emit_signal("itemChanged")
-			currentItem.isAiming = false
-			equipWeapon(currentItemIndex)
-			currentItem.isAiming = false
-			currentItem.weaponOwner = self
-			enableRightHand()
-			checkMeshLookat()
-			if currentItem.weaponResource != null:
-				await get_tree().process_frame
-				if currentItem.weaponResource.leftHandParent:
-					itemHolder.reparent(leftHandBone)
-					itemHolder.position = Vector3.ZERO
-				if currentItem.weaponResource.rightHandParent:
-					itemHolder.reparent(rightHandBone)
-					itemHolder.position = Vector3.ZERO
+		if !isPawnDead and is_instance_valid(self):
+			currentItemIndex = clamp(value, 0, itemInventory.size()-1)
+			currentItem = itemInventory[currentItemIndex]
+			if !currentItem == null:
+				emit_signal("itemChanged")
+				currentItem.isAiming = false
+				equipWeapon(currentItemIndex)
+				currentItem.isAiming = false
+				currentItem.weaponOwner = self
+				enableRightHand()
+				checkMeshLookat()
+				if currentItem.weaponResource != null:
+					await get_tree().process_frame
+					if currentItem.weaponResource.leftHandParent:
+						itemHolder.reparent(leftHandBone)
+						itemHolder.position = Vector3.ZERO
+					if currentItem.weaponResource.rightHandParent:
+						itemHolder.reparent(rightHandBone)
+						itemHolder.position = Vector3.ZERO
 
-			if attachedCam:
-				currentItem.weaponCast = attachedCam.camCast
-				if currentItem.weaponResource.useCustomCrosshairSize:
-					attachedCam.hud.getCrosshair().crosshairSize = currentItem.weaponResource.crosshairSizeOverride
-				else:
-					attachedCam.hud.getCrosshair().crosshairSize = attachedCam.hud.getCrosshair().defaultCrosshairSize
-				if !UserConfig.game_simple_crosshairs:
-					if currentItem.weaponResource.forcedCrosshair != null:
-						attachedCam.hud.getCrosshair().setCrosshair(currentItem.weaponResource.forcedCrosshair)
+				if attachedCam:
+					currentItem.weaponCast = attachedCam.camCast
+					if currentItem.weaponResource.useCustomCrosshairSize:
+						attachedCam.hud.getCrosshair().crosshairSize = currentItem.weaponResource.crosshairSizeOverride
 					else:
-						attachedCam.hud.getCrosshair().setCrosshair(attachedCam.hud.getCrosshair().defaultCrosshair)
-				attachedCam.itemEquipOffsetToggle = true
-				#Dialogic.VAR.set('playerHasWeaponEquipped',true)
-				#attachedCam.resetCamCast()
-		else:
-			disableRightHand()
-			disableLeftHand()
-			checkMeshLookat()
-			for weapon in itemHolder.get_children():
-				if weapon.isEquipped != false:
-						weapon.isEquipped = false
-				weapon.hide()
-			if attachedCam:
-				#Dialogic.VAR.set('playerHasWeaponEquipped',false)
-				attachedCam.itemEquipOffsetToggle = false
-				attachedCam.hud.getCrosshair().setCrosshair(null)
-				#attachedCam.resetCamCast()
+						attachedCam.hud.getCrosshair().crosshairSize = attachedCam.hud.getCrosshair().defaultCrosshairSize
+					if !UserConfig.game_simple_crosshairs:
+						if currentItem.weaponResource.forcedCrosshair != null:
+							attachedCam.hud.getCrosshair().setCrosshair(currentItem.weaponResource.forcedCrosshair)
+						else:
+							attachedCam.hud.getCrosshair().setCrosshair(attachedCam.hud.getCrosshair().defaultCrosshair)
+					attachedCam.itemEquipOffsetToggle = true
+					#Dialogic.VAR.set('playerHasWeaponEquipped',true)
+					#attachedCam.resetCamCast()
+			else:
+				disableRightHand()
+				disableLeftHand()
+				checkMeshLookat()
+				for weapon in itemHolder.get_children():
+					if weapon.isEquipped != false:
+							weapon.isEquipped = false
+					weapon.hide()
+				if attachedCam:
+					#Dialogic.VAR.set('playerHasWeaponEquipped',false)
+					attachedCam.itemEquipOffsetToggle = false
+					attachedCam.hud.getCrosshair().setCrosshair(null)
+					#attachedCam.resetCamCast()
 @export var purchasedClothing : Array
 
 @export var clothingInventory : Array:
@@ -400,8 +384,6 @@ func _ready() -> void:
 	fixRot()
 	setupPawnColor()
 	setupAnimationTree()
-	if !gameManager.getEventSignal("playerDied").is_connected(gameManager.doDeathEffect):
-		gameManager.getEventSignal("playerDied").connect(gameManager.doDeathEffect)
 	#getAllHitboxes()
 
 func _physics_process(delta:float) -> void:
@@ -418,16 +400,11 @@ func _physics_process(delta:float) -> void:
 
 			preventWeaponFire = aimBlockRaycast.is_colliding()
 
-			if isDiving and !isOnGround():
-				freeAim = true
-			elif isDiving and isOnGround():
-				animationTree.set("parameters/dive_transition/transition_request", "not_diving")
-				isDiving = false
 
 
 ##Checks to see if any required components (Base components) Are null
 func checkComponents():
-	if inputComponent:
+	if is_instance_valid(inputComponent):
 		if inputComponent is AIComponent:
 			inputComponent.pawnOwner = self
 			await get_tree().process_frame
@@ -458,19 +435,19 @@ func checkComponents():
 		return null
 
 func endPawn()->void:
-	direction = Vector3.ZERO
-	velocity = Vector3.ZERO
-	removeComponents()
-	dropWeapon()
-	if currentItem:
-		currentItem.weaponOwner = null
-	currentItemIndex = 0
-	currentItem = null
-	pawnEnabled = false
-	collisionEnabled = false
-	animationPlayer.queue_free()
-	animationController.queue_free()
-	footstepSounds.queue_free()
+	if is_instance_valid(self) and !is_queued_for_deletion():
+		direction = Vector3.ZERO
+		velocity = Vector3.ZERO
+		removeComponents()
+		dropWeapon()
+		currentItemIndex = 0
+		pawnEnabled = false
+		collisionEnabled = false
+		if is_instance_valid(footstepSounds):
+			footstepSounds.queue_free()
+		await get_tree().create_timer(5).timeout
+		print("Deleted %s at %s"%[name,Time.get_ticks_usec()])
+		self.queue_free()
 
 
 func endAttachedCam()->void:
@@ -478,8 +455,9 @@ func endAttachedCam()->void:
 		if gameManager.bulletTime:
 			gameManager.bulletTime = false
 		attachedCam.hud.flashColor(Color.DARK_RED)
+		gameManager.doDeathEffect()
 		attachedCam.stopCameraRecoil()
-		attachedCam.cameraRotationUpdated.disconnect(doMeshRotation)
+		#attachedCam.cameraRotationUpdated.disconnect(doMeshRotation)
 		gameManager.getEventSignal("playerDied").emit()
 		attachedCam.lowHP = false
 		attachedCam.hud.hudEnabled = false
@@ -508,100 +486,100 @@ func moveHitboxDecals(parent:Node3D = gameManager.world.worldParticles) ->void:
 func die(killer) -> void:
 	if is_instance_valid(self) and !isPawnDead:
 		isPawnDead = true
+		collisionShape.disabled = true
+		if is_instance_valid(killer):
+			doKillEffect(killer)
+		animationController.enabled = false
+		movementController.enabled = false
 		killAllTweens()
 		createRagdoll(lastHitPart, killer)
 		pawnEnabled = false
 		moveHitboxDecals()
-		animationTree.set("parameters/standToCrouchAdd/add_amount", 0)
-		animationTree.set("parameters/standToCrouchStrafe/add_amount", 0)
-		doKillEffect(killer)
-		#moveDecalsToRagdoll(ragdoll)
-		endPawn()
-		deleteAllHitboxes()
+		disableAllHitboxes()
 		onPawnKilled.emit()
-		#killedPawn.emit()
-		queue_free()
+		endPawn()
 
 
 
 func do_stairs(delta) -> void:
-	#Does staircase stuff
-	const step_check_distance : float = 0.5
-	const step_height_max : float = 1.0
-	const step_depth_min : float = 0.15
+	if pawnEnabled and !isPawnDead:
+		#Does staircase stuff
+		const step_check_distance : float = 0.5
+		const step_height_max : float = 1.0
+		const step_depth_min : float = 0.15
 
-	var input_direction : Vector2 = Vector2(direction.x, direction.z)
-	if !is_on_floor() or input_direction.length() <= 0.1:
-		return
-	#Check multiple directions
-	var cam = gameManager.activeCamera
-	if cam == null:
-		return
-	var flat_vel = (velocity * Vector3(1.0, 0.0, 1.0)).normalized()
-	var check_directions : Array[Vector3] = [
-		flat_vel,
-		flat_vel.rotated(Vector3.UP, PI/3),
-		flat_vel.rotated(Vector3.UP, -PI/3),
-		]
-	#if gameManager.debugEnabled:
-		#print(input_direction)
-		#print(flat_vel)
-	for direction in check_directions:
-		var step_ray_dir := direction * step_check_distance
-		#if step_ray_dir.dot(Vector3(velocity.x, 0, velocity.z).normalized()) < 0.5:
-			#continue
-		var direct_state = get_world_3d().direct_space_state
-		var obs_ray_info : PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.new()
-		obs_ray_info.exclude = [RID(self)]
-		obs_ray_info.from = global_position
-		obs_ray_info.to = obs_ray_info.from + step_ray_dir
-		#First check : Is a flat wall found?
-		var first_collision = direct_state.intersect_ray(obs_ray_info)
-		#print("Ray from %s to %s" % [obs_ray_info.from, obs_ray_info.to])
-		if !first_collision.is_empty():
-			#if gameManager.debugEnabled:
-				#print("Ray hit something.")
-			if not first_collision["collider"] is StaticBody3D and not first_collision["collider"] is CSGShape3D:
-				continue
-			if first_collision["normal"].angle_to(Vector3.UP) < 1.39626:
-				var remain_length = step_check_distance - first_collision["position"].distance_to(obs_ray_info.from)
-				obs_ray_info.from = first_collision["position"]
-				obs_ray_info.to = obs_ray_info.from + (remain_length * step_ray_dir.slide(first_collision["normal"]))
-				obs_ray_info.to.y += 0.05
-				first_collision = direct_state.intersect_ray(obs_ray_info)
-				if first_collision.is_empty():
-					return
+		var input_direction : Vector2 = Vector2(direction.x, direction.z)
+		if !is_on_floor() or input_direction.length() <= 0.1:
+			return
+		#Check multiple directions
+		var cam = gameManager.activeCamera
+		if cam == null:
+			return
+		var flat_vel = (velocity * Vector3(1.0, 0.0, 1.0)).normalized()
+		var check_directions : Array[Vector3] = [
+			flat_vel,
+			flat_vel.rotated(Vector3.UP, PI/3),
+			flat_vel.rotated(Vector3.UP, -PI/3),
+			]
+		#if gameManager.debugEnabled:
+			#print(input_direction)
+			#print(flat_vel)
+		for direction in check_directions:
+			var step_ray_dir := direction * step_check_distance
+			#if step_ray_dir.dot(Vector3(velocity.x, 0, velocity.z).normalized()) < 0.5:
+				#continue
+			var direct_state = get_world_3d().direct_space_state
+			var obs_ray_info : PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.new()
+			obs_ray_info.exclude = [RID(self)]
+			obs_ray_info.from = global_position
+			obs_ray_info.to = obs_ray_info.from + step_ray_dir
+			#First check : Is a flat wall found?
+			var first_collision = direct_state.intersect_ray(obs_ray_info)
+			#print("Ray from %s to %s" % [obs_ray_info.from, obs_ray_info.to])
+			if !first_collision.is_empty():
+				#if gameManager.debugEnabled:
+					#print("Ray hit something.")
+				if not first_collision["collider"] is StaticBody3D and not first_collision["collider"] is CSGShape3D:
+					continue
 				if first_collision["normal"].angle_to(Vector3.UP) < 1.39626:
-					return
-			#if gameManager.debugEnabled:
-				#print("Ready to climb up step.")
-			#From that first collision point, we now check if 'min_stair_depth' is met
-			#at the the 'max_step_height'
-			var depth_check : PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.new()
-			depth_check.exclude = obs_ray_info.exclude
-			depth_check.from = global_position + Vector3(0, step_height_max, 0)
-			depth_check.to = depth_check.from + (step_ray_dir * (step_depth_min + global_position.distance_to(first_collision.position)))
-			if !direct_state.intersect_ray(depth_check).is_empty():
-				continue
-			#The step is deep enough.
-			#Last we need to find the top of the step so we can stand on it.
-			#Inch the initial collision up by step_max and forward a tiny bit.
-			#The to-position is just the initial position minus the step_max.
-			var top_check : PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.new()
-			top_check.exclude = obs_ray_info.exclude
-			top_check.from = first_collision.position + Vector3(step_ray_dir.x, step_height_max, step_ray_dir.z)
-			top_check.to = top_check.from - Vector3(0, step_height_max, 0)
-			var stair_top_collision = direct_state.intersect_ray(top_check)
-			if !stair_top_collision.is_empty():
-					#move player up above step
-					var pre_position = global_position
-					position.y += stair_top_collision.position.y - obs_ray_info.from.y
-					#move player forward onto step
-					position += (step_ray_dir * (step_check_distance * 0.5))
-					#interpolate_visual_position(pre_position - global_position)
-					return
-			#if gameManager.debugEnabled:
-				#print("Couldn't climb up the step.")
+					var remain_length = step_check_distance - first_collision["position"].distance_to(obs_ray_info.from)
+					obs_ray_info.from = first_collision["position"]
+					obs_ray_info.to = obs_ray_info.from + (remain_length * step_ray_dir.slide(first_collision["normal"]))
+					obs_ray_info.to.y += 0.05
+					first_collision = direct_state.intersect_ray(obs_ray_info)
+					if first_collision.is_empty():
+						return
+					if first_collision["normal"].angle_to(Vector3.UP) < 1.39626:
+						return
+				#if gameManager.debugEnabled:
+					#print("Ready to climb up step.")
+				#From that first collision point, we now check if 'min_stair_depth' is met
+				#at the the 'max_step_height'
+				var depth_check : PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.new()
+				depth_check.exclude = obs_ray_info.exclude
+				depth_check.from = global_position + Vector3(0, step_height_max, 0)
+				depth_check.to = depth_check.from + (step_ray_dir * (step_depth_min + global_position.distance_to(first_collision.position)))
+				if !direct_state.intersect_ray(depth_check).is_empty():
+					continue
+				#The step is deep enough.
+				#Last we need to find the top of the step so we can stand on it.
+				#Inch the initial collision up by step_max and forward a tiny bit.
+				#The to-position is just the initial position minus the step_max.
+				var top_check : PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.new()
+				top_check.exclude = obs_ray_info.exclude
+				top_check.from = first_collision.position + Vector3(step_ray_dir.x, step_height_max, step_ray_dir.z)
+				top_check.to = top_check.from - Vector3(0, step_height_max, 0)
+				var stair_top_collision = direct_state.intersect_ray(top_check)
+				if !stair_top_collision.is_empty():
+						#move player up above step
+						var pre_position = global_position
+						position.y += stair_top_collision.position.y - obs_ray_info.from.y
+						#move player forward onto step
+						position += (step_ray_dir * (step_check_distance * 0.5))
+						#interpolate_visual_position(pre_position - global_position)
+						return
+				#if gameManager.debugEnabled:
+					#print("Couldn't climb up the step.")
 
 
 func _on_health_component_health_depleted(dealer:BasePawn) -> void:
@@ -633,67 +611,14 @@ func setRagdollPositionAndRotation(ragdoll:PawnRagdoll)->void:
 	ragdoll.targetSkeleton = pawnSkeleton
 
 func createRagdoll(impulse_bone : int = 0,killer = null)->PawnRagdoll:
-	var currVel = velocity
-	var ragdoll = ragdollScene.instantiate()
 	collisionEnabled = false
 	self.hide()
+	var ragdoll : PawnRagdoll = ragdollScene.instantiate()
 	gameManager.world.worldMisc.add_child(ragdoll)
-	setRagdollPositionAndRotation(ragdoll)
-	moveClothesToRagdoll(ragdoll)
-	ragdoll.setPawnMaterial(currentPawnMat)
-	setRagdollPose(ragdoll)
-	ragdoll.startRagdoll()
-
-
-	applyRagdollImpulse(ragdoll,currVel,impulse_bone)
-
-
+	ragdoll.initializeRagdoll(self,velocity,impulse_bone,hitImpulse,killer)
 	pawnDied.emit(ragdoll)
-	ragdoll.checkClothingHider()
-	#ragdoll.startRagdoll()
-
-
-	for bones in ragdoll.physicalBoneSimulator.get_child_count():
-		var child = ragdoll.physicalBoneSimulator.get_child(bones)
-		if child is RagdollBone:
-			if child.get_bone_id() == impulse_bone:
-				child.canBleed = true
-				if child.healthComponent and killer != null and killer.currentItem != null:
-					child.healthComponent.damage(killer.currentItem.weaponResource.weaponDamage * randf_range(1.5,2),killer)
-
-
-	if impulse_bone == 41:
-		if killer != null:
-			if killer.currentItem != null:
-				if killer.currentItem.weaponResource.headDismember:
-					ragdoll.doRagdollHeadshot()
-			if killer.attachedCam != null:
-				killer.attachedCam.doHeadshotEffect()
-		headshottedPawn.emit()
-
-
-	if !attachedCam == null:
-		var cam = attachedCam
-		cam.unposessObject()
-		cam.posessObject(ragdoll, ragdoll.rootCameraNode)
-		ragdoll.removeTimer.stop()
-		for bones in ragdoll.physicalBoneSimulator.get_child_count():
-			if ragdoll.physicalBoneSimulator.get_child(bones) is RagdollBone:
-				cam.camSpring.add_excluded_object(ragdoll.physicalBoneSimulator.get_child(bones).get_rid())
-		endAttachedCam()
-		attachedCam = null
-
-
-	if ragdoll.activeRagdollEnabled:
-		if impulse_bone == 41:
-			ragdoll.activeRagdollEnabled = false
-		forceAnimation = true
-		animationToForce = "PawnAnim/WritheRightKneeBack"
-
-
-	if collisionShape != null:
-		collisionShape.queue_free()
-
+	#if collisionShape != null:
+		#collisionShape.queue_free()
 	return ragdoll
 
 func checkItems()->void:
@@ -838,7 +763,7 @@ func jump() -> void:
 
 func setupWeaponAnimations() -> void:
 	var blendSet
-	if !currentItem == null:
+	if !currentItem == null and is_instance_valid(currentItem):
 		blendSet = currentItem.animationTree.tree_root
 		if !currentItem.weaponAnimSet:
 			#Swap out animationLibraries
@@ -947,13 +872,25 @@ func _on_free_aim_timer_timeout() -> void:
 	freeAim = false
 
 func removeComponents() -> void:
+	if healthComponent:
+		healthComponent.queue_free()
+		healthComponent = null
+
+	if movementController:
+		movementController.queue_free()
+		movementController = null
+
+	if animationController:
+		animationController.queue_free()
+		animationController = null
+
 	if inputComponent:
 		inputComponent.queue_free()
 		inputComponent = null
 
-func checkFootstepMateral() -> void:
-	if footstepMaterialChecker.is_colliding():
-		return
+#func checkFootstepMateral() -> void:
+	#if footstepMaterialChecker.is_colliding():
+		#return
 
 func playFootstepAudio(soundprofile : AudioStream = null) -> void:
 	if !footstepSounds == null:
@@ -971,6 +908,7 @@ func dropWeapon() -> void:
 	if !isPawnDead:
 		animationTree.set("parameters/weaponBlend/blend_amount", 0)
 	if currentItem:
+		currentItem.weaponOwner = null
 		currentItem.resetToDefault()
 		currentItem.collisionEnabled = true
 		currentItem.weaponAnimSet = false
@@ -1087,29 +1025,30 @@ func setRunBlendFilters(value:bool) -> void:
 	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:L_Pinkie2", value)
 
 func doMeshRotation() -> void:
-	#await get_tree().process_frame
-	if meshRotationTween:
-		meshRotationTween.kill()
-	meshRotationTween = create_tween()
-	meshRotationTween.set_parallel(true)
-	if meshRotationTweenMovement:
-		meshRotationTweenMovement.kill()
-	meshRotationTweenMovement = create_tween()
-	meshRotationTweenMovement.set_parallel(true)
-	if meshRotationTween:
-		if !meshLookAt:
-			if isMoving:
-				#var rotationTarget = lerp_angle(pawnMesh.rotation.y, atan2(-velocity.x,-velocity.z), 1)
-				if direction != Vector3.ZERO:
-					meshRotationTween.tween_property(pawnMesh,"rotation:y",getShortTweenAngle(pawnMesh.rotation.y,atan2(-direction.x,-direction.z)),0.25)
-		else:
-			canJump = false
-			bodyIKMarker.rotation.x = turnAmount
-			#bodyIKMarker.rotation_degrees.y = lerpf(bodyIKMarker.rotation_degrees.y, to_local(Vector3(0,180,0)).y, 16*delta)
-			meshRotationTweenMovement.tween_property(bodyIKMarker,"rotation:z",getShortTweenAngle(bodyIKMarker.rotation.z,0.0),0.05)
-			meshRotationTween.tween_property(pawnMesh,"rotation:y",getShortTweenAngle(pawnMesh.rotation.y,meshRotation),0.02)
-			#pawnMesh.rotation.y = lerp_angle(pawnMesh.rotation.y, meshRotation, 23 * delta)
-			#bodyIKMarker.rotation.z = lerpf(bodyIKMarker.rotation.z, 0.0, 16*delta)
+	if !isPawnDead and is_instance_valid(self):
+		#await get_tree().process_frame
+		if meshRotationTween:
+			meshRotationTween.kill()
+		meshRotationTween = create_tween()
+		meshRotationTween.set_parallel(true)
+		if meshRotationTweenMovement:
+			meshRotationTweenMovement.kill()
+		meshRotationTweenMovement = create_tween()
+		meshRotationTweenMovement.set_parallel(true)
+		if meshRotationTween:
+			if !meshLookAt:
+				if isMoving:
+					#var rotationTarget = lerp_angle(pawnMesh.rotation.y, atan2(-velocity.x,-velocity.z), 1)
+					if direction != Vector3.ZERO:
+						meshRotationTween.tween_property(pawnMesh,"rotation:y",getShortTweenAngle(pawnMesh.rotation.y,atan2(-direction.x,-direction.z)),0.25)
+			else:
+				canJump = false
+				bodyIKMarker.rotation.x = turnAmount
+				#bodyIKMarker.rotation_degrees.y = lerpf(bodyIKMarker.rotation_degrees.y, to_local(Vector3(0,180,0)).y, 16*delta)
+				meshRotationTweenMovement.tween_property(bodyIKMarker,"rotation:z",getShortTweenAngle(bodyIKMarker.rotation.z,0.0),0.05)
+				meshRotationTween.tween_property(pawnMesh,"rotation:y",getShortTweenAngle(pawnMesh.rotation.y,meshRotation),0.02)
+				#pawnMesh.rotation.y = lerp_angle(pawnMesh.rotation.y, meshRotation, 23 * delta)
+				#bodyIKMarker.rotation.z = lerpf(bodyIKMarker.rotation.z, 0.0, 16*delta)
 
 	#if !is_on_wall():
 		#if is_on_floor():
@@ -1275,89 +1214,103 @@ func loadPawnInfo(pawnInfo:String)->void:
 	Console.add_rich_console_message("[color=green]Loaded Pawn File![/color]")
 
 func setThrowableBlendValue(value:float)->void:
-	animationTree.set("parameters/leftThrowableBlend/blend_amount",value)
+	if !isPawnDead and is_instance_valid(self):
+		animationTree.set("parameters/leftThrowableBlend/blend_amount",value)
 
 func setRightHandBlendValue(value:float)->void:
-	animationTree.set("parameters/weaponBlend/blend_amount",value)
+	if !isPawnDead and is_instance_valid(self):
+		animationTree.set("parameters/weaponBlend/blend_amount",value)
 
 func setLeftHandBlendValue(value:float)->void:
-	animationTree.set("parameters/weaponBlend_Left_blend/blend_amount",value)
+	if !isPawnDead and is_instance_valid(self):
+		animationTree.set("parameters/weaponBlend_Left_blend/blend_amount",value)
 
 func enableRunBlend()->void:
-	if runTween:
-		runTween.kill()
-	runTween = create_tween().bind_node(animationTree)
-	var currentBlend : float = animationTree.get("parameters/runBlend/blend_amount")
-	runTween.tween_method(setRunBlendValue,currentBlend,1,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+	if !isPawnDead and is_instance_valid(self):
+		if runTween:
+			runTween.kill()
+		runTween = create_tween().bind_node(animationTree)
+		var currentBlend : float = animationTree.get("parameters/runBlend/blend_amount")
+		runTween.tween_method(setRunBlendValue,currentBlend,1,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
 
 func disableRunBlend()->void:
-	if runTween:
-		runTween.kill()
-	runTween = create_tween().bind_node(animationTree)
-	var currentBlend : float = animationTree.get("parameters/runBlend/blend_amount")
-	runTween.tween_method(setRunBlendValue,currentBlend,0,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+	if !isPawnDead and is_instance_valid(self):
+		if runTween:
+			runTween.kill()
+		runTween = create_tween().bind_node(animationTree)
+		var currentBlend : float = animationTree.get("parameters/runBlend/blend_amount")
+		runTween.tween_method(setRunBlendValue,currentBlend,0,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
 
 func enableFallBlend()->void:
-	if fallTween:
-		fallTween.kill()
-	fallTween = create_tween().bind_node(animationTree)
-	var currentBlend : float = animationTree.get("parameters/fallBlend/blend_amount")
-	fallTween.tween_method(setFallBlendValue,currentBlend,1,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+	if !isPawnDead and is_instance_valid(self):
+		if fallTween:
+			fallTween.kill()
+		fallTween = create_tween().bind_node(animationTree)
+		var currentBlend : float = animationTree.get("parameters/fallBlend/blend_amount")
+		fallTween.tween_method(setFallBlendValue,currentBlend,1,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
 
 func disableFallBlend()->void:
-	if fallTween:
-		fallTween.kill()
-	fallTween = create_tween().bind_node(animationTree)
-	var currentBlend : float = animationTree.get("parameters/fallBlend/blend_amount")
-	fallTween.tween_method(setFallBlendValue,currentBlend,0,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+	if !isPawnDead and is_instance_valid(self):
+		if fallTween:
+			fallTween.kill()
+		fallTween = create_tween().bind_node(animationTree)
+		var currentBlend : float = animationTree.get("parameters/fallBlend/blend_amount")
+		fallTween.tween_method(setFallBlendValue,currentBlend,0,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
 
 func enableIdleSpaceBlend()->void:
-	if idleSpaceTween:
-		idleSpaceTween.kill()
-	idleSpaceTween = create_tween().bind_node(animationTree)
-	var currentBlend : float = animationTree.get("parameters/idleSpace/blend_position")
-	idleSpaceTween.tween_method(setIdleBlend,currentBlend,1,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+	if !isPawnDead and is_instance_valid(self):
+		if idleSpaceTween:
+			idleSpaceTween.kill()
+		idleSpaceTween = create_tween().bind_node(animationTree)
+		var currentBlend : float = animationTree.get("parameters/idleSpace/blend_position")
+		idleSpaceTween.tween_method(setIdleBlend,currentBlend,1,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
 
 func disableIdleSpaceBlend()->void:
-	if idleSpaceTween:
-		idleSpaceTween.kill()
-	idleSpaceTween = create_tween().bind_node(animationTree)
-	var currentBlend : float = animationTree.get("parameters/idleSpace/blend_position")
-	idleSpaceTween.tween_method(setIdleBlend,currentBlend,0,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+	if !isPawnDead and is_instance_valid(self):
+		if idleSpaceTween:
+			idleSpaceTween.kill()
+		idleSpaceTween = create_tween().bind_node(animationTree)
+		var currentBlend : float = animationTree.get("parameters/idleSpace/blend_position")
+		idleSpaceTween.tween_method(setIdleBlend,currentBlend,0,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
 
 func enableLeftHand()->void:
-	if leftHandTween:
-		leftHandTween.kill()
-	leftHandTween = create_tween().bind_node(animationTree)
-	var currentBlend : float = animationTree.get("parameters/weaponBlend_Left_blend/blend_amount")
-	leftHandTween.tween_method(setLeftHandBlendValue,currentBlend,1,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
-	#tween.tween_callback(tween.kill)
+	if !isPawnDead and is_instance_valid(self):
+		if leftHandTween:
+			leftHandTween.kill()
+		leftHandTween = create_tween().bind_node(animationTree)
+		var currentBlend : float = animationTree.get("parameters/weaponBlend_Left_blend/blend_amount")
+		leftHandTween.tween_method(setLeftHandBlendValue,currentBlend,1,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+		#tween.tween_callback(tween.kill)
 
 func enableRightHand()->void:
-	if rightHandTween:
-		rightHandTween.kill()
-	rightHandTween = create_tween().bind_node(animationTree)
-	var currentBlend : float = animationTree.get("parameters/weaponBlend/blend_amount")
-	rightHandTween.tween_method(setRightHandBlendValue,currentBlend,1,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
-	#tween.tween_callback(tween.kill)
+	if !isPawnDead and is_instance_valid(self):
+		if rightHandTween:
+			rightHandTween.kill()
+		rightHandTween = create_tween().bind_node(animationTree)
+		var currentBlend : float = animationTree.get("parameters/weaponBlend/blend_amount")
+		rightHandTween.tween_method(setRightHandBlendValue,currentBlend,1,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+		#tween.tween_callback(tween.kill)
 
 func disableLeftHand()->void:
-	if leftHandTween:
-		leftHandTween.kill()
-	leftHandTween = create_tween().bind_node(animationTree)
-	var currentBlend : float = animationTree.get("parameters/weaponBlend_Left_blend/blend_amount")
-	leftHandTween.tween_method(setLeftHandBlendValue,currentBlend,0,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
-	#tween.tween_callback(tween.kill)
+	if !isPawnDead and is_instance_valid(self):
+		if leftHandTween:
+			leftHandTween.kill()
+		leftHandTween = create_tween().bind_node(animationTree)
+		var currentBlend : float = animationTree.get("parameters/weaponBlend_Left_blend/blend_amount")
+		leftHandTween.tween_method(setLeftHandBlendValue,currentBlend,0,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+		#tween.tween_callback(tween.kill)
 
 func disableRightHand()->void:
-	if rightHandTween:
-		rightHandTween.kill()
-	rightHandTween = create_tween().bind_node(animationTree)
-	var currentBlend : float = animationTree.get("parameters/weaponBlend/blend_amount")
-	rightHandTween.tween_method(setRightHandBlendValue,currentBlend,0,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
-	#rightHandTween.tween_callback(tween.kill)
+	if !isPawnDead and is_instance_valid(self):
+		if rightHandTween:
+			rightHandTween.kill()
+		rightHandTween = create_tween().bind_node(animationTree)
+		var currentBlend : float = animationTree.get("parameters/weaponBlend/blend_amount")
+		rightHandTween.tween_method(setRightHandBlendValue,currentBlend,0,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+		#rightHandTween.tween_callback(tween.kill)
 
 func disableThrowableAnim()->void:
+	if !isPawnDead and is_instance_valid(self):
 		if throwableTween:
 			throwableTween.kill()
 		throwableTween = create_tween().bind_node(animationTree)
@@ -1365,6 +1318,7 @@ func disableThrowableAnim()->void:
 		throwableTween.tween_method(setThrowableBlendValue,currentBlend,0,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
 
 func enableThrowableAnim()->void:
+	if !isPawnDead and is_instance_valid(self):
 		enableLeftHand()
 		if throwableTween:
 			throwableTween.kill()
@@ -1373,43 +1327,50 @@ func enableThrowableAnim()->void:
 		throwableTween.tween_method(setThrowableBlendValue,currentBlend,1,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
 
 func setFallBlendValue(value:float)->void:
-	animationTree.set("parameters/fallBlend/blend_amount",value)
+	if !isPawnDead and is_instance_valid(self):
+		animationTree.set("parameters/fallBlend/blend_amount",value)
 
 func setRunBlendValue(value:float)->void:
-	animationTree.set("parameters/runBlend/blend_amount",value)
+	if !isPawnDead and is_instance_valid(self):
+		animationTree.set("parameters/runBlend/blend_amount",value)
 
 func setIdleBlend(value:float)->void:
-	animationTree.set("parameters/idleSpace/blend_position", value)
+	if !isPawnDead and is_instance_valid(self):
+		animationTree.set("parameters/idleSpace/blend_position", value)
 
 func setBodyIKInterpolation(value:float)->void:
-	bodyIK.interpolation = value
+	if !isPawnDead and is_instance_valid(self):
+		bodyIK.interpolation = value
 
 func disableBodyIK()->void:
-	if bodyIKTween:
-		bodyIKTween.kill()
-	bodyIKTween = create_tween().bind_node(animationTree)
-	await bodyIKTween.tween_method(setBodyIKInterpolation,bodyIK.interpolation,0,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType).finished
-	bodyIK.stop()
+	if !isPawnDead and is_instance_valid(self):
+		if bodyIKTween:
+			bodyIKTween.kill()
+		bodyIKTween = create_tween().bind_node(animationTree)
+		await bodyIKTween.tween_method(setBodyIKInterpolation,bodyIK.interpolation,0,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType).finished
+		bodyIK.stop()
 
 func startBodyIK()->void:
-	if bodyIKTween:
-		bodyIKTween.kill()
-	bodyIKTween = create_tween().bind_node(animationTree)
-	bodyIK.start()
-	bodyIKTween.tween_method(setBodyIKInterpolation,bodyIK.interpolation,1,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType).finished
+	if !isPawnDead and is_instance_valid(self):
+		if bodyIKTween:
+			bodyIKTween.kill()
+		bodyIKTween = create_tween().bind_node(animationTree)
+		bodyIK.start()
+		bodyIKTween.tween_method(setBodyIKInterpolation,bodyIK.interpolation,1,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType).finished
 
 func checkMeshLookat()->void:
-	if meshLookAt:
-		startBodyIK()
-		if !freeAim:
-			if currentItem != null:
-				if currentItem.isAiming != true:
-					currentItem.isAiming = true
-				else:
-					if currentItem.isAiming != false:
-						currentItem.isAiming = false
-	else:
-		disableBodyIK()
+	if !isPawnDead and is_instance_valid(self):
+		if meshLookAt:
+			startBodyIK()
+			if !freeAim:
+				if currentItem != null:
+					if currentItem.isAiming != true:
+						currentItem.isAiming = true
+					else:
+						if currentItem.isAiming != false:
+							currentItem.isAiming = false
+		else:
+			disableBodyIK()
 
 func getShortTweenAngle(currentAngle:float,targetAngle:float)->float:
 	return currentAngle + wrapf(targetAngle-currentAngle,-PI,PI)
@@ -1420,11 +1381,6 @@ func isCurrentlyMoving()->bool:
 func isOnGround()->bool:
 	return is_on_floor()
 
-func dive()->void:
-	isDiving = true
-	#disableBodyIK()
-	#bodyIKMarker.position += diveDirection * diveForce
-
 
 func setBulletTime(value:bool)->void:
 	if value:
@@ -1432,6 +1388,12 @@ func setBulletTime(value:bool)->void:
 	else:
 		gameManager.disableBulletTime()
 
+
+func disableAllHitboxes()->void:
+	for hb in getAllHitboxes():
+		hb.collision_layer = 0
+		hb.collision_mask = 0
+		hb.enabled = false
 
 func deleteAllHitboxes():
 	for hb in getAllHitboxes():
@@ -1446,13 +1408,16 @@ func toggleBulletTime()->void:
 			setBulletTime(true)
 
 func playInteractAnimation()->void:
-	animationTree.set("parameters/useType/transition_request", "interactL")
-	animationTree.set("parameters/useShot/request",AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+	if !isPawnDead and is_instance_valid(self):
+		animationTree.set("parameters/useType/transition_request", "interactL")
+		animationTree.set("parameters/useShot/request",AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 
 func playUseAnimation()->void:
-	animationTree.set("parameters/useType/transition_request", "useL")
-	animationTree.set("parameters/useShot/request",AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+	if !isPawnDead and is_instance_valid(self):
+		animationTree.set("parameters/useType/transition_request", "useL")
+		animationTree.set("parameters/useShot/request",AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 
 func playGrabAnimation()->void:
-	animationTree.set("parameters/useType/transition_request", "grabL")
-	animationTree.set("parameters/useShot/request",AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+	if !isPawnDead and is_instance_valid(self):
+		animationTree.set("parameters/useType/transition_request", "grabL")
+		animationTree.set("parameters/useShot/request",AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)

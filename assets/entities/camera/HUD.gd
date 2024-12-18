@@ -6,8 +6,8 @@ signal interactionFound
 @onready var questNotifHolder : MarginContainer = $questNotification
 @export var cam : Camera3D
 @export var interactionOffset : Vector2 = Vector2.ZERO
-@onready var interactHud = $Interact
-@onready var interactText = $Interact/panel/richTextLabel
+@onready var interactHud : Control = $Interact
+@onready var interactText : RichTextLabel = $Interact/panel/richTextLabel
 @onready var camVert = $"../camPivot/horizonal/vertholder/vertical"
 @onready var camHoriz = $"../camPivot/horizonal"
 @onready var camCast : RayCast3D = $"../camPivot/horizonal/vertholder/vertical/springArm3d/Camera/RayCast3D"
@@ -28,9 +28,9 @@ var interactVisible:bool = false:
 	set(value):
 		interactVisible = value
 		if value:
-			emit_signal("interactionFound")
+			interactionFound.emit()
 		else:
-			emit_signal("interactionunFound")
+			interactionunFound.emit()
 
 # Called when the node enters the scene tree for the first time.
 func _ready()->void:

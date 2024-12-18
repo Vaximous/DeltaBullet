@@ -23,14 +23,6 @@ var ragdoll : PawnRagdoll:
 			if !healthComponent.HPisDead.is_connected(pulverizeBone):
 				healthComponent.HPisDead.connect(pulverizeBone)
 var bonePhysicsServer = PhysicsServer3D
-@export var canBeDismembered : bool = false:
-	set(value):
-		canBeDismembered = value
-		if canBeDismembered:
-			if healthComponent != null:
-				healthComponent.HPisDead.connect(pulverizeBone)
-		else:
-			healthComponent.HPisDead.disconnect(pulverizeBone)
 var bonePulverized : bool = false:
 	set(value):
 		if bonePulverized != value:
@@ -51,7 +43,9 @@ var hasBled : bool = false
 @export var activeRagdollBone : bool = true
 @export var activeRagdollForce = 1
 @export_subgroup("Impact Hits")
-@export var canBePulverized = false
+@export var canBeDismembered : bool = false:
+	set(value):
+		canBeDismembered = value
 @export var hardImpactEffectEnabled : bool = true
 @export var impactEffectHard : PackedScene
 @export var mediumImpactEffectEnabled : bool = true
@@ -74,7 +68,7 @@ var bonePhysics : PhysicsDirectBodyState3D
 @export_subgroup("Information")
 @export var currentVelocity : Vector3
 @export var contactCount : int
-var initialRotation = get("joint_rotation")
+
 
 var audioStreamPlayer : AudioStreamPlayer3D
 var inAirStreamPlayer : AudioStreamPlayer3D
@@ -90,13 +84,19 @@ var exclusionArray : Array[RID]
 
 # Called when the node enters the scene tree for the first time.
 func _ready()-> void:
-	bonePhysicsServer.body_set_max_contacts_reported(RID(self), 1)
-	if canBeDismembered and healthComponent:
-		if !healthComponent.HPisDead.is_connected(pulverizeBone):
-			healthComponent.HPisDead.connect(pulverizeBone)
+	boneSetup()
+
+
+func boneSetup()->void:
 	setBoneCooldownTimer()
 	createAudioPlayer()
-	#isAsleep.connect(doBleed)
+	bonePhysicsServer.body_set_max_contacts_reported(RID(self), 1)
+	if canBeDismembered:
+		if healthComponent != null:
+			if !healthComponent.HPisDead.is_connected(pulverizeBone):
+				healthComponent.HPisDead.connect(pulverizeBone)
+	else:
+		healthComponent.HPisDead.disconnect(pulverizeBone)
 
 
 func createInAirAudio()->void:
@@ -141,7 +141,7 @@ func createAudioPlayer()->void:
 
 
 func updateRagdollScale()->void:
-	if healthComponent.isDead and canBeDismembered:
+	if healthComponent.isDead and canBeDismembered and is_instance_valid(healthComponent):
 		pulverizeBone()
 		#bonePulverized = true
 
@@ -161,9 +161,10 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 			print("%s Contact Force : %s"%[name,contactForce])
 		#audioStreamPlayer.attenuation_filter_db = lerp(-20, 0, clamp(abs(contactDot) * contactForce, 0, 1))
 		if contactForce > heavyImpactThreshold:
-			audioStreamPlayer.stream = heavyImpactSounds
-			audioStreamPlayer.play()
-			audioCooldown = 0.45
+			if audioStreamPlayer:
+				audioStreamPlayer.stream = heavyImpactSounds
+				audioStreamPlayer.play()
+				audioCooldown = 0.45
 			if healthComponent:
 				healthComponent.damage(contactForce + randi_range(0,16))
 			if hardImpactEffectEnabled:
@@ -176,9 +177,10 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 					#particle.amount = randi_range(25,75)
 					gameManager.sprayBlood(global_position,randi_range(1,3),10,1.2)
 		elif contactForce > mediumImpactThreshold:
-			audioStreamPlayer.stream = mediumImpactSounds
-			audioStreamPlayer.play()
-			audioCooldown = 0.45
+			if audioStreamPlayer:
+				audioStreamPlayer.stream = mediumImpactSounds
+				audioStreamPlayer.play()
+				audioCooldown = 0.45
 			if healthComponent:
 				healthComponent.damage(contactForce + randi_range(0,10))
 			if mediumImpactEffectEnabled:
@@ -189,11 +191,12 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 					#particle.amount = randi_range(25,40)
 					gameManager.sprayBlood(global_position,randi_range(1,3),10,1.2)
 		elif contactForce > lightImpactThreshold:
-			audioStreamPlayer.stream = lightImpactSounds
+			if audioStreamPlayer:
+				audioStreamPlayer.stream = lightImpactSounds
 			#var fac = (contactForce - lightImpactThreshold) / (mediumImpactThreshold - lightImpactThreshold)
 			#audioStreamPlayer.volume_db = lerp(-2, 5, fac)
-			audioStreamPlayer.play()
-			audioCooldown = 0.45
+				audioStreamPlayer.play()
+				audioCooldown = 0.45
 			if lightImpactEffectEnabled:
 				if impactEffectLight == null:
 					#await get_tree().process_frame
@@ -239,7 +242,7 @@ func getBoneChildren(skeleton3d:Skeleton3D,bone:PhysicalBone3D)->Array:
 func findPhysicsBone(id:int)->PhysicalBone3D:
 	var foundBone : PhysicalBone3D
 	for bones in ragdoll.physicsBones:
-		if bones.get_bone_id() == id and bones != null:
+		if is_instance_valid(bones) and bones.get_bone_id() == id:
 			foundBone = bones
 	return foundBone
 
@@ -260,12 +263,14 @@ func doPulverizeEffect()->void:
 	pulverizeSound.bus = &"Sounds"
 	pulverizeSound.attenuation_filter_db = 0
 	pulverizeSound.volume_db = -5
-	add_child(pulverizeSound)
+	gameManager.world.worldMisc.add_child(pulverizeSound)
+	pulverizeSound.global_position = global_position
+	pulverizeSound.finished.connect(pulverizeSound.queue_free)
 	pulverizeSound.play()
 	var bloodSpurt : GPUParticles3D = load("res://assets/particles/bloodSpurt/bloodSpurt.tscn").instantiate()
 	gameManager.world.worldMisc.add_child(bloodSpurt)
 	bloodSpurt.global_position = global_position
-	bloodSpurt.amount = randi_range(50,85)
+	bloodSpurt.amount = randi_range(20,35)
 	bloodSpurt.emitting = true
 	collision_layer = 0
 	collision_mask = 1
@@ -275,10 +280,13 @@ func doPulverizeEffect()->void:
 	for childrenIDs in getBoneChildren(ragdoll.ragdollSkeleton,self):
 		var bone
 		bone = findPhysicsBone(childrenIDs)
-		if bone != null:
-			bone.collision_layer = 0
-			bone.collision_mask = 0
+		if is_instance_valid(bone):
+			bone.doPulverizeEffect()
+			#bone.collision_layer = 0
+			#bone.collision_mask = 0
+			#bone.queue_free()
 			#findPhysicsBone(childrenIDs).mass = 0
+	queue_free()
 	#createBurstOfBlood(10,15,25)
 
 func doBleed()->void:

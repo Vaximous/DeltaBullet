@@ -10,6 +10,7 @@ script/source = "extends Node
 
 # Called when the node enters the scene tree for the first time.
 func _ready()->void:
+	gameManager.freeOrphanNodes()
 	gameManager.clearTemporaryPawnInfo()
 	if has_seen_prologue():
 		var menu = load(\"res://assets/scenes/menu/menuScenes/prePrologueMenuScene.tscn\").instantiate()
@@ -21,12 +22,8 @@ func _ready()->void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	Fade.fade_in(0.8, Color(0,0,0,1),\"GradientVertical\",false,true)
 	musicManager.change_song_to(menuMusic.stream,0.5)
-	gameManager.freeOrphanNodes()
-func _init()->void:
-	gameManager.freeOrphans.connect(free_me_orphan)
-func free_me_orphan()->void:
-	if not is_inside_tree():
-		queue_free()
+
+
 
 func _process(delta)->void:
 	gameManager.showMouse()

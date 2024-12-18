@@ -236,7 +236,8 @@ func _physics_process(delta)->void:
 	if !followNode == null:
 		if followingEntity is BasePawn:
 			followingEntity.meshRotation = camRot
-			hud.healthBar.value = lerpf(hud.healthBar.value,followingEntity.healthComponent.health, 20 * delta)
+			if is_instance_valid(followingEntity.healthComponent):
+				hud.healthBar.value = lerpf(hud.healthBar.value,followingEntity.healthComponent.health, 20 * delta)
 
 	##Lerp to FollowNode
 

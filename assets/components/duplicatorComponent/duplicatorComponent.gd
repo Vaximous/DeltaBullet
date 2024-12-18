@@ -53,10 +53,6 @@ func _ready() -> void:
 	if !expand_pool_when_empty:
 		dup_pool.make_read_only()
 
-func free_me_orphan()->void:
-	if not is_inside_tree():
-		queue_free()
-
 func duplicate_node() -> void:
 	var node_dup = get_parent().duplicate() if !use_pooling else recycle_pooled()
 	if node_dup == null:

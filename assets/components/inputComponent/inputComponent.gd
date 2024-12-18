@@ -134,7 +134,7 @@ func _input(event: InputEvent) -> void:
 			if event.is_action_pressed("dKill"):
 				#emit_signal("actionPressed", str(event.keycode))
 				if controllingPawn:
-					controllingPawn.healthComponent.health = 0
+					controllingPawn.healthComponent.setHealth(0)
 					if controllingPawn.attachedCam:
 						controllingPawn.attachedCam.fireVignette(0.8,Color.DARK_RED)
 						gameManager.notifyFade("You've died! Press F6 to restart!", 4, 5)
@@ -143,30 +143,22 @@ func _input(event: InputEvent) -> void:
 		if isMouseHidden():
 			if !event is InputEventMouseMotion and !event is InputEventMouseButton:
 				if movementEnabled:
-					if !controllingPawn.isDiving:
-						controllingPawn.direction.x = getInputDir().x
-						controllingPawn.direction.z = getInputDir().z
-
+					controllingPawn.direction.x = getInputDir().x
+					controllingPawn.direction.z = getInputDir().z
 					if controllingPawn.isCurrentlyMoving():
-						if Input.is_action_pressed("gDive"):
-							if !controllingPawn.isDiving:
-								controllingPawn.dive()
-
-						if Input.is_action_pressed("gSprint") and !controllingPawn.isDiving:
+						if Input.is_action_pressed("gSprint"):
 							controllingPawn.setMovementState.emit(controllingPawn.movementStates["sprint"])
 							controllingPawn.isCrouching = false
 						else:
-							if !controllingPawn.isDiving:
-								if !controllingPawn.isCrouching:
-									controllingPawn.setMovementState.emit(controllingPawn.movementStates["walk"])
-								else:
-									controllingPawn.setMovementState.emit(controllingPawn.movementStates["crouchWalk"])
-					else:
-						if !controllingPawn.isDiving:
 							if !controllingPawn.isCrouching:
-								controllingPawn.setMovementState.emit(controllingPawn.movementStates["standing"])
+								controllingPawn.setMovementState.emit(controllingPawn.movementStates["walk"])
 							else:
-								controllingPawn.setMovementState.emit(controllingPawn.movementStates["crouch"])
+								controllingPawn.setMovementState.emit(controllingPawn.movementStates["crouchWalk"])
+					else:
+						if !controllingPawn.isCrouching:
+							controllingPawn.setMovementState.emit(controllingPawn.movementStates["standing"])
+						else:
+							controllingPawn.setMovementState.emit(controllingPawn.movementStates["crouch"])
 
 func isMouseHidden()->bool:
 	if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED or Input.get_mouse_mode() == Input.MOUSE_MODE_HIDDEN:

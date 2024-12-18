@@ -18,7 +18,7 @@ func healPawn(pawn:BasePawn)->void:
 	if !beenUsed:
 		if pawn:
 			if pawn.healthComponent.health < 100:
-				pawn.healthComponent.health = 100
+				pawn.healthComponent.setHealth(100)
 				if pawn.attachedCam:
 					pawn.attachedCam.fireVignette(0.9,Color.DARK_OLIVE_GREEN)
 					pawn.attachedCam.fireRecoil(0,randf_range(5.15,7.8),0,true)

@@ -38,7 +38,7 @@ func scanMaps()->void:
 						#Console.add_rich_console_message("[color=blue]%s[/color]"%_map.mapFile)
 						_map.sceneLoad = map
 						_map.parseMap()
-						gameManager.freeOrphanNodes()
+
 
 func hidePanel()->void:
 	var tween = create_tween()

@@ -23,7 +23,7 @@ func on_enter()->void:
 	attackTimer.start()
 
 func on_physics_process(delta):
-	if aiOwner.targetedPawn != null and aiOwner.pawnOwner.currentItem != null and !aiOwner.targetedPawn.isPawnDead:
+	if aiOwner.targetedPawn != null and aiOwner.pawnOwner.currentItem != null and !aiOwner.targetedPawn.isPawnDead and is_instance_valid(aiOwner.targetedPawn):
 		#aiOwner.targetedPawn.turnAmount = -aiOwner.aimCast.rotation.x
 		if !aiOwner.pawnOwner.freeAim:
 			aiOwner.pawnOwner.freeAim = true

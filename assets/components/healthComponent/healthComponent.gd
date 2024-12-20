@@ -8,11 +8,8 @@ signal killedWithDismemberingWeapon
 @export_category("Component")
 var lastDealer : Node3D = null
 @export var health:float = 100
-@export var isDead:bool = false:
-	set(value):
-		isDead = value
-		if isDead:
-			HPisDead.emit()
+@export var isDead:bool = false
+
 var componentOwner : Node3D
 var killerSignalEmitted :bool= false
 
@@ -39,6 +36,7 @@ func healthCheck()->void:
 			if is_instance_valid(self):
 				healthDepleted.emit(null)
 		isDead = true
+		HPisDead.emit()
 
 func damage(amount:float, dealer:Node3D = null)->void:
 	if is_instance_valid(self):

@@ -116,7 +116,6 @@ func createInAirAudio()->void:
 
 
 func setBoneCooldownTimer()->void:
-	await get_tree().process_frame
 	boneCooldownTimer = Timer.new()
 	add_child(boneCooldownTimer)
 	boneCooldownTimer.stop()
@@ -127,7 +126,6 @@ func setBoneCooldownTimer()->void:
 
 
 func createAudioPlayer()->void:
-	await get_tree().process_frame
 	audioStreamPlayer = AudioStreamPlayer3D.new()
 	add_child(audioStreamPlayer)
 	set_meta(&"physics_material_override", preload("res://assets/resources/PhysicsMaterials/flesh_physics_material.tres"))
@@ -245,15 +243,6 @@ func findPhysicsBone(id:int)->PhysicalBone3D:
 		if is_instance_valid(bones) and bones.get_bone_id() == id:
 			foundBone = bones
 	return foundBone
-
-func createBurstOfPhysicsBlood(amountMin:int,amountMax:int,maxImpulse:int)->void:
-	var droplets : PackedScene = load("res://assets/entities/emitters/bloodDroplet/bloodDroplets.tscn")
-	for drop in randf_range(amountMin,amountMax):
-		if gameManager.world != null:
-			var blood : RigidBody3D = droplets.instantiate()
-			gameManager.world.worldMisc.add_child(blood)
-			blood.global_position = Vector3(global_position.x,global_position.y-1.4,global_position.z)
-			blood.apply_impulse(Vector3(randf_range(-maxImpulse,maxImpulse),randf_range(-maxImpulse,maxImpulse),randf_range(-maxImpulse,maxImpulse)) * randf_range(5,maxImpulse))
 
 
 func doPulverizeEffect()->void:

@@ -8,7 +8,11 @@ var lastSpawnedPawn : BasePawn = null
 var previewMeshMat = load("res://assets/materials/pawnMaterial/MALE.tres").duplicate()
 @export_category("Pawn Spawn")
 @export var active : bool = true
-@export var pawnName : String
+@export var pawnName : String:
+	set(value):
+		pawnName = value
+		if value != "" or " ":
+			name = pawnName
 @export_enum("Player","Pawn") var pawnType : int = 1:
 	set(value):
 		pawnType = value

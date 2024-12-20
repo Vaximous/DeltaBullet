@@ -34,7 +34,7 @@ func on_physics_process(_delta: float) -> void:
 
 
 # Handled by AIManager
-func on_ai_process() -> void:
+func on_ai_process(delta) -> void:
 	pass
 
 

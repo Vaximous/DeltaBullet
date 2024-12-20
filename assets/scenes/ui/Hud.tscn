@@ -22,6 +22,8 @@ default_font = ExtResource("2_tf7jg")
 resource_name = "crosshair"
 script/source = "extends TextureRect
 const  defaultCrosshair = preload(\"res://assets/textures/crosshair/crosshair001.png\")
+@export var dynamicCrosshair : bool = true
+@export var overridePosition : bool = true
 var positionOverride = get_viewport_rect().size/2 - pivot_offset
 const defaultCrosshairSize : Vector2 = Vector2(0.8,0.8)
 var crosshairSize : Vector2 = Vector2(0.8,0.8)
@@ -31,30 +33,35 @@ var tiltSpeed = 15.0
 var tintSpeed = 2.5
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	positionOverride = get_viewport_rect().size/2 - pivot_offset
+	if overridePosition:
+		positionOverride = get_viewport_rect().size/2 - pivot_offset
 	setCrosshair(defaultCrosshair)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
-	if UserConfig.game_crosshair_dynamic_position:
-		setOverride()
-	rotation = lerpf(rotation,0.0,delta*tiltSpeed)
-	scale = lerp(scale,crosshairSize,crosshairSizeSpeed)
-	#self.scale = clamp(scale,Vector2(0.005,0.005),Vector2(10.5,10.5))
-	self_modulate =  lerp(self_modulate,defaultTint,tintSpeed*delta)
+	if dynamicCrosshair:
+		if UserConfig.game_crosshair_dynamic_position:
+			setOverride()
+		rotation = lerpf(rotation,0.0,delta*tiltSpeed)
+		scale = lerp(scale,crosshairSize,crosshairSizeSpeed)
+		#self.scale = clamp(scale,Vector2(0.005,0.005),Vector2(10.5,10.5))
+		self_modulate =  lerp(self_modulate,defaultTint,tintSpeed*delta)
 
 
 func setOverride():
 	if positionOverride != null:
-		position = positionOverride - pivot_offset
+		if overridePosition:
+			position = positionOverride - pivot_offset
 	else:
 		position = get_viewport_rect().size/2 - pivot_offset
 
 func addSize(sizeAmount:float = 0.1):
-	self.scale += Vector2(sizeAmount,sizeAmount)
+	if dynamicCrosshair:
+		self.scale += Vector2(sizeAmount,sizeAmount)
 
 func tintCrosshair(tint:Color):
-	self_modulate = tint
+	if dynamicCrosshair:
+		self_modulate = tint
 
 func setCrosshair(crosshairTexture):
 	if crosshairTexture != null:
@@ -63,7 +70,8 @@ func setCrosshair(crosshairTexture):
 		texture = defaultCrosshair
 
 func addTilt(tilt:float = 0.0):
-	rotation += tilt
+	if dynamicCrosshair:
+		rotation += tilt
 "
 
 [sub_resource type="Shader" id="Shader_1wy2d"]
@@ -227,6 +235,25 @@ grow_vertical = 2
 pivot_offset = Vector2(36.255, 36.145)
 texture = ExtResource("4_uhc5s")
 script = SubResource("GDScript_quas3")
+
+[node name="stableCrosshair" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -36.0
+offset_top = -36.0
+offset_right = 36.0
+offset_bottom = 36.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(36.255, 36.145)
+texture = ExtResource("4_uhc5s")
+script = SubResource("GDScript_quas3")
+dynamicCrosshair = false
 
 [node name="vignette" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_5giah")

@@ -160,10 +160,10 @@ func _physics_process(delta: float) -> void:
 					pathingToPosition = false
 
 
-func _ai_process() -> void:
+func _ai_process(delta) -> void:
 	if is_instance_valid(self) and is_instance_valid(pawnOwner) and !pawnOwner.isPawnDead:
 		print("Processing..")
-		pawnFSM._ai_process()
+		pawnFSM._ai_process(delta)
 
 
 func createFOVModel()->ImmediateMesh:

@@ -130,6 +130,7 @@ func _ready()->void:
 	Fade.fade_in(0.3, Color(0,0,0,1),"GradientVertical",false,true)
 	#Dialogic.timeline_started.connect(playTextAppearSound)
 	UserConfig.configs_updated.connect(checkMotionBlur)
+	hud.camOwner = self
 
 func checkMotionBlur()->void:
 	if UserConfig.graphics_motion_blur:

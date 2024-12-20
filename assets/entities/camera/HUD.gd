@@ -2,6 +2,7 @@ extends Control
 signal interactionunFound
 signal interactionFound
 @export_category("Hud")
+var camOwner : PlayerCamera
 @onready var gameNotifications : VBoxContainer = $marginContainer/control/gameNotifications
 @onready var questNotifHolder : MarginContainer = $questNotification
 @export var cam : Camera3D
@@ -23,6 +24,7 @@ var slidingCrosshairPos : Vector2 = Vector2.ZERO
 @onready var bulletTimeOff : AudioStreamPlayer = $bulletTimeFlash/bulletTimeOff
 @onready var fpsLabel = $FPSCounter/label
 @onready var interactAnim = $Interact/interactAnimPlayer
+@onready var stableCrosshair : TextureRect = $stableCrosshair
 var flashTween : Tween
 var interactVisible:bool = false:
 	set(value):
@@ -64,12 +66,11 @@ func _process(delta)->void:
 		pass
 
 	#Crosshair Follow
+	var pos
 	if UserConfig.game_crosshair_dynamic_position:
-		var pos
 		if camCast.is_colliding():
 			pos = camCast.get_collision_point()
 			slidingCrosshairPos = cam.unproject_position(pos)
-				#crosshair.tint = Color.WHITE
 		else:
 			pos = get_owner().camCastEnd.global_position
 			slidingCrosshairPos = cam.unproject_position(pos)

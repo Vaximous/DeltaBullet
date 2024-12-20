@@ -18,7 +18,7 @@ func on_enter()->void:
 	timer.timeout.connect(detectionIncrement)
 
 
-func on_ai_process()->void:
+func on_ai_process(delta)->void:
 	if detectionAmount > 35:
 		aiOwner.walkToPosition(aiOwner.getTargetPosition())
 	if detectionAmount > 1:

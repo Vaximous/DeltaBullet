@@ -17,4 +17,4 @@ func _physics_process(_delta: float) -> void:
 		if !component.is_processing():
 			return
 
-		component._ai_process()
+		component._ai_process(_delta)

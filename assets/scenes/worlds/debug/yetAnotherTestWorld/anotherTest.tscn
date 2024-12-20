@@ -161,8 +161,9 @@ equipWeaponOnSpawn = true
 weaponToEquip = 1
 aiType = 1
 
-[node name="pawnSpawn5" parent="Spawns/pawnSpawns" index="4" instance=ExtResource("4_0r0wx")]
+[node name="BogoHead" parent="Spawns/pawnSpawns" index="4" instance=ExtResource("4_0r0wx")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 7.23665, 1.5, 18.6997)
+pawnName = "BogoHead"
 pawnWeapons = Array[PackedScene]([ExtResource("5_wnt7o")])
 pawnClothing = Array[PackedScene]([ExtResource("6_71o2e"), ExtResource("7_u38u0"), ExtResource("8_00u34"), ExtResource("9_mvwmk")])
 equipWeaponOnSpawn = true

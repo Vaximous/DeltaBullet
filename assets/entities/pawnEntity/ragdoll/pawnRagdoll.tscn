@@ -1,14 +1,14 @@
 [gd_scene load_steps=67 format=4 uid="uid://di4i31dg7lojx"]
 
-[ext_resource type="Script" path="res://assets/scripts/entities/pawn/pawn_ragdoll.gd" id="1_p53ah"]
+[ext_resource type="Script" uid="uid://bqop3ih4f3q8r" path="res://assets/scripts/entities/pawn/pawn_ragdoll.gd" id="1_p53ah"]
 [ext_resource type="Resource" uid="uid://b7neohue6wpop" path="res://assets/resources/pawnRelated/pawnDeathCam.tres" id="2_xmv52"]
 [ext_resource type="Material" uid="uid://cmkj35g6w356q" path="res://assets/materials/pawnMaterial/MALE.tres" id="5_aal2s"]
 [ext_resource type="Material" uid="uid://5n0kme1jerwl" path="res://assets/materials/pawnMaterial/goreInside.tres" id="6_akgpo"]
-[ext_resource type="Script" path="res://assets/scripts/entities/ragdollBone/ragdollBone.gd" id="6_hyv7e"]
+[ext_resource type="Script" uid="uid://cwy51h2sgfulw" path="res://assets/scripts/entities/ragdollBone/ragdollBone.gd" id="6_hyv7e"]
 [ext_resource type="ArrayMesh" uid="uid://bhieuqeubp70" path="res://assets/models/pawn/male/head.tres" id="7_aamms"]
 [ext_resource type="AudioStream" uid="uid://ff7bu7igicx3" path="res://assets/sounds/ragdollSounds/hit1.wav" id="8_40qfl"]
 [ext_resource type="AudioStream" uid="uid://bs3xofj7vdju3" path="res://assets/sounds/ragdollSounds/hit2.wav" id="9_45vob"]
-[ext_resource type="Script" path="res://assets/components/healthComponent/healthComponent.gd" id="9_eyh07"]
+[ext_resource type="Script" uid="uid://dd6my2ga34tq7" path="res://assets/components/healthComponent/healthComponent.gd" id="9_eyh07"]
 [ext_resource type="AudioStream" uid="uid://slmolt6qnk4d" path="res://assets/sounds/ragdollSounds/hit3.wav" id="10_18634"]
 [ext_resource type="AudioStream" uid="uid://cpf5aa7d015yq" path="res://assets/sounds/ragdollSounds/hit4.wav" id="11_82f1r"]
 [ext_resource type="AudioStream" uid="uid://dibcd53odd7ea" path="res://assets/sounds/ragdollSounds/hit5.wav" id="12_dgfg4"]
@@ -763,6 +763,7 @@ stream_3/stream = ExtResource("28_jgl2r")
 stream_4/stream = ExtResource("29_qibad")
 
 [node name="pawnRagdoll" type="Node3D" node_paths=PackedStringArray("healthComponent", "rootCameraNode", "followNode") groups=["Posessable", "ragdolls"]]
+physics_interpolation_mode = 1
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 script = ExtResource("1_p53ah")
 canTwitch = false
@@ -1270,16 +1271,18 @@ mesh = ExtResource("7_aamms")
 skin = SubResource("Skin_d4meq")
 
 [node name="PhysicalBoneSimulator3D" type="PhysicalBoneSimulator3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D"]
+physics_interpolation_mode = 1
 
 [node name="Physical Bone Spine_0" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
-transform = Transform3D(1, 2.42056e-07, -6.74753e-09, 2.67181e-12, -0.0278761, -0.999611, -2.4215e-07, 0.999611, -0.0278761, -0.00146747, 0.948701, -0.0942243)
+physics_interpolation_mode = 1
+transform = Transform3D(1, 2.42116e-07, -6.71157e-09, 4.02914e-11, -0.0278761, -0.999611, -2.42209e-07, 0.999611, -0.0278761, -0.00147082, 0.948701, -0.0942243)
 top_level = true
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
-joint_offset = Transform3D(-3.61999e-06, 0, 1, 0, 1, 0, -1, 0, -3.61999e-06, 5.44587e-07, -1.21099e-06, 0.069905)
+joint_offset = Transform3D(-3.61999e-06, 0, 1, 0, 1, 0, -1, 0, -3.61999e-06, 3.89478e-06, -1.21099e-06, 0.069905)
 joint_rotation = Vector3(0, 1.5708, 0)
-body_offset = Transform3D(1, -2.45261e-08, -1.56489e-07, -1.56489e-07, -2.62633e-07, -1, 2.4526e-08, 1, -2.62633e-07, -5.33648e-07, 0.069905, 1.22935e-06)
+body_offset = Transform3D(1, -2.44658e-08, -1.56453e-07, -1.56453e-07, -2.62633e-07, -1, 2.44657e-08, 1, -2.62633e-07, -3.88385e-06, 0.069905, 1.22935e-06)
 mass = 1.88
 friction = 0.57
 bounce = 0.5
@@ -1367,14 +1370,15 @@ shape = SubResource("CylinderShape3D_8uk3o")
 script = ExtResource("9_eyh07")
 
 [node name="Physical Bone Spine_1" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
-transform = Transform3D(1, 2.30077e-07, 1.20368e-06, 1.1921e-06, 0.0450308, -0.998986, -2.84047e-07, 0.998986, 0.0450308, -0.00146738, 1.1215, -0.096917)
+physics_interpolation_mode = 1
+transform = Transform3D(1, 2.30076e-07, 1.20368e-06, 1.1921e-06, 0.0450308, -0.998986, -2.84046e-07, 0.998986, 0.0450308, -0.00147073, 1.1215, -0.096917)
 top_level = true
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
-joint_offset = Transform3D(-3.61999e-06, 0, 1, 0, 1, 0, -1, 0, -3.61999e-06, 3.04943e-07, -6.82452e-07, 0.103048)
+joint_offset = Transform3D(-3.61999e-06, 0, 1, 0, 1, 0, -1, 0, -3.61999e-06, 3.65514e-06, -6.89903e-07, 0.103048)
 joint_rotation = Vector3(0, 1.5708, 0)
-body_offset = Transform3D(1, -2.55644e-08, 1.05353e-06, 1.05353e-06, 1.15484e-07, -1, 2.55643e-08, 1, 1.15484e-07, -4.13507e-07, 0.103048, 6.70552e-07)
+body_offset = Transform3D(1, -2.55656e-08, 1.05353e-06, 1.05353e-06, 1.15484e-07, -1, 2.55655e-08, 1, 1.15484e-07, -3.76371e-06, 0.103048, 6.78003e-07)
 mass = 1.88
 friction = 0.57
 bounce = 0.5
@@ -1462,6 +1466,7 @@ shape = SubResource("CylinderShape3D_52twy")
 script = ExtResource("9_eyh07")
 
 [node name="Physical Bone Spine_2" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
+physics_interpolation_mode = 1
 transform = Transform3D(1, 1.9161e-07, 2.0225e-06, 1.99676e-06, 0.0907651, -0.995872, -3.74392e-07, 0.995872, 0.0907651, -0.00146711, 1.35583, -0.113533)
 top_level = true
 collision_layer = 2
@@ -1557,13 +1562,14 @@ shape = SubResource("CylinderShape3D_bwxkl")
 script = ExtResource("9_eyh07")
 
 [node name="Physical Bone L_UpperArm" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
-transform = Transform3D(-0.0223745, 0.911734, -0.410172, 0.0496621, 0.410782, 0.91038, 0.998515, -7.29374e-07, -0.0544697, 0.178106, 1.33498, -0.144721)
+physics_interpolation_mode = 1
+transform = Transform3D(-0.0223745, 0.911734, -0.410172, 0.0496621, 0.410782, 0.91038, 0.998515, -7.27515e-07, -0.0544697, 0.1781, 1.33499, -0.144721)
 top_level = true
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00131154, 0.0016767, 0.117835)
-body_offset = Transform3D(1, 2.30965e-07, -9.68575e-08, -1.00583e-07, -1.58837e-07, -1, -2.07242e-07, 1, -1.58192e-07, -0.00131153, 0.117835, -0.00167668)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00131096, 0.00167837, 0.117825)
+body_offset = Transform3D(1, 2.30965e-07, -9.68575e-08, -1.00583e-07, -1.58837e-07, -1, -2.07242e-07, 1, -1.58192e-07, -0.00131094, 0.117825, -0.00167835)
 mass = 1.3
 friction = 0.5
 bounce = 0.25
@@ -1652,7 +1658,8 @@ shape = SubResource("CapsuleShape3D_mwo6o")
 script = ExtResource("9_eyh07")
 
 [node name="Physical Bone L_Forearm" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
-transform = Transform3D(-0.127091, 0.838414, -0.530009, 0.187233, 0.545014, 0.817254, 0.97406, 0.00463011, -0.226245, 0.301662, 1.11069, -0.107246)
+physics_interpolation_mode = 1
+transform = Transform3D(-0.127091, 0.838414, -0.530009, 0.187233, 0.545014, 0.817254, 0.97406, 0.0046301, -0.226245, 0.301662, 1.11069, -0.107246)
 top_level = true
 collision_layer = 2
 collision_mask = 11
@@ -1748,12 +1755,13 @@ shape = SubResource("CapsuleShape3D_m3j52")
 script = ExtResource("9_eyh07")
 
 [node name="Physical Bone L_Hand" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
-transform = Transform3D(0.805081, 0.524111, -0.277762, 0.576918, -0.583027, 0.572054, 0.137877, -0.620796, -0.771753, 0.38264, 0.97899, -0.0415716)
+physics_interpolation_mode = 1
+transform = Transform3D(0.805081, 0.524111, -0.277762, 0.576918, -0.583027, 0.572054, 0.137877, -0.620795, -0.771753, 0.38264, 0.97899, -0.0415716)
 top_level = true
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
-joint_offset = Transform3D(-3.61999e-06, 0, -1, 0, 1, 0, 1, 0, -3.61999e-06, -7.5642e-06, -2.6653e-06, 0.0477033)
+joint_offset = Transform3D(-3.61999e-06, 0, -1, 0, 1, 0, 1, 0, -3.61999e-06, -7.55349e-06, -2.6763e-06, 0.0477032)
 joint_rotation = Vector3(0, -1.5708, 0)
 body_offset = Transform3D(0.132587, -0.706801, -0.693495, -7.3649e-06, 0.699684, -0.713109, 0.990203, 0.0946448, 0.092853, 0.0330811, 0.0340195, -0.00442165)
 mass = 1.3
@@ -1844,6 +1852,7 @@ shape = SubResource("CylinderShape3D_j7vcn")
 script = ExtResource("9_eyh07")
 
 [node name="Physical Bone R_UpperArm" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
+physics_interpolation_mode = 1
 transform = Transform3D(-0.0223749, -0.911733, 0.410173, -0.0496621, 0.410783, 0.91038, -0.998515, -3.936e-07, -0.0544698, -0.188273, 1.32907, -0.143012)
 top_level = true
 collision_layer = 2
@@ -1940,6 +1949,7 @@ shape = SubResource("CapsuleShape3D_pecwf")
 script = ExtResource("9_eyh07")
 
 [node name="Physical Bone R_Forearm" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
+physics_interpolation_mode = 1
 transform = Transform3D(-0.127093, -0.838414, 0.530009, -0.187231, 0.545014, 0.817254, -0.97406, 0.00463321, -0.226244, -0.307305, 1.11074, -0.107303)
 top_level = true
 collision_layer = 2
@@ -2036,13 +2046,14 @@ shape = SubResource("CapsuleShape3D_1wxcq")
 script = ExtResource("9_eyh07")
 
 [node name="Physical Bone R_Hand" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
-transform = Transform3D(0.83003, -0.514241, 0.215886, -0.532388, -0.615231, 0.581424, -0.166172, -0.597534, -0.784436, -0.385109, 0.979111, -0.0416234)
+physics_interpolation_mode = 1
+transform = Transform3D(0.83003, -0.51424, 0.215886, -0.532388, -0.615231, 0.581423, -0.166172, -0.597534, -0.784436, -0.385109, 0.979111, -0.0416234)
 top_level = true
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6056e-06, 2.69554e-06, 0.0468982)
-body_offset = Transform3D(0.153808, 0.690184, 0.707099, 4.39584e-06, 0.715614, -0.698496, -0.988101, 0.107438, 0.110064, -0.0331638, 0.0327563, -0.00516051)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.58465e-06, 2.72214e-06, 0.0468982)
+body_offset = Transform3D(0.153807, 0.690184, 0.707099, 4.48897e-06, 0.715614, -0.698496, -0.988101, 0.107437, 0.110064, -0.0331638, 0.0327563, -0.00516051)
 mass = 1.3
 friction = 0.15
 bounce = 0.25
@@ -2131,12 +2142,13 @@ shape = SubResource("CylinderShape3D_ugm88")
 script = ExtResource("9_eyh07")
 
 [node name="Physical Bone L_UpperLeg" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
+physics_interpolation_mode = 1
 transform = Transform3D(0.981452, -0.00314959, -0.191683, 0.191582, 0.0524232, 0.980076, 0.00696178, -0.99862, 0.0520543, 0.0862981, 0.680569, -0.106704)
 top_level = true
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
-joint_offset = Transform3D(-3.61999e-06, 0, 1, 0, 1, 0, -1, 0, -3.61999e-06, -1.33962e-06, 3.67425e-07, 0.202285)
+joint_offset = Transform3D(-3.61999e-06, 0, 1, 0, 1, 0, -1, 0, -3.61999e-06, -1.33961e-06, 3.67425e-07, 0.202285)
 joint_rotation = Vector3(0, 1.5708, 0)
 body_offset = Transform3D(1, -1.69501e-07, -7.4401e-07, -7.38946e-07, -5.58794e-08, -1, 1.71363e-07, 1, -4.84288e-08, 1.49012e-06, 0.202285, -3.57628e-07)
 mass = 1.3
@@ -2227,6 +2239,7 @@ shape = SubResource("CapsuleShape3D_q1lep")
 script = ExtResource("9_eyh07")
 
 [node name="Physical Bone L_LowerLeg" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
+physics_interpolation_mode = 1
 transform = Transform3D(0.990494, -0.000589495, -0.137552, 0.137317, 0.0627061, 0.98854, 0.00804257, -0.998032, 0.0621909, 0.152775, 0.283262, -0.129753)
 top_level = true
 collision_layer = 2
@@ -2323,13 +2336,14 @@ shape = SubResource("CapsuleShape3D_7w7wt")
 script = ExtResource("9_eyh07")
 
 [node name="Physical Bone L_Foot" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
-transform = Transform3D(-0.977138, 0.0799448, -0.197003, -0.0750966, 0.7371, 0.671598, 0.198902, 0.671039, -0.714245, 0.18972, 0.0526522, -0.108718)
+physics_interpolation_mode = 1
+transform = Transform3D(-0.977137, 0.0799436, -0.197006, -0.0750996, 0.7371, 0.671598, 0.198903, 0.671038, -0.714244, 0.18972, 0.0526522, -0.108718)
 top_level = true
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.73674e-06, 3.52951e-07, 0.046988)
-body_offset = Transform3D(1, 5.60284e-06, 1.28597e-05, 1.29044e-05, -4.08292e-06, -1, -5.61774e-06, 1, -4.02331e-06, 1.13249e-06, 0.046988, -1.63913e-07)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.89078e-06, 3.78154e-07, 0.046988)
+body_offset = Transform3D(1, 6.70552e-06, 1.6138e-05, 1.61529e-05, -4.58956e-06, -1, -6.70552e-06, 1, -4.55976e-06, 1.13249e-06, 0.046988, -1.63913e-07)
 mass = 1.3
 friction = 0.85
 bounce = 0.6
@@ -2418,14 +2432,15 @@ shape = SubResource("CapsuleShape3D_7drfu")
 script = ExtResource("9_eyh07")
 
 [node name="Physical Bone R_UpperLeg" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
+physics_interpolation_mode = 1
 transform = Transform3D(0.981452, 0.00314941, 0.19168, -0.19158, 0.0524231, 0.980076, -0.00696183, -0.99862, 0.0520541, -0.0919615, 0.680576, -0.106704)
 top_level = true
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
-joint_offset = Transform3D(-3.61999e-06, 0, 1, 0, 1, 0, -1, 0, -3.61999e-06, 3.55035e-07, -2.90657e-07, 0.202277)
+joint_offset = Transform3D(-3.61999e-06, 0, 1, 0, 1, 0, -1, 0, -3.61999e-06, 3.5503e-07, -2.91411e-07, 0.202277)
 joint_rotation = Vector3(0, 1.5708, 0)
-body_offset = Transform3D(1, 5.07571e-08, -1.31319e-06, -1.34527e-06, 4.09782e-08, -1, -5.07571e-08, 1, 3.72529e-08, -8.9407e-08, 0.202277, 2.83122e-07)
+body_offset = Transform3D(1, 5.02914e-08, -1.31316e-06, -1.34527e-06, 4.47035e-08, -1, -5.07571e-08, 1, 4.09782e-08, -8.9407e-08, 0.202277, 2.83122e-07)
 mass = 1.3
 friction = 0.45
 bounce = 0.6
@@ -2514,12 +2529,13 @@ shape = SubResource("CapsuleShape3D_eyojg")
 script = ExtResource("9_eyh07")
 
 [node name="Physical Bone R_LowerLeg" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
+physics_interpolation_mode = 1
 transform = Transform3D(0.990494, 0.000589113, 0.137552, -0.137318, 0.0627058, 0.98854, -0.00804295, -0.998032, 0.0621907, -0.158436, 0.283263, -0.129757)
 top_level = true
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
-joint_offset = Transform3D(-3.61999e-06, 0, 1, 0, 1, 0, -1, 0, -3.61999e-06, 1.1909e-06, -5.43295e-07, 0.201358)
+joint_offset = Transform3D(-3.61999e-06, 0, 1, 0, 1, 0, -1, 0, -3.61999e-06, 1.19091e-06, -5.43294e-07, 0.201358)
 joint_rotation = Vector3(0, 1.5708, 0)
 body_offset = Transform3D(1, -2.38419e-07, 1.41194e-06, 1.41049e-06, 9.68575e-08, -1, 2.37487e-07, 1, 1.08033e-07, -1.47521e-06, 0.201358, 5.21541e-07)
 mass = 1.3
@@ -2610,13 +2626,14 @@ shape = SubResource("CapsuleShape3D_ftayn")
 script = ExtResource("9_eyh07")
 
 [node name="Physical Bone R_Foot" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
-transform = Transform3D(-0.987933, -0.080835, 0.132117, 0.0307913, 0.733473, 0.679021, -0.151793, 0.674895, -0.722133, -0.19227, 0.05266, -0.108724)
+physics_interpolation_mode = 1
+transform = Transform3D(-0.987933, -0.080835, 0.132117, 0.0307913, 0.733473, 0.679021, -0.151793, 0.674895, -0.722133, -0.19227, 0.0530814, -0.109072)
 top_level = true
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.60428e-07, -1.44713e-06, 0.0464649)
-body_offset = Transform3D(1, 7.45058e-07, 5.81145e-07, 5.58794e-07, 3.27826e-07, -1, -7.37607e-07, 1, 3.57628e-07, -3.8743e-07, 0.0464649, 1.43051e-06)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.54129e-05, -7.57591e-05, 0.0459276)
+body_offset = Transform3D(1, 7.45058e-07, 5.81145e-07, 5.58794e-07, 3.27826e-07, -1, -7.37607e-07, 1, 3.57628e-07, 6.53863e-05, 0.0459276, 7.57426e-05)
 mass = 1.3
 friction = 0.85
 bounce = 0.35
@@ -2705,14 +2722,15 @@ shape = SubResource("CapsuleShape3D_pmdyv")
 script = ExtResource("9_eyh07")
 
 [node name="Physical Bone Neck" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
-transform = Transform3D(-1, -3.70361e-08, 1.45087e-07, -1.47238e-07, 0.0668406, -0.997764, 2.72556e-08, -0.997764, -0.0668406, -0.001467, 1.52345, -0.123086)
+physics_interpolation_mode = 1
+transform = Transform3D(-1, -3.65852e-08, 1.4471e-07, -1.46829e-07, 0.0667335, -0.997771, 2.68466e-08, -0.997771, -0.0667335, -0.00146682, 1.52345, -0.123301)
 top_level = true
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
-joint_offset = Transform3D(1, 1.49012e-08, 4.44089e-16, -1.49012e-08, 1, 2.98023e-08, 1.00585e-21, -2.98023e-08, 1, 3.90855e-08, -1.05286e-06, 0.0362801)
+joint_offset = Transform3D(1, 1.49012e-08, 4.44089e-16, -1.49012e-08, 1, 2.98023e-08, 1.00585e-21, -2.98023e-08, 1, 2.23657e-07, -0.000211097, 0.0362659)
 joint_rotation = Vector3(-2.98023e-08, 4.44089e-16, -1.49012e-08)
-body_offset = Transform3D(-1, 2.2726e-07, 1.52221e-08, 2.1298e-12, 0.0668411, -0.99777, -2.2777e-07, -0.997769, -0.066841, 3.85335e-08, 0.0361993, 0.00242395)
+body_offset = Transform3D(-1, 2.27697e-07, 1.48169e-08, 4.1109e-10, 0.066734, -0.997777, -2.28179e-07, -0.997776, -0.0667339, 2.23168e-07, 0.0361993, 0.00220954)
 mass = 1.75
 friction = 0.8
 bounce = 0.25

@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3 uid="uid://mspc5c8w8fqi"]
 
 [ext_resource type="Resource" uid="uid://nbth0uf3slwn" path="res://assets/entities/weapons/BattlecadeAssaultRifle/bcARStats.tres" id="1_niglr"]
-[ext_resource type="Script" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="2_g1vh5"]
+[ext_resource type="Script" uid="uid://b6r8ewrq3qb3y" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="2_g1vh5"]
 
 [resource]
 script = ExtResource("2_g1vh5")

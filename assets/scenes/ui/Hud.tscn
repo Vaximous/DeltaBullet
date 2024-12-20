@@ -1,6 +1,6 @@
 [gd_scene load_steps=28 format=3 uid="uid://1d1rfqprpnrb"]
 
-[ext_resource type="Script" path="res://assets/entities/camera/HUD.gd" id="1_on6xd"]
+[ext_resource type="Script" uid="uid://bqcb21u5nterd" path="res://assets/entities/camera/HUD.gd" id="1_on6xd"]
 [ext_resource type="FontFile" uid="uid://xmwjvmqspojb" path="res://assets/fonts/Grand_Aventure_Text.otf" id="2_tf7jg"]
 [ext_resource type="Texture2D" uid="uid://dc3fkfugwvtla" path="res://assets/textures/misc/company-logo (1).png" id="3_4nkiw"]
 [ext_resource type="Texture2D" uid="uid://birbjoai58xb7" path="res://assets/textures/crosshair/crosshair001.png" id="4_uhc5s"]
@@ -169,12 +169,13 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_uw0ow"]
 _data = {
-"RESET": SubResource("Animation_jcse6"),
-"rolldown": SubResource("Animation_1hh6o"),
-"rollover": SubResource("Animation_tl6cg")
+&"RESET": SubResource("Animation_jcse6"),
+&"rolldown": SubResource("Animation_1hh6o"),
+&"rollover": SubResource("Animation_tl6cg")
 }
 
 [node name="HUD" type="Control" node_paths=PackedStringArray("crosshair")]
+physics_interpolation_mode = 1
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -220,6 +221,7 @@ texture = ExtResource("3_4nkiw")
 expand_mode = 1
 
 [node name="Crosshair" type="TextureRect" parent="."]
+physics_interpolation_mode = 1
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -469,7 +471,7 @@ text = "Use \"Item\""
 
 [node name="interactAnimPlayer" type="AnimationPlayer" parent="Interact"]
 libraries = {
-"": SubResource("AnimationLibrary_uw0ow")
+&"": SubResource("AnimationLibrary_uw0ow")
 }
 speed_scale = 1.733
 

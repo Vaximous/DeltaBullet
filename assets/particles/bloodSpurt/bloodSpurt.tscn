@@ -1,27 +1,9 @@
-[gd_scene load_steps=25 format=3 uid="uid://bpp4s1vikjdv8"]
+[gd_scene load_steps=23 format=3 uid="uid://bpp4s1vikjdv8"]
 
-[ext_resource type="Texture2D" uid="uid://bimk8xiwemuh7" path="res://assets/textures/blood/realBloodSheets/Blood_1-2.png" id="1_6l5g6"]
-[ext_resource type="Texture2D" uid="uid://dvovreh6l13lj" path="res://assets/textures/blood/realBloodSheets/Blood_1-2_n.png" id="2_dec78"]
+[ext_resource type="Material" uid="uid://co86jd67xrcl" path="res://assets/materials/blood/spurts/bloodSpurt3.tres" id="1_fkxrd"]
 [ext_resource type="Texture2D" uid="uid://djho1o4a46mla" path="res://assets/textures/blood/ParticleCloudWhite.png" id="3_nfhuv"]
 [ext_resource type="Material" uid="uid://bxh02ijn7mkmu" path="res://assets/materials/blood/bloodland1.tres" id="4_jlj6w"]
 [ext_resource type="Material" uid="uid://dkqmd8bpbl83c" path="res://assets/materials/blood/bloodDecalSmall.tres" id="5_2tj2p"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mh1kq"]
-transparency = 1
-cull_mode = 2
-albedo_color = Color(0.462745, 0.0941176, 0.0745098, 1)
-albedo_texture = ExtResource("1_6l5g6")
-albedo_texture_msdf = true
-metallic = 0.75
-metallic_specular = 0.0
-roughness = 0.0
-normal_enabled = true
-normal_texture = ExtResource("2_dec78")
-billboard_mode = 3
-billboard_keep_scale = true
-particles_anim_h_frames = 4
-particles_anim_v_frames = 4
-particles_anim_loop = false
 
 [sub_resource type="Curve" id="Curve_e4ray"]
 _data = [Vector2(0, 0), 0.0, 1.8595, 0, 0, Vector2(0.980582, 1), 0.0, 0.0, 0, 0]
@@ -67,6 +49,7 @@ var landTexture : Array = [preload(\"res://assets/materials/blood/bloodland1.tre
 # Called when the node enters the scene tree for the first time.
 func _ready()->void:
 	#removeTimer.wait_time = UserConfig.game_decal_remove_time
+	material_override = gameManager.bloodSpurts.pick_random()
 	removeTimer.start()
 	$bloodLand.material_overlay = landTexture.pick_random()
 	#randomize(
@@ -91,7 +74,7 @@ point_count = 2
 curve = SubResource("Curve_v3mcd")
 
 [sub_resource type="Curve" id="Curve_2tsyi"]
-max_value = 2.0
+_limits = [0.0, 2.0, 0.0, 1.0]
 _data = [Vector2(0, 0.263736), 0.0, 0.0, 0, 0, Vector2(0.519418, 1.51648), 1.9116, 0.0, 0, 0]
 point_count = 2
 
@@ -167,7 +150,7 @@ size = Vector2(0.085, 2)
 process_thread_group = 2
 process_thread_group_order = 0
 process_thread_messages = 2
-material_override = SubResource("StandardMaterial3D_mh1kq")
+material_override = ExtResource("1_fkxrd")
 emitting = false
 amount = 6
 one_shot = true

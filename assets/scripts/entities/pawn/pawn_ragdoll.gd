@@ -189,6 +189,7 @@ func applyRagdollImpulse(pawn:BasePawn,currentVelocity:Vector3,impulseBone:int =
 			bones.apply_central_impulse(currentVelocity)
 			if bones.get_bone_id() == impulseBone:
 				#ragdoll.startRagdoll()
+				bones.canBleed = true
 				bones.apply_central_impulse(hitImpulse * randf_range(1.5,2))
 
 

@@ -1,0 +1,22 @@
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://de1e055q4qkay"]
+
+[ext_resource type="Texture2D" uid="uid://cydcys0moencw" path="res://assets/textures/blood/realBloodSheets/Blood_1-4.png" id="1_hhfq5"]
+[ext_resource type="Texture2D" uid="uid://dvovreh6l13lj" path="res://assets/textures/blood/realBloodSheets/Blood_1-2_n.png" id="2_vcvsl"]
+
+[resource]
+transparency = 1
+cull_mode = 2
+albedo_color = Color(0.462745, 0.0941176, 0.0745098, 1)
+albedo_texture = ExtResource("1_hhfq5")
+metallic = 0.75
+metallic_specular = 0.0
+roughness = 0.0
+normal_enabled = true
+normal_texture = ExtResource("2_vcvsl")
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 4
+particles_anim_v_frames = 4
+particles_anim_loop = false
+msdf_pixel_range = 2.0
+msdf_outline_size = 1.0

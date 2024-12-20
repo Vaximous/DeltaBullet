@@ -163,13 +163,13 @@ func _physics_process(delta)->void:
 		if "currentItem" in followingEntity:
 			if followingEntity.currentItem != null:
 				weaponHud.modulate = lerp(weaponHud.modulate,Color(1,1,1,0.8),12*delta)
-				weaponAmmoLabel.text = str(followingEntity.currentItem.currentAmmo)
+				weaponAmmoLabel.text = str(int(followingEntity.currentItem.currentAmmo))
 				if followingEntity.currentItem.currentAmmo <= 2:
 					weaponAmmoLabel.modulate = lerp(weaponAmmoLabel.modulate,Color.RED,18*delta)
 				else:
 					weaponAmmoLabel.modulate = lerp(weaponAmmoLabel.modulate,Color.WHITE,18*delta)
 				weaponLabel.text = str(followingEntity.currentItem.objectName)
-				weaponMagCountLabel.text = str(followingEntity.currentItem.currentMagSize)
+				weaponMagCountLabel.text = str(int(followingEntity.currentItem.currentMagSize))
 				if followingEntity.currentItem.currentMagSize <= 2:
 					weaponMagCountLabel.modulate = lerp(weaponMagCountLabel.modulate,Color.RED,18*delta)
 				else:

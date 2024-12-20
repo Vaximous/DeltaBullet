@@ -22,9 +22,9 @@ func _init():
 
 func _render_callback_2(render_size : Vector2i, render_scene_buffers : RenderSceneBuffersRD, render_scene_data : RenderSceneDataRD):
 	ensure_texture(custom_velocity, render_scene_buffers)
-	
+
 	rd.draw_command_begin_label("Pre Blur Processing", Color(1.0, 1.0, 1.0, 1.0))
-	
+
 	var float_pre_blur_push_constants: PackedFloat32Array = [
 		camera_rotation_component.multiplier,
 		camera_movement_component.multiplier,
@@ -39,15 +39,15 @@ func _render_callback_2(render_size : Vector2i, render_scene_buffers : RenderSce
 		0,
 		0,
 	]
-	
+
 	var int_pre_blur_push_constants : PackedInt32Array = [
 	]
-	
+
 	var byte_array = float_pre_blur_push_constants.to_byte_array()
 	byte_array.append_array(int_pre_blur_push_constants.to_byte_array())
-	
+
 	var view_count = render_scene_buffers.get_view_count()
-	
+
 	for view in range(view_count):
 		var depth_image := render_scene_buffers.get_depth_layer(view)
 		var velocity_image := render_scene_buffers.get_velocity_layer(view)
@@ -57,11 +57,11 @@ func _render_callback_2(render_size : Vector2i, render_scene_buffers : RenderSce
 		scene_data_buffer_uniform.uniform_type = RenderingDevice.UNIFORM_TYPE_UNIFORM_BUFFER
 		scene_data_buffer_uniform.binding = 5
 		scene_data_buffer_uniform.add_id(scene_data_buffer)
-		
+
 		var x_groups := floori((render_size.x - 1) / 16 + 1)
 		var y_groups := floori((render_size.y - 1) / 16 + 1)
-		
-		dispatch_stage(pre_blur_processor_stage, 
+
+		dispatch_stage(pre_blur_processor_stage,
 		[
 			get_sampler_uniform(depth_image, 0, false),
 			get_sampler_uniform(velocity_image, 1, false),
@@ -69,8 +69,8 @@ func _render_callback_2(render_size : Vector2i, render_scene_buffers : RenderSce
 			scene_data_buffer_uniform
 		],
 		byte_array,
-		Vector3i(x_groups, y_groups, 1), 
-		"Process Velocity Buffer", 
+		Vector3i(x_groups, y_groups, 1),
+		"Process Velocity Buffer",
 		view)
-	
+
 	rd.draw_command_end_label()

@@ -19,7 +19,7 @@ config/name="Delta Bullet"
 config/version="0.75.6"
 run/main_scene="res://bootscene.tscn"
 run/main_loop_type="PEMainLoop"
-config/features=PackedStringArray("4.3", "Forward Plus")
+config/features=PackedStringArray("4.4", "Forward Plus")
 boot_splash/bg_color=Color(0, 0, 0, 1)
 boot_splash/show_image=false
 boot_splash/image="res://assets/textures/misc/bootlogo.png"
@@ -41,9 +41,9 @@ AiManager="*res://assets/scripts/singletons/AIManager.gd"
 
 [debug]
 
+settings/stdout/verbose_stdout=true
 file_logging/enable_file_logging=true
 file_logging/max_log_files=10
-settings/stdout/verbose_stdout=true
 
 [dialogic]
 
@@ -322,10 +322,10 @@ limits/debugger/max_chars_per_second=132768
 
 [physics]
 
-common/physics_ticks_per_second=120
-common/physics_jitter_fix=2.0
-3d/physics_engine="JoltPhysics3D"
+common/physics_ticks_per_second=72
+3d/physics_engine="Jolt Physics"
 3d/default_gravity=16.8
+common/physics_interpolation=true
 jolt_3d/sleep/time_threshold=0.2
 
 [rendering]

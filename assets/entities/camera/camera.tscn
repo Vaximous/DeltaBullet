@@ -1,6 +1,6 @@
 [gd_scene load_steps=16 format=3 uid="uid://c1r6apfs6eb8j"]
 
-[ext_resource type="Script" path="res://assets/scripts/camera/Camera.gd" id="1_r7vh5"]
+[ext_resource type="Script" uid="uid://dc5csltpb6sdj" path="res://assets/scripts/camera/Camera.gd" id="1_r7vh5"]
 [ext_resource type="Compositor" uid="uid://c1twst3dvajrx" path="res://assets/envs/motionBlurCompositor.tres" id="2_gqas6"]
 [ext_resource type="PackedScene" uid="uid://cvynv7sgqowum" path="res://assets/components/velocityComponent/velocityComponent.tscn" id="2_rb4ck"]
 [ext_resource type="PackedScene" uid="uid://cmyxa8pfmhpcy" path="res://assets/components/inputComponent/inputComponent.tscn" id="3_jchmi"]
@@ -32,6 +32,7 @@ stream_2/stream = ExtResource("21_dd0pb")
 stream_3/stream = ExtResource("22_vhmuo")
 
 [node name="Camera" type="CharacterBody3D" node_paths=PackedStringArray("velocityComponent", "inputComponent")]
+physics_interpolation_mode = 1
 collision_layer = 0
 collision_mask = 0
 motion_mode = 1

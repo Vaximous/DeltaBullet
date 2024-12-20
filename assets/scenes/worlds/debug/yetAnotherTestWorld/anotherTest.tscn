@@ -1,7 +1,7 @@
 [gd_scene load_steps=33 format=3 uid="uid://ccnq3cc8k6nt5"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_iq3s1"]
-[ext_resource type="Script" path="res://assets/resources/customResources/worldData/worldData.gd" id="2_gqs4i"]
+[ext_resource type="Script" uid="uid://b31u24at18p5t" path="res://assets/resources/customResources/worldData/worldData.gd" id="2_gqs4i"]
 [ext_resource type="Material" uid="uid://6hc0pjapu32g" path="res://assets/materials/devMaterials/developer/checkerboard_material.tres" id="3_sg61b"]
 [ext_resource type="PackedScene" uid="uid://boicvk4qeqmbd" path="res://assets/entities/pawnSpawn/pawnSpawn.tscn" id="4_0r0wx"]
 [ext_resource type="Texture2D" uid="uid://d0f0crtwpmoka" path="res://assets/textures/panoramas/panoramatest1.png" id="4_7ph80"]
@@ -15,11 +15,11 @@
 [ext_resource type="PackedScene" uid="uid://b4v8dskvpby4c" path="res://assets/entities/clothing/Hair/Hair2.tscn" id="7_u38u0"]
 [ext_resource type="PackedScene" uid="uid://b026rv1louhqg" path="res://assets/entities/clothing/Longcoats/longCoat.tscn" id="8_00u34"]
 [ext_resource type="PackedScene" uid="uid://bb78dx0yknjep" path="res://assets/entities/door/keypadDoor.tscn" id="8_8q3c1"]
-[ext_resource type="Script" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="8_hfkws"]
+[ext_resource type="Script" uid="uid://b6r8ewrq3qb3y" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="8_hfkws"]
 [ext_resource type="PackedScene" uid="uid://4seyitfkc6wn" path="res://assets/entities/clothing/Pants/pants.tscn" id="9_mvwmk"]
 [ext_resource type="PackedScene" uid="uid://bgk584lddf4aa" path="res://assets/entities/weapons/BattlecadeAssaultRifle/BattlecadeAssaultRifle.tscn" id="12_wtwgc"]
-[ext_resource type="Script" path="res://assets/scenes/worlds/areas/playerHome/player_closet.gd" id="18_lux1e"]
-[ext_resource type="Script" path="res://assets/scripts/entities/interactiveObject/interactiveObject.gd" id="19_s4bs4"]
+[ext_resource type="Script" uid="uid://d01nxiqfv4lfd" path="res://assets/scenes/worlds/areas/playerHome/player_closet.gd" id="18_lux1e"]
+[ext_resource type="Script" uid="uid://tiffkbp5ry74" path="res://assets/scripts/entities/interactiveObject/interactiveObject.gd" id="19_s4bs4"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_882n8"]
 panorama = ExtResource("4_7ph80")
@@ -262,7 +262,7 @@ transform = Transform3D(0.721047, -0.348327, 0.598965, 0.26794, 0.937373, 0.2225
 weaponResource = SubResource("Resource_eich3")
 
 [node name="BattlecadeAssaultRifle" parent="Props" index="1" instance=ExtResource("12_wtwgc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.48657, 15.2846, -7.25441)
+transform = Transform3D(0.159606, 0, -0.987181, -0.191204, 0.981063, -0.0309134, 0.968487, 0.193686, 0.156583, -4.48657, 8.26459, -7.25441)
 collisionEnabled = true
 
 [node name="PlayerCloset" type="Node3D" parent="Props" index="2"]

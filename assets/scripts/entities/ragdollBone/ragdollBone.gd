@@ -91,12 +91,14 @@ func boneSetup()->void:
 	setBoneCooldownTimer()
 	createAudioPlayer()
 	bonePhysicsServer.body_set_max_contacts_reported(RID(self), 1)
+	isAsleep.connect(doBleed)
 	if canBeDismembered:
 		if healthComponent != null:
 			if !healthComponent.HPisDead.is_connected(pulverizeBone):
 				healthComponent.HPisDead.connect(pulverizeBone)
 	else:
-		healthComponent.HPisDead.disconnect(pulverizeBone)
+		if healthComponent.HPisDead.is_connected(pulverizeBone):
+			healthComponent.HPisDead.disconnect(pulverizeBone)
 
 
 func createInAirAudio()->void:
@@ -208,7 +210,7 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 		#audioCooldown -= delta
 
 func hit(dmg, dealer=null, hitImpulse:Vector3 = Vector3.ZERO, hitPoint:Vector3 = Vector3.ZERO)->void:
-	#canBleed = true
+	canBleed = true
 	emit_signal("onHit",hitImpulse,hitPoint)
 	apply_central_impulse(hitImpulse)
 	if get_bone_id() == 41:
@@ -246,7 +248,7 @@ func findPhysicsBone(id:int)->PhysicalBone3D:
 
 
 func doPulverizeEffect()->void:
-	canBleed = true
+	doBleed()
 	var pulverizeSound : AudioStreamPlayer3D = AudioStreamPlayer3D.new()
 	pulverizeSound.stream = load("res://assets/misc/obliterateStream.tres")
 	pulverizeSound.bus = &"Sounds"

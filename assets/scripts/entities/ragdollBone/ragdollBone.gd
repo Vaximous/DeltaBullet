@@ -261,7 +261,7 @@ func doPulverizeEffect()->void:
 	var bloodSpurt : GPUParticles3D = load("res://assets/particles/bloodSpurt/bloodSpurt.tscn").instantiate()
 	gameManager.world.worldMisc.add_child(bloodSpurt)
 	bloodSpurt.global_position = global_position
-	bloodSpurt.amount = randi_range(20,35)
+	bloodSpurt.maxParticles = 10
 	bloodSpurt.emitting = true
 	collision_layer = 0
 	collision_mask = 1

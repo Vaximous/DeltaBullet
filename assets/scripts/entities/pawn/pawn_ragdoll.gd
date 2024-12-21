@@ -144,7 +144,7 @@ func doRagdollHeadshot()-> void:
 	head.mesh = destroyedHeads.pick_random()
 	var particle = globalParticles.createParticle("BloodSpurt",Vector3(headBone.global_position.x,headBone.global_position.y-1.4,headBone.global_position.z))
 	particle.rotation = headBone.global_rotation
-	particle.amount = randi_range(25,35)
+	particle.maxParticles = randi_range(8,10)
 	for clothes in self.get_children():
 		if clothes is ClothingItem:
 			if clothes.clothingType == 0 or clothes.clothingType == 1:

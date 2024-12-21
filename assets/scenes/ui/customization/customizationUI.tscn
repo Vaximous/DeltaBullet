@@ -1,8 +1,8 @@
 [gd_scene load_steps=43 format=3 uid="uid://iftsfle430nr"]
 
-[ext_resource type="Script" path="res://assets/scenes/ui/customization/customizationUI.gd" id="1_2bhr7"]
+[ext_resource type="Script" uid="uid://dmkj1xkkt0fwp" path="res://assets/scenes/ui/customization/customizationUI.gd" id="1_2bhr7"]
 [ext_resource type="PackedScene" uid="uid://ctrswootky6q7" path="res://assets/scenes/ui/customization/customizationWorld.tscn" id="1_sgpgn"]
-[ext_resource type="Shader" path="res://assets/scripts/shaders/ui_blur.gdshader" id="2_jrjiw"]
+[ext_resource type="Shader" uid="uid://dhylkvfkpaysc" path="res://assets/scripts/shaders/ui_blur.gdshader" id="2_jrjiw"]
 [ext_resource type="PackedScene" uid="uid://2nj1n64cy47e" path="res://assets/scenes/ui/customization/customizationClothing.tscn" id="3_m5e2e"]
 [ext_resource type="Texture2D" uid="uid://bn80p3jko0k42" path="res://assets/textures/ui/customization/faceButton.png" id="3_sge17"]
 [ext_resource type="Texture2D" uid="uid://c4vv3virnhurd" path="res://assets/textures/ui/customization/shirtButton.png" id="4_66qj6"]
@@ -148,8 +148,8 @@ tracks/4/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_rnnv7"]
 _data = {
-"RESET": SubResource("Animation_wcnyg"),
-"titlebarIn": SubResource("Animation_6nk7h")
+&"RESET": SubResource("Animation_wcnyg"),
+&"titlebarIn": SubResource("Animation_6nk7h")
 }
 
 [sub_resource type="Environment" id="Environment_qpku8"]
@@ -238,7 +238,7 @@ grow_vertical = 2
 
 [node name="animationPlayer" type="AnimationPlayer" parent="customizationUi"]
 libraries = {
-"": SubResource("AnimationLibrary_rnnv7")
+&"": SubResource("AnimationLibrary_rnnv7")
 }
 
 [node name="characterPreviewContainer" type="MarginContainer" parent="customizationUi"]

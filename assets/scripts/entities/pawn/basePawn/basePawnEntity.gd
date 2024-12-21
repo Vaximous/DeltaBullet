@@ -486,17 +486,18 @@ func moveHitboxDecals(parent:Node3D = gameManager.world.worldParticles) ->void:
 func die(killer) -> void:
 	if is_instance_valid(self) and !isPawnDead:
 		isPawnDead = true
+		createRagdoll(lastHitPart, killer)
+		pawnEnabled = false
 		collisionShape.disabled = true
 		if is_instance_valid(killer):
 			doKillEffect(killer)
 		animationController.enabled = false
 		movementController.enabled = false
 		killAllTweens()
-		createRagdoll(lastHitPart, killer)
-		pawnEnabled = false
-		moveHitboxDecals()
+		#moveHitboxDecals()
 		disableAllHitboxes()
 		onPawnKilled.emit()
+		#process_mode = Node.PROCESS_MODE_DISABLED
 		endPawn()
 
 
@@ -583,7 +584,6 @@ func do_stairs(delta) -> void:
 
 
 func _on_health_component_health_depleted(dealer:BasePawn) -> void:
-	await get_tree().process_frame
 	if !isPawnDead and is_instance_valid(self):
 		if is_instance_valid(dealer):
 			die(dealer)
@@ -750,7 +750,12 @@ func killAllTweens()->void:
 		meshRotationTweenMovement.kill()
 	if flinchTween:
 		flinchTween.kill()
-
+	if animationController.tweener:
+		animationController.tweener.kill()
+	if movementController.meshRotationTween:
+		movementController.meshRotationTween.kill()
+	if movementController.meshRotationTweenMovement:
+		movementController.meshRotationTweenMovement.kill()
 
 func jump() -> void:
 	playFootstepAudio()

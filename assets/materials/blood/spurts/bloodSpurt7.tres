@@ -1,7 +1,7 @@
 [gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://kklobn0262aw"]
 
 [ext_resource type="Texture2D" uid="uid://b4btbfoc2onwt" path="res://assets/textures/blood/realBloodSheets/Blood_1-9.png" id="1_wf2nf"]
-[ext_resource type="Texture2D" uid="uid://dvovreh6l13lj" path="res://assets/textures/blood/realBloodSheets/Blood_1-2_n.png" id="2_bopcc"]
+[ext_resource type="Texture2D" uid="uid://dsuxqhr1mnmpl" path="res://assets/textures/blood/realBloodSheets/Blood_1-9_n.png" id="2_wf2nf"]
 
 [resource]
 transparency = 1
@@ -12,7 +12,7 @@ metallic = 0.75
 metallic_specular = 0.0
 roughness = 0.0
 normal_enabled = true
-normal_texture = ExtResource("2_bopcc")
+normal_texture = ExtResource("2_wf2nf")
 billboard_mode = 3
 billboard_keep_scale = true
 particles_anim_h_frames = 4

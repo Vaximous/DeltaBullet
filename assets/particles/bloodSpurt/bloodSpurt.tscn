@@ -1,7 +1,6 @@
-[gd_scene load_steps=23 format=3 uid="uid://bpp4s1vikjdv8"]
+[gd_scene load_steps=15 format=3 uid="uid://bpp4s1vikjdv8"]
 
 [ext_resource type="Material" uid="uid://co86jd67xrcl" path="res://assets/materials/blood/spurts/bloodSpurt3.tres" id="1_fkxrd"]
-[ext_resource type="Texture2D" uid="uid://djho1o4a46mla" path="res://assets/textures/blood/ParticleCloudWhite.png" id="3_nfhuv"]
 [ext_resource type="Material" uid="uid://bxh02ijn7mkmu" path="res://assets/materials/blood/bloodland1.tres" id="4_jlj6w"]
 [ext_resource type="Material" uid="uid://dkqmd8bpbl83c" path="res://assets/materials/blood/bloodDecalSmall.tres" id="5_2tj2p"]
 
@@ -45,6 +44,8 @@ var remove : bool = false:
 			queue_free()
 @onready var removeTimer : Timer = $timer
 @onready var bloodLand : GPUParticles3D = $bloodLand
+@export var minParticles : int = 5
+@export var maxParticles : int = 8
 var landTexture : Array = [preload(\"res://assets/materials/blood/bloodland1.tres\"),preload(\"res://assets/materials/blood/bloodland2.tres\"),preload(\"res://assets/materials/blood/bloodland3.tres\")]
 # Called when the node enters the scene tree for the first time.
 func _ready()->void:
@@ -52,66 +53,12 @@ func _ready()->void:
 	material_override = gameManager.bloodSpurts.pick_random()
 	removeTimer.start()
 	$bloodLand.material_overlay = landTexture.pick_random()
-	#randomize(
-	amount = randi_range(6,20)
+	amount = randi_range(minParticles,maxParticles)
 	$bloodLand.amount = amount
-	$bloodSmoke.emitting = true
-	#self.process_material.spread = randf_range(5,20)
-	#self.process_material.flatness = randf_range(0,5)
-	#self.process_material.initial_velocity_min = randf_range(1.1,5)
-	#self.process_material.initial_velocity_max = randf_range(self.process_material.initial_velocity_min,7)
-	#self.lifetime = randf_range(5,45)
 
 func _on_timer_timeout()->void:
 	remove = true
 "
-
-[sub_resource type="Curve" id="Curve_v3mcd"]
-_data = [Vector2(0, 1), 0.0, -1.10285, 0, 0, Vector2(0.679612, 0), 0.0263227, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="CurveTexture" id="CurveTexture_inqm3"]
-curve = SubResource("Curve_v3mcd")
-
-[sub_resource type="Curve" id="Curve_2tsyi"]
-_limits = [0.0, 2.0, 0.0, 1.0]
-_data = [Vector2(0, 0.263736), 0.0, 0.0, 0, 0, Vector2(0.519418, 1.51648), 1.9116, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="CurveTexture" id="CurveTexture_wvrms"]
-curve = SubResource("Curve_2tsyi")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_5ns81"]
-particle_flag_align_y = true
-angle_max = 24.6
-inherit_velocity_ratio = 0.504
-direction = Vector3(0, 0, -1)
-spread = 10.0
-initial_velocity_max = 2.5
-gravity = Vector3(0, 0, 0)
-linear_accel_min = -19.05
-attractor_interaction_enabled = false
-scale_min = 0.8
-scale_max = 1.6
-scale_curve = SubResource("CurveTexture_wvrms")
-alpha_curve = SubResource("CurveTexture_inqm3")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_thf25"]
-transparency = 1
-vertex_color_use_as_albedo = true
-albedo_color = Color(0.552941, 0, 0, 0.737255)
-albedo_texture = ExtResource("3_nfhuv")
-metallic = 1.0
-metallic_specular = 0.0
-billboard_mode = 3
-billboard_keep_scale = true
-particles_anim_h_frames = 1
-particles_anim_v_frames = 1
-particles_anim_loop = false
-
-[sub_resource type="QuadMesh" id="QuadMesh_qqov7"]
-material = SubResource("StandardMaterial3D_thf25")
-size = Vector2(0.3, 0.3)
 
 [sub_resource type="Curve" id="Curve_ro5oo"]
 _data = [Vector2(0, 0.757895), 0.0, 6.18947, 0, 0, Vector2(1e-05, 1), -1.12516, -1.12516, 0, 0, Vector2(0.617143, 0.769231), 0.0, 0.0, 0, 0]
@@ -160,17 +107,6 @@ fixed_fps = 0
 process_material = SubResource("ParticleProcessMaterial_ow2gb")
 draw_pass_1 = SubResource("QuadMesh_5noax")
 script = SubResource("GDScript_fb3dx")
-
-[node name="bloodSmoke" type="GPUParticles3D" parent="."]
-visible = false
-emitting = false
-one_shot = true
-preprocess = 0.15
-speed_scale = 1.8
-explosiveness = 0.35
-fixed_fps = 144
-process_material = SubResource("ParticleProcessMaterial_5ns81")
-draw_pass_1 = SubResource("QuadMesh_qqov7")
 
 [node name="timer" type="Timer" parent="."]
 wait_time = 36.0

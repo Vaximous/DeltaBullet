@@ -520,6 +520,7 @@ func reloadWeapon()->void:
 	weaponRemoteState.stop()
 	weaponRemoteStateLeft.stop()
 	if canReloadWeapon and !isReloading and weaponResource.canBeReloaded and isEquipped and !weaponOwner.isArmingThrowable and is_instance_valid(weaponResource):
+		var reloadTime = weaponResource.reloadTime
 		var firedShots = weaponResource.ammoSize - currentAmmo
 		weaponRemoteState.travel("reload")
 		weaponRemoteState.next()
@@ -527,7 +528,7 @@ func reloadWeapon()->void:
 		weaponRemoteStateLeft.next()
 		isReloading = true
 		canReloadWeapon = false
-		await get_tree().create_timer(weaponResource.reloadTime).timeout
+		await get_tree().create_timer(reloadTime).timeout
 		isReloading = false
 		currentMagSize -= firedShots
 		currentAmmo += firedShots

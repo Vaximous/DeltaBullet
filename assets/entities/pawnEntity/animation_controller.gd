@@ -10,7 +10,7 @@ const defaultEaseType = Tween.EASE_OUT
 var tweener : Tween
 
 func _physics_process(delta: float) -> void:
-	if enabled:
+	if enabled and !pawn.isPawnDead and is_instance_valid(pawn):
 		if pawn.is_on_floor():
 			animationTree.set("parameters/fallBlend/blend_amount", lerpf(animationTree.get("parameters/fallBlend/blend_amount"), 0.0, delta * 12))
 		elif pawn.velocity.y > 0:
@@ -26,7 +26,7 @@ func _physics_process(delta: float) -> void:
 
 
 func _on_pawn_entity_set_movement_state(state: MovementState) -> void:
-	if enabled:
+	if enabled and !pawn.isPawnDead and is_instance_valid(pawn):
 		if tweener:
 			tweener.kill()
 		tweener = create_tween().set_ease(defaultEaseType).set_trans(defaultTransitionType)
@@ -44,11 +44,11 @@ func _on_pawn_entity_set_movement_state(state: MovementState) -> void:
 				animationTree.set("parameters/strafeType/transition_request", "running")
 
 func _on_pawn_entity_mesh_look_at_changed(value: bool) -> void:
-	if enabled:
+	if enabled and !pawn.isPawnDead and is_instance_valid(pawn):
 		setAimingTree(value)
 
 func setAimingTree(value:bool)->void:
-	if value:
+	if value and !pawn.isPawnDead and is_instance_valid(pawn):
 		animationTree.set("parameters/aimTransition/transition_request", "aiming")
 	else:
 		animationTree.set("parameters/aimTransition/transition_request", "notAiming")

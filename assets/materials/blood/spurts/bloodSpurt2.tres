@@ -1,7 +1,7 @@
 [gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://bdapn1asdehgj"]
 
-[ext_resource type="Texture2D" uid="uid://bimk8xiwemuh7" path="res://assets/textures/blood/realBloodSheets/Blood_1-2.png" id="1_hndiv"]
-[ext_resource type="Texture2D" uid="uid://dvovreh6l13lj" path="res://assets/textures/blood/realBloodSheets/Blood_1-2_n.png" id="2_6vg58"]
+[ext_resource type="Texture2D" uid="uid://csco20w5fqskw" path="res://assets/textures/blood/realBloodSheets/Blood_1-1.png" id="1_hndiv"]
+[ext_resource type="Texture2D" uid="uid://dk8vnrq8ap32n" path="res://assets/textures/blood/realBloodSheets/Blood_1-1_n.png" id="2_6vg58"]
 
 [resource]
 transparency = 1

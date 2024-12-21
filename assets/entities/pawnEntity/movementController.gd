@@ -15,7 +15,7 @@ var cameraRotation : float
 var gravity : float = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 func _physics_process(delta: float) -> void:
-	if enabled:
+	if enabled and !pawnControlling.isPawnDead and is_instance_valid(pawnControlling):
 		if pawnControlling.pawnEnabled and !pawnControlling.isPawnDead:
 			velocity.x = speed * movementDirection.normalized().x
 			velocity.z = speed * movementDirection.normalized().z
@@ -39,7 +39,7 @@ func _physics_process(delta: float) -> void:
 			pawnControlling.move_and_slide()
 
 func onMovementStateSet(state:MovementState)->void:
-	if enabled:
+	if enabled and !pawnControlling.isPawnDead and is_instance_valid(pawnControlling):
 		speed = state.movementSpeed
 		acceleration = state.acceleration
 		if pawnControlling.attachedCam and pawnControlling:

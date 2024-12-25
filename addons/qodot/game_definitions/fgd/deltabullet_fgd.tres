@@ -17,7 +17,7 @@
 [ext_resource type="Resource" uid="uid://de6w02sa4ckl5" path="res://addons/qodot/game_definitions/fgd/solid_classes/rotate_solid_class.tres" id="15_2kqos"]
 [ext_resource type="Resource" uid="uid://b70dbh5v15xno" path="res://addons/qodot/game_definitions/fgd/solid_classes/trigger_solid_class.tres" id="16_r1465"]
 [ext_resource type="Resource" uid="uid://bu2f3lupsjhfp" path="res://addons/qodot/game_definitions/fgd/solid_classes/wall_solid_class.tres" id="17_24kc0"]
-[ext_resource type="Script" path="res://addons/qodot/src/resources/game-definitions/fgd/qodot_fgd_file.gd" id="18_nunfx"]
+[ext_resource type="Script" uid="uid://c8ror834mm8ar" path="res://addons/qodot/src/resources/game-definitions/fgd/qodot_fgd_file.gd" id="18_nunfx"]
 
 [resource]
 script = ExtResource("18_nunfx")

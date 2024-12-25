@@ -20,7 +20,7 @@ func _physics_process(delta: float) -> void:
 			velocity.x = speed * movementDirection.normalized().x
 			velocity.z = speed * movementDirection.normalized().z
 
-			if not pawnControlling.is_on_floor():
+			if not pawnControlling.is_on_floor() or pawnControlling.snappedToStairsLastFrame:
 				pawnControlling.velocity.y -= gravity * delta
 
 			if !pawnControlling.is_on_floor():
@@ -36,7 +36,10 @@ func _physics_process(delta: float) -> void:
 			elif pawnControlling.meshLookAt:
 				doMeshLookat(delta)
 
-			pawnControlling.move_and_slide()
+
+			if !pawnControlling.snapUpStairCheck(delta):
+				pawnControlling.move_and_slide()
+				pawnControlling.stairSnapCheck()
 
 func onMovementStateSet(state:MovementState)->void:
 	if enabled and !pawnControlling.isPawnDead and is_instance_valid(pawnControlling):

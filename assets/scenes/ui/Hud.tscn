@@ -21,6 +21,7 @@ default_font = ExtResource("2_tf7jg")
 [sub_resource type="GDScript" id="GDScript_quas3"]
 resource_name = "crosshair"
 script/source = "extends TextureRect
+signal crosshairSet(crosshair)
 const  defaultCrosshair = preload(\"res://assets/textures/crosshair/crosshair001.png\")
 @export var dynamicCrosshair : bool = true
 @export var overridePosition : bool = true
@@ -32,13 +33,13 @@ const defaultTint : Color = Color.WHITE
 var tiltSpeed = 15.0
 var tintSpeed = 2.5
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func _ready()->void:
 	if overridePosition:
 		positionOverride = get_viewport_rect().size/2 - pivot_offset
 	setCrosshair(defaultCrosshair)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _physics_process(delta):
+func _physics_process(delta)->void:
 	if dynamicCrosshair:
 		if UserConfig.game_crosshair_dynamic_position:
 			setOverride()
@@ -48,28 +49,29 @@ func _physics_process(delta):
 		self_modulate =  lerp(self_modulate,defaultTint,tintSpeed*delta)
 
 
-func setOverride():
+func setOverride()->void:
 	if positionOverride != null:
 		if overridePosition:
 			position = positionOverride - pivot_offset
 	else:
 		position = get_viewport_rect().size/2 - pivot_offset
 
-func addSize(sizeAmount:float = 0.1):
+func addSize(sizeAmount:float = 0.1)->void:
 	if dynamicCrosshair:
 		self.scale += Vector2(sizeAmount,sizeAmount)
 
-func tintCrosshair(tint:Color):
+func tintCrosshair(tint:Color)->void:
 	if dynamicCrosshair:
 		self_modulate = tint
 
-func setCrosshair(crosshairTexture):
+func setCrosshair(crosshairTexture)->void:
 	if crosshairTexture != null:
 		texture = crosshairTexture
+		crosshairSet.emit(crosshairTexture)
 	else:
 		texture = defaultCrosshair
 
-func addTilt(tilt:float = 0.0):
+func addTilt(tilt:float = 0.0)->void:
 	if dynamicCrosshair:
 		rotation += tilt
 "
@@ -428,6 +430,7 @@ text = "FPS:"
 vertical_alignment = 1
 
 [node name="Interact" type="Control" parent="."]
+modulate = Color(1, 1, 1, 0)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -536,6 +539,16 @@ bus = &"UI"
 stream = ExtResource("14_i7djv")
 volume_db = -7.0
 bus = &"UI"
+
+[node name="worldCrosshair" type="Sprite3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, -1.12949)
+top_level = true
+visible = false
+billboard = 1
+double_sided = false
+render_priority = 1
+texture = ExtResource("4_uhc5s")
 
 [connection signal="interactionFound" from="." to="Interact/interactAnimPlayer" method="play"]
 [connection signal="interactionFound" from="." to="Interact/audioStreamPlayer" method="play"]

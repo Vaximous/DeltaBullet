@@ -19,26 +19,30 @@ script/source = "extends MeshInstance3D
 @export var randomRotX : bool = false
 @export var randomRotY : bool = false
 @export var randomRotZ : bool = false
+var flareTween : Tween
 
 func flare() -> void:
 	visible = true
+	transparency = 0.0
+	if flareTween:
+		flareTween.kill()
+	flareTween = create_tween()
+	flareTween.parallel().tween_method(setTransparency,transparency,1.0,0.05)
 	if randomRotX:
 		rotation.x = randf_range(-PI, PI)
 	if randomRotY:
 		rotation.y = randf_range(-PI, PI)
 	if randomRotZ:
 		rotation.z = randf_range(-PI, PI)
-	transparency = 0.0
-	await get_tree().process_frame
-	await get_tree().process_frame
-	transparency = 0.5
-	await get_tree().process_frame
-	await get_tree().process_frame
-	visible = false
+	#visible = false
+
+func setTransparency(value:float)->void:
+	transparency = value
 "
 
 [node name="ShootFlare" type="MeshInstance3D"]
 transform = Transform3D(-1.88165e-08, -0.260066, 0, 0.43047, -1.13678e-08, 0, 0, 0, 0.43047, 0.258325, 0.00224278, 2.25835e-08)
+visible = false
 material_override = SubResource("StandardMaterial3D_tj4wp")
 mesh = ExtResource("2_uonme")
 skeleton = NodePath("../../../../FX")

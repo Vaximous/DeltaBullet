@@ -26,11 +26,11 @@ signal worldLoaded
 
 func _enter_tree()->void:
 	gameManager.world = self
-	gameManager.freeOrphanNodes()
+	#gameManager.freeOrphanNodes()
 
 
 func _ready()->void:
-	gameManager.freeOrphanNodes()
+	#gameManager.freeOrphanNodes()
 	gameManager.pauseMenu = pauseControl
 	emit_signal("worldLoaded")
 	gameManager.getEventSignal("contractRefresh").emit()
@@ -97,8 +97,9 @@ func playSoundscape()->void:
 
 
 func setupWorld()-> void:
-	gameManager.freeOrphanNodes()
+	#gameManager.freeOrphanNodes()
 	if worldData != null:
+		name = worldData.worldName
 		#Set the sky texture
 		if worldData.skyTexture:
 			worldSky.environment.sky.sky_material = worldData.skyTexture.duplicate()

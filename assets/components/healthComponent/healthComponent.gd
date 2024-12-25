@@ -28,15 +28,13 @@ func setHealth(value:float)->float:
 
 func healthCheck()->void:
 	if health <= 0 and is_instance_valid(self):
-		await get_tree().process_frame
-		setHealth(0)
+		isDead = true
+		HPisDead.emit()
 		if lastDealer!=null and is_instance_valid(self) and is_instance_valid(lastDealer):
 			healthDepleted.emit(lastDealer)
 		else:
 			if is_instance_valid(self):
 				healthDepleted.emit(null)
-		isDead = true
-		HPisDead.emit()
 
 func damage(amount:float, dealer:Node3D = null)->void:
 	if is_instance_valid(self):

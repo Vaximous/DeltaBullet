@@ -1,7 +1,7 @@
 [gd_scene load_steps=20 format=3 uid="uid://cgcbp5m61rywd"]
 
 [ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="1_haby5"]
-[ext_resource type="Script" path="res://assets/scenes/menu/loadingscreen/loadingScreen.gd" id="2_t86jf"]
+[ext_resource type="Script" uid="uid://dxc26uax5vs8o" path="res://assets/scenes/menu/loadingscreen/loadingScreen.gd" id="2_t86jf"]
 [ext_resource type="AudioStream" uid="uid://c7v7iev137c2t" path="res://assets/sounds/ui/notif2_new.wav" id="3_i6oou"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_lvrfr"]
@@ -376,8 +376,8 @@ tracks/13/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ut57x"]
 _data = {
-"RESET": SubResource("Animation_lphui"),
-"flyout": SubResource("Animation_05hkw")
+&"RESET": SubResource("Animation_lphui"),
+&"flyout": SubResource("Animation_05hkw")
 }
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_r6ijf"]
@@ -501,8 +501,8 @@ tracks/4/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_jl7qx"]
 _data = {
-"RESET": SubResource("Animation_wdyjg"),
-"flyout": SubResource("Animation_uhhhk")
+&"RESET": SubResource("Animation_wdyjg"),
+&"flyout": SubResource("Animation_uhhhk")
 }
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_q7akn"]
@@ -589,7 +589,7 @@ text = "World Description"
 
 [node name="animationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_ut57x")
+&"": SubResource("AnimationLibrary_ut57x")
 }
 
 [node name="loadCompleted" type="AudioStreamPlayer" parent="."]
@@ -627,7 +627,7 @@ text = "Press Any Key to continue"
 
 [node name="animationPlayer" type="AnimationPlayer" parent="control/continueLabel"]
 libraries = {
-"": SubResource("AnimationLibrary_jl7qx")
+&"": SubResource("AnimationLibrary_jl7qx")
 }
 
 [node name="progressBar" type="ProgressBar" parent="control"]

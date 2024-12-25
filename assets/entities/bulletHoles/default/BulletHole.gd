@@ -67,6 +67,12 @@ func initializeBulletHole()->void:
 		if forceGlobalPosition:
 			particles.global_transform.origin = colPoint
 
+		#Reparent to particles in world
+		particles.reparent(gameManager.world.worldParticles)
+
+		#Connect finished to queue_free()
+		particles.finished.connect(particles.queue_free)
+
 		#Turns the particle on
 		particles.emitting = true
 

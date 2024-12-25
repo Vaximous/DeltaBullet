@@ -496,12 +496,15 @@ func equipToPawn(pawn:BasePawn):
 								pawn.attachedCam.fireRecoil(0,3.7,5.4,true)
 
 func setInteractable()->void:
-		reparent(gameManager.world.worldProps)
-		set("gravity_scale", 1)
-		add_to_group("Interactable")
-		interactType = 0
-		canBeUsed = true
-		freeze = false
+		if is_instance_valid(gameManager.world):
+			get_parent().remove_child(self)
+			gameManager.world.worldProps.add_child(self)
+			#reparent(gameManager.world.worldProps)
+			gravity_scale = 1
+			add_to_group("Interactable")
+			interactType = 0
+			canBeUsed = true
+			freeze = false
 
 func setEquipVariables()->void:
 	if is_in_group("Interactable"):

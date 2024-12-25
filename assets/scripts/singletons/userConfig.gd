@@ -107,7 +107,7 @@ func applyConfigs() -> void:
 	AudioServer.set_bus_volume_db(4, audio_ambience_volume)
 	applyShadowQuality()
 	applyShadowFilterQuality()
-	get_window().mode = Window.MODE_FULLSCREEN if graphics_fullscreen else Window.MODE_WINDOWED
+	get_window().mode = Window.MODE_EXCLUSIVE_FULLSCREEN if graphics_fullscreen else Window.MODE_WINDOWED
 	configs_updated.emit()
 
 

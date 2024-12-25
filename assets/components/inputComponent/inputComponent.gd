@@ -17,8 +17,7 @@ func _ready()->void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta:float)->void:
-	if isMouseHidden():
-		if mouseActionsEnabled and is_instance_valid(controllingPawn):
+		if is_instance_valid(controllingPawn) and isMouseHidden():
 			if Input.is_action_pressed("gThrowThrowable"):
 				if is_instance_valid(controllingPawn):
 					controllingPawn.freeAim = true
@@ -66,8 +65,7 @@ func _process(_delta:float)->void:
 						controllingPawn.currentItem.fire()
 						controllingPawn.freeAimTimer.start()
 
-		if !controllingPawn == null:
-			if !controllingPawn.attachedCam == null:
+			if is_instance_valid(controllingPawn.attachedCam):
 				if controllingPawn.freeAim:
 					controllingPawn.turnAmount = -controllingPawn.attachedCam.vertical.rotation.x
 
@@ -79,65 +77,63 @@ func getInputDir()->Vector3:
 		return Vector3.ZERO
 
 func _input(event: InputEvent) -> void:
-	if controllingPawn:
-		if isMouseHidden():
-			if mouseActionsEnabled:
-				if event.is_action_pressed("gMwheelUp"):
-					#emit_signal("mouseButtonPressed", event.button_index)
-					if controllingPawn:
-						if !controllingPawn.healthComponent == null:
-							if !controllingPawn.healthComponent.isDead:
-								if !controllingPawn.currentItemIndex == controllingPawn.itemInventory.size()-1:
-									controllingPawn.currentItemIndex = controllingPawn.currentItemIndex+1
-
-				if event.is_action_pressed("gMwheelDown"):
-					#emit_signal("actionPressed", str(event.button_index))
-					if controllingPawn:
-						if !controllingPawn.healthComponent == null:
-							if !controllingPawn.healthComponent.isDead:
-								controllingPawn.currentItemIndex = controllingPawn.currentItemIndex-1
-
-			if event.is_action_pressed("gCrouch"):
-				if controllingPawn.isCrouching:
-					controllingPawn.isCrouching = false
-				else:
-					controllingPawn.isCrouching = true
-
-			if event.is_action_pressed("gJump"):
-				#emit_signal("actionPressed", str(event.keycode))
+	if isMouseHidden() and is_instance_valid(controllingPawn):
+		if mouseActionsEnabled:
+			if event.is_action_pressed("gMwheelUp"):
+				#emit_signal("mouseButtonPressed", event.button_index)
 				if controllingPawn:
-					if controllingPawn.canJump:
-						controllingPawn.jump()
+					if !controllingPawn.healthComponent == null:
+						if !controllingPawn.healthComponent.isDead:
+							if !controllingPawn.currentItemIndex == controllingPawn.itemInventory.size()-1:
+								controllingPawn.currentItemIndex = controllingPawn.currentItemIndex+1
 
-			if event.is_action_pressed("gBulletTimeToggle"):
-				#emit_signal("actionPressed", str(event.keycode))
+			if event.is_action_pressed("gMwheelDown"):
+				#emit_signal("actionPressed", str(event.button_index))
 				if controllingPawn:
-					controllingPawn.toggleBulletTime()
+					if !controllingPawn.healthComponent == null:
+						if !controllingPawn.healthComponent.isDead:
+							controllingPawn.currentItemIndex = controllingPawn.currentItemIndex-1
 
-			if event.is_action_pressed("gReloadWeapon"):
-				#emit_signal("actionPressed", str(event.keycode))
-				if controllingPawn:
-					if controllingPawn.currentItem != null:
-						if controllingPawn.currentItem.canReloadWeapon:
-							controllingPawn.currentItem.reloadWeapon()
+		if event.is_action_pressed("gCrouch"):
+			if controllingPawn.isCrouching:
+				controllingPawn.isCrouching = false
+			else:
+				controllingPawn.isCrouching = true
 
-			if event.is_action_pressed("gUse"):
-				#emit_signal("actionPressed", str(event.keycode))
-				if controllingPawn:
-					var interactObj = controllingPawn.getInteractionObject()
-					if interactObj != null:
-						if interactObj is BasePawn:
-							interactObj.inputComponent.interactSpeakTrigger.emit()
-						elif interactObj is InteractiveObject:
-							if interactObj.canBeUsed:
-								interactObj.objectUsed.emit(controllingPawn)
-			if event.is_action_pressed("dKill"):
-				#emit_signal("actionPressed", str(event.keycode))
-				if controllingPawn:
-					controllingPawn.healthComponent.setHealth(0)
-					if controllingPawn.attachedCam:
-						controllingPawn.attachedCam.fireVignette(0.8,Color.DARK_RED)
-						gameManager.notifyFade("You've died! Press F6 to restart!", 4, 5)
+		if event.is_action_pressed("gJump"):
+			#emit_signal("actionPressed", str(event.keycode))
+			if controllingPawn:
+				if controllingPawn.canJump:
+					controllingPawn.jump()
+
+		if event.is_action_pressed("gBulletTimeToggle"):
+			#emit_signal("actionPressed", str(event.keycode))
+			if controllingPawn:
+				controllingPawn.toggleBulletTime()
+
+		if event.is_action_pressed("gReloadWeapon"):
+			#emit_signal("actionPressed", str(event.keycode))
+			if controllingPawn.currentItem != null:
+				if controllingPawn.currentItem.canReloadWeapon:
+					controllingPawn.currentItem.reloadWeapon()
+
+		if event.is_action_pressed("gUse"):
+			#emit_signal("actionPressed", str(event.keycode))
+			if controllingPawn:
+				var interactObj = controllingPawn.getInteractionObject()
+				if interactObj != null:
+					if interactObj is BasePawn:
+						interactObj.inputComponent.interactSpeakTrigger.emit()
+					elif interactObj is InteractiveObject:
+						if interactObj.canBeUsed:
+							interactObj.objectUsed.emit(controllingPawn)
+		if event.is_action_pressed("dKill"):
+			#emit_signal("actionPressed", str(event.keycode))
+			if controllingPawn:
+				controllingPawn.healthComponent.setHealth(0)
+				if controllingPawn.attachedCam:
+					controllingPawn.attachedCam.fireVignette(0.8,Color.DARK_RED)
+					gameManager.notifyFade("You've died! Press F6 to restart!", 4, 5)
 
 		##Movement Code
 		if isMouseHidden():

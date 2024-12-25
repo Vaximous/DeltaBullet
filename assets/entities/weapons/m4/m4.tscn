@@ -183,8 +183,8 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_xu2pg"]
 _data = {
-"RESET": SubResource("Animation_k64ul"),
-"light_flash": SubResource("Animation_4v8w6")
+&"RESET": SubResource("Animation_k64ul"),
+&"light_flash": SubResource("Animation_4v8w6")
 }
 
 [sub_resource type="Gradient" id="Gradient_8krwq"]
@@ -251,10 +251,10 @@ size = Vector3(0.0790253, 0.340725, 0.882185)
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_kytnd"]
 _data = {
-"aim": ExtResource("8_e6rah"),
-"fire": ExtResource("9_iqxdj"),
-"idle": ExtResource("10_kskv2"),
-"reload": ExtResource("11_b1h3l")
+&"aim": ExtResource("8_e6rah"),
+&"fire": ExtResource("9_iqxdj"),
+&"idle": ExtResource("10_kskv2"),
+&"reload": ExtResource("11_b1h3l")
 }
 
 [node name="M4" node_paths=PackedStringArray("weaponMesh", "muzzlePoint") instance=ExtResource("1_kohee")]
@@ -286,12 +286,10 @@ transform = Transform3D(0.133072, 4.4688e-08, -4.26326e-14, -1.00466e-08, 0.5919
 
 [node name="ShootFlare" parent="M4Mesh/Marker3D" index="0" instance=ExtResource("3_44xfi")]
 transform = Transform3D(-1.58255e-08, -0.077, 3.55271e-15, 0.362046, -3.36578e-09, 8.74816e-15, -8.32877e-15, -8.88178e-16, 0.380277, 0.0487104, -0.00940807, -2.12923e-09)
-visible = false
 randomRotX = true
 
 [node name="ShootFlare2" parent="M4Mesh/Marker3D" index="1" instance=ExtResource("3_44xfi")]
 transform = Transform3D(-7.67774e-09, -0.778928, -3.55271e-15, 0.175646, -3.40479e-08, 9.49723e-16, -9.04193e-16, 0, 0.184491, 0.778989, -0.00529345, -3.40508e-08)
-visible = false
 randomRotX = true
 
 [node name="OmniLight3D" type="OmniLight3D" parent="M4Mesh/Marker3D" index="2"]
@@ -303,7 +301,7 @@ omni_range = 4.20246
 [node name="AnimationPlayer" type="AnimationPlayer" parent="M4Mesh/Marker3D/OmniLight3D" index="0"]
 root_node = NodePath("../../../..")
 libraries = {
-"": SubResource("AnimationLibrary_xu2pg")
+&"": SubResource("AnimationLibrary_xu2pg")
 }
 autoplay = "RESET"
 
@@ -339,7 +337,7 @@ parameters/weaponStateSpeed/scale = 1.0
 
 [node name="AnimationPlayer" parent="." index="4"]
 libraries = {
-"weaponAnims": SubResource("AnimationLibrary_kytnd")
+&"weaponAnims": SubResource("AnimationLibrary_kytnd")
 }
 
 [connection signal="shot_fired" from="." to="M4Mesh/Marker3D/ShootFlare2" method="flare"]

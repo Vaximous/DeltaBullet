@@ -28,12 +28,13 @@ var data:
 		worldBG.texture = data.worldLoadingTexture
 		if data.worldLoadingTexture == null:
 			worldBG.texture = load(gameManager.tempImages.pick_random())
+		data = null
 var loadStatus
 var sceneLoading
 var press = false
 
 func _ready() -> void:
-	gameManager.freeOrphanNodes()
+	#gameManager.freeOrphanNodes()
 	gameManager.playerPawns.clear()
 	worldNameControl.hide()
 	await Fade.fade_in(0.3)
@@ -45,6 +46,8 @@ func _ready() -> void:
 	worldNameControl.show()
 	continueLabel.hide()
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	#print_orphan_nodes()
+
 
 func _process(delta) -> void:
 	if sceneToLoad != "" or " " or null:
@@ -65,4 +68,3 @@ func _unhandled_key_input(event) -> void:
 			await Fade.fade_out(0.5).finished
 			#gameManager.freeOrphanNodes()
 			get_tree().change_scene_to_packed(sceneLoading)
-			queue_free()

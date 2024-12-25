@@ -6,6 +6,7 @@
 [resource]
 transparency = 1
 cull_mode = 2
+vertex_color_use_as_albedo = true
 albedo_color = Color(0.462745, 0.0941176, 0.0745098, 1)
 albedo_texture = ExtResource("1_xtmoa")
 metallic = 0.75

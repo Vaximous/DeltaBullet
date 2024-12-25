@@ -72,11 +72,11 @@ func _ai_process(delta) -> void:
 	if is_instance_valid(current_state):
 		current_state.on_ai_process(delta)
 
-# Called when there is an input event that hasn't been consumed by the gui.
-# Calls the 'on_input' function on the current state.
-func _unhandled_input(event: InputEvent) -> void:
-	if is_instance_valid(current_state):
-		current_state.on_input(event)
+## Called when there is an input event that hasn't been consumed by the gui.
+## Calls the 'on_input' function on the current state.
+#func _unhandled_input(event: InputEvent) -> void:
+	#if is_instance_valid(current_state):
+		#current_state.on_input(event)
 
 
 # Called when the node exits the scene tree.

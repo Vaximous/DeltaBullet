@@ -11,11 +11,7 @@ var ownerSkeleton : Skeleton3D:
 		#if !get_owner().physicalBoneSimulator.modification_processed.is_connected(doActiveRagdoll):
 			#get_owner().physicalBoneSimulator.modification_processed.connect(doActiveRagdoll)
 			#print("connected")
-var ragdoll : PawnRagdoll:
-	set(value):
-		ragdoll = value
-		if !ragdoll.ragdollSkeleton.skeleton_updated.is_connected(updateRagdollScale):
-			ragdoll.ragdollSkeleton.skeleton_updated.connect(updateRagdollScale)
+var ragdoll : PawnRagdoll
 @export var healthComponent : HealthComponent:
 	set(value):
 		healthComponent = value
@@ -100,6 +96,9 @@ func boneSetup()->void:
 		if healthComponent.HPisDead.is_connected(pulverizeBone):
 			healthComponent.HPisDead.disconnect(pulverizeBone)
 
+	if is_instance_valid(ragdoll):
+		if !ragdoll.ragdollSkeleton.skeleton_updated.is_connected(updateRagdollScale):
+				ragdoll.ragdollSkeleton.skeleton_updated.connect(updateRagdollScale)
 
 func createInAirAudio()->void:
 	if inAirSound != null:
@@ -175,7 +174,7 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 					var particle = globalParticles.createParticle("BloodSpurt",self.position)
 					particle.rotation = self.rotation
 					#particle.amount = randi_range(25,75)
-					gameManager.sprayBlood(global_position,randi_range(1,3),10,1.2)
+
 		elif contactForce > mediumImpactThreshold:
 			if audioStreamPlayer:
 				audioStreamPlayer.stream = mediumImpactSounds
@@ -189,7 +188,7 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 					var particle = globalParticles.createParticle("BloodSpurt",self.position)
 					particle.rotation = self.rotation
 					#particle.amount = randi_range(25,40)
-					gameManager.sprayBlood(global_position,randi_range(1,3),10,1.2)
+					gameManager.sprayBlood(global_position,randi_range(1,3),5,1.2)
 		elif contactForce > lightImpactThreshold:
 			if audioStreamPlayer:
 				audioStreamPlayer.stream = lightImpactSounds
@@ -202,7 +201,7 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 					#await get_tree().process_frame
 					var particle = globalParticles.createParticle("BloodSpurt",self.position)
 					particle.rotation = self.rotation
-					gameManager.sprayBlood(global_position,randi_range(1,3),10,1.2)
+					gameManager.sprayBlood(global_position,randi_range(1,3),5,1.2)
 
 
 #func _physics_process(delta)->void:
@@ -266,7 +265,7 @@ func doPulverizeEffect()->void:
 	collision_layer = 0
 	collision_mask = 1
 	joint_type = JOINT_TYPE_NONE
-	gameManager.sprayBlood(global_position,randi_range(3,15),500,1.2)
+	gameManager.sprayBlood(global_position,randi_range(3,15),20,1.2)
 	#mass = 0.01
 	for childrenIDs in getBoneChildren(ragdoll.ragdollSkeleton,self):
 		var bone
@@ -282,7 +281,7 @@ func doPulverizeEffect()->void:
 
 func doBleed()->void:
 	if !hasBled and canBleed:
-		gameManager.createBloodPool(global_position,randf_range(0.3,1.6))
+		#gameManager.createBloodPool(global_position,randf_range(0.3,1.6))
 		hasBled = true
 
 

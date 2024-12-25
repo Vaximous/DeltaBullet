@@ -286,4 +286,4 @@ func maps()->void:
 
 	var maplist = load("res://assets/scenes/ui/mapslist/maplist.tscn")
 	var mapInst = maplist.instantiate()
-	get_tree().current_scene.add_child(mapInst)
+	get_tree().root.add_child(mapInst)

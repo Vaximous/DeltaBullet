@@ -304,7 +304,6 @@ func _physics_process(delta)->void:
 		velocity.y = velocityComponent.accelerateToVel(vertVeclocity, delta, false, true, false).y
 		velocity.z = velocityComponent.accelerateToVel(direction, delta, false, false, true).z
 
-
 		move_and_slide()
 
 

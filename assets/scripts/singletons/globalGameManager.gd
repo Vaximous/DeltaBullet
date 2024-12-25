@@ -57,6 +57,7 @@ var deadzone : float = 0.1
 var defaultFOV : int = 90
 
 #World
+var loadScene = null
 const bloodPool : PackedScene = preload("res://assets/entities/bloodPool/bloodPool.tscn")
 const tempImages : Array = ["res://assets/scenes/ui/saveloadmenu/save1.png","res://assets/scenes/ui/saveloadmenu/save2.png","res://assets/scenes/ui/saveloadmenu/save3.png","res://assets/scenes/ui/saveloadmenu/save4.png","res://assets/misc/db7.png"]
 var saveOverwrite : String
@@ -102,7 +103,15 @@ func freeOrphanNodes():
 	freeOrphans.emit()
 
 
-
+func doKillEffect(pawn:BasePawn,deathDealer:BasePawn)->void:
+	if deathDealer != null and !deathDealer.isPawnDead and is_instance_valid(deathDealer) and is_instance_valid(pawn):
+		if deathDealer.currentItem != null:
+			if deathDealer.currentItem.weaponResource.headDismember:
+				pawn.healthComponent.killedWithDismemberingWeapon.emit()
+		if !pawn.healthComponent.killerSignalEmitted:
+			if pawn.healthComponent.componentOwner is BasePawn:
+				deathDealer.killedPawn.emit()
+				pawn.healthComponent.killerSignalEmitted = true
 
 func get_persistent_data() -> Dictionary:
 	if !userDir.file_exists("persistence"):
@@ -358,17 +367,17 @@ func saveTemporaryPawnInfo()->void:
 			#temporaryPawnInfo.append(info)
 
 func loadWorld(worldscene:String, fadein:bool = false)->void:
-	freeOrphanNodes()
+	get_tree().change_scene_to_file("res://assets/scenes/menu/loadingscreen/emptyLoaderScene.tscn")
+	await get_tree().process_frame
+	#freeOrphanNodes()
 	saveTemporaryPawnInfo()
 	musicManager.change_song_to(null)
 	var loader = load("res://assets/scenes/menu/loadingscreen/loadingScreen.tscn")
 	var inst = loader.instantiate()
 	if fadein:
 		await Fade.fade_in(0.5).finished
-	freeOrphanNodes()
-	get_tree().current_scene.queue_free()
-	get_tree().current_scene = null
-	get_tree().root.add_child(inst)
+	#freeOrphanNodes()
+	get_tree().current_scene.add_child(inst)
 	inst.sceneToLoad = worldscene
 
 func saveGame(saveName:String = "Save1"):
@@ -525,16 +534,16 @@ func doDeathEffect()->void:
 
 
 func createSplat(gposition:Vector3 = Vector3.ZERO,normal:Vector3 = Vector3.ZERO,colPoint:Vector3 = Vector3.ZERO,parent : Node3D = world.worldMisc)->void:
-	var _b = bloodDecal.instantiate()
-	parent.add_child(_b)
-	_b.position = gposition
-	if !Vector3.UP.is_equal_approx(normal.normalized()):
-		_b.transform.basis = _b.transform.basis.looking_at(normal.normalized())
-	_b.rotate(normal,randf_range(0, 2)*PI)
+	if is_instance_valid(parent):
+		var _b = bloodDecal.instantiate()
+		parent.add_child(_b)
+		_b.position = gposition
+		if !Vector3.UP.is_equal_approx(normal.normalized()):
+			_b.transform.basis = _b.transform.basis.looking_at(normal.normalized())
+		_b.rotate(normal,randf_range(0, 2)*PI)
 
 func sprayBlood(position:Vector3,amount:int,_maxDistance:int,distanceMultiplier:float = 1)->void:
-	randomize()
-	if world != null:
+	if is_instance_valid(world):
 		for rays in amount:
 			var directSpace : PhysicsDirectSpaceState3D = world.worldMisc.get_world_3d().direct_space_state
 			var ray = PhysicsRayQueryParameters3D.new()
@@ -542,8 +551,20 @@ func sprayBlood(position:Vector3,amount:int,_maxDistance:int,distanceMultiplier:
 			ray = ray.create(position,position + Vector3(randi_range(-_maxDistance,_maxDistance),randi_range(-_maxDistance,_maxDistance),randi_range(-_maxDistance,_maxDistance)*distanceMultiplier),1)
 			result = directSpace.intersect_ray(ray)
 			if result:
-				await get_tree().process_frame
 				createSplat(result.position,result.normal,result.position)
+				#if debugEnabled:
+					#var meshInstance : MeshInstance3D = MeshInstance3D.new()
+					#var mesh = ImmediateMesh.new()
+					#var meshMat : StandardMaterial3D = StandardMaterial3D.new()
+					#meshMat.albedo_color = Color.BLUE
+					#world.worldMisc.add_child(meshInstance)
+					#meshInstance.mesh = mesh
+					#mesh.surface_begin(Mesh.PRIMITIVE_LINES)
+					#mesh.surface_add_vertex(position)
+					#mesh.surface_add_vertex(result.position)
+					#mesh.surface_end()
+					#meshInstance.material_override = meshMat
+
 
 func createBloodPool(position:Vector3,size:float=0.5)->void:
 	if world != null:

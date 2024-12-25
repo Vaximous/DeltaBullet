@@ -32,10 +32,7 @@ var physicsBones : Array[PhysicalBone3D]
 @export_category("Ragdoll")
 var savedPose :Array[Transform3D]
 @export_subgroup("Active Ragdoll")
-@export var activeRagdollEnabled:bool = false:
-	set(value):
-		activeRagdollEnabled = value
-		#activeRagdollChanged.emit(value)
+@export var activeRagdollEnabled:bool = false
 @export var targetSkeleton : Skeleton3D
 @export_subgroup("Behavior")
 ##Start simulation on create
@@ -73,12 +70,9 @@ func _ready()-> void:
 
 func setBoneOwners()->void:
 	for pb in physicsBones:
-			if pb.get_script() != null:
-				for b in physicsBones:
-					pass
-					pb.exclusionArray.append(RID(b))
-					b.ownerSkeleton = ragdollSkeleton
-					b.ragdoll = self
+		pb.exclusionArray.append(RID(pb))
+		pb.ownerSkeleton = ragdollSkeleton
+		pb.ragdoll = self
 
 func appendPhysicalBoneArray()->void:
 	for bones in physicalBoneSimulator.get_children().filter(func(x): return x is PhysicalBone3D):
@@ -150,7 +144,7 @@ func doRagdollHeadshot()-> void:
 			if clothes.clothingType == 0 or clothes.clothingType == 1:
 				clothes.queue_free()
 				checkClothingHider()
-	gameManager.sprayBlood(headBone.global_position,particle.amount,150,1.2)
+	gameManager.sprayBlood(headBone.global_position,particle.amount,50,1.2)
 
 func setPawnMaterial(material)-> void:
 	for mesh in ragdollSkeleton.get_children():

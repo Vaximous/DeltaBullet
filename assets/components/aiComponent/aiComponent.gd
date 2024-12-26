@@ -113,6 +113,15 @@ var meshAngle:float = 1:
 @export_subgroup("Detection")
 @export var currLocation:Vector3
 @export var newVelocity:Vector3
+##AI Manager runs AI logic if this is set to true
+var ai_process_enabled : bool = true
+##Returns ai_process_enabled
+func is_ai_processing() -> bool:
+	return ai_process_enabled
+##Sets ai_process_enabled
+func set_ai_processing(enabled : bool) -> void:
+	ai_process_enabled = enabled
+var last_ai_process_tick : int
 @export_category("Debug")
 static var instances : Array[AIComponent]
 var posSpheres : Array = []
@@ -160,10 +169,18 @@ func _physics_process(delta: float) -> void:
 					pathingToPosition = false
 
 
-func _ai_process(delta) -> void:
+##Returns time since last AI process in seconds
+func get_and_update_ai_process_delta(time_msec : int) -> float:
+	var delta_msec = last_ai_process_tick - time_msec
+	last_ai_process_tick = time_msec
+	return float(delta_msec / 1000)
+
+
+
+func _ai_process(physics_delta : float) -> void:
 	if is_instance_valid(self) and is_instance_valid(pawnOwner) and !pawnOwner.isPawnDead:
-		print("Processing..")
-		pawnFSM._ai_process(delta)
+		var ai_process_delta = get_and_update_ai_process_delta(Time.get_ticks_msec())
+		pawnFSM._ai_process(physics_delta, ai_process_delta)
 
 
 func createFOVModel()->ImmediateMesh:

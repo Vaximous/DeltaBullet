@@ -13,6 +13,7 @@ func on_exit():
 	if aiOwner.pawnOwner.currentItem != null and aiOwner.pawnOwner.currentItem.canReloadWeapon and !aiOwner.pawnOwner.currentItem.isReloading:
 			aiOwner.pawnOwner.currentItem.reloadWeapon()
 
+
 func on_enter()->void:
 	aiOwner.pathingToPosition = false
 	aiOwner.currentPath.clear()
@@ -22,7 +23,8 @@ func on_enter()->void:
 	moveTimer.wait_time = randf_range(1,5)
 	attackTimer.start()
 
-func on_physics_process(delta):
+
+func on_ai_process(phys_delta : float, ai_delta : float):
 	if aiOwner.targetedPawn != null and aiOwner.pawnOwner.currentItem != null and !aiOwner.targetedPawn.isPawnDead and is_instance_valid(aiOwner.targetedPawn):
 		#aiOwner.targetedPawn.turnAmount = -aiOwner.aimCast.rotation.x
 		if !aiOwner.pawnOwner.freeAim:
@@ -38,6 +40,7 @@ func on_physics_process(delta):
 			aiOwner.pawnOwner.currentItem.reloadWeapon()
 	else:
 		aiOwner.pawnFSM.change_state("Wander")
+
 
 func toggleShooting()->void:
 	if shootAt:

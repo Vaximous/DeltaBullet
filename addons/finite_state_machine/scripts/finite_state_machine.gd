@@ -68,9 +68,9 @@ func _physics_process(delta: float) -> void:
 
 
 #AIManager handling
-func _ai_process(delta) -> void:
+func _ai_process(phys_delta : float, ai_delta : float) -> void:
 	if is_instance_valid(current_state):
-		current_state.on_ai_process(delta)
+		current_state.on_ai_process(phys_delta, ai_delta)
 
 ## Called when there is an input event that hasn't been consumed by the gui.
 ## Calls the 'on_input' function on the current state.

@@ -50,7 +50,8 @@ func _ready()->void:
 			for pawn in pawnWorldSpawns.get_children():
 				if pawn != null:
 					if pawn is PawnSpawn:
-						pawn.spawnPawn()
+						if not pawn.ignore_spawn_on_load:
+							pawn.spawnPawn()
 
 
 func orphanDelete()->void:

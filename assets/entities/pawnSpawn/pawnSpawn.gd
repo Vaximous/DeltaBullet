@@ -48,6 +48,9 @@ var forceAnimation: bool = false
 		if pawnType == 1:
 			if previewMesh != null:
 				previewMesh.material_override.albedo_color = pawnColor
+var ignore_spawn_on_load : bool = false
+
+
 func _ready()->void:
 	if Engine.is_editor_hint():
 		if previewMesh != null:

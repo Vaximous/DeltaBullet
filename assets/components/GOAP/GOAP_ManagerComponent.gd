@@ -23,6 +23,7 @@ var goal_selection_cooldown : float = 0.0
 
 
 func _ready() -> void:
+	add_child(goal_execute_timer)
 	goal_execute_timer.timeout.connect(goal_execute_timer.start)
 	goal_execute_timer.timeout.connect(process_goal)
 	goal_execute_timer.wait_time = execute_time

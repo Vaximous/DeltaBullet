@@ -34,68 +34,69 @@ func purchase_item()->void:
 					print("Not enough grit!")
 
 func get_item_description_long() -> String:
-	var inst = item.instantiate()
-	if inst is Weapon:
-		return inst.weaponResource.displayData.itemDescriptionLong
-	else:
-		return ""
-	inst.queue_free()
+	var result = null
+	instancedItem = item.instantiate()
+	if instancedItem is Weapon:
+		result = instancedItem.weaponResource.displayData.itemDescriptionLong
+	instancedItem.queue_free()
+	return result
 
 func get_item_description() -> String:
-	var inst = item.instantiate()
-	if inst is Weapon:
-		return inst.weaponResource.displayData.itemDescriptionShort
-	else:
-		return ""
-	inst.queue_free()
+	instancedItem = item.instantiate()
+	var result = null
+	if instancedItem is Weapon:
+		result = instancedItem.weaponResource.displayData.itemDescriptionShort
+	instancedItem.queue_free()
+	return result
 
 func get_item_price() -> int:
-	var inst = item.instantiate()
-	if inst is Weapon:
-		return inst.weaponResource.displayData.gritPrice
-	else:
-		return 0
-	inst.queue_free()
+	instancedItem = item.instantiate()
+	var result = null
+	if instancedItem is Weapon:
+		result = instancedItem.weaponResource.displayData.gritPrice
+	instancedItem.queue_free()
+	return result
 
 func get_item_fire_rate() -> float:
-	var inst = item.instantiate()
-	if inst is InteractiveObject:
-		return inst.weaponResource.displayData.fireRate
-	else:
-		return 0.0
-	inst.queue_free()
+	var result = null
+	var instancedItem = item.instantiate()
+	if instancedItem is InteractiveObject:
+		result = instancedItem.weaponResource.displayData.fireRate
+	instancedItem.queue_free()
+	return result
 
 func get_item_damage() -> float:
-	var inst = item.instantiate()
-	if inst is InteractiveObject:
-		return inst.weaponResource.displayData.damage
-	else:
-		return 0.0
-	inst.queue_free()
+	var result = null
+	instancedItem = item.instantiate()
+	if instancedItem is InteractiveObject:
+		result = instancedItem.weaponResource.displayData.damage
+	instancedItem.queue_free()
+	return result
 
 func get_item_penetration() -> float:
-	var inst = item.instantiate()
-	if inst is InteractiveObject:
-		return inst.weaponResource.displayData.penetration
-	else:
-		return 0.0
-	inst.queue_free()
+	var result = null
+	instancedItem = item.instantiate()
+	if instancedItem is InteractiveObject:
+		result = instancedItem.weaponResource.displayData.penetration
+	instancedItem.queue_free()
+	return result
 
 func get_item_name() -> String:
-	var inst = item.instantiate()
-	if inst is InteractiveObject:
-		return inst.objectName
-	else:
-		return " "
-	inst.queue_free()
+	var result = null
+	instancedItem = item.instantiate()
+	if instancedItem is InteractiveObject:
+		result = instancedItem.objectName
+	instancedItem.queue_free()
+	return result
 
 func get_item_data() -> ItemData:
-	var inst = item.instantiate()
-	if inst is Weapon:
-		return inst.weaponResource.displayData
-	else:
-		return null
-	inst.queue_free()
+	var result
+	var instancedItem = item.instantiate()
+	if instancedItem is Weapon:
+		result = instancedItem.weaponResource.displayData
+
+	instancedItem.queue_free()
+	return result
 
 func setItemInfo()->void:
 	statusLabel.text = str("$%s"%get_item_price())
@@ -103,16 +104,16 @@ func setItemInfo()->void:
 	itemDescription.text = str("%s"%get_item_description())
 
 func _get_configuration_warnings() -> PackedStringArray:
-	var inst = item.instantiate()
-	if inst != InteractiveObject:
-		return ["The item is not of type InteractiveObject."]
-	inst.queue_free()
-	return []
+	var result = []
+	instancedItem = item.instantiate()
+	if instancedItem != InteractiveObject:
+		result = ["The item is not of type InteractiveObject."]
+	instancedItem.queue_free()
+	return result
 
 func doesHaveItem(pawn:BasePawn)->bool:
-	var inst = item.instantiate()
-	if pawn.itemNames.has(inst.objectName):
-		return true
-	else:
-		return false
-	inst.queue_free()
+	var result = false
+	instancedItem = item.instantiate()
+	result = pawn.itemNames.has(instancedItem.objectName)
+	instancedItem.queue_free()
+	return result

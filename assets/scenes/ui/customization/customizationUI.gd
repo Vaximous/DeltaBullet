@@ -97,13 +97,13 @@ func setSectionLabel(section:int = 0)->void:
 
 func checkClothingItem(item:PackedScene)->bool:
 	var boolean : bool = false
+	var itemInstance = item.instantiate()
 	if item and clothingPawn:
-		var itemInstance = item.instantiate()
 		for i in clothingPawn.clothingInventory:
 			if i != null:
 				if i.scene_file_path == itemInstance.scene_file_path:
 					boolean = true
-		itemInstance.queue_free()
+	itemInstance.queue_free()
 	return boolean
 
 

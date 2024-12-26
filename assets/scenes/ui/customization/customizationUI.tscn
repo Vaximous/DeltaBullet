@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://iftsfle430nr"]
+[gd_scene load_steps=54 format=3 uid="uid://iftsfle430nr"]
 
 [ext_resource type="Script" uid="uid://dmkj1xkkt0fwp" path="res://assets/scenes/ui/customization/customizationUI.gd" id="1_2bhr7"]
 [ext_resource type="PackedScene" uid="uid://ctrswootky6q7" path="res://assets/scenes/ui/customization/customizationWorld.tscn" id="1_sgpgn"]
@@ -187,6 +187,8 @@ Button/styles/hover = SubResource("StyleBoxEmpty_nmmhv")
 Button/styles/normal = SubResource("StyleBoxEmpty_0jhp1")
 Button/styles/pressed = SubResource("StyleBoxEmpty_186f8")
 
+[sub_resource type="ButtonGroup" id="ButtonGroup_tuxjq"]
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_mv1bo"]
 resource_name = "HairNormal"
 atlas = ExtResource("4_tuxjq")
@@ -196,6 +198,16 @@ region = Rect2(64, 0, 64, 64)
 resource_name = "HairFocus"
 atlas = ExtResource("4_tuxjq")
 region = Rect2(64, 64, 64, 64)
+
+[sub_resource type="Gradient" id="Gradient_tuxjq"]
+offsets = PackedFloat32Array(0.855505, 1)
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 0.529412)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_mv1bo"]
+gradient = SubResource("Gradient_tuxjq")
+fill = 2
+fill_from = Vector2(0.5, 0.5)
+metadata/_snap_enabled = true
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_oourm"]
 resource_name = "HatFacewearNormal"
@@ -355,49 +367,54 @@ alignment = 1
 
 [node name="hairButton" type="TextureButton" parent="customizationUi/catalogControl/vBoxContainer/topBar/buttons"]
 layout_mode = 2
-focus_mode = 0
+focus_mode = 1
+toggle_mode = true
+button_group = SubResource("ButtonGroup_tuxjq")
 texture_normal = SubResource("AtlasTexture_mv1bo")
 texture_pressed = SubResource("AtlasTexture_evd5i")
 texture_hover = SubResource("AtlasTexture_evd5i")
-texture_focused = SubResource("AtlasTexture_evd5i")
+texture_focused = SubResource("GradientTexture2D_mv1bo")
 
-[node name="headwearButton" type="TextureButton" parent="customizationUi/catalogControl/vBoxContainer/topBar/buttons"]
-visible = false
-layout_mode = 2
-focus_mode = 0
-
-[node name="facewearButton" type="TextureButton" parent="customizationUi/catalogControl/vBoxContainer/topBar/buttons"]
+[node name="headgearButton" type="TextureButton" parent="customizationUi/catalogControl/vBoxContainer/topBar/buttons"]
 clip_contents = true
 layout_mode = 2
-focus_mode = 0
+focus_mode = 1
+toggle_mode = true
+button_group = SubResource("ButtonGroup_tuxjq")
 texture_normal = SubResource("AtlasTexture_oourm")
 texture_pressed = SubResource("AtlasTexture_shvh8")
 texture_hover = SubResource("AtlasTexture_shvh8")
-texture_focused = SubResource("AtlasTexture_shvh8")
+texture_focused = SubResource("GradientTexture2D_mv1bo")
 
 [node name="blingbutton" type="TextureButton" parent="customizationUi/catalogControl/vBoxContainer/topBar/buttons"]
 layout_mode = 2
-focus_mode = 0
+focus_mode = 1
+toggle_mode = true
+button_group = SubResource("ButtonGroup_tuxjq")
 texture_normal = SubResource("AtlasTexture_hrtpq")
 texture_pressed = SubResource("AtlasTexture_gusrc")
 texture_hover = SubResource("AtlasTexture_gusrc")
-texture_focused = SubResource("AtlasTexture_gusrc")
+texture_focused = SubResource("GradientTexture2D_mv1bo")
 
 [node name="bodyButton" type="TextureButton" parent="customizationUi/catalogControl/vBoxContainer/topBar/buttons"]
 layout_mode = 2
-focus_mode = 0
+focus_mode = 1
+toggle_mode = true
+button_group = SubResource("ButtonGroup_tuxjq")
 texture_normal = SubResource("AtlasTexture_lxijr")
 texture_pressed = SubResource("AtlasTexture_d1uui")
 texture_hover = SubResource("AtlasTexture_d1uui")
-texture_focused = SubResource("AtlasTexture_d1uui")
+texture_focused = SubResource("GradientTexture2D_mv1bo")
 
 [node name="pantsButton" type="TextureButton" parent="customizationUi/catalogControl/vBoxContainer/topBar/buttons"]
 layout_mode = 2
-focus_mode = 0
+focus_mode = 1
+toggle_mode = true
+button_group = SubResource("ButtonGroup_tuxjq")
 texture_normal = SubResource("AtlasTexture_0pj1c")
 texture_pressed = SubResource("AtlasTexture_pw2jl")
 texture_hover = SubResource("AtlasTexture_pw2jl")
-texture_focused = SubResource("AtlasTexture_pw2jl")
+texture_focused = SubResource("GradientTexture2D_mv1bo")
 
 [node name="category" type="Panel" parent="customizationUi/catalogControl/vBoxContainer"]
 custom_minimum_size = Vector2(0, 53)

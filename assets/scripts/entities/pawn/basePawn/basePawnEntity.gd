@@ -410,7 +410,7 @@ func _physics_process(delta:float) -> void:
 
 
 ##Checks to see if any required components (Base components) Are null
-func checkComponents():
+func checkComponents()->void:
 	if is_instance_valid(inputComponent):
 		if inputComponent is AIComponent:
 			inputComponent.pawnOwner = self
@@ -438,8 +438,6 @@ func checkComponents():
 				raycaster = _cam.camCast
 				add_to_group("Player")
 
-	if healthComponent == null:
-		return null
 
 func endPawn()->void:
 	if is_instance_valid(self) and !is_queued_for_deletion():
@@ -527,13 +525,14 @@ func moveHitboxDecals(parent:Node3D = gameManager.world.worldParticles) ->void:
 
 func die(killer) -> void:
 	if is_instance_valid(self) and !isPawnDead:
-		isPawnDead = true
-		createRagdoll(lastHitPart, killer)
-		pawnEnabled = false
-		collisionShape.disabled = true
 		gameManager.doKillEffect(self,killer)
 		onPawnKilled.emit()
+		dropWeapon()
+		isPawnDead = true
+		createRagdoll(lastHitPart, killer)
 		endPawn()
+		#pawnEnabled = false
+		#collisionShape.disabled = true
 		#animationController.enabled = false
 		#movementController.enabled = false
 	#	killAllTweens()

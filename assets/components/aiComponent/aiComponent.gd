@@ -153,20 +153,9 @@ func _ready() -> void:
 	setupNav()
 
 
-func _physics_process(delta: float) -> void:
-	if is_instance_valid(self) and is_instance_valid(pawnOwner) and !pawnOwner.isPawnDead:
-		if pathingToPosition:
-			var nextPoint : Vector3 = currentPath[pathPoint] - pawnOwner.global_position
-			if nextPoint.length_squared() > 1.0:
-				pawnOwner.direction = (nextPoint.normalized()*delta)
-			else:
-				if pathPoint < (currentPath.size() - 1):
-					pathPointReached.emit()
-					pathPoint += 1
-					_physics_process(delta)
-				else:
-					targetPathReached.emit()
-					pathingToPosition = false
+#func _physics_process(delta: float) -> void:
+	#if is_instance_valid(self) and is_instance_valid(pawnOwner) and !pawnOwner.isPawnDead:
+#
 
 
 ##Returns time since last AI process in seconds
@@ -181,6 +170,19 @@ func _ai_process(physics_delta : float) -> void:
 	if is_instance_valid(self) and is_instance_valid(pawnOwner) and !pawnOwner.isPawnDead:
 		var ai_process_delta = get_and_update_ai_process_delta(Time.get_ticks_msec())
 		pawnFSM._ai_process(physics_delta, ai_process_delta)
+
+		if pathingToPosition:
+			var nextPoint : Vector3 = currentPath[pathPoint] - pawnOwner.global_position
+			if nextPoint.length_squared() > 1.0:
+				pawnOwner.direction = (nextPoint.normalized()*physics_delta)
+			else:
+				if pathPoint < (currentPath.size() - 1):
+					pathPointReached.emit()
+					pathPoint += 1
+					_ai_process(physics_delta)
+				else:
+					targetPathReached.emit()
+					pathingToPosition = false
 
 
 func createFOVModel()->ImmediateMesh:

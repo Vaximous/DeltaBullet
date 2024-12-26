@@ -30,9 +30,11 @@ func getRandomNavPoints()->AIMarker:
 func finishedPath()->void:
 	if is_instance_valid(aiOwner.pawnOwner) and !aiOwner.pawnOwner.isPawnDead and is_instance_valid(gameManager.world):
 		#print("path finished")
-		aiOwner.pawnOwner.direction = Vector3.ZERO
-		await get_tree().create_timer(randf_range(0.5,5)).timeout
-		targetPosition = getRandomNavPoints().global_position
+		var navPoint = getRandomNavPoints()
+		if is_instance_valid(navPoint):
+			aiOwner.pawnOwner.direction = Vector3.ZERO
+			await get_tree().create_timer(randf_range(0.5,5)).timeout
+			targetPosition = navPoint.global_position
 
 
 func _on_force_target_reset_timeout() -> void:

@@ -24,7 +24,7 @@ func _ready() -> void:
 	camera.doppler_tracking = cam_to_copy.camera.doppler_tracking
 	camera.near = cam_to_copy.camera.near
 	camera.far = cam_to_copy.camera.far
-
+	camera.compositor = cam_to_copy.camera.compositor
 
 func activate(_return_cam, targetPos : Vector3, targetRot : Vector3, speed:float = 5.0) -> void:
 	return_cam = _return_cam

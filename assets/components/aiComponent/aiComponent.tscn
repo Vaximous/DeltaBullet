@@ -7,7 +7,7 @@
 [ext_resource type="Script" uid="uid://cvxqmc10mumg8" path="res://assets/components/aiComponent/aiStates/Search.gd" id="5_uyejc"]
 [ext_resource type="Script" uid="uid://bkkwm0mhefja0" path="res://assets/components/aiComponent/aiStates/Wander.gd" id="6_vgbdp"]
 [ext_resource type="Script" uid="uid://65yu2g060csf" path="res://assets/components/aiComponent/aiStates/Attack.gd" id="7_m2cst"]
-[ext_resource type="Script" path="res://assets/components/aiComponent/aiStates/FindCover.gd" id="8_bgtfw"]
+[ext_resource type="Script" uid="uid://dtb6e32c2tkq1" path="res://assets/components/aiComponent/aiStates/FindCover.gd" id="8_bgtfw"]
 [ext_resource type="Script" uid="uid://yj6cxhxe0s8w" path="res://assets/components/aiComponent/aiStates/Patrol.gd" id="9_8na1r"]
 
 [sub_resource type="Gradient" id="Gradient_4vyck"]

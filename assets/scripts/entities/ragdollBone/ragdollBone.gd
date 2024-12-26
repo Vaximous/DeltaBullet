@@ -90,11 +90,11 @@ func boneSetup()->void:
 	isAsleep.connect(doBleed)
 	if canBeDismembered:
 		if healthComponent != null:
-			if !healthComponent.HPisDead.is_connected(pulverizeBone):
-				healthComponent.HPisDead.connect(pulverizeBone)
+			if !healthComponent.HPisDead.is_connected(doPulverizeEffect):
+				healthComponent.HPisDead.connect(doPulverizeEffect)
 	else:
-		if healthComponent.HPisDead.is_connected(pulverizeBone):
-			healthComponent.HPisDead.disconnect(pulverizeBone)
+		if healthComponent.HPisDead.is_connected(doPulverizeEffect):
+			healthComponent.HPisDead.disconnect(doPulverizeEffect)
 
 	if is_instance_valid(ragdoll):
 		if !ragdoll.ragdollSkeleton.skeleton_updated.is_connected(updateRagdollScale):
@@ -165,12 +165,12 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 				audioStreamPlayer.play()
 				audioCooldown = 0.45
 			if healthComponent:
-				healthComponent.damage(contactForce + randi_range(0,16))
+				healthComponent.damage(contactForce * randi_range(0,16))
 			if hardImpactEffectEnabled:
 				if impactEffectHard == null:
-					if canBeDismembered:
-						healthComponent.damage(900,null)
-						pulverizeBone()
+					#if canBeDismembered:
+						#healthComponent.damage(900,null)
+						#pulverizeBone()
 					var particle = globalParticles.createParticle("BloodSpurt",self.position)
 					particle.rotation = self.rotation
 					#particle.amount = randi_range(25,75)
@@ -205,8 +205,14 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 
 
 #func _physics_process(delta)->void:
-	#if audioCooldown > 0:
-		#audioCooldown -= delta
+	#if ragdoll.activeRagdollEnabled and get_bone_id() != 0:
+		#var target_rotation : Basis = ragdoll.targetSkeleton.get_bone_global_pose(get_bone_id()).basis.inverse() * ownerSkeleton.get_bone_global_pose(get_bone_id()).basis
+		#var target_velocity : Vector3 = target_rotation.get_euler() * activeRagdollForce
+		#bonePhysicsServer.generic_6dof_joint_set_param(get_rid(),Vector3.AXIS_X,PhysicsServer3D.G6DOF_JOINT_ANGULAR_MOTOR_TARGET_VELOCITY,target_velocity.x)
+		#print(get("joint_data"))
+		##print(bonePhysicsServer.generic_6dof_joint_get_param(get_rid(),Vector3.AXIS_X,PhysicsServer3D.G6DOF_JOINT_ANGULAR_MOTOR_TARGET_VELOCITY))
+		#bonePhysicsServer.generic_6dof_joint_set_param(get_rid(),Vector3.AXIS_Y,PhysicsServer3D.G6DOF_JOINT_ANGULAR_MOTOR_TARGET_VELOCITY,target_velocity.y)
+		#bonePhysicsServer.generic_6dof_joint_set_param(get_rid(),Vector3.AXIS_X,PhysicsServer3D.G6DOF_JOINT_ANGULAR_MOTOR_TARGET_VELOCITY,target_velocity.z)
 
 func hit(dmg, dealer=null, hitImpulse:Vector3 = Vector3.ZERO, hitPoint:Vector3 = Vector3.ZERO)->void:
 	canBleed = true

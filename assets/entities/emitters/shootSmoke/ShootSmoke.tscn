@@ -1,0 +1,73 @@
+[gd_scene load_steps=10 format=3 uid="uid://o7dvrw30qlyk"]
+
+[ext_resource type="Texture2D" uid="uid://deg4xoxwmqn8w" path="res://assets/textures/smoke/smoke1.png" id="1_nj2my"]
+
+[sub_resource type="Gradient" id="Gradient_buc1p"]
+offsets = PackedFloat32Array(0, 0.0365854, 1)
+colors = PackedColorArray(8.02745, 0.541176, 0, 1, 0.196078, 0.196078, 0.196078, 0.0705882, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_2dja8"]
+gradient = SubResource("Gradient_buc1p")
+
+[sub_resource type="Curve" id="Curve_nafn7"]
+_data = [Vector2(0, 1), 0.0, 0.397784, 0, 0, Vector2(0.0194986, 0.305263), -18.8947, 2.26737, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_j0p7u"]
+curve = SubResource("Curve_nafn7")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_2pv0k"]
+angle_min = -720.0
+angle_max = 720.0
+direction = Vector3(-1, 0, 0)
+spread = 19.28
+initial_velocity_min = 2.0
+initial_velocity_max = 5.0
+angular_velocity_min = -50.0
+angular_velocity_max = 50.0
+gravity = Vector3(0, 5, 0)
+damping_min = 8.824
+damping_max = 41.596
+scale_min = 0.5
+scale_curve = SubResource("CurveTexture_j0p7u")
+color = Color(1.2, 1.2, 1.2, 1)
+color_ramp = SubResource("GradientTexture1D_2dja8")
+hue_variation_min = -0.02
+hue_variation_max = 0.08
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y85su"]
+transparency = 1
+diffuse_mode = 2
+specular_mode = 2
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_nj2my")
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_avg6y"]
+material = SubResource("StandardMaterial3D_y85su")
+
+[sub_resource type="GDScript" id="GDScript_ed33w"]
+resource_name = "shootSmoke"
+script/source = "extends GPUParticles3D
+
+
+func _ready() -> void:
+	emitting = true
+"
+
+[node name="ShootSmoke" type="GPUParticles3D"]
+transform = Transform3D(-0.999999, 7.10543e-15, 8.74228e-08, -1.72263e-14, 0.999999, 1.42109e-14, -8.74227e-08, -7.10543e-15, -0.999999, 0, 0, 0)
+emitting = false
+amount = 4
+lifetime = 2.0
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_2pv0k")
+draw_pass_1 = SubResource("QuadMesh_avg6y")
+script = SubResource("GDScript_ed33w")
+
+[connection signal="finished" from="." to="." method="queue_free"]

@@ -3,19 +3,20 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dw4q4o6g13c6q"
-path="res://.godot/imported/db_customization_buttonicons.png-d789735477b10442c0b4d0cc647f6815.ctex"
+path.s3tc="res://.godot/imported/db_customization_buttonicons.png-d789735477b10442c0b4d0cc647f6815.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/textures/ui/customization/db_customization_buttonicons.png"
-dest_files=["res://.godot/imported/db_customization_buttonicons.png-d789735477b10442c0b4d0cc647f6815.ctex"]
+dest_files=["res://.godot/imported/db_customization_buttonicons.png-d789735477b10442c0b4d0cc647f6815.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1

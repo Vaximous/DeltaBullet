@@ -23,12 +23,15 @@ var sceneToLoad:String:
 var data:
 	set(value):
 		data = value.worldData
-		worldNameLabel.text = data.worldName
-		worldDescription.text = data.worldDescription
-		worldBG.texture = data.worldLoadingTexture
-		if data.worldLoadingTexture == null:
-			worldBG.texture = load(gameManager.tempImages.pick_random())
+		if data:
+			worldNameLabel.text = data.worldName
+			worldDescription.text = data.worldDescription
+			worldBG.texture = data.worldLoadingTexture
+			if data.worldLoadingTexture == null:
+				worldBG.texture = load(gameManager.tempImages.pick_random())
+		await get_tree().process_frame
 		data = null
+		value.queue_free()
 var loadStatus
 var sceneLoading
 var press = false
@@ -66,5 +69,4 @@ func _unhandled_key_input(event) -> void:
 		if event.is_pressed() and !press:
 			press = true
 			await Fade.fade_out(0.5).finished
-			#gameManager.freeOrphanNodes()
 			get_tree().change_scene_to_packed(sceneLoading)

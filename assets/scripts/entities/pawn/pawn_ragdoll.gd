@@ -243,7 +243,9 @@ func damageBoneHitboxes(impulse_bone:int,killer)->void:
 			if child.get_bone_id() == impulse_bone:
 				child.canBleed = true
 				if child.healthComponent and killer != null and killer.currentItem != null:
-					child.healthComponent.damage(killer.currentItem.weaponResource.weaponDamage * randf_range(1.5,2),killer)
+					var dmgAmount = killer.currentItem.weaponResource.weaponDamage
+					print(dmgAmount)
+					child.healthComponent.damage(dmgAmount,killer)
 
 
 func setRagdollPositionAndRotation(pawn:BasePawn)->void:

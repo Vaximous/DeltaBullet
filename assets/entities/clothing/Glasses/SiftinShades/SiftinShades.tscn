@@ -12,6 +12,7 @@ metallic_specular = 0.0
 roughness = 0.14
 
 [node name="SiftinShades" instance=ExtResource("1_6mmub")]
+clothingCategory = 1
 clothingType = 1
 itemName = "Siftin' Shades"
 

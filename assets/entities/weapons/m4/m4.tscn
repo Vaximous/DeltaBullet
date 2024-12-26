@@ -1,11 +1,10 @@
-[gd_scene load_steps=36 format=4 uid="uid://bidurnqgd1c74"]
+[gd_scene load_steps=27 format=4 uid="uid://bidurnqgd1c74"]
 
 [ext_resource type="PackedScene" uid="uid://cpd5r8bmx2885" path="res://assets/entities/weapons/weaponBase.tscn" id="1_kohee"]
 [ext_resource type="Resource" uid="uid://cqlbuo5rnaqs5" path="res://assets/resources/customResources/weaponData/M4/M4.tres" id="2_t7j74"]
 [ext_resource type="PackedScene" uid="uid://bq8bs21h3itgd" path="res://assets/models/effects/shoot_flare.tscn" id="3_44xfi"]
+[ext_resource type="PackedScene" uid="uid://o7dvrw30qlyk" path="res://assets/entities/emitters/shootSmoke/ShootSmoke.tscn" id="3_rgg5c"]
 [ext_resource type="Texture2D" uid="uid://b2fhcoojuwv3r" path="res://assets/models/weapons/Textures/American Light AssaultRifle.png" id="3_slm2e"]
-[ext_resource type="Texture2D" uid="uid://deg4xoxwmqn8w" path="res://assets/textures/smoke/smoke1.png" id="4_e0gyb"]
-[ext_resource type="PackedScene" uid="uid://bumha05iiv1i2" path="res://assets/components/duplicatorComponent/duplicatorComponent.scn" id="5_23j2w"]
 [ext_resource type="AudioStream" uid="uid://l22ec5ipci2g" path="res://assets/sounds/weapons/m4/WEAPONS_RIFLE_Assault_Rifle_Fire_05.wav" id="7_2gub5"]
 [ext_resource type="Animation" uid="uid://cprovv54ucski" path="res://assets/models/weapons/honeybadger/anims/BadgerAim.res" id="8_e6rah"]
 [ext_resource type="AnimationNodeBlendTree" uid="uid://dm3678yui0y2i" path="res://assets/entities/weapons/m4/M4Tree.tres" id="8_k4rby"]
@@ -187,60 +186,6 @@ _data = {
 &"light_flash": SubResource("Animation_4v8w6")
 }
 
-[sub_resource type="Gradient" id="Gradient_8krwq"]
-offsets = PackedFloat32Array(0, 0.0365854, 1)
-colors = PackedColorArray(8.02745, 0.541176, 0, 1, 0.196078, 0.196078, 0.196078, 0.0705882, 1, 1, 1, 0)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_7u60u"]
-gradient = SubResource("Gradient_8krwq")
-
-[sub_resource type="Curve" id="Curve_e5uqm"]
-_data = [Vector2(0, 1), 0.0, 0.397784, 0, 0, Vector2(0.0194986, 0.305263), -18.8947, 2.26737, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
-point_count = 3
-
-[sub_resource type="CurveTexture" id="CurveTexture_dv1fd"]
-curve = SubResource("Curve_e5uqm")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_nyg8u"]
-angle_min = -720.0
-angle_max = 720.0
-direction = Vector3(-1, 0, 0)
-spread = 19.28
-initial_velocity_min = 2.0
-initial_velocity_max = 5.0
-angular_velocity_min = -50.0
-angular_velocity_max = 50.0
-gravity = Vector3(0, 5, 0)
-damping_min = 8.824
-damping_max = 41.596
-scale_min = 0.5
-scale_curve = SubResource("CurveTexture_dv1fd")
-color = Color(1.2, 1.2, 1.2, 1)
-color_ramp = SubResource("GradientTexture1D_7u60u")
-hue_variation_min = -0.02
-hue_variation_max = 0.08
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rfu4s"]
-transparency = 1
-diffuse_mode = 2
-specular_mode = 2
-vertex_color_use_as_albedo = true
-albedo_texture = ExtResource("4_e0gyb")
-billboard_mode = 3
-billboard_keep_scale = true
-particles_anim_h_frames = 1
-particles_anim_v_frames = 1
-particles_anim_loop = false
-
-[sub_resource type="QuadMesh" id="QuadMesh_p2041"]
-material = SubResource("StandardMaterial3D_rfu4s")
-
-[sub_resource type="GDScript" id="GDScript_fqemc"]
-script/source = "static func execute(node : Node) -> void:
-	(node as GPUParticles3D).restart()
-	
-"
-
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_upyhg"]
 random_pitch = 1.05
 streams_count = 1
@@ -260,6 +205,7 @@ _data = {
 [node name="M4" node_paths=PackedStringArray("weaponMesh", "muzzlePoint") instance=ExtResource("1_kohee")]
 weaponMesh = NodePath("M4Mesh")
 weaponResource = ExtResource("2_t7j74")
+smokeEffect = ExtResource("3_rgg5c")
 muzzlePoint = NodePath("M4Mesh/Marker3D")
 objectName = "M4A3"
 
@@ -304,22 +250,6 @@ libraries = {
 &"": SubResource("AnimationLibrary_xu2pg")
 }
 autoplay = "RESET"
-
-[node name="ShootSmoke" type="GPUParticles3D" parent="M4Mesh/Marker3D" index="3"]
-transform = Transform3D(1, 0, -7.10543e-15, 0, 1, 8.07794e-28, 7.10543e-15, 0, 1, 0.0953, 0, -4.1657e-09)
-emitting = false
-amount = 4
-lifetime = 2.0
-one_shot = true
-explosiveness = 1.0
-process_material = SubResource("ParticleProcessMaterial_nyg8u")
-draw_pass_1 = SubResource("QuadMesh_p2041")
-
-[node name="duplicatorComponent" parent="M4Mesh/Marker3D/ShootSmoke" index="0" instance=ExtResource("5_23j2w")]
-useWorldMiscAsParent = true
-dup_lifetime = 2.0
-advanced_behavior_script = SubResource("GDScript_fqemc")
-use_pooling = true
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." index="1"]
 stream = SubResource("AudioStreamRandomizer_upyhg")

@@ -1,7 +1,6 @@
-[gd_scene load_steps=16 format=3 uid="uid://c1r6apfs6eb8j"]
+[gd_scene load_steps=15 format=3 uid="uid://c1r6apfs6eb8j"]
 
 [ext_resource type="Script" uid="uid://dc5csltpb6sdj" path="res://assets/scripts/camera/Camera.gd" id="1_r7vh5"]
-[ext_resource type="Compositor" uid="uid://c1twst3dvajrx" path="res://assets/envs/motionBlurCompositor.tres" id="2_gqas6"]
 [ext_resource type="PackedScene" uid="uid://cvynv7sgqowum" path="res://assets/components/velocityComponent/velocityComponent.tscn" id="2_rb4ck"]
 [ext_resource type="PackedScene" uid="uid://cmyxa8pfmhpcy" path="res://assets/components/inputComponent/inputComponent.tscn" id="3_jchmi"]
 [ext_resource type="PackedScene" uid="uid://1d1rfqprpnrb" path="res://assets/scenes/ui/Hud.tscn" id="5_27on2"]
@@ -59,7 +58,6 @@ collision_mask = 3
 shape = SubResource("SphereShape3D_seysn")
 
 [node name="Camera" type="Camera3D" parent="camPivot/horizonal/vertholder/vertical/springArm3d"]
-compositor = ExtResource("2_gqas6")
 
 [node name="RayCast3D" type="RayCast3D" parent="camPivot/horizonal/vertholder/vertical/springArm3d/Camera"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.12949)

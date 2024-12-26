@@ -44,6 +44,7 @@ var currentAmmo = 0:
 		currentMagSize = weaponResource.weaponMagSize
 		setWeaponRecoil()
 @export_subgroup("Behavior")
+@export var smokeEffect : PackedScene
 var defaultBulletTrail = load("res://assets/entities/bulletTrail/bulletTrail.tscn")
 @export var projectile : PackedScene = preload("res://assets/entities/projectiles/Bullet.tscn")
 @export var muzzlePoint : Marker3D
@@ -251,6 +252,13 @@ func fire()->void:
 				#bullet.position.y += randf_range(-0.05,0.05)
 
 			if weaponCast != null:
+
+				if smokeEffect:
+					var smokeInstance = smokeEffect.instantiate()
+					gameManager.world.worldParticles.add_child(smokeInstance)
+					smokeInstance.global_position = muzzlePoint.global_position
+					smokeInstance.global_rotation = muzzlePoint.global_rotation
+
 				spawnProjectile(weaponCast)
 				applyCameraRecoil()
 					#raycastHit(shot_cast)

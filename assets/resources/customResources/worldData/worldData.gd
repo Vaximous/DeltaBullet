@@ -4,8 +4,6 @@ signal worldTypeChanged
 @export_category("World Identity")
 ## What texture will the sky be in this world?
 @export var skyTexture : PanoramaSkyMaterial
-## Is time of day enabled in this world?
-@export var enableTimeCycle :bool= false
 ##What is this worlds name?
 @export var worldName:String = ""
 ##Describe the world..

@@ -1,8 +1,9 @@
-[gd_scene load_steps=54 format=3 uid="uid://7idw8rtae15o"]
+[gd_scene load_steps=44 format=3 uid="uid://7idw8rtae15o"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_dmxbb"]
 [ext_resource type="PackedScene" uid="uid://n500uprpwbbk" path="res://assets/models/csgmodels/csgtruck.tscn" id="2_cg4ns"]
 [ext_resource type="Script" uid="uid://b31u24at18p5t" path="res://assets/resources/customResources/worldData/worldData.gd" id="2_xbw1q"]
+[ext_resource type="Texture2D" uid="uid://dvfkpbe83xcf4" path="res://assets/textures/panoramas/panoramatest3.png" id="3_6iqu2"]
 [ext_resource type="PackedScene" uid="uid://boicvk4qeqmbd" path="res://assets/entities/pawnSpawn/pawnSpawn.tscn" id="3_fqriv"]
 [ext_resource type="PackedScene" uid="uid://boh343kalvj5i" path="res://assets/entities/weapons/Revolver/Revolver.tscn" id="3_k4wxf"]
 [ext_resource type="PackedScene" uid="uid://wtqya32cwdbk" path="res://assets/entities/weapons/Beretta/Beretta.tscn" id="4_0kehd"]
@@ -15,25 +16,13 @@
 [ext_resource type="PackedScene" uid="uid://bap501mpmqgb" path="res://assets/entities/clothing/Gloves/right_glove_fingerless.tscn" id="8_ghfsu"]
 [ext_resource type="Material" uid="uid://cet4363l3i6lx" path="res://assets/materials/fence/fence_material.tres" id="10_1sm5o"]
 [ext_resource type="PackedScene" uid="uid://btfs5d0jboy58" path="res://assets/models/csgmodels/CsgBigtruck.tscn" id="10_uvhd4"]
-[ext_resource type="Resource" uid="uid://cslvcweyejh3c" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/default_camera_movement_component.tres" id="11_3scig"]
 [ext_resource type="Texture2D" uid="uid://e2ua6iexncex" path="res://assets/textures/urban/cem_Concrete01.tga" id="11_ebwed"]
 [ext_resource type="Texture2D" uid="uid://cd07ppooqojsp" path="res://assets/textures/urban/Floor-07-Color.tga" id="11_l2exv"]
 [ext_resource type="Texture2D" uid="uid://bc1parbnkgewl" path="res://assets/textures/urban/cem_Concrete_04.tga" id="11_mqfpj"]
 [ext_resource type="Texture2D" uid="uid://ksqovy04h5gl" path="res://assets/textures/urban/brick002.tga" id="12_f68rh"]
 [ext_resource type="Texture2D" uid="uid://djqo5emhckfhg" path="res://assets/textures/urban/Floor-06-Specular.tga" id="12_jyv1n"]
-[ext_resource type="Resource" uid="uid://iru8ynu04i00" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/default_camera_rotation_component.tres" id="12_uwd8l"]
 [ext_resource type="Texture2D" uid="uid://po4r5jjexlh8" path="res://assets/textures/urban/Floor-07-Normal.tga" id="13_aefe7"]
-[ext_resource type="Resource" uid="uid://rp3mpjmisoyh" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/default_object_movement_component.tres" id="13_bb7b0"]
 [ext_resource type="PackedScene" uid="uid://7ueyays7enj5" path="res://assets/entities/trigger/pawnTrigger.tscn" id="13_gmp2x"]
-[ext_resource type="Resource" uid="uid://c8ulad7utgrg7" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/pre_blur_processing_stage.tres" id="14_bkwut"]
-[ext_resource type="Script" uid="uid://d2c1khggr5mja" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/pre_blur_processor.gd" id="15_cm1ib"]
-[ext_resource type="Resource" uid="uid://bk5yd5plopwi2" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/simple_jf_blur_stage.tres" id="16_o81qa"]
-[ext_resource type="Resource" uid="uid://bj3exhmsfcx4w" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jf_simple_stage.tres" id="17_ijnr4"]
-[ext_resource type="Resource" uid="uid://co5k7plgmxepi" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jump_flood_neighbor_max_stage.tres" id="18_6fy6k"]
-[ext_resource type="Resource" uid="uid://dc5fr84ue3dn5" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jump_flood_overlay_stage.tres" id="19_f74ys"]
-[ext_resource type="Script" uid="uid://dj7utfe0dcfoy" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/simple_jf_motion_blur.gd" id="20_3u1ko"]
-[ext_resource type="Resource" uid="uid://c10aboaly701b" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jump_flood_tile_max_x_stage.tres" id="21_qfex1"]
-[ext_resource type="Resource" uid="uid://cymk87e4nyxva" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jump_flood_tile_max_y_stage.tres" id="22_waxlx"]
 [ext_resource type="PackedScene" uid="uid://dnr0cbfhyguux" path="res://assets/particles/rain/rain_particles.tscn" id="23_s82mf"]
 [ext_resource type="Script" uid="uid://b7vowqimfqppv" path="res://addons/proto_shape/proto_ramp/proto_ramp.gd" id="33_edjsf"]
 [ext_resource type="PackedScene" uid="uid://bidurnqgd1c74" path="res://assets/entities/weapons/m4/m4.tscn" id="34_np7sb"]
@@ -41,9 +30,12 @@
 [ext_resource type="Script" uid="uid://b6r8ewrq3qb3y" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="36_usxi5"]
 [ext_resource type="PackedScene" uid="uid://dvmmlj4mvj88r" path="res://assets/entities/aiMarker/aiMarker.tscn" id="39_41ndd"]
 
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_wf1is"]
+panorama = ExtResource("3_6iqu2")
+
 [sub_resource type="Resource" id="Resource_cwdvh"]
 script = ExtResource("2_xbw1q")
-enableTimeCycle = false
+skyTexture = SubResource("PanoramaSkyMaterial_wf1is")
 worldName = "Shootout"
 worldDescription = "Fuck up the operation"
 worldType = 0
@@ -58,12 +50,6 @@ enabled = true
 effect_callback_type = 4
 needs_motion_vectors = false
 needs_normal_roughness = false
-script = ExtResource("15_cm1ib")
-pre_blur_processor_stage = ExtResource("14_bkwut")
-camera_rotation_component = ExtResource("12_uwd8l")
-camera_movement_component = ExtResource("11_3scig")
-object_movement_component = ExtResource("13_bb7b0")
-debug = false
 
 [sub_resource type="CompositorEffect" id="CompositorEffect_uxybo"]
 resource_local_to_scene = false
@@ -72,24 +58,6 @@ enabled = true
 effect_callback_type = 4
 needs_motion_vectors = false
 needs_normal_roughness = false
-script = ExtResource("20_3u1ko")
-tile_max_x_stage = ExtResource("21_qfex1")
-tile_max_y_stage = ExtResource("22_waxlx")
-construct_stage = ExtResource("17_ijnr4")
-neighbor_max_stage = ExtResource("18_6fy6k")
-blur_stage = ExtResource("16_o81qa")
-overlay_stage = ExtResource("19_f74ys")
-perpen_error_threshold = 0.5
-sample_step_multiplier = 16
-step_exponent_modifier = 1.0
-JFA_pass_count = 3
-samples = 16
-intensity = 1.0
-center_fade = 0.0
-framerate_independent = true
-uncapped_independence = false
-target_constant_framerate = 60.0
-debug = false
 
 [sub_resource type="Compositor" id="Compositor_otk5e"]
 compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_pmh78"), SubResource("CompositorEffect_uxybo")])
@@ -852,10 +820,10 @@ size = Vector3(47, 2, 7)
 material = SubResource("StandardMaterial3D_xnp05")
 
 [node name="csgBox3d5" type="CSGBox3D" parent="Geometry/navigationRegion3d" index="61"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.5858, 3.26123, 20.8885)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.5858, 3.26123, 20.8414)
 use_collision = true
 collision_mask = 0
-size = Vector3(2, 8, 5)
+size = Vector3(2, 8, 5.09424)
 
 [node name="csgBox3d37" type="CSGBox3D" parent="Geometry/navigationRegion3d" index="62"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.5858, 3.36123, 21.3885)

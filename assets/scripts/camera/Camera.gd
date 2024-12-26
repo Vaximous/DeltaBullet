@@ -120,7 +120,6 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 func _ready()->void:
 	camera.make_current()
-	checkMotionBlur()
 	#Dialogic.current_timeline = null
 	#Dialogic.end_timeline()
 	gameManager.activeCamera = self
@@ -129,21 +128,20 @@ func _ready()->void:
 	aimFOV = currentFOV - zoomAmount
 	Fade.fade_in(0.3, Color(0,0,0,1),"GradientVertical",false,true)
 	#Dialogic.timeline_started.connect(playTextAppearSound)
-	UserConfig.configs_updated.connect(checkMotionBlur)
 	hud.camOwner = self
 
-func checkMotionBlur()->void:
-	if UserConfig.graphics_motion_blur:
-		if camera.compositor == null:
-			var comp = load("res://assets/envs/motionBlurCompositor.tres")
-			camera.compositor = comp
-		else:
-			camera.compositor.compositor_effects[0].set("enabled",true)
-			camera.compositor.compositor_effects[1].set("enabled",true)
-	else:
-		if camera.compositor:
-			camera.compositor.compositor_effects[0].set("enabled",false)
-			camera.compositor.compositor_effects[1].set("enabled",false)
+#func checkMotionBlur()->void:
+	#if UserConfig.graphics_motion_blur:
+		#if camera.compositor == null:
+			#var comp = load("res://assets/envs/motionBlurCompositor.tres")
+			#camera.compositor = comp
+		#else:
+			#camera.compositor.compositor_effects[0].set("enabled",true)
+			#camera.compositor.compositor_effects[1].set("enabled",true)
+	#else:
+		#if camera.compositor:
+			#camera.compositor.compositor_effects[0].set("enabled",false)
+			#camera.compositor.compositor_effects[1].set("enabled",false)
 
 func _input(_event)->void:
 	if Input.is_action_pressed("gRightClick"):

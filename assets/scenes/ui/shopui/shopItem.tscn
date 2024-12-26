@@ -1,6 +1,6 @@
 [gd_scene load_steps=19 format=3 uid="uid://ims5mb4jlsni"]
 
-[ext_resource type="Script" path="res://assets/scenes/ui/shopui/shop_item.gd" id="1_hhb87"]
+[ext_resource type="Script" uid="uid://bdto10hj8uvkd" path="res://assets/scenes/ui/shopui/shop_item.gd" id="1_hhb87"]
 [ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="1_j1f5m"]
 [ext_resource type="AudioStream" uid="uid://crpcvvr4dupq6" path="res://assets/sounds/ui/slideOpen.wav" id="3_w0iub"]
 [ext_resource type="AudioStream" uid="uid://c7v7iev137c2t" path="res://assets/sounds/ui/notif2_new.wav" id="4_sxe4e"]
@@ -137,9 +137,9 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_q1i74"]
 _data = {
-"RESET": SubResource("Animation_n24de"),
-"in": SubResource("Animation_5mmls"),
-"out": SubResource("Animation_uow4b")
+&"RESET": SubResource("Animation_n24de"),
+&"in": SubResource("Animation_5mmls"),
+&"out": SubResource("Animation_uow4b")
 }
 
 [sub_resource type="Gradient" id="Gradient_pmu2c"]
@@ -246,15 +246,15 @@ horizontal_alignment = 2
 
 [node name="animationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_q1i74")
+&"": SubResource("AnimationLibrary_q1i74")
 }
 
 [node name="panel" type="Panel" parent="."]
 layout_mode = 1
 anchors_preset = -1
 anchor_bottom = 1.0
-offset_left = -35.0
-offset_right = 28.0
+offset_left = -34.0
+offset_right = 29.0
 theme_override_styles/panel = SubResource("StyleBoxTexture_u2iun")
 
 [node name="hoverSound" type="AudioStreamPlayer" parent="."]

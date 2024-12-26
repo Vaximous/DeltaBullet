@@ -55,9 +55,9 @@ func _ready() -> void:
 
 # Called every frame.
 # Calls the 'on_process' function on the current state.
-func _process(delta: float) -> void:
-	if is_instance_valid(current_state):
-		current_state.on_process(delta)
+#func _process(delta: float) -> void:
+	#if is_instance_valid(current_state):
+		#current_state.on_process(delta)
 
 
 # Called every physics frame.

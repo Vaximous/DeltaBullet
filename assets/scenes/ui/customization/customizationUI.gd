@@ -2,7 +2,7 @@ extends CanvasLayer
 @onready var blur = $blur
 @onready var customizationUI : Control = $customizationUi
 @onready var equipSound : AudioStreamPlayer = $equipSounds
-@export_enum("Hair","Headwear","Facewear","Body","Pants")var selectedSection : int = 2:
+@export_enum("Hair","Headgear","Bling","Body","Pants")var selectedSection : int = 1:
 	set(value):
 		selectedSection = value
 		setSectionLabel(value)
@@ -26,9 +26,9 @@ func _ready() -> void:
 	gameManager.showMouse()
 
 
-func enlargeControlScale(control:Control)->void:
+func enlargeControlScale(control:Control,size:float=1.5)->void:
 	var tween = create_tween()
-	tween.tween_property(control,"scale",Vector2(1.5,1.5),defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+	tween.tween_property(control,"scale",Vector2(size,size),defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
 
 
 func resetControlScale(control:Control)->void:
@@ -40,7 +40,7 @@ func setupButtons()->void:
 	if buttonHolder != null:
 		for buttons in buttonHolder.get_children():
 			buttons.pivot_offset = buttons.size/2
-			buttons.mouse_entered.connect(enlargeControlScale.bind(buttons))
+			buttons.mouse_entered.connect(enlargeControlScale.bind(buttons,1.15))
 			buttons.mouse_exited.connect(resetControlScale.bind(buttons))
 			buttons.pressed.connect(setSection.bind(getSelectedSectionID(buttons)))
 			buttons.pressed.connect(generateClothingOptions.bind(clothingPawn))
@@ -86,9 +86,9 @@ func setSectionLabel(section:int = 0)->void:
 			0:
 				sectionLabel.text = "Hair"
 			1:
-				sectionLabel.text = "Hats"
+				sectionLabel.text = "Headgear"
 			2:
-				sectionLabel.text = "Face"
+				sectionLabel.text = "Bling"
 			3:
 				sectionLabel.text = "Body"
 			4:
@@ -98,10 +98,12 @@ func setSectionLabel(section:int = 0)->void:
 func checkClothingItem(item:PackedScene)->bool:
 	var boolean : bool = false
 	if item and clothingPawn:
+		var itemInstance = item.instantiate()
 		for i in clothingPawn.clothingInventory:
 			if i != null:
-				if i.scene_file_path == item.instantiate().scene_file_path:
+				if i.scene_file_path == itemInstance.scene_file_path:
 					boolean = true
+		itemInstance.queue_free()
 	return boolean
 
 
@@ -133,7 +135,8 @@ func equipClothingToPawn(item:PackedScene)->void:
 
 func unequipClothingFromPawn(item:PackedScene)->void:
 	if clothingPawn and item:
-		var filePath = item.instantiate().scene_file_path
+		var itemInstance = item.instantiate()
+		var filePath = itemInstance.scene_file_path
 		for clothing in clothingPawn.clothingInventory:
 			if clothing.scene_file_path == filePath:
 				clothingPawn.clothingInventory.erase(clothing)
@@ -143,6 +146,7 @@ func unequipClothingFromPawn(item:PackedScene)->void:
 		clothingPawn.clothingInventory.clear()
 		await get_tree().process_frame
 		clothingPawn.checkClothes()
+		itemInstance.queue_free()
 		setPreviewAppearance()
 
 
@@ -155,9 +159,11 @@ func generateClothingOptions(pawn:BasePawn)->void:
 	if pawn != null:
 		for clothing in pawn.purchasedClothing:
 			var itemLoad = load(clothing)
-			if itemLoad.instantiate().clothingCategory == selectedSection:
+			var itemInstance = itemLoad.instantiate()
+			if itemInstance.clothingCategory == selectedSection:
 				var button = clothingItem.instantiate()
 				button.clothingItem = itemLoad
 				clothingButtonsHolder.add_child(button)
 				button.isEquipped = checkClothingItem(itemLoad)
 				button.button.pressed.connect(toggleItem.bind(button))
+			itemInstance.queue_free()

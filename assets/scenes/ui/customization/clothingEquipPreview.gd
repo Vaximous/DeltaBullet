@@ -37,7 +37,7 @@ func initClothingItem()->void:
 		#Set up the pawn
 		if examplePawn != null:
 			examplePawn.hide()
-			examplePawn.pawnColor = Color.WHITE
+			examplePawn.pawnColor = Color.GRAY
 			examplePawn.pawnEnabled = false
 			examplePawn.animationToForce = "PawnAnim/Idle"
 			examplePawn.forceAnimation = true
@@ -80,7 +80,8 @@ func playSound()->void:
 
 func setCameraPosition()->void:
 	if viewportCamera != null and clothingItem != null:
-		match clothingItem.instantiate().clothingType:
+		var itemInstance = clothingItem.instantiate()
+		match itemInstance.clothingType:
 			0:
 				viewportCamera.position.y = 1.835
 			1:
@@ -93,3 +94,4 @@ func setCameraPosition()->void:
 				viewportCamera.position.y = 1.025
 			5:
 				viewportCamera.position.y = 1.025
+		itemInstance.queue_free()

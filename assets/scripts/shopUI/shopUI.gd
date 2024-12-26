@@ -62,8 +62,9 @@ func buildItemList()->void:
 	var shopItem = load("res://assets/scenes/ui/shopui/shopItem.tscn")
 	if shopResource != null:
 		for items in shopResource.itemsToSell:
-			if items.instantiate() is Weapon:
-				if tabBar.current_tab == items.instantiate().weaponResource.displayData.saleCategory:
+			var itemInstance = items.instantiate()
+			if itemInstance is Weapon:
+				if tabBar.current_tab == itemInstance.weaponResource.displayData.saleCategory:
 					var _shopItem : Button = shopItem.instantiate()
 					_shopItem.item = items
 					itemHolder.add_child(_shopItem)
@@ -71,6 +72,7 @@ func buildItemList()->void:
 					_shopItem.pressed.connect(setShopItem.bind(_shopItem))
 					if _shopItem.doesHaveItem(gameManager.playerPawns[0]):
 						_shopItem.isPurchased = true
+			itemInstance.queue_free()
 
 
 func setShopItem(item:Button)->Button:

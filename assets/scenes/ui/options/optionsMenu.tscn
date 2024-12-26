@@ -395,6 +395,7 @@ layout_mode = 2
 text = "Fullscreen"
 
 [node name="motionBlur" type="CheckButton" parent="panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer"]
+visible = false
 layout_mode = 2
 text = "Motion Blur"
 

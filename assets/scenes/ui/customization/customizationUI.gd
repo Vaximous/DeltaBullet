@@ -56,7 +56,7 @@ func setSection(id:int)->void:
 	selectedSection = id
 	print(selectedSection)
 
-func getSelectedSectionID(button:Button)->int:
+func getSelectedSectionID(button:TextureButton)->int:
 	var id : int = 0
 	for buttonid in buttonHolder.get_children().size():
 		if buttonHolder.get_child(buttonid) == button:

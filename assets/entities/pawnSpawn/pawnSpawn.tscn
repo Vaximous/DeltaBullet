@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://boicvk4qeqmbd"]
 
-[ext_resource type="Script" path="res://assets/entities/pawnSpawn/pawnSpawn.gd" id="1_2jqm3"]
+[ext_resource type="Script" uid="uid://b5bptk5vgkicd" path="res://assets/entities/pawnSpawn/pawnSpawn.gd" id="1_2jqm3"]
 [ext_resource type="ArrayMesh" uid="uid://dvkb1ntdr5k04" path="res://assets/models/pawn/pawnMarkerReferenceModel.res" id="2_kp4hc"]
 [ext_resource type="Texture2D" uid="uid://c1bh2rcoj7vd8" path="res://assets/textures/pawn_tex/texture_Base_Color.jpg" id="3_moayw"]
 [ext_resource type="Texture2D" uid="uid://bnyghsg41pkwb" path="res://assets/textures/pawn_tex/texture_Mixed_AO.jpg" id="4_l5i4o"]
@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://ctyjq1f6284yy" path="res://assets/textures/pawn_tex/texture_Normal_OpenGL.jpg" id="5_sssv4"]
 [ext_resource type="Texture2D" uid="uid://d68y7icd86b3" path="res://assets/textures/pawn_tex/texture_Roughness.jpg" id="6_ie2lk"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_txe1p"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k1bj2"]
 resource_name = "MALE"
 cull_mode = 2
 diffuse_mode = 2
@@ -44,7 +44,7 @@ aiType = 0
 
 [node name="previewMesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
-material_override = SubResource("StandardMaterial3D_txe1p")
+material_override = SubResource("StandardMaterial3D_k1bj2")
 gi_mode = 0
 mesh = ExtResource("2_kp4hc")
 

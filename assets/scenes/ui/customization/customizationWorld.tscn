@@ -1,14 +1,22 @@
-[gd_scene load_steps=6 format=3 uid="uid://ctrswootky6q7"]
+[gd_scene load_steps=9 format=3 uid="uid://ctrswootky6q7"]
 
-[ext_resource type="Script" path="res://assets/scenes/ui/customization/customizationWorld.gd" id="1_37aps"]
+[ext_resource type="Script" uid="uid://bp312460vua66" path="res://assets/scenes/ui/customization/customizationWorld.gd" id="1_37aps"]
 [ext_resource type="PackedScene" uid="uid://bg8aarggcxwa8" path="res://assets/entities/pawnEntity/pawnEntity.tscn" id="1_ch2jg"]
 [ext_resource type="PackedScene" uid="uid://cmyxa8pfmhpcy" path="res://assets/components/inputComponent/inputComponent.tscn" id="3_ax8xa"]
+[ext_resource type="PackedScene" uid="uid://bh8ocrcm7xaho" path="res://assets/models/interior/changingroom/ChangingRoom.tscn" id="4_h5q60"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kfmsv"]
 transparency = 1
 albedo_color = Color(1, 1, 1, 0)
 
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_h5q60"]
+
+[sub_resource type="Sky" id="Sky_mywmq"]
+sky_material = SubResource("PhysicalSkyMaterial_h5q60")
+
 [sub_resource type="Environment" id="Environment_e7eu0"]
+background_mode = 2
+sky = SubResource("Sky_mywmq")
 ambient_light_source = 2
 ambient_light_color = Color(1, 1, 1, 1)
 ambient_light_energy = 0.7
@@ -49,3 +57,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1571, 2.06761)
 fov = 52.1
 
 [node name="inputComponent" parent="." instance=ExtResource("3_ax8xa")]
+
+[node name="ChangingRoom" parent="." instance=ExtResource("4_h5q60")]

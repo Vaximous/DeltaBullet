@@ -1,0 +1,15 @@
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://bb0mg8bye2y67"]
+
+[ext_resource type="Texture2D" uid="uid://dqyi3mbplfwh8" path="res://assets/textures/urban/Wood-02-Color.tga" id="1_2gx4o"]
+[ext_resource type="Texture2D" uid="uid://cplrunfo1xugt" path="res://assets/textures/urban/Wood-02-Normal.tga" id="2_cduvl"]
+
+[resource]
+resource_name = "Floor"
+albedo_texture = ExtResource("1_2gx4o")
+roughness = 0.59
+normal_enabled = true
+normal_texture = ExtResource("2_cduvl")
+clearcoat_enabled = true
+clearcoat = 0.12
+clearcoat_roughness = 0.57
+uv1_scale = Vector3(7, 7, 7)

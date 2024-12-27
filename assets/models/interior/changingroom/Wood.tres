@@ -1,0 +1,6 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://hs45cy5lurrd"]
+
+[resource]
+resource_name = "Wood"
+albedo_color = Color(0.5, 0.285, 0.2, 1)
+roughness = 0.5

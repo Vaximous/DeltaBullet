@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://bh8ocrcm7xaho"]
+
+[ext_resource type="ArrayMesh" uid="uid://b54vrmcdxsmic" path="res://assets/models/interior/changingroom/changingroom_Cube_004.res" id="1_tj061"]
+[ext_resource type="ArrayMesh" uid="uid://cdqacx3jpfyfa" path="res://assets/models/interior/changingroom/changingroom_Cube_001.res" id="2_hlkx1"]
+[ext_resource type="ArrayMesh" uid="uid://fye5nm3sk4mo" path="res://assets/models/interior/changingroom/changingroom_Cube_002.res" id="3_d53xn"]
+
+[node name="ChangingRoom" type="Node3D"]
+
+[node name="Room" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.340632, 0, -0.174981, 0, 0.382947, 0, 0.174981, 0, 0.340632, -0.611091, 1.97183, -2.00086)
+mesh = ExtResource("1_tj061")
+skeleton = NodePath("")
+
+[node name="Wardrobe" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.886579, 0, -0.462577, 0, 1, 0, 0.462577, 0, 0.886579, 1.08566, 1.18627, -1.64541)
+mesh = ExtResource("2_hlkx1")
+skeleton = NodePath("")
+
+[node name="WardrobeDoor" type="MeshInstance3D" parent="Wardrobe"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.593085, 0.0366918, 0.335971)
+mesh = ExtResource("3_d53xn")
+skeleton = NodePath("")
+
+[node name="WardrobeDoor_001" type="MeshInstance3D" parent="Wardrobe"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, 1, 0.593085, 0.0366918, 0.335971)
+mesh = ExtResource("3_d53xn")
+skeleton = NodePath("")

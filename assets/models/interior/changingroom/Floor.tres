@@ -5,6 +5,7 @@
 
 [resource]
 resource_name = "Floor"
+cull_mode = 2
 albedo_texture = ExtResource("1_2gx4o")
 roughness = 0.59
 normal_enabled = true

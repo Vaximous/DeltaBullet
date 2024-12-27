@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=4 uid="uid://bh8ocrcm7xaho"]
+[gd_scene load_steps=14 format=4 uid="uid://bh8ocrcm7xaho"]
 
 [ext_resource type="Material" uid="uid://dw1k2ug5l7xor" path="res://assets/models/interior/changingroom/Glass.tres" id="1_qea6g"]
 [ext_resource type="Material" uid="uid://bynwskuck5r36" path="res://assets/models/interior/changingroom/WardrobeWood.tres" id="2_4gs88"]
@@ -102,8 +102,6 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_yws27")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xks2k"]
-
 [sub_resource type="ArrayMesh" id="ArrayMesh_uc8al"]
 _surfaces = [{
 "aabb": AABB(-0.658523, -0.948789, -0.316866, 1.31705, 1.94879, 0.657517),
@@ -127,7 +125,7 @@ _surfaces = [{
 "format": 34359742519,
 "index_count": 276,
 "index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABAAHAAUACAAJAAoACAALAAkADAAIAAoACwANAAkADAAKAA4ACwAPAA0AEAAMAA4ADwARAA0AEAAOABIAEAASABEADwATABEAEAARABMAFAAVABYAFAAXABUAGAAUABYAGAAWABkAGgAbABwAGgAdABsAHgAfACAAHgAhAB8AIgAhAB4AIgAjACEAJAAlACYAJAAnACUAKAAnACQAKAApACcAKgArACwAKgAtACsALgAvADAALgAxAC8AMgAzADQAMgA1ADMANgA3ADgANgA5ADcAOgA7ADwAOgA9ADsAPgA/AEAAPgBBAD8AQgBDAEQAQgBFAEMARgBHAEgARgBJAEcASgBLAEwASgBNAEsATgBPAFAATgBRAE8AUgBTAFQAUgBVAFMAVgBXAFgAVgBZAFcAWgBZAFYAWgBbAFkAXABdAF4AXABfAF0AYABfAFwAYABhAF8AYgBjAGQAYgBlAGMAZgBnAGgAZgBpAGcAagBrAGwAagBtAGsAbgBqAGwAbgBsAG8AcABxAHIAcgBxAHMAcAB0AHEAcgBzAHUAdgB0AHAAdQBzAHcAdgB4AHQAdQB3AHkAegB4AHYAeQB3AHsAegB7AHgAeQB7AHoAfAB9AH4AfAB/AH0AgAB/AHwAgACBAH8AggCDAIQAggCFAIMAhgCHAIgAhgCJAIcAigCJAIYAigCLAIkAjACNAI4AjACPAI0A"),
-"material": SubResource("StandardMaterial3D_xks2k"),
+"material": ExtResource("2_4gs88"),
 "primitive": 3,
 "uv_scale": Vector4(0, 0, 0, 0),
 "vertex_count": 144,

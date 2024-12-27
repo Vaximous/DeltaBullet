@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://ctrswootky6q7"]
+[gd_scene load_steps=12 format=3 uid="uid://ctrswootky6q7"]
 
 [ext_resource type="Script" uid="uid://bp312460vua66" path="res://assets/scenes/ui/customization/customizationWorld.gd" id="1_37aps"]
 [ext_resource type="PackedScene" uid="uid://bg8aarggcxwa8" path="res://assets/entities/pawnEntity/pawnEntity.tscn" id="1_ch2jg"]
@@ -26,6 +26,11 @@ ssao_intensity = 1.0
 ssao_power = 3.95852
 ssao_detail = 5.0
 fog_light_color = Color(0.951441, 0.956499, 0.964452, 1)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mywmq"]
+
+[sub_resource type="Sky" id="Sky_tt1wg"]
+sky_material = SubResource("ProceduralSkyMaterial_mywmq")
 
 [node name="customizationWorld" type="Node3D"]
 script = ExtResource("1_37aps")
@@ -69,5 +74,8 @@ quality = 3
 bounces = 5
 directional = true
 shadowmask_mode = 2
+environment_mode = 2
+environment_custom_sky = SubResource("Sky_tt1wg")
+environment_custom_energy = 1.0
 generate_probes_subdiv = 0
 light_data = ExtResource("5_mywmq")

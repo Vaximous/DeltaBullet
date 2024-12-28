@@ -1,6 +1,6 @@
 [gd_resource type="Environment" load_steps=6 format=3 uid="uid://dnig6jq4e6pjs"]
 
-[ext_resource type="Texture2D" uid="uid://dvfkpbe83xcf4" path="res://assets/textures/panoramas/panoramatest3.png" id="1_tipwx"]
+[ext_resource type="Texture2D" uid="uid://d0f0crtwpmoka" path="res://assets/textures/panoramas/panoramatest1.png" id="1_tipwx"]
 
 [sub_resource type="Gradient" id="Gradient_6voip"]
 colors = PackedColorArray(0, 0, 0, 1, 0.996078, 0.941176, 0.811765, 1)

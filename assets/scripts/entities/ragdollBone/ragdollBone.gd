@@ -77,7 +77,7 @@ var audioCooldown : float = 0.0:
 		else:
 			boneCooldownTimer.stop()
 var exclusionArray : Array[RID]
-
+var activeRagdollJoint : Generic6DOFJoint3D
 # Called when the node enters the scene tree for the first time.
 func _ready()-> void:
 	boneSetup()
@@ -204,15 +204,13 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 					gameManager.sprayBlood(global_position,randi_range(1,3),5,1.2)
 
 
-#func _physics_process(delta)->void:
-	#if ragdoll.activeRagdollEnabled and get_bone_id() != 0:
-		#var target_rotation : Basis = ragdoll.targetSkeleton.get_bone_global_pose(get_bone_id()).basis.inverse() * ownerSkeleton.get_bone_global_pose(get_bone_id()).basis
-		#var target_velocity : Vector3 = target_rotation.get_euler() * activeRagdollForce
-		#bonePhysicsServer.generic_6dof_joint_set_param(get_rid(),Vector3.AXIS_X,PhysicsServer3D.G6DOF_JOINT_ANGULAR_MOTOR_TARGET_VELOCITY,target_velocity.x)
-		#print(get("joint_data"))
-		##print(bonePhysicsServer.generic_6dof_joint_get_param(get_rid(),Vector3.AXIS_X,PhysicsServer3D.G6DOF_JOINT_ANGULAR_MOTOR_TARGET_VELOCITY))
-		#bonePhysicsServer.generic_6dof_joint_set_param(get_rid(),Vector3.AXIS_Y,PhysicsServer3D.G6DOF_JOINT_ANGULAR_MOTOR_TARGET_VELOCITY,target_velocity.y)
-		#bonePhysicsServer.generic_6dof_joint_set_param(get_rid(),Vector3.AXIS_X,PhysicsServer3D.G6DOF_JOINT_ANGULAR_MOTOR_TARGET_VELOCITY,target_velocity.z)
+func _physics_process(delta)->void:
+	if activeRagdollJoint:
+		var target_rotation : Basis = ragdoll.targetSkeleton.get_bone_global_pose(get_bone_id()).basis.inverse() * ownerSkeleton.get_bone_global_pose(get_bone_id()).basis
+		var target_velocity : Vector3 = target_rotation.get_euler() * 2
+		activeRagdollJoint.set_param_x(Generic6DOFJoint3D.PARAM_ANGULAR_MOTOR_TARGET_VELOCITY,target_velocity.x)
+		activeRagdollJoint.set_param_y(Generic6DOFJoint3D.PARAM_ANGULAR_MOTOR_TARGET_VELOCITY,target_velocity.y)
+		activeRagdollJoint.set_param_z(Generic6DOFJoint3D.PARAM_ANGULAR_MOTOR_TARGET_VELOCITY,target_velocity.z)
 
 func hit(dmg, dealer=null, hitImpulse:Vector3 = Vector3.ZERO, hitPoint:Vector3 = Vector3.ZERO)->void:
 	canBleed = true
@@ -251,6 +249,29 @@ func findPhysicsBone(id:int)->PhysicalBone3D:
 			foundBone = bones
 	return foundBone
 
+
+func createActiveRagdollJoint()->void:
+	var activeRagJoint : Generic6DOFJoint3D = Generic6DOFJoint3D.new()
+	var boneParent = ownerSkeleton.get_bone_parent(get_bone_id())
+	var physicsBoneParent = findPhysicsBone(boneParent)
+	if boneParent and physicsBoneParent:
+		add_child(activeRagJoint)
+		activeRagJoint.position = (self.position - physicsBoneParent.position)
+		activeRagJoint.node_a = findPhysicsBone(boneParent).get_path()
+		activeRagJoint.node_b = self.get_path()
+		activeRagJoint.set_flag_x(Generic6DOFJoint3D.FLAG_ENABLE_MOTOR, true)
+		activeRagJoint.set_flag_y(Generic6DOFJoint3D.FLAG_ENABLE_MOTOR, true)
+		activeRagJoint.set_flag_z(Generic6DOFJoint3D.FLAG_ENABLE_MOTOR, true)
+		if joint_type == PhysicalBone3D.JOINT_TYPE_6DOF:
+			activeRagJoint.set_param_x(Generic6DOFJoint3D.PARAM_ANGULAR_UPPER_LIMIT,findPhysicsBone(boneParent).get("joint_constraints/x/angular_limit_upper"))
+			activeRagJoint.set_param_x(Generic6DOFJoint3D.PARAM_ANGULAR_LOWER_LIMIT,findPhysicsBone(boneParent).get("joint_constraints/x/angular_limit_lower"))
+			activeRagJoint.set_param_y(Generic6DOFJoint3D.PARAM_ANGULAR_UPPER_LIMIT,findPhysicsBone(boneParent).get("joint_constraints/y/angular_limit_upper"))
+			activeRagJoint.set_param_y(Generic6DOFJoint3D.PARAM_ANGULAR_LOWER_LIMIT,findPhysicsBone(boneParent).get("joint_constraints/y/angular_limit_lower"))
+			activeRagJoint.set_param_z(Generic6DOFJoint3D.PARAM_ANGULAR_UPPER_LIMIT,findPhysicsBone(boneParent).get("joint_constraints/z/angular_limit_upper"))
+			activeRagJoint.set_param_z(Generic6DOFJoint3D.PARAM_ANGULAR_LOWER_LIMIT,findPhysicsBone(boneParent).get("joint_constraints/z/angular_limit_lower"))
+		#joint_type = PhysicalBone3D.JOINT_TYPE_NONE
+		activeRagJoint.name = "AR_%s"%ownerSkeleton.get_bone_name(get_bone_id())
+		activeRagdollJoint = activeRagJoint
 
 func doPulverizeEffect()->void:
 	doBleed()

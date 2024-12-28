@@ -1626,9 +1626,6 @@ surface_material_override/0 = null
 shadow_enabled = true
 omni_attenuation = 0.732043
 
-[node name="ShootSmoke" parent="Props/Uzi/Mesh/Marker3D" index="3"]
-visible = false
-
 [node name="audioStreamPlayer3d" parent="Props/Uzi" index="1"]
 stream = SubResource("AudioStreamRandomizer_ej6dr")
 
@@ -1669,7 +1666,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0930214, 1.3428, -0.0350943
 shape = SubResource("BoxShape3D_fxtgo")
 
 [node name="keypadDoor" parent="Props" index="5" instance=ExtResource("53_gn8tv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.56063, 4.04291, 23.1296)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.868134, 4.04291, 23.1296)
 doorOpenSpeed = 1.5
 
 [node name="aiMarker" parent="Misc/WaypointNodes" index="0" instance=ExtResource("54_gk0ih")]

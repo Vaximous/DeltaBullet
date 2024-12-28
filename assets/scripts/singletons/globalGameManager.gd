@@ -35,6 +35,7 @@ var sounds : Dictionary = {"healSound" = preload("res://assets/sounds/ui/rareIte
 			}
 
 #Misc
+var customizationUI : PackedScene = preload("res://assets/scenes/ui/customization/customizationUI.tscn")
 var orphanedData := []
 var richPresenceEnabled:bool = false
 var activeCamera = null
@@ -488,7 +489,6 @@ func initCustomization(pawn:BasePawn)->void:
 	removeShop()
 	removeCustomization()
 	gameManager.pauseMenu.canPause = false
-	var customizationUI : PackedScene = load("res://assets/scenes/ui/customization/customizationUI.tscn")
 	var _customizationUI = customizationUI.instantiate()
 	_customizationUI.add_to_group(&"customizationUI")
 	add_child(_customizationUI)

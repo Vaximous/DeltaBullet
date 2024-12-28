@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://iooyvec74nw5"]
 
-[ext_resource type="Script" path="res://assets/scripts/entities/ragdollBone/ragdollBone.gd" id="1_6av8o"]
+[ext_resource type="Script" uid="uid://cwy51h2sgfulw" path="res://assets/scripts/entities/ragdollBone/ragdollBone.gd" id="1_6av8o"]
 [ext_resource type="AudioStream" uid="uid://ht64k76bbtg2" path="res://assets/entities/ragdollBone/LightImpact.tres" id="2_fw7ax"]
 [ext_resource type="AudioStream" uid="uid://bx2btskodl2yg" path="res://assets/sounds/ragdollSounds/wosh1.wav" id="2_r4vec"]
 [ext_resource type="AudioStream" uid="uid://bka1av68xmqfa" path="res://assets/entities/ragdollBone/MediumImpact.tres" id="3_efgsc"]

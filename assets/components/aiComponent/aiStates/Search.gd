@@ -1,8 +1,8 @@
 extends StateMachineState
 @export_category("Search State")
-var timer = Timer.new()
+#var timer = Timer.new()
 @export var aiOwner : AIComponent
-@export var detectionAmount : int = 0.0:
+@export var detectionAmount : float = 0.0:
 	set(value):
 		detectionAmount = value
 		if detectionAmount <= 0:
@@ -11,11 +11,11 @@ var timer = Timer.new()
 @export var detectionMaxThreshold = 50
 @export var detectionSpeed = 0.6
 
-func on_enter()->void:
-	add_child(timer)
-	timer.wait_time = detectionSpeed
-	timer.start()
-	timer.timeout.connect(detectionIncrement)
+#func on_enter()->void:
+	#add_child(timer)
+	#timer.wait_time = detectionSpeed
+	#timer.start()
+	#timer.timeout.connect(detectionIncrement)
 
 
 func on_ai_process(phys_delta : float, ai_delta : float)->void:
@@ -26,12 +26,12 @@ func on_ai_process(phys_delta : float, ai_delta : float)->void:
 
 	if detectionAmount >= detectionMaxThreshold:
 		detectionAmount = 0
-		timer.stop()
+		#timer.stop()
 		change_state("Attack")
 
 
 func detectionIncrement()->void:
-	timer.start()
+	#timer.start()
 	if aiOwner.hasTarget() and aiOwner.isTargetInSight():
 		detectionWeight = 1.0 + aiOwner.getTargetDistance()
 		detectionAmount += 1 * int(detectionWeight)

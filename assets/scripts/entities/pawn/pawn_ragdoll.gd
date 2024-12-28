@@ -62,6 +62,7 @@ func _ready()-> void:
 	setBoneOwners()
 
 	deathSound.play()
+	createActiveJoints()
 	if startOnInstance:
 		startRagdoll()
 
@@ -185,6 +186,12 @@ func applyRagdollImpulse(pawn:BasePawn,currentVelocity:Vector3,impulseBone:int =
 				#ragdoll.startRagdoll()
 				bones.canBleed = true
 				bones.apply_central_impulse(hitImpulse * randf_range(1.5,2))
+
+
+func createActiveJoints()->void:
+	if activeRagdollEnabled:
+		for pb in physicsBones:
+			pb.createActiveRagdollJoint()
 
 
 func initializeRagdoll(pawn:BasePawn,pawnvelocity:Vector3 = Vector3.ZERO,lastHit:int=0,impulse:Vector3 = Vector3.ZERO,killer = null)->void:

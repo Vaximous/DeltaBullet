@@ -2,6 +2,7 @@ extends CanvasLayer
 @onready var blur = $blur
 @onready var customizationUI : Control = $customizationUi
 @onready var equipSound : AudioStreamPlayer = $equipSounds
+var customizeTween : Tween
 @export_enum("Hair","Headgear","Bling","Body","Pants")var selectedSection : int = 1:
 	set(value):
 		selectedSection = value
@@ -22,8 +23,10 @@ const defaultEaseType = Tween.EASE_OUT
 
 func _ready() -> void:
 	#setupButtons()
+	customizationUI.modulate = Color.TRANSPARENT
 	animationTitlebar.play("titlebarIn")
 	gameManager.showMouse()
+	fadeCustomizationUIIn()
 
 
 func enlargeControlScale(control:Control,size:float=1.5)->void:
@@ -35,6 +38,19 @@ func resetControlScale(control:Control)->void:
 	var tween = create_tween()
 	tween.tween_property(control,"scale",Vector2(1,1),defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
 
+func fadeCustomizationUIOut()->void:
+	if customizeTween:
+		customizeTween.kill()
+	customizeTween = create_tween()
+	customizeTween.parallel().tween_property(blur,"modulate",Color.TRANSPARENT,0.25).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+	await customizeTween.parallel().tween_property(customizationUI,"modulate",Color.TRANSPARENT,0.35).set_trans(defaultTransitionType).set_ease(defaultEaseType).finished
+	gameManager.removeCustomization()
+
+func fadeCustomizationUIIn()->void:
+	if customizeTween:
+		customizeTween.kill()
+	customizeTween = create_tween()
+	customizeTween.tween_property(customizationUI,"modulate",Color.WHITE,0.5).set_trans(defaultTransitionType).set_ease(defaultEaseType)
 
 func setupButtons()->void:
 	if buttonHolder != null:
@@ -71,7 +87,7 @@ func _exit_tree() -> void:
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("gEscape"):
-		fadeOut()
+		fadeCustomizationUIOut()
 
 
 func setPreviewAppearance()->void:
@@ -107,11 +123,6 @@ func checkClothingItem(item:PackedScene)->bool:
 	return boolean
 
 
-func fadeOut()->void:
-	var tween = create_tween()
-	tween.parallel().tween_property(blur,"modulate",Color.TRANSPARENT,0.25).set_ease(defaultEaseType).set_trans(defaultTransitionType)
-	await tween.parallel().tween_property(customizationUI,"modulate",Color.TRANSPARENT,0.25).set_ease(defaultEaseType).set_trans(defaultTransitionType).finished
-	gameManager.removeCustomization()
 
 func toggleItem(item)->void:
 	if item:

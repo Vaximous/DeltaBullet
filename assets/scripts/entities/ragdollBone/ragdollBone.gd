@@ -204,13 +204,13 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 					gameManager.sprayBlood(global_position,randi_range(1,3),5,1.2)
 
 
-func _physics_process(delta)->void:
-	if activeRagdollJoint:
-		var target_rotation : Basis = ragdoll.targetSkeleton.get_bone_global_pose(get_bone_id()).basis.inverse() * ownerSkeleton.get_bone_global_pose(get_bone_id()).basis
-		var target_velocity : Vector3 = target_rotation.get_euler() * 2
-		activeRagdollJoint.set_param_x(Generic6DOFJoint3D.PARAM_ANGULAR_MOTOR_TARGET_VELOCITY,target_velocity.x)
-		activeRagdollJoint.set_param_y(Generic6DOFJoint3D.PARAM_ANGULAR_MOTOR_TARGET_VELOCITY,target_velocity.y)
-		activeRagdollJoint.set_param_z(Generic6DOFJoint3D.PARAM_ANGULAR_MOTOR_TARGET_VELOCITY,target_velocity.z)
+#func _physics_process(delta)->void:
+	#if activeRagdollJoint:
+		#var target_rotation : Basis = ragdoll.targetSkeleton.get_bone_global_pose(get_bone_id()).basis.inverse() * ownerSkeleton.get_bone_global_pose(get_bone_id()).basis
+		#var target_velocity : Vector3 = target_rotation.get_euler() * 2
+		#activeRagdollJoint.set_param_x(Generic6DOFJoint3D.PARAM_ANGULAR_MOTOR_TARGET_VELOCITY,target_velocity.x)
+		#activeRagdollJoint.set_param_y(Generic6DOFJoint3D.PARAM_ANGULAR_MOTOR_TARGET_VELOCITY,target_velocity.y)
+		#activeRagdollJoint.set_param_z(Generic6DOFJoint3D.PARAM_ANGULAR_MOTOR_TARGET_VELOCITY,target_velocity.z)
 
 func hit(dmg, dealer=null, hitImpulse:Vector3 = Vector3.ZERO, hitPoint:Vector3 = Vector3.ZERO)->void:
 	canBleed = true

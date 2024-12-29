@@ -1,0 +1,66 @@
+[gd_scene load_steps=9 format=3 uid="uid://c63b0ewnfkf4n"]
+
+[ext_resource type="Script" uid="uid://t733jevi3esu" path="res://assets/scenes/ui/mapOverview/map/map.gd" id="1_rkk0n"]
+[ext_resource type="Texture2D" uid="uid://d0f0crtwpmoka" path="res://assets/textures/panoramas/panoramatest1.png" id="2_1xklm"]
+[ext_resource type="PackedScene" uid="uid://cqmrcejc0uwpb" path="res://assets/models/misc/mapoverview.glb" id="3_fvi35"]
+
+[sub_resource type="Gradient" id="Gradient_6voip"]
+colors = PackedColorArray(0, 0, 0, 1, 0.996078, 0.941176, 0.811765, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_iun5n"]
+gradient = SubResource("Gradient_6voip")
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_tipwx"]
+panorama = ExtResource("2_1xklm")
+
+[sub_resource type="Sky" id="Sky_nj1fe"]
+sky_material = SubResource("PanoramaSkyMaterial_tipwx")
+
+[sub_resource type="Environment" id="Environment_tej77"]
+background_mode = 1
+background_color = Color(0.74978, 0.74978, 0.74978, 1)
+sky = SubResource("Sky_nj1fe")
+ssao_enabled = true
+ssil_intensity = 0.75
+sdfgi_enabled = true
+sdfgi_use_occlusion = true
+sdfgi_cascades = 8
+glow_normalized = true
+glow_bloom = 0.15
+glow_blend_mode = 1
+fog_light_energy = 0.0
+fog_sun_scatter = 0.17
+fog_density = 0.009
+fog_sky_affect = 0.765
+fog_height = 96.8
+fog_height_density = 0.089
+volumetric_fog_density = 0.2457
+volumetric_fog_albedo = Color(0.848227, 0.767118, 0.651965, 1)
+adjustment_brightness = 0.9
+adjustment_saturation = 1.15
+adjustment_color_correction = SubResource("GradientTexture1D_iun5n")
+
+[node name="map" type="Node3D"]
+script = ExtResource("1_rkk0n")
+mapRotations = Array[Vector3]([Vector3(-30, 149, 0), Vector3(-35, -35.4, 0), Vector3(-36.9, -158, 0)])
+mapPositions = Array[Vector3]([Vector3(5.21291, 37.0915, 4.57104), Vector3(-19.2002, 37.0915, -0.622449), Vector3(-18.7244, 32.5327, -74.3564)])
+
+[node name="worldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_tej77")
+
+[node name="model" type="Node3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+
+[node name="mapoverview" parent="model" instance=ExtResource("3_fvi35")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65.6323, 0, 99.9221)
+
+[node name="Camera" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.7244, 32.5327, -74.3564)
+
+[node name="camHoriz" type="Node3D" parent="Camera"]
+transform = Transform3D(-0.927184, 0, -0.374606, 0, 1, 0, 0.374606, 0, -0.927184, 0, 0, 0)
+
+[node name="camVert" type="Node3D" parent="Camera/camHoriz"]
+transform = Transform3D(1, 0, 0, 0, 0.799685, 0.60042, 0, -0.60042, 0.799685, 0, 0, 0)
+
+[node name="camera3d" type="Camera3D" parent="Camera/camHoriz/camVert"]

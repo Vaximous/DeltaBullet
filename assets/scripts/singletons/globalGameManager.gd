@@ -368,11 +368,22 @@ func saveTemporaryPawnInfo()->void:
 			temporaryPawnInfo.insert(p,info)
 			#temporaryPawnInfo.append(info)
 
+func showHUD()->void:
+	for player in playerPawns:
+		if player.attachedCam:
+			player.attachedCam.hud.fadeHudIn()
+
+func hideHUD()->void:
+	for player in playerPawns:
+		if player.attachedCam:
+			player.attachedCam.hud.fadeHudOut()
+
+
 func loadWorld(worldscene:String, fadein:bool = false)->void:
+	saveTemporaryPawnInfo()
 	get_tree().change_scene_to_file("res://assets/scenes/menu/loadingscreen/emptyLoaderScene.tscn")
 	await get_tree().process_frame
 	#freeOrphanNodes()
-	saveTemporaryPawnInfo()
 	musicManager.change_song_to(null)
 	var loader = load("res://assets/scenes/menu/loadingscreen/loadingScreen.tscn")
 	var inst = loader.instantiate()

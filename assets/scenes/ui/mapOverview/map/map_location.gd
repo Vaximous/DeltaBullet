@@ -47,7 +47,8 @@ func gotoLocation()->void:
 		await Fade.fade_out(0.5).finished
 		gameManager.removeWorldMap()
 		gameManager.loadWorld(travelScene.resource_path)
-
+	else:
+		gameManager.notify_warn("You're already at this location.", 4, 5)
 
 func setVisible(value:bool)->void:
 	if visibilityTween:

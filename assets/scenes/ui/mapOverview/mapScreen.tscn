@@ -117,7 +117,6 @@ _data = {
 }
 
 [node name="map_screen" type="CanvasLayer" node_paths=PackedStringArray("map")]
-layer = 2
 script = ExtResource("1_r48cj")
 map = NodePath("mapScreen/subViewportContainer/subViewport/map")
 

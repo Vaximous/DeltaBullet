@@ -17,19 +17,19 @@ var isPurchased:bool = false:
 
 func purchase_item()->void:
 	if gameManager.playerPawns[0] != null:
-		instancedItem = item.instantiate()
+		var _instancedItem = item.instantiate()
 		if !isPurchased:
-			if instancedItem is Weapon:
-				if gameManager.playerPawns[0].pawnCash >= instancedItem.weaponResource.displayData.gritPrice:
+			if _instancedItem is Weapon:
+				if gameManager.playerPawns[0].pawnCash >= _instancedItem.weaponResource.displayData.gritPrice:
 					if !doesHaveItem(gameManager.playerPawns[0]):
 						purchaseSound.play()
 						isPurchased = true
-						gameManager.world.add_child(instancedItem)
-						instancedItem.equipToPawn(gameManager.playerPawns[0])
-						gameManager.notifyCheck("Purchased %s!"%instancedItem.objectName,4,5)
-						gameManager.playerPawns[0].pawnCash -= instancedItem.weaponResource.displayData.gritPrice
+						gameManager.world.add_child(_instancedItem)
+						_instancedItem.equipToPawn(gameManager.playerPawns[0])
+						gameManager.notifyCheck("Purchased %s!"%_instancedItem.objectName,4,5)
+						gameManager.playerPawns[0].pawnCash -= _instancedItem.weaponResource.displayData.gritPrice
 				else:
-					instancedItem.queue_free()
+					_instancedItem.queue_free()
 					gameManager.notify_warn("You do not have enough grit!",4,5)
 					print("Not enough grit!")
 

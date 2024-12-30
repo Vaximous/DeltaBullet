@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://c63b0ewnfkf4n"]
+[gd_scene load_steps=16 format=3 uid="uid://c63b0ewnfkf4n"]
 
 [ext_resource type="Script" uid="uid://t733jevi3esu" path="res://assets/scenes/ui/mapOverview/map/map.gd" id="1_rkk0n"]
 [ext_resource type="Texture2D" uid="uid://d0f0crtwpmoka" path="res://assets/textures/panoramas/panoramatest1.png" id="2_1xklm"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://ccnq3cc8k6nt5" path="res://assets/scenes/worlds/debug/yetAnotherTestWorld/anotherTest.tscn" id="5_tej77"]
 [ext_resource type="PackedScene" uid="uid://c8bkdy6aqwxls" path="res://assets/scenes/worlds/areas/playerHome/playerHome.tscn" id="6_tej77"]
 [ext_resource type="PackedScene" uid="uid://gunf36bni4oe" path="res://assets/scenes/worlds/areas/Shop/shopArea.tscn" id="7_46huw"]
+[ext_resource type="PackedScene" uid="uid://7idw8rtae15o" path="res://assets/scenes/worlds/missions/Crackhouse/crackhouse-p1.tscn" id="7_dvqh0"]
 [ext_resource type="PackedScene" uid="uid://c8sr5dinhonjs" path="res://assets/scenes/worlds/missions/AbandonedHospital/HospitalMission.tscn" id="8_d0eii"]
 
 [sub_resource type="Gradient" id="Gradient_6voip"]
@@ -91,6 +92,11 @@ travelGroupID = 2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.4784, 6.0131, 46.9237)
 locationName = "Home"
 travelScene = ExtResource("6_tej77")
+
+[node name="mapLocation5" parent="areaNodes" instance=ExtResource("4_fvi35")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.6802, 7.05717, 26.0663)
+locationName = "Lanton Warehouse"
+travelScene = ExtResource("7_dvqh0")
 
 [node name="mapLocation3" parent="areaNodes" instance=ExtResource("4_fvi35")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.904, 6.0131, 29.7552)

@@ -1,0 +1,130 @@
+[gd_scene load_steps=17 format=3 uid="uid://vwacetrutvng"]
+
+[ext_resource type="PackedScene" uid="uid://cbmy8aewv7g1w" path="res://assets/components/3Dto2Dcomponent/3Dto2DComponent.tscn" id="1_568f0"]
+[ext_resource type="Script" uid="uid://dpnbcwkkk6au2" path="res://assets/scenes/ui/mapOverview/map/map_location.gd" id="2_aptmj"]
+
+[sub_resource type="Gradient" id="Gradient_fvi35"]
+offsets = PackedFloat32Array(0, 0.317857)
+colors = PackedColorArray(0.47451, 0, 0, 1, 0.32549, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_t3e1d"]
+gradient = SubResource("Gradient_fvi35")
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_v8iie"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_568f0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_aptmj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_t3e1d"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v8iie"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_svgid"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4dj13"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sbnov"]
+
+[sub_resource type="Animation" id="Animation_mp7cn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(256, 40)]
+}
+
+[sub_resource type="Animation" id="Animation_clmnj"]
+resource_name = "open"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.533333),
+"transitions": PackedFloat32Array(0.15932, 1),
+"update": 0,
+"values": [Vector2(93, 40), Vector2(189.345, 40)]
+}
+
+[sub_resource type="Animation" id="Animation_568f0"]
+resource_name = "close"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.866667),
+"transitions": PackedFloat32Array(0.0853776, 0.15932),
+"update": 0,
+"values": [Vector2(189.345, 40), Vector2(93, 40)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lmyb2"]
+_data = {
+&"RESET": SubResource("Animation_mp7cn"),
+&"close": SubResource("Animation_568f0"),
+&"open": SubResource("Animation_clmnj")
+}
+
+[node name="mapLocation" instance=ExtResource("1_568f0")]
+script = ExtResource("2_aptmj")
+locationName = ""
+travelScene = null
+travelStatus = 1
+travelGroupID = 0
+travelID = 0
+
+[node name="marginContainer" type="MarginContainer" parent="." index="0"]
+anchors_preset = -1
+anchor_bottom = 0.044
+offset_right = 256.0
+offset_bottom = 0.400002
+
+[node name="textureRect" type="TextureRect" parent="marginContainer" index="0"]
+layout_mode = 2
+texture = SubResource("GradientTexture1D_t3e1d")
+expand_mode = 1
+
+[node name="hBoxContainer" type="HBoxContainer" parent="marginContainer" index="1"]
+layout_mode = 2
+
+[node name="textureRect" type="TextureRect" parent="marginContainer/hBoxContainer" index="0"]
+layout_mode = 2
+texture = SubResource("PlaceholderTexture2D_v8iie")
+
+[node name="label" type="Label" parent="marginContainer/hBoxContainer" index="1"]
+layout_mode = 2
+text = "AREANAME"
+
+[node name="button" type="Button" parent="marginContainer" index="2"]
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_568f0")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_aptmj")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_t3e1d")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_v8iie")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_svgid")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_4dj13")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_sbnov")
+
+[node name="animationPlayer" type="AnimationPlayer" parent="marginContainer" index="3"]
+libraries = {
+&"": SubResource("AnimationLibrary_lmyb2")
+}
+
+[connection signal="focus_entered" from="marginContainer/button" to="." method="playOpenAnimation"]
+[connection signal="focus_exited" from="marginContainer/button" to="." method="playCloseAnimation"]
+[connection signal="mouse_entered" from="marginContainer/button" to="." method="playOpenAnimation"]
+[connection signal="mouse_exited" from="marginContainer/button" to="." method="playCloseAnimation"]
+[connection signal="pressed" from="marginContainer/button" to="." method="gotoLocation"]

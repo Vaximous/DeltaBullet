@@ -1,5 +1,7 @@
 extends Node3D
+
 var camTween : Tween
+@export var mapScreen : CanvasLayer
 @onready var horizontal = $Camera/camHoriz
 @onready var vertical = $Camera/camHoriz/camVert
 @onready var camera = $Camera/camHoriz/camVert/camera3d
@@ -11,6 +13,15 @@ var camTween : Tween
 const defaultTransitionType = Tween.TRANS_QUINT
 const defaultEaseType = Tween.EASE_OUT
 const defaultTweenSpeed : float = 1
+
+func _ready() -> void:
+	scanMarkers()
+
+func scanMarkers()->void:
+	for markers in %areaNodes.get_children():
+		if !markers.map:
+			markers.map = self
+			markers.setupMap()
 
 func setCameraPositionAndRotation(pos:Vector3,rot:Vector3)->void:
 	if camTween:

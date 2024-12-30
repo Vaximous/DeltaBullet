@@ -1,4 +1,4 @@
-[gd_scene load_steps=182 format=4 uid="uid://c8bkdy6aqwxls"]
+[gd_scene load_steps=183 format=4 uid="uid://c8bkdy6aqwxls"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_ypyko"]
 [ext_resource type="PackedScene" uid="uid://boicvk4qeqmbd" path="res://assets/entities/pawnSpawn/pawnSpawn.tscn" id="2_v576b"]
@@ -1443,7 +1443,7 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_lli6r")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_qp8ey"]
-size = Vector3(2.9657, 1.28027, 1.58936)
+size = Vector3(0.457543, 2.08569, 1.03404)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_815w5"]
 albedo_color = Color(0.537255, 0.345098, 0, 1)
@@ -1549,11 +1549,19 @@ roughness = 0.59
 [sub_resource type="BoxShape3D" id="BoxShape3D_4n7f0"]
 size = Vector3(0.504639, 0.341583, 0.0980835)
 
+[sub_resource type="GDScript" id="GDScript_vsmks"]
+resource_name = "WorldMapInteractExit"
+script/source = "extends InteractiveObject
+
+func _on_object_used(user: Variant) -> void:
+	gameManager.initWorldMap()
+"
+
 [node name="playerHome" instance=ExtResource("1_ypyko")]
 worldData = SubResource("Resource_3bd3l")
 
 [node name="pawnSpawn" parent="Spawns/playerSpawns" index="0" instance=ExtResource("2_v576b")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 8.70259, 4.00722, -10.6588)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 8.19247, 4.00722, -10.6588)
 pawnType = 0
 
 [node name="worldEnvironment" parent="Environment" index="0"]
@@ -1962,7 +1970,6 @@ canBeUsed = true
 shape = SubResource("ConcavePolygonShape3D_08n51")
 
 [node name="Wardrobe" type="MeshInstance3D" parent="Props/PlayerCloset" index="1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 mesh = SubResource("ArrayMesh_cr6ca")
 skeleton = NodePath("")
 
@@ -2231,6 +2238,22 @@ material_override = SubResource("StandardMaterial3D_3pega")
 transform = Transform3D(1, 0, -1.49012e-08, 0, 1, 0, 1.49012e-08, 0, 1, 0.0692141, 0.156887, 0.0191963)
 shape = SubResource("BoxShape3D_4n7f0")
 
+[node name="worldMapInteract" type="RigidBody3D" parent="Props" index="2" groups=["Interactable"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.0194, 4.94458, -10.7677)
+collision_layer = 32
+collision_mask = 32
+lock_rotation = true
+freeze = true
+script = SubResource("GDScript_vsmks")
+customInteractText = "Exit to World Map"
+useCustomInteractText = true
+interactType = 1
+canBeUsed = true
+
+[node name="collisionShape3d" type="CollisionShape3D" parent="Props/worldMapInteract" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.150013, 0.113404, 0.0307083)
+shape = SubResource("BoxShape3D_qp8ey")
+
 [node name="aiMarker" parent="Misc/WaypointNodes" index="0" instance=ExtResource("47_7m3hx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.84778, 3.9975, 2.22027)
 
@@ -2292,6 +2315,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.46324, 3.9975, -4.73378)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.46324, 3.9975, -8.51123)
 
 [connection signal="objectUsed" from="Props/PlayerCloset/closetInteraction" to="Props/PlayerCloset" method="_onClosetUsed"]
+[connection signal="objectUsed" from="Props/worldMapInteract" to="Props/worldMapInteract" method="_on_object_used"]
 
 [editable path="Geometry/navigationRegion3d/home/Door_Group/DoorFrame/playerDoor"]
 [editable path="Props/Temporary/LivingRoomStuff/table/radio/interactiveObject/radio"]

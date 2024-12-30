@@ -1,8 +1,48 @@
-[gd_scene load_steps=10 format=3 uid="uid://bxog5iq8771kh"]
+[gd_scene load_steps=17 format=3 uid="uid://bxog5iq8771kh"]
 
 [ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="1_iee3r"]
 [ext_resource type="PackedScene" uid="uid://c63b0ewnfkf4n" path="res://assets/scenes/ui/mapOverview/map/map.tscn" id="1_lplem"]
 [ext_resource type="Script" uid="uid://cxxrx1vnyb7mf" path="res://assets/scenes/ui/mapOverview/map_screen.gd" id="1_r48cj"]
+[ext_resource type="Texture2D" uid="uid://d0f0crtwpmoka" path="res://assets/textures/panoramas/panoramatest1.png" id="3_jqm1r"]
+
+[sub_resource type="Gradient" id="Gradient_6voip"]
+colors = PackedColorArray(0, 0, 0, 1, 0.996078, 0.941176, 0.811765, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_iun5n"]
+gradient = SubResource("Gradient_6voip")
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_tipwx"]
+panorama = ExtResource("3_jqm1r")
+
+[sub_resource type="Sky" id="Sky_nj1fe"]
+sky_material = SubResource("PanoramaSkyMaterial_tipwx")
+
+[sub_resource type="Environment" id="Environment_n3oiv"]
+background_mode = 1
+background_color = Color(0.74978, 0.74978, 0.74978, 1)
+sky = SubResource("Sky_nj1fe")
+ssao_enabled = true
+ssil_intensity = 0.75
+sdfgi_enabled = true
+sdfgi_use_occlusion = true
+sdfgi_cascades = 8
+glow_normalized = true
+glow_bloom = 0.15
+glow_blend_mode = 1
+fog_light_energy = 0.0
+fog_sun_scatter = 0.17
+fog_density = 0.009
+fog_sky_affect = 0.765
+fog_height = 96.8
+fog_height_density = 0.089
+volumetric_fog_density = 0.2457
+volumetric_fog_albedo = Color(0.848227, 0.767118, 0.651965, 1)
+adjustment_brightness = 0.9
+adjustment_saturation = 1.15
+adjustment_color_correction = SubResource("GradientTexture1D_iun5n")
+
+[sub_resource type="World3D" id="World3D_kc4o1"]
+environment = SubResource("Environment_n3oiv")
 
 [sub_resource type="Gradient" id="Gradient_jqm1r"]
 offsets = PackedFloat32Array(0, 0.0714286, 1)
@@ -15,33 +55,6 @@ gradient = SubResource("Gradient_jqm1r")
 font_size = 66
 shadow_size = 7
 shadow_color = Color(0, 0, 0, 1)
-
-[sub_resource type="Animation" id="Animation_206y2"]
-resource_name = "open"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("topBar:size")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(0.183013, 1),
-"update": 0,
-"values": [Vector2(0, 71), Vector2(790, 71)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("topBar/label:self_modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0.29, 0.8),
-"transitions": PackedFloat32Array(0.0824697, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
-}
 
 [sub_resource type="Animation" id="Animation_udaj1"]
 length = 0.001
@@ -70,13 +83,46 @@ tracks/1/keys = {
 "values": [Color(1, 1, 1, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_206y2"]
+resource_name = "open"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("topBar:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.183013, 1),
+"update": 0,
+"values": [Vector2(0, 71), Vector2(790, 71)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("topBar/label:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.29, 0.8),
+"transitions": PackedFloat32Array(0.0824697, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_avv0b"]
 _data = {
 &"RESET": SubResource("Animation_udaj1"),
 &"open": SubResource("Animation_206y2")
 }
 
-[node name="mapScreen" type="Control" node_paths=PackedStringArray("map")]
+[node name="map_screen" type="CanvasLayer" node_paths=PackedStringArray("map")]
+layer = 2
+script = ExtResource("1_r48cj")
+map = NodePath("mapScreen/subViewportContainer/subViewport/map")
+
+[node name="mapScreen" type="Control" parent="."]
+unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -84,10 +130,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_iee3r")
-script = ExtResource("1_r48cj")
-map = NodePath("subViewportContainer/subViewport/map")
 
-[node name="subViewportContainer" type="SubViewportContainer" parent="."]
+[node name="subViewportContainer" type="SubViewportContainer" parent="mapScreen"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -96,16 +140,19 @@ grow_horizontal = 2
 grow_vertical = 2
 stretch = true
 
-[node name="subViewport" type="SubViewport" parent="subViewportContainer"]
+[node name="subViewport" type="SubViewport" parent="mapScreen/subViewportContainer"]
+own_world_3d = true
+world_3d = SubResource("World3D_kc4o1")
 handle_input_locally = false
 msaa_3d = 2
 screen_space_aa = 1
 size = Vector2i(1600, 900)
 render_target_update_mode = 4
 
-[node name="map" parent="subViewportContainer/subViewport" instance=ExtResource("1_lplem")]
+[node name="map" parent="mapScreen/subViewportContainer/subViewport" node_paths=PackedStringArray("mapScreen") instance=ExtResource("1_lplem")]
+mapScreen = NodePath("../../../..")
 
-[node name="topBar" type="MarginContainer" parent="."]
+[node name="topBar" type="MarginContainer" parent="mapScreen"]
 clip_contents = true
 layout_mode = 1
 anchors_preset = -1
@@ -114,22 +161,22 @@ anchor_bottom = 0.079
 offset_right = -0.400024
 offset_bottom = -0.100006
 
-[node name="textureRect" type="TextureRect" parent="topBar"]
+[node name="textureRect" type="TextureRect" parent="mapScreen/topBar"]
 layout_mode = 2
 texture = SubResource("GradientTexture1D_n3oiv")
 expand_mode = 1
 
-[node name="label" type="Label" parent="topBar"]
+[node name="label" type="Label" parent="mapScreen/topBar"]
 layout_mode = 2
 text = "World Map"
 label_settings = SubResource("LabelSettings_kc4o1")
 
-[node name="topBarAnimPlayer" type="AnimationPlayer" parent="."]
+[node name="topBarAnimPlayer" type="AnimationPlayer" parent="mapScreen"]
 libraries = {
 &"": SubResource("AnimationLibrary_avv0b")
 }
 
-[node name="forward" type="Button" parent="."]
+[node name="forward" type="Button" parent="mapScreen"]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -143,7 +190,7 @@ grow_horizontal = 0
 grow_vertical = 2
 text = ">"
 
-[node name="backward" type="Button" parent="."]
+[node name="backward" type="Button" parent="mapScreen"]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -154,5 +201,5 @@ offset_bottom = 218.5
 grow_vertical = 2
 text = "<"
 
-[connection signal="pressed" from="forward" to="." method="addIndex"]
-[connection signal="pressed" from="backward" to="." method="subtractIndex"]
+[connection signal="pressed" from="mapScreen/forward" to="." method="addIndex"]
+[connection signal="pressed" from="mapScreen/backward" to="." method="subtractIndex"]

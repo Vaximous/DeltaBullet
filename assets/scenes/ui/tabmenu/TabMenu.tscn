@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3 uid="uid://7hcwtpln33no"]
 
-[ext_resource type="Script" path="res://assets/scenes/ui/tabmenu/TabMenu.gd" id="1_3o718"]
+[ext_resource type="Script" uid="uid://b3spwree1wl1f" path="res://assets/scenes/ui/tabmenu/TabMenu.gd" id="1_3o718"]
 [ext_resource type="AudioStream" uid="uid://f2h70ga15l4e" path="res://assets/sounds/ui/notif1_new.wav" id="2_3qfkf"]
 [ext_resource type="AudioStream" uid="uid://c7v7iev137c2t" path="res://assets/sounds/ui/notif2_new.wav" id="3_odpon"]
 [ext_resource type="Texture2D" uid="uid://hay8mrdt8sdy" path="res://assets/scenes/ui/saveloadmenu/save4.png" id="3_qpfdr"]
@@ -24,9 +24,9 @@ length = 0.3
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_kv18w"]
 _data = {
-"RESET": SubResource("Animation_5a7bn"),
-"iconIn": SubResource("Animation_k4j18"),
-"iconOut": SubResource("Animation_8pifu")
+&"RESET": SubResource("Animation_5a7bn"),
+&"iconIn": SubResource("Animation_k4j18"),
+&"iconOut": SubResource("Animation_8pifu")
 }
 
 [node name="TabMenu" type="CanvasLayer"]
@@ -52,7 +52,7 @@ expand_mode = 1
 
 [node name="animationPlayer" type="AnimationPlayer" parent="gradientBG"]
 libraries = {
-"": SubResource("AnimationLibrary_1qwql")
+&"": SubResource("AnimationLibrary_1qwql")
 }
 
 [node name="tabContainer" type="TabContainer" parent="gradientBG"]
@@ -68,9 +68,12 @@ theme_override_colors/font_selected_color = Color(0.635294, 0, 0, 1)
 theme_override_fonts/font = ExtResource("4_fgadc")
 theme_override_font_sizes/font_size = 45
 theme_override_styles/panel = SubResource("StyleBoxEmpty_rus3g")
+current_tab = 3
 
 [node name="Contracts" type="Control" parent="gradientBG/tabContainer"]
+visible = false
 layout_mode = 2
+metadata/_tab_index = 0
 
 [node name="contractsPanel" parent="gradientBG/tabContainer/Contracts" instance=ExtResource("5_p5r15")]
 layout_mode = 1
@@ -82,18 +85,20 @@ offset_bottom = 10.0
 [node name="Loadout" type="Control" parent="gradientBG/tabContainer"]
 visible = false
 layout_mode = 2
+metadata/_tab_index = 1
 
 [node name="Intel" type="Control" parent="gradientBG/tabContainer"]
 visible = false
 layout_mode = 2
+metadata/_tab_index = 2
 
 [node name="World Map" type="Control" parent="gradientBG/tabContainer"]
-visible = false
 layout_mode = 2
+metadata/_tab_index = 3
 
 [node name="animationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_kv18w")
+&"": SubResource("AnimationLibrary_kv18w")
 }
 playback_default_blend_time = 0.2
 

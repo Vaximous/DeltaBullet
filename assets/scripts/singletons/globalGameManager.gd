@@ -35,6 +35,7 @@ var sounds : Dictionary = {"healSound" = preload("res://assets/sounds/ui/rareIte
 			}
 
 #Misc
+var worldMapUI : PackedScene = preload("res://assets/scenes/ui/mapOverview/mapScreen.tscn")
 var customizationUI : PackedScene = preload("res://assets/scenes/ui/customization/customizationUI.tscn")
 var orphanedData := []
 var richPresenceEnabled:bool = false
@@ -485,9 +486,19 @@ func scanForSaves(dirpath : String, max_depth : int = -1, _depth = 0) -> PackedS
 		print("An error occurred when trying to access the path.")
 	return foundSaves
 
+func initWorldMap()->void:
+	removeShop()
+	removeCustomization()
+	gameManager.pauseMenu.canPause = false
+	var _WorldMapUI = worldMapUI.instantiate()
+	_WorldMapUI.add_to_group(&"worldMap")
+	add_child(_WorldMapUI)
+
+
 func initCustomization(pawn:BasePawn)->void:
 	removeShop()
 	removeCustomization()
+	removeWorldMap()
 	gameManager.pauseMenu.canPause = false
 	var _customizationUI = customizationUI.instantiate()
 	_customizationUI.add_to_group(&"customizationUI")
@@ -495,6 +506,11 @@ func initCustomization(pawn:BasePawn)->void:
 	#hideAllPlayers()
 	_customizationUI.clothingPawn = pawn
 	_customizationUI.generateClothingOptions(pawn)
+
+func removeWorldMap()->void:
+	for i in get_children():
+		if i.is_in_group(&"worldMap"):
+			i.queue_free()
 
 
 func removeCustomization()->void:

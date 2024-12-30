@@ -1,8 +1,8 @@
 [gd_scene load_steps=62 format=3 uid="uid://gunf36bni4oe"]
 
-[ext_resource type="Script" path="res://assets/scripts/worldRelated/worldScript/worldScript.gd" id="1_t2nyd"]
+[ext_resource type="Script" uid="uid://0jwheadtfh77" path="res://assets/scripts/worldRelated/worldScript/worldScript.gd" id="1_t2nyd"]
 [ext_resource type="PackedScene" uid="uid://boicvk4qeqmbd" path="res://assets/entities/pawnSpawn/pawnSpawn.tscn" id="2_cx0r4"]
-[ext_resource type="Script" path="res://assets/resources/customResources/worldData/worldData.gd" id="2_ex3qv"]
+[ext_resource type="Script" uid="uid://b31u24at18p5t" path="res://assets/resources/customResources/worldData/worldData.gd" id="2_ex3qv"]
 [ext_resource type="PackedScene" uid="uid://dsxt078giobel" path="res://assets/entities/weapons/Uzi/Uzi.tscn" id="3_s544t"]
 [ext_resource type="PackedScene" uid="uid://wtqya32cwdbk" path="res://assets/entities/weapons/Beretta/Beretta.tscn" id="6_h8kok"]
 [ext_resource type="PackedScene" uid="uid://boh343kalvj5i" path="res://assets/entities/weapons/Revolver/Revolver.tscn" id="7_rht07"]
@@ -31,11 +31,10 @@
 [ext_resource type="Texture2D" uid="uid://cphp5qil6gcrt" path="res://assets/textures/areas/marble/marble_roughness.png" id="27_2ly4l"]
 [ext_resource type="Material" uid="uid://be461rr115j0h" path="res://assets/materials/world/airduct/airduct.tres" id="29_wxcnx"]
 [ext_resource type="PhysicsMaterial" uid="uid://cc5ltv4umlj8t" path="res://assets/resources/PhysicsMaterials/metal_physics_material.tres" id="30_shitk"]
-[ext_resource type="Script" path="res://assets/scripts/entities/interactiveObject/interactiveObject.gd" id="30_tgd3s"]
+[ext_resource type="Script" uid="uid://tiffkbp5ry74" path="res://assets/scripts/entities/interactiveObject/interactiveObject.gd" id="30_tgd3s"]
 
 [sub_resource type="Resource" id="Resource_o85ge"]
 script = ExtResource("2_ex3qv")
-enableTimeCycle = false
 worldName = "Uncle Tsimks' Shop"
 worldDescription = "Get ripped off at this jackasses pawn shop.."
 worldType = 0
@@ -193,10 +192,7 @@ func _process(delta):
 	pass
 
 func gotoTest(pawn:BasePawn):
-	interactive.remove_from_group(\"Interactable\")
-	musicManager.change_song_to(null,0.5)
-	await Fade.fade_out(0.3, Color(0,0,0,1),\"GradientVertical\",false,true).finished
-	gameManager.loadWorld(\"res://assets/scenes/worlds/testscene2/testscene2.tscn\")
+	gameManager.initWorldMap()
 "
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_unhla"]
@@ -461,7 +457,7 @@ collision_mask = 32
 lock_rotation = true
 freeze = true
 script = ExtResource("30_tgd3s")
-customInteractText = "Go to Test Level"
+customInteractText = "Exit to World Map"
 useCustomInteractText = true
 interactType = 1
 canBeUsed = true
@@ -477,7 +473,7 @@ shape = SubResource("BoxShape3D_xn14e")
 [node name="WaypointNodes" type="Node3D" parent="Misc"]
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="Misc"]
-_spawnable_scenes = PackedStringArray("res://assets/entities/camera/camera.tscn")
+_spawnable_scenes = PackedStringArray("uid://c1r6apfs6eb8j")
 spawn_path = NodePath("../../Pawns/Players")
 
 [node name="dialogueCam" type="Marker3D" parent="Misc"]

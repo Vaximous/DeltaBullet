@@ -41,21 +41,6 @@ tracks/0/keys = {
 "values": [Vector2(256, 40)]
 }
 
-[sub_resource type="Animation" id="Animation_clmnj"]
-resource_name = "open"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:size")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.533333),
-"transitions": PackedFloat32Array(0.15932, 1),
-"update": 0,
-"values": [Vector2(93, 40), Vector2(189.345, 40)]
-}
-
 [sub_resource type="Animation" id="Animation_568f0"]
 resource_name = "close"
 tracks/0/type = "value"
@@ -69,6 +54,21 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(0.0853776, 0.15932),
 "update": 0,
 "values": [Vector2(189.345, 40), Vector2(93, 40)]
+}
+
+[sub_resource type="Animation" id="Animation_clmnj"]
+resource_name = "open"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.533333),
+"transitions": PackedFloat32Array(0.15932, 1),
+"update": 0,
+"values": [Vector2(93, 40), Vector2(189.345, 40)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_lmyb2"]

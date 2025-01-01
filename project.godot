@@ -322,7 +322,9 @@ limits/debugger/max_chars_per_second=132768
 
 common/physics_ticks_per_second=72
 3d/physics_engine="Jolt Physics"
+jolt_physics_3d/simulation/velocity_steps=12
 3d/default_gravity=16.8
+3d/solver/solver_iterations=18
 common/physics_interpolation=true
 jolt_3d/sleep/time_threshold=0.2
 

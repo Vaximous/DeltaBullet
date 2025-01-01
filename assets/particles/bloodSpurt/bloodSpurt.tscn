@@ -42,10 +42,6 @@ scale_curve = SubResource("CurveTexture_addkl")
 alpha_curve = SubResource("CurveTexture_fkxrd")
 anim_speed_min = 2.2
 anim_speed_max = 2.5
-collision_mode = 2
-collision_use_scale = true
-sub_emitter_mode = 3
-sub_emitter_amount_at_collision = 1
 
 [sub_resource type="QuadMesh" id="QuadMesh_5noax"]
 
@@ -57,12 +53,16 @@ script/source = "extends GPUParticles3D
 var landTexture : Array = [preload(\"res://assets/materials/blood/bloodland1.tres\"),preload(\"res://assets/materials/blood/bloodland2.tres\"),preload(\"res://assets/materials/blood/bloodland3.tres\")]
 # Called when the node enters the scene tree for the first time.
 func _ready()->void:
+	#var removeTimer = Timer.new()
+	#add_gizmo(removeTimer)
 	#removeTimer.wait_time = UserConfig.game_decal_remove_time
+	#removeTimer.timeout.connect(queue_free)
 	material_override = gameManager.bloodSpurts.pick_random()
 	$bloodLand.material_overlay = landTexture.pick_random()
 	amount = randi_range(minParticles,maxParticles)
 	$bloodLand.amount = amount
-	finished.connect(queue_free)
+	if !finished.is_connected(queue_free):
+		finished.connect(queue_free)
 "
 
 [sub_resource type="Curve" id="Curve_ro5oo"]
@@ -113,6 +113,7 @@ draw_pass_1 = SubResource("QuadMesh_5noax")
 script = SubResource("GDScript_fb3dx")
 
 [node name="bloodLand" type="GPUParticles3D" parent="."]
+visible = false
 material_override = ExtResource("4_jlj6w")
 cast_shadow = 0
 emitting = false

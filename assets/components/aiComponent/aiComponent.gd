@@ -34,6 +34,7 @@ var targetedPawn : BasePawn
 @export var isInteractable : bool = false
 var isInDialogue : bool
 @export_category("Path")
+var aiAgent : RID
 var currentPath : PackedVector3Array
 var navMap : RID
 var pathingToPosition : bool = false:
@@ -172,9 +173,11 @@ func _ai_process(physics_delta : float) -> void:
 		pawnFSM._ai_process(physics_delta, ai_process_delta)
 
 		if pathingToPosition:
+			NavigationServer3D.agent_set_position(aiAgent,pawnOwner.global_position)
 			var nextPoint : Vector3 = currentPath[pathPoint] - pawnOwner.global_position
 			if nextPoint.length_squared() > 1.0:
-				pawnOwner.direction = (nextPoint.normalized()*physics_delta)
+				NavigationServer3D.agent_set_velocity(aiAgent,(nextPoint.normalized()*physics_delta))
+				pawnOwner.direction = NavigationServer3D.agent_get_velocity(aiAgent)
 			else:
 				if pathPoint < (currentPath.size() - 1):
 					pathPointReached.emit()
@@ -451,7 +454,8 @@ func goToPathPosition(path:PackedVector3Array,sprint:bool=false)->void:
 			pawnOwner.setMovementState.emit(pawnOwner.movementStates["walk"])
 
 	for p in path:
-		pawnOwner.direction = p
+		NavigationServer3D.agent_set_velocity(aiAgent,p)
+		pawnOwner.direction = NavigationServer3D.agent_get_velocity(aiAgent)
 		await pawnOwner.position.is_equal_approx(p)
 
 	path.clear()
@@ -503,8 +507,15 @@ func setPathPosition(pathPosition:Vector3)->PackedVector3Array:
 
 
 func setupNav()->void:
+	aiAgent = NavigationServer3D.agent_create()
+	NavigationServer3D.agent_set_radius(aiAgent,5.0)
+	NavigationServer3D.agent_set_position(aiAgent,pawnOwner.global_position)
+	NavigationServer3D.agent_set_avoidance_layers(aiAgent,pawnOwner.collision_layer)
+	NavigationServer3D.agent_set_avoidance_mask(aiAgent,pawnOwner.collision_mask)
+	NavigationServer3D.agent_set_avoidance_enabled(aiAgent,true)
+	NavigationServer3D.agent_set_use_3d_avoidance(aiAgent,true)
 	navMap = get_world_3d().get_navigation_map()
-	print("Nav Set")
+	print(NavigationServer3D.map_get_agents(navMap))
 
 func pawnDamaged(amount,impulse,vector, dealer)->void:
 	if is_instance_valid(dealer):

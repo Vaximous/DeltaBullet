@@ -8,11 +8,11 @@ colors = PackedColorArray(0, 0, 0, 1, 0.996078, 0.941176, 0.811765, 1)
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_iun5n"]
 gradient = SubResource("Gradient_6voip")
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_afll2"]
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_tipwx"]
 panorama = ExtResource("1_tipwx")
 
 [sub_resource type="Sky" id="Sky_nj1fe"]
-sky_material = SubResource("PanoramaSkyMaterial_afll2")
+sky_material = SubResource("PanoramaSkyMaterial_tipwx")
 
 [resource]
 background_mode = 2
@@ -24,8 +24,11 @@ ssao_enabled = true
 ssil_intensity = 0.75
 sdfgi_use_occlusion = true
 sdfgi_y_scale = 2
+glow_enabled = true
+glow_levels/5 = 0.0
 glow_normalized = true
-glow_bloom = 0.15
+glow_intensity = 0.71
+glow_bloom = 0.25
 glow_blend_mode = 1
 fog_light_energy = 0.0
 fog_sun_scatter = 0.17

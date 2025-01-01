@@ -811,7 +811,8 @@ func setupWeaponAnimations() -> void:
 		if !currentItem.weaponAnimSet:
 			#Swap out animationLibraries
 			if animationPlayer != null:
-				animationPlayer.remove_animation_library("weaponAnims")
+				if animationPlayer.has_animation_library("weaponAnims"):
+					animationPlayer.remove_animation_library("weaponAnims")
 				if currentItem.animationPlayer != null:
 					var libraryToAdd = currentItem.animationPlayer.get_animation_library("weaponAnims").duplicate()
 					animationPlayer.add_animation_library("weaponAnims", libraryToAdd)

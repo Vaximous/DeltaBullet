@@ -1,10 +1,9 @@
-[gd_scene load_steps=27 format=4 uid="uid://bidurnqgd1c74"]
+[gd_scene load_steps=23 format=4 uid="uid://bidurnqgd1c74"]
 
 [ext_resource type="PackedScene" uid="uid://cpd5r8bmx2885" path="res://assets/entities/weapons/weaponBase.tscn" id="1_kohee"]
 [ext_resource type="Resource" uid="uid://cqlbuo5rnaqs5" path="res://assets/resources/customResources/weaponData/M4/M4.tres" id="2_t7j74"]
-[ext_resource type="PackedScene" uid="uid://bq8bs21h3itgd" path="res://assets/models/effects/shoot_flare.tscn" id="3_44xfi"]
-[ext_resource type="PackedScene" uid="uid://o7dvrw30qlyk" path="res://assets/entities/emitters/shootSmoke/ShootSmoke.tscn" id="3_rgg5c"]
 [ext_resource type="Texture2D" uid="uid://b2fhcoojuwv3r" path="res://assets/models/weapons/Textures/American Light AssaultRifle.png" id="3_slm2e"]
+[ext_resource type="PackedScene" uid="uid://bvvxnmgamquay" path="res://assets/entities/muzzleFlashes/muzzles/flash1.tscn" id="4_rgg5c"]
 [ext_resource type="AudioStream" uid="uid://l22ec5ipci2g" path="res://assets/sounds/weapons/m4/WEAPONS_RIFLE_Assault_Rifle_Fire_05.wav" id="7_2gub5"]
 [ext_resource type="Animation" uid="uid://cprovv54ucski" path="res://assets/models/weapons/honeybadger/anims/BadgerAim.res" id="8_e6rah"]
 [ext_resource type="AnimationNodeBlendTree" uid="uid://dm3678yui0y2i" path="res://assets/entities/weapons/m4/M4Tree.tres" id="8_k4rby"]
@@ -124,68 +123,6 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_jxwwy")
 
-[sub_resource type="Animation" id="Animation_k64ul"]
-resource_name = "RESET"
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:light_energy")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("M4Mesh/Marker3D/OmniLight3D:light_energy")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-
-[sub_resource type="Animation" id="Animation_4v8w6"]
-resource_name = "light_flash"
-length = 0.2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:light_energy")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(0.277392, 1),
-"update": 0,
-"values": [1.0, 0.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("M4Mesh/Marker3D/OmniLight3D:light_energy")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(0.277392, 1),
-"update": 0,
-"values": [1.741, 0.0]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_xu2pg"]
-_data = {
-&"RESET": SubResource("Animation_k64ul"),
-&"light_flash": SubResource("Animation_4v8w6")
-}
-
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_upyhg"]
 random_pitch = 1.05
 streams_count = 1
@@ -205,8 +142,8 @@ _data = {
 [node name="M4" node_paths=PackedStringArray("weaponMesh", "muzzlePoint") instance=ExtResource("1_kohee")]
 weaponMesh = NodePath("M4Mesh")
 weaponResource = ExtResource("2_t7j74")
-smokeEffect = ExtResource("3_rgg5c")
 muzzlePoint = NodePath("M4Mesh/Marker3D")
+muzzleFlashes = Array[PackedScene]([ExtResource("4_rgg5c")])
 objectName = "M4A3"
 
 [node name="M4Mesh" type="Node3D" parent="." index="0"]
@@ -230,27 +167,6 @@ surface_material_override/0 = SubResource("StandardMaterial3D_fqcp5")
 [node name="Marker3D" type="Marker3D" parent="M4Mesh" index="3"]
 transform = Transform3D(0.133072, 4.4688e-08, -4.26326e-14, -1.00466e-08, 0.591908, 2.06481e-15, 1.55431e-14, -1.95338e-15, 0.625684, 0.875428, -0.00299279, -3.82662e-08)
 
-[node name="ShootFlare" parent="M4Mesh/Marker3D" index="0" instance=ExtResource("3_44xfi")]
-transform = Transform3D(-1.58255e-08, -0.077, 3.55271e-15, 0.362046, -3.36578e-09, 8.74816e-15, -8.32877e-15, -8.88178e-16, 0.380277, 0.0487104, -0.00940807, -2.12923e-09)
-randomRotX = true
-
-[node name="ShootFlare2" parent="M4Mesh/Marker3D" index="1" instance=ExtResource("3_44xfi")]
-transform = Transform3D(-7.67774e-09, -0.778928, -3.55271e-15, 0.175646, -3.40479e-08, 9.49723e-16, -9.04193e-16, 0, 0.184491, 0.778989, -0.00529345, -3.40508e-08)
-randomRotX = true
-
-[node name="OmniLight3D" type="OmniLight3D" parent="M4Mesh/Marker3D" index="2"]
-transform = Transform3D(0.999999, 8.47033e-22, -3.55271e-15, -8.47033e-22, 0.999999, 1.9766e-22, 2.4869e-14, 3.5341e-28, 1, 0.00495756, -0.0070769, -2.167e-10)
-light_color = Color(1, 0.768627, 0.215686, 1)
-light_energy = 0.0
-omni_range = 4.20246
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="M4Mesh/Marker3D/OmniLight3D" index="0"]
-root_node = NodePath("../../../..")
-libraries = {
-&"": SubResource("AnimationLibrary_xu2pg")
-}
-autoplay = "RESET"
-
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." index="1"]
 stream = SubResource("AudioStreamRandomizer_upyhg")
 volume_db = -10.0
@@ -270,6 +186,4 @@ libraries = {
 &"weaponAnims": SubResource("AnimationLibrary_kytnd")
 }
 
-[connection signal="shot_fired" from="." to="M4Mesh/Marker3D/ShootFlare2" method="flare"]
 [connection signal="shot_fired" from="." to="AudioStreamPlayer3D" method="play"]
-[connection signal="shot_fired" from="." to="M4Mesh/Marker3D/OmniLight3D/AnimationPlayer" method="play" binds= ["light_flash"]]

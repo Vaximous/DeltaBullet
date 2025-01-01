@@ -48,6 +48,7 @@ var currentAmmo = 0:
 var defaultBulletTrail = load("res://assets/entities/bulletTrail/bulletTrail.tscn")
 @export var projectile : PackedScene = preload("res://assets/entities/projectiles/Bullet.tscn")
 @export var muzzlePoint : Marker3D
+@export var muzzleFlashes : Array[PackedScene]
 @export var isReloading : bool = false:
 	set(value):
 		isReloading = value
@@ -252,6 +253,13 @@ func fire()->void:
 				#bullet.position.y += randf_range(-0.05,0.05)
 
 			if weaponCast != null:
+
+				if muzzleFlashes:
+					var flash = muzzleFlashes.pick_random().instantiate()
+					gameManager.world.worldParticles.add_child(flash)
+					flash.global_position = muzzlePoint.global_position
+					flash.global_rotation = muzzlePoint.global_rotation
+					flash.playFlash()
 
 				if smokeEffect:
 					var smokeInstance = smokeEffect.instantiate()

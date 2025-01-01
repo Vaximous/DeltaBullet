@@ -91,10 +91,10 @@ emission_energy = 5.35
 distance_fade_enabled = true
 cull_mask = 1048551
 
-[node name="visibleOnScreenEnabler3d" type="VisibleOnScreenEnabler3D" parent="."]
-
 [node name="dropletSound" type="AudioStreamPlayer3D" parent="."]
 stream = SubResource("AudioStreamRandomizer_dej56")
 volume_db = -18.0
 bus = &"Sounds"
 attenuation_filter_db = 0.0
+
+[node name="visibleOnScreenEnabler3d" type="VisibleOnScreenEnabler3D" parent="."]

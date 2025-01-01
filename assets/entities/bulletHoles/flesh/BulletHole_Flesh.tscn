@@ -48,7 +48,10 @@ scale_max = 0.3
 scale_curve = SubResource("CurveTexture_iasca")
 color_ramp = SubResource("GradientTexture1D_mvhe5")
 color_initial_ramp = SubResource("GradientTexture1D_mvhe5")
-collision_mode = 2
+collision_use_scale = true
+sub_emitter_mode = 3
+sub_emitter_amount_at_collision = 1
+sub_emitter_keep_velocity = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hmv24"]
 transparency = 1
@@ -139,7 +142,7 @@ top_level = true
 
 [node name="impactParticle" type="GPUParticles3D" parent="." index="3"]
 emitting = false
-amount = 25
+amount = 30
 one_shot = true
 speed_scale = 1.8
 explosiveness = 1.0

@@ -564,10 +564,13 @@ func createSplat(gposition:Vector3 = Vector3.ZERO,normal:Vector3 = Vector3.ZERO,
 	if is_instance_valid(parent):
 		var _b = bloodDecal.instantiate()
 		parent.add_child(_b)
-		_b.position = gposition
-		if !Vector3.UP.is_equal_approx(normal.normalized()):
-			_b.transform.basis = _b.transform.basis.looking_at(normal.normalized())
-		_b.rotate(normal,randf_range(0, 2)*PI)
+		if parent.has_node(_b.get_path()) and _b.is_inside_tree():
+			_b.position = gposition
+			if !Vector3.UP.is_equal_approx(normal.normalized()):
+				_b.transform.basis = _b.transform.basis.looking_at(normal.normalized())
+			_b.rotate(normal,randf_range(0, 2)*PI)
+		else:
+			_b.queue_free()
 
 func sprayBlood(position:Vector3,amount:int,_maxDistance:int,distanceMultiplier:float = 1)->void:
 	if is_instance_valid(world):
@@ -579,18 +582,18 @@ func sprayBlood(position:Vector3,amount:int,_maxDistance:int,distanceMultiplier:
 			result = directSpace.intersect_ray(ray)
 			if result:
 				createSplat(result.position,result.normal,result.position)
-				#if debugEnabled:
-					#var meshInstance : MeshInstance3D = MeshInstance3D.new()
-					#var mesh = ImmediateMesh.new()
-					#var meshMat : StandardMaterial3D = StandardMaterial3D.new()
-					#meshMat.albedo_color = Color.BLUE
-					#world.worldMisc.add_child(meshInstance)
-					#meshInstance.mesh = mesh
-					#mesh.surface_begin(Mesh.PRIMITIVE_LINES)
-					#mesh.surface_add_vertex(position)
-					#mesh.surface_add_vertex(result.position)
-					#mesh.surface_end()
-					#meshInstance.material_override = meshMat
+				if debugEnabled:
+					var meshInstance : MeshInstance3D = MeshInstance3D.new()
+					var mesh = ImmediateMesh.new()
+					var meshMat : StandardMaterial3D = StandardMaterial3D.new()
+					meshMat.albedo_color = Color.BLUE
+					world.worldMisc.add_child(meshInstance)
+					meshInstance.mesh = mesh
+					mesh.surface_begin(Mesh.PRIMITIVE_LINES)
+					mesh.surface_add_vertex(position)
+					mesh.surface_add_vertex(result.position)
+					mesh.surface_end()
+					meshInstance.material_override = meshMat
 
 
 func createBloodPool(position:Vector3,size:float=0.5)->void:

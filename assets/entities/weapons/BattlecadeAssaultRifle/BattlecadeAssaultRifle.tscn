@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://cpd5r8bmx2885" path="res://assets/entities/weapons/weaponBase.tscn" id="1_140ft"]
 [ext_resource type="Resource" uid="uid://mspc5c8w8fqi" path="res://assets/entities/weapons/BattlecadeAssaultRifle/bcARData.tres" id="2_hmlkw"]
-[ext_resource type="PackedScene" uid="uid://o7dvrw30qlyk" path="res://assets/entities/emitters/shootSmoke/ShootSmoke.tscn" id="3_lpipf"]
+[ext_resource type="PackedScene" uid="uid://djat14axcb08w" path="res://assets/entities/muzzleFlashes/muzzles/silencedFlash.tscn" id="3_lpipf"]
 [ext_resource type="ArrayMesh" uid="uid://cnqt41d8xeuui" path="res://assets/entities/weapons/BattlecadeAssaultRifle/bcAssaultRifle.res" id="3_sepsf"]
 [ext_resource type="Animation" uid="uid://d1v5ctkn0snr1" path="res://assets/animations/pawn/BattlecadeRifleAim.res" id="4_wypj0"]
 [ext_resource type="Animation" uid="uid://bvvo2vyqekr4o" path="res://assets/animations/pawn/BattlecadeRifleReload.res" id="5_kjs77"]
@@ -142,8 +142,8 @@ stream_0/stream = ExtResource("8_3iuom")
 [node name="BattlecadeAssaultRifle" node_paths=PackedStringArray("weaponMesh", "muzzlePoint") instance=ExtResource("1_140ft")]
 weaponMesh = NodePath("rifleMesh")
 weaponResource = ExtResource("2_hmlkw")
-smokeEffect = ExtResource("3_lpipf")
 muzzlePoint = NodePath("rifleMesh/muzzle")
+muzzleFlashes = Array[PackedScene]([ExtResource("3_lpipf")])
 objectName = "Fightbot Rifle"
 
 [node name="collisionObject" parent="." index="0"]

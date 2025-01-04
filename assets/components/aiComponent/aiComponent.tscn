@@ -25,7 +25,7 @@ albedo_color = Color(1, 0, 0, 0.309804)
 
 [node name="aiComponent" type="Node3D" node_paths=PackedStringArray("pawnFSM", "visionTimer", "memoryManager")]
 script = ExtResource("4_gaqok")
-aimSpeed = 2.0
+aimSpeed = 3.0
 pawnFSM = NodePath("pawnFSM")
 visionTimer = NodePath("visionTimer")
 memoryManager = NodePath("aiMemoryManager")

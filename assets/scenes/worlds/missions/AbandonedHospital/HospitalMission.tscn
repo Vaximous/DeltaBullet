@@ -1,21 +1,20 @@
 [gd_scene load_steps=47 format=4 uid="uid://c8sr5dinhonjs"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_puc7u"]
-[ext_resource type="Script" path="res://assets/resources/customResources/worldData/worldData.gd" id="2_top7h"]
+[ext_resource type="Script" uid="uid://b31u24at18p5t" path="res://assets/resources/customResources/worldData/worldData.gd" id="2_top7h"]
 [ext_resource type="PackedScene" uid="uid://boicvk4qeqmbd" path="res://assets/entities/pawnSpawn/pawnSpawn.tscn" id="2_wvqbd"]
 [ext_resource type="PackedScene" uid="uid://bqffl0bhp3lhf" path="res://assets/scenes/worlds/missions/AbandonedHospital/hospital_map.gltf" id="5_puxol"]
 [ext_resource type="LightmapGIData" uid="uid://c3fdl2yams4k6" path="res://assets/scenes/worlds/missions/AbandonedHospital/HospitalMission.lmbake" id="6_c76ue"]
 [ext_resource type="Material" uid="uid://m75r5v2wuvuc" path="res://assets/scenes/worlds/missions/AbandonedHospital/Material.001.tres" id="6_pu22m"]
 [ext_resource type="PackedScene" uid="uid://bn07wnk5k005c" path="res://assets/entities/weapons/HoneyBadger/honeybadger.tscn" id="7_ofjna"]
 [ext_resource type="Texture2D" uid="uid://c7b38t83ckisx" path="res://assets/textures/crosshair/crosshair161.png" id="8_8rnes"]
-[ext_resource type="Script" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="9_gsaqh"]
+[ext_resource type="Script" uid="uid://b6r8ewrq3qb3y" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="9_gsaqh"]
 [ext_resource type="PackedScene" uid="uid://boh343kalvj5i" path="res://assets/entities/weapons/Revolver/Revolver.tscn" id="10_j38tr"]
 [ext_resource type="AudioStream" uid="uid://dueh83f2ybvgv" path="res://assets/sounds/ambient/515704_Destruction-Reigns.mp3" id="10_nsobe"]
 [ext_resource type="PackedScene" uid="uid://bb78dx0yknjep" path="res://assets/entities/door/keypadDoor.tscn" id="12_7bo60"]
 
 [sub_resource type="Resource" id="Resource_7pmvn"]
 script = ExtResource("2_top7h")
-enableTimeCycle = false
 worldName = "Harvelona Hospital"
 worldDescription = ""
 worldType = 0

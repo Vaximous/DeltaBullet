@@ -64,7 +64,7 @@ lightIntensity = 0.3
 meshTime = 0.2
 muzzleEmitters = [NodePath("smoke")]
 muzzleLights = [NodePath("omniLight3d"), NodePath("omniLight3d2")]
-muzzleMeshes = [NodePath(""), NodePath("")]
+muzzleMeshes = [null, null]
 randomRotX = true
 
 [node name="smoke" type="GPUParticles3D" parent="." index="0"]

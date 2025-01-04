@@ -200,12 +200,12 @@ func initializeRagdoll(pawn:BasePawn,pawnvelocity:Vector3 = Vector3.ZERO,lastHit
 		moveClothesToRagdoll(pawn)
 		setRagdollPose(pawn)
 		startRagdoll()
-		applyRagdollImpulse(pawn,pawnvelocity,lastHit,impulse)
 		checkClothingHider()
 		damageBoneHitboxes(lastHit,killer)
 		headshotCheck(lastHit,killer,pawn)
 		attachedCamCheck(pawn)
 		activeRagdollDeathCheck(lastHit,pawn)
+		applyRagdollImpulse(pawn,pawnvelocity,lastHit,impulse)
 		if pawn.currentPawnMat:
 			setPawnMaterial(pawn.currentPawnMat.duplicate())
 
@@ -251,7 +251,6 @@ func damageBoneHitboxes(impulse_bone:int,killer)->void:
 				child.canBleed = true
 				if child.healthComponent and killer != null and killer.currentItem != null:
 					var dmgAmount = killer.currentItem.weaponResource.weaponDamage
-					print(dmgAmount)
 					child.healthComponent.damage(dmgAmount,killer)
 
 

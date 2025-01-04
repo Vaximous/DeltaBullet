@@ -246,7 +246,7 @@ points = PackedVector3Array(-5.39464, -1.039, -12.7685, 7.17429, 1.40544, 9.5807
 resource_name = "Glass"
 transparency = 1
 cull_mode = 2
-albedo_color = Color(0.238361, 0.323785, 0.488167, 0.0901961)
+albedo_color = Color(0.239216, 0.32549, 0.486275, 1)
 roughness = 0.0
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_ge553"]
@@ -1598,6 +1598,7 @@ shape = SubResource("ConvexPolygonShape3D_6gxel")
 
 [node name="Glass" type="MeshInstance3D" parent="Geometry/navigationRegion3d/home" index="2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.61588, 2.56295, -18.4941)
+transparency = 0.81
 mesh = SubResource("ArrayMesh_8gbvr")
 skeleton = NodePath("")
 
@@ -1608,6 +1609,7 @@ shape = SubResource("ConcavePolygonShape3D_a3r8g")
 
 [node name="Glass2" type="MeshInstance3D" parent="Geometry/navigationRegion3d/home" index="3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.38331, 2.86279, 3.47862)
+transparency = 0.85
 mesh = SubResource("ArrayMesh_7i0qu")
 skeleton = NodePath("")
 

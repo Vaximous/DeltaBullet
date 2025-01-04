@@ -268,7 +268,7 @@ func fire()->void:
 					smokeInstance.global_rotation = muzzlePoint.global_rotation
 
 				spawnProjectile(weaponCast)
-				applyCameraRecoil()
+				applyRecoil(weaponCast)
 					#raycastHit(shot_cast)
 					#var hit = globalParticles.detectMaterial(getHitObject(shot_cast))
 					#if hit != null:
@@ -349,15 +349,25 @@ func isFireReady() -> bool:
 	return true
 
 
-func applyCameraRecoil()->void:
-	if !weaponOwner.get(&"attachedCam") is CharacterBody3D:
-		return
+func applyWeaponSpread(spread,raycaster:RayCast3D)->void:
+	raycaster.rotation += Vector3(randf_range(0.0, spread),randf_range(-spread, spread),0)
+
+func applyRecoil(raycaster:RayCast3D)->void:
 	if isAiming:
-		weaponOwner.attachedCam.camRecoilStrength = weaponResource.weaponRecoilStrengthAim
-		weaponOwner.attachedCam.applyWeaponSpread(weaponResource.weaponSpreadAim)
+		applyWeaponSpread(weaponResource.weaponSpreadAim,raycaster)
+		#Apply Camera Recoil
+		if weaponOwner.get(&"attachedCam") is CharacterBody3D:
+			weaponOwner.attachedCam.camRecoilStrength = weaponResource.weaponRecoilStrengthAim
+			weaponOwner.attachedCam.applyWeaponSpreadEffect(weaponResource.weaponSpreadAim)
+
 	else:
-		weaponOwner.attachedCam.camRecoilStrength = weaponResource.weaponRecoilStrength
-		weaponOwner.attachedCam.applyWeaponSpread(weaponResource.weaponSpread)
+		applyWeaponSpread(weaponResource.weaponSpread,raycaster)
+
+		#Apply Camera Recoil
+		if weaponOwner.get(&"attachedCam") is CharacterBody3D:
+			weaponOwner.attachedCam.camRecoilStrength = weaponResource.weaponRecoilStrengthAim
+			weaponOwner.attachedCam.applyWeaponSpreadEffect(weaponResource.weaponSpreadAim)
+
 
 
 func createMuzzle() -> Node:

@@ -381,8 +381,8 @@ func fireRecoil(setRecoilX:float = 0.0,setRecoilY:float = 0.0,setRecoilZ:float =
 	else:
 		camera.fov += randf_range(0.1,0.8)
 
-func applyWeaponSpread(spread)->void:
-	camCast.rotation += Vector3(randf_range(0.0, spread),randf_range(-spread, spread),0)
+func applyWeaponSpreadEffect(spread)->void:
+	#camCast.rotation += Vector3(randf_range(0.0, spread),randf_range(-spread, spread),0)
 	hud.getCrosshair().addSize(0.85)
 	if UserConfig.game_crosshair_tilt:
 		hud.getCrosshair().addTilt(randf_range(-spread*7,spread*7))

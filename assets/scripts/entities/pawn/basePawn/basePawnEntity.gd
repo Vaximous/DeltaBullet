@@ -22,7 +22,7 @@ signal headshottedPawn
 @onready var equipSound : AudioStreamPlayer3D = $Sounds/equipSound
 @onready var footstepSounds : AudioStreamPlayer3D = $Sounds/footsteps
 ##Onready
-@onready var onScreenNotifier : VisibleOnScreenNotifier3D = $Mesh/visibleOnScreenNotifier3d
+@onready var onScreenNotifier : VisibleOnScreenNotifier3D = $visibleOnScreenNotifier3d
 @onready var componentHolder : Node3D = $Components
 @onready var boneAttatchementHolder : Node = $BoneAttatchments
 @onready var interactRaycast : RayCast3D = $Mesh/interactRaycast
@@ -428,9 +428,9 @@ func checkComponents()->void:
 				gameManager.playerPawns.append(self)
 				var cam = load("res://assets/entities/camera/camera.tscn")
 				var _cam = cam.instantiate()
+				gameManager.world.worldMisc.add_child(_cam)
 				_cam.global_position = self.global_position
 				await get_tree().process_frame
-				gameManager.world.worldMisc.add_child(_cam)
 				_cam.posessObject(self, followNode)
 				_cam.camCast.add_exception(self)
 				_cam.interactCast.add_exception(self)

@@ -19,6 +19,7 @@ signal visibleObject(object:Node3D,visibleposition:Vector3)
 @onready var aimCastEnd : Marker3D = $aiAimcast/aiAimcastEnd
 @onready var pawnDebugLabel : Label3D = $debugPawnStats
 @export_category("AI Component")
+var castLerp : Transform3D
 var targetedPawn : BasePawn
 @export var pawnOwner : BasePawn:
 	set(value):
@@ -48,7 +49,9 @@ var pathPoint : int = 0
 @export var dialogueString : String
 @export_subgroup("Identification")
 @export var pawnName : String
-@export var aimSpeed : float = 0.75
+##The AI Skill will be dependent on "aimSpeed" which is always going to be multiplied by "aimStrength" to give the pawns the correct amount of speed to aim at a target with
+@export var aimSpeed : float = 12.75
+@export var aimStrength : float = 20
 @export_enum("Idle","Wander","Patrol") var pawnType :int = 0:
 	set(value):
 		pawnType = value
@@ -57,11 +60,11 @@ var pathPoint : int = 0
 	set(value):
 		aiSkill = value
 		if value == 0:
-			aimSpeed = 1.0
+			aimSpeed = 26.0
 		elif value == 1:
-			aimSpeed = 0.075
+			aimSpeed = 16
 		elif value == 2:
-			aimSpeed = 0.015
+			aimSpeed = 10
 @export_subgroup("Nodes")
 @export var pawnFSM : FiniteStateMachine:
 	set(value):
@@ -165,12 +168,20 @@ func get_and_update_ai_process_delta(time_msec : int) -> float:
 	last_ai_process_tick = time_msec
 	return float(delta_msec / 1000)
 
-
+func rayTest(from:Vector3,to:Vector3)->Dictionary:
+	var ray = PhysicsRayQueryParameters3D.new()
+	ray.from = from
+	ray.to = to
+	ray.collision_mask = collisionMasks
+	var result = get_world_3d().direct_space_state.intersect_ray(ray)
+	return result
 
 func _ai_process(physics_delta : float) -> void:
 	if is_instance_valid(self) and is_instance_valid(pawnOwner) and !pawnOwner.isPawnDead:
 		var ai_process_delta = get_and_update_ai_process_delta(Time.get_ticks_msec())
 		pawnFSM._ai_process(physics_delta, ai_process_delta)
+
+		aimCast.transform = aimCast.transform.interpolate_with(castLerp,aimSpeed*physics_delta * aimStrength)
 
 		if pathingToPosition:
 			NavigationServer3D.agent_set_position(aiAgent,pawnOwner.global_position)
@@ -476,13 +487,19 @@ func stopLookingAt()->void:
 	pawnOwner.meshLookAt = false
 
 
-func lookAtPosition(lookat:Vector3)->void:
+func lookAtPosition(lookat:Vector3, snap:bool = false)->void:
 	var tween = create_tween()
-	pawnOwner.meshLookAt = true
-	aimCast.look_at(lookat)
+	var dir = (aimCast.global_position - lookat)
+	if !pawnOwner.meshLookAt:
+		pawnOwner.meshLookAt = true
+	castLerp = castLerp.looking_at(-dir)
+
 	pawnOwner.turnAmount = (-aimCast.rotation.x) + 0.1
 	tween.tween_property(pawnOwner,"meshRotation",gameManager.getShortTweenAngle(pawnOwner.meshRotation,aimCast.global_transform.basis.get_euler().y),aimSpeed).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CIRC)
 
+	if snap:
+		aimCast.transform = castLerp
+		pawnOwner.meshRotation = aimCast.global_transform.basis.get_euler().y
 
 func setPawnType()->void:
 	await get_tree().process_frame
@@ -508,7 +525,7 @@ func setPathPosition(pathPosition:Vector3)->PackedVector3Array:
 
 func setupNav()->void:
 	aiAgent = NavigationServer3D.agent_create()
-	NavigationServer3D.agent_set_radius(aiAgent,5.0)
+	NavigationServer3D.agent_set_radius(aiAgent,15.0)
 	NavigationServer3D.agent_set_position(aiAgent,pawnOwner.global_position)
 	NavigationServer3D.agent_set_avoidance_layers(aiAgent,pawnOwner.collision_layer)
 	NavigationServer3D.agent_set_avoidance_mask(aiAgent,pawnOwner.collision_mask)
@@ -519,7 +536,8 @@ func setupNav()->void:
 
 func pawnDamaged(amount,impulse,vector, dealer)->void:
 	if is_instance_valid(dealer):
-		lookAtPosition(dealer.global_position)
-		if pawnFSM.current_state != pawnFSM.get_state("Attack"):
+		if pawnFSM.current_state != pawnFSM.get_state("Attack") and pawnOwner.currentItem:
+			lookAtPosition(dealer.global_position,true)
 			pawnFSM.change_state("Attack")
+
 		targetedPawn = dealer

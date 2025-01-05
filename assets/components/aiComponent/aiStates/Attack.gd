@@ -67,7 +67,7 @@ func on_ai_process(phys_delta : float, ai_delta : float):
 			#aiOwner.pawnOwner.freeAim = true
 
 		aiOwner.pawnOwner.movementController.onSetCamRot(aiOwner.pawnOwner.meshRotation)
-		aiOwner.lookAtPosition(aiOwner.targetedPawn.upperChestBone.global_position)
+		aiOwner.lookAtPosition(aiOwner.targetedPawn.upperChestBone.global_position + aiOwner.targetedPawn.velocity * 0.1 )
 
 		if shootAt and !isSightToTargetBlocked():
 			aiOwner.pawnOwner.currentItem.fire()

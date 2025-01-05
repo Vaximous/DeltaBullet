@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://dakipfkiu0xqt"]
+
+[ext_resource type="Script" uid="uid://b68isv55ngap5" path="res://assets/components/musicChangeZone/music_change_zone.gd" id="1_5aduy"]
+
+[node name="MusicChangeZone" type="Area3D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_5aduy")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

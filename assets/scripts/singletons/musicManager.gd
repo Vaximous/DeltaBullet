@@ -114,7 +114,7 @@ func get_all_audioplayers() -> Array[AudioStreamPlayer]:
 	return valid
 
 
-func get_all_channels() -> Array[String]:
+func get_all_channels() -> PackedStringArray:
 	var names : PackedStringArray = []
 	for n in get_children():
 		if n is AudioStreamPlayer:
@@ -122,9 +122,9 @@ func get_all_channels() -> Array[String]:
 	return names
 
 
-func play_sound(soundfile : String, volume_db : float = 0.0, pitch_scale : float = 1.0) -> void:
+func play_sound(soundfile : String, volume_db : float = 0.0, pitch_scale : float = 1.0,bus:StringName = &"Sounds") -> void:
 	var audioplayer := AudioStreamPlayer.new()
-	audioplayer.bus = &"game"
+	audioplayer.bus = bus
 	var stream = load(soundfile)
 	audioplayer.stream = stream
 	audioplayer.process_mode = Node.PROCESS_MODE_ALWAYS
@@ -135,9 +135,9 @@ func play_sound(soundfile : String, volume_db : float = 0.0, pitch_scale : float
 	audioplayer.play()
 
 
-func play_sound_positioned(soundfile : String, position : Vector3, volume_db : float = 0.0, pitch_scale : float = 1.0, parent : Node = null) -> void:
+func play_sound_positioned(soundfile : String, position : Vector3, volume_db : float = 0.0, pitch_scale : float = 1.0, bus:StringName = &"Sounds", parent : Node = null) -> void:
 	var audioplayer := AudioStreamPlayer3D.new()
-	audioplayer.bus = &"game"
+	audioplayer.bus = bus
 	var stream = load(soundfile)
 	audioplayer.stream = stream
 	audioplayer.finished.connect(audioplayer.queue_free)

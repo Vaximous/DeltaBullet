@@ -55,14 +55,17 @@ func _on_resume_button_pressed()->void:
 	unpauseGame()
 
 func _on_menu_button_pressed()->void:
-	musicManager.change_song_to(null,0.5)
+	musicManager.fade_all_audioplayers_out(0.5)
 	await Fade.fade_out(0.3, Color(0,0,0,1),"GradientVertical",false,true).finished
 	get_tree().paused = false
 	hide()
 	get_tree().change_scene_to_file("res://assets/scenes/menu/menu.tscn")
 
 func unpauseGame()->void:
-	musicManager.resumeMusic()
+	if musicManager.get_all_channels():
+		for i in musicManager.get_all_channels():
+			musicManager.set_channel_pause(i,false)
+	#musicManager.resumeMusic()
 	soundPlayer.play()
 	gameManager.set_meta(&"stored_mouse_mode", Input.mouse_mode)
 	gameManager.hideMouse()
@@ -74,7 +77,9 @@ func pauseGame()->void:
 	show()
 	fadeIn()
 	resumeButton.focus_mode = 2
-	musicManager.pauseMusic()
+	if musicManager.get_all_channels():
+		for i in musicManager.get_all_channels():
+			musicManager.set_channel_pause(i,true)
 	#Dialogic.end_timeline()
 	secondSound.play()
 	Input.mouse_mode = gameManager.get_meta(&"stored_mouse_mode", Input.MOUSE_MODE_CAPTURED)

@@ -546,33 +546,34 @@ func setWeaponRecoil()->void:
 
 func reloadWeapon()->void:
 	#await get_tree().process_frame
-	weaponRemoteState.stop()
-	weaponRemoteStateLeft.stop()
-	if canReloadWeapon and !isReloading and weaponResource.canBeReloaded and isEquipped and !weaponOwner.isArmingThrowable and is_instance_valid(weaponResource):
-		var reloadTime = weaponResource.reloadTime
-		var firedShots = weaponResource.ammoSize - currentAmmo
-		weaponRemoteState.travel("reload")
-		weaponRemoteState.next()
-		weaponRemoteStateLeft.travel("reload")
-		weaponRemoteStateLeft.next()
-		isReloading = true
-		canReloadWeapon = false
-		await get_tree().create_timer(reloadTime).timeout
-		isReloading = false
-		currentMagSize -= firedShots
-		currentAmmo += firedShots
-		if weaponOwner != null:
-			if isAiming:
-				if weaponOwner != null:
-					#weaponOwner.setLeftHandFilter(weaponResource.useLeftHandAiming)
-					weaponOwner.setRightHandFilter(weaponResource.useRightHandAiming)
-			elif weaponOwner.freeAim:
-				if weaponOwner != null:
-					#weaponOwner.setLeftHandFilter(weaponResource.useLeftHandFreeAiming)
-					weaponOwner.setRightHandFilter(weaponResource.useRightHandFreeAiming)
-			elif !isFiring and !isAiming and !weaponOwner.freeAim and !isReloading and weaponOwner != null:
-				#weaponOwner.setLeftHandFilter(weaponResource.useLeftHandIdle)
-				weaponOwner.setRightHandFilter(weaponResource.useRightHandIdle)
+	if is_instance_valid(get_tree()):
+		weaponRemoteState.stop()
+		weaponRemoteStateLeft.stop()
+		if canReloadWeapon and !isReloading and weaponResource.canBeReloaded and isEquipped and !weaponOwner.isArmingThrowable and is_instance_valid(weaponResource):
+			var reloadTime = weaponResource.reloadTime
+			var firedShots = weaponResource.ammoSize - currentAmmo
+			weaponRemoteState.travel("reload")
+			weaponRemoteState.next()
+			weaponRemoteStateLeft.travel("reload")
+			weaponRemoteStateLeft.next()
+			isReloading = true
+			canReloadWeapon = false
+			await get_tree().create_timer(reloadTime).timeout
+			isReloading = false
+			currentMagSize -= firedShots
+			currentAmmo += firedShots
+			if weaponOwner != null:
+				if isAiming:
+					if weaponOwner != null:
+						#weaponOwner.setLeftHandFilter(weaponResource.useLeftHandAiming)
+						weaponOwner.setRightHandFilter(weaponResource.useRightHandAiming)
+				elif weaponOwner.freeAim:
+					if weaponOwner != null:
+						#weaponOwner.setLeftHandFilter(weaponResource.useLeftHandFreeAiming)
+						weaponOwner.setRightHandFilter(weaponResource.useRightHandFreeAiming)
+				elif !isFiring and !isAiming and !weaponOwner.freeAim and !isReloading and weaponOwner != null:
+					#weaponOwner.setLeftHandFilter(weaponResource.useLeftHandIdle)
+					weaponOwner.setRightHandFilter(weaponResource.useRightHandIdle)
 
 func checkFreeAim()->void:
 	if weaponOwner:

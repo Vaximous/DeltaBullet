@@ -308,7 +308,7 @@ func doPulverizeEffect()->void:
 
 func doBleed()->void:
 	if !hasBled and canBleed:
-		#gameManager.createBloodPool(global_position,randf_range(0.3,1.6))
+		gameManager.createBloodPool(global_position,randf_range(0.3,1.6))
 		hasBled = true
 
 

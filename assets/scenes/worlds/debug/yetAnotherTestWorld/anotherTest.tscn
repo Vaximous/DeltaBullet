@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://ccnq3cc8k6nt5"]
+[gd_scene load_steps=40 format=3 uid="uid://ccnq3cc8k6nt5"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_iq3s1"]
 [ext_resource type="Script" uid="uid://b31u24at18p5t" path="res://assets/resources/customResources/worldData/worldData.gd" id="2_gqs4i"]
@@ -16,9 +16,11 @@
 [ext_resource type="PackedScene" uid="uid://b026rv1louhqg" path="res://assets/entities/clothing/Longcoats/longCoat.tscn" id="8_00u34"]
 [ext_resource type="PackedScene" uid="uid://bb78dx0yknjep" path="res://assets/entities/door/keypadDoor.tscn" id="8_8q3c1"]
 [ext_resource type="Script" uid="uid://b6r8ewrq3qb3y" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="8_hfkws"]
+[ext_resource type="PackedScene" uid="uid://boh343kalvj5i" path="res://assets/entities/weapons/Revolver/Revolver.tscn" id="9_3ukc6"]
 [ext_resource type="PackedScene" uid="uid://4seyitfkc6wn" path="res://assets/entities/clothing/Pants/pants.tscn" id="9_mvwmk"]
 [ext_resource type="PackedScene" uid="uid://bgk584lddf4aa" path="res://assets/entities/weapons/BattlecadeAssaultRifle/BattlecadeAssaultRifle.tscn" id="12_wtwgc"]
 [ext_resource type="PackedScene" uid="uid://n500uprpwbbk" path="res://assets/models/csgmodels/csgtruck.tscn" id="13_512dd"]
+[ext_resource type="PackedScene" uid="uid://7ueyays7enj5" path="res://assets/entities/trigger/pawnTrigger.tscn" id="14_sl7fe"]
 [ext_resource type="Script" uid="uid://d01nxiqfv4lfd" path="res://assets/scenes/worlds/areas/playerHome/player_closet.gd" id="18_lux1e"]
 [ext_resource type="Script" uid="uid://tiffkbp5ry74" path="res://assets/scripts/entities/interactiveObject/interactiveObject.gd" id="19_s4bs4"]
 
@@ -41,11 +43,11 @@ colors = PackedColorArray(0, 0, 0, 1, 0.996078, 0.941176, 0.811765, 1)
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_iun5n"]
 gradient = SubResource("Gradient_6voip")
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_512dd"]
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_sl7fe"]
 panorama = ExtResource("4_7ph80")
 
 [sub_resource type="Sky" id="Sky_nj1fe"]
-sky_material = SubResource("PanoramaSkyMaterial_512dd")
+sky_material = SubResource("PanoramaSkyMaterial_sl7fe")
 
 [sub_resource type="Environment" id="Environment_a8ts2"]
 background_mode = 2
@@ -140,6 +142,19 @@ albedo_color = Color(0.52549, 0.407843, 0.129412, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_1664x"]
 size = Vector3(0.845581, 2.36316, 1.58691)
 
+[sub_resource type="GDScript" id="GDScript_r7ihw"]
+resource_name = "death"
+script/source = "extends Node3D
+
+
+func _on_pawn_trigger_trigger_activated(body: Variant) -> void:
+	if body.has_method(\"die\"):
+		body.die(null)
+"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_sl7fe"]
+size = Vector3(125.94, 80.2482, 128.95)
+
 [node name="worldBase" instance=ExtResource("1_iq3s1")]
 worldData = SubResource("Resource_6vxwt")
 
@@ -172,13 +187,66 @@ equipWeaponOnSpawn = true
 weaponToEquip = 1
 aiType = 1
 
-[node name="BogoHead" parent="Spawns/pawnSpawns" index="4" instance=ExtResource("4_0r0wx")]
+[node name="pawnSpawn5" parent="Spawns/pawnSpawns" index="4" instance=ExtResource("4_0r0wx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.23665, 1.5, 8.3449)
+pawnWeapons = Array[PackedScene]([ExtResource("4_rig7i")])
+equipWeaponOnSpawn = true
+weaponToEquip = 1
+aiType = 1
+
+[node name="pawnSpawn6" parent="Spawns/pawnSpawns" index="5" instance=ExtResource("4_0r0wx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.23665, 1.5, 8.3449)
+pawnWeapons = Array[PackedScene]([ExtResource("5_wnt7o")])
+equipWeaponOnSpawn = true
+weaponToEquip = 1
+aiType = 1
+
+[node name="pawnSpawn11" parent="Spawns/pawnSpawns" index="6" instance=ExtResource("4_0r0wx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.93228, 1.5, -4.08672)
+pawnWeapons = Array[PackedScene]([ExtResource("5_gs5af")])
+equipWeaponOnSpawn = true
+weaponToEquip = 1
+aiType = 1
+
+[node name="pawnSpawn7" parent="Spawns/pawnSpawns" index="7" instance=ExtResource("4_0r0wx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.23665, 1.5, 6.94549)
+pawnWeapons = Array[PackedScene]([ExtResource("4_rig7i")])
+equipWeaponOnSpawn = true
+weaponToEquip = 1
+aiType = 1
+
+[node name="pawnSpawn8" parent="Spawns/pawnSpawns" index="8" instance=ExtResource("4_0r0wx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.23665, 1.5, 6.94549)
+pawnWeapons = Array[PackedScene]([ExtResource("12_wtwgc")])
+pawnClothing = Array[PackedScene]([ExtResource("6_71o2e")])
+equipWeaponOnSpawn = true
+weaponToEquip = 1
+aiType = 1
+
+[node name="pawnSpawn9" parent="Spawns/pawnSpawns" index="9" instance=ExtResource("4_0r0wx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.23665, 1.5, 5.61552)
+pawnWeapons = Array[PackedScene]([ExtResource("9_3ukc6")])
+equipWeaponOnSpawn = true
+weaponToEquip = 1
+aiType = 1
+
+[node name="pawnSpawn10" parent="Spawns/pawnSpawns" index="10" instance=ExtResource("4_0r0wx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.23665, 1.5, 5.61552)
+pawnWeapons = Array[PackedScene]([ExtResource("9_3ukc6")])
+equipWeaponOnSpawn = true
+weaponToEquip = 1
+aiType = 1
+
+[node name="BogoHead" parent="Spawns/pawnSpawns" index="11" instance=ExtResource("4_0r0wx")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 7.23665, 1.5, 18.6997)
+visible = false
 pawnName = "BogoHead"
 pawnWeapons = Array[PackedScene]([ExtResource("5_wnt7o")])
 pawnClothing = Array[PackedScene]([ExtResource("6_71o2e"), ExtResource("7_u38u0"), ExtResource("8_00u34"), ExtResource("9_mvwmk")])
+aiSkill = 0
 equipWeaponOnSpawn = true
 weaponToEquip = 1
+aiType = 1
 
 [node name="worldEnvironment" parent="Environment" index="0"]
 environment = SubResource("Environment_a8ts2")
@@ -343,6 +411,18 @@ canBeUsed = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0772095, 0.68158, -0.293457)
 shape = SubResource("BoxShape3D_1664x")
 
+[node name="node3d" type="Node3D" parent="Props" index="3"]
+script = SubResource("GDScript_r7ihw")
+
+[node name="pawnTrigger" parent="Props/node3d" index="0" instance=ExtResource("14_sl7fe")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -16.7929, 0)
+triggerOnce = false
+triggerGroups = Array[String](["Player", "Pawn"])
+
+[node name="collisionShape3d" type="CollisionShape3D" parent="Props/node3d/pawnTrigger" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.06566, -36.6576, -7.02885)
+shape = SubResource("BoxShape3D_sl7fe")
+
 [node name="aiMarker" parent="Misc/WaypointNodes" index="0" instance=ExtResource("5_bh8tr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.626718, 1.5, 2.90188)
 
@@ -399,3 +479,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.3854, 1.5, 3.90188)
 
 [connection signal="objectUsed" from="Geometry/navigationRegion3d/csgtruck/worldMapInteract" to="Geometry/navigationRegion3d/csgtruck/worldMapInteract" method="_on_object_used"]
 [connection signal="objectUsed" from="Props/PlayerCloset/closetInteraction" to="Props/PlayerCloset" method="_onClosetUsed"]
+[connection signal="triggerActivated" from="Props/node3d/pawnTrigger" to="Props/node3d" method="_on_pawn_trigger_trigger_activated"]

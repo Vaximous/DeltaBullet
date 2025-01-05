@@ -5,7 +5,7 @@ resource_name = "pawnTrigger"
 script/source = "@tool
 extends Area3D
 class_name PawnTrigger
-signal triggerActivated
+signal triggerActivated(body)
 @export_category(\"Pawn Trigger\")
 @export var activeTrigger : bool = true
 @export var triggerOnce : bool = true
@@ -18,7 +18,7 @@ func enteredTrigger(entered)->void:
 				if triggerOnce:
 					Console.add_rich_console_message(\"%s Triggered. No longer active\" %[name])
 					activeTrigger = false
-				triggerActivated.emit()
+				triggerActivated.emit(entered)
 
 func _on_body_entered(body)->void:
 	enteredTrigger(body)

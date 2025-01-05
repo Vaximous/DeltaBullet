@@ -3,14 +3,18 @@ extends StateMachineState
 @export var aiOwner : AIComponent
 var shootAt : bool = false
 var tgtDistance : float
-var maxDistance : float = 10.0
+var maxDistance : float = 5.0
+var minDistance : float = 2.0
 var targetPosition : Vector3 = Vector3.ZERO:
 	set(value):
 		if !aiOwner.pathingToPosition and is_instance_valid(aiOwner.pawnOwner) and !aiOwner.pawnOwner.isPawnDead and is_instance_valid(gameManager.world) and aiOwner.is_ai_processing():
 			targetPosition = value
 			if is_current_state():
 				var rand : Array = [true,false]
-				aiOwner.goToPosition(targetPosition, rand.pick_random())
+				if tgtDistance>=maxDistance or isSightToTargetBlocked():
+					aiOwner.goToPosition(targetPosition, rand.pick_random())
+				elif tgtDistance<=minDistance:
+					aiOwner.goToPosition(-targetPosition, rand.pick_random())
 @onready var attackTimer : Timer = $attackTimer
 @onready var moveTimer : Timer = $moveTimer
 
@@ -31,7 +35,7 @@ func on_enter()->void:
 	aiOwner.currentPath.clear()
 	if !attackTimer.timeout.is_connected(toggleShooting):
 		attackTimer.timeout.connect(toggleShooting)
-	attackTimer.wait_time = randf_range(0.05,0.6)
+	attackTimer.wait_time = randf_range(0.05,0.2)
 	moveTimer.wait_time = randf_range(1,5)
 	attackTimer.start()
 
@@ -51,9 +55,9 @@ func on_ai_process(phys_delta : float, ai_delta : float):
 		if tgtDistance >= maxDistance or isSightToTargetBlocked():
 			if !aiOwner.pathingToPosition:
 				targetPosition = aiOwner.targetedPawn.global_position
-		else:
-			if aiOwner.pathingToPosition:
-				aiOwner.pathingToPosition = false
+		#else:
+			#if aiOwner.pathingToPosition:
+				#aiOwner.pathingToPosition = false
 
 		if !aiOwner.pawnOwner.currentItem.isAiming:
 			if !isSightToTargetBlocked():

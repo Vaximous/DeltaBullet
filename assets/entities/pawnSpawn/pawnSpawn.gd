@@ -138,7 +138,7 @@ func spawnPawn(forceParent : Node = null):
 			pawn.checkComponents()
 			pawn.fixRot()
 			controller.pawnType = aiType
-			#controller.aiSkill = aiSkill
+			controller.aiSkill = aiSkill
 			#controller.hatedPawnGroups = hatedGroups
 			pawn.add_to_group(spawnGroup)
 

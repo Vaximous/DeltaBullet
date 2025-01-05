@@ -21,7 +21,7 @@ func _ready()->void:
 
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	Fade.fade_in(0.8, Color(0,0,0,1),\"GradientVertical\",false,true)
-	musicManager.change_song_to(menuMusic.stream,0.5)
+	musicManager.create_audioplayer_with_stream(menuMusic.stream,0.5)
 
 
 

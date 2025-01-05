@@ -12,7 +12,7 @@ script/source = "extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready()->void:
-	musicManager.change_song_to(null)
+	musicManager.fade_all_audioplayers_out()
 	$textureRect.modulate = Color.TRANSPARENT
 	await get_tree().process_frame
 	$AnimationPlayer.play(\"logostart\")

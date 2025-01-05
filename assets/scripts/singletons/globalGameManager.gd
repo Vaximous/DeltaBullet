@@ -167,7 +167,7 @@ func _input(_event)->void:
 		if get_tree().paused == false:
 			await Fade.fade_out(0.3).finished
 			loadWorld(get_tree().current_scene.scene_file_path)
-			musicManager.change_song_to(null,0.5)
+			musicManager.fade_all_audioplayers_out(0.5)
 
 	if debugEnabled:
 		if Input.is_action_pressed("dFreecam"):
@@ -384,7 +384,7 @@ func loadWorld(worldscene:String, fadein:bool = false)->void:
 	get_tree().change_scene_to_file("res://assets/scenes/menu/loadingscreen/emptyLoaderScene.tscn")
 	await get_tree().process_frame
 	#freeOrphanNodes()
-	musicManager.change_song_to(null)
+	musicManager.fade_all_audioplayers_out()
 	var loader = load("res://assets/scenes/menu/loadingscreen/loadingScreen.tscn")
 	var inst = loader.instantiate()
 	if fadein:

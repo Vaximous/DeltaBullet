@@ -150,6 +150,7 @@ func _ready() -> void:
 		setExceptions()
 		visionTimer.start()
 		await get_tree().process_frame
+		pawnOwner.pawnDied.connect(NavigationServer3D.free_rid.bind(aiAgent))
 		if isInteractable:
 			setInteractablePawn(true)
 	else:
@@ -188,9 +189,9 @@ func _ai_process(physics_delta : float) -> void:
 		NavigationServer3D.agent_set_position(aiAgent,pawnOwner.global_position)
 		if pathingToPosition:
 			var nextPoint : Vector3 = currentPath[pathPoint] - pawnOwner.global_position
-			if nextPoint.length_squared() > 1.0:
+			if nextPoint.length() > 1.0:
 				NavigationServer3D.agent_set_velocity(aiAgent,(nextPoint.normalized()*physics_delta))
-				pawnOwner.direction = NavigationServer3D.agent_get_velocity(aiAgent)
+				pawnOwner.direction = safeVelocity
 			else:
 				if pathPoint < (currentPath.size() - 1):
 					pathPointReached.emit()
@@ -534,7 +535,7 @@ func setupNav()->void:
 	NavigationServer3D.agent_set_radius(aiAgent,0.5)
 	NavigationServer3D.agent_set_position(aiAgent,pawnOwner.global_position)
 	NavigationServer3D.agent_set_avoidance_layers(aiAgent,pawnOwner.collision_layer)
-	NavigationServer3D.agent_set_avoidance_mask(aiAgent,pawnOwner.collision_mask)
+	NavigationServer3D.agent_set_avoidance_mask(aiAgent,pawnOwner.collision_layer)
 	NavigationServer3D.agent_set_avoidance_enabled(aiAgent,true)
 	#NavigationServer3D.agent_set_use_3d_avoidance(aiAgent,true)
 	navMap = get_world_3d().get_navigation_map()

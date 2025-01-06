@@ -268,7 +268,7 @@ stretch = true
 [node name="subViewport" type="SubViewport" parent="panelHolder/panel/textureRect/subViewportContainer"]
 own_world_3d = true
 handle_input_locally = false
-size = Vector2i(64, 64)
+size = Vector2i(960, 480)
 render_target_update_mode = 4
 
 [node name="Node3D" parent="panelHolder/panel/textureRect/subViewportContainer/subViewport" instance=ExtResource("2_b3bty")]
@@ -474,7 +474,7 @@ offset_bottom = 31.0
 theme_override_font_sizes/font_size = 16
 text = "Soft Very Low"
 alignment = 2
-item_count = 6
+item_count = 8
 popup/item_0/text = "Hard"
 popup/item_0/id = 0
 popup/item_1/text = "Soft Very Low"
@@ -487,6 +487,10 @@ popup/item_4/text = "Soft High"
 popup/item_4/id = 4
 popup/item_5/text = "Soft Very High"
 popup/item_5/id = 5
+popup/item_6/text = "Ultra"
+popup/item_6/id = 6
+popup/item_7/text = "Max"
+popup/item_7/id = 7
 
 [node name="msaa" type="Control" parent="panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer"]
 custom_minimum_size = Vector2(0, 37.905)

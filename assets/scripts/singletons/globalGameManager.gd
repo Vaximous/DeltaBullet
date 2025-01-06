@@ -88,6 +88,11 @@ func _ready()->void:
 	if richPresenceEnabled:
 		pass
 
+func _process(delta: float) -> void:
+	#Set audio pitch to match timescale
+	AudioServer.playback_speed_scale = Engine.time_scale
+
+
 
 func freeOrphanNodes():
 	var keep := []

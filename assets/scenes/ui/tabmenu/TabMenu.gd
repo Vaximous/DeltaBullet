@@ -20,7 +20,7 @@ func pauseGame()->void:
 	backgroundElement.position.y += 10
 	tween.tween_property(backgroundElement,"modulate",Color.WHITE,0.065)
 	tween.tween_property(backgroundElement,"position",Vector2(0,0),0.065)
-	musicManager.pauseMusic()
+#	musicManager.pauseMusic()
 	#Dialogic.end_timeline()
 	Input.mouse_mode = gameManager.get_meta(&"stored_mouse_mode", Input.MOUSE_MODE_CAPTURED)
 	gameManager.showMouse()
@@ -29,7 +29,7 @@ func pauseGame()->void:
 
 func unpauseGame()->void:
 	var tween = create_tween()
-	musicManager.resumeMusic()
+#	musicManager.resumeMusic()
 	gameManager.set_meta(&"stored_mouse_mode", Input.mouse_mode)
 	gameManager.hideMouse()
 	tween.set_ease(Tween.EASE_OUT)

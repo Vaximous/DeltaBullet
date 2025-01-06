@@ -1,4 +1,4 @@
-[gd_scene load_steps=189 format=4 uid="uid://c8bkdy6aqwxls"]
+[gd_scene load_steps=190 format=4 uid="uid://c8bkdy6aqwxls"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_ypyko"]
 [ext_resource type="PackedScene" uid="uid://boicvk4qeqmbd" path="res://assets/entities/pawnSpawn/pawnSpawn.tscn" id="2_v576b"]
@@ -51,7 +51,6 @@
 [ext_resource type="Material" uid="uid://doi2tqqimhggh" path="res://assets/models/interior/changingroom/WardrobeSteel.tres" id="41_7m3hx"]
 [ext_resource type="PackedScene" uid="uid://dvmmlj4mvj88r" path="res://assets/entities/aiMarker/aiMarker.tscn" id="47_7m3hx"]
 [ext_resource type="PackedScene" uid="uid://dakipfkiu0xqt" path="res://assets/components/musicChangeZone/music_change_zone.tscn" id="51_7i0qu"]
-[ext_resource type="AudioStream" uid="uid://bawfxkkyqcufb" path="res://assets/music/menu/portla.mp3" id="52_6hcyr"]
 [ext_resource type="AudioStream" uid="uid://c1mk4s30dq3nc" path="res://assets/music/menu/Idlehoodtune.wav" id="53_cj522"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_6ok4a"]
@@ -1136,6 +1135,9 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_oxttd")
 
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_7i0qu"]
+data = PackedVector3Array(-0.5, 0.9562, 0.0475, -0.5, -1.1437, -0.0325, -0.5, 0.9562, -0.0325, -0.5, 0.9562, 0.0475, -0.5, -1.1437, 0.0475, -0.5, -1.1437, -0.0325, 0.42, 0.8762, 0.0475, 0.42, -1.1437, 0.0075, 0.42, 0.8762, 0.0075, 0.42, 0.8762, 0.0475, 0.42, -1.1437, 0.0475, 0.42, -1.1437, 0.0075, -0.5, 0.9562, -0.0325, 0.5, 0.9562, 0.0475, -0.5, 0.9562, 0.0475, -0.5, 0.9562, -0.0325, 0.5, 0.9562, -0.0325, 0.5, 0.9562, 0.0475, 0.5, -1.1437, 0.0475, 0.5, 0.9562, -0.0325, 0.5, -1.1437, -0.0325, 0.5, -1.1437, 0.0475, 0.5, 0.9562, 0.0475, 0.5, 0.9562, -0.0325, -0.42, 0.8762, 0.0075, -0.42, -1.1437, 0.0475, -0.42, 0.8762, 0.0475, -0.42, 0.8762, 0.0075, -0.42, -1.1437, 0.0075, -0.42, -1.1437, 0.0475, -0.4, 0.8762, -0.0325, -0.4, -1.1437, 0.0075, -0.4, 0.8762, 0.0075, -0.4, 0.8762, -0.0325, -0.4, -1.1437, -0.0325, -0.4, -1.1437, 0.0075, 0.5, -1.1437, -0.0325, 0.42, 0.8762, -0.0325, 0.42, -1.1437, -0.0325, 0.42, 0.8762, -0.0325, 0.4, -1.1437, -0.0325, 0.42, -1.1437, -0.0325, 0.5, -1.1437, -0.0325, 0.5, 0.9562, -0.0325, 0.42, 0.8762, -0.0325, 0.42, 0.8762, -0.0325, 0.4, 0.8762, -0.0325, 0.4, -1.1437, -0.0325, -0.42, 0.8762, -0.0325, 0.42, 0.8762, -0.0325, 0.5, 0.9562, -0.0325, -0.42, 0.8762, -0.0325, 0.5, 0.9562, -0.0325, -0.5, 0.9562, -0.0325, -0.5, 0.9562, -0.0325, -0.42, -1.1437, -0.0325, -0.42, 0.8762, -0.0325, -0.5, 0.9562, -0.0325, -0.5, -1.1437, -0.0325, -0.42, -1.1437, -0.0325, -0.4, 0.8762, -0.0325, -0.42, 0.8762, -0.0325, -0.42, -1.1437, -0.0325, -0.4, 0.8762, -0.0325, -0.42, -1.1437, -0.0325, -0.4, -1.1437, -0.0325, -0.4, 0.8562, -0.0325, 0.4, 0.8762, -0.0325, -0.4, 0.8762, -0.0325, -0.4, 0.8562, -0.0325, 0.4, 0.8562, -0.0325, 0.4, 0.8762, -0.0325, -0.42, 0.8762, 0.0475, 0.42, 0.8762, 0.0075, -0.42, 0.8762, 0.0075, -0.42, 0.8762, 0.0475, 0.42, 0.8762, 0.0475, 0.42, 0.8762, 0.0075, -0.42, 0.8762, 0.0475, -0.5, -1.1437, 0.0475, -0.5, 0.9562, 0.0475, -0.42, 0.8762, 0.0475, -0.42, -1.1437, 0.0475, -0.5, -1.1437, 0.0475, 0.42, -1.1437, 0.0475, 0.5, 0.9562, 0.0475, 0.5, -1.1437, 0.0475, 0.42, -1.1437, 0.0475, 0.42, 0.8762, 0.0475, 0.5, 0.9562, 0.0475, -0.42, 0.8762, 0.0075, -0.4, -1.1437, 0.0075, -0.42, -1.1437, 0.0075, -0.42, 0.8762, 0.0075, -0.4, 0.8762, 0.0075, -0.4, -1.1437, 0.0075, -0.4, 0.8762, 0.0075, 0.4, 0.8562, 0.0075, -0.4, 0.8562, 0.0075, -0.4, 0.8762, 0.0075, 0.4, 0.8762, 0.0075, 0.4, 0.8562, 0.0075, 0.4, 0.8762, 0.0075, 0.42, -1.1437, 0.0075, 0.4, -1.1437, 0.0075, 0.4, 0.8762, 0.0075, 0.42, 0.8762, 0.0075, 0.42, -1.1437, 0.0075, -0.4, 0.8562, -0.0325, 0.4, 0.8562, 0.0075, 0.4, 0.8562, -0.0325, -0.4, 0.8562, -0.0325, -0.4, 0.8562, 0.0075, 0.4, 0.8562, 0.0075, 0.42, 0.8762, 0.0475, -0.5, 0.9562, 0.0475, 0.5, 0.9562, 0.0475, 0.42, 0.8762, 0.0475, -0.42, 0.8762, 0.0475, -0.5, 0.9562, 0.0475, -0.42, -1.1437, 0.0075, -0.4, -1.1437, -0.0325, -0.42, -1.1437, -0.0325, -0.42, -1.1437, 0.0075, -0.4, -1.1437, 0.0075, -0.4, -1.1437, -0.0325, 0.4, 0.8762, 0.0075, 0.4, -1.1437, -0.0325, 0.4, 0.8762, -0.0325, 0.4, 0.8762, 0.0075, 0.4, -1.1437, 0.0075, 0.4, -1.1437, -0.0325, 0.4, -1.1437, 0.0075, 0.42, -1.1437, -0.0325, 0.4, -1.1437, -0.0325, 0.4, -1.1437, 0.0075, 0.42, -1.1437, 0.0075, 0.42, -1.1437, -0.0325, -0.42, 0.8762, -0.0325, 0.4, 0.8762, -0.0325, 0.42, 0.8762, -0.0325)
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cr6ca"]
 resource_name = "sill"
 cull_mode = 2
@@ -1560,15 +1562,17 @@ func _on_object_used(user: Variant) -> void:
 	gameManager.initWorldMap()
 "
 
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_briwp"]
-streams_count = 4
-stream_0/stream = ExtResource("52_6hcyr")
-stream_1/stream = ExtResource("53_cj522")
-stream_2/stream = ExtResource("10_8mobu")
-stream_3/stream = ExtResource("12_lb63t")
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_6hcyr"]
+streams_count = 2
+stream_0/stream = ExtResource("53_cj522")
+stream_1/stream = ExtResource("10_8mobu")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_gugwl"]
 size = Vector3(7.03693, 3.60657, 6.11816)
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_briwp"]
+streams_count = 1
+stream_0/stream = ExtResource("12_lb63t")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_jg2d5"]
 size = Vector3(15.7415, 3.60657, 14.381)
@@ -1834,6 +1838,11 @@ skeleton = NodePath("")
 transform = Transform3D(1, 0, 0, 0, -1, 8.02679e-07, 0, -8.02679e-07, -1, -0.324391, 0.0403222, -0.0433135)
 mesh = SubResource("ArrayMesh_1ega1")
 skeleton = NodePath("")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Geometry/navigationRegion3d/home/Door_Group_001/DoorFrame_001" index="1"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/navigationRegion3d/home/Door_Group_001/DoorFrame_001/StaticBody3D" index="0"]
+shape = SubResource("ConcavePolygonShape3D_7i0qu")
 
 [node name="Door_Group_002" type="Node3D" parent="Geometry/navigationRegion3d/home" index="20"]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 9.23566, 0.973451, -10.7351)
@@ -2334,7 +2343,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.46324, 3.9975, -8.51123)
 
 [node name="MusicChangeZone" parent="Misc" index="5" instance=ExtResource("51_7i0qu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.09155, 4.86931, 0)
-area_music = SubResource("AudioStreamRandomizer_briwp")
+area_music = SubResource("AudioStreamRandomizer_6hcyr")
 switch_back_on_exit = true
 
 [node name="collisionShape3d" type="CollisionShape3D" parent="Misc/MusicChangeZone" index="0"]

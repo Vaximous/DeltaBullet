@@ -93,6 +93,7 @@ func spawnPawn(forceParent : Node = null):
 				pawn.checkComponents()
 				pawn.fixRot()
 				pawn.add_to_group(&"Player")
+				pawn.set_meta(&"isPlayer", true)
 				pawn.healthComponent.setHealth(450)
 				if gameManager.temporaryPawnInfo.size() <= 0:
 					if gameManager.currentSave != "" or gameManager.currentSave != " " or gameManager.currentSave != null:

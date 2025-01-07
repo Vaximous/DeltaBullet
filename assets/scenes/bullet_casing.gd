@@ -14,7 +14,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	mesh.rotation += rotational_velocity * delta
 	velocity += get_gravity() * delta * 3
-	print(get_gravity())
+	#print(get_gravity())
 	var col = move_and_collide(velocity * delta)
 	if col is KinematicCollision3D:
 		if first_bounce:
@@ -26,4 +26,4 @@ func _physics_process(delta: float) -> void:
 		rotational_velocity *= randf_range(0.5, 1.2)
 		if velocity.length() < 1.0:
 			set_physics_process(false)
-			print("Stap")
+			#print("Stap")

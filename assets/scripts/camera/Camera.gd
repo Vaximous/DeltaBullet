@@ -144,7 +144,7 @@ func _ready()->void:
 			#camera.compositor.compositor_effects[1].set("enabled",false)
 
 func _input(_event)->void:
-	if Input.is_action_pressed("gRightClick"):
+	if Input.is_action_pressed("gRightClick") and gameManager.isMouseHidden():
 		isZoomed = true
 	else:
 		isZoomed = false
@@ -306,7 +306,7 @@ func _physics_process(delta)->void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventMouseMotion:
+	if event is InputEventMouseMotion and Input.mouse_mode == Input.MouseMode.MOUSE_MODE_CAPTURED:
 		motionX = rad_to_deg(-event.relative.x * gameManager.mouseSens)
 		motionY = rad_to_deg(-event.relative.y * gameManager.mouseSens)
 		castLerp = Vector3(motionY* recoilLookSpeed+0.01,motionX* recoilLookSpeed,0)

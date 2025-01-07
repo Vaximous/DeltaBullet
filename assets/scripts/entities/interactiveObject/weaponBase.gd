@@ -44,6 +44,7 @@ var currentAmmo = 0:
 		currentMagSize = weaponResource.weaponMagSize
 		setWeaponRecoil()
 @export_subgroup("Behavior")
+@export var ejectionPoint : Marker3D
 @export var smokeEffect : PackedScene
 var defaultBulletTrail = load("res://assets/entities/bulletTrail/bulletTrail.tscn")
 @export var projectile : PackedScene = preload("res://assets/entities/projectiles/Bullet.tscn")
@@ -283,13 +284,14 @@ func fire()->void:
 
 
 func spawn_bullet_casing() -> void:
-	var casing = preload("res://assets/scenes/BulletCasing.tscn")
-	var inst = casing.instantiate()
-	inst.velocity.y = 10
-	inst.velocity.x = randf_range(-1, 1)
-	inst.velocity.z = randf_range(-1, 1)
-	gameManager.world.add_child(inst)
-	inst.global_position = global_position
+	if ejectionPoint:
+		var casing = preload("res://assets/scenes/BulletCasing.tscn")
+		var inst = casing.instantiate()
+		inst.velocity.y = 15 * ejectionPoint.rotation.x
+		inst.velocity.x = randf_range(-1, 1)
+		inst.velocity.z = randf_range(-1, 1)
+		gameManager.world.add_child(inst)
+		inst.global_position = ejectionPoint.global_position
 
 
 func spawnProjectile(raycaster : RayCast3D) -> void:

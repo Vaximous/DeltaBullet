@@ -44,7 +44,7 @@ var interactVisible:bool = false:
 # Called when the node enters the scene tree for the first time.
 func _ready()->void:
 	enableHud()
-	gameManager.getEventSignal("playerDied").connect(disableHud)
+	gameManager.getEventSignal("playerDied").connect(gameManager.onPlayerDeath)
 	gameManager.getEventSignal(&"playerShot").connect(spawnBulletCasing)
 	#Dialogic.timeline_started.connect(disableHud)
 	#Dialogic.timeline_ended.connect(enableHud)

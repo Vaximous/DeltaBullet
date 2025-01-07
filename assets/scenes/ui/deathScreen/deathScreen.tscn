@@ -1,0 +1,69 @@
+[gd_scene load_steps=8 format=3 uid="uid://drscixwlaa7o3"]
+
+[ext_resource type="Script" uid="uid://byispavvhv1yf" path="res://assets/scenes/ui/deathScreen/death_screen.gd" id="1_1cuhj"]
+[ext_resource type="Shader" uid="uid://dhylkvfkpaysc" path="res://assets/scripts/shaders/ui_blur.gdshader" id="2_s3fp7"]
+[ext_resource type="PackedScene" uid="uid://81cyr0xg0y7d" path="res://assets/scenes/ui/saveloadmenu/saveloadmenu.tscn" id="3_s3fp7"]
+[ext_resource type="PackedScene" uid="uid://ba0s8u6mtjxns" path="res://assets/scenes/menu/menuButton.tscn" id="3_wec8j"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ixt4c"]
+shader = ExtResource("2_s3fp7")
+shader_parameter/blur_amount = 1.5
+shader_parameter/tint = Color(0.467709, 0, 0.0200993, 1)
+
+[sub_resource type="Gradient" id="Gradient_e62h6"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_1cuhj"]
+gradient = SubResource("Gradient_e62h6")
+
+[node name="deathScreen" type="CanvasLayer"]
+layer = 2
+script = ExtResource("1_1cuhj")
+
+[node name="blurMargin" type="MarginContainer" parent="."]
+unique_name_in_owner = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="colorRect" type="TextureRect" parent="blurMargin"]
+material = SubResource("ShaderMaterial_ixt4c")
+layout_mode = 2
+texture = SubResource("GradientTexture1D_1cuhj")
+
+[node name="saveLoadMenu" parent="." instance=ExtResource("3_s3fp7")]
+visible = false
+
+[node name="deathOptions" type="MarginContainer" parent="."]
+unique_name_in_owner = true
+anchors_preset = -1
+anchor_top = 1.0
+anchor_right = 0.191
+anchor_bottom = 1.0
+offset_top = -175.0
+offset_right = 0.399963
+grow_vertical = 0
+
+[node name="panelContainer" type="PanelContainer" parent="deathOptions"]
+layout_mode = 2
+
+[node name="vBoxContainer" type="VBoxContainer" parent="deathOptions/panelContainer"]
+layout_mode = 2
+
+[node name="restartButton" parent="deathOptions/panelContainer/vBoxContainer" instance=ExtResource("3_wec8j")]
+layout_mode = 2
+text = "Restart"
+
+[node name="loadGame" parent="deathOptions/panelContainer/vBoxContainer" instance=ExtResource("3_wec8j")]
+layout_mode = 2
+text = "Load game"
+
+[node name="backToMenu" parent="deathOptions/panelContainer/vBoxContainer" instance=ExtResource("3_wec8j")]
+layout_mode = 2
+text = "quit to menu"
+
+[connection signal="pressed" from="deathOptions/panelContainer/vBoxContainer/restartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="pressed" from="deathOptions/panelContainer/vBoxContainer/loadGame" to="saveLoadMenu" method="initLoadPanel"]
+[connection signal="pressed" from="deathOptions/panelContainer/vBoxContainer/loadGame" to="saveLoadMenu" method="show"]
+[connection signal="pressed" from="deathOptions/panelContainer/vBoxContainer/backToMenu" to="." method="_on_back_to_menu_pressed"]

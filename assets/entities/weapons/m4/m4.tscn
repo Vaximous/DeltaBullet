@@ -139,9 +139,10 @@ _data = {
 &"reload": ExtResource("11_b1h3l")
 }
 
-[node name="M4" node_paths=PackedStringArray("weaponMesh", "muzzlePoint") instance=ExtResource("1_kohee")]
+[node name="M4" node_paths=PackedStringArray("weaponMesh", "ejectionPoint", "muzzlePoint") instance=ExtResource("1_kohee")]
 weaponMesh = NodePath("M4Mesh")
 weaponResource = ExtResource("2_t7j74")
+ejectionPoint = NodePath("M4Mesh/ejectionPoint")
 muzzlePoint = NodePath("M4Mesh/Marker3D")
 muzzleFlashes = Array[PackedScene]([ExtResource("4_rgg5c")])
 objectName = "M4A3"
@@ -166,6 +167,9 @@ surface_material_override/0 = SubResource("StandardMaterial3D_fqcp5")
 
 [node name="Marker3D" type="Marker3D" parent="M4Mesh" index="3"]
 transform = Transform3D(0.133072, 4.4688e-08, -4.26326e-14, -1.00466e-08, 0.591908, 2.06481e-15, 1.55431e-14, -1.95338e-15, 0.625684, 0.875428, -0.00299279, -3.82662e-08)
+
+[node name="ejectionPoint" type="Marker3D" parent="M4Mesh" index="4"]
+transform = Transform3D(1, 0, 0, 0, 0.907777, -0.419452, 0, 0.419452, 0.907777, 0.351888, 0.0279661, 0.0391288)
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." index="1"]
 stream = SubResource("AudioStreamRandomizer_upyhg")

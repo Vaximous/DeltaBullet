@@ -272,9 +272,10 @@ _data = {
 &"reload": ExtResource("12_12yrj")
 }
 
-[node name="Uzi" node_paths=PackedStringArray("weaponMesh", "muzzlePoint") instance=ExtResource("1_k0gi6")]
+[node name="Uzi" node_paths=PackedStringArray("weaponMesh", "ejectionPoint", "muzzlePoint") instance=ExtResource("1_k0gi6")]
 weaponMesh = NodePath("Mesh")
 weaponResource = ExtResource("2_5xwbk")
+ejectionPoint = NodePath("Mesh/ejectionPoint")
 muzzlePoint = NodePath("Mesh/Marker3D")
 muzzleFlashes = Array[PackedScene]([ExtResource("4_2r72i")])
 objectName = "Uzi"
@@ -324,7 +325,10 @@ mesh = SubResource("ArrayMesh_weqvd")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_fl3pl")
 
-[node name="Marker3D" type="Marker3D" parent="Mesh" index="7"]
+[node name="ejectionPoint" type="Marker3D" parent="Mesh" index="7"]
+transform = Transform3D(-3.48298e-08, 0.334225, 0.723329, 0, 0.723329, -0.334225, -0.796813, -1.46094e-08, -3.16177e-08, 0.0267887, 0.0127892, 0.0265468)
+
+[node name="Marker3D" type="Marker3D" parent="Mesh" index="8"]
 transform = Transform3D(0.682511, 0, -0.0106383, 0, 0.682594, 0, 0.0106383, 0, 0.682511, 0.296102, 2.0802e-05, -1.2943e-08)
 
 [node name="audioStreamPlayer3d" type="AudioStreamPlayer3D" parent="." index="1"]

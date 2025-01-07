@@ -133,6 +133,12 @@ func get_persistent_data() -> Dictionary:
 	return {}
 
 
+func onPlayerDeath()->void:
+	var deathScreen = load("res://assets/scenes/ui/deathScreen/deathScreen.tscn")
+	gameManager.activeCamera.hud.disableHud()
+	await get_tree().create_timer(0.7).timeout
+	add_child(deathScreen.instantiate())
+
 func modify_persistent_data(key : String, value : Variant) -> void:
 	var data = get_persistent_data()
 	data[key] = value
@@ -159,6 +165,11 @@ func getColliderPhysicsMaterial(collider : Object) -> DB_PhysicsMaterial:
 		#print("No physics mat found, using generic...")
 		phys_mat = preload("res://assets/resources/PhysicsMaterials/generic_physics_material.tres")
 	return phys_mat
+
+func removeAllDeathScreens()->void:
+	for i in get_children():
+		if i.is_in_group(&"DeathScreen"):
+			i.fadeOut()
 
 
 func _input(_event)->void:
@@ -331,6 +342,13 @@ func showMouse()->void:
 
 func hideMouse()->void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
+
+func isMouseHidden()->bool:
+	if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED or Input.get_mouse_mode() == Input.MOUSE_MODE_HIDDEN:
+		return true
+	else:
+		return false
 
 func playSound(stream)->void:
 	soundPlayer.stream = stream

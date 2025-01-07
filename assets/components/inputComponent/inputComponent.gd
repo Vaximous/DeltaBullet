@@ -17,7 +17,7 @@ func _ready()->void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta:float)->void:
-		if is_instance_valid(controllingPawn) and isMouseHidden():
+		if is_instance_valid(controllingPawn) and gameManager.isMouseHidden():
 			if Input.is_action_pressed("gThrowThrowable"):
 				if is_instance_valid(controllingPawn):
 					controllingPawn.freeAim = true
@@ -70,14 +70,14 @@ func _process(_delta:float)->void:
 					controllingPawn.turnAmount = -controllingPawn.attachedCam.vertical.rotation.x
 
 func getInputDir()->Vector3:
-	if isMouseHidden():
+	if gameManager.isMouseHidden():
 		inputDir = Vector3(Input.get_action_strength("gMoveRight") - Input.get_action_strength("gMoveLeft"), 0, Input.get_action_strength("gMoveBackward") - Input.get_action_strength("gMoveForward"))
 		return inputDir
 	else:
 		return Vector3.ZERO
 
 func _input(event: InputEvent) -> void:
-	if isMouseHidden() and is_instance_valid(controllingPawn):
+	if gameManager.isMouseHidden() and is_instance_valid(controllingPawn):
 		if mouseActionsEnabled:
 			if event.is_action_pressed("gMwheelUp"):
 				#emit_signal("mouseButtonPressed", event.button_index)
@@ -136,7 +136,7 @@ func _input(event: InputEvent) -> void:
 					gameManager.notifyFade("You've died! Press F6 to restart!", 4, 5)
 
 		##Movement Code
-		if isMouseHidden():
+		if gameManager.isMouseHidden():
 			if !event is InputEventMouseMotion and !event is InputEventMouseButton:
 				if movementEnabled:
 					controllingPawn.direction.x = getInputDir().x
@@ -155,9 +155,3 @@ func _input(event: InputEvent) -> void:
 							controllingPawn.setMovementState.emit(controllingPawn.movementStates["standing"])
 						else:
 							controllingPawn.setMovementState.emit(controllingPawn.movementStates["crouch"])
-
-func isMouseHidden()->bool:
-	if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED or Input.get_mouse_mode() == Input.MOUSE_MODE_HIDDEN:
-		return true
-	else:
-		return false

@@ -513,7 +513,8 @@ func endAttachedCam()->void:
 		#Dialogic.end_timeline()
 
 
-
+func isPlayerPawn()->bool:
+	return get_meta(&"isPlayer")
 
 func moveHitboxDecals(parent:Node3D = gameManager.world.worldParticles) ->void:
 	if gameManager.world != null:

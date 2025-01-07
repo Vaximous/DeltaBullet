@@ -1,19 +1,19 @@
 [gd_scene load_steps=13 format=3 uid="uid://dwxr1gnovk0jv"]
 
 [ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="1_6sqyy"]
-[ext_resource type="Script" path="res://assets/scenes/ui/saveloadmenu/saveButton.gd" id="2_hc6b0"]
+[ext_resource type="Script" uid="uid://chj3en6dpytsf" path="res://assets/scenes/ui/saveloadmenu/saveButton.gd" id="2_hc6b0"]
 [ext_resource type="AudioStream" uid="uid://08mwbmwvrolu" path="res://assets/sounds/ui/uiAppear2.wav" id="3_g47wy"]
 [ext_resource type="AudioStream" uid="uid://dbxyo1p3kd36u" path="res://assets/sounds/ui/uievaluate.wav" id="4_qgfjb"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qqgmi"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hgw5i"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1sutc"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_uklys"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dkqhi"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1sutc"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hgw5i"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qqgmi"]
 
 [sub_resource type="Gradient" id="Gradient_06uxp"]
 colors = PackedColorArray(0.196078, 0, 0, 1, 0.356863, 0, 0, 0)
@@ -34,11 +34,11 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 theme = ExtResource("1_6sqyy")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_qqgmi")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_hgw5i")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_1sutc")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_uklys")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_dkqhi")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_1sutc")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_hgw5i")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_qqgmi")
 script = ExtResource("2_hc6b0")
 
 [node name="background" type="TextureRect" parent="."]

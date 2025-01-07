@@ -120,6 +120,7 @@ resource_name = "kitchenFlooring"
 cull_mode = 2
 albedo_texture = ExtResource("14_kydh8")
 roughness = 0.95
+uv1_scale = Vector3(0.305, 0.305, 0.305)
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_sya1n"]
 _surfaces = [{

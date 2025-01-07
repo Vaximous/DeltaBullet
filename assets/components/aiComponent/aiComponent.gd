@@ -150,7 +150,7 @@ func _ready() -> void:
 		setExceptions()
 		visionTimer.start()
 		await get_tree().process_frame
-		pawnOwner.pawnDied.connect(NavigationServer3D.free_rid.bind(aiAgent))
+		pawnOwner.onPawnKilled.connect(NavigationServer3D.free_rid.bind(aiAgent))
 		if isInteractable:
 			setInteractablePawn(true)
 	else:

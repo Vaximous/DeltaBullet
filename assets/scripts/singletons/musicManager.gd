@@ -149,3 +149,8 @@ func play_sound_positioned(soundfile : String, position : Vector3, volume_db : f
 		get_tree().current_scene.add_child(audioplayer)
 	audioplayer.play()
 	audioplayer.position = position
+
+
+#Function exists so we don't have to replace all instances of change_song_to
+func change_song_to(stream : AudioStream, fade_time : float = 1.0) -> void:
+	create_audioplayer_with_stream(stream, fade_time)

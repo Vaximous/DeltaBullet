@@ -529,6 +529,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 color = Color(1, 1, 1, 0)
+metadata/_edit_lock_ = true
 
 [node name="bulletTimeOn" type="AudioStreamPlayer" parent="bulletTimeFlash"]
 stream = ExtResource("13_paei5")

@@ -1,14 +1,14 @@
 [gd_resource type="Resource" script_class="ItemData" load_steps=4 format=3 uid="uid://f30cnkk8nnpb"]
 
-[ext_resource type="Script" uid="uid://b6r8ewrq3qb3y" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="1_1ufyd"]
+[ext_resource type="Script" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="1_1ufyd"]
 [ext_resource type="Texture2D" uid="uid://bado0y6x8is5j" path="res://assets/textures/crosshair/crosshair008.png" id="1_22a00"]
 [ext_resource type="Resource" uid="uid://chv5hapb5gdq5" path="res://assets/entities/weapons/Revolver/revolverDisplay.tres" id="1_v5w1c"]
 
 [resource]
 script = ExtResource("1_1ufyd")
-useBulletTrail = null
+useBulletTrail = true
 displayData = ExtResource("1_v5w1c")
-canBeReloaded = null
+canBeReloaded = true
 weaponMagSize = 18
 ammoSize = 6
 reloadTime = 0.5
@@ -20,8 +20,8 @@ bulletPenetration = 1000.0
 weaponImpulse = 50.0
 weaponShots = 1
 ammoConsumption = 1
-useCustomCrosshairSize = null
-crosshairSizeOverride = null
+useCustomCrosshairSize = false
+crosshairSizeOverride = Vector2(0.8, 0.8)
 forcedCrosshair = ExtResource("1_22a00")
 useFOV = true
 fovShotAmount = 5.5
@@ -29,16 +29,16 @@ weaponRecoil = Vector3(45, 45, 9)
 weaponRecoilStrength = 6.0
 weaponSpread = 0.9
 weaponRecoilStrengthAim = 7.0
-weaponSpreadAim = null
-leftHandParent = null
-rightHandParent = null
+weaponSpreadAim = 0.25
+leftHandParent = false
+rightHandParent = true
 useWeaponSprintAnim = true
 useLeftHandIdle = false
-useRightHandIdle = null
+useRightHandIdle = true
 useLeftHandAiming = false
-useRightHandAiming = null
+useRightHandAiming = true
 useLeftHandFreeAiming = false
-useRightHandFreeAiming = null
+useRightHandFreeAiming = true
 weaponPositionOffset = Vector3(-0.005, -0.285, 0.075)
 weaponRotationOffset = Vector3(3.125, -1.58, 0.125)
-bulletColor = null
+bulletColor = Color(1, 1, 0, 1)

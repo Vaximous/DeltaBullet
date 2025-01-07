@@ -45,6 +45,7 @@ var interactVisible:bool = false:
 func _ready()->void:
 	enableHud()
 	gameManager.getEventSignal("playerDied").connect(disableHud)
+	gameManager.getEventSignal(&"playerShot").connect(spawnBulletCasing)
 	#Dialogic.timeline_started.connect(disableHud)
 	#Dialogic.timeline_ended.connect(enableHud)
 	#Dialogic.timeline_started.connect(gameManager.showMouse)
@@ -188,9 +189,17 @@ func get_hit_target(raycast : RayCast3D) -> Vector3:
 	return ray_target_point
 
 
+const bulletcasing_scene = preload("res://assets/scenes/ui/HudBulletCasingFly.tscn")
+func spawnBulletCasing() -> void:
+	var spawn_pos = $weaponBar.global_position
+	var inst = bulletcasing_scene.instantiate()
+	inst.spawn_at_location(self, spawn_pos)
+
+
 func disableHud()->void:
 	hudEnabled = false
 	fadeHudOut()
+
 
 func enableHud()->void:
 	hudEnabled = true

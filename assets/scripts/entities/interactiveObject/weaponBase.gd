@@ -239,6 +239,8 @@ func fire()->void:
 		if weaponRemoteState and weaponRemoteStateLeft and isEquipped:
 			weaponRemoteState.start("fire")
 			weaponRemoteStateLeft.start("fire")
+			if weaponOwner.is_in_group(&"Player"):
+				gameManager.getEventSignal(&"playerShot").emit()
 		if weaponOwner.attachedCam:
 			if weaponResource.useFOV:
 				weaponOwner.attachedCam.camera.fov += weaponResource.fovShotAmount

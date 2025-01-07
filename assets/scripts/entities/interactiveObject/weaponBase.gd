@@ -229,8 +229,8 @@ func fire()->void:
 	#Weapon is capable of firing.
 	if !isFiring:
 		shot_fired.emit()
+		spawn_bullet_casing()
 		isFiring = true
-
 		#var shot_cast : RayCast3D = weaponCast
 		#if checkShooter():
 			#if weaponOwner.attachedCam.camCast != null:
@@ -280,6 +280,16 @@ func fire()->void:
 		await get_tree().create_timer(weaponResource.weaponFireRate).timeout
 		isFiring = false
 	return
+
+
+func spawn_bullet_casing() -> void:
+	var casing = preload("res://assets/scenes/BulletCasing.tscn")
+	var inst = casing.instantiate()
+	inst.velocity.y = 10
+	inst.velocity.x = randf_range(-1, 1)
+	inst.velocity.z = randf_range(-1, 1)
+	gameManager.world.add_child(inst)
+	inst.global_position = global_position
 
 
 func spawnProjectile(raycaster : RayCast3D) -> void:

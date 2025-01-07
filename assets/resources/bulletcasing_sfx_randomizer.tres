@@ -1,0 +1,15 @@
+[gd_resource type="AudioStreamRandomizer" load_steps=6 format=3 uid="uid://dsirhcpi676ka"]
+
+[ext_resource type="AudioStream" uid="uid://5j2rha1m5b45" path="res://assets/sounds/weapons/bulletcasing_drop-01.mp3" id="1_0s412"]
+[ext_resource type="AudioStream" uid="uid://bw17bqtx5slci" path="res://assets/sounds/weapons/bulletcasing_drop-02.mp3" id="2_vpb8t"]
+[ext_resource type="AudioStream" uid="uid://0si2ocgwj0ph" path="res://assets/sounds/weapons/bulletcasing_drop-03.mp3" id="3_3xsda"]
+[ext_resource type="AudioStream" uid="uid://crxf8mqgqtl55" path="res://assets/sounds/weapons/bulletcasing_drop-04.mp3" id="4_n0y3v"]
+[ext_resource type="AudioStream" uid="uid://y7jnim6yjjk8" path="res://assets/sounds/weapons/bulletcasing_drop-05.mp3" id="5_581o4"]
+
+[resource]
+streams_count = 5
+stream_0/stream = ExtResource("1_0s412")
+stream_1/stream = ExtResource("2_vpb8t")
+stream_2/stream = ExtResource("3_3xsda")
+stream_3/stream = ExtResource("4_n0y3v")
+stream_4/stream = ExtResource("5_581o4")

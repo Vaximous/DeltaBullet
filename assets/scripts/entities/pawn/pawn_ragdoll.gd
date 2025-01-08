@@ -131,6 +131,8 @@ func doRagdollHeadshot()-> void:
 			#blood.global_position = Vector3(headBone.global_position.x,headBone.global_position.y-1.4,headBone.global_position.z)
 			#blood.apply_impulse(Vector3(randf_range(-10,10),randf_range(-10,10),randf_range(-10,10)) * randf_range(5,10))
 
+	for x in randi_range(2,7):
+		gameManager.createGib(headBone.global_position)
 	var destroyedHeads : Array = [preload("res://assets/models/pawn/male/headDestroyed1.tres"),preload("res://assets/models/pawn/male/headDestroyed2.tres"),preload("res://assets/models/pawn/male/headDestroyed3.tres")]
 	headshotsound.play()
 	deathSound.stop()

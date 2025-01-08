@@ -16,7 +16,7 @@ warnings/check_angle_interpolation_type_conflicting=false
 [application]
 
 config/name="Delta Bullet"
-config/version="0.75.91"
+config/version="0.75.92"
 run/main_scene="res://bootscene.tscn"
 run/main_loop_type="PEMainLoop"
 config/features=PackedStringArray("4.4", "Forward Plus")

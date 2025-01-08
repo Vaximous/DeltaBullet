@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://ccnq3cc8k6nt5"]
+[gd_scene load_steps=44 format=3 uid="uid://ccnq3cc8k6nt5"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_iq3s1"]
 [ext_resource type="Script" uid="uid://b31u24at18p5t" path="res://assets/resources/customResources/worldData/worldData.gd" id="2_gqs4i"]
@@ -23,6 +23,8 @@
 [ext_resource type="PackedScene" uid="uid://7ueyays7enj5" path="res://assets/entities/trigger/pawnTrigger.tscn" id="14_sl7fe"]
 [ext_resource type="Script" uid="uid://d01nxiqfv4lfd" path="res://assets/scenes/worlds/areas/playerHome/player_closet.gd" id="18_lux1e"]
 [ext_resource type="Script" uid="uid://tiffkbp5ry74" path="res://assets/scripts/entities/interactiveObject/interactiveObject.gd" id="19_s4bs4"]
+[ext_resource type="PackedScene" uid="uid://dakipfkiu0xqt" path="res://assets/components/musicChangeZone/music_change_zone.tscn" id="23_akr5q"]
+[ext_resource type="AudioStream" uid="uid://c1mk4s30dq3nc" path="res://assets/music/menu/Idlehoodtune.wav" id="24_qkxav"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_882n8"]
 panorama = ExtResource("4_7ph80")
@@ -43,11 +45,11 @@ colors = PackedColorArray(0, 0, 0, 1, 0.996078, 0.941176, 0.811765, 1)
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_iun5n"]
 gradient = SubResource("Gradient_6voip")
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_sl7fe"]
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_2am8s"]
 panorama = ExtResource("4_7ph80")
 
 [sub_resource type="Sky" id="Sky_nj1fe"]
-sky_material = SubResource("PanoramaSkyMaterial_sl7fe")
+sky_material = SubResource("PanoramaSkyMaterial_2am8s")
 
 [sub_resource type="Environment" id="Environment_a8ts2"]
 background_mode = 2
@@ -154,6 +156,13 @@ func _on_pawn_trigger_trigger_activated(body: Variant) -> void:
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_sl7fe"]
 size = Vector3(125.94, 80.2482, 128.95)
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_qkxav"]
+streams_count = 1
+stream_0/stream = ExtResource("24_qkxav")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_peom8"]
+size = Vector3(7.06016, 3.95514, 9.06775)
 
 [node name="worldBase" instance=ExtResource("1_iq3s1")]
 worldData = SubResource("Resource_6vxwt")
@@ -422,6 +431,16 @@ triggerGroups = Array[String](["Player", "Pawn"])
 [node name="collisionShape3d" type="CollisionShape3D" parent="Props/node3d/pawnTrigger" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.06566, -36.6576, -7.02885)
 shape = SubResource("BoxShape3D_sl7fe")
+
+[node name="MusicChangeZone" parent="Props" index="4" instance=ExtResource("23_akr5q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.91982, 2.35435, 19.2278)
+area_music = SubResource("AudioStreamRandomizer_qkxav")
+fade_time = 1.5
+switch_back_on_exit = true
+
+[node name="collisionShape3d" type="CollisionShape3D" parent="Props/MusicChangeZone" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0513339, 1.12899, -1.13312)
+shape = SubResource("BoxShape3D_peom8")
 
 [node name="aiMarker" parent="Misc/WaypointNodes" index="0" instance=ExtResource("5_bh8tr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.626718, 1.66502, 2.90188)

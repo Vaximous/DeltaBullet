@@ -146,6 +146,7 @@ func updateRagdollScale()->void:
 
 func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 	boneState = state.sleeping
+	currentVelocity = state.get_velocity_at_local_position(position)
 	if audioCooldown > 0 or boneState == true:
 			return
 
@@ -228,7 +229,6 @@ func hit(dmg, dealer=null, hitImpulse:Vector3 = Vector3.ZERO, hitPoint:Vector3 =
 func hookes_law(displacement: Vector3, current_velocity: Vector3, stiffness: float, damping: float) -> Vector3:
 	return (stiffness * displacement) - (damping * current_velocity)
 
-
 func pulverizeBone()->void:
 	#await get_tree().process_frame
 	ragdoll.ragdollSkeleton.set_bone_pose_scale(get_bone_id(),Vector3.ZERO)
@@ -274,7 +274,9 @@ func createActiveRagdollJoint()->void:
 		activeRagdollJoint = activeRagJoint
 
 func doPulverizeEffect()->void:
-	doBleed()
+	await get_tree().process_frame
+	gameManager.createGib(global_position)
+	#doBleed()
 	var pulverizeSound : AudioStreamPlayer3D = AudioStreamPlayer3D.new()
 	pulverizeSound.stream = load("res://assets/misc/obliterateStream.tres")
 	pulverizeSound.bus = &"Sounds"

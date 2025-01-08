@@ -37,12 +37,11 @@ visible = false
 
 [node name="deathOptions" type="MarginContainer" parent="."]
 unique_name_in_owner = true
-anchors_preset = -1
+anchors_preset = 2
 anchor_top = 1.0
-anchor_right = 0.191
 anchor_bottom = 1.0
 offset_top = -175.0
-offset_right = 0.399963
+offset_right = 306.0
 grow_vertical = 0
 
 [node name="panelContainer" type="PanelContainer" parent="deathOptions"]
@@ -64,6 +63,6 @@ layout_mode = 2
 text = "quit to menu"
 
 [connection signal="pressed" from="deathOptions/panelContainer/vBoxContainer/restartButton" to="." method="_on_restart_button_pressed"]
-[connection signal="pressed" from="deathOptions/panelContainer/vBoxContainer/loadGame" to="saveLoadMenu" method="initLoadPanel"]
 [connection signal="pressed" from="deathOptions/panelContainer/vBoxContainer/loadGame" to="saveLoadMenu" method="show"]
+[connection signal="pressed" from="deathOptions/panelContainer/vBoxContainer/loadGame" to="saveLoadMenu" method="initLoadPanel"]
 [connection signal="pressed" from="deathOptions/panelContainer/vBoxContainer/backToMenu" to="." method="_on_back_to_menu_pressed"]

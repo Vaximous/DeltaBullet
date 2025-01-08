@@ -285,7 +285,7 @@ func fire()->void:
 
 func spawn_bullet_casing() -> void:
 	if ejectionPoint:
-		var casing = preload("res://assets/scenes/BulletCasing.tscn")
+		var casing = preload("res://assets/entities/casing/BulletCasing.tscn")
 		var inst = casing.instantiate()
 		inst.velocity.y = 15 * ejectionPoint.rotation.x
 		inst.velocity.x = randf_range(-1, 1)
@@ -317,6 +317,7 @@ func spawnProjectile(raycaster : RayCast3D) -> void:
 		ray.from = muzzlePoint.global_position
 		ray.to = ray_target_point
 		ray.collision_mask = raycaster.collision_mask
+		ray.collide_with_areas = true
 		var result = get_world_3d().direct_space_state.intersect_ray(ray)
 		if result:
 			bulletTrail.initTrail(muzzlePoint.global_position, result.position)
@@ -344,7 +345,7 @@ func get_hit_target(raycast : RayCast3D) -> Vector3:
 			else:
 				ray_target_point = intersect['position']
 		else:
-			rayq.collide_with_areas = false
+			rayq.collide_with_areas = true
 			rayq.collision_mask = raycast.collision_mask
 			intersect = state.intersect_ray(rayq)
 			if !intersect.is_empty():

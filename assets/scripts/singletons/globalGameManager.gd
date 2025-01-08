@@ -584,7 +584,7 @@ func doDeathEffect()->void:
 	deathTween.tween_property(Engine,"time_scale",1,1.5).set_ease(defaultEaseType).set_trans(defaultTransitionType)
 
 
-func createSplat(gposition:Vector3 = Vector3.ZERO,normal:Vector3 = Vector3.ZERO,colPoint:Vector3 = Vector3.ZERO,parent : Node3D = world.worldMisc)->void:
+func createSplat(gposition:Vector3 = Vector3.ZERO,normal:Vector3 = Vector3.ZERO,parent : Node3D = world.worldMisc)->void:
 	if is_instance_valid(parent):
 		var _b = bloodDecal.instantiate()
 		parent.add_child(_b)
@@ -605,7 +605,7 @@ func sprayBlood(position:Vector3,amount:int,_maxDistance:int,distanceMultiplier:
 			ray = ray.create(position,position + Vector3(randi_range(-_maxDistance,_maxDistance),randi_range(-_maxDistance,_maxDistance),randi_range(-_maxDistance,_maxDistance)*distanceMultiplier),1)
 			result = directSpace.intersect_ray(ray)
 			if result:
-				createSplat(result.position,result.normal,result.position)
+				createSplat(result.position,result.normal)
 				if debugEnabled:
 					var meshInstance : MeshInstance3D = MeshInstance3D.new()
 					var mesh = ImmediateMesh.new()
@@ -693,6 +693,7 @@ func enableBulletTime()->void:
 func setSoundVariables(sound:AudioStreamPlayer3D,bus:StringName = &"Sounds")->void:
 	#Set the sound's variables to sound correctly and not muffled as well as assigning it to a bus if its not already.
 	sound.max_polyphony = 2
+	sound.attenuation_model = AudioStreamPlayer3D.ATTENUATION_DISABLED
 	#sound.max_db = 15
 	sound.max_distance = 0
 	sound.unit_size = 10
@@ -706,6 +707,16 @@ func create_surface_transform(origin : Vector3, incoming_vector : Vector3, surfa
 	var x = surface_normal.cross(z)
 	var tf := Transform3D(x.normalized(), y.normalized(), z.normalized(), origin).rotated_local(Vector3.UP, PI/2)
 	return tf
+
+
+func createGib(position:Vector3, velocity : Vector3 = Vector3.ONE)->void:
+	var gib = [preload("res://assets/entities/gore/dismemberGib.tscn"),preload("res://assets/entities/gore/dismemberGib2.tscn")].pick_random()
+	var inst = gib.instantiate()
+	inst.velocity.y = velocity.y * randf_range(5, 16)
+	inst.velocity.x = velocity.x * randf_range(-2, 2)
+	inst.velocity.z = velocity.z * randf_range(-2, 2)
+	gameManager.world.add_child(inst)
+	inst.global_position = position
 
 
 func hideAllPlayers()->void:

@@ -108,7 +108,7 @@ func spawnPawn(walk:bool = false,position : Vector3 = Vector3.INF) -> void:
 		pawn.rotation.y = randf_range(0,360)
 		pawn.global_position = cast.get_collision_point()
 		pawn.fallDamageEnabled = true
-		pawn.global_position.y = pawn.global_position.y + 1
+		pawn.global_position.y = pawn.global_position.y
 		if walk:
 			var controller : AIComponent = aiControllerComponent.instantiate()
 			pawn.componentHolder.add_child(controller)

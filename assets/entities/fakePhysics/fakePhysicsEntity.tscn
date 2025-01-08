@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://conrx8ns0rf38"]
+
+[ext_resource type="Script" uid="uid://mpu0audo4bfj" path="res://assets/entities/fakePhysics/fake_physics_entity.gd" id="1_gfee5"]
+
+[node name="fakePhysicsEntity" type="CharacterBody3D"]
+collision_layer = 0
+script = ExtResource("1_gfee5")
+
+[node name="collisionShape3d" type="CollisionShape3D" parent="."]

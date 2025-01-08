@@ -593,9 +593,10 @@ _data = {
 &"reload": ExtResource("11_4ba1w")
 }
 
-[node name="Honeybadger" node_paths=PackedStringArray("weaponMesh", "muzzlePoint") instance=ExtResource("1_821xr")]
+[node name="Honeybadger" node_paths=PackedStringArray("weaponMesh", "ejectionPoint", "muzzlePoint") instance=ExtResource("1_821xr")]
 weaponMesh = NodePath("Cube_005")
 weaponResource = ExtResource("2_ytmxg")
+ejectionPoint = NodePath("Cube_005/marker3d2")
 muzzlePoint = NodePath("Cube_005/Marker3D")
 muzzleFlashes = Array[PackedScene]([ExtResource("4_08g2b")])
 objectName = "Honeybadger"
@@ -607,6 +608,9 @@ skeleton = NodePath("")
 
 [node name="Marker3D" type="Marker3D" parent="Cube_005" index="0"]
 transform = Transform3D(-1.45419e-11, 0, -0.00156421, -0.000332679, -1.76403e-10, 6.83739e-11, -3.96584e-11, 0.00147977, 8.15076e-18, 0, -0.00116952, 6.67015e-05)
+
+[node name="marker3d2" type="Marker3D" parent="Cube_005" index="1"]
+transform = Transform3D(1, 0, 0, 0, 0.973952, -0.226753, 0, 0.226753, 0.973952, -0.000121239, 0.000143778, 9.52302e-05)
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." index="1"]
 stream = SubResource("AudioStreamRandomizer_24m82")

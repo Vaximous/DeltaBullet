@@ -149,7 +149,7 @@ func unequipClothingFromPawn(item:PackedScene)->void:
 		var itemInstance = item.instantiate()
 		var filePath = itemInstance.scene_file_path
 		for clothing in clothingPawn.clothingInventory:
-			if clothing.scene_file_path == filePath:
+			if clothing.scene_file_path == filePath and is_instance_valid(clothing):
 				clothingPawn.clothingInventory.erase(clothing)
 				clothing.queue_free()
 				#clothingPawn.clothingInventory.remove_at(clothingInt)

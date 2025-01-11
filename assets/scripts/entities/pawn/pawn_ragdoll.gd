@@ -147,7 +147,7 @@ func doRagdollHeadshot()-> void:
 			if clothes.clothingType == 0 or clothes.clothingType == 1:
 				clothes.queue_free()
 				checkClothingHider()
-	gameManager.sprayBlood(headBone.global_position,particle.amount,50,1.2)
+	gameManager.sprayBlood(headBone.global_position,randi_range(1,5),50,1.2)
 
 func setPawnMaterial(material)-> void:
 	for mesh in ragdollSkeleton.get_children():

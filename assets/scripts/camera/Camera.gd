@@ -294,9 +294,11 @@ func _physics_process(delta)->void:
 			direction = direction.normalized()
 
 		if Input.is_action_pressed("dCamUp"):
-			vertVeclocity.y = 1
+			if gameManager.isMouseHidden():
+				vertVeclocity.y = 1
 		if Input.is_action_pressed("dCamDown"):
-			vertVeclocity.y = -1.0
+			if gameManager.isMouseHidden():
+				vertVeclocity.y = -1.0
 
 		velocity.x = velocityComponent.accelerateToVel(direction, delta, true, false, false).x
 		velocity.y = velocityComponent.accelerateToVel(vertVeclocity, delta, false, true, false).y

@@ -1,0 +1,81 @@
+[gd_scene load_steps=6 format=3 uid="uid://2mlt2r4jpb1c"]
+
+[ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="1_7mwi3"]
+[ext_resource type="Texture2D" uid="uid://dwy1ieh8lo0m0" path="res://assets/scenes/worlds/areas/playerHome/previewscreenTest.png" id="2_bhotf"]
+[ext_resource type="Script" uid="uid://bl3u61qcau7of" path="res://assets/scenes/ui/mapOverview/area_information.gd" id="2_ghdy3"]
+[ext_resource type="FontFile" uid="uid://b3s7umd01feyu" path="res://assets/fonts/Carthage Pro Regular.ttf" id="3_ghdy3"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_okjsk"]
+font = ExtResource("3_ghdy3")
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 5
+shadow_color = Color(0, 0, 0, 0.576471)
+
+[node name="AreaInformation" type="MarginContainer"]
+anchors_preset = -1
+anchor_right = 0.265
+anchor_bottom = 0.606
+offset_right = 3.05176e-05
+offset_bottom = -0.400024
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_7mwi3")
+script = ExtResource("2_ghdy3")
+
+[node name="panelContainer" type="PanelContainer" parent="."]
+layout_mode = 2
+
+[node name="vBoxContainer" type="VBoxContainer" parent="panelContainer"]
+layout_mode = 2
+
+[node name="hideButton" type="Button" parent="panelContainer/vBoxContainer"]
+layout_mode = 2
+text = "X"
+
+[node name="hSeparator3" type="HSeparator" parent="panelContainer/vBoxContainer"]
+layout_mode = 2
+
+[node name="textureRect" type="TextureRect" parent="panelContainer/vBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("2_bhotf")
+expand_mode = 5
+
+[node name="hSeparator" type="HSeparator" parent="panelContainer/vBoxContainer"]
+layout_mode = 2
+
+[node name="descriptionZone" type="PanelContainer" parent="panelContainer/vBoxContainer"]
+custom_minimum_size = Vector2(0, 147.785)
+layout_mode = 2
+
+[node name="label" type="Label" parent="panelContainer/vBoxContainer/descriptionZone"]
+layout_mode = 2
+text = "Map description here.."
+label_settings = SubResource("LabelSettings_okjsk")
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="hSeparator2" type="HSeparator" parent="panelContainer/vBoxContainer"]
+layout_mode = 2
+
+[node name="completionStats" type="PanelContainer" parent="panelContainer/vBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(0, 73.53)
+layout_mode = 2
+
+[node name="label" type="Label" parent="panelContainer/vBoxContainer/completionStats"]
+layout_mode = 2
+text = "Put completion stats here"
+label_settings = SubResource("LabelSettings_okjsk")
+horizontal_alignment = 1
+
+[node name="hSeparator4" type="HSeparator" parent="panelContainer/vBoxContainer"]
+layout_mode = 2
+
+[node name="travelButton" type="Button" parent="panelContainer/vBoxContainer"]
+layout_mode = 2
+text = "TRAVEL"
+
+[connection signal="pressed" from="panelContainer/vBoxContainer/hideButton" to="." method="hide"]
+[connection signal="pressed" from="panelContainer/vBoxContainer/travelButton" to="." method="_on_travel_button_pressed"]

@@ -225,9 +225,9 @@ tracks/3/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ws3um"]
 _data = {
-"RESET": SubResource("Animation_ixmy2"),
-"hover": SubResource("Animation_sy07a"),
-"unhover": SubResource("Animation_wmfmd")
+&"RESET": SubResource("Animation_ixmy2"),
+&"hover": SubResource("Animation_sy07a"),
+&"unhover": SubResource("Animation_wmfmd")
 }
 
 [sub_resource type="Theme" id="Theme_7cx13"]
@@ -249,16 +249,16 @@ mouse_filter = 1
 theme_override_colors/font_disabled_color = Color(0, 0, 0, 0)
 theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 0)
 theme_override_colors/font_hover_color = Color(0, 0, 0, 0)
-theme_override_colors/font_pressed_color = Color(0, 0, 0, 0)
-theme_override_colors/font_focus_color = Color(0, 0, 0, 0)
-theme_override_colors/font_color = Color(0, 0, 0, 0)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
-theme_override_colors/icon_normal_color = Color(0, 0, 0, 0)
-theme_override_colors/icon_focus_color = Color(0, 0, 0, 0)
-theme_override_colors/icon_pressed_color = Color(0, 0, 0, 0)
-theme_override_colors/icon_hover_color = Color(0, 0, 0, 0)
-theme_override_colors/icon_hover_pressed_color = Color(0, 0, 0, 0)
 theme_override_colors/icon_disabled_color = Color(0, 0, 0, 0)
+theme_override_colors/icon_hover_pressed_color = Color(0, 0, 0, 0)
+theme_override_colors/icon_hover_color = Color(0, 0, 0, 0)
+theme_override_colors/icon_pressed_color = Color(0, 0, 0, 0)
+theme_override_colors/icon_focus_color = Color(0, 0, 0, 0)
+theme_override_colors/icon_normal_color = Color(0, 0, 0, 0)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
+theme_override_colors/font_color = Color(0, 0, 0, 0)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 0)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 0)
 theme_override_font_sizes/font_size = 1
 theme_override_styles/focus = SubResource("StyleBoxEmpty_1lmnn")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_x4efl")
@@ -289,7 +289,7 @@ expand_mode = 1
 
 [node name="animationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_ws3um")
+&"": SubResource("AnimationLibrary_ws3um")
 }
 
 [node name="label" type="Label" parent="."]

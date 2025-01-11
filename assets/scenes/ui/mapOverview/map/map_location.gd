@@ -3,9 +3,10 @@ var visibilityTween : Tween
 const defaultTransitionType = Tween.TRANS_QUINT
 const defaultEaseType = Tween.EASE_OUT
 const defaultTweenSpeed : float = 1
-@onready var animPlayer : AnimationPlayer = $marginContainer/animationPlayer
-@onready var markerLabel : Label = $marginContainer/hBoxContainer/label
-@onready var container : MarginContainer = $marginContainer
+@onready var animPlayer : AnimationPlayer = $Icon/marginContainer/animationPlayer
+@onready var markerLabel : Label = $Icon/marginContainer/hBoxContainer/label
+@onready var container : MarginContainer = $Icon/marginContainer
+@onready var icon : Control = $Icon
 @export var map : Node3D:
 	set(value):
 		map = value
@@ -37,10 +38,14 @@ func _ready() -> void:
 	setupMap()
 
 func playOpenAnimation()->void:
-	animPlayer.play("open")
+	if map:
+		if map.mapScreen.selectedMarker != self and !animPlayer.current_animation == "open":
+			animPlayer.play("open")
 
 func playCloseAnimation()->void:
-	animPlayer.play("close")
+	if map:
+		if map.mapScreen.selectedMarker != self:
+			animPlayer.play("close")
 
 func gotoLocation()->void:
 	if travelScene and get_tree().current_scene.scene_file_path != travelScene.resource_path:
@@ -56,7 +61,12 @@ func setVisible(value:bool)->void:
 	visibilityTween = create_tween()
 	if value:
 		show()
-		visibilityTween.parallel().tween_property(container,"modulate",Color.WHITE,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+		visibilityTween.parallel().tween_property(icon,"modulate",Color.WHITE,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
 	else:
-		await visibilityTween.parallel().tween_property(container,"modulate",Color.TRANSPARENT,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType).finished
+		await visibilityTween.parallel().tween_property(icon,"modulate",Color.TRANSPARENT,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType).finished
 		hide()
+
+
+func _on_button_pressed() -> void:
+	if map:
+		map.mapScreen.selectedMarker = self

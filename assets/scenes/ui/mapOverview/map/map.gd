@@ -20,6 +20,7 @@ func _ready() -> void:
 func scanMarkers()->void:
 	for markers in %areaNodes.get_children():
 		if !markers.map:
+			markers.playCloseAnimation()
 			markers.map = self
 			markers.setupMap()
 

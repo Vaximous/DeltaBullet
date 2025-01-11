@@ -7,13 +7,13 @@
 [resource]
 resource_local_to_scene = true
 script = ExtResource("2_jsw5u")
-useBulletTrail = null
+useBulletTrail = true
 displayData = ExtResource("1_hivbl")
 canBeReloaded = null
 weaponMagSize = null
 ammoSize = null
 reloadTime = 1.9
-headDismember = null
+headDismember = false
 weaponDamage = 7.9
 weaponFireRate = 0.1
 bulletSpeed = null

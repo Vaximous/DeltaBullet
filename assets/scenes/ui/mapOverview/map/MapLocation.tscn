@@ -2,29 +2,13 @@
 
 [ext_resource type="PackedScene" uid="uid://cbmy8aewv7g1w" path="res://assets/components/3Dto2Dcomponent/3Dto2DComponent.tscn" id="1_568f0"]
 [ext_resource type="Script" uid="uid://dpnbcwkkk6au2" path="res://assets/scenes/ui/mapOverview/map/map_location.gd" id="2_aptmj"]
+[ext_resource type="Texture2D" uid="uid://c1vivm6xnyiik" path="res://assets/textures/icons/map/mapMarkerNone.png" id="3_aptmj"]
 
-[sub_resource type="Gradient" id="Gradient_fvi35"]
-offsets = PackedFloat32Array(0, 0.317857)
-colors = PackedColorArray(0.47451, 0, 0, 1, 0.32549, 0, 0, 0)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_t3e1d"]
-gradient = SubResource("Gradient_fvi35")
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_v8iie"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_568f0"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_aptmj"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_t3e1d"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v8iie"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_svgid"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4dj13"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sbnov"]
+[sub_resource type="LabelSettings" id="LabelSettings_t3e1d"]
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 5
+shadow_color = Color(0, 0, 0, 0.32549)
 
 [sub_resource type="Animation" id="Animation_mp7cn"]
 length = 0.001
@@ -40,20 +24,53 @@ tracks/0/keys = {
 "update": 0,
 "values": [Vector2(256, 40)]
 }
-
-[sub_resource type="Animation" id="Animation_568f0"]
-resource_name = "close"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:size")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.866667),
-"transitions": PackedFloat32Array(0.0853776, 0.15932),
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(189.345, 40), Vector2(93, 40)]
+"values": [Vector2(8, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../icon:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-3.6, 0.5)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../icon:size")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(36, 34)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_clmnj"]
@@ -70,13 +87,140 @@ tracks/0/keys = {
 "update": 0,
 "values": [Vector2(93, 40), Vector2(189.345, 40)]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.7),
+"transitions": PackedFloat32Array(0.153893, 1),
+"update": 0,
+"values": [Vector2(1, 0), Vector2(45.84, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../icon:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.53),
+"transitions": PackedFloat32Array(0.108819, 1),
+"update": 0,
+"values": [Vector2(-3.6, 0.5), Vector2(-4, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../icon:size")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.53),
+"transitions": PackedFloat32Array(0.108819, 1),
+"update": 0,
+"values": [Vector2(36, 34), Vector2(41, 39)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(0.353553, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_aptmj"]
+resource_name = "close"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0666667, 0.433333),
+"transitions": PackedFloat32Array(0.183011, 0.15932),
+"update": 0,
+"values": [Vector2(189.345, 40), Vector2(93, 40)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.0666667, 0.433333),
+"transitions": PackedFloat32Array(0.183011, 0.153893),
+"update": 0,
+"values": [Vector2(45.84, 0), Vector2(1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../icon:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.1, 0.5),
+"transitions": PackedFloat32Array(0.241484, 0.108819),
+"update": 0,
+"values": [Vector2(-4, 1), Vector2(-3.6, 0.5)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../icon:size")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.1, 0.5),
+"transitions": PackedFloat32Array(0.241484, 0.108819),
+"update": 0,
+"values": [Vector2(41, 39), Vector2(36, 34)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.0333333, 0.433333),
+"transitions": PackedFloat32Array(0.129408, 0.353553),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_lmyb2"]
 _data = {
 &"RESET": SubResource("Animation_mp7cn"),
-&"close": SubResource("Animation_568f0"),
+&"close": SubResource("Animation_aptmj"),
 &"open": SubResource("Animation_clmnj")
 }
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_v8iie"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_568f0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_aptmj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_t3e1d"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v8iie"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_svgid"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4dj13"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sbnov"]
 
 [node name="mapLocation" instance=ExtResource("1_568f0")]
 script = ExtResource("2_aptmj")
@@ -86,30 +230,62 @@ travelStatus = 1
 travelGroupID = 0
 travelID = 0
 
-[node name="marginContainer" type="MarginContainer" parent="." index="0"]
+[node name="Icon" type="Control" parent="." index="0"]
+layout_mode = 3
+anchor_right = 0.02
+anchor_bottom = 0.033
+offset_bottom = 0.299999
+
+[node name="marginContainer" type="MarginContainer" parent="Icon" index="0"]
+layout_mode = 1
 anchors_preset = -1
-anchor_bottom = 0.044
-offset_right = 256.0
-offset_bottom = 0.400002
+anchor_bottom = 0.092
+offset_left = 1.0
+offset_right = 95.0
+offset_bottom = 37.24
 
-[node name="textureRect" type="TextureRect" parent="marginContainer" index="0"]
-layout_mode = 2
-texture = SubResource("GradientTexture1D_t3e1d")
-expand_mode = 1
-
-[node name="hBoxContainer" type="HBoxContainer" parent="marginContainer" index="1"]
+[node name="hBoxContainer" type="HBoxContainer" parent="Icon/marginContainer" index="0"]
 layout_mode = 2
 
-[node name="textureRect" type="TextureRect" parent="marginContainer/hBoxContainer" index="0"]
+[node name="textureRect" type="ColorRect" parent="Icon/marginContainer/hBoxContainer" index="0"]
+custom_minimum_size = Vector2(2.48, 0)
 layout_mode = 2
-texture = SubResource("PlaceholderTexture2D_v8iie")
+color = Color(0.435294, 0, 0, 1)
 
-[node name="label" type="Label" parent="marginContainer/hBoxContainer" index="1"]
+[node name="label" type="Label" parent="Icon/marginContainer/hBoxContainer" index="1"]
 layout_mode = 2
 text = "AREANAME"
+label_settings = SubResource("LabelSettings_t3e1d")
 
-[node name="button" type="Button" parent="marginContainer" index="2"]
+[node name="animationPlayer" type="AnimationPlayer" parent="Icon/marginContainer" index="1"]
+libraries = {
+&"": SubResource("AnimationLibrary_lmyb2")
+}
+
+[node name="icon" type="TextureRect" parent="Icon" index="1"]
+modulate = Color(0.72549, 0, 0.0941176, 1)
+material = SubResource("CanvasItemMaterial_v8iie")
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.017
+anchor_right = 1.0
+anchor_bottom = 1.15
+offset_left = -3.6
+offset_top = -0.00999624
+offset_right = 0.400135
+offset_bottom = 0.000137329
+pivot_offset = Vector2(18, 34)
+texture = ExtResource("3_aptmj")
+expand_mode = 1
+
+[node name="button" type="Button" parent="Icon/icon" index="0"]
 layout_mode = 2
+anchor_right = 2.739
+anchor_bottom = 1.162
+offset_left = 4.6
+offset_top = -0.500004
+offset_right = -0.00437164
+offset_bottom = -0.00816727
 theme_override_styles/focus = SubResource("StyleBoxEmpty_568f0")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_aptmj")
 theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_t3e1d")
@@ -118,13 +294,8 @@ theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_svgid")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_4dj13")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_sbnov")
 
-[node name="animationPlayer" type="AnimationPlayer" parent="marginContainer" index="3"]
-libraries = {
-&"": SubResource("AnimationLibrary_lmyb2")
-}
-
-[connection signal="focus_entered" from="marginContainer/button" to="." method="playOpenAnimation"]
-[connection signal="focus_exited" from="marginContainer/button" to="." method="playCloseAnimation"]
-[connection signal="mouse_entered" from="marginContainer/button" to="." method="playOpenAnimation"]
-[connection signal="mouse_exited" from="marginContainer/button" to="." method="playCloseAnimation"]
-[connection signal="pressed" from="marginContainer/button" to="." method="gotoLocation"]
+[connection signal="focus_entered" from="Icon/icon/button" to="." method="playOpenAnimation"]
+[connection signal="focus_exited" from="Icon/icon/button" to="." method="playCloseAnimation"]
+[connection signal="mouse_entered" from="Icon/icon/button" to="." method="playOpenAnimation"]
+[connection signal="mouse_exited" from="Icon/icon/button" to="." method="playCloseAnimation"]
+[connection signal="pressed" from="Icon/icon/button" to="." method="_on_button_pressed"]

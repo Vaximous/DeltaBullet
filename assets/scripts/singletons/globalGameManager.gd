@@ -80,6 +80,7 @@ func _enter_tree() -> void:
 # Called when the node enters the scene tree for the first time.
 func _ready()->void:
 	initializeSteam()
+	DisplayServer.window_set_title(ProjectSettings.get_setting("application/config/name"))
 	soundPlayer.name = "globalSoundPlayer"
 	if !userDir.dir_exists("saves"):
 		userDir.make_dir("saves")
@@ -91,6 +92,7 @@ func _ready()->void:
 func _process(delta: float) -> void:
 	#Set audio pitch to match timescale
 	AudioServer.playback_speed_scale = Engine.time_scale
+	DisplayServer.window_set_title(ProjectSettings.get_setting("application/config/name"))
 
 
 
@@ -201,7 +203,10 @@ func _input(_event)->void:
 			else:
 				Console.add_console_message("You can't posess nothing dipshit. Look at a pawn.")
 
-
+func getCurrentPawn()->BasePawn:
+	if activeCamera.followingEntity is BasePawn:
+		return activeCamera.followingEntity
+	else: return null
 
 func takeScreenshot(path:String = "user://screenshots",screenshotName:String = "") -> String:
 	print("Initializing screenshot!")
@@ -584,7 +589,7 @@ func doDeathEffect()->void:
 	deathTween.tween_property(Engine,"time_scale",1,1.5).set_ease(defaultEaseType).set_trans(defaultTransitionType)
 
 
-func createSplat(gposition:Vector3 = Vector3.ZERO,normal:Vector3 = Vector3.ZERO,parent : Node3D = world.worldMisc)->void:
+func createSplat(gposition:Vector3 = Vector3.ZERO,normal:Vector3 = Vector3.ZERO,parent : Node3D = world.worldMisc)->Node3D:
 	if is_instance_valid(parent):
 		var _b = bloodDecal.instantiate()
 		parent.add_child(_b)
@@ -593,8 +598,11 @@ func createSplat(gposition:Vector3 = Vector3.ZERO,normal:Vector3 = Vector3.ZERO,
 			if !Vector3.UP.is_equal_approx(normal.normalized()):
 				_b.transform.basis = _b.transform.basis.looking_at(normal.normalized())
 			_b.rotate(normal,randf_range(0, 2)*PI)
+			return _b
 		else:
 			_b.queue_free()
+			return null
+	return null
 
 func sprayBlood(position:Vector3,amount:int,_maxDistance:int,distanceMultiplier:float = 1)->void:
 	if is_instance_valid(world):

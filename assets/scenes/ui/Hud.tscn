@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://1d1rfqprpnrb"]
+[gd_scene load_steps=29 format=3 uid="uid://1d1rfqprpnrb"]
 
 [ext_resource type="Script" uid="uid://bqcb21u5nterd" path="res://assets/entities/camera/HUD.gd" id="1_on6xd"]
 [ext_resource type="FontFile" uid="uid://xmwjvmqspojb" path="res://assets/fonts/Grand_Aventure_Text.otf" id="2_tf7jg"]
@@ -111,6 +111,12 @@ shader = SubResource("Shader_kenmw")
 shader_parameter/color = Color(0.666667, 0, 0, 1)
 shader_parameter/multiplier = 0.25
 shader_parameter/softness = 0.9
+
+[sub_resource type="LabelSettings" id="LabelSettings_5mxeu"]
+outline_size = 7
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 9
+shadow_color = Color(0, 0, 0, 0.376471)
 
 [sub_resource type="Gradient" id="Gradient_jat1a"]
 offsets = PackedFloat32Array(0, 0.995455, 1)
@@ -407,7 +413,6 @@ offset_bottom = 87.0
 
 [node name="FPSCounter" type="Control" parent="."]
 layout_mode = 1
-anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -62.0
@@ -415,18 +420,23 @@ offset_bottom = 39.0
 grow_horizontal = 0
 
 [node name="colorRect" type="ColorRect" parent="FPSCounter"]
+visible = false
 layout_mode = 0
 offset_right = 62.0
 offset_bottom = 38.0
 color = Color(0.133333, 0.133333, 0.133333, 0.788235)
 
 [node name="label" type="Label" parent="FPSCounter"]
-layout_mode = 0
-offset_left = 5.0
-offset_right = 70.0
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -61.0
 offset_bottom = 37.0
+grow_horizontal = 0
 theme_override_fonts/font = ExtResource("10_siy77")
 text = "FPS:"
+label_settings = SubResource("LabelSettings_5mxeu")
 vertical_alignment = 1
 
 [node name="Interact" type="Control" parent="."]

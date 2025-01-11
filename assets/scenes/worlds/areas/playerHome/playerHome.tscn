@@ -1977,8 +1977,8 @@ transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 4.89631,
 script = ExtResource("20_13iaj")
 
 [node name="closetInteraction" type="RigidBody3D" parent="Props/PlayerCloset" index="0" groups=["Interactable"]]
-collision_layer = 33
-collision_mask = 33
+collision_layer = 43
+collision_mask = 43
 lock_rotation = true
 freeze = true
 script = ExtResource("8_36425")

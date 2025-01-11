@@ -294,7 +294,7 @@ func doPulverizeEffect()->void:
 	collision_layer = 0
 	collision_mask = 1
 	joint_type = JOINT_TYPE_NONE
-	gameManager.sprayBlood(global_position,randi_range(3,15),20,1.2)
+	gameManager.sprayBlood(global_position,randi_range(1,5),20,1.2)
 	#mass = 0.01
 	for childrenIDs in getBoneChildren(ragdoll.ragdollSkeleton,self):
 		var bone

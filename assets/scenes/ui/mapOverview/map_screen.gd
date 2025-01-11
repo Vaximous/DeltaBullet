@@ -5,6 +5,19 @@ const defaultTransitionType = Tween.TRANS_QUINT
 const defaultEaseType = Tween.EASE_OUT
 const defaultTweenSpeed : float = 0.25
 @onready var topBarAnimPlayer : AnimationPlayer = $mapScreen/topBarAnimPlayer
+##This is the marker that is selected
+var selectedMarker : Node3D = null:
+	set(value):
+		if value != null:
+			if selectedMarker != null:
+				var previousMarker = selectedMarker
+				selectedMarker = value
+				previousMarker.playCloseAnimation()
+			else:
+				selectedMarker = value
+				#selectedMarker.playCloseAnimation()
+			%AreaInformation.show()
+			%AreaInformation.marker = value
 ##The map object
 @export var map : Node3D
 ##Currently selected map index, controls the rotation and position of where the camera is looking
@@ -33,6 +46,9 @@ func _ready() -> void:
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("gEscape"):
 		setVisible(false)
+
+func setSelectedMarker(value)->void:
+	selectedMarker = value
 
 func setVisible(value:bool)->void:
 	if visibleTween:

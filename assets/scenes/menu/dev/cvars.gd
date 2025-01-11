@@ -99,6 +99,29 @@ func freecam()->void:
 	_notification.doNotification(null,"Camera", "Freecam Enabled.")
 	gameManager.activeCamera.unposessObject(true)
 
+func printAiInstances()->void:
+	print(AIComponent.instances)
+	Console.add_rich_console_message("[color=pink]%s[/color]"%[AIComponent.instances])
+
+func aggroRandom()->void:
+	for i in AIComponent.instances:
+		var randomEnemy = AIComponent.instances.pick_random()
+		if randomEnemy == i:
+			randomEnemy = AIComponent.instances.pick_random()
+
+		i.targetedPawn = randomEnemy.pawnOwner
+		if i.pawnFSM.current_state != i.pawnFSM.get_state("Attack") and i.pawnOwner.currentItem:
+			i.lookAtPosition(i.targetedPawn.global_position,true)
+			i.pawnFSM.change_state("Attack")
+
+
+func aggroAll()->void:
+	for i in AIComponent.instances:
+		i.targetedPawn = gameManager.getCurrentPawn()
+		if i.pawnFSM.current_state != i.pawnFSM.get_state("Attack") and i.pawnOwner.currentItem:
+			i.lookAtPosition(i.targetedPawn.global_position,true)
+			i.pawnFSM.change_state("Attack")
+
 func spawnPawn(walk:bool = false,position : Vector3 = Vector3.INF) -> void:
 	var cast : RayCast3D = gameManager.activeCamera.camCast
 	if cast.is_colliding() and !position.is_finite():

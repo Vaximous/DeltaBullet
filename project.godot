@@ -16,7 +16,7 @@ warnings/check_angle_interpolation_type_conflicting=false
 [application]
 
 config/name="Delta Bullet"
-config/version="0.75.92"
+config/version="0.75.93"
 run/main_scene="res://bootscene.tscn"
 run/main_loop_type="PEMainLoop"
 config/features=PackedStringArray("4.4", "Forward Plus")
@@ -320,9 +320,11 @@ limits/debugger/max_chars_per_second=132768
 
 [physics]
 
-common/physics_ticks_per_second=72
+common/physics_ticks_per_second=76
+common/max_physics_steps_per_frame=16
+common/physics_jitter_fix=0.0
 3d/physics_engine="Jolt Physics"
-jolt_physics_3d/simulation/velocity_steps=12
+jolt_physics_3d/simulation/sleep_velocity_threshold=0.06
 3d/default_gravity=16.8
 3d/solver/solver_iterations=18
 common/physics_interpolation=true

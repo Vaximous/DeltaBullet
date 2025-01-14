@@ -143,22 +143,25 @@ func equipClothingToPawn(item:PackedScene)->void:
 		clothingPawn.clothingHolder.add_child(itemInstance)
 		clothingPawn.checkClothes()
 		setPreviewAppearance()
+		gameManager.saveTemporaryPawnInfo()
 
 func unequipClothingFromPawn(item:PackedScene)->void:
 	if clothingPawn and item:
 		var itemInstance = item.instantiate()
-		var filePath = itemInstance.scene_file_path
-		for clothing in clothingPawn.clothingInventory:
-			if clothing.scene_file_path == filePath and is_instance_valid(clothing):
-				clothingPawn.clothingInventory.erase(clothing)
-				clothing.queue_free()
-				#clothingPawn.clothingInventory.remove_at(clothingInt)
+		if is_instance_valid(itemInstance):
+			var filePath = itemInstance.scene_file_path
+			for clothing in clothingPawn.clothingInventory:
+				if clothing.scene_file_path == filePath and is_instance_valid(clothing) and clothing != null:
+					clothingPawn.clothingInventory.erase(clothing)
+					clothing.queue_free()
+					#clothingPawn.clothingInventory.remove_at(clothingInt)
 		clothingPawn.setBodyVisibility(true)
 		clothingPawn.clothingInventory.clear()
 		await get_tree().process_frame
 		clothingPawn.checkClothes()
 		itemInstance.queue_free()
 		setPreviewAppearance()
+		gameManager.saveTemporaryPawnInfo()
 
 
 func generateClothingOptions(pawn:BasePawn)->void:

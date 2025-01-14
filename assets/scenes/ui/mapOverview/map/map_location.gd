@@ -49,6 +49,7 @@ func playCloseAnimation()->void:
 
 func gotoLocation()->void:
 	if travelScene and get_tree().current_scene.scene_file_path != travelScene.resource_path:
+		gameManager.saveTemporaryPawnInfo()
 		await Fade.fade_out(0.5).finished
 		gameManager.removeWorldMap()
 		gameManager.loadWorld(travelScene.resource_path)

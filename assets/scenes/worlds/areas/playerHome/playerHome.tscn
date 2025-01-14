@@ -1,4 +1,4 @@
-[gd_scene load_steps=188 format=4 uid="uid://c8bkdy6aqwxls"]
+[gd_scene load_steps=189 format=4 uid="uid://c8bkdy6aqwxls"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_ypyko"]
 [ext_resource type="PackedScene" uid="uid://boicvk4qeqmbd" path="res://assets/entities/pawnSpawn/pawnSpawn.tscn" id="2_v576b"]
@@ -50,6 +50,7 @@
 [ext_resource type="Material" uid="uid://bynwskuck5r36" path="res://assets/models/interior/changingroom/WardrobeWood.tres" id="40_gf3mp"]
 [ext_resource type="Material" uid="uid://doi2tqqimhggh" path="res://assets/models/interior/changingroom/WardrobeSteel.tres" id="41_7m3hx"]
 [ext_resource type="PackedScene" uid="uid://dvmmlj4mvj88r" path="res://assets/entities/aiMarker/aiMarker.tscn" id="47_7m3hx"]
+[ext_resource type="PackedScene" uid="uid://c81jcxxd6oi3i" path="res://assets/entities/emitters/bloodStringEmitter/bloodString.tscn" id="50_jg2d5"]
 [ext_resource type="PackedScene" uid="uid://dakipfkiu0xqt" path="res://assets/components/musicChangeZone/music_change_zone.tscn" id="51_7i0qu"]
 [ext_resource type="AudioStream" uid="uid://c1mk4s30dq3nc" path="res://assets/music/menu/Idlehoodtune.wav" id="53_cj522"]
 
@@ -2274,6 +2275,9 @@ canBeUsed = true
 [node name="collisionShape3d" type="CollisionShape3D" parent="Props/worldMapInteract" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.150013, 0.113404, 0.0307083)
 shape = SubResource("BoxShape3D_qp8ey")
+
+[node name="bloodString" parent="Props" index="3" instance=ExtResource("50_jg2d5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.87697, 6.90297, -2.69612)
 
 [node name="aiMarker" parent="Misc/WaypointNodes" index="0" instance=ExtResource("47_7m3hx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.84778, 3.9975, 2.22027)

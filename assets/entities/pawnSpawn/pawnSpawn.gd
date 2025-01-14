@@ -94,6 +94,7 @@ func spawnPawn(forceParent : Node = null):
 				pawn.fixRot()
 				pawn.add_to_group(&"Player")
 				pawn.set_meta(&"isPlayer", true)
+				gameManager.allPawns.append(pawn)
 				pawn.healthComponent.setHealth(450)
 				if gameManager.temporaryPawnInfo.size() <= 0:
 					if gameManager.currentSave != "" or gameManager.currentSave != " " or gameManager.currentSave != null:
@@ -140,6 +141,7 @@ func spawnPawn(forceParent : Node = null):
 			pawn.fixRot()
 			controller.pawnType = aiType
 			controller.aiSkill = aiSkill
+			gameManager.allPawns.append(pawn)
 			#controller.hatedPawnGroups = hatedGroups
 			pawn.add_to_group(spawnGroup)
 

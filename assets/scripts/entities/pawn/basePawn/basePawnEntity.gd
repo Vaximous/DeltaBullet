@@ -523,11 +523,16 @@ func moveHitboxDecals(parent:Node3D = gameManager.world.worldParticles) ->void:
 				if decals is BulletHole:
 					decals.reparent(parent)
 
+func playKillSound()->void:
+	var stream : AudioStream = load("res://assets/resources/killsoundStream.tres")
+	gameManager.createSoundAtPosition(stream,pawnMesh.global_position)
 
 func die(killer) -> void:
 	if is_instance_valid(self) and !isPawnDead:
+		gameManager.allPawns.erase(self)
 		gameManager.doKillEffect(self,killer)
 		onPawnKilled.emit()
+		playKillSound()
 		dropWeapon()
 		isPawnDead = true
 		createRagdoll(lastHitPart, killer)

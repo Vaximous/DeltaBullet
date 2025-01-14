@@ -1,11 +1,10 @@
-[gd_scene load_steps=14 format=3 uid="uid://c1r6apfs6eb8j"]
+[gd_scene load_steps=12 format=3 uid="uid://c1r6apfs6eb8j"]
 
 [ext_resource type="Script" uid="uid://dc5csltpb6sdj" path="res://assets/scripts/camera/Camera.gd" id="1_r7vh5"]
 [ext_resource type="PackedScene" uid="uid://cvynv7sgqowum" path="res://assets/components/velocityComponent/velocityComponent.tscn" id="2_rb4ck"]
 [ext_resource type="PackedScene" uid="uid://cmyxa8pfmhpcy" path="res://assets/components/inputComponent/inputComponent.tscn" id="3_jchmi"]
 [ext_resource type="PackedScene" uid="uid://1d1rfqprpnrb" path="res://assets/scenes/ui/Hud.tscn" id="5_27on2"]
-[ext_resource type="AudioStream" uid="uid://bn4a2o1il06g3" path="res://assets/sounds/gore/fleshImpacts/bulletImpacts/bulletBody3.wav" id="5_q4ckx"]
-[ext_resource type="AudioStream" uid="uid://crhpecd4vkaul" path="res://assets/sounds/gore/fleshImpacts/bulletImpacts/bulletBody7.wav" id="6_q4ckx"]
+[ext_resource type="AudioStream" uid="uid://d1ve0476451lw" path="res://assets/resources/killsoundStream.tres" id="5_q4ckx"]
 [ext_resource type="AudioStream" uid="uid://k5gdem56qgha" path="res://assets/sounds/gore/fleshImpacts/bulletImpacts/bulletBody9.wav" id="7_p4i6y"]
 [ext_resource type="AudioStream" uid="uid://blj5l7iianm2y" path="res://assets/sounds/gore/fleshImpacts/bulletImpacts/bulletBody2.wav" id="9_0ng1w"]
 [ext_resource type="AudioStream" uid="uid://ddew5bof56sx" path="res://assets/sounds/gore/fleshImpacts/bulletImpacts/bulletBody10.wav" id="9_p4i6y"]
@@ -13,14 +12,6 @@
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_seysn"]
 radius = 0.55
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_jf4fj"]
-random_pitch = 1.05
-random_volume_offset_db = 0.7
-streams_count = 3
-stream_0/stream = ExtResource("5_q4ckx")
-stream_1/stream = ExtResource("6_q4ckx")
-stream_2/stream = ExtResource("7_p4i6y")
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_bpylg"]
 random_pitch = 1.05
@@ -85,7 +76,7 @@ vAcceleration = 3.0
 cam = NodePath("../camPivot/horizonal/vertholder/vertical/springArm3d/Camera")
 
 [node name="killSound" type="AudioStreamPlayer" parent="."]
-stream = SubResource("AudioStreamRandomizer_jf4fj")
+stream = ExtResource("5_q4ckx")
 volume_db = 2.0
 max_polyphony = 10
 bus = &"Sounds"

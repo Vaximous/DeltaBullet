@@ -60,6 +60,7 @@ var defaultFOV : int = 90
 
 #World
 var loadScene = null
+var allPawns : Array[BasePawn]
 const bloodPool : PackedScene = preload("res://assets/entities/bloodPool/bloodPool.tscn")
 const tempImages : Array = ["res://assets/scenes/ui/saveloadmenu/save1.png","res://assets/scenes/ui/saveloadmenu/save2.png","res://assets/scenes/ui/saveloadmenu/save3.png","res://assets/scenes/ui/saveloadmenu/save4.png","res://assets/misc/db7.png"]
 var saveOverwrite : String
@@ -412,6 +413,7 @@ func loadWorld(worldscene:String, fadein:bool = false)->void:
 	saveTemporaryPawnInfo()
 	get_tree().change_scene_to_file("res://assets/scenes/menu/loadingscreen/emptyLoaderScene.tscn")
 	await get_tree().process_frame
+	allPawns.clear()
 	#freeOrphanNodes()
 	musicManager.fade_all_audioplayers_out()
 	var loader = load("res://assets/scenes/menu/loadingscreen/loadingScreen.tscn")
@@ -754,6 +756,14 @@ func pick_weighted(weightedArray:Array) -> int:
 			break
 	return chosen_index
 
+func createSoundAtPosition(stream:AudioStream,position:Vector3):
+	var aud = AudioStreamPlayer3D.new()
+	if world:
+		world.worldMisc.add_child(aud)
+		setSoundVariables(aud)
+		aud.stream = stream
+		aud.finished.connect(aud.queue_free)
+		aud.play()
 
 func get_weight_sum(weightedArray) -> float:
 	var sum : float

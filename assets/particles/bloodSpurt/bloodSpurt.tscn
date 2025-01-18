@@ -1,6 +1,7 @@
-[gd_scene load_steps=19 format=3 uid="uid://bpp4s1vikjdv8"]
+[gd_scene load_steps=27 format=3 uid="uid://bpp4s1vikjdv8"]
 
 [ext_resource type="Material" uid="uid://co86jd67xrcl" path="res://assets/materials/blood/spurts/bloodSpurt3.tres" id="1_fkxrd"]
+[ext_resource type="Texture2D" uid="uid://djho1o4a46mla" path="res://assets/textures/blood/ParticleCloudWhite.png" id="2_fkxrd"]
 [ext_resource type="Material" uid="uid://bxh02ijn7mkmu" path="res://assets/materials/blood/bloodland1.tres" id="4_jlj6w"]
 [ext_resource type="Material" uid="uid://dkqmd8bpbl83c" path="res://assets/materials/blood/bloodDecalSmall.tres" id="5_2tj2p"]
 
@@ -57,6 +58,7 @@ func _ready()->void:
 	#add_gizmo(removeTimer)
 	#removeTimer.wait_time = UserConfig.game_decal_remove_time
 	#removeTimer.timeout.connect(queue_free)
+	%bloodSmoke.emitting = true
 	material_override = gameManager.bloodSpurts.pick_random()
 	$bloodLand.material_overlay = landTexture.pick_random()
 	amount = randi_range(minParticles,maxParticles)
@@ -64,6 +66,52 @@ func _ready()->void:
 	if !finished.is_connected(queue_free):
 		finished.connect(queue_free)
 "
+
+[sub_resource type="Curve" id="Curve_ksiwr"]
+_data = [Vector2(0, 1), 0.0, -1.10285, 0, 0, Vector2(0.679612, 0), 0.0263227, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_inqm3"]
+curve = SubResource("Curve_ksiwr")
+
+[sub_resource type="Curve" id="Curve_5c2mh"]
+_limits = [0.0, 2.0, 0.0, 1.0]
+_data = [Vector2(0, 0.263736), 0.0, 0.0, 0, 0, Vector2(0.519418, 1.51648), 1.9116, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_wvrms"]
+curve = SubResource("Curve_5c2mh")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_fkxrd"]
+particle_flag_align_y = true
+angle_max = 24.6
+inherit_velocity_ratio = 0.504
+direction = Vector3(0, 0, -1)
+initial_velocity_min = 3.15
+initial_velocity_max = 4.15
+gravity = Vector3(0, -12.995, 0)
+attractor_interaction_enabled = false
+scale_min = 0.8
+scale_max = 2.0
+scale_curve = SubResource("CurveTexture_wvrms")
+alpha_curve = SubResource("CurveTexture_inqm3")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oedkt"]
+transparency = 1
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.552941, 0, 0, 0.737255)
+albedo_texture = ExtResource("2_fkxrd")
+metallic = 1.0
+metallic_specular = 0.0
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_c6fs4"]
+material = SubResource("StandardMaterial3D_oedkt")
+size = Vector2(0.3, 0.3)
 
 [sub_resource type="Curve" id="Curve_ro5oo"]
 _data = [Vector2(0, 0.757895), 0.0, 6.18947, 0, 0, Vector2(1e-05, 1), -1.12516, -1.12516, 0, 0, Vector2(0.617143, 0.769231), 0.0, 0.0, 0, 0]
@@ -107,10 +155,24 @@ emitting = false
 one_shot = true
 explosiveness = 1.0
 randomness = 0.54
+seed = 435807676
 fixed_fps = 0
 process_material = SubResource("ParticleProcessMaterial_ow2gb")
 draw_pass_1 = SubResource("QuadMesh_5noax")
 script = SubResource("GDScript_fb3dx")
+
+[node name="bloodSmoke" type="GPUParticles3D" parent="."]
+unique_name_in_owner = true
+emitting = false
+amount = 4
+one_shot = true
+speed_scale = 1.8
+explosiveness = 1.0
+randomness = 1.0
+seed = 670685318
+fixed_fps = 0
+process_material = SubResource("ParticleProcessMaterial_fkxrd")
+draw_pass_1 = SubResource("QuadMesh_c6fs4")
 
 [node name="bloodLand" type="GPUParticles3D" parent="."]
 visible = false

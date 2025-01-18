@@ -1,6 +1,6 @@
 [gd_resource type="Environment" load_steps=6 format=3 uid="uid://dnig6jq4e6pjs"]
 
-[ext_resource type="Texture2D" uid="uid://d0f0crtwpmoka" path="res://assets/textures/panoramas/panoramatest1.png" id="1_tipwx"]
+[ext_resource type="Texture2D" uid="uid://dvfkpbe83xcf4" path="res://assets/textures/panoramas/panoramatest3.png" id="1_tipwx"]
 
 [sub_resource type="Gradient" id="Gradient_6voip"]
 colors = PackedColorArray(0, 0, 0, 1, 0.996078, 0.941176, 0.811765, 1)
@@ -18,8 +18,7 @@ sky_material = SubResource("PanoramaSkyMaterial_tipwx")
 background_mode = 2
 sky = SubResource("Sky_nj1fe")
 reflected_light_source = 1
-tonemap_mode = 3
-tonemap_exposure = 0.9
+tonemap_mode = 4
 ssao_enabled = true
 ssil_intensity = 0.75
 sdfgi_use_occlusion = true
@@ -27,7 +26,6 @@ sdfgi_y_scale = 2
 glow_enabled = true
 glow_levels/5 = 0.0
 glow_normalized = true
-glow_intensity = 0.71
 glow_bloom = 0.25
 glow_blend_mode = 1
 fog_light_energy = 0.0

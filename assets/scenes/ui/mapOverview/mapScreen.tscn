@@ -158,8 +158,8 @@ layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.494
 anchor_bottom = 0.079
-offset_right = -0.400024
-offset_bottom = -0.100006
+offset_right = 790.0
+offset_bottom = 71.0
 
 [node name="textureRect" type="TextureRect" parent="mapScreen/topBar"]
 layout_mode = 2

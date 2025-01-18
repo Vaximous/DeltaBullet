@@ -15,7 +15,7 @@ func spawn_at_location(parent : Node, location : Vector2) -> void:
 	rotational_velocity = randf_range(-100, 100)
 
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	velocity.y += delta * 4500
 	rotation += rotational_velocity * delta
 	global_position += velocity * delta

@@ -77,6 +77,5 @@ directional = true
 shadowmask_mode = 2
 environment_mode = 2
 environment_custom_sky = SubResource("Sky_tt1wg")
-environment_custom_energy = 1.0
 generate_probes_subdiv = 0
 light_data = ExtResource("5_mywmq")

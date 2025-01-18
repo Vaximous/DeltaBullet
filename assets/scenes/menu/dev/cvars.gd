@@ -290,7 +290,6 @@ func debugToggle()->void:
 		Console.add_console_message("Debug controls are now enabled.")
 
 func loadMap(map)->void:
-	var worldsPath = "res://assets/scenes/worlds/"
 	var dir : DirAccess
 	if map is String:
 		if map != "" or " ":

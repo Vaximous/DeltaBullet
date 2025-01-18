@@ -153,6 +153,7 @@ _data = {
 [sub_resource type="Environment" id="Environment_qpku8"]
 ambient_light_source = 2
 ambient_light_color = Color(1, 1, 1, 1)
+tonemap_mode = 4
 
 [sub_resource type="World3D" id="World3D_eb65e"]
 environment = SubResource("Environment_qpku8")

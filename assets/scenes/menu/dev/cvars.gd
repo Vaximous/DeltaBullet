@@ -81,8 +81,9 @@ func posess()->void:
 				#gameManager.notify_warn("Posessing..", 2, 5)
 				var _notification = load("res://assets/scenes/ui/generalNotif/generalNotification.tscn").instantiate()
 				gameManager.activeCamera.hud.gameNotifications.add_child(_notification)
-				_notification.doNotification(null,"Posession", "Posessed %s." %cast.get_collider())
+				_notification.doNotification(null,"Posession", "Posessed %s." %cast.get_collider().name)
 				gameManager.activeCamera.posessObject(cast.get_collider(),cast.get_collider().followNode)
+				enableHud()
 			else:
 				var _notification = load("res://assets/scenes/ui/generalNotif/generalNotification.tscn").instantiate()
 				gameManager.activeCamera.hud.gameNotifications.add_child(_notification)
@@ -98,6 +99,14 @@ func freecam()->void:
 	gameManager.activeCamera.hud.gameNotifications.add_child(_notification)
 	_notification.doNotification(null,"Camera", "Freecam Enabled.")
 	gameManager.activeCamera.unposessObject(true)
+
+func disableHud()->void:
+	if gameManager.activeCamera:
+		gameManager.activeCamera.hud.disableHud()
+
+func enableHud()->void:
+	if gameManager.activeCamera:
+		gameManager.activeCamera.hud.enableHud()
 
 func printAiInstances()->void:
 	print(AIComponent.instances)

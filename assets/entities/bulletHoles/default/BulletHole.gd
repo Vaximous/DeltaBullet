@@ -76,7 +76,7 @@ func initializeBulletHole()->void:
 		particles.reparent(gameManager.world.worldParticles)
 
 		#Connect finished to queue_free()
-		if !particles.finished.is_connected(queue_free):
+		if !particles.finished.is_connected(particles.queue_free):
 			particles.finished.connect(particles.queue_free)
 
 		#Turns the particle on

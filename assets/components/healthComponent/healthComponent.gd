@@ -20,11 +20,13 @@ func _ready()->void:
 
 
 func setHealth(value:float)->float:
-	healthChanged.emit()
-	health = value
-	healthCheck()
-	return health
-
+	if is_instance_valid(self) and is_instance_valid(componentOwner):
+		healthChanged.emit()
+		health = value
+		healthCheck()
+		return health
+	else:
+		return 0.0
 
 func healthCheck()->void:
 	if health <= 0 and is_instance_valid(self):
@@ -36,10 +38,10 @@ func healthCheck()->void:
 			if is_instance_valid(self):
 				healthDepleted.emit(null)
 
-func damage(amount:float, dealer:Node3D = null)->void:
-	if is_instance_valid(self):
+func damage(amount:float, dealer:Node3D = null,hitDirection:Vector3 = Vector3.ZERO)->void:
+	if is_instance_valid(self) and is_instance_valid(componentOwner):
 		lastDealer = dealer
-		onDamaged.emit(dealer, Vector3.ZERO)
+		onDamaged.emit(dealer, hitDirection)
 		setHealth(health - amount)
 
 #func _on_health_depleted(dealer: Node3D) -> void:

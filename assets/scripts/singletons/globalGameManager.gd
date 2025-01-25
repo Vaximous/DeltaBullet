@@ -59,6 +59,7 @@ var deadzone : float = 0.1
 var defaultFOV : int = 90
 
 #World
+var targetedEnemies : Array[AIComponent]
 var loadScene = null
 var allPawns : Array[BasePawn]
 const bloodPool : PackedScene = preload("res://assets/entities/bloodPool/bloodPool.tscn")
@@ -240,7 +241,9 @@ func takeScreenshot(path:String = "user://screenshots",screenshotName:String = "
 	return savedfilepath
 
 func restartScene()->void:
-	musicManager.change_song_to(null,0.35)
+	targetedEnemies.clear()
+	allPawns.clear()
+	musicManager.fade_all_audioplayers_out(0.5)
 	await Fade.fade_out(0.3, Color(0,0,0,1),"GradientVertical",false,true).finished
 	get_tree().reload_current_scene()
 
@@ -411,6 +414,7 @@ func hideHUD()->void:
 
 func loadWorld(worldscene:String, fadein:bool = false)->void:
 	saveTemporaryPawnInfo()
+	targetedEnemies.clear()
 	get_tree().change_scene_to_file("res://assets/scenes/menu/loadingscreen/emptyLoaderScene.tscn")
 	await get_tree().process_frame
 	allPawns.clear()
@@ -597,9 +601,9 @@ func createSplat(gposition:Vector3 = Vector3.ZERO,normal:Vector3 = Vector3.ZERO,
 		parent.add_child(_b)
 		if parent.has_node(_b.get_path()) and _b.is_inside_tree():
 			_b.position = gposition
-			if !Vector3.UP.is_equal_approx(normal.normalized()):
+			if !Vector3.UP.is_equal_approx(normal.normalized()) and !normal.normalized().is_equal_approx(Vector3.ZERO):
 				_b.transform.basis = _b.transform.basis.looking_at(normal.normalized())
-			_b.rotate(normal,randf_range(0, 2)*PI)
+			_b.rotate(normal.normalized(),randf_range(0, 2)*PI)
 			return _b
 		else:
 			_b.queue_free()
@@ -643,33 +647,6 @@ func createBloodPool(position:Vector3,size:float=0.5)->void:
 			_bloodPool.global_position = result.position
 			_bloodPool.startPool(size)
 
-func preloadAllMaterials():
-	var materialsToLoad : Array = []
-	var texturesToLoad : Array = []
-	var materializer : MeshInstance3D = MeshInstance3D.new()
-	materializer.mesh = SphereMesh.new()
-	get_tree().current_scene.add_child(materializer)
-
-	##Start with textures first
-	for i in preloadTextureDirectories:
-		var files = DirAccess.open(i)
-		if files:
-			files.list_dir_begin()
-			var textureName : String = files.get_next()
-			while textureName != "":
-				textureName = files.get_next()
-				if textureName.get_extension() != "import" and !files.current_is_dir():
-					texturesToLoad.append(i+textureName)
-
-	##Get Materials Here
-
-	#Load the textures into memory
-	for t in texturesToLoad:
-		load(t)
-		#print("Loading %s.." %t)
-
-	#print(texturesToLoad)
-	return OK
 
 func getShortTweenAngle(currentAngle:float,targetAngle:float)->float:
 	return currentAngle + wrapf(targetAngle-currentAngle,-PI,PI)

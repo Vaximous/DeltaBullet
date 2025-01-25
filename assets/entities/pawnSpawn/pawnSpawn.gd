@@ -144,6 +144,7 @@ func spawnPawn(forceParent : Node = null):
 			gameManager.allPawns.append(pawn)
 			#controller.hatedPawnGroups = hatedGroups
 			pawn.add_to_group(spawnGroup)
+			pawn.set_meta(&"isPlayer", false)
 
 			if pawnName != "":
 				controller.pawnName = pawnName

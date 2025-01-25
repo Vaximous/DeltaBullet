@@ -174,7 +174,7 @@ signal cameraAttached
 	set(value):
 		animationToForce = value
 		if forceAnimation:
-			if animationPlayer != null:
+			if is_instance_valid(animationPlayer):
 				if !animationPlayer.is_playing():
 					animationPlayer.play(animationToForce)
 ##Allows the pawn to interact with the environment, move and have physics applied, etc..
@@ -221,7 +221,7 @@ var preventWeaponFire : bool = false:
 			if !isMoving:
 	#			disableIdleSpaceBlend()
 	#			disableRunBlend()
-				if footstepSounds != null:
+				if is_instance_valid(footstepSounds):
 					if footstepSounds.playing:
 						footstepSounds.stop()
 @export_subgroup("Movement")
@@ -275,7 +275,7 @@ var currentItem : InteractiveObject = null
 				currentItem.weaponOwner = self
 				enableRightHand()
 				checkMeshLookat()
-				if currentItem.weaponResource != null:
+				if is_instance_valid(currentItem.weaponResource):
 					await get_tree().process_frame
 					if currentItem.weaponResource.leftHandParent:
 						itemHolder.reparent(leftHandBone)
@@ -291,7 +291,7 @@ var currentItem : InteractiveObject = null
 					else:
 						attachedCam.hud.getCrosshair().crosshairSize = attachedCam.hud.getCrosshair().defaultCrosshairSize
 					if !UserConfig.game_simple_crosshairs:
-						if currentItem.weaponResource.forcedCrosshair != null:
+						if is_instance_valid(currentItem.weaponResource.forcedCrosshair):
 							attachedCam.hud.getCrosshair().setCrosshair(currentItem.weaponResource.forcedCrosshair)
 						else:
 							attachedCam.hud.getCrosshair().setCrosshair(attachedCam.hud.getCrosshair().defaultCrosshair)
@@ -441,11 +441,14 @@ func checkComponents()->void:
 
 func endPawn()->void:
 	if is_instance_valid(self) and !is_queued_for_deletion():
-		direction = Vector3.ZERO
-		velocity = Vector3.ZERO
-		removeComponents()
-		dropWeapon()
-		queue_free()
+		for i in %BoneAttatchments.get_children():
+			i.queue_free()
+		self.call_deferred("queue_free")
+		#direction = Vector3.ZERO
+		#velocity = Vector3.ZERO
+		#removeComponents()
+		#dropWeapon()
+		#queue_free()
 		#currentItemIndex = 0
 		#pawnEnabled = false
 		#collisionEnabled = false
@@ -499,7 +502,7 @@ func runBodyTestMotion(from : Transform3D,motion:Vector3,result = null)->bool:
 
 
 func endAttachedCam()->void:
-	if attachedCam != null:
+	if is_instance_valid(attachedCam):
 		if gameManager.bulletTime:
 			gameManager.bulletTime = false
 		attachedCam.hud.flashColor(Color.DARK_RED)
@@ -517,7 +520,7 @@ func isPlayerPawn()->bool:
 	return get_meta(&"isPlayer")
 
 func moveHitboxDecals(parent:Node3D = gameManager.world.worldParticles) ->void:
-	if gameManager.world != null:
+	if is_instance_valid(gameManager.world):
 		for boxes in getAllHitboxes():
 			for decals in boxes.get_children():
 				if decals is BulletHole:
@@ -533,7 +536,7 @@ func die(killer) -> void:
 		gameManager.doKillEffect(self,killer)
 		onPawnKilled.emit()
 		playKillSound()
-		dropWeapon()
+		#dropWeapon()
 		isPawnDead = true
 		createRagdoll(lastHitPart, killer)
 		endPawn()
@@ -812,14 +815,14 @@ func jump() -> void:
 
 func setupWeaponAnimations() -> void:
 	var blendSet
-	if !currentItem == null and is_instance_valid(currentItem):
+	if is_instance_valid(currentItem):
 		blendSet = currentItem.animationTree.tree_root
 		if !currentItem.weaponAnimSet:
 			#Swap out animationLibraries
-			if animationPlayer != null:
+			if is_instance_valid(animationPlayer):
 				if animationPlayer.has_animation_library("weaponAnims"):
 					animationPlayer.remove_animation_library("weaponAnims")
-				if currentItem.animationPlayer != null:
+				if is_instance_valid(currentItem.animationPlayer):
 					var libraryToAdd = currentItem.animationPlayer.get_animation_library("weaponAnims").duplicate()
 					animationPlayer.add_animation_library("weaponAnims", libraryToAdd)
 
@@ -1000,7 +1003,7 @@ func playAnimation(animation:String) -> void:
 func getInteractionObject():
 	if interactRaycast.is_colliding():
 		var col = interactRaycast.get_collider()
-		if col != null:
+		if is_instance_valid(col):
 			if col.is_in_group("Interactable"):
 				gameManager.getEventSignal("interactableFound").emit()
 				return col
@@ -1017,7 +1020,7 @@ func moveItemToWeapons(item:Weapon) -> void:
 
 func setPawnMaterial() -> void:
 	currentPawnMat.albedo_color = pawnColor
-	if pawnSkeleton != null:
+	if is_instance_valid(pawnSkeleton):
 		for mesh in pawnSkeleton.get_children():
 			if mesh is MeshInstance3D:
 				mesh.set_surface_override_material(0,currentPawnMat)
@@ -1413,7 +1416,7 @@ func checkMeshLookat()->void:
 		if meshLookAt:
 			startBodyIK()
 			if !freeAim:
-				if currentItem != null:
+				if is_instance_valid(currentItem):
 					if currentItem.isAiming != true:
 						currentItem.isAiming = true
 					else:

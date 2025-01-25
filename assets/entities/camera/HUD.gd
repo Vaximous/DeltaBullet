@@ -34,6 +34,7 @@ var hudTween : Tween
 var interactVisible:bool = false:
 	set(value):
 		interactVisible = value
+		await get_tree().process_frame
 		if value:
 			fadeInteractHudIn()
 			interactionFound.emit()

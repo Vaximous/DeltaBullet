@@ -20,7 +20,16 @@ signal visibleObject(object:Node3D,visibleposition:Vector3)
 @onready var pawnDebugLabel : Label3D = $debugPawnStats
 @export_category("AI Component")
 var castLerp : Transform3D
-var targetedPawn : BasePawn
+var targetedPawn : BasePawn:
+	set(value):
+		targetedPawn = value
+		if targetedPawn.isPlayerPawn():
+			if !gameManager.targetedEnemies.has(self):
+				gameManager.targetedEnemies.append(self)
+		else:
+			if gameManager.targetedEnemies.has(self):
+				gameManager.targetedEnemies.erase(self)
+
 @export var pawnOwner : BasePawn:
 	set(value):
 		pawnOwner = value
@@ -150,7 +159,7 @@ func _ready() -> void:
 		setExceptions()
 		visionTimer.start()
 		await get_tree().process_frame
-		pawnOwner.onPawnKilled.connect(NavigationServer3D.free_rid.bind(aiAgent))
+		pawnOwner.onPawnKilled.connect(removeAI)
 		if isInteractable:
 			setInteractablePawn(true)
 	else:
@@ -159,6 +168,11 @@ func _ready() -> void:
 	setPawnType()
 	setupNav()
 
+func removeAI()->void:
+	if gameManager.targetedEnemies.has(self):
+				gameManager.targetedEnemies.erase(self)
+
+	NavigationServer3D.free_rid.bind(aiAgent)
 
 #func _physics_process(delta: float) -> void:
 	#if is_instance_valid(self) and is_instance_valid(pawnOwner) and !pawnOwner.isPawnDead:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://ccnq3cc8k6nt5"]
+[gd_scene load_steps=50 format=4 uid="uid://ccnq3cc8k6nt5"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_iq3s1"]
 [ext_resource type="Script" uid="uid://b31u24at18p5t" path="res://assets/resources/customResources/worldData/worldData.gd" id="2_gqs4i"]
@@ -165,6 +165,72 @@ stream_0/stream = ExtResource("24_qkxav")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_peom8"]
 size = Vector3(12.5566, 3.95514, 11.101)
+
+[sub_resource type="GDScript" id="GDScript_2am8s"]
+resource_name = "BuddyManson"
+script/source = "extends InteractiveObject
+var enabled : bool = false:
+	set(value):
+		enabled = value
+		if enabled:
+			%timer.start()
+			%CSGBakedMeshInstance3D.get_surface_override_material(1).albedo_color = Color.GREEN
+		else:
+			%timer.stop()
+			%CSGBakedMeshInstance3D.get_surface_override_material(1).albedo_color = Color.RED
+
+func spawnSomeEnemies()->void:
+	for i in randi_range(1,gameManager.world.pawnWorldSpawns.get_child_count()):
+		gameManager.world.pawnWorldSpawns.get_child(i).spawnPawn()
+		aggroRandom()
+
+func aggroRandom()->void:
+	for i in AIComponent.instances:
+		var randomEnemy = AIComponent.instances.pick_random()
+		if randomEnemy == i:
+			randomEnemy = AIComponent.instances.pick_random()
+
+		i.targetedPawn = randomEnemy.pawnOwner
+		if i.pawnFSM.current_state != i.pawnFSM.get_state(\"Attack\") and i.pawnOwner.currentItem:
+			i.lookAtPosition(i.targetedPawn.global_position,true)
+			i.pawnFSM.change_state(\"Attack\")
+
+
+func _on_object_used(user: Variant) -> void:
+	if enabled:
+		enabled = false
+	else:
+		enabled = true
+"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_akr5q"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_qkxav"]
+_surfaces = [{
+"aabb": AABB(-0.120483, -0.5, -0.117188, 0.240967, 1, 0.234375),
+"attribute_data": PackedByteArray("AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AACAPUun4T0AAIA/AAAAAAAAAAAAAAAAAACAPUun4T0AAAAAAAAAAAAAgD3aAm8/iYhoP0un4T0AAIA/AAAAAAAAgD1Lp+E9AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AACAPwAAAACJiGg/S6fhPQAAgD8AAIA/AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AACAPwAAAAAAAAAAAAAAAAAAgD8AAIA/AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAACAPdoCbz8AAAAAAAAAAAAAAAAAAIA/iYhoP9oCbz8AAIA/AACAP4mIaD9Lp+E9AAAAAAAAAAAAAIA/AACAPwAAgD8AAAAAAAAAAAAAAAAAAIA/AACAPwAAgD8AAAAAiYhoP9oCbz8AAAAAAACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AACAPdoCbz8AAAAAAACAP4mIaD/aAm8/AACAPwAAAAAAAAAAAAAAAAAAgD8AAIA/"),
+"format": 34359738391,
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 54,
+"vertex_data": PackedByteArray("AMD2vQAAAL8AAPA9AMD2PQAAAL8AAPA9AMD2PQAAAL8AAPC9AGDAPQAAAD8AANI9AMD2PQAAAD8AAPC9AMD2PQAAAD8AAPA9AGDAPQAAAD8AANI9AMD2PQAAAD8AAPA9AADWvQAAAD8AANI9AGDAPQAAAD8AAMS9AMD2PQAAAD8AAPC9AGDAPQAAAD8AANI9AMD2PQAAAD8AAPA9AMD2PQAAAD8AAPC9AMD2PQAAAL8AAPC9AMD2PQAAAD8AAPC9AGDAPQAAAD8AAMS9AMD2vQAAAD8AAPC9AMD2PQAAAL8AAPC9AMD2PQAAAD8AAPC9AMD2vQAAAD8AAPC9AMD2PQAAAL8AAPA9AMD2PQAAAD8AAPA9AMD2PQAAAL8AAPC9AMD2PQAAAD8AAPA9AMD2PQAAAL8AAPA9AMD2vQAAAL8AAPA9AMD2vQAAAL8AAPA9AMD2vQAAAL8AAPC9AMD2vQAAAD8AAPC9AADWvQAAAD8AANI9AMD2PQAAAD8AAPA9AMD2vQAAAD8AAPA9AADWvQAAAD8AAMS9AMD2vQAAAD8AAPC9AGDAPQAAAD8AAMS9AMD2vQAAAL8AAPA9AMD2PQAAAL8AAPC9AMD2vQAAAL8AAPC9AMD2PQAAAL8AAPC9AMD2vQAAAD8AAPC9AMD2vQAAAL8AAPC9AADWvQAAAD8AAMS9AMD2vQAAAD8AAPA9AMD2vQAAAD8AAPC9AMD2vQAAAD8AAPC9AMD2vQAAAD8AAPA9AMD2vQAAAL8AAPA9AADWvQAAAD8AANI9AMD2vQAAAD8AAPA9AADWvQAAAD8AAMS9AMD2vQAAAD8AAPA9AMD2PQAAAD8AAPA9AMD2vQAAAL8AAPA9/38AAP//AAD/fwAA//8AAP9/AAD//wAA/3//////AAD/f/////8AAP9///8AAAAA/3//////AAD/f///AAAAAP9///8AAAAA/3//////AAD/f/////8AAP9//////wAA////f/9//n////9//3/+f////3//f/5//3//////AAD/f/////8AAP9//////wAA/////wAA/z//////AAD/P/////8AAP8/////f/9//n////9//3/+f////3//f/5//3//fwAA/z//f/9/AAD/P/9//38AAP8/AAD/f/9//n8AAP9//3/+fwAA/3//f/5//3///wAAAAD/f///AAAAAP9///8AAAAA/3//////AAD/f/////8AAP9//////wAA/38AAP//AAD/fwAA//8AAP9/AAD//wAA/////wAA/z//////AAD/P/////8AAP8//3//////AAD/f///AAAAAP9//////wAAAAD/f/9//n8AAP9//3/+fwAA/3//f/5//3///wAAAAD/f///AAAAAP9//////wAA/3//fwAA/z//f/9/AAD/P/9//38AAP8/")
+}, {
+"aabb": AABB(-0.104492, 0.5, -0.0957031, 0.198425, 0.0482113, 0.198242),
+"attribute_data": PackedByteArray("AAAAACmD0T4AAIA/AACAPwAAgD8pg9E+AAAAACmD0T4AAAAAAACAPwAAgD8AAIA/AACAPwAAgD8AAAAAAAAAAAAAAAAAAIA/AACAPwAAAAAAAAAAAAAAAAAAgD8AAIA/AAAAAAAAAAAAAAAAAACAP2w+Fz8AAAAAbD4XPwAAgD9sPhc/AAAAAAAAAAAAAIA/bD4XPwAAgD9sPhc/AAAAAAAAAAAAAIA/AAAAAAAAAAAAAAAAbD4XPwAAgD9sPhc/AAAAAAAAAAAAAAAAAACAP2w+Fz8AAAAAAACAP2w+Fz8AAIA/AAAAAAAAAAAAAAAA"),
+"format": 34359738391,
+"material": SubResource("StandardMaterial3D_akr5q"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 30,
+"vertex_data": PackedByteArray("AGDAPQAAAD8AAMS9AADWvZRXDD8AAMS9AADWvQAAAD8AAMS9AGDAPQAAAD8AAMS9AGDAPZRXDD8AAMS9AADWvZRXDD8AAMS9AADWvZRXDD8AAMS9AGDAPZRXDD8AANI9AADWvZRXDD8AANI9AGDAPZRXDD8AAMS9AGDAPZRXDD8AANI9AADWvZRXDD8AAMS9AADWvZRXDD8AAMS9AADWvZRXDD8AANI9AADWvQAAAD8AAMS9AGDAPQAAAD8AAMS9AGDAPQAAAD8AANI9AGDAPZRXDD8AAMS9AADWvQAAAD8AANI9AADWvQAAAD8AAMS9AADWvZRXDD8AANI9AGDAPZRXDD8AANI9AGDAPQAAAD8AANI9AADWvQAAAD8AANI9AGDAPZRXDD8AANI9AGDAPZRXDD8AAMS9AGDAPQAAAD8AANI9AADWvQAAAD8AANI9AADWvZRXDD8AANI9AGDAPZRXDD8AANI9/////wAA/z//////AAD/P/////8AAP8//////wAA/z//////AAD/P/////8AAP8//3//////AAD/f/////8AAP9//////wAA/3//////AAD/f/////8AAP9//////wAAAAD/f/9//n8AAP9//3/+fwAA/3//f/5/////f/9//n////9//3/+f////3//f/5/AAD/f/9//n8AAP9//3/+fwAA/3//f/5//3//fwAA/z//f/9/AAD/P/9//38AAP8/////f/9//n////9//3/+f////3//f/5//3//fwAA/z//f/9/AAD/P/9//38AAP8/")
+}]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_peom8"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_cuq5u"]
+data = PackedVector3Array(-0.120483, -0.5, 0.117188, 0.120483, -0.5, 0.117188, 0.120483, -0.5, -0.117188, 0.0939331, 0.5, 0.102539, 0.120483, 0.5, -0.117188, 0.120483, 0.5, 0.117188, 0.0939331, 0.5, 0.102539, 0.120483, 0.5, 0.117188, -0.104492, 0.5, 0.102539, 0.0939331, 0.5, -0.0957031, 0.120483, 0.5, -0.117188, 0.0939331, 0.5, 0.102539, 0.120483, 0.5, 0.117188, 0.120483, 0.5, -0.117188, 0.120483, -0.5, -0.117188, 0.120483, 0.5, -0.117188, 0.0939331, 0.5, -0.0957031, -0.120483, 0.5, -0.117188, 0.120483, -0.5, -0.117188, 0.120483, 0.5, -0.117188, -0.120483, 0.5, -0.117188, 0.120483, -0.5, 0.117188, 0.120483, 0.5, 0.117188, 0.120483, -0.5, -0.117188, 0.120483, 0.5, 0.117188, 0.120483, -0.5, 0.117188, -0.120483, -0.5, 0.117188, -0.120483, -0.5, 0.117188, -0.120483, -0.5, -0.117188, -0.120483, 0.5, -0.117188, -0.104492, 0.5, 0.102539, 0.120483, 0.5, 0.117188, -0.120483, 0.5, 0.117188, -0.104492, 0.5, -0.0957031, -0.120483, 0.5, -0.117188, 0.0939331, 0.5, -0.0957031, -0.120483, -0.5, 0.117188, 0.120483, -0.5, -0.117188, -0.120483, -0.5, -0.117188, 0.120483, -0.5, -0.117188, -0.120483, 0.5, -0.117188, -0.120483, -0.5, -0.117188, -0.104492, 0.5, -0.0957031, -0.120483, 0.5, 0.117188, -0.120483, 0.5, -0.117188, -0.120483, 0.5, -0.117188, -0.120483, 0.5, 0.117188, -0.120483, -0.5, 0.117188, -0.104492, 0.5, 0.102539, -0.120483, 0.5, 0.117188, -0.104492, 0.5, -0.0957031, -0.120483, 0.5, 0.117188, 0.120483, 0.5, 0.117188, -0.120483, -0.5, 0.117188, 0.0939331, 0.5, -0.0957031, -0.104492, 0.548211, -0.0957031, -0.104492, 0.5, -0.0957031, 0.0939331, 0.5, -0.0957031, 0.0939331, 0.548211, -0.0957031, -0.104492, 0.548211, -0.0957031, -0.104492, 0.548211, -0.0957031, 0.0939331, 0.548211, 0.102539, -0.104492, 0.548211, 0.102539, 0.0939331, 0.548211, -0.0957031, 0.0939331, 0.548211, 0.102539, -0.104492, 0.548211, -0.0957031, -0.104492, 0.548211, -0.0957031, -0.104492, 0.548211, 0.102539, -0.104492, 0.5, -0.0957031, 0.0939331, 0.5, -0.0957031, 0.0939331, 0.5, 0.102539, 0.0939331, 0.548211, -0.0957031, -0.104492, 0.5, 0.102539, -0.104492, 0.5, -0.0957031, -0.104492, 0.548211, 0.102539, 0.0939331, 0.548211, 0.102539, 0.0939331, 0.5, 0.102539, -0.104492, 0.5, 0.102539, 0.0939331, 0.548211, 0.102539, 0.0939331, 0.548211, -0.0957031, 0.0939331, 0.5, 0.102539, -0.104492, 0.5, 0.102539, -0.104492, 0.548211, 0.102539, 0.0939331, 0.548211, 0.102539)
 
 [node name="worldBase" instance=ExtResource("1_iq3s1")]
 worldData = SubResource("Resource_6vxwt")
@@ -420,6 +486,32 @@ switch_back_on_exit = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.28858, 1.12899, -0.674395)
 shape = SubResource("BoxShape3D_peom8")
 
+[node name="interactiveObject" type="RigidBody3D" parent="Props" index="5" groups=["Interactable"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.2621, 2.60888, 0)
+axis_lock_linear_x = true
+axis_lock_linear_y = true
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+freeze = true
+script = SubResource("GDScript_2am8s")
+objectName = "Buddy Manson"
+interactType = 1
+canBeUsed = true
+metadata/_custom_type_script = ExtResource("19_s4bs4")
+
+[node name="CSGBakedMeshInstance3D" type="MeshInstance3D" parent="Props/interactiveObject" index="0"]
+unique_name_in_owner = true
+mesh = SubResource("ArrayMesh_qkxav")
+surface_material_override/1 = SubResource("StandardMaterial3D_peom8")
+
+[node name="CSGBakedCollisionShape3D" type="CollisionShape3D" parent="Props/interactiveObject" index="1"]
+shape = SubResource("ConcavePolygonShape3D_cuq5u")
+
+[node name="timer" type="Timer" parent="Props/interactiveObject" index="2"]
+unique_name_in_owner = true
+
 [node name="aiMarker" parent="Misc/WaypointNodes" index="0" instance=ExtResource("5_bh8tr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.626718, 1.66502, 2.90188)
 
@@ -480,3 +572,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.3854, 1.66502, 3.90188)
 [connection signal="objectUsed" from="Geometry/navigationRegion3d/csgtruck/worldMapInteract" to="Geometry/navigationRegion3d/csgtruck/worldMapInteract" method="_on_object_used"]
 [connection signal="objectUsed" from="Props/PlayerCloset/closetInteraction" to="Props/PlayerCloset" method="_onClosetUsed"]
 [connection signal="triggerActivated" from="Props/node3d/pawnTrigger" to="Props/node3d" method="_on_pawn_trigger_trigger_activated"]
+[connection signal="objectUsed" from="Props/interactiveObject" to="Props/interactiveObject" method="_on_object_used"]
+[connection signal="objectUsed" from="Props/interactiveObject" to="Props/interactiveObject" method="spawnSomeEnemies"]
+[connection signal="timeout" from="Props/interactiveObject/timer" to="Props/interactiveObject" method="spawnSomeEnemies"]

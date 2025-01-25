@@ -1,10 +1,23 @@
-[gd_scene load_steps=3 format=3 uid="uid://sjxq22ronv14"]
+[gd_scene load_steps=8 format=3 uid="uid://sjxq22ronv14"]
 
-[ext_resource type="Script" path="res://assets/entities/projectiles/Bullet.gd" id="1_mie4e"]
+[ext_resource type="Script" uid="uid://bvnntkrelpsql" path="res://assets/entities/projectiles/Bullet.gd" id="1_mie4e"]
+[ext_resource type="AudioStream" uid="uid://bmaocrrp0g86y" path="res://assets/sounds/bulletFlyby/flyby1.wav" id="2_tgiau"]
+[ext_resource type="AudioStream" uid="uid://d202sp21rpj55" path="res://assets/sounds/bulletFlyby/flyby2.wav" id="3_er6km"]
+[ext_resource type="AudioStream" uid="uid://21yxgmuvtk6v" path="res://assets/sounds/bulletFlyby/flyby3.wav" id="4_mij58"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_jg7a5"]
 radius = 0.1
 height = 0.2
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_18pkn"]
+random_pitch = 1.05
+streams_count = 3
+stream_0/stream = ExtResource("2_tgiau")
+stream_1/stream = ExtResource("3_er6km")
+stream_2/stream = ExtResource("4_mij58")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_5el7n"]
+radius = 5.46664
 
 [node name="bullet" type="RayCast3D"]
 collision_mask = 19
@@ -17,3 +30,22 @@ max_distance = 1000.0
 [node name="meshInstance3d" type="MeshInstance3D" parent="."]
 visible = false
 mesh = SubResource("SphereMesh_jg7a5")
+
+[node name="flybyArea" type="Area3D" parent="."]
+unique_name_in_owner = true
+collision_layer = 8
+collision_mask = 8
+
+[node name="flybySound" type="AudioStreamPlayer3D" parent="flybyArea"]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_18pkn")
+attenuation_model = 3
+volume_db = 25.0
+bus = &"Sounds"
+attenuation_filter_db = 0.0
+
+[node name="collisionShape3d" type="CollisionShape3D" parent="flybyArea"]
+shape = SubResource("SphereShape3D_5el7n")
+debug_color = Color(0.796078, 0, 0.886275, 1)
+
+[connection signal="body_entered" from="flybyArea" to="." method="_on_flyby_area_body_entered"]

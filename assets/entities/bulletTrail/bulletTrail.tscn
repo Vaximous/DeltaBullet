@@ -9,9 +9,6 @@ emission = Color(1, 1, 0, 1)
 emission_energy_multiplier = 16.0
 
 [node name="bulletTrail" type="MeshInstance3D"]
-process_thread_group = 2
-process_thread_group_order = 0
-process_thread_messages = 2
 top_level = true
 material_override = SubResource("StandardMaterial3D_atsew")
 ignore_occlusion_culling = true

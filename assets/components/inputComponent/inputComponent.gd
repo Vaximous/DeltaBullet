@@ -33,8 +33,8 @@ func _process(_delta:float)->void:
 			if Input.is_action_pressed("gRightClick"):
 				if !controllingPawn == null:
 					if !controllingPawn.isPawnDead:
-						if controllingPawn.attachedCam != null:
-							if controllingPawn.currentItem:
+						if is_instance_valid(controllingPawn.attachedCam):
+							if is_instance_valid(controllingPawn.currentItem):
 									if controllingPawn.currentItem.isAiming != true:
 										controllingPawn.currentItem.isAiming = true
 							controllingPawn.turnAmount = -controllingPawn.attachedCam.vertical.rotation.x
@@ -42,7 +42,7 @@ func _process(_delta:float)->void:
 							controllingPawn.freeAimTimer.stop()
 							if !controllingPawn.meshLookAt:
 								controllingPawn.meshLookAt = true
-								if !controllingPawn.attachedCam == null:
+								if !is_instance_valid(controllingPawn.attachedCam):
 									if controllingPawn.meshRotation:
 										controllingPawn.meshRotation = controllingPawn.attachedCam.camRot
 							controllingPawn.canRun = false
@@ -113,7 +113,7 @@ func _input(event: InputEvent) -> void:
 
 		if event.is_action_pressed("gReloadWeapon"):
 			#emit_signal("actionPressed", str(event.keycode))
-			if controllingPawn.currentItem != null:
+			if is_instance_valid(controllingPawn.currentItem):
 				if controllingPawn.currentItem.canReloadWeapon:
 					controllingPawn.currentItem.reloadWeapon()
 
@@ -121,7 +121,7 @@ func _input(event: InputEvent) -> void:
 			#emit_signal("actionPressed", str(event.keycode))
 			if controllingPawn:
 				var interactObj = controllingPawn.getInteractionObject()
-				if interactObj != null:
+				if is_instance_valid(interactObj):
 					if interactObj is BasePawn:
 						interactObj.inputComponent.interactSpeakTrigger.emit()
 					elif interactObj is InteractiveObject:

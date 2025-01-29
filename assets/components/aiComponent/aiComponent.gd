@@ -535,8 +535,8 @@ func setPawnType()->void:
 func setPathPosition(pathPosition:Vector3)->PackedVector3Array:
 	var safePosition : Vector3 = NavigationServer3D.map_get_closest_point(navMap,pathPosition)
 	currentPath = NavigationServer3D.map_get_path(navMap,pawnOwner.global_position,pathPosition,true)
-	if gameManager.debugEnabled:
-		print(currentPath)
+	#if gameManager.debugEnabled:
+		#print(currentPath)
 	return currentPath
 
 func onSafeVelCompute(velocity:Vector3)->void:

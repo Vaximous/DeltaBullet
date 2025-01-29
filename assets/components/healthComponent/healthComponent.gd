@@ -43,15 +43,3 @@ func damage(amount:float, dealer:Node3D = null,hitDirection:Vector3 = Vector3.ZE
 		lastDealer = dealer
 		onDamaged.emit(dealer, hitDirection)
 		setHealth(health - amount)
-
-#func _on_health_depleted(dealer: Node3D) -> void:
-	#print("Dealer is %s"%dealer)
-	#lastDealer = dealer
-	#if lastDealer != null:
-		#if lastDealer.currentItem != null:
-			#if lastDealer.currentItem.weaponResource.headDismember:
-				#killedWithDismemberingWeapon.emit()
-		#if !killerSignalEmitted:
-			#if componentOwner is BasePawn:
-				#lastDealer.emit_signal("killedPawn")
-				#killerSignalEmitted = true

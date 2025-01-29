@@ -1,9 +1,7 @@
-[gd_scene load_steps=27 format=3 uid="uid://bpp4s1vikjdv8"]
+[gd_scene load_steps=19 format=3 uid="uid://bpp4s1vikjdv8"]
 
 [ext_resource type="Material" uid="uid://co86jd67xrcl" path="res://assets/materials/blood/spurts/bloodSpurt3.tres" id="1_fkxrd"]
 [ext_resource type="Texture2D" uid="uid://djho1o4a46mla" path="res://assets/textures/blood/ParticleCloudWhite.png" id="2_fkxrd"]
-[ext_resource type="Material" uid="uid://bxh02ijn7mkmu" path="res://assets/materials/blood/bloodland1.tres" id="4_jlj6w"]
-[ext_resource type="Material" uid="uid://dkqmd8bpbl83c" path="res://assets/materials/blood/bloodDecalSmall.tres" id="5_2tj2p"]
 
 [sub_resource type="Curve" id="Curve_ak7gg"]
 _data = [Vector2(0, 1), 0.0, -0.470953, 0, 0, Vector2(1, 0), -1.15979, 0.0, 0, 0]
@@ -48,21 +46,13 @@ anim_speed_max = 2.5
 
 [sub_resource type="GDScript" id="GDScript_fb3dx"]
 script/source = "extends GPUParticles3D
-@onready var bloodLand : GPUParticles3D = $bloodLand
 @export var minParticles : int = 5
 @export var maxParticles : int = 8
-var landTexture : Array = [preload(\"res://assets/materials/blood/bloodland1.tres\"),preload(\"res://assets/materials/blood/bloodland2.tres\"),preload(\"res://assets/materials/blood/bloodland3.tres\")]
-# Called when the node enters the scene tree for the first time.
+
 func _ready()->void:
-	#var removeTimer = Timer.new()
-	#add_gizmo(removeTimer)
-	#removeTimer.wait_time = UserConfig.game_decal_remove_time
-	#removeTimer.timeout.connect(queue_free)
 	%bloodSmoke.emitting = true
 	material_override = gameManager.bloodSpurts.pick_random()
-	$bloodLand.material_overlay = landTexture.pick_random()
 	amount = randi_range(minParticles,maxParticles)
-	$bloodLand.amount = amount
 	if !finished.is_connected(queue_free):
 		finished.connect(queue_free)
 "
@@ -113,43 +103,7 @@ particles_anim_loop = false
 material = SubResource("StandardMaterial3D_oedkt")
 size = Vector2(0.3, 0.3)
 
-[sub_resource type="Curve" id="Curve_ro5oo"]
-_data = [Vector2(0, 0.757895), 0.0, 6.18947, 0, 0, Vector2(1e-05, 1), -1.12516, -1.12516, 0, 0, Vector2(0.617143, 0.769231), 0.0, 0.0, 0, 0]
-point_count = 3
-
-[sub_resource type="CurveTexture" id="CurveTexture_mousa"]
-curve = SubResource("Curve_ro5oo")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_pdrmt"]
-particle_flag_align_y = true
-particle_flag_rotate_y = true
-angle_min = -360.0
-angle_max = 360.0
-direction = Vector3(0, 0, -1)
-flatness = 1.0
-initial_velocity_min = 1.65
-initial_velocity_max = 1.65
-gravity = Vector3(0, -15, 0)
-scale_min = 0.3
-scale_max = 0.7
-scale_curve = SubResource("CurveTexture_mousa")
-collision_mode = 1
-collision_friction = 0.95
-collision_bounce = 0.0
-collision_use_scale = true
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_aix64"]
-size = Vector2(0.55, 0.55)
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_eacj8"]
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_h5erw"]
-size = Vector2(0.085, 2)
-
 [node name="bloodSpurt" type="GPUParticles3D"]
-process_thread_group = 2
-process_thread_group_order = 0
-process_thread_messages = 2
 material_override = ExtResource("1_fkxrd")
 emitting = false
 one_shot = true
@@ -173,22 +127,3 @@ seed = 670685318
 fixed_fps = 0
 process_material = SubResource("ParticleProcessMaterial_fkxrd")
 draw_pass_1 = SubResource("QuadMesh_c6fs4")
-
-[node name="bloodLand" type="GPUParticles3D" parent="."]
-visible = false
-material_override = ExtResource("4_jlj6w")
-cast_shadow = 0
-emitting = false
-amount = 22
-lifetime = 363.55
-one_shot = true
-randomness = 0.1
-fixed_fps = 144
-process_material = SubResource("ParticleProcessMaterial_pdrmt")
-draw_pass_1 = SubResource("PlaneMesh_aix64")
-
-[node name="gpuParticles3d" type="GPUParticles3D" parent="."]
-visible = false
-material_override = ExtResource("5_2tj2p")
-process_material = SubResource("ParticleProcessMaterial_eacj8")
-draw_pass_1 = SubResource("PlaneMesh_h5erw")

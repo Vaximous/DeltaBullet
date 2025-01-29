@@ -62,7 +62,7 @@ func _ready()-> void:
 	setBoneOwners()
 
 	deathSound.play()
-	createActiveJoints()
+
 	if startOnInstance:
 		startRagdoll()
 
@@ -82,7 +82,7 @@ func appendPhysicalBoneArray()->void:
 func startRagdoll()-> void:
 	#ragdollSkeleton.animate_physical_bones = true
 	physicalBoneSimulator.physical_bones_start_simulation()
-	checkClothingHider()
+	#checkClothingHider()
 
 func ragTwitch(convulsionAmount : float = 10.0, bodyPartIDX : int = 0)-> void:
 	pass
@@ -90,30 +90,41 @@ func ragTwitch(convulsionAmount : float = 10.0, bodyPartIDX : int = 0)-> void:
 func checkClothingHider()-> void:
 	for clothes in self.get_children():
 		if clothes is ClothingItem:
-			if clothes.head:
-				head.hide()
-			if clothes.rightUpperarm:
-				rightUpperArm.hide()
-			if clothes.leftUpperarm:
-				leftUpperArm.hide()
-			if clothes.shoulders:
-				shoulders.hide()
-			if clothes.leftForearm:
-				leftForearm.hide()
-			if clothes.rightForearm:
-				rightForearm.hide()
-			if clothes.upperChest:
-				upperChest.hide()
-			if clothes.lowerBody:
-				lowerBody.hide()
-			if clothes.leftUpperLeg:
-				leftUpperLeg.hide()
-			if clothes.rightUpperLeg:
-				rightUpperLeg.hide()
-			if clothes.rightLowerLeg:
-				rightLowerLeg.hide()
-			if clothes.leftLowerLeg:
-				leftLowerLeg.hide()
+			match clothes.head:
+				true: head.hide()
+			match clothes.rightUpperarm:
+				true:
+					rightUpperArm.hide()
+			match clothes.leftUpperarm:
+				true:
+					leftUpperArm.hide()
+			match clothes.shoulders:
+				true:
+					shoulders.hide()
+			match clothes.leftForearm:
+				true:
+					leftForearm.hide()
+			match clothes.rightForearm:
+				true:
+					rightForearm.hide()
+			match clothes.upperChest:
+				true:
+					upperChest.hide()
+			match clothes.lowerBody:
+				true:
+					lowerBody.hide()
+			match clothes.leftUpperLeg:
+				true:
+					leftUpperLeg.hide()
+			match clothes.rightUpperLeg:
+				true:
+					rightUpperLeg.hide()
+			match clothes.rightLowerLeg:
+				true:
+					rightLowerLeg.hide()
+			match clothes.leftLowerLeg:
+				true:
+					leftLowerLeg.hide()
 
 func hookes_law(displacement: Vector3, current_velocity: Vector3, stiffness: float, damping: float) -> Vector3:
 	return (stiffness * displacement) - (damping * current_velocity)
@@ -155,15 +166,6 @@ func setPawnMaterial(material)-> void:
 			mesh.set_surface_override_material(0,material)
 
 
-func _on_visible_on_screen_notifier_3d_screen_entered()-> void:
-	visibleOnScreen = true
-	show()
-
-func _on_visible_on_screen_notifier_3d_screen_exited()-> void:
-	visibleOnScreen = false
-	hide()
-
-
 func moveClothesToRagdoll(pawn:BasePawn) -> void:
 	if is_instance_valid(pawn):
 		for clothes in pawn.clothingHolder.get_children():
@@ -198,6 +200,7 @@ func createActiveJoints()->void:
 
 func initializeRagdoll(pawn:BasePawn,pawnvelocity:Vector3 = Vector3.ZERO,lastHit:int=0,impulse:Vector3 = Vector3.ZERO,killer = null)->void:
 	if is_instance_valid(pawn):
+		name = "%s's Ragdoll"%pawn.name
 		setRagdollPositionAndRotation(pawn)
 		moveClothesToRagdoll(pawn)
 		setRagdollPose(pawn)
@@ -208,12 +211,12 @@ func initializeRagdoll(pawn:BasePawn,pawnvelocity:Vector3 = Vector3.ZERO,lastHit
 		attachedCamCheck(pawn)
 		activeRagdollDeathCheck(lastHit,pawn)
 		applyRagdollImpulse(pawn,pawnvelocity,lastHit,impulse)
-		if pawn.currentPawnMat:
+		if is_instance_valid(pawn.currentPawnMat):
 			setPawnMaterial(pawn.currentPawnMat.duplicate())
 
 
 func attachedCamCheck(pawn:BasePawn)->void:
-	if !pawn.attachedCam == null:
+	if is_instance_valid(pawn.attachedCam):
 		var cam = pawn.attachedCam
 		cam.unposessObject()
 		cam.posessObject(self, rootCameraNode)
@@ -235,11 +238,11 @@ func activeRagdollDeathCheck(impulse_bone:int,pawn:BasePawn)->void:
 
 func headshotCheck(impulse_bone:int,killer,pawn:BasePawn)->void:
 	if impulse_bone == 41:
-		if killer != null:
-			if killer.currentItem != null:
+		if is_instance_valid(killer):
+			if is_instance_valid(killer.currentItem):
 				if killer.currentItem.weaponResource.headDismember:
 					doRagdollHeadshot()
-			if killer.attachedCam != null:
+			if is_instance_valid(killer.attachedCam):
 				killer.attachedCam.doHeadshotEffect()
 		pawn.headshottedPawn.emit()
 

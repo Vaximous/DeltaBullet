@@ -284,7 +284,7 @@ var currentItem : InteractiveObject = null
 						itemHolder.reparent(rightHandBone)
 						itemHolder.position = Vector3.ZERO
 
-				if attachedCam:
+				if is_instance_valid(attachedCam):
 					currentItem.weaponCast = attachedCam.camCast
 					if currentItem.weaponResource.useCustomCrosshairSize:
 						attachedCam.hud.getCrosshair().crosshairSize = currentItem.weaponResource.crosshairSizeOverride
@@ -306,7 +306,7 @@ var currentItem : InteractiveObject = null
 					if weapon.isEquipped != false:
 							weapon.isEquipped = false
 					weapon.hide()
-				if attachedCam:
+				if is_instance_valid(attachedCam):
 					#Dialogic.VAR.set('playerHasWeaponEquipped',false)
 					attachedCam.itemEquipOffsetToggle = false
 					attachedCam.hud.getCrosshair().setCrosshair(null)
@@ -440,15 +440,13 @@ func checkComponents()->void:
 
 
 func endPawn()->void:
-	if is_instance_valid(self) and !is_queued_for_deletion():
-		for i in %BoneAttatchments.get_children():
-			i.queue_free()
-		self.call_deferred("queue_free")
+	if (is_instance_valid(self) and not self.is_queued_for_deletion()):
+		process_mode = Node.PROCESS_MODE_DISABLED
 		#direction = Vector3.ZERO
 		#velocity = Vector3.ZERO
 		#removeComponents()
 		#dropWeapon()
-		#queue_free()
+		queue_free()
 		#currentItemIndex = 0
 		#pawnEnabled = false
 		#collisionEnabled = false
@@ -517,8 +515,10 @@ func endAttachedCam()->void:
 
 
 func isPlayerPawn()->bool:
-	return get_meta(&"isPlayer")
-
+	if has_meta(&"isPlayer"):
+		return get_meta(&"isPlayer")
+	else:
+		return false
 func moveHitboxDecals(parent:Node3D = gameManager.world.worldParticles) ->void:
 	if is_instance_valid(gameManager.world):
 		for boxes in getAllHitboxes():
@@ -904,7 +904,7 @@ func equipWeapon(index:int) -> void:
 func unequipWeapon() -> void:
 	animationTree.set("parameters/weaponBlend/blend_amount", 0)
 	animationTree.set("parameters/weaponBlend_Left_blend/blend_amount", 0)
-	if lastLeftBlend != null:
+	if is_instance_valid(lastLeftBlend):
 		lastLeftBlend.stop()
 	for weapon in itemHolder.get_children():
 		weapon.hide()
@@ -925,19 +925,19 @@ func _on_free_aim_timer_timeout() -> void:
 	freeAim = false
 
 func removeComponents() -> void:
-	if healthComponent:
+	if is_instance_valid(healthComponent):
 		healthComponent.queue_free()
 		healthComponent = null
 
-	if movementController:
+	if is_instance_valid(movementController):
 		movementController.queue_free()
 		movementController = null
 
-	if animationController:
+	if is_instance_valid(animationController):
 		animationController.queue_free()
 		animationController = null
 
-	if inputComponent:
+	if is_instance_valid(inputComponent):
 		inputComponent.queue_free()
 		inputComponent = null
 

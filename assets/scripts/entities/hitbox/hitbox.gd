@@ -13,7 +13,7 @@ var boneId:int
 # Called when the node enters the scene tree for the first time.
 func _ready()->void:
 	if enabled:
-		if healthComponent.componentOwner != null:
+		if is_instance_valid(healthComponent.componentOwner):
 			await healthComponent.componentOwner.ready
 			healthComponent.componentOwner.hitboxes.append(self)
 		set_meta(&"physics_material_override", preload("res://assets/resources/PhysicsMaterials/flesh_physics_material.tres"))
@@ -37,7 +37,7 @@ func hit(dmg, dealer=null, hitImpulse:Vector3 = Vector3.ZERO, hitPoint:Vector3 =
 			healthComponent.componentOwner.hitImpulse = hitImpulse
 			healthComponent.componentOwner.hitVector = hitPoint
 
-			if healthComponent.componentOwner.attachedCam != null:
+			if is_instance_valid(healthComponent.componentOwner.attachedCam):
 				healthComponent.componentOwner.attachedCam.camera.fov -= randf_range(1.8,4.8)
 				healthComponent.componentOwner.attachedCam.fireRecoil(randf_range(8,14),randf_range(1,4),randf_range(9,13),true)
 				healthComponent.componentOwner.attachedCam.fireVignette(1.2,Color.RED)

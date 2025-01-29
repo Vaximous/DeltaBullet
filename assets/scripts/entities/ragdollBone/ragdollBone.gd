@@ -5,13 +5,9 @@ signal isAwake
 signal onHit(impulse,vector)
 @export_category("Ragdoll Bone")
 var boneCooldownTimer : Timer
-var ownerSkeleton : Skeleton3D:
-	set(value):
-		ownerSkeleton = value
-		#if !get_owner().physicalBoneSimulator.modification_processed.is_connected(doActiveRagdoll):
-			#get_owner().physicalBoneSimulator.modification_processed.connect(doActiveRagdoll)
-			#print("connected")
+var ownerSkeleton : Skeleton3D
 var ragdoll : PawnRagdoll
+var bloodSpurt = preload("res://assets/particles/bloodSpurt/bloodSpurt.tscn")
 @export var healthComponent : HealthComponent:
 	set(value):
 		healthComponent = value
@@ -39,9 +35,7 @@ var hasBled : bool = false
 @export var activeRagdollBone : bool = true
 @export var activeRagdollForce = 1
 @export_subgroup("Impact Hits")
-@export var canBeDismembered : bool = false:
-	set(value):
-		canBeDismembered = value
+@export var canBeDismembered : bool = false
 @export var hardImpactEffectEnabled : bool = true
 @export var impactEffectHard : PackedScene
 @export var mediumImpactEffectEnabled : bool = true
@@ -72,10 +66,10 @@ var inAirStreamPlayer : AudioStreamPlayer3D
 var audioCooldown : float = 0.0:
 	set(value):
 		audioCooldown = value
-		if audioCooldown > 0.0:
-			boneCooldownTimer.start(0.15)
-		else:
-			boneCooldownTimer.stop()
+		#if audioCooldown > 0.0:
+			#boneCooldownTimer.start(0.15)
+		#else:
+			#boneCooldownTimer.stop()
 var exclusionArray : Array[RID]
 var activeRagdollJoint : Generic6DOFJoint3D
 # Called when the node enters the scene tree for the first time.
@@ -84,18 +78,19 @@ func _ready()-> void:
 
 
 func boneSetup()->void:
+	set_meta(&"physics_material_override", preload("res://assets/resources/PhysicsMaterials/flesh_physics_material.tres"))
 	setBoneCooldownTimer()
 	createAudioPlayer()
 	bonePhysicsServer.body_set_max_contacts_reported(RID(self), 1)
 	isAsleep.connect(doBleed)
 	if canBeDismembered:
-		if healthComponent != null:
+		if is_instance_valid(healthComponent):
 			if !healthComponent.HPisDead.is_connected(doPulverizeEffect):
 				healthComponent.HPisDead.connect(doPulverizeEffect)
 	else:
 		if healthComponent.HPisDead.is_connected(doPulverizeEffect):
 			healthComponent.HPisDead.disconnect(doPulverizeEffect)
-
+#
 	if is_instance_valid(ragdoll):
 		if !ragdoll.ragdollSkeleton.skeleton_updated.is_connected(updateRagdollScale):
 				ragdoll.ragdollSkeleton.skeleton_updated.connect(updateRagdollScale)
@@ -124,12 +119,12 @@ func setBoneCooldownTimer()->void:
 	boneCooldownTimer.autostart = false
 	boneCooldownTimer.one_shot = false
 	boneCooldownTimer.timeout.connect(subtractBoneCooldown)
+	boneCooldownTimer.start()
 
 
 func createAudioPlayer()->void:
 	audioStreamPlayer = AudioStreamPlayer3D.new()
 	add_child(audioStreamPlayer)
-	set_meta(&"physics_material_override", preload("res://assets/resources/PhysicsMaterials/flesh_physics_material.tres"))
 	audioStreamPlayer.max_polyphony = 2
 	audioStreamPlayer.max_db = 15
 	audioStreamPlayer.max_distance = 32
@@ -144,83 +139,65 @@ func updateRagdollScale()->void:
 		pulverizeBone()
 		#bonePulverized = true
 
+func createSpurtInstance(globalPosition : Vector3)->void:
+	var spurtInstance = bloodSpurt.instantiate()
+	gameManager.world.worldMisc.add_child(spurtInstance)
+	spurtInstance.global_position = globalPosition
+	spurtInstance.emitting = true
+
 func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 	boneState = state.sleeping
 	currentVelocity = state.get_velocity_at_local_position(position)
 	if audioCooldown > 0 or boneState == true:
 			return
 
-	if state.get_contact_count() > 0 and !boneState and ragdoll != null:
+	if state.get_contact_count() > 0 and !boneState and is_instance_valid(ragdoll):
 		if exclusionArray.has(state.get_contact_collider(0)):
 			return
 		#var contactNormal = state.get_contact_local_normal(0)
 		#var contactDot = state.get_contact_local_velocity_at_position(0).normalized().dot(contactNormal)
-		var contactForce = state.get_contact_local_velocity_at_position(0).length()
-		#contactForce = clampf(contactForce,0,heavyImpactThreshold)
+		var contactForce = state.get_contact_impulse(0).length()*2
+		##contactForce = clampf(contactForce,0,heavyImpactThreshold)
 		if gameManager.debugEnabled:
 			print("%s Contact Force : %s"%[name,contactForce])
-		#audioStreamPlayer.attenuation_filter_db = lerp(-20, 0, clamp(abs(contactDot) * contactForce, 0, 1))
-		if contactForce > heavyImpactThreshold:
-			if audioStreamPlayer:
+		##audioStreamPlayer.attenuation_filter_db = lerp(-20, 0, clamp(abs(contactDot) * contactForce, 0, 1))
+
+
+		if contactForce >= heavyImpactThreshold:
+			if is_instance_valid(audioStreamPlayer):
 				audioStreamPlayer.stream = heavyImpactSounds
 				audioStreamPlayer.play()
-				audioCooldown = 0.45
-			if healthComponent:
-				healthComponent.damage(contactForce * randi_range(0,16))
-			if hardImpactEffectEnabled:
-				if impactEffectHard == null:
-					#if canBeDismembered:
-						#healthComponent.damage(900,null)
-						#pulverizeBone()
-					var particle = globalParticles.createParticle("BloodSpurt",self.position)
-					particle.rotation = self.rotation
-					#particle.amount = randi_range(25,75)
+				audioCooldown = 0.25
+			if is_instance_valid(healthComponent):
+				healthComponent.damage(contactForce * randi_range(2,16))
 
-		elif contactForce > mediumImpactThreshold:
-			if audioStreamPlayer:
+		elif contactForce >= mediumImpactThreshold:
+			if is_instance_valid(audioStreamPlayer):
 				audioStreamPlayer.stream = mediumImpactSounds
 				audioStreamPlayer.play()
-				audioCooldown = 0.45
-			if healthComponent:
+				audioCooldown = 0.25
+			if is_instance_valid(healthComponent):
 				healthComponent.damage(contactForce + randi_range(0,10))
-			if mediumImpactEffectEnabled:
-				if impactEffectMedium == null:
-					#await get_tree().process_frame
-					var particle = globalParticles.createParticle("BloodSpurt",self.position)
-					particle.rotation = self.rotation
-					#particle.amount = randi_range(25,40)
-					gameManager.sprayBlood(global_position,randi_range(1,3),5,1.2)
-		elif contactForce > lightImpactThreshold:
-			if audioStreamPlayer:
+
+		elif contactForce >= lightImpactThreshold:
+			#createSpurtInstance(state.get_contact_collider_position(0))
+			gameManager.createSplat(state.get_contact_collider_position(0))
+			if is_instance_valid(audioStreamPlayer):
 				audioStreamPlayer.stream = lightImpactSounds
-			#var fac = (contactForce - lightImpactThreshold) / (mediumImpactThreshold - lightImpactThreshold)
-			#audioStreamPlayer.volume_db = lerp(-2, 5, fac)
 				audioStreamPlayer.play()
-				audioCooldown = 0.45
-			if lightImpactEffectEnabled:
-				if impactEffectLight == null:
-					#await get_tree().process_frame
-					var particle = globalParticles.createParticle("BloodSpurt",self.position)
-					particle.rotation = self.rotation
-					gameManager.sprayBlood(global_position,randi_range(1,3),5,1.2)
+				audioCooldown = 0.35
+			if is_instance_valid(healthComponent):
+				healthComponent.damage(contactForce + randi_range(0,5))
 
-
-#func _physics_process(delta)->void:
-	#if activeRagdollJoint:
-		#var target_rotation : Basis = ragdoll.targetSkeleton.get_bone_global_pose(get_bone_id()).basis.inverse() * ownerSkeleton.get_bone_global_pose(get_bone_id()).basis
-		#var target_velocity : Vector3 = target_rotation.get_euler() * 2
-		#activeRagdollJoint.set_param_x(Generic6DOFJoint3D.PARAM_ANGULAR_MOTOR_TARGET_VELOCITY,target_velocity.x)
-		#activeRagdollJoint.set_param_y(Generic6DOFJoint3D.PARAM_ANGULAR_MOTOR_TARGET_VELOCITY,target_velocity.y)
-		#activeRagdollJoint.set_param_z(Generic6DOFJoint3D.PARAM_ANGULAR_MOTOR_TARGET_VELOCITY,target_velocity.z)
 
 func hit(dmg, dealer=null, hitImpulse:Vector3 = Vector3.ZERO, hitPoint:Vector3 = Vector3.ZERO)->void:
 	canBleed = true
-	emit_signal("onHit",hitImpulse,hitPoint)
+	onHit.emit(hitImpulse,hitPoint)
 	apply_central_impulse(hitImpulse)
 	if get_bone_id() == 41:
 		if get_owner().activeRagdollEnabled:
 			get_owner().activeRagdollEnabled = false
-	if healthComponent != null:
+	if is_instance_valid(healthComponent):
 		#print("dmg:%s"%int(dmg))
 		#print("hp:%s"%healthComponent.health)
 		healthComponent.damage(int(dmg),dealer)
@@ -237,7 +214,8 @@ func pulverizeBone()->void:
 		bonePulverized = true
 
 func subtractBoneCooldown()->void:
-	audioCooldown -= 0.1
+	if audioCooldown > 0:
+		audioCooldown -= 0.1
 
 func getBoneChildren(skeleton3d:Skeleton3D,bone:PhysicalBone3D)->Array:
 	return skeleton3d.get_bone_children(bone.get_bone_id())

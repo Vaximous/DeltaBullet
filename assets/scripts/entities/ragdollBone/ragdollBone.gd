@@ -195,7 +195,7 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 func hit(dmg, dealer=null, hitImpulse:Vector3 = Vector3.ZERO, hitPoint:Vector3 = Vector3.ZERO)->void:
 	canBleed = true
 	onHit.emit(hitImpulse,hitPoint)
-	apply_central_impulse(hitImpulse)
+	apply_impulse(hitImpulse,hitPoint)
 	if get_bone_id() == 41:
 		if get_owner().activeRagdollEnabled:
 			get_owner().activeRagdollEnabled = false

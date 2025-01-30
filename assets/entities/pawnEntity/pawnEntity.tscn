@@ -1825,13 +1825,25 @@ physics_interpolation_mode = 1
 collision_layer = 8
 collision_mask = 9
 script = ExtResource("1_rjm04")
+pawnColor = null
 animationController = NodePath("Components/AnimationController")
 movementController = NodePath("Components/MovementController")
 healthComponent = NodePath("Components/HealthComponent")
 rootCameraNode = NodePath("Mesh")
 pawnCameraData = ExtResource("2_pnnqo")
 followNode = NodePath("BoneAttatchments/UpperChest")
+isCrouching = null
+fallDamageEnabled = null
+forceAnimation = null
+animationToForce = null
+freeAim = null
+pawnEnabled = null
+animationPlayerSpeed = null
 collisionEnabled = false
+turnAmount = null
+turnSpeed = null
+isPawnDead = null
+isMoving = null
 movementStates = {
 "crouch": ExtResource("6_t3cbn"),
 "crouchWalk": ExtResource("7_sldwb"),
@@ -1839,8 +1851,22 @@ movementStates = {
 "standing": ExtResource("3_cxhu0"),
 "walk": ExtResource("5_1m2q1")
 }
+canRun = null
+isRunning = null
 JUMP_VELOCITY = 5.7
+defaultWalkSpeed = null
+defaultRunSpeed = null
+canJump = null
+isJumping = null
+itemInventory = null
+currentItemIndex = null
+purchasedClothing = null
+clothingInventory = null
 ragdollScene = ExtResource("3_rlop3")
+meshLookAt = null
+lastHitPart = null
+hitImpulse = null
+hitVector = null
 metadata/physics_material_override = ExtResource("4_8h2st")
 
 [node name="Collider" type="CollisionShape3D" parent="."]

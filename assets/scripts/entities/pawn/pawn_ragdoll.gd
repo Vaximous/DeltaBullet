@@ -180,7 +180,7 @@ func setRagdollPose(pawn:BasePawn)->void:
 		ragdollSkeleton.set_bone_global_pose(bones, pawn.pawnSkeleton.get_bone_global_pose(bones))
 
 
-func applyRagdollImpulse(pawn:BasePawn,currentVelocity:Vector3,impulseBone:int = 0,hitImpulse:Vector3 = Vector3.ZERO)->void:
+func applyRagdollImpulse(pawn:BasePawn,currentVelocity:Vector3,impulseBone:int = 0,hitImpulse:Vector3 = Vector3.ZERO,hitPosition:Vector3=Vector3.ZERO)->void:
 	for bones in physicalBoneSimulator.get_children():
 		if bones is RagdollBone:
 			bones.linear_velocity = currentVelocity
@@ -189,7 +189,7 @@ func applyRagdollImpulse(pawn:BasePawn,currentVelocity:Vector3,impulseBone:int =
 			if bones.get_bone_id() == impulseBone:
 				#ragdoll.startRagdoll()
 				bones.canBleed = true
-				bones.apply_central_impulse(hitImpulse * randf_range(1.5,2))
+				bones.apply_impulse(hitImpulse * randf_range(1.5,2),hitPosition)
 
 
 func createActiveJoints()->void:
@@ -198,7 +198,7 @@ func createActiveJoints()->void:
 			pb.createActiveRagdollJoint()
 
 
-func initializeRagdoll(pawn:BasePawn,pawnvelocity:Vector3 = Vector3.ZERO,lastHit:int=0,impulse:Vector3 = Vector3.ZERO,killer = null)->void:
+func initializeRagdoll(pawn:BasePawn,pawnvelocity:Vector3 = Vector3.ZERO,lastHit:int=0,impulse:Vector3 = Vector3.ZERO,hitPosition:Vector3=Vector3.ZERO,killer = null)->void:
 	if is_instance_valid(pawn):
 		name = "%s's Ragdoll"%pawn.name
 		setRagdollPositionAndRotation(pawn)
@@ -210,7 +210,7 @@ func initializeRagdoll(pawn:BasePawn,pawnvelocity:Vector3 = Vector3.ZERO,lastHit
 		headshotCheck(lastHit,killer,pawn)
 		attachedCamCheck(pawn)
 		activeRagdollDeathCheck(lastHit,pawn)
-		applyRagdollImpulse(pawn,pawnvelocity,lastHit,impulse)
+		applyRagdollImpulse(pawn,pawnvelocity,lastHit,impulse,hitPosition)
 		if is_instance_valid(pawn.currentPawnMat):
 			setPawnMaterial(pawn.currentPawnMat.duplicate())
 

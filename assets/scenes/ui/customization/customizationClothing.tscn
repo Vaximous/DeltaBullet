@@ -184,9 +184,31 @@ material = SubResource("StandardMaterial3D_1lwbg")
 
 [node name="pawnEntity" parent="backgroundPanel/subViewportContainer/subViewport/node3d" instance=ExtResource("3_sqnta")]
 pawnColor = Color(1, 1, 1, 1)
+isCrouching = null
+fallDamageEnabled = null
 forceAnimation = true
 animationToForce = "PawnAnim/Idle"
+freeAim = null
 pawnEnabled = false
+animationPlayerSpeed = null
+turnAmount = null
+turnSpeed = null
+isPawnDead = null
+isMoving = null
+canRun = null
+isRunning = null
+defaultWalkSpeed = null
+defaultRunSpeed = null
+canJump = null
+isJumping = null
+itemInventory = null
+currentItemIndex = null
+purchasedClothing = null
+clothingInventory = null
+meshLookAt = null
+lastHitPart = null
+hitImpulse = null
+hitVector = null
 
 [node name="camera3d" type="Camera3D" parent="backgroundPanel/subViewportContainer/subViewport"]
 transform = Transform3D(-0.766711, 0.211272, -0.606233, 0.0237522, 0.952988, 0.302077, 0.641553, 0.217206, -0.735685, -0.500804, 1.62699, -0.529846)

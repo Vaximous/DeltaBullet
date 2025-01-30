@@ -54,7 +54,9 @@ func _input(event: InputEvent) -> void:
 
 	if event.is_action_pressed("gEscape"):
 		gameManager.removeSafehouseEditor()
+		await get_tree().process_frame
 		gameManager.pauseMenu.canPause = true
+		gameManager.hideMouse()
 
 	if event.is_action_pressed("gEditorMouseToggle"):
 		if Input.mouse_mode == Input.MOUSE_MODE_HIDDEN or Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:

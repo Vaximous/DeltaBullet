@@ -47,7 +47,7 @@ var pawnDebug : bool = false
 var userDir = DirAccess.open("user://")
 
 #Ingame
-var purchasedPlacables : Array[PackedScene] = [load("res://assets/entities/props/radio.tscn")]
+var purchasedPlacables : Array[PackedScene] = [load("res://assets/entities/props/radio.tscn"),load("res://assets/entities/props/hospitalCozyChair.tscn")]
 var deathTween : Tween
 var bulletTime : bool = false
 var canBulletTime : bool = true
@@ -416,6 +416,7 @@ func hideHUD()->void:
 func loadWorld(worldscene:String, fadein:bool = false)->void:
 	saveTemporaryPawnInfo()
 	targetedEnemies.clear()
+	playerPawns.clear()
 	get_tree().change_scene_to_file("res://assets/scenes/menu/loadingscreen/emptyLoaderScene.tscn")
 	await get_tree().process_frame
 	allPawns.clear()

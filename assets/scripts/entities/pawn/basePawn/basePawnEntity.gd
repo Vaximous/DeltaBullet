@@ -665,7 +665,7 @@ func setRagdollPositionAndRotation(ragdoll:PawnRagdoll)->void:
 func createRagdoll(impulse_bone : int = 0,killer = null)->PawnRagdoll:
 	var ragdoll : PawnRagdoll = ragdollScene.instantiate()
 	gameManager.world.worldMisc.add_child(ragdoll)
-	ragdoll.initializeRagdoll(self,velocity,impulse_bone,hitImpulse,killer)
+	ragdoll.initializeRagdoll(self,velocity,impulse_bone,hitImpulse,hitVector,killer)
 	return ragdoll
 
 func checkItems()->void:

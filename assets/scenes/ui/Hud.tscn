@@ -562,6 +562,27 @@ double_sided = false
 render_priority = 1
 texture = ExtResource("4_uhc5s")
 
+[node name="worldEditButton" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchor_top = 0.643
+anchor_bottom = 0.643
+offset_top = 0.299988
+offset_right = 140.0
+offset_bottom = 138.3
+grow_vertical = 2
+
+[node name="panelContainer" type="PanelContainer" parent="worldEditButton"]
+layout_mode = 0
+offset_right = 141.0
+offset_bottom = 141.0
+
+[node name="label" type="Label" parent="worldEditButton/panelContainer"]
+layout_mode = 2
+text = "Press J To Edit
+Safehouse"
+horizontal_alignment = 1
+
 [connection signal="interactionFound" from="." to="Interact/interactAnimPlayer" method="play"]
 [connection signal="interactionFound" from="." to="Interact/audioStreamPlayer" method="play"]
 [connection signal="interactionFound" from="." to="Interact/interactAnimPlayer" method="set_current_animation" binds= ["rollover"]]

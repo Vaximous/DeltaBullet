@@ -49,7 +49,7 @@ func enter_material(material : DB_PhysicsMaterial, hit_data : Dictionary) -> voi
 				col.hit(get_damage(),projectile_owner.weaponOwner,velocity.normalized() * projectile_owner.weaponResource.weaponImpulse,to_global(to_local(hit_data['col_point'])-position))
 		else:
 			#just return for now
-			assert(false, "Unaccounted state")
+			print("Unaccounted State")
 	if penetration_power > 0:
 		distance_traveled += (material.penetration_entry_cost / penetration_power)
 		#print("Power reduction = %s" % [material.penetration_entry_cost / penetration_power])

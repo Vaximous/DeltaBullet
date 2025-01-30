@@ -1,6 +1,5 @@
-[gd_scene load_steps=14 format=3 uid="uid://b53hvcf0hvvkw"]
+[gd_scene load_steps=13 format=3 uid="uid://b53hvcf0hvvkw"]
 
-[ext_resource type="PackedScene" uid="uid://glmcou87njh6" path="res://assets/components/aiComponent/aiMemoryManager.tscn" id="2_fp3i1"]
 [ext_resource type="Script" uid="uid://b268i2svd6x8f" path="res://addons/finite_state_machine/scripts/finite_state_machine.gd" id="2_ubyph"]
 [ext_resource type="Script" uid="uid://6gdyem6cg7ut" path="res://assets/components/aiComponent/aiComponent.gd" id="4_gaqok"]
 [ext_resource type="Script" uid="uid://debsl6hgg8u5o" path="res://assets/components/aiComponent/aiStates/Idle.gd" id="4_p56ey"]
@@ -28,17 +27,9 @@ script = ExtResource("4_gaqok")
 aimSpeed = 3.0
 pawnFSM = NodePath("pawnFSM")
 visionTimer = NodePath("visionTimer")
-memoryManager = NodePath("aiMemoryManager")
+memoryManager = NodePath("")
 meshDistance = 5.0
 collisionMasks = 1
-
-[node name="aiMemoryManager" parent="." node_paths=PackedStringArray("brainOwner") instance=ExtResource("2_fp3i1")]
-brainOwner = NodePath("..")
-
-[node name="memorySpan" type="Timer" parent="."]
-process_callback = 0
-wait_time = 10.0
-autostart = true
 
 [node name="pawnFSM" type="Node" parent="." node_paths=PackedStringArray("current_state", "animation_player")]
 script = ExtResource("2_ubyph")

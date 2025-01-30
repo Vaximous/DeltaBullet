@@ -39,7 +39,7 @@ var worldMapUI : PackedScene = preload("res://assets/scenes/ui/mapOverview/mapSc
 var customizationUI : PackedScene = preload("res://assets/scenes/ui/customization/customizationUI.tscn")
 var orphanedData := []
 var richPresenceEnabled:bool = false
-var activeCamera = null
+var activeCamera : PlayerCamera = null
 var debugEnabled:bool = false
 var pawnDebug : bool = false
 
@@ -47,6 +47,7 @@ var pawnDebug : bool = false
 var userDir = DirAccess.open("user://")
 
 #Ingame
+var purchasedPlacables : Array[PackedScene] = [load("res://assets/entities/props/radio.tscn")]
 var deathTween : Tween
 var bulletTime : bool = false
 var canBulletTime : bool = true
@@ -469,6 +470,7 @@ func loadGame(save:String)->void:
 				var nodeData = json.get_data()
 				currentSave = save
 				loadWorld(nodeData["scene"])
+				#purchasedPlacables = nodeData["purchasePlacables"]
 				#temporaryPawnInfo.clear()
 		else:
 			Console.add_rich_console_message("[color=red]Unable to find that save![/color]")
@@ -583,6 +585,15 @@ func removeShop()->void:
 			i.queue_free()
 	#gameManager.pauseMenu.canPause = true
 
+func removeSafehouseEditor()->void:
+	await Fade.fade_out(0.5).finished
+	for i in get_children():
+		if i.is_in_group(&"safehouseEditor"):
+			i.queue_free()
+	showAllPlayers()
+	gameManager.activeCamera.posessObject(playerPawns[0],playerPawns[0].followNode)
+	Fade.fade_in(0.5)
+	gameManager.activeCamera.hud.enableHud()
 
 func doDeathEffect()->void:
 	const defaultTransitionType = Tween.TRANS_QUART
@@ -632,6 +643,20 @@ func sprayBlood(position:Vector3,amount:int,_maxDistance:int,distanceMultiplier:
 					mesh.surface_add_vertex(result.position)
 					mesh.surface_end()
 					meshInstance.material_override = meshMat
+
+func initializeSafehouseEditor()->void:
+	gameManager.pauseMenu.canPause = false
+	removeWorldMap()
+	removeShop()
+	removeCustomization()
+	await Fade.fade_out(0.3).finished
+	var editorUI : PackedScene = load("res://assets/scenes/ui/safehouseEditor/safehouseEditor.tscn")
+	var safehouseEditor = editorUI.instantiate()
+	safehouseEditor.add_to_group(&"safehouseEditor")
+	add_child(safehouseEditor)
+	hideAllPlayers()
+	safehouseEditor.initEditor()
+	Fade.fade_in(0.5)
 
 
 func createBloodPool(position:Vector3,size:float=0.5)->void:

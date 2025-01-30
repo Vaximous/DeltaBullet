@@ -1,0 +1,35 @@
+[gd_scene load_steps=3 format=3 uid="uid://euaxty1qfugn"]
+
+[ext_resource type="Script" uid="uid://ch735riwicvap" path="res://assets/scenes/ui/safehouseEditor/safehouse_editor.gd" id="1_8svem"]
+[ext_resource type="PackedScene" uid="uid://uo3piwv2xb4d" path="res://assets/scenes/ui/safehouseEditor/editorItem.tscn" id="2_3feuy"]
+
+[node name="safehouseEditor" type="CanvasLayer"]
+script = ExtResource("1_8svem")
+
+[node name="itemContainer" type="MarginContainer" parent="."]
+anchors_preset = -1
+anchor_top = 0.89
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.00006
+grow_vertical = 0
+
+[node name="categoryPanel" type="PanelContainer" parent="itemContainer"]
+layout_mode = 2
+
+[node name="itemContainer" type="HBoxContainer" parent="itemContainer/categoryPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="safehouseItem" parent="itemContainer/categoryPanel/itemContainer" instance=ExtResource("2_3feuy")]
+layout_mode = 2
+
+[node name="safehouseItem2" parent="itemContainer/categoryPanel/itemContainer" instance=ExtResource("2_3feuy")]
+layout_mode = 2
+
+[node name="safehouseItem3" parent="itemContainer/categoryPanel/itemContainer" instance=ExtResource("2_3feuy")]
+layout_mode = 2
+
+[node name="safehouseItem4" parent="itemContainer/categoryPanel/itemContainer" instance=ExtResource("2_3feuy")]
+layout_mode = 2

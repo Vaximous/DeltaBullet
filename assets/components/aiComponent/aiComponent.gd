@@ -443,32 +443,12 @@ func setExceptions()->void:
 					aimCast.add_exception(hb.getCollisionObject())
 
 
-func _on_memory_span_timeout():
-	memoryManager.forgetMemories(memorySpanTimer.wait_time-1)
-
-
-func getTargetPosition()->Vector3:
-	return memoryManager.bestMemory.memoryPosition
-
-
-func isTargetInSight()->bool:
-	return memoryManager.bestMemory.memoryAge < 0.5
-
-
-func getTargetDistance()->float:
-	return memoryManager.bestMemory.distance
-
-
 func hasTarget()->bool:
-	return memoryManager.bestMemory != null
-
-
-func getMemoryAge():
-	return memoryManager.bestMemory.memoryAge
+	return is_instance_valid(targetedPawn)
 
 
 func getTarget()->Node3D:
-	return memoryManager.bestMemory.memoryOwner
+	return targetedPawn
 
 
 func goToPathPosition(path:PackedVector3Array,sprint:bool=false)->void:

@@ -51,6 +51,12 @@ func _ready()->void:
 	#Dialogic.timeline_ended.connect(enableHud)
 	#Dialogic.timeline_started.connect(gameManager.showMouse)
 	#Dialogic.timeline_ended.connect(gameManager.hideMouse)
+	if gameManager.world:
+		if gameManager.world.worldData.worldEditable:
+			%worldEditButton.show()
+		else:
+			%worldEditButton.hide()
+
 
 
 func flashColor(color:Color)->void:

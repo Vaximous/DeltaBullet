@@ -66,10 +66,6 @@ var inAirStreamPlayer : AudioStreamPlayer3D
 var audioCooldown : float = 0.0:
 	set(value):
 		audioCooldown = value
-		#if audioCooldown > 0.0:
-			#boneCooldownTimer.start(0.15)
-		#else:
-			#boneCooldownTimer.stop()
 var exclusionArray : Array[RID]
 var activeRagdollJoint : Generic6DOFJoint3D
 # Called when the node enters the scene tree for the first time.
@@ -80,6 +76,7 @@ func _ready()-> void:
 func boneSetup()->void:
 	set_meta(&"physics_material_override", preload("res://assets/resources/PhysicsMaterials/flesh_physics_material.tres"))
 	setBoneCooldownTimer()
+	audioCooldown = 0.0
 	createAudioPlayer()
 	bonePhysicsServer.body_set_max_contacts_reported(RID(self), 1)
 	isAsleep.connect(doBleed)
@@ -143,6 +140,7 @@ func createSpurtInstance(globalPosition : Vector3)->void:
 	var spurtInstance = bloodSpurt.instantiate()
 	gameManager.world.worldMisc.add_child(spurtInstance)
 	spurtInstance.global_position = globalPosition
+	spurtInstance.global_rotation = global_rotation
 	spurtInstance.emitting = true
 
 func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
@@ -164,6 +162,9 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 
 
 		if contactForce >= heavyImpactThreshold:
+			createSpurtInstance(state.get_contact_collider_position(0))
+			gameManager.sprayBlood(state.get_contact_collider_position(0),15,3)
+			gameManager.createSplat(state.get_contact_collider_position(0))
 			if is_instance_valid(audioStreamPlayer):
 				audioStreamPlayer.stream = heavyImpactSounds
 				audioStreamPlayer.play()
@@ -172,15 +173,16 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 				healthComponent.damage(contactForce * randi_range(2,16))
 
 		elif contactForce >= mediumImpactThreshold:
+			gameManager.createSplat(state.get_contact_collider_position(0))
 			if is_instance_valid(audioStreamPlayer):
 				audioStreamPlayer.stream = mediumImpactSounds
 				audioStreamPlayer.play()
 				audioCooldown = 0.25
 			if is_instance_valid(healthComponent):
-				healthComponent.damage(contactForce + randi_range(0,10))
+				healthComponent.damage(contactForce * randi_range(2,3))
 
 		elif contactForce >= lightImpactThreshold:
-			#createSpurtInstance(state.get_contact_collider_position(0))
+			createSpurtInstance(state.get_contact_collider_position(0))
 			gameManager.createSplat(state.get_contact_collider_position(0))
 			if is_instance_valid(audioStreamPlayer):
 				audioStreamPlayer.stream = lightImpactSounds

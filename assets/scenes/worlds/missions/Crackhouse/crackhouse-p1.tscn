@@ -38,6 +38,7 @@ panorama = ExtResource("3_6iqu2")
 
 [sub_resource type="Resource" id="Resource_cwdvh"]
 script = ExtResource("2_xbw1q")
+worldEditable = false
 skyTexture = SubResource("PanoramaSkyMaterial_wf1is")
 worldName = "Shootout"
 worldDescription = "Fuck up the operation"

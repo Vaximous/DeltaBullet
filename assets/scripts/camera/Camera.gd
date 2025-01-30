@@ -48,6 +48,7 @@ var castLerp : Vector3 = Vector3.ZERO
 @onready var camera : Camera3D = $camPivot/horizonal/vertholder/vertical/springArm3d/Camera
 @onready var camPivot : Node3D = $camPivot
 @onready var interactCast : RayCast3D = $camPivot/horizonal/vertholder/vertical/springArm3d/Camera/interactCast
+@onready var editorCast : RayCast3D = $camPivot/horizonal/vertholder/vertical/springArm3d/Camera/editorCast
 @onready var camCast : RayCast3D = $camPivot/horizonal/vertholder/vertical/springArm3d/Camera/RayCast3D
 @onready var camCastEnd : Marker3D = $camPivot/horizonal/vertholder/vertical/springArm3d/Camera/RayCast3D/camRayEnd
 @onready var debugCast : RayCast3D = $camPivot/horizonal/vertholder/vertical/springArm3d/Camera/debugCast

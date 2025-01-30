@@ -100,6 +100,10 @@ func _input(event: InputEvent) -> void:
 			else:
 				controllingPawn.isCrouching = true
 
+		if event.is_action_pressed("gSafehouseEditor"):
+			if gameManager.world.worldData.worldEditable:
+				gameManager.initializeSafehouseEditor()
+
 		if event.is_action_pressed("gJump"):
 			#emit_signal("actionPressed", str(event.keycode))
 			if controllingPawn:

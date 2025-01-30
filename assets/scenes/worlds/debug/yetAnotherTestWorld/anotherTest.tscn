@@ -31,6 +31,7 @@ panorama = ExtResource("4_7ph80")
 
 [sub_resource type="Resource" id="Resource_6vxwt"]
 script = ExtResource("2_gqs4i")
+worldEditable = false
 skyTexture = SubResource("PanoramaSkyMaterial_882n8")
 worldName = "Another Test Palace"
 worldDescription = ""

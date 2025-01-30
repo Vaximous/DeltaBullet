@@ -1,9 +1,9 @@
 [gd_scene load_steps=13 format=3 uid="uid://cn7cu77jr8mqg"]
 
-[ext_resource type="Script" path="res://assets/entities/props/radio.gd" id="1_sjcpk"]
+[ext_resource type="Script" uid="uid://dckbxqiqpd6hf" path="res://assets/entities/props/radio.gd" id="1_sjcpk"]
 [ext_resource type="PackedScene" uid="uid://qlrpb47edm7y" path="res://assets/models/props/radio.gltf" id="2_4gxm0"]
-[ext_resource type="Script" path="res://assets/scripts/entities/hitbox/hitbox.gd" id="3_wwei6"]
-[ext_resource type="Script" path="res://assets/components/healthComponent/healthComponent.gd" id="4_inbxv"]
+[ext_resource type="Script" uid="uid://bljf2d3r4oqda" path="res://assets/scripts/entities/hitbox/hitbox.gd" id="3_wwei6"]
+[ext_resource type="Script" uid="uid://dd6my2ga34tq7" path="res://assets/components/healthComponent/healthComponent.gd" id="4_inbxv"]
 [ext_resource type="AudioStream" uid="uid://ceotuwcmjjrgc" path="res://assets/sounds/misc/crash.wav" id="8_0tnq2"]
 [ext_resource type="AudioStream" uid="uid://bbtlld4pno206" path="res://assets/sounds/misc/mouseclick.wav" id="9_h3sbt"]
 

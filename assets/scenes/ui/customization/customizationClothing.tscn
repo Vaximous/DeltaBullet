@@ -219,8 +219,8 @@ layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.974
 anchor_bottom = 1.025
-offset_right = -0.0739899
-offset_bottom = -0.0499878
+offset_right = 147.0
+offset_bottom = 207.0
 
 [node name="button" type="Button" parent="backgroundPanel"]
 layout_mode = 2

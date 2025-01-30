@@ -58,6 +58,7 @@ panorama = ExtResource("3_rcju0")
 
 [sub_resource type="Resource" id="Resource_3bd3l"]
 script = ExtResource("2_vqmji")
+worldEditable = true
 skyTexture = SubResource("PanoramaSkyMaterial_6ok4a")
 worldName = "Home"
 worldDescription = "Yes.. My home.."

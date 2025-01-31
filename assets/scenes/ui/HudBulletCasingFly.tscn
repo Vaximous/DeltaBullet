@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://mimmbo0imtii"]
+
+[ext_resource type="Texture2D" uid="uid://clm6g6ctyjdca" path="res://assets/textures/ui/bulletcasing_icons.png" id="1_p7tf6"]
+[ext_resource type="Script" uid="uid://62t4vmtpr2i" path="res://assets/scenes/ui/hud_bullet_casing_fly.gd" id="2_jsjk7"]
+
+[node name="HUD_BulletCasingFly" type="Sprite2D"]
+physics_interpolation_mode = 2
+modulate = Color(1, 0, 0, 1)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("1_p7tf6")
+hframes = 2
+vframes = 4
+script = ExtResource("2_jsjk7")
+
+[node name="visibleOnScreenNotifier2d" type="VisibleOnScreenNotifier2D" parent="."]
+
+[node name="lifetime" type="Timer" parent="."]
+wait_time = 0.2
+autostart = true
+
+[connection signal="screen_exited" from="visibleOnScreenNotifier2d" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
+[connection signal="timeout" from="lifetime" to="." method="_on_lifetime_timeout"]

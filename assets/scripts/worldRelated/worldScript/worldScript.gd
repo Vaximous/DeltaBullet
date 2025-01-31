@@ -1,3 +1,4 @@
+@tool
 extends Node
 class_name WorldScene
 signal worldLoaded
@@ -25,32 +26,41 @@ signal worldLoaded
 
 
 func _enter_tree()->void:
-	gameManager.world = self
-	gameManager.freeOrphanNodes()
+	if !Engine.is_editor_hint():
+		gameManager.world = self
+		#gameManager.freeOrphanNodes()
 
 
 func _ready()->void:
-	gameManager.freeOrphanNodes()
-	gameManager.pauseMenu = pauseControl
-	emit_signal("worldLoaded")
-	gameManager.getEventSignal("contractRefresh").emit()
-	setupWorld()
-	##Spawn a player at a point.
-	if !gameManager.isMultiplayerGame:
-		pass
-		#gameManager.add_player(getPlayerSpawnPoints(Vector3.ZERO,true).global_position)
-	else:
-		if worldData != null:
-			worldData.spawnPawnsOnLoad = false
+	if !Engine.is_editor_hint():
+		#gameManager.freeOrphanNodes()
+		gameManager.pauseMenu = pauseControl
+		emit_signal("worldLoaded")
+		gameManager.getEventSignal("contractRefresh").emit()
+		setupWorld()
 
-	##Spawn pawns at their respective points.
-	if worldData != null:
-		if worldData.spawnPawnsOnLoad == true:
-			getPlayerSpawnPoints().spawnPawn()
-			for pawn in pawnWorldSpawns.get_children():
-				if pawn != null:
-					if pawn is PawnSpawn:
-						pawn.spawnPawn()
+		##Spawn pawns at their respective points.
+		if worldData != null:
+			if worldData.spawnPawnsOnLoad == true:
+				getPlayerSpawnPoints().spawnPawn()
+				for pawn in pawnWorldSpawns.get_children():
+					if pawn != null:
+						if pawn is PawnSpawn:
+							if not pawn.ignore_spawn_on_load:
+								pawn.spawnPawn()
+
+		if !gameManager.isMultiplayerGame:
+			pass
+			#gameManager.add_player(getPlayerSpawnPoints(Vector3.ZERO,true).global_position)
+		else:
+			if worldData != null:
+				worldData.spawnPawnsOnLoad = false
+	else:
+		if worldData:
+			if worldData.skyTexture:
+				worldSky.environment.sky.sky_material = worldData.skyTexture.duplicate()
+
+
 
 
 func orphanDelete()->void:
@@ -97,8 +107,9 @@ func playSoundscape()->void:
 
 
 func setupWorld()-> void:
-	gameManager.freeOrphanNodes()
+	#gameManager.freeOrphanNodes()
 	if worldData != null:
+		name = worldData.worldName
 		#Set the sky texture
 		if worldData.skyTexture:
 			worldSky.environment.sky.sky_material = worldData.skyTexture.duplicate()

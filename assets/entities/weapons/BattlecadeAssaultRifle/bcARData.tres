@@ -1,26 +1,28 @@
-[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3 uid="uid://mspc5c8w8fqi"]
+[gd_resource type="Resource" script_class="ItemData" load_steps=4 format=3 uid="uid://mspc5c8w8fqi"]
 
 [ext_resource type="Resource" uid="uid://nbth0uf3slwn" path="res://assets/entities/weapons/BattlecadeAssaultRifle/bcARStats.tres" id="1_niglr"]
-[ext_resource type="Script" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="2_g1vh5"]
+[ext_resource type="Script" uid="uid://b6r8ewrq3qb3y" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="2_g1vh5"]
+[ext_resource type="Texture2D" uid="uid://cffiixp75h8ah" path="res://assets/textures/crosshair/crosshair046.png" id="2_piemj"]
 
 [resource]
 script = ExtResource("2_g1vh5")
 useBulletTrail = true
 displayData = ExtResource("1_niglr")
 canBeReloaded = true
-weaponMagSize = 390
+weaponMagSize = 146
 ammoSize = 46
 reloadTime = 2.55
 headDismember = false
-weaponDamage = 3.5
+weaponDamage = 3.8
 weaponFireRate = 0.075
 bulletSpeed = 800.0
-bulletPenetration = 1.0
-weaponImpulse = 16.0
+bulletPenetration = 0.0
+weaponImpulse = 19.0
 weaponShots = 1
 ammoConsumption = 1
-useCustomCrosshairSize = false
-crosshairSizeOverride = Vector2(0.8, 0.8)
+useCustomCrosshairSize = true
+crosshairSizeOverride = Vector2(0.5, 0.5)
+forcedCrosshair = ExtResource("2_piemj")
 useFOV = false
 fovShotAmount = 1.5
 weaponRecoil = Vector3(2, 4, 4)

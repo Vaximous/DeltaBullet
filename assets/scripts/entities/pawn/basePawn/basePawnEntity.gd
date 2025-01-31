@@ -22,7 +22,7 @@ signal headshottedPawn
 @onready var equipSound : AudioStreamPlayer3D = $Sounds/equipSound
 @onready var footstepSounds : AudioStreamPlayer3D = $Sounds/footsteps
 ##Onready
-@onready var onScreenNotifier : VisibleOnScreenNotifier3D = $Mesh/visibleOnScreenNotifier3d
+@onready var onScreenNotifier : VisibleOnScreenNotifier3D = $visibleOnScreenNotifier3d
 @onready var componentHolder : Node3D = $Components
 @onready var boneAttatchementHolder : Node = $BoneAttatchments
 @onready var interactRaycast : RayCast3D = $Mesh/interactRaycast
@@ -174,7 +174,7 @@ signal cameraAttached
 	set(value):
 		animationToForce = value
 		if forceAnimation:
-			if animationPlayer != null:
+			if is_instance_valid(animationPlayer):
 				if !animationPlayer.is_playing():
 					animationPlayer.play(animationToForce)
 ##Allows the pawn to interact with the environment, move and have physics applied, etc..
@@ -221,7 +221,7 @@ var preventWeaponFire : bool = false:
 			if !isMoving:
 	#			disableIdleSpaceBlend()
 	#			disableRunBlend()
-				if footstepSounds != null:
+				if is_instance_valid(footstepSounds):
 					if footstepSounds.playing:
 						footstepSounds.stop()
 @export_subgroup("Movement")
@@ -232,7 +232,6 @@ var preventWeaponFire : bool = false:
 			canRun = value
 		else:
 			canRun = false
-
 @export var isRunning : bool = false:
 	set(value):
 		isRunning = value
@@ -242,6 +241,10 @@ var preventWeaponFire : bool = false:
 @export var canJump : bool = true
 @export var isJumping : bool = false
 var isGrounded : bool = true
+@export_subgroup("Stair Handling")
+const maxStepHeight : float = 0.5
+var snappedToStairsLastFrame : bool = false
+var lastFrameOnFloor : int = -INF
 @export_subgroup("Throwables")
 var throwableItem : Node
 var throwableAmount : int = 0
@@ -272,7 +275,7 @@ var currentItem : InteractiveObject = null
 				currentItem.weaponOwner = self
 				enableRightHand()
 				checkMeshLookat()
-				if currentItem.weaponResource != null:
+				if is_instance_valid(currentItem.weaponResource):
 					await get_tree().process_frame
 					if currentItem.weaponResource.leftHandParent:
 						itemHolder.reparent(leftHandBone)
@@ -281,14 +284,14 @@ var currentItem : InteractiveObject = null
 						itemHolder.reparent(rightHandBone)
 						itemHolder.position = Vector3.ZERO
 
-				if attachedCam:
+				if is_instance_valid(attachedCam):
 					currentItem.weaponCast = attachedCam.camCast
 					if currentItem.weaponResource.useCustomCrosshairSize:
 						attachedCam.hud.getCrosshair().crosshairSize = currentItem.weaponResource.crosshairSizeOverride
 					else:
 						attachedCam.hud.getCrosshair().crosshairSize = attachedCam.hud.getCrosshair().defaultCrosshairSize
 					if !UserConfig.game_simple_crosshairs:
-						if currentItem.weaponResource.forcedCrosshair != null:
+						if is_instance_valid(currentItem.weaponResource.forcedCrosshair):
 							attachedCam.hud.getCrosshair().setCrosshair(currentItem.weaponResource.forcedCrosshair)
 						else:
 							attachedCam.hud.getCrosshair().setCrosshair(attachedCam.hud.getCrosshair().defaultCrosshair)
@@ -303,7 +306,7 @@ var currentItem : InteractiveObject = null
 					if weapon.isEquipped != false:
 							weapon.isEquipped = false
 					weapon.hide()
-				if attachedCam:
+				if is_instance_valid(attachedCam):
 					#Dialogic.VAR.set('playerHasWeaponEquipped',false)
 					attachedCam.itemEquipOffsetToggle = false
 					attachedCam.hud.getCrosshair().setCrosshair(null)
@@ -389,12 +392,16 @@ func _ready() -> void:
 func _physics_process(delta:float) -> void:
 	if pawnEnabled:
 		if !isPawnDead and is_instance_valid(self):
+
+			#Set Last frame on floor
+			if is_on_floor(): lastFrameOnFloor = Engine.get_physics_frames()
+
 			do_stairs(delta)
 			if isCurrentlyMoving():
 				setDirection.emit(direction)
 
 			if fallDamageEnabled:
-				if floorcheck.is_colliding():
+				if floorcheck.is_colliding() and !snappedToStairsLastFrame:
 					if velocity.y <= -15:
 						die(null)
 
@@ -403,7 +410,7 @@ func _physics_process(delta:float) -> void:
 
 
 ##Checks to see if any required components (Base components) Are null
-func checkComponents():
+func checkComponents()->void:
 	if is_instance_valid(inputComponent):
 		if inputComponent is AIComponent:
 			inputComponent.pawnOwner = self
@@ -421,9 +428,9 @@ func checkComponents():
 				gameManager.playerPawns.append(self)
 				var cam = load("res://assets/entities/camera/camera.tscn")
 				var _cam = cam.instantiate()
+				gameManager.world.worldMisc.add_child(_cam)
 				_cam.global_position = self.global_position
 				await get_tree().process_frame
-				gameManager.world.worldMisc.add_child(_cam)
 				_cam.posessObject(self, followNode)
 				_cam.camCast.add_exception(self)
 				_cam.interactCast.add_exception(self)
@@ -431,27 +438,69 @@ func checkComponents():
 				raycaster = _cam.camCast
 				add_to_group("Player")
 
-	if healthComponent == null:
-		return null
 
 func endPawn()->void:
-	if is_instance_valid(self) and !is_queued_for_deletion():
-		direction = Vector3.ZERO
-		velocity = Vector3.ZERO
-		removeComponents()
-		dropWeapon()
-		currentItemIndex = 0
-		pawnEnabled = false
-		collisionEnabled = false
-		if is_instance_valid(footstepSounds):
-			footstepSounds.queue_free()
-		await get_tree().create_timer(5).timeout
-		print("Deleted %s at %s"%[name,Time.get_ticks_usec()])
-		self.queue_free()
+	if (is_instance_valid(self) and not self.is_queued_for_deletion()):
+		process_mode = Node.PROCESS_MODE_DISABLED
+		#direction = Vector3.ZERO
+		#velocity = Vector3.ZERO
+		#removeComponents()
+		#dropWeapon()
+		queue_free()
+		#currentItemIndex = 0
+		#pawnEnabled = false
+		#collisionEnabled = false
+		#if is_instance_valid(footstepSounds):
+			#footstepSounds.queue_free()
+		#print("Deleted %s at %s"%[name,Time.get_ticks_usec()])
+
+
+func snapUpStairCheck(delta)->bool:
+	if not is_on_floor() and not snappedToStairsLastFrame: return false
+	var expectedMotion = self.velocity * Vector3(1,0,1) * delta
+	var stepPositionWithClearance = global_transform.translated(expectedMotion + Vector3(0,maxStepHeight * 2,0))
+	var downResult = PhysicsTestMotionResult3D.new()
+	if (runBodyTestMotion(stepPositionWithClearance,Vector3(0,-maxStepHeight*2,0),downResult)
+	and (downResult.get_collider().is_class("StaticBody3D") or downResult.get_collider().is_class("CSGShape3D"))):
+		var stepHeight = ((stepPositionWithClearance.origin + downResult.get_travel()) - global_position).y
+		if stepHeight > maxStepHeight or stepHeight <= 0.01 or (downResult.get_collision_point() - global_position).y > maxStepHeight: return false
+		%stairRay.global_position = downResult.get_collision_point() + Vector3(0,maxStepHeight,0) + expectedMotion.normalized() * 0.1
+		%stairRay.force_raycast_update()
+		if %stairRay.is_colliding() and not isSurfaceSteep(%stairRay.get_collision_normal()):
+			global_position = stepPositionWithClearance.origin + downResult.get_travel()
+			apply_floor_snap()
+			snappedToStairsLastFrame = true
+			return true
+	return false
+
+
+func stairSnapCheck() -> void:
+	var snapped : bool = false
+	var isFloorBelow : bool = %stairUnder.is_colliding() and not isSurfaceSteep(%stairUnder.get_collision_normal())
+	var wasOnFloorFrame = Engine.get_physics_frames() - lastFrameOnFloor == 1
+	if not is_on_floor() and velocity.y <= 0 and (wasOnFloorFrame or snappedToStairsLastFrame) and isFloorBelow:
+		var testResult = PhysicsTestMotionResult3D.new()
+		if runBodyTestMotion(global_transform, Vector3(0,-maxStepHeight,0),testResult):
+			var yTranslate = testResult.get_travel().y
+			self.position.y += yTranslate
+			apply_floor_snap()
+			snapped = true
+	snappedToStairsLastFrame = snapped
+
+func isSurfaceSteep(normal:Vector3)->bool:
+	return normal.angle_to(Vector3.UP) > self.floor_max_angle
+
+
+func runBodyTestMotion(from : Transform3D,motion:Vector3,result = null)->bool:
+	if not result: result = PhysicsTestMotionResult3D.new()
+	var params = PhysicsTestMotionParameters3D.new()
+	params.from = from
+	params.motion = motion
+	return PhysicsServer3D.body_test_motion(self.get_rid(),params,result)
 
 
 func endAttachedCam()->void:
-	if attachedCam != null:
+	if is_instance_valid(attachedCam):
 		if gameManager.bulletTime:
 			gameManager.bulletTime = false
 		attachedCam.hud.flashColor(Color.DARK_RED)
@@ -465,125 +514,128 @@ func endAttachedCam()->void:
 		#Dialogic.end_timeline()
 
 
-func doKillEffect(deathDealer)->void:
-	if deathDealer != null and !deathDealer.isPawnDead and is_instance_valid(deathDealer):
-		if deathDealer.currentItem != null:
-			if deathDealer.currentItem.weaponResource.headDismember:
-				healthComponent.killedWithDismemberingWeapon.emit()
-		if !healthComponent.killerSignalEmitted:
-			if healthComponent.componentOwner is BasePawn:
-				deathDealer.killedPawn.emit()
-				healthComponent.killerSignalEmitted = true
-
+func isPlayerPawn()->bool:
+	if has_meta(&"isPlayer"):
+		return get_meta(&"isPlayer")
+	else:
+		return false
 func moveHitboxDecals(parent:Node3D = gameManager.world.worldParticles) ->void:
-	if gameManager.world != null:
+	if is_instance_valid(gameManager.world):
 		for boxes in getAllHitboxes():
 			for decals in boxes.get_children():
 				if decals is BulletHole:
 					decals.reparent(parent)
 
+func playKillSound()->void:
+	var stream : AudioStream = load("res://assets/resources/killsoundStream.tres")
+	gameManager.createSoundAtPosition(stream,pawnMesh.global_position)
 
 func die(killer) -> void:
 	if is_instance_valid(self) and !isPawnDead:
-		isPawnDead = true
-		collisionShape.disabled = true
-		if is_instance_valid(killer):
-			doKillEffect(killer)
-		animationController.enabled = false
-		movementController.enabled = false
-		killAllTweens()
-		createRagdoll(lastHitPart, killer)
-		pawnEnabled = false
-		moveHitboxDecals()
-		disableAllHitboxes()
+		gameManager.allPawns.erase(self)
+		gameManager.doKillEffect(self,killer)
 		onPawnKilled.emit()
+		playKillSound()
+		#dropWeapon()
+		isPawnDead = true
+		createRagdoll(lastHitPart, killer)
 		endPawn()
+		#pawnEnabled = false
+		#collisionShape.disabled = true
+		#animationController.enabled = false
+		#movementController.enabled = false
+	#	killAllTweens()
+		#moveHitboxDecals()
+	#	disableAllHitboxes()
+		#process_mode = Node.PROCESS_MODE_DISABLED
 
 
 
 func do_stairs(delta) -> void:
 	if pawnEnabled and !isPawnDead:
+		%stairHandler.rotation.y = atan2(-velocity.x,-velocity.z)
+		pass
+		##Old Staircase Code Below
 		#Does staircase stuff
-		const step_check_distance : float = 0.5
-		const step_height_max : float = 1.0
-		const step_depth_min : float = 0.15
-
-		var input_direction : Vector2 = Vector2(direction.x, direction.z)
-		if !is_on_floor() or input_direction.length() <= 0.1:
-			return
-		#Check multiple directions
-		var cam = gameManager.activeCamera
-		if cam == null:
-			return
-		var flat_vel = (velocity * Vector3(1.0, 0.0, 1.0)).normalized()
-		var check_directions : Array[Vector3] = [
-			flat_vel,
-			flat_vel.rotated(Vector3.UP, PI/3),
-			flat_vel.rotated(Vector3.UP, -PI/3),
-			]
-		#if gameManager.debugEnabled:
-			#print(input_direction)
-			#print(flat_vel)
-		for direction in check_directions:
-			var step_ray_dir := direction * step_check_distance
-			#if step_ray_dir.dot(Vector3(velocity.x, 0, velocity.z).normalized()) < 0.5:
-				#continue
-			var direct_state = get_world_3d().direct_space_state
-			var obs_ray_info : PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.new()
-			obs_ray_info.exclude = [RID(self)]
-			obs_ray_info.from = global_position
-			obs_ray_info.to = obs_ray_info.from + step_ray_dir
-			#First check : Is a flat wall found?
-			var first_collision = direct_state.intersect_ray(obs_ray_info)
-			#print("Ray from %s to %s" % [obs_ray_info.from, obs_ray_info.to])
-			if !first_collision.is_empty():
-				#if gameManager.debugEnabled:
-					#print("Ray hit something.")
-				if not first_collision["collider"] is StaticBody3D and not first_collision["collider"] is CSGShape3D:
-					continue
-				if first_collision["normal"].angle_to(Vector3.UP) < 1.39626:
-					var remain_length = step_check_distance - first_collision["position"].distance_to(obs_ray_info.from)
-					obs_ray_info.from = first_collision["position"]
-					obs_ray_info.to = obs_ray_info.from + (remain_length * step_ray_dir.slide(first_collision["normal"]))
-					obs_ray_info.to.y += 0.05
-					first_collision = direct_state.intersect_ray(obs_ray_info)
-					if first_collision.is_empty():
-						return
-					if first_collision["normal"].angle_to(Vector3.UP) < 1.39626:
-						return
-				#if gameManager.debugEnabled:
-					#print("Ready to climb up step.")
-				#From that first collision point, we now check if 'min_stair_depth' is met
-				#at the the 'max_step_height'
-				var depth_check : PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.new()
-				depth_check.exclude = obs_ray_info.exclude
-				depth_check.from = global_position + Vector3(0, step_height_max, 0)
-				depth_check.to = depth_check.from + (step_ray_dir * (step_depth_min + global_position.distance_to(first_collision.position)))
-				if !direct_state.intersect_ray(depth_check).is_empty():
-					continue
-				#The step is deep enough.
-				#Last we need to find the top of the step so we can stand on it.
-				#Inch the initial collision up by step_max and forward a tiny bit.
-				#The to-position is just the initial position minus the step_max.
-				var top_check : PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.new()
-				top_check.exclude = obs_ray_info.exclude
-				top_check.from = first_collision.position + Vector3(step_ray_dir.x, step_height_max, step_ray_dir.z)
-				top_check.to = top_check.from - Vector3(0, step_height_max, 0)
-				var stair_top_collision = direct_state.intersect_ray(top_check)
-				if !stair_top_collision.is_empty():
-						#move player up above step
-						var pre_position = global_position
-						position.y += stair_top_collision.position.y - obs_ray_info.from.y
-						#move player forward onto step
-						position += (step_ray_dir * (step_check_distance * 0.5))
-						#interpolate_visual_position(pre_position - global_position)
-						return
-				#if gameManager.debugEnabled:
-					#print("Couldn't climb up the step.")
+		#const step_check_distance : float = 0.5
+		#const step_height_max : float = 1.0
+		#const step_depth_min : float = 0.15
+#
+		#var input_direction : Vector2 = Vector2(direction.x, direction.z)
+		#if !is_on_floor() or input_direction.length() <= 0.1:
+			#return
+		##Check multiple directions
+		#var cam = gameManager.activeCamera
+		#if cam == null:
+			#return
+		#var flat_vel = (velocity * Vector3(1.0, 0.0, 1.0)).normalized()
+		#var check_directions : Array[Vector3] = [
+			#flat_vel,
+			#flat_vel.rotated(Vector3.UP, PI/3),
+			#flat_vel.rotated(Vector3.UP, -PI/3),
+			#]
+		##if gameManager.debugEnabled:
+			##print(input_direction)
+			##print(flat_vel)
+		#for direction in check_directions:
+			#var step_ray_dir := direction * step_check_distance
+			##if step_ray_dir.dot(Vector3(velocity.x, 0, velocity.z).normalized()) < 0.5:
+				##continue
+			#var direct_state = get_world_3d().direct_space_state
+			#var obs_ray_info : PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.new()
+			#obs_ray_info.exclude = [RID(self)]
+			#obs_ray_info.from = global_position
+			#obs_ray_info.to = obs_ray_info.from + step_ray_dir
+			##First check : Is a flat wall found?
+			#var first_collision = direct_state.intersect_ray(obs_ray_info)
+			##print("Ray from %s to %s" % [obs_ray_info.from, obs_ray_info.to])
+			#if !first_collision.is_empty():
+				##if gameManager.debugEnabled:
+					##print("Ray hit something.")
+				#if not first_collision["collider"] is StaticBody3D and not first_collision["collider"] is CSGShape3D:
+					#continue
+				#if first_collision["normal"].angle_to(Vector3.UP) < 1.39626:
+					#var remain_length = step_check_distance - first_collision["position"].distance_to(obs_ray_info.from)
+					#obs_ray_info.from = first_collision["position"]
+					#obs_ray_info.to = obs_ray_info.from + (remain_length * step_ray_dir.slide(first_collision["normal"]))
+					#obs_ray_info.to.y += 0.05
+					#first_collision = direct_state.intersect_ray(obs_ray_info)
+					#if first_collision.is_empty():
+						#return
+					#if first_collision["normal"].angle_to(Vector3.UP) < 1.39626:
+						#return
+				##if gameManager.debugEnabled:
+					##print("Ready to climb up step.")
+				##From that first collision point, we now check if 'min_stair_depth' is met
+				##at the the 'max_step_height'
+				#var depth_check : PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.new()
+				#depth_check.exclude = obs_ray_info.exclude
+				#depth_check.from = global_position + Vector3(0, step_height_max, 0)
+				#depth_check.to = depth_check.from + (step_ray_dir * (step_depth_min + global_position.distance_to(first_collision.position)))
+				#if !direct_state.intersect_ray(depth_check).is_empty():
+					#continue
+				##The step is deep enough.
+				##Last we need to find the top of the step so we can stand on it.
+				##Inch the initial collision up by step_max and forward a tiny bit.
+				##The to-position is just the initial position minus the step_max.
+				#var top_check : PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.new()
+				#top_check.exclude = obs_ray_info.exclude
+				#top_check.from = first_collision.position + Vector3(step_ray_dir.x, step_height_max, step_ray_dir.z)
+				#top_check.to = top_check.from - Vector3(0, step_height_max, 0)
+				#var stair_top_collision = direct_state.intersect_ray(top_check)
+				#if !stair_top_collision.is_empty():
+						##move player up above step
+						#var pre_position = global_position
+						#position.y += stair_top_collision.position.y - obs_ray_info.from.y
+						##move player forward onto step
+						#position += (step_ray_dir * (step_check_distance * 0.5))
+						##interpolate_visual_position(pre_position - global_position)
+						#return
+				##if gameManager.debugEnabled:
+					##print("Couldn't climb up the step.")
 
 
 func _on_health_component_health_depleted(dealer:BasePawn) -> void:
-	await get_tree().process_frame
 	if !isPawnDead and is_instance_valid(self):
 		if is_instance_valid(dealer):
 			die(dealer)
@@ -611,14 +663,9 @@ func setRagdollPositionAndRotation(ragdoll:PawnRagdoll)->void:
 	ragdoll.targetSkeleton = pawnSkeleton
 
 func createRagdoll(impulse_bone : int = 0,killer = null)->PawnRagdoll:
-	collisionEnabled = false
-	self.hide()
 	var ragdoll : PawnRagdoll = ragdollScene.instantiate()
 	gameManager.world.worldMisc.add_child(ragdoll)
-	ragdoll.initializeRagdoll(self,velocity,impulse_bone,hitImpulse,killer)
-	pawnDied.emit(ragdoll)
-	#if collisionShape != null:
-		#collisionShape.queue_free()
+	ragdoll.initializeRagdoll(self,velocity,impulse_bone,hitImpulse,hitVector,killer)
 	return ragdoll
 
 func checkItems()->void:
@@ -750,26 +797,32 @@ func killAllTweens()->void:
 		meshRotationTweenMovement.kill()
 	if flinchTween:
 		flinchTween.kill()
-
+	if animationController.tweener:
+		animationController.tweener.kill()
+	if movementController.meshRotationTween:
+		movementController.meshRotationTween.kill()
+	if movementController.meshRotationTweenMovement:
+		movementController.meshRotationTweenMovement.kill()
 
 func jump() -> void:
 	playFootstepAudio()
 	if !isJumping:
 		isJumping = true
 		canJump = false
-		if is_on_floor():
+		if is_on_floor() or snappedToStairsLastFrame:
 			isJumping = false
 	velocity.y = JUMP_VELOCITY
 
 func setupWeaponAnimations() -> void:
 	var blendSet
-	if !currentItem == null and is_instance_valid(currentItem):
+	if is_instance_valid(currentItem):
 		blendSet = currentItem.animationTree.tree_root
 		if !currentItem.weaponAnimSet:
 			#Swap out animationLibraries
-			if animationPlayer != null:
-				animationPlayer.remove_animation_library("weaponAnims")
-				if currentItem.animationPlayer != null:
+			if is_instance_valid(animationPlayer):
+				if animationPlayer.has_animation_library("weaponAnims"):
+					animationPlayer.remove_animation_library("weaponAnims")
+				if is_instance_valid(currentItem.animationPlayer):
 					var libraryToAdd = currentItem.animationPlayer.get_animation_library("weaponAnims").duplicate()
 					animationPlayer.add_animation_library("weaponAnims", libraryToAdd)
 
@@ -851,7 +904,7 @@ func equipWeapon(index:int) -> void:
 func unequipWeapon() -> void:
 	animationTree.set("parameters/weaponBlend/blend_amount", 0)
 	animationTree.set("parameters/weaponBlend_Left_blend/blend_amount", 0)
-	if lastLeftBlend != null:
+	if is_instance_valid(lastLeftBlend):
 		lastLeftBlend.stop()
 	for weapon in itemHolder.get_children():
 		weapon.hide()
@@ -872,19 +925,19 @@ func _on_free_aim_timer_timeout() -> void:
 	freeAim = false
 
 func removeComponents() -> void:
-	if healthComponent:
+	if is_instance_valid(healthComponent):
 		healthComponent.queue_free()
 		healthComponent = null
 
-	if movementController:
+	if is_instance_valid(movementController):
 		movementController.queue_free()
 		movementController = null
 
-	if animationController:
+	if is_instance_valid(animationController):
 		animationController.queue_free()
 		animationController = null
 
-	if inputComponent:
+	if is_instance_valid(inputComponent):
 		inputComponent.queue_free()
 		inputComponent = null
 
@@ -950,7 +1003,7 @@ func playAnimation(animation:String) -> void:
 func getInteractionObject():
 	if interactRaycast.is_colliding():
 		var col = interactRaycast.get_collider()
-		if col != null:
+		if is_instance_valid(col):
 			if col.is_in_group("Interactable"):
 				gameManager.getEventSignal("interactableFound").emit()
 				return col
@@ -967,7 +1020,7 @@ func moveItemToWeapons(item:Weapon) -> void:
 
 func setPawnMaterial() -> void:
 	currentPawnMat.albedo_color = pawnColor
-	if pawnSkeleton != null:
+	if is_instance_valid(pawnSkeleton):
 		for mesh in pawnSkeleton.get_children():
 			if mesh is MeshInstance3D:
 				mesh.set_surface_override_material(0,currentPawnMat)
@@ -1363,7 +1416,7 @@ func checkMeshLookat()->void:
 		if meshLookAt:
 			startBodyIK()
 			if !freeAim:
-				if currentItem != null:
+				if is_instance_valid(currentItem):
 					if currentItem.isAiming != true:
 						currentItem.isAiming = true
 					else:

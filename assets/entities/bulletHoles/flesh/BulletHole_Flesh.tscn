@@ -1,21 +1,23 @@
-[gd_scene load_steps=26 format=3 uid="uid://cj1va0l7e2wcb"]
+[gd_scene load_steps=27 format=3 uid="uid://cj1va0l7e2wcb"]
 
 [ext_resource type="PackedScene" uid="uid://dend7ate7mq6e" path="res://assets/entities/bulletHoles/default/BulletHoleBase.tscn" id="1_y0rpe"]
 [ext_resource type="Texture2D" uid="uid://bec1o4nxcwu58" path="res://assets/textures/bullet/holes/flesh/flesh1.png" id="2_g3210"]
-[ext_resource type="Script" path="res://assets/entities/bulletHoles/flesh/bullet_hole_flesh.gd" id="2_tbna7"]
+[ext_resource type="Script" uid="uid://bw0f2o37nlbsg" path="res://assets/entities/bulletHoles/flesh/bullet_hole_flesh.gd" id="2_tbna7"]
 [ext_resource type="AudioStream" uid="uid://0bwly86406fp" path="res://assets/sounds/gore/flesh4.wav" id="3_tt2cq"]
 [ext_resource type="AudioStream" uid="uid://cvjrwmws0pggm" path="res://assets/sounds/gore/fleshimpact1.wav" id="4_etq7i"]
 [ext_resource type="AudioStream" uid="uid://c574uajy46jny" path="res://assets/sounds/gore/fleshimpact3.wav" id="5_s28yx"]
 [ext_resource type="PackedScene" uid="uid://bpp4s1vikjdv8" path="res://assets/particles/bloodSpurt/bloodSpurt.tscn" id="6_b318v"]
+[ext_resource type="AudioStream" uid="uid://bvbgmhwv1ybms" path="res://assets/sounds/gore/fleshImpacts/fleshimpact_hard4.wav" id="7_0i6sn"]
 [ext_resource type="Texture2D" uid="uid://brx3kup0o5hrn" path="res://assets/textures/impact/genericDebrisImpact.png" id="7_ctoc5"]
 [ext_resource type="Texture2D" uid="uid://bnxl6jqwci6w3" path="res://assets/textures/smoke/smokeLoopAlpha.png" id="8_lq38g"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_17daq"]
-random_pitch = 1.6
-streams_count = 3
+random_pitch = 1.05
+streams_count = 4
 stream_0/stream = ExtResource("3_tt2cq")
 stream_1/stream = ExtResource("4_etq7i")
 stream_2/stream = ExtResource("5_s28yx")
+stream_3/stream = ExtResource("7_0i6sn")
 
 [sub_resource type="Gradient" id="Gradient_cb5rd"]
 offsets = PackedFloat32Array(0.0215054, 1)
@@ -25,7 +27,7 @@ colors = PackedColorArray(0.431373, 0, 0, 1, 0.258824, 0, 0, 1)
 gradient = SubResource("Gradient_cb5rd")
 
 [sub_resource type="Curve" id="Curve_x3x78"]
-max_value = 2.0
+_limits = [0.0, 2.0, 0.0, 1.0]
 _data = [Vector2(0, 0.131868), 0.0, 2.33233, 0, 0, Vector2(1, 0.0219779), -2.55396, 0.0, 0, 0]
 point_count = 2
 
@@ -48,7 +50,10 @@ scale_max = 0.3
 scale_curve = SubResource("CurveTexture_iasca")
 color_ramp = SubResource("GradientTexture1D_mvhe5")
 color_initial_ramp = SubResource("GradientTexture1D_mvhe5")
-collision_mode = 2
+collision_use_scale = true
+sub_emitter_mode = 3
+sub_emitter_amount_at_collision = 1
+sub_emitter_keep_velocity = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hmv24"]
 transparency = 1
@@ -124,22 +129,24 @@ bulletTextures = Array[Texture2D]([ExtResource("2_g3210")])
 particleArray = [NodePath("bloodSpurt"), NodePath("impactParticle"), NodePath("smokeParticle")]
 soundArray = [NodePath("audioStreamPlayer3d")]
 decalSize = 0.055
+audioVolume = 3.0
 
 [node name="audioStreamPlayer3d" type="AudioStreamPlayer3D" parent="." index="1"]
 stream = SubResource("AudioStreamRandomizer_17daq")
-volume_db = -0.11
+attenuation_model = 3
 pitch_scale = 0.75
-autoplay = true
 max_polyphony = 3
 bus = &"Sounds"
 attenuation_filter_db = 0.0
 
 [node name="bloodSpurt" parent="." index="2" instance=ExtResource("6_b318v")]
 top_level = true
+emitting = true
+seed = 2045083808
 
 [node name="impactParticle" type="GPUParticles3D" parent="." index="3"]
 emitting = false
-amount = 25
+amount = 30
 one_shot = true
 speed_scale = 1.8
 explosiveness = 1.0
@@ -160,3 +167,4 @@ process_material = SubResource("ParticleProcessMaterial_sh7fp")
 draw_pass_1 = SubResource("QuadMesh_bqllu")
 
 [connection signal="bulletHoleEmitted" from="." to="." method="_on_bullet_hole_emitted"]
+[connection signal="ready" from="." to="bloodSpurt" method="restart"]

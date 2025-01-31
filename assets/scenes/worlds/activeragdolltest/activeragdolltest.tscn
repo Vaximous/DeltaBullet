@@ -1,8 +1,8 @@
-[gd_scene load_steps=48 format=3 uid="uid://1uuvtqrmyqus"]
+[gd_scene load_steps=49 format=3 uid="uid://1uuvtqrmyqus"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_fy66m"]
 [ext_resource type="PackedScene" uid="uid://boicvk4qeqmbd" path="res://assets/entities/pawnSpawn/pawnSpawn.tscn" id="2_mn033"]
-[ext_resource type="Script" path="res://assets/resources/customResources/worldData/worldData.gd" id="2_mvtic"]
+[ext_resource type="Script" uid="uid://b31u24at18p5t" path="res://assets/resources/customResources/worldData/worldData.gd" id="2_mvtic"]
 [ext_resource type="AudioStream" uid="uid://ddfe5wktqvtp8" path="res://assets/sounds/ambient/toomba.mp3" id="3_7jnid"]
 [ext_resource type="AudioStream" uid="uid://dueh83f2ybvgv" path="res://assets/sounds/ambient/515704_Destruction-Reigns.mp3" id="3_yb1nc"]
 [ext_resource type="PackedScene" uid="uid://wtqya32cwdbk" path="res://assets/entities/weapons/Beretta/Beretta.tscn" id="4_a2bgr"]
@@ -21,9 +21,9 @@
 [ext_resource type="PackedScene" uid="uid://di4i31dg7lojx" path="res://assets/entities/pawnEntity/ragdoll/pawnRagdoll.tscn" id="15_4qgq4"]
 [ext_resource type="PackedScene" uid="uid://nyee136gj7vd" path="res://assets/entities/clothing/longSleeve/long_sleeved_jacket.tscn" id="15_wjsdj"]
 [ext_resource type="PackedScene" uid="uid://dend7ate7mq6e" path="res://assets/entities/bulletHoles/default/BulletHoleBase.tscn" id="17_4tm44"]
-[ext_resource type="Script" path="res://assets/resources/PhysicsMaterials/DB_PhysicsMaterial.gd" id="17_15fkl"]
+[ext_resource type="Script" uid="uid://dr0phe3qewla0" path="res://assets/resources/PhysicsMaterials/DB_PhysicsMaterial.gd" id="17_15fkl"]
 [ext_resource type="Texture2D" uid="uid://bodygaior62dl" path="res://assets/textures/Developer_Textures/Light/texture_08.png" id="18_8tf33"]
-[ext_resource type="Script" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="22_js4nn"]
+[ext_resource type="Script" uid="uid://b6r8ewrq3qb3y" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="22_js4nn"]
 [ext_resource type="Texture2D" uid="uid://ds3g0xorlwkrr" path="res://assets/textures/urban/swnjnwkwin7.tga" id="23_ng86g"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_14nxj"]
@@ -33,7 +33,6 @@ stream_1/stream = ExtResource("3_7jnid")
 
 [sub_resource type="Resource" id="Resource_vjbvd"]
 script = ExtResource("2_mvtic")
-enableTimeCycle = false
 worldName = "Active Ragdoll Testing"
 worldDescription = "You're not supposed to be here.."
 worldLoadingTexture = ExtResource("5_6wdlm")
@@ -181,8 +180,8 @@ tracks/2/keys = PackedFloat32Array(0, 1, 0, 2.13163e-14, 0, 1, 0.5, 1, -0.115665
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_crhox"]
 _data = {
-"RESET": SubResource("Animation_aixt4"),
-"new_animation": SubResource("Animation_v7sdg")
+&"RESET": SubResource("Animation_aixt4"),
+&"new_animation": SubResource("Animation_v7sdg")
 }
 
 [sub_resource type="GDScript" id="GDScript_x30ca"]
@@ -197,7 +196,6 @@ func _ready():
 	physSkel.physical_bones_start_simulation()
 	$\"../untitled/animationPlayer\".play(\"new_animation\")
 	phsbones = activeragarmature.get_children().filter(func(index): return index is PhysicalBone3D)
-
 "
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_effxa"]
@@ -233,6 +231,21 @@ radius = 1.10435
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vamy4"]
 radius = 0.181316
 height = 2.39488
+
+[sub_resource type="GDScript" id="GDScript_d8qg3"]
+resource_name = "testactive"
+script/source = "extends Generic6DOFJoint3D
+@export var matching_velocity_multiplier = 1
+@export var ownerthingy : Node3D
+func _physics_process(delta: float) -> void:
+		var target_rotation : Basis = ownerthingy.animSkeleton.get_bone_global_pose(get_node(node_b).get_bone_id()).basis.inverse() * self.get_parent().get_bone_global_pose(get_node(node_b).get_bone_id()).basis
+		var target_velocity : Vector3 = target_rotation.get_euler() * matching_velocity_multiplier
+		#print(target_velocity)
+
+		self.set_param_x(Generic6DOFJoint3D.PARAM_ANGULAR_MOTOR_TARGET_VELOCITY, target_velocity.x)
+		self.set_param_y(Generic6DOFJoint3D.PARAM_ANGULAR_MOTOR_TARGET_VELOCITY, target_velocity.y)
+		self.set_param_z(Generic6DOFJoint3D.PARAM_ANGULAR_MOTOR_TARGET_VELOCITY, target_velocity.z)
+"
 
 [sub_resource type="Resource" id="Resource_y2df1"]
 resource_local_to_scene = true
@@ -387,7 +400,7 @@ bones/2/rotation = Quaternion(0, 2.13163e-14, 0, 1)
 
 [node name="animationPlayer" type="AnimationPlayer" parent="Props/untitled" index="1"]
 libraries = {
-"": SubResource("AnimationLibrary_crhox")
+&"": SubResource("AnimationLibrary_crhox")
 }
 
 [node name="untitled2" parent="Props" index="2" node_paths=PackedStringArray("physSkel", "animSkeleton") instance=ExtResource("7_4j4hu")]
@@ -404,7 +417,7 @@ transform = Transform3D(1, -2.17053e-21, -1.7752e-15, -1.7752e-15, -7.45058e-09,
 collision_layer = 2
 collision_mask = 11
 joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.77646e-15, 1.62199e-05, 1.00071)
-body_offset = Transform3D(1, -2.17053e-21, -1.7752e-15, -1.7752e-15, -7.45058e-09, -1, 2.17052e-21, 1, -7.45058e-09, 0, 1.00071, -1.62125e-05)
+body_offset = Transform3D(1, -2.17053e-21, -1.7752e-15, -1.7752e-15, -7.45058e-09, -1, 2.15729e-21, 1, -7.45058e-09, 0, 1.00071, -1.62125e-05)
 bone_name = "Bone"
 script = SubResource("GDScript_8s8wa")
 animSkeleton = NodePath("../../../../untitled/Armature/Skeleton3D")
@@ -414,16 +427,12 @@ transform = Transform3D(1, -1.36962e-19, 5.30719e-21, 0, 0, 1, -5.87298e-23, -1,
 shape = SubResource("SphereShape3D_c28eq")
 
 [node name="Physical Bone Bone_001" type="PhysicalBone3D" parent="Props/untitled2/Armature/Skeleton3D" index="2" node_paths=PackedStringArray("animSkeleton")]
-transform = Transform3D(1, 2.38418e-07, 4.60076e-13, -1.77636e-15, 1.9446e-06, -1, -2.38418e-07, 1, 1.9446e-06, -9.53674e-07, 2.90801, -0.19933)
+transform = Transform3D(1, 2.38418e-07, 4.56523e-13, -1.77636e-15, 1.92225e-06, -1, -2.38418e-07, 1, 1.92225e-06, -9.53674e-07, 2.90801, -0.19933)
 collision_layer = 2
 collision_mask = 11
-joint_type = 1
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.53674e-07, 3.3046e-05, 0.906664)
-body_offset = Transform3D(1, -2.27374e-13, -3.55271e-15, -1.77636e-15, 1.9446e-06, -1, 0, 1, 1.9446e-06, -9.53674e-07, 0.906665, -3.48091e-05)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.53674e-07, 3.30663e-05, 0.906664)
+body_offset = Transform3D(1, -2.41585e-13, -1.77636e-15, -1.77636e-15, 1.92225e-06, -1, 0, 1, 1.92225e-06, -9.53674e-07, 0.906665, -3.48091e-05)
 bone_name = "Bone.001"
-joint_constraints/bias = 0.3
-joint_constraints/damping = 1.0
-joint_constraints/impulse_clamp = 0.0
 script = SubResource("GDScript_8s8wa")
 animSkeleton = NodePath("../../../../untitled/Armature/Skeleton3D")
 matching_force = 5
@@ -431,6 +440,17 @@ matching_force = 5
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Props/untitled2/Armature/Skeleton3D/Physical Bone Bone_001" index="0"]
 transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, 0)
 shape = SubResource("CapsuleShape3D_vamy4")
+
+[node name="generic6dofJoint3d" type="Generic6DOFJoint3D" parent="Props/untitled2/Armature/Skeleton3D" index="3" node_paths=PackedStringArray("ownerthingy")]
+node_a = NodePath("../Physical Bone Bone")
+node_b = NodePath("../Physical Bone Bone_001")
+angular_limit_x/upper_angle = 1.5708
+angular_limit_x/lower_angle = -1.5708
+angular_motor_x/enabled = true
+angular_motor_y/enabled = true
+angular_motor_z/enabled = true
+script = SubResource("GDScript_d8qg3")
+ownerthingy = NodePath("../../..")
 
 [node name="Beretta" parent="Props" index="3" instance=ExtResource("4_a2bgr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5649, 3.09809)

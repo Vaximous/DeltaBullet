@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://rnjqykyxts43" path="res://assets/textures/crosshair/crosshair037.png" id="1_4q1x7"]
 [ext_resource type="Resource" uid="uid://r6qkb05upxjv" path="res://assets/resources/customResources/weaponData/Uzi/UziDisplay.tres" id="1_7jknn"]
-[ext_resource type="Script" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="2_xq0ah"]
+[ext_resource type="Script" uid="uid://b6r8ewrq3qb3y" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="2_xq0ah"]
 
 [resource]
 resource_local_to_scene = true

@@ -107,7 +107,7 @@ func applyConfigs() -> void:
 	AudioServer.set_bus_volume_db(4, audio_ambience_volume)
 	applyShadowQuality()
 	applyShadowFilterQuality()
-	get_window().mode = Window.MODE_FULLSCREEN if graphics_fullscreen else Window.MODE_WINDOWED
+	get_window().mode = Window.MODE_EXCLUSIVE_FULLSCREEN if graphics_fullscreen else Window.MODE_WINDOWED
 	configs_updated.emit()
 
 
@@ -163,6 +163,11 @@ func applyShadowFilterQuality() -> void:
 			RenderingServer.positional_soft_shadow_filter_set_quality(5)
 			ProjectSettings.set_setting("rendering/lights_and_shadows/directional_shadow/soft_shadow_filter_quality",5)
 			ProjectSettings.set_setting("rendering/lights_and_shadows/positional_shadow/soft_shadow_filter_quality",5)
+		6:
+			RenderingServer.directional_soft_shadow_filter_set_quality(6)
+			RenderingServer.positional_soft_shadow_filter_set_quality(6)
+			ProjectSettings.set_setting("rendering/lights_and_shadows/directional_shadow/soft_shadow_filter_quality",6)
+			ProjectSettings.set_setting("rendering/lights_and_shadows/positional_shadow/soft_shadow_filter_quality",6)
 
 func applyShadowQuality() -> void:
 	match graphics_shadow_quality:

@@ -1,17 +1,14 @@
 [gd_scene load_steps=3 format=3 uid="uid://wb3grtjgigng"]
 
-[ext_resource type="Script" path="res://assets/scripts/bulletTrail/bulletTrail.gd" id="1_u8knr"]
+[ext_resource type="Script" uid="uid://chcwhgdmausuw" path="res://assets/scripts/bulletTrail/bulletTrail.gd" id="1_u8knr"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_atsew"]
 transparency = 1
 emission_enabled = true
 emission = Color(1, 1, 0, 1)
-emission_energy_multiplier = 8.56
+emission_energy_multiplier = 16.0
 
 [node name="bulletTrail" type="MeshInstance3D"]
-process_thread_group = 2
-process_thread_group_order = 0
-process_thread_messages = 2
 top_level = true
 material_override = SubResource("StandardMaterial3D_atsew")
 ignore_occlusion_culling = true

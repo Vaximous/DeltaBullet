@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://c81jcxxd6oi3i"]
+
+[ext_resource type="Script" uid="uid://cxy3w5f3xoq0a" path="res://assets/entities/emitters/bloodStringEmitter/blood_string.gd" id="1_4eav8"]
+
+[node name="bloodString" type="Marker3D"]
+script = ExtResource("1_4eav8")
+
+[node name="timer" type="Timer" parent="."]
+unique_name_in_owner = true
+autostart = true

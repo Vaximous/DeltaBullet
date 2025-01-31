@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3 uid="uid://cpd5r8bmx2885"]
 
-[ext_resource type="Script" path="res://assets/scripts/entities/interactiveObject/weaponBase.gd" id="1_37cvt"]
+[ext_resource type="Script" uid="uid://bn6twcdxleakc" path="res://assets/scripts/entities/interactiveObject/weaponBase.gd" id="1_37cvt"]
 [ext_resource type="AudioStream" uid="uid://c7ulnbplr7bm8" path="res://assets/sounds/weapons/dryfire1.wav" id="2_dmwe3"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_psxhm"]
@@ -23,13 +23,13 @@ resource_name = "new_animation"
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_qxw0b"]
 _data = {
-"aim": SubResource("Animation_ef23n"),
-"equip": SubResource("Animation_c3lrp"),
-"fire": SubResource("Animation_nch48"),
-"idle": SubResource("Animation_2k5br"),
-"reload": SubResource("Animation_cqnx3"),
-"sprint": SubResource("Animation_6o8vv"),
-"unequip": SubResource("Animation_aoqdk")
+&"aim": SubResource("Animation_ef23n"),
+&"equip": SubResource("Animation_c3lrp"),
+&"fire": SubResource("Animation_nch48"),
+&"idle": SubResource("Animation_2k5br"),
+&"reload": SubResource("Animation_cqnx3"),
+&"sprint": SubResource("Animation_6o8vv"),
+&"unequip": SubResource("Animation_aoqdk")
 }
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_latvr"]
@@ -52,7 +52,7 @@ anim_player = NodePath("../AnimationPlayer")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_qxw0b")
+&"": SubResource("AnimationLibrary_qxw0b")
 }
 
 [node name="FX" type="Node" parent="."]

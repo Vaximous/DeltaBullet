@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://dodu8jdt3nw06"]
 
 [ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="1_d5vm4"]
-[ext_resource type="Script" path="res://assets/scenes/ui/GamePauseMenu.gd" id="1_h7sny"]
+[ext_resource type="Script" uid="uid://cl8r0t4s4jk48" path="res://assets/scenes/ui/GamePauseMenu.gd" id="1_h7sny"]
 [ext_resource type="PackedScene" uid="uid://wncyofb1f8i7" path="res://assets/scenes/ui/options/optionsMenu.tscn" id="1_nxica"]
 [ext_resource type="PackedScene" uid="uid://ba0s8u6mtjxns" path="res://assets/scenes/menu/menuButton.tscn" id="3_mr0iv"]
 [ext_resource type="AudioStream" uid="uid://08mwbmwvrolu" path="res://assets/sounds/ui/uiAppear2.wav" id="5_0havd"]
@@ -127,9 +127,9 @@ volume_db = -15.0
 bus = &"UI"
 
 [connection signal="pressed" from="buttons/ResumeButton" to="." method="_on_resume_button_pressed"]
-[connection signal="pressed" from="buttons/SaveButton" to="saveloadmenu" method="initSavePanel"]
 [connection signal="pressed" from="buttons/SaveButton" to="saveloadmenu" method="show"]
-[connection signal="pressed" from="buttons/LoadButton" to="saveloadmenu" method="initLoadPanel"]
+[connection signal="pressed" from="buttons/SaveButton" to="saveloadmenu" method="initSavePanel"]
 [connection signal="pressed" from="buttons/LoadButton" to="saveloadmenu" method="show"]
+[connection signal="pressed" from="buttons/LoadButton" to="saveloadmenu" method="initLoadPanel"]
 [connection signal="pressed" from="buttons/OptionsButton" to="Options" method="show"]
 [connection signal="pressed" from="buttons/menuButton" to="." method="_on_menu_button_pressed"]

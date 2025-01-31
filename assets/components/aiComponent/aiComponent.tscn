@@ -1,14 +1,13 @@
-[gd_scene load_steps=14 format=3 uid="uid://b53hvcf0hvvkw"]
+[gd_scene load_steps=13 format=3 uid="uid://b53hvcf0hvvkw"]
 
-[ext_resource type="PackedScene" uid="uid://glmcou87njh6" path="res://assets/components/aiComponent/aiMemoryManager.tscn" id="2_fp3i1"]
-[ext_resource type="Script" path="res://addons/finite_state_machine/scripts/finite_state_machine.gd" id="2_ubyph"]
-[ext_resource type="Script" path="res://assets/components/aiComponent/aiComponent.gd" id="4_gaqok"]
-[ext_resource type="Script" path="res://assets/components/aiComponent/aiStates/Idle.gd" id="4_p56ey"]
-[ext_resource type="Script" path="res://assets/components/aiComponent/aiStates/Search.gd" id="5_uyejc"]
-[ext_resource type="Script" path="res://assets/components/aiComponent/aiStates/Wander.gd" id="6_vgbdp"]
-[ext_resource type="Script" path="res://assets/components/aiComponent/aiStates/Attack.gd" id="7_m2cst"]
-[ext_resource type="Script" path="res://assets/components/aiComponent/aiStates/FindCover.gd" id="8_bgtfw"]
-[ext_resource type="Script" path="res://assets/components/aiComponent/aiStates/Patrol.gd" id="9_8na1r"]
+[ext_resource type="Script" uid="uid://b268i2svd6x8f" path="res://addons/finite_state_machine/scripts/finite_state_machine.gd" id="2_ubyph"]
+[ext_resource type="Script" uid="uid://6gdyem6cg7ut" path="res://assets/components/aiComponent/aiComponent.gd" id="4_gaqok"]
+[ext_resource type="Script" uid="uid://debsl6hgg8u5o" path="res://assets/components/aiComponent/aiStates/Idle.gd" id="4_p56ey"]
+[ext_resource type="Script" uid="uid://cvxqmc10mumg8" path="res://assets/components/aiComponent/aiStates/Search.gd" id="5_uyejc"]
+[ext_resource type="Script" uid="uid://bkkwm0mhefja0" path="res://assets/components/aiComponent/aiStates/Wander.gd" id="6_vgbdp"]
+[ext_resource type="Script" uid="uid://65yu2g060csf" path="res://assets/components/aiComponent/aiStates/Attack.gd" id="7_m2cst"]
+[ext_resource type="Script" uid="uid://dtb6e32c2tkq1" path="res://assets/components/aiComponent/aiStates/FindCover.gd" id="8_bgtfw"]
+[ext_resource type="Script" uid="uid://yj6cxhxe0s8w" path="res://assets/components/aiComponent/aiStates/Patrol.gd" id="9_8na1r"]
 
 [sub_resource type="Gradient" id="Gradient_4vyck"]
 colors = PackedColorArray(0, 0, 0, 1, 1, 1, 0.32549, 1)
@@ -21,24 +20,16 @@ transparency = 1
 cull_mode = 2
 albedo_color = Color(1, 0, 0, 0.309804)
 
-[sub_resource type="ImmediateMesh" id="ImmediateMesh_3vs7s"]
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_rcngy"]
 
 [node name="aiComponent" type="Node3D" node_paths=PackedStringArray("pawnFSM", "visionTimer", "memoryManager")]
 script = ExtResource("4_gaqok")
-aimSpeed = 2.0
+aimSpeed = 3.0
 pawnFSM = NodePath("pawnFSM")
 visionTimer = NodePath("visionTimer")
-memoryManager = NodePath("aiMemoryManager")
+memoryManager = NodePath("")
 meshDistance = 5.0
 collisionMasks = 1
-
-[node name="aiMemoryManager" parent="." node_paths=PackedStringArray("brainOwner") instance=ExtResource("2_fp3i1")]
-brainOwner = NodePath("..")
-
-[node name="memorySpan" type="Timer" parent="."]
-process_callback = 0
-wait_time = 10.0
-autostart = true
 
 [node name="pawnFSM" type="Node" parent="." node_paths=PackedStringArray("current_state", "animation_player")]
 script = ExtResource("2_ubyph")
@@ -112,6 +103,6 @@ debug_shape_custom_color = Color(1, 0.823529, 0, 1)
 
 [node name="visualMesh" type="MeshInstance3D" parent="."]
 material_override = SubResource("StandardMaterial3D_giynp")
-mesh = SubResource("ImmediateMesh_3vs7s")
+mesh = SubResource("ImmediateMesh_rcngy")
 
 [connection signal="timeout" from="pawnFSM/Wander/forceTargetReset" to="pawnFSM/Wander" method="_on_force_target_reset_timeout"]

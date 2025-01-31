@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bsdhbnw1p72ie"]
+
+[ext_resource type="Script" uid="uid://b5a1s7fyuae1c" path="res://assets/components/spawnTriggerArea/spawn_trigger_area_3d.gd" id="1_y76ps"]
+
+[node name="SpawnTriggerArea3D" type="Area3D"]
+collision_layer = 8
+collision_mask = 8
+script = ExtResource("1_y76ps")

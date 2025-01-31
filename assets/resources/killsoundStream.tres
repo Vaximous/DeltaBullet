@@ -1,0 +1,13 @@
+[gd_resource type="AudioStreamRandomizer" load_steps=4 format=3 uid="uid://d1ve0476451lw"]
+
+[ext_resource type="AudioStream" uid="uid://bn4a2o1il06g3" path="res://assets/sounds/gore/fleshImpacts/bulletImpacts/bulletBody3.wav" id="1_3g4cw"]
+[ext_resource type="AudioStream" uid="uid://crhpecd4vkaul" path="res://assets/sounds/gore/fleshImpacts/bulletImpacts/bulletBody7.wav" id="2_maa4o"]
+[ext_resource type="AudioStream" uid="uid://k5gdem56qgha" path="res://assets/sounds/gore/fleshImpacts/bulletImpacts/bulletBody9.wav" id="3_r0sy8"]
+
+[resource]
+random_pitch = 1.05
+random_volume_offset_db = 0.7
+streams_count = 3
+stream_0/stream = ExtResource("1_3g4cw")
+stream_1/stream = ExtResource("2_maa4o")
+stream_2/stream = ExtResource("3_r0sy8")

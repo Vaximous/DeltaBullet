@@ -44,9 +44,12 @@ var currentAmmo = 0:
 		currentMagSize = weaponResource.weaponMagSize
 		setWeaponRecoil()
 @export_subgroup("Behavior")
+@export var ejectionPoint : Marker3D
+@export var smokeEffect : PackedScene
 var defaultBulletTrail = load("res://assets/entities/bulletTrail/bulletTrail.tscn")
 @export var projectile : PackedScene = preload("res://assets/entities/projectiles/Bullet.tscn")
 @export var muzzlePoint : Marker3D
+@export var muzzleFlashes : Array[PackedScene]
 @export var isReloading : bool = false:
 	set(value):
 		isReloading = value
@@ -227,8 +230,8 @@ func fire()->void:
 	#Weapon is capable of firing.
 	if !isFiring:
 		shot_fired.emit()
+		spawn_bullet_casing()
 		isFiring = true
-
 		#var shot_cast : RayCast3D = weaponCast
 		#if checkShooter():
 			#if weaponOwner.attachedCam.camCast != null:
@@ -237,6 +240,8 @@ func fire()->void:
 		if weaponRemoteState and weaponRemoteStateLeft and isEquipped:
 			weaponRemoteState.start("fire")
 			weaponRemoteStateLeft.start("fire")
+			if weaponOwner.is_in_group(&"Player"):
+				gameManager.getEventSignal(&"playerShot").emit()
 		if weaponOwner.attachedCam:
 			if weaponResource.useFOV:
 				weaponOwner.attachedCam.camera.fov += weaponResource.fovShotAmount
@@ -251,8 +256,22 @@ func fire()->void:
 				#bullet.position.y += randf_range(-0.05,0.05)
 
 			if weaponCast != null:
+
+				if muzzleFlashes:
+					var flash = muzzleFlashes.pick_random().instantiate()
+					gameManager.world.worldParticles.add_child(flash)
+					flash.global_position = muzzlePoint.global_position
+					flash.global_rotation = muzzlePoint.global_rotation
+					flash.playFlash()
+
+				if smokeEffect:
+					var smokeInstance = smokeEffect.instantiate()
+					gameManager.world.worldParticles.add_child(smokeInstance)
+					smokeInstance.global_position = muzzlePoint.global_position
+					smokeInstance.global_rotation = muzzlePoint.global_rotation
+
 				spawnProjectile(weaponCast)
-				applyCameraRecoil()
+				applyRecoil(weaponCast)
 					#raycastHit(shot_cast)
 					#var hit = globalParticles.detectMaterial(getHitObject(shot_cast))
 					#if hit != null:
@@ -262,6 +281,17 @@ func fire()->void:
 		await get_tree().create_timer(weaponResource.weaponFireRate).timeout
 		isFiring = false
 	return
+
+
+func spawn_bullet_casing() -> void:
+	if ejectionPoint:
+		var casing = preload("res://assets/entities/casing/BulletCasing.tscn")
+		var inst = casing.instantiate()
+		inst.velocity.y = 15 * ejectionPoint.rotation.x
+		inst.velocity.x = randf_range(-1, 1)
+		inst.velocity.z = randf_range(-1, 1)
+		gameManager.world.add_child(inst)
+		inst.global_position = ejectionPoint.global_position
 
 
 func spawnProjectile(raycaster : RayCast3D) -> void:
@@ -287,6 +317,7 @@ func spawnProjectile(raycaster : RayCast3D) -> void:
 		ray.from = muzzlePoint.global_position
 		ray.to = ray_target_point
 		ray.collision_mask = raycaster.collision_mask
+		ray.collide_with_areas = true
 		var result = get_world_3d().direct_space_state.intersect_ray(ray)
 		if result:
 			bulletTrail.initTrail(muzzlePoint.global_position, result.position)
@@ -314,7 +345,7 @@ func get_hit_target(raycast : RayCast3D) -> Vector3:
 			else:
 				ray_target_point = intersect['position']
 		else:
-			rayq.collide_with_areas = false
+			rayq.collide_with_areas = true
 			rayq.collision_mask = raycast.collision_mask
 			intersect = state.intersect_ray(rayq)
 			if !intersect.is_empty():
@@ -333,15 +364,25 @@ func isFireReady() -> bool:
 	return true
 
 
-func applyCameraRecoil()->void:
-	if !weaponOwner.get(&"attachedCam") is CharacterBody3D:
-		return
+func applyWeaponSpread(spread,raycaster:RayCast3D)->void:
+	raycaster.rotation += Vector3(randf_range(0.0, spread),randf_range(-spread, spread),0)
+
+func applyRecoil(raycaster:RayCast3D)->void:
 	if isAiming:
-		weaponOwner.attachedCam.camRecoilStrength = weaponResource.weaponRecoilStrengthAim
-		weaponOwner.attachedCam.applyWeaponSpread(weaponResource.weaponSpreadAim)
+		applyWeaponSpread(weaponResource.weaponSpreadAim,raycaster)
+		#Apply Camera Recoil
+		if weaponOwner.get(&"attachedCam") is CharacterBody3D:
+			weaponOwner.attachedCam.camRecoilStrength = weaponResource.weaponRecoilStrengthAim
+			weaponOwner.attachedCam.applyWeaponSpreadEffect(weaponResource.weaponSpreadAim)
+
 	else:
-		weaponOwner.attachedCam.camRecoilStrength = weaponResource.weaponRecoilStrength
-		weaponOwner.attachedCam.applyWeaponSpread(weaponResource.weaponSpread)
+		applyWeaponSpread(weaponResource.weaponSpread,raycaster)
+
+		#Apply Camera Recoil
+		if weaponOwner.get(&"attachedCam") is CharacterBody3D:
+			weaponOwner.attachedCam.camRecoilStrength = weaponResource.weaponRecoilStrengthAim
+			weaponOwner.attachedCam.applyWeaponSpreadEffect(weaponResource.weaponSpreadAim)
+
 
 
 func createMuzzle() -> Node:
@@ -496,12 +537,15 @@ func equipToPawn(pawn:BasePawn):
 								pawn.attachedCam.fireRecoil(0,3.7,5.4,true)
 
 func setInteractable()->void:
-		reparent(gameManager.world.worldProps)
-		set("gravity_scale", 1)
-		add_to_group("Interactable")
-		interactType = 0
-		canBeUsed = true
-		freeze = false
+		if is_instance_valid(gameManager.world):
+			get_parent().remove_child(self)
+			gameManager.world.worldProps.add_child(self)
+			#reparent(gameManager.world.worldProps)
+			gravity_scale = 1
+			add_to_group("Interactable")
+			interactType = 0
+			canBeUsed = true
+			freeze = false
 
 func setEquipVariables()->void:
 	if is_in_group("Interactable"):
@@ -517,32 +561,34 @@ func setWeaponRecoil()->void:
 
 func reloadWeapon()->void:
 	#await get_tree().process_frame
-	weaponRemoteState.stop()
-	weaponRemoteStateLeft.stop()
-	if canReloadWeapon and !isReloading and weaponResource.canBeReloaded and isEquipped and !weaponOwner.isArmingThrowable and is_instance_valid(weaponResource):
-		var firedShots = weaponResource.ammoSize - currentAmmo
-		weaponRemoteState.travel("reload")
-		weaponRemoteState.next()
-		weaponRemoteStateLeft.travel("reload")
-		weaponRemoteStateLeft.next()
-		isReloading = true
-		canReloadWeapon = false
-		await get_tree().create_timer(weaponResource.reloadTime).timeout
-		isReloading = false
-		currentMagSize -= firedShots
-		currentAmmo += firedShots
-		if weaponOwner != null:
-			if isAiming:
-				if weaponOwner != null:
-					#weaponOwner.setLeftHandFilter(weaponResource.useLeftHandAiming)
-					weaponOwner.setRightHandFilter(weaponResource.useRightHandAiming)
-			elif weaponOwner.freeAim:
-				if weaponOwner != null:
-					#weaponOwner.setLeftHandFilter(weaponResource.useLeftHandFreeAiming)
-					weaponOwner.setRightHandFilter(weaponResource.useRightHandFreeAiming)
-			elif !isFiring and !isAiming and !weaponOwner.freeAim and !isReloading and weaponOwner != null:
-				#weaponOwner.setLeftHandFilter(weaponResource.useLeftHandIdle)
-				weaponOwner.setRightHandFilter(weaponResource.useRightHandIdle)
+	if is_instance_valid(get_tree()):
+		weaponRemoteState.stop()
+		weaponRemoteStateLeft.stop()
+		if canReloadWeapon and !isReloading and weaponResource.canBeReloaded and isEquipped and !weaponOwner.isArmingThrowable and is_instance_valid(weaponResource):
+			var reloadTime = weaponResource.reloadTime
+			var firedShots = weaponResource.ammoSize - currentAmmo
+			weaponRemoteState.travel("reload")
+			weaponRemoteState.next()
+			weaponRemoteStateLeft.travel("reload")
+			weaponRemoteStateLeft.next()
+			isReloading = true
+			canReloadWeapon = false
+			await get_tree().create_timer(reloadTime).timeout
+			isReloading = false
+			currentMagSize -= firedShots
+			currentAmmo += firedShots
+			if weaponOwner != null:
+				if isAiming:
+					if weaponOwner != null:
+						#weaponOwner.setLeftHandFilter(weaponResource.useLeftHandAiming)
+						weaponOwner.setRightHandFilter(weaponResource.useRightHandAiming)
+				elif weaponOwner.freeAim:
+					if weaponOwner != null:
+						#weaponOwner.setLeftHandFilter(weaponResource.useLeftHandFreeAiming)
+						weaponOwner.setRightHandFilter(weaponResource.useRightHandFreeAiming)
+				elif !isFiring and !isAiming and !weaponOwner.freeAim and !isReloading and weaponOwner != null:
+					#weaponOwner.setLeftHandFilter(weaponResource.useLeftHandIdle)
+					weaponOwner.setRightHandFilter(weaponResource.useRightHandIdle)
 
 func checkFreeAim()->void:
 	if weaponOwner:

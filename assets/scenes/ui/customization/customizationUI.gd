@@ -2,7 +2,8 @@ extends CanvasLayer
 @onready var blur = $blur
 @onready var customizationUI : Control = $customizationUi
 @onready var equipSound : AudioStreamPlayer = $equipSounds
-@export_enum("Hair","Headwear","Facewear","Body","Pants")var selectedSection : int = 2:
+var customizeTween : Tween
+@export_enum("Hair","Headgear","Bling","Body","Pants")var selectedSection : int = 1:
 	set(value):
 		selectedSection = value
 		setSectionLabel(value)
@@ -22,25 +23,40 @@ const defaultEaseType = Tween.EASE_OUT
 
 func _ready() -> void:
 	#setupButtons()
+	customizationUI.modulate = Color.TRANSPARENT
 	animationTitlebar.play("titlebarIn")
 	gameManager.showMouse()
+	fadeCustomizationUIIn()
 
 
-func enlargeControlScale(control:Control)->void:
+func enlargeControlScale(control:Control,size:float=1.5)->void:
 	var tween = create_tween()
-	tween.tween_property(control,"scale",Vector2(1.5,1.5),defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+	tween.tween_property(control,"scale",Vector2(size,size),defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
 
 
 func resetControlScale(control:Control)->void:
 	var tween = create_tween()
 	tween.tween_property(control,"scale",Vector2(1,1),defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
 
+func fadeCustomizationUIOut()->void:
+	if customizeTween:
+		customizeTween.kill()
+	customizeTween = create_tween()
+	customizeTween.parallel().tween_property(blur,"modulate",Color.TRANSPARENT,0.25).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+	await customizeTween.parallel().tween_property(customizationUI,"modulate",Color.TRANSPARENT,0.35).set_trans(defaultTransitionType).set_ease(defaultEaseType).finished
+	gameManager.removeCustomization()
+
+func fadeCustomizationUIIn()->void:
+	if customizeTween:
+		customizeTween.kill()
+	customizeTween = create_tween()
+	customizeTween.tween_property(customizationUI,"modulate",Color.WHITE,0.5).set_trans(defaultTransitionType).set_ease(defaultEaseType)
 
 func setupButtons()->void:
 	if buttonHolder != null:
 		for buttons in buttonHolder.get_children():
 			buttons.pivot_offset = buttons.size/2
-			buttons.mouse_entered.connect(enlargeControlScale.bind(buttons))
+			buttons.mouse_entered.connect(enlargeControlScale.bind(buttons,1.15))
 			buttons.mouse_exited.connect(resetControlScale.bind(buttons))
 			buttons.pressed.connect(setSection.bind(getSelectedSectionID(buttons)))
 			buttons.pressed.connect(generateClothingOptions.bind(clothingPawn))
@@ -56,7 +72,7 @@ func setSection(id:int)->void:
 	selectedSection = id
 	print(selectedSection)
 
-func getSelectedSectionID(button:Button)->int:
+func getSelectedSectionID(button:TextureButton)->int:
 	var id : int = 0
 	for buttonid in buttonHolder.get_children().size():
 		if buttonHolder.get_child(buttonid) == button:
@@ -71,7 +87,7 @@ func _exit_tree() -> void:
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("gEscape"):
-		fadeOut()
+		fadeCustomizationUIOut()
 
 
 func setPreviewAppearance()->void:
@@ -86,9 +102,9 @@ func setSectionLabel(section:int = 0)->void:
 			0:
 				sectionLabel.text = "Hair"
 			1:
-				sectionLabel.text = "Hats"
+				sectionLabel.text = "Headgear"
 			2:
-				sectionLabel.text = "Face"
+				sectionLabel.text = "Bling"
 			3:
 				sectionLabel.text = "Body"
 			4:
@@ -97,19 +113,16 @@ func setSectionLabel(section:int = 0)->void:
 
 func checkClothingItem(item:PackedScene)->bool:
 	var boolean : bool = false
+	var itemInstance = item.instantiate()
 	if item and clothingPawn:
 		for i in clothingPawn.clothingInventory:
 			if i != null:
-				if i.scene_file_path == item.instantiate().scene_file_path:
+				if i.scene_file_path == itemInstance.scene_file_path:
 					boolean = true
+	itemInstance.queue_free()
 	return boolean
 
 
-func fadeOut()->void:
-	var tween = create_tween()
-	tween.parallel().tween_property(blur,"modulate",Color.TRANSPARENT,0.25).set_ease(defaultEaseType).set_trans(defaultTransitionType)
-	await tween.parallel().tween_property(customizationUI,"modulate",Color.TRANSPARENT,0.25).set_ease(defaultEaseType).set_trans(defaultTransitionType).finished
-	gameManager.removeCustomization()
 
 func toggleItem(item)->void:
 	if item:
@@ -130,20 +143,25 @@ func equipClothingToPawn(item:PackedScene)->void:
 		clothingPawn.clothingHolder.add_child(itemInstance)
 		clothingPawn.checkClothes()
 		setPreviewAppearance()
+		gameManager.saveTemporaryPawnInfo()
 
 func unequipClothingFromPawn(item:PackedScene)->void:
 	if clothingPawn and item:
-		var filePath = item.instantiate().scene_file_path
-		for clothing in clothingPawn.clothingInventory:
-			if clothing.scene_file_path == filePath:
-				clothingPawn.clothingInventory.erase(clothing)
-				clothing.queue_free()
-				#clothingPawn.clothingInventory.remove_at(clothingInt)
+		var itemInstance = item.instantiate()
+		if is_instance_valid(itemInstance):
+			var filePath = itemInstance.scene_file_path
+			for clothing in clothingPawn.clothingInventory:
+				if clothing.scene_file_path == filePath and is_instance_valid(clothing) and clothing != null:
+					clothingPawn.clothingInventory.erase(clothing)
+					clothing.queue_free()
+					#clothingPawn.clothingInventory.remove_at(clothingInt)
 		clothingPawn.setBodyVisibility(true)
 		clothingPawn.clothingInventory.clear()
 		await get_tree().process_frame
 		clothingPawn.checkClothes()
+		itemInstance.queue_free()
 		setPreviewAppearance()
+		gameManager.saveTemporaryPawnInfo()
 
 
 func generateClothingOptions(pawn:BasePawn)->void:
@@ -155,9 +173,11 @@ func generateClothingOptions(pawn:BasePawn)->void:
 	if pawn != null:
 		for clothing in pawn.purchasedClothing:
 			var itemLoad = load(clothing)
-			if itemLoad.instantiate().clothingCategory == selectedSection:
+			var itemInstance = itemLoad.instantiate()
+			if itemInstance.clothingCategory == selectedSection:
 				var button = clothingItem.instantiate()
 				button.clothingItem = itemLoad
 				clothingButtonsHolder.add_child(button)
 				button.isEquipped = checkClothingItem(itemLoad)
 				button.button.pressed.connect(toggleItem.bind(button))
+			itemInstance.queue_free()

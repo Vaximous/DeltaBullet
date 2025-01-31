@@ -1,14 +1,23 @@
-[gd_scene load_steps=6 format=3 uid="uid://ctrswootky6q7"]
+[gd_scene load_steps=12 format=3 uid="uid://ctrswootky6q7"]
 
-[ext_resource type="Script" path="res://assets/scenes/ui/customization/customizationWorld.gd" id="1_37aps"]
+[ext_resource type="Script" uid="uid://bp312460vua66" path="res://assets/scenes/ui/customization/customizationWorld.gd" id="1_37aps"]
 [ext_resource type="PackedScene" uid="uid://bg8aarggcxwa8" path="res://assets/entities/pawnEntity/pawnEntity.tscn" id="1_ch2jg"]
 [ext_resource type="PackedScene" uid="uid://cmyxa8pfmhpcy" path="res://assets/components/inputComponent/inputComponent.tscn" id="3_ax8xa"]
+[ext_resource type="PackedScene" uid="uid://bh8ocrcm7xaho" path="res://assets/models/interior/changingroom/ChangingRoom.tscn" id="4_h5q60"]
+[ext_resource type="LightmapGIData" uid="uid://cthhbv11ym5df" path="res://assets/scenes/ui/customization/customizationWorld.lmbake" id="5_mywmq"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kfmsv"]
 transparency = 1
 albedo_color = Color(1, 1, 1, 0)
 
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_h5q60"]
+
+[sub_resource type="Sky" id="Sky_mywmq"]
+sky_material = SubResource("PhysicalSkyMaterial_h5q60")
+
 [sub_resource type="Environment" id="Environment_e7eu0"]
+background_mode = 2
+sky = SubResource("Sky_mywmq")
 ambient_light_source = 2
 ambient_light_color = Color(1, 1, 1, 1)
 ambient_light_energy = 0.7
@@ -17,6 +26,11 @@ ssao_intensity = 1.0
 ssao_power = 3.95852
 ssao_detail = 5.0
 fog_light_color = Color(0.951441, 0.956499, 0.964452, 1)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mywmq"]
+
+[sub_resource type="Sky" id="Sky_tt1wg"]
+sky_material = SubResource("ProceduralSkyMaterial_mywmq")
 
 [node name="customizationWorld" type="Node3D"]
 script = ExtResource("1_37aps")
@@ -34,7 +48,11 @@ environment = SubResource("Environment_e7eu0")
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0.24698, -0.45583)
 
 [node name="spotLight3d" type="SpotLight3D" parent="."]
-transform = Transform3D(0.992265, 0.071421, -0.101535, -7.34382e-09, 0.817919, 0.575334, 0.124138, -0.570883, 0.811592, -0.729325, 2.63393, 1.60217)
+transform = Transform3D(0.992265, 0.0714207, -0.101535, -7.34382e-09, 0.817919, 0.575333, 0.124138, -0.570883, 0.811592, -1.80485, 3.1419, 1.60217)
+light_color = Color(1, 0.949, 0.91, 1)
+light_energy = 4.871
+light_indirect_energy = 2.355
+light_bake_mode = 1
 shadow_enabled = true
 spot_range = 22.234
 spot_angle = 39.25
@@ -49,3 +67,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1571, 2.06761)
 fov = 52.1
 
 [node name="inputComponent" parent="." instance=ExtResource("3_ax8xa")]
+
+[node name="ChangingRoom" parent="." instance=ExtResource("4_h5q60")]
+
+[node name="lightmapGi" type="LightmapGI" parent="."]
+quality = 3
+bounces = 5
+directional = true
+shadowmask_mode = 2
+environment_mode = 2
+environment_custom_sky = SubResource("Sky_tt1wg")
+generate_probes_subdiv = 0
+light_data = ExtResource("5_mywmq")

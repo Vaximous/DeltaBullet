@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://xla3f2btr78l"]
+
+[ext_resource type="Script" uid="uid://c05xtfoksu7fr" path="res://assets/components/lookTargetTrigger/look_target.gd" id="1_vtgt8"]
+
+[node name="LookTarget" type="Marker3D"]
+script = ExtResource("1_vtgt8")
+
+[node name="VisibleOnScreenEnabler3D" type="VisibleOnScreenEnabler3D" parent="."]
+process_mode = 3
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]

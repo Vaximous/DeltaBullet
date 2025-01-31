@@ -81,8 +81,9 @@ func posess()->void:
 				#gameManager.notify_warn("Posessing..", 2, 5)
 				var _notification = load("res://assets/scenes/ui/generalNotif/generalNotification.tscn").instantiate()
 				gameManager.activeCamera.hud.gameNotifications.add_child(_notification)
-				_notification.doNotification(null,"Posession", "Posessed %s." %cast.get_collider())
+				_notification.doNotification(null,"Posession", "Posessed %s." %cast.get_collider().name)
 				gameManager.activeCamera.posessObject(cast.get_collider(),cast.get_collider().followNode)
+				enableHud()
 			else:
 				var _notification = load("res://assets/scenes/ui/generalNotif/generalNotification.tscn").instantiate()
 				gameManager.activeCamera.hud.gameNotifications.add_child(_notification)
@@ -99,6 +100,37 @@ func freecam()->void:
 	_notification.doNotification(null,"Camera", "Freecam Enabled.")
 	gameManager.activeCamera.unposessObject(true)
 
+func disableHud()->void:
+	if gameManager.activeCamera:
+		gameManager.activeCamera.hud.disableHud()
+
+func enableHud()->void:
+	if gameManager.activeCamera:
+		gameManager.activeCamera.hud.enableHud()
+
+func printAiInstances()->void:
+	print(AIComponent.instances)
+	Console.add_rich_console_message("[color=pink]%s[/color]"%[AIComponent.instances])
+
+func aggroRandom()->void:
+	for i in AIComponent.instances:
+		var randomEnemy = AIComponent.instances.pick_random()
+		if randomEnemy == i:
+			randomEnemy = AIComponent.instances.pick_random()
+
+		i.targetedPawn = randomEnemy.pawnOwner
+		if i.pawnFSM.current_state != i.pawnFSM.get_state("Attack") and i.pawnOwner.currentItem:
+			i.lookAtPosition(i.targetedPawn.global_position,true)
+			i.pawnFSM.change_state("Attack")
+
+
+func aggroAll()->void:
+	for i in AIComponent.instances:
+		i.targetedPawn = gameManager.getCurrentPawn()
+		if i.pawnFSM.current_state != i.pawnFSM.get_state("Attack") and i.pawnOwner.currentItem:
+			i.lookAtPosition(i.targetedPawn.global_position,true)
+			i.pawnFSM.change_state("Attack")
+
 func spawnPawn(walk:bool = false,position : Vector3 = Vector3.INF) -> void:
 	var cast : RayCast3D = gameManager.activeCamera.camCast
 	if cast.is_colliding() and !position.is_finite():
@@ -108,13 +140,13 @@ func spawnPawn(walk:bool = false,position : Vector3 = Vector3.INF) -> void:
 		pawn.rotation.y = randf_range(0,360)
 		pawn.global_position = cast.get_collision_point()
 		pawn.fallDamageEnabled = true
-		pawn.global_position.y = pawn.global_position.y + 1
+		pawn.global_position.y = pawn.global_position.y
 		if walk:
 			var controller : AIComponent = aiControllerComponent.instantiate()
 			pawn.componentHolder.add_child(controller)
 			pawn.inputComponent = controller
 			pawn.checkComponents()
-			controller.aiType = 1
+			controller.pawnType = 1
 		pawn.fixRot()
 		if gameManager.debugEnabled:
 			Console.add_console_message("spawned %s at %s" % [pawn, pawn.global_position])
@@ -267,7 +299,6 @@ func debugToggle()->void:
 		Console.add_console_message("Debug controls are now enabled.")
 
 func loadMap(map)->void:
-	var worldsPath = "res://assets/scenes/worlds/"
 	var dir : DirAccess
 	if map is String:
 		if map != "" or " ":
@@ -286,4 +317,4 @@ func maps()->void:
 
 	var maplist = load("res://assets/scenes/ui/mapslist/maplist.tscn")
 	var mapInst = maplist.instantiate()
-	get_tree().current_scene.add_child(mapInst)
+	get_tree().root.add_child(mapInst)

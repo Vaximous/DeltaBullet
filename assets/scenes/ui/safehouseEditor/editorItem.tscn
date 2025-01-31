@@ -1,0 +1,152 @@
+[gd_scene load_steps=26 format=3 uid="uid://uo3piwv2xb4d"]
+
+[ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="1_otci6"]
+[ext_resource type="Script" uid="uid://clsjyahn8krlw" path="res://assets/scenes/ui/safehouseEditor/editor_item.gd" id="2_ayosu"]
+[ext_resource type="AudioStream" uid="uid://bijncj6jexoln" path="res://assets/sounds/ui/select1.wav" id="6_lxbfo"]
+[ext_resource type="AudioStream" uid="uid://b5rkc064kjvpg" path="res://assets/sounds/ui/select2.wav" id="7_ahe27"]
+
+[sub_resource type="Gradient" id="Gradient_b6ksk"]
+colors = PackedColorArray(0, 0, 0, 0, 0.188235, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_02n5f"]
+gradient = SubResource("Gradient_b6ksk")
+fill_from = Vector2(1, 1)
+
+[sub_resource type="Environment" id="Environment_7ifj3"]
+reflected_light_source = 1
+
+[sub_resource type="World3D" id="World3D_3pxu0"]
+environment = SubResource("Environment_7ifj3")
+
+[sub_resource type="Animation" id="Animation_h1xa5"]
+length = 0.001
+
+[sub_resource type="Animation" id="Animation_psy11"]
+resource_name = "buffer"
+
+[sub_resource type="Animation" id="Animation_3xnob"]
+resource_name = "buffer_done"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hvgav"]
+_data = {
+&"RESET": SubResource("Animation_h1xa5"),
+&"buffer": SubResource("Animation_psy11"),
+&"buffer_done": SubResource("Animation_3xnob")
+}
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_vcg60"]
+random_pitch = 1.05
+streams_count = 1
+stream_0/stream = ExtResource("6_lxbfo")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_kme6p"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("7_ahe27")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_q57b3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jj03y"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vou74"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4ay7d"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ovr16"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_64fnf"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_248r3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_m2a8b"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3fp5x"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jxhlx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qexsl"]
+
+[node name="safehouseItem" type="MarginContainer"]
+custom_minimum_size = Vector2(80, 80)
+anchors_preset = -1
+anchor_right = 0.05
+anchor_bottom = 0.089
+offset_bottom = -0.0999985
+mouse_default_cursor_shape = 2
+theme = ExtResource("1_otci6")
+script = ExtResource("2_ayosu")
+
+[node name="backgroundPanel" type="Panel" parent="."]
+layout_mode = 2
+
+[node name="textureRect" type="TextureRect" parent="backgroundPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.039
+anchor_top = 0.035
+anchor_right = 0.954
+anchor_bottom = 0.995
+offset_left = 0.072
+offset_top = -0.0700002
+offset_right = 0.991989
+offset_bottom = 0.00999451
+texture = SubResource("GradientTexture2D_02n5f")
+expand_mode = 1
+
+[node name="subViewportContainer" type="SubViewportContainer" parent="backgroundPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_right = 82.0
+stretch = true
+
+[node name="subViewport" type="SubViewport" parent="backgroundPanel/subViewportContainer"]
+own_world_3d = true
+world_3d = SubResource("World3D_3pxu0")
+transparent_bg = true
+handle_input_locally = false
+debug_draw = 1
+size = Vector2i(80, 80)
+render_target_update_mode = 4
+
+[node name="itemHolder" type="Node3D" parent="backgroundPanel/subViewportContainer/subViewport"]
+unique_name_in_owner = true
+transform = Transform3D(0.999222, 0, 0.0394493, 0, 1, 0, -0.0394493, 0, 0.999222, 0, 0, 0)
+
+[node name="camera3d" type="Camera3D" parent="backgroundPanel/subViewportContainer/subViewport"]
+transform = Transform3D(-0.766711, 0.211272, -0.606233, 0.0237522, 0.952988, 0.302077, 0.641553, 0.217206, -0.735685, -0.501, 0.5, -0.53)
+environment = SubResource("Environment_7ifj3")
+fov = 95.9
+
+[node name="animationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_hvgav")
+}
+
+[node name="hoverSound" type="AudioStreamPlayer" parent="."]
+
+[node name="equipSound" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_vcg60")
+volume_db = -15.0
+bus = &"UI"
+
+[node name="unequipSound" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_kme6p")
+volume_db = -15.0
+bus = &"UI"
+
+[node name="button" type="Button" parent="."]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_q57b3")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_jj03y")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_vou74")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_4ay7d")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ovr16")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_64fnf")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_248r3")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_m2a8b")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_3fp5x")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxTexture_jxhlx")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_qexsl")

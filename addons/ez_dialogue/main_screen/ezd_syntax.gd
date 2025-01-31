@@ -11,7 +11,7 @@ var lineToCommand = {}
 
 func clear():
 	node = null
-	
+
 func set_parsed_node(_node: DialogueNode):
 	node = _node
 	var queue = []
@@ -62,7 +62,7 @@ func _get_line_syntax_highlighting(line: int) -> Dictionary:
 					result[command.start_pos] = {
 						"color": _get_clolor_for_type(command.type)
 					}
-	
+
 	var bracketRegex = RegEx.new()
 	bracketRegex.compile("{|}|\\(|\\)")
 	var lineText = get_text_edit().get_line(line)
@@ -72,7 +72,7 @@ func _get_line_syntax_highlighting(line: int) -> Dictionary:
 			result[search.get_start()] = {
 				"color": operatorColor
 			}
-	
+
 	var signalRegex = RegEx.new()
 	signalRegex.compile("signal\\(([\\s\\S]*?)\\)")
 	var signalParamResult = signalRegex.search_all(lineText)
@@ -81,7 +81,7 @@ func _get_line_syntax_highlighting(line: int) -> Dictionary:
 			result[signalSearch.get_start(1)] = {
 				"color": textColor
 			}
-			
+
 	# Godot bug = color application is order sensitive.. so we must have them left to right
 	var sortedResult = {}
 	var keys = result.keys()
@@ -90,7 +90,7 @@ func _get_line_syntax_highlighting(line: int) -> Dictionary:
 		sortedResult[position] = result[position]
 
 	return sortedResult
-	
+
 func _get_clolor_for_type(type: DialogueCommand.CommandType) -> Color:
 	match type:
 		DialogueCommand.CommandType.DISPLAY_TEXT:

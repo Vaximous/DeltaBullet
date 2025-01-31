@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://dvyihgclnhulv"]
+
+[ext_resource type="ArrayMesh" uid="uid://crqjr8005odw7" path="res://assets/models/csgmodels/9mm_bullet_casing.tres" id="1_e5blf"]
+[ext_resource type="Script" uid="uid://mpu0audo4bfj" path="res://assets/entities/fakePhysics/fake_physics_entity.gd" id="1_f76y0"]
+[ext_resource type="AudioStream" uid="uid://dsirhcpi676ka" path="res://assets/resources/bulletcasing_sfx_randomizer.tres" id="3_lkkir"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_l1elw"]
+radius = 0.0303793
+
+[node name="BulletCasing" type="CharacterBody3D" node_paths=PackedStringArray("mesh", "collisionSounds")]
+collision_layer = 0
+script = ExtResource("1_f76y0")
+mesh = NodePath("meshInstance3d")
+collisionSounds = [NodePath("audioStreamPlayer3d")]
+metadata/_custom_type_script = ExtResource("1_f76y0")
+
+[node name="collisionShape3d" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0213982, 0)
+shape = SubResource("SphereShape3D_l1elw")
+
+[node name="meshInstance3d" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0, 0)
+mesh = ExtResource("1_e5blf")
+
+[node name="Lifetime" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[node name="audioStreamPlayer3d" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_lkkir")
+unit_size = 1.0
+max_db = 0.0
+
+[connection signal="timeout" from="Lifetime" to="." method="queue_free"]

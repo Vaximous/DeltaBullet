@@ -4,7 +4,6 @@
 [ext_resource type="ArrayMesh" uid="uid://qhwuwv1l2lr7" path="res://assets/models/pawn/clothing/gloves/maleRightGlove.res" id="2_d0mp6"]
 
 [node name="RightGloveFingerless" instance=ExtResource("1_uhnu2")]
-clothingCategory = 3
 clothingType = 4
 itemName = "Fingerless Glove (Right)"
 

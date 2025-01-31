@@ -1,0 +1,30 @@
+[gd_resource type="SphereMesh" load_steps=3 format=3 uid="uid://dniya8jwodiae"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nqni0"]
+render_priority = -1
+cull_mode = 1
+depth_draw_mode = 2
+no_depth_test = true
+shading_mode = 0
+disable_ambient_light = true
+disable_fog = true
+albedo_color = Color(0, 0, 0, 1)
+grow = true
+grow_amount = 0.005
+fixed_size = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lydbe"]
+next_pass = SubResource("StandardMaterial3D_nqni0")
+no_depth_test = true
+shading_mode = 0
+disable_ambient_light = true
+disable_fog = true
+albedo_color = Color(1, 1, 0, 1)
+fixed_size = true
+
+[resource]
+material = SubResource("StandardMaterial3D_lydbe")
+radius = 0.01
+height = 0.02
+radial_segments = 4
+rings = 1

@@ -1,14 +1,12 @@
-[gd_scene load_steps=43 format=3 uid="uid://iftsfle430nr"]
+[gd_scene load_steps=52 format=3 uid="uid://iftsfle430nr"]
 
-[ext_resource type="Script" path="res://assets/scenes/ui/customization/customizationUI.gd" id="1_2bhr7"]
+[ext_resource type="Script" uid="uid://dmkj1xkkt0fwp" path="res://assets/scenes/ui/customization/customizationUI.gd" id="1_2bhr7"]
 [ext_resource type="PackedScene" uid="uid://ctrswootky6q7" path="res://assets/scenes/ui/customization/customizationWorld.tscn" id="1_sgpgn"]
-[ext_resource type="Shader" path="res://assets/scripts/shaders/ui_blur.gdshader" id="2_jrjiw"]
+[ext_resource type="Shader" uid="uid://dhylkvfkpaysc" path="res://assets/scripts/shaders/ui_blur.gdshader" id="2_jrjiw"]
 [ext_resource type="PackedScene" uid="uid://2nj1n64cy47e" path="res://assets/scenes/ui/customization/customizationClothing.tscn" id="3_m5e2e"]
-[ext_resource type="Texture2D" uid="uid://bn80p3jko0k42" path="res://assets/textures/ui/customization/faceButton.png" id="3_sge17"]
-[ext_resource type="Texture2D" uid="uid://c4vv3virnhurd" path="res://assets/textures/ui/customization/shirtButton.png" id="4_66qj6"]
 [ext_resource type="PackedScene" uid="uid://d10o2e44ltrnl" path="res://assets/entities/clothing/ArmoredShirt/armor_shirt.tscn" id="4_jnw8h"]
 [ext_resource type="PackedScene" uid="uid://jwq6tye7ok4r" path="res://assets/entities/clothing/Glasses/SiftinShades/SiftinShades.tscn" id="4_lk8ax"]
-[ext_resource type="Texture2D" uid="uid://cxaqryfq1g77g" path="res://assets/textures/ui/customization/pantsButton.png" id="5_spumi"]
+[ext_resource type="Texture2D" uid="uid://dw4q4o6g13c6q" path="res://assets/textures/ui/customization/db_customization_buttonicons.png" id="4_tuxjq"]
 [ext_resource type="PackedScene" uid="uid://b026rv1louhqg" path="res://assets/entities/clothing/Longcoats/longCoat.tscn" id="6_3d7ru"]
 [ext_resource type="PackedScene" uid="uid://cgghffeqks1ac" path="res://assets/entities/clothing/Gloves/left_glove_fingerless.tscn" id="7_h6386"]
 [ext_resource type="FontFile" uid="uid://xmwjvmqspojb" path="res://assets/fonts/Grand_Aventure_Text.otf" id="8_1ugh4"]
@@ -148,13 +146,14 @@ tracks/4/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_rnnv7"]
 _data = {
-"RESET": SubResource("Animation_wcnyg"),
-"titlebarIn": SubResource("Animation_6nk7h")
+&"RESET": SubResource("Animation_wcnyg"),
+&"titlebarIn": SubResource("Animation_6nk7h")
 }
 
 [sub_resource type="Environment" id="Environment_qpku8"]
 ambient_light_source = 2
 ambient_light_color = Color(1, 1, 1, 1)
+tonemap_mode = 4
 
 [sub_resource type="World3D" id="World3D_eb65e"]
 environment = SubResource("Environment_qpku8")
@@ -189,6 +188,58 @@ Button/styles/hover = SubResource("StyleBoxEmpty_nmmhv")
 Button/styles/normal = SubResource("StyleBoxEmpty_0jhp1")
 Button/styles/pressed = SubResource("StyleBoxEmpty_186f8")
 
+[sub_resource type="ButtonGroup" id="ButtonGroup_tuxjq"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mv1bo"]
+resource_name = "HairNormal"
+atlas = ExtResource("4_tuxjq")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_evd5i"]
+resource_name = "HairFocus"
+atlas = ExtResource("4_tuxjq")
+region = Rect2(64, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oourm"]
+resource_name = "HatFacewearNormal"
+atlas = ExtResource("4_tuxjq")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_shvh8"]
+resource_name = "HatFacewearFocus"
+atlas = ExtResource("4_tuxjq")
+region = Rect2(192, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hrtpq"]
+resource_name = "BlingNormal"
+atlas = ExtResource("4_tuxjq")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gusrc"]
+resource_name = "BlingFocus"
+atlas = ExtResource("4_tuxjq")
+region = Rect2(128, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lxijr"]
+resource_name = "ShirtNormal"
+atlas = ExtResource("4_tuxjq")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d1uui"]
+resource_name = "ShirtFocus"
+atlas = ExtResource("4_tuxjq")
+region = Rect2(320, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0pj1c"]
+resource_name = "PantsNormal"
+atlas = ExtResource("4_tuxjq")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pw2jl"]
+resource_name = "PantsFocus"
+atlas = ExtResource("4_tuxjq")
+region = Rect2(256, 64, 64, 64)
+
 [sub_resource type="LabelSettings" id="LabelSettings_xf102"]
 font = ExtResource("8_1ugh4")
 font_size = 46
@@ -219,7 +270,6 @@ clothingButtonsHolder = NodePath("customizationUi/catalogControl/vBoxContainer/c
 sectionLabel = NodePath("customizationUi/catalogControl/vBoxContainer/category/label")
 
 [node name="blur" type="TextureRect" parent="."]
-self_modulate = Color(1, 1, 1, 0)
 material = SubResource("ShaderMaterial_uggvv")
 anchors_preset = 15
 anchor_right = 1.0
@@ -238,7 +288,7 @@ grow_vertical = 2
 
 [node name="animationPlayer" type="AnimationPlayer" parent="customizationUi"]
 libraries = {
-"": SubResource("AnimationLibrary_rnnv7")
+&"": SubResource("AnimationLibrary_rnnv7")
 }
 
 [node name="characterPreviewContainer" type="MarginContainer" parent="customizationUi"]
@@ -266,7 +316,7 @@ world_3d = SubResource("World3D_eb65e")
 transparent_bg = true
 handle_input_locally = false
 msaa_3d = 1
-size = Vector2i(661, 794)
+size = Vector2i(2, 2)
 render_target_update_mode = 4
 
 [node name="customizationWorld" parent="customizationUi/characterPreviewContainer/subViewportContainer/subViewport" instance=ExtResource("1_sgpgn")]
@@ -305,32 +355,51 @@ theme = SubResource("Theme_itbcj")
 theme_override_constants/separation = 25
 alignment = 1
 
-[node name="hairButton" type="Button" parent="customizationUi/catalogControl/vBoxContainer/topBar/buttons"]
+[node name="hairButton" type="TextureButton" parent="customizationUi/catalogControl/vBoxContainer/topBar/buttons"]
 layout_mode = 2
-text = "Hair
-"
-icon_alignment = 1
+focus_mode = 1
+toggle_mode = true
+button_group = SubResource("ButtonGroup_tuxjq")
+texture_normal = SubResource("AtlasTexture_mv1bo")
+texture_pressed = SubResource("AtlasTexture_evd5i")
+texture_hover = SubResource("AtlasTexture_evd5i")
 
-[node name="headwearButton" type="Button" parent="customizationUi/catalogControl/vBoxContainer/topBar/buttons"]
-layout_mode = 2
-text = "Hats"
-icon_alignment = 1
-
-[node name="facewearButton" type="Button" parent="customizationUi/catalogControl/vBoxContainer/topBar/buttons"]
+[node name="headgearButton" type="TextureButton" parent="customizationUi/catalogControl/vBoxContainer/topBar/buttons"]
 clip_contents = true
 layout_mode = 2
-icon = ExtResource("3_sge17")
-icon_alignment = 1
+focus_mode = 1
+toggle_mode = true
+button_group = SubResource("ButtonGroup_tuxjq")
+texture_normal = SubResource("AtlasTexture_oourm")
+texture_pressed = SubResource("AtlasTexture_shvh8")
+texture_hover = SubResource("AtlasTexture_shvh8")
 
-[node name="bodyButton" type="Button" parent="customizationUi/catalogControl/vBoxContainer/topBar/buttons"]
+[node name="blingbutton" type="TextureButton" parent="customizationUi/catalogControl/vBoxContainer/topBar/buttons"]
 layout_mode = 2
-icon = ExtResource("4_66qj6")
-icon_alignment = 1
+focus_mode = 1
+toggle_mode = true
+button_group = SubResource("ButtonGroup_tuxjq")
+texture_normal = SubResource("AtlasTexture_hrtpq")
+texture_pressed = SubResource("AtlasTexture_gusrc")
+texture_hover = SubResource("AtlasTexture_gusrc")
 
-[node name="pantsButton" type="Button" parent="customizationUi/catalogControl/vBoxContainer/topBar/buttons"]
+[node name="bodyButton" type="TextureButton" parent="customizationUi/catalogControl/vBoxContainer/topBar/buttons"]
 layout_mode = 2
-icon = ExtResource("5_spumi")
-icon_alignment = 1
+focus_mode = 1
+toggle_mode = true
+button_group = SubResource("ButtonGroup_tuxjq")
+texture_normal = SubResource("AtlasTexture_lxijr")
+texture_pressed = SubResource("AtlasTexture_d1uui")
+texture_hover = SubResource("AtlasTexture_d1uui")
+
+[node name="pantsButton" type="TextureButton" parent="customizationUi/catalogControl/vBoxContainer/topBar/buttons"]
+layout_mode = 2
+focus_mode = 1
+toggle_mode = true
+button_group = SubResource("ButtonGroup_tuxjq")
+texture_normal = SubResource("AtlasTexture_0pj1c")
+texture_pressed = SubResource("AtlasTexture_pw2jl")
+texture_hover = SubResource("AtlasTexture_pw2jl")
 
 [node name="category" type="Panel" parent="customizationUi/catalogControl/vBoxContainer"]
 custom_minimum_size = Vector2(0, 53)

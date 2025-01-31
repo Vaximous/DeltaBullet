@@ -61,8 +61,8 @@ func _ready() -> void:
 """
 func trace_skeleton( value : bool ) -> void:
 	self.set_physics_process(value)
-	_declare_flag_for_all_axis( JoltGeneric6DOFJoint3D.FLAG_ENABLE_ANGULAR_LIMIT, not value )
-	_declare_flag_for_all_axis( JoltGeneric6DOFJoint3D.FLAG_ENABLE_ANGULAR_MOTOR, value )
+	_declare_flag_for_all_axis(Generic6DOFJoint3D.FLAG_ENABLE_ANGULAR_LIMIT, not value )
+	_declare_flag_for_all_axis(Generic6DOFJoint3D.FLAG_ENABLE_MOTOR, value )
 
 
 """

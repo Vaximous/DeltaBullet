@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dend7ate7mq6e"]
 
-[ext_resource type="Script" path="res://assets/entities/bulletHoles/default/BulletHole.gd" id="1_t8p33"]
+[ext_resource type="Script" uid="uid://c21wgrmlie8rw" path="res://assets/entities/bulletHoles/default/BulletHole.gd" id="1_t8p33"]
 
 [node name="bulletHole_Base" type="Node3D" node_paths=PackedStringArray("decal")]
 script = ExtResource("1_t8p33")

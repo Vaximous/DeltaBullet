@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://36wgm1ed6j3p"]
 
-[ext_resource type="Script" path="res://assets/entities/door/door_base.gd" id="1_p2444"]
-[ext_resource type="Script" path="res://assets/scripts/entities/interactiveObject/interactiveObject.gd" id="2_ieweh"]
+[ext_resource type="Script" uid="uid://dohjf7n6a0gb1" path="res://assets/entities/door/door_base.gd" id="1_p2444"]
+[ext_resource type="Script" uid="uid://tiffkbp5ry74" path="res://assets/scripts/entities/interactiveObject/interactiveObject.gd" id="2_ieweh"]
 
 [node name="doorBase" type="Node3D" node_paths=PackedStringArray("doorCollision", "interactiveObject", "doorMesh")]
 script = ExtResource("1_p2444")
@@ -12,6 +12,14 @@ doorMesh = NodePath("doorMesh")
 [node name="doorMesh" type="Node3D" parent="."]
 
 [node name="interactionDoor" type="RigidBody3D" parent="doorMesh" groups=["Interactable"]]
+axis_lock_linear_x = true
+axis_lock_linear_y = true
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+lock_rotation = true
+freeze = true
 script = ExtResource("2_ieweh")
 customInteractText = "Open Door"
 useCustomInteractText = true

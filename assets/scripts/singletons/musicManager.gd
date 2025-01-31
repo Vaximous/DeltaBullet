@@ -1,73 +1,156 @@
 extends Node
 
 
-var current_player : AudioStreamPlayer
+var saved_times : Dictionary
 
 
-func _ready() -> void:
+func _init() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 
 
-func _process(delta: float) -> void:
-	#Scale audio pitch with timescale.
-	AudioServer.playback_speed_scale = Engine.time_scale
+func fade_all_audioplayers_out(fade_time : float = 2.0) -> void:
+	for t in get_all_audioplayers():
+		fade_audioplayer_out_and_free(t.name, fade_time)
 
 
-func isPlayerPlaying():
-	if current_player.playing:
-		return true
+func instance_new_audioplayer(channel : StringName, stream : AudioStream = null, bus : StringName = &"Music") -> AudioStreamPlayer:
+	var new_audio_stream_player = AudioStreamPlayer.new()
+	new_audio_stream_player.name = channel
+	add_child(new_audio_stream_player)
+	new_audio_stream_player.set_meta(&"channel_track", true)
+	new_audio_stream_player.volume_db = -80
+	if stream != null:
+		new_audio_stream_player.stream = stream
+		new_audio_stream_player.bus = channel
+	return new_audio_stream_player
+
+
+func set_channel_pause(channel : String = "Music", paused : bool = false) -> void:
+	var existing = get_node_or_null(channel)
+	if existing != null:
+		existing.stream_paused = paused
+
+
+func save_stream_time(channel : String = "Music") -> void:
+	var ch = get_audioplayer(channel)
+	if ch != null:
+		if ch.stream != null:
+			saved_times[ch.stream] = [ch.get_playback_position(), Time.get_ticks_msec()]
+
+
+func create_audioplayer_with_stream(stream : AudioStream, fade_time : float = 2.0, channel : StringName = "Music", volume_db : float = 0.0, continue_from_stored : bool = true, bus : StringName = &"Music"):
+	fade_time = max(fade_time, 0.05)
+	var existing = get_node_or_null(String(channel))
+	if existing != null:
+		if existing.stream == stream:
+			#Don't do it if the stream is already the same stream
+			return
+		save_stream_time(existing.name)
+		fade_audioplayer_out_and_free(existing.name, fade_time)
+	var new_pl = instance_new_audioplayer(channel, stream)
+	fade_audioplayer_in(new_pl.name, fade_time, volume_db)
+	if stream == null:
+		return
+	if saved_times.has(stream) and continue_from_stored:
+		new_pl.seek(saved_times[stream][0] + ((Time.get_ticks_msec() - saved_times[stream][1]) / 1000.0))
+		saved_times.erase(stream)
+
+
+func fade_audioplayer_in(channel_name : String, fade_time : float, volume_db : float = 0.0) -> void:
+	var channel = get_node_or_null(channel_name)
+	if channel == null:
+		return
+	print("Fading %s in" % channel_name	)
+	channel.volume_db = -80
+	if !channel.playing:
+		channel.playing = true
+	if fade_time > 0:
+		var fade_fraction = 0.0
+		while fade_fraction < 1.0 or channel.volume_db < volume_db:
+			if is_instance_valid(channel):
+				if channel.has_meta(&"fading_out"):
+					return
+				channel.volume_db = linear_to_db(lerp(0.0, db_to_linear(volume_db), fade_fraction))
+				fade_fraction += get_process_delta_time() / fade_time
+				await get_tree().process_frame
+			else:
+				return
+	channel.volume_db = volume_db
+
+
+func fade_audioplayer_out_and_free(channel_name : String, fade_time : float) -> void:
+	var channel = get_node_or_null(channel_name)
+	if channel == null:
+		return
+	if channel.has_meta(&"fading_out"):
+		channel.set_meta(&"fade_time", fade_time)
+		return
+	channel.name += "_fading%s"%randi()
+	channel.set_meta(&"fading_out", true)
+	channel.set_meta(&"fade_time", fade_time)
+	if fade_time > 0:
+		while channel.volume_db > -80.0:
+			var new_volume = linear_to_db(db_to_linear(channel.volume_db)-(get_process_delta_time()/channel.get_meta(&"fade_time", 1.0)))
+			if is_nan(new_volume):
+				break
+			channel.volume_db = new_volume
+			await get_tree().process_frame
+	channel.queue_free()
+
+
+func get_audioplayer(channel : String) -> AudioStreamPlayer:
+	return get_node_or_null(channel)
+
+
+func has_audioplayer(channel : String) -> bool:
+	return has_node(channel)
+
+
+func get_all_audioplayers() -> Array[AudioStreamPlayer]:
+	var valid : Array[AudioStreamPlayer] = []
+	for c in get_children():
+		if c.has_meta(&"channel_track"):
+			valid.append(c)
+	return valid
+
+
+func get_all_channels() -> PackedStringArray:
+	var names : PackedStringArray = []
+	for n in get_children():
+		if n is AudioStreamPlayer:
+			names.append(n.name)
+	return names
+
+
+func play_sound(soundfile : String, volume_db : float = 0.0, pitch_scale : float = 1.0,bus:StringName = &"Sounds") -> void:
+	var audioplayer := AudioStreamPlayer.new()
+	audioplayer.bus = bus
+	var stream = load(soundfile)
+	audioplayer.stream = stream
+	audioplayer.process_mode = Node.PROCESS_MODE_ALWAYS
+	audioplayer.finished.connect(audioplayer.queue_free)
+	audioplayer.volume_db = volume_db
+	audioplayer.pitch_scale = pitch_scale
+	get_tree().current_scene.add_child(audioplayer)
+	audioplayer.play()
+
+
+func play_sound_positioned(soundfile : String, position : Vector3, volume_db : float = 0.0, pitch_scale : float = 1.0, bus:StringName = &"Sounds", parent : Node = null) -> void:
+	var audioplayer := AudioStreamPlayer3D.new()
+	audioplayer.bus = bus
+	var stream = load(soundfile)
+	audioplayer.stream = stream
+	audioplayer.finished.connect(audioplayer.queue_free)
+	audioplayer.volume_db = volume_db
+	audioplayer.pitch_scale = pitch_scale
+	if parent != null:
+		parent.add_child(audioplayer)
 	else:
-		return false
-
-func change_song_to_file(file_path : String, fade_duration : float = 0.0, at_position : float = 0.0) -> void:
-	if file_path == "" and current_player != null:
-		fade_player_out(current_player, fade_duration)
-		return
-	var song = load(file_path)
-	if not (song is AudioStream):
-		push_warning(false, "The file at 'file_path' is not an AudioStream.")
-		return
-	change_song_to(song, fade_duration, at_position)
+		get_tree().current_scene.add_child(audioplayer)
+	audioplayer.play()
+	audioplayer.position = position
 
 
-func change_song_to(song : AudioStream, fade_duration : float = 0.0, at_position : float = 0.0) -> void:
-	fade_player_out(current_player, fade_duration)
-	var new_player = AudioStreamPlayer.new()
-	add_child(new_player)
-	current_player = new_player
-	new_player.bus = &"Music"
-	new_player.stream = song
-	#new_player.volume_db = -80
-	new_player.play(at_position)
-	fade_player_in(new_player, fade_duration)
-
-
-func fade_player_out(player : AudioStreamPlayer, duration : float) -> void:
-	if player == null: return
-	var vol : float = 1.0
-	player.set_meta("_fading_in", false)
-	while vol > 0:
-		vol -= get_process_delta_time() / duration
-		player.volume_db = linear_to_db(clamp(vol, 0, 1))
-		await get_tree().process_frame
-	player.queue_free()
-
-
-func fade_player_in(player : AudioStreamPlayer, duration : float) -> void:
-	if player == null: return
-	player.set_meta("_fading_in", true)
-	var vol : float = 0.0
-	while vol < 1 and player.get_meta("_fading_in", false):
-		vol += get_process_delta_time() / duration
-		player.volume_db = linear_to_db(clamp(vol, 0, 1))
-		await get_tree().process_frame
-	player.volume_db = 0
-
-func pauseMusic():
-	if current_player != null:
-		if isPlayerPlaying():
-			current_player.stream_paused = true
-
-func resumeMusic():
-	if current_player != null:
-		current_player.stream_paused = false
+#Function exists so we don't have to replace all instances of change_song_to
+func change_song_to(stream : AudioStream, fade_time : float = 1.0) -> void:
+	create_audioplayer_with_stream(stream, fade_time)

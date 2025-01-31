@@ -48,6 +48,7 @@ var castLerp : Vector3 = Vector3.ZERO
 @onready var camera : Camera3D = $camPivot/horizonal/vertholder/vertical/springArm3d/Camera
 @onready var camPivot : Node3D = $camPivot
 @onready var interactCast : RayCast3D = $camPivot/horizonal/vertholder/vertical/springArm3d/Camera/interactCast
+@onready var editorCast : RayCast3D = $camPivot/horizonal/vertholder/vertical/springArm3d/Camera/editorCast
 @onready var camCast : RayCast3D = $camPivot/horizonal/vertholder/vertical/springArm3d/Camera/RayCast3D
 @onready var camCastEnd : Marker3D = $camPivot/horizonal/vertholder/vertical/springArm3d/Camera/RayCast3D/camRayEnd
 @onready var debugCast : RayCast3D = $camPivot/horizonal/vertholder/vertical/springArm3d/Camera/debugCast
@@ -120,7 +121,6 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 func _ready()->void:
 	camera.make_current()
-	checkMotionBlur()
 	#Dialogic.current_timeline = null
 	#Dialogic.end_timeline()
 	gameManager.activeCamera = self
@@ -129,24 +129,23 @@ func _ready()->void:
 	aimFOV = currentFOV - zoomAmount
 	Fade.fade_in(0.3, Color(0,0,0,1),"GradientVertical",false,true)
 	#Dialogic.timeline_started.connect(playTextAppearSound)
-	UserConfig.configs_updated.connect(checkMotionBlur)
 	hud.camOwner = self
 
-func checkMotionBlur()->void:
-	if UserConfig.graphics_motion_blur:
-		if camera.compositor == null:
-			var comp = load("res://assets/envs/motionBlurCompositor.tres")
-			camera.compositor = comp
-		else:
-			camera.compositor.compositor_effects[0].set("enabled",true)
-			camera.compositor.compositor_effects[1].set("enabled",true)
-	else:
-		if camera.compositor:
-			camera.compositor.compositor_effects[0].set("enabled",false)
-			camera.compositor.compositor_effects[1].set("enabled",false)
+#func checkMotionBlur()->void:
+	#if UserConfig.graphics_motion_blur:
+		#if camera.compositor == null:
+			#var comp = load("res://assets/envs/motionBlurCompositor.tres")
+			#camera.compositor = comp
+		#else:
+			#camera.compositor.compositor_effects[0].set("enabled",true)
+			#camera.compositor.compositor_effects[1].set("enabled",true)
+	#else:
+		#if camera.compositor:
+			#camera.compositor.compositor_effects[0].set("enabled",false)
+			#camera.compositor.compositor_effects[1].set("enabled",false)
 
 func _input(_event)->void:
-	if Input.is_action_pressed("gRightClick"):
+	if Input.is_action_pressed("gRightClick") and gameManager.isMouseHidden():
 		isZoomed = true
 	else:
 		isZoomed = false
@@ -163,13 +162,13 @@ func _physics_process(delta)->void:
 		if "currentItem" in followingEntity:
 			if followingEntity.currentItem != null:
 				weaponHud.modulate = lerp(weaponHud.modulate,Color(1,1,1,0.8),12*delta)
-				weaponAmmoLabel.text = str(followingEntity.currentItem.currentAmmo)
+				weaponAmmoLabel.text = str(int(followingEntity.currentItem.currentAmmo))
 				if followingEntity.currentItem.currentAmmo <= 2:
 					weaponAmmoLabel.modulate = lerp(weaponAmmoLabel.modulate,Color.RED,18*delta)
 				else:
 					weaponAmmoLabel.modulate = lerp(weaponAmmoLabel.modulate,Color.WHITE,18*delta)
 				weaponLabel.text = str(followingEntity.currentItem.objectName)
-				weaponMagCountLabel.text = str(followingEntity.currentItem.currentMagSize)
+				weaponMagCountLabel.text = str(int(followingEntity.currentItem.currentMagSize))
 				if followingEntity.currentItem.currentMagSize <= 2:
 					weaponMagCountLabel.modulate = lerp(weaponMagCountLabel.modulate,Color.RED,18*delta)
 				else:
@@ -296,20 +295,21 @@ func _physics_process(delta)->void:
 			direction = direction.normalized()
 
 		if Input.is_action_pressed("dCamUp"):
-			vertVeclocity.y = 1
+			if gameManager.isMouseHidden():
+				vertVeclocity.y = 1
 		if Input.is_action_pressed("dCamDown"):
-			vertVeclocity.y = -1.0
+			if gameManager.isMouseHidden():
+				vertVeclocity.y = -1.0
 
 		velocity.x = velocityComponent.accelerateToVel(direction, delta, true, false, false).x
 		velocity.y = velocityComponent.accelerateToVel(vertVeclocity, delta, false, true, false).y
 		velocity.z = velocityComponent.accelerateToVel(direction, delta, false, false, true).z
 
-
 		move_and_slide()
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventMouseMotion:
+	if event is InputEventMouseMotion and Input.mouse_mode == Input.MouseMode.MOUSE_MODE_CAPTURED:
 		motionX = rad_to_deg(-event.relative.x * gameManager.mouseSens)
 		motionY = rad_to_deg(-event.relative.y * gameManager.mouseSens)
 		castLerp = Vector3(motionY* recoilLookSpeed+0.01,motionX* recoilLookSpeed,0)
@@ -384,8 +384,8 @@ func fireRecoil(setRecoilX:float = 0.0,setRecoilY:float = 0.0,setRecoilZ:float =
 	else:
 		camera.fov += randf_range(0.1,0.8)
 
-func applyWeaponSpread(spread)->void:
-	camCast.rotation += Vector3(randf_range(0.0, spread),randf_range(-spread, spread),0)
+func applyWeaponSpreadEffect(spread)->void:
+	#camCast.rotation += Vector3(randf_range(0.0, spread),randf_range(-spread, spread),0)
 	hud.getCrosshair().addSize(0.85)
 	if UserConfig.game_crosshair_tilt:
 		hud.getCrosshair().addTilt(randf_range(-spread*7,spread*7))
@@ -398,7 +398,7 @@ func emitKilleffect()->void:
 	camera.fov += randf_range(3.0,3.5)
 	killSound.play()
 	killEffect = true
-	fireRecoil(0,0,randf_range(-20.8,21.2))
+	fireRecoil(0,0,randf_range(20.8,21.2))
 	fireVignette(0.9,Color.DARK_RED)
 	hud.getCrosshair().tintCrosshair(Color.DARK_RED)
 	hud.getCrosshair().addSize(1.5)

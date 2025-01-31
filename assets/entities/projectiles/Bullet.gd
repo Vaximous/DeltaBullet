@@ -1,6 +1,5 @@
 extends Projectile
 
-
 var max_damage : float
 @export var falloff : Curve = preload("res://assets/entities/projectiles/linear_falloff_curve.tres")
 @export var penetration_power : float = 1.0:
@@ -45,11 +44,12 @@ func enter_material(material : DB_PhysicsMaterial, hit_data : Dictionary) -> voi
 	globalParticles.spawnBulletHolePackedScene(material.bullet_hole, hit_data['col'], hit_data['col_point'], randf_range(0, TAU), hit_data['col_normal'],hit_data['velocity'])
 	var col : Object = hit_data['col']
 	if col.has_method(&"hit"):
-		if projectile_owner is Weapon:
-			col.hit(get_damage(),projectile_owner.weaponOwner,velocity.normalized() * projectile_owner.weaponResource.weaponImpulse,to_global(to_local(hit_data['col_point'])-position))
+		if is_instance_valid(projectile_owner):
+			if projectile_owner is Weapon:
+				col.hit(get_damage(),projectile_owner.weaponOwner,velocity.normalized() * projectile_owner.weaponResource.weaponImpulse,to_global(to_local(hit_data['col_point'])-position))
 		else:
 			#just return for now
-			assert(false, "Unaccounted state")
+			print("Unaccounted State")
 	if penetration_power > 0:
 		distance_traveled += (material.penetration_entry_cost / penetration_power)
 		#print("Power reduction = %s" % [material.penetration_entry_cost / penetration_power])
@@ -73,3 +73,10 @@ func _add_distance(distance : float) -> void:
 func get_damage() -> float:
 	#print("Falloff damage : %s (travel : %s)" % [falloff.sample(get_travel_progress()) * max_damage, get_travel_progress()])
 	return falloff.sample(get_travel_progress()) * max_damage
+
+
+func _on_flyby_area_body_entered(body: Node3D) -> void:
+	if body is BasePawn:
+		if body.isPlayerPawn():
+			if !%flybySound.playing:
+				%flybySound.play()

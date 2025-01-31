@@ -178,8 +178,8 @@ visible = false
 layout_mode = 1
 
 [connection signal="pressed" from="buttonHolder/playButton" to="." method="_on_play_button_pressed"]
-[connection signal="pressed" from="buttonHolder/loadButton" to="saveLoadMenu" method="initLoadPanel"]
 [connection signal="pressed" from="buttonHolder/loadButton" to="saveLoadMenu" method="show"]
+[connection signal="pressed" from="buttonHolder/loadButton" to="saveLoadMenu" method="initLoadPanel"]
 [connection signal="pressed" from="buttonHolder/optionsButton" to="." method="_on_options_button_pressed"]
 [connection signal="pressed" from="buttonHolder/creditsButton" to="." method="_on_credits_button_pressed"]
 [connection signal="pressed" from="buttonHolder/quitButton" to="." method="_on_quit_button_pressed"]

@@ -1,0 +1,238 @@
+[remap]
+
+importer="scene"
+importer_version=1
+type="PackedScene"
+uid="uid://cm4mbrbar4iik"
+path="res://.godot/imported/changingroom.glb-fab11c1b8ba08910f598be2b941a1732.scn"
+
+[deps]
+
+source_file="res://assets/models/interior/changingroom/changingroom.glb"
+dest_files=["res://.godot/imported/changingroom.glb-fab11c1b8ba08910f598be2b941a1732.scn"]
+
+[params]
+
+nodes/root_type=""
+nodes/root_name=""
+nodes/apply_root_scale=true
+nodes/root_scale=1.0
+nodes/import_as_skeleton_bones=false
+nodes/use_node_type_suffixes=true
+meshes/ensure_tangents=true
+meshes/generate_lods=true
+meshes/create_shadow_meshes=true
+meshes/light_baking=1
+meshes/lightmap_texel_size=0.2
+meshes/force_disable_compression=false
+skins/use_named_skins=true
+animation/import=true
+animation/fps=30
+animation/trimming=false
+animation/remove_immutable_tracks=true
+animation/import_rest_as_RESET=false
+import_script/path=""
+_subresources={
+"materials": {
+"Floor": {
+"use_external/enabled": true,
+"use_external/path": "res://assets/models/interior/changingroom/Floor.tres"
+},
+"Glass": {
+"use_external/enabled": true,
+"use_external/path": "res://assets/models/interior/changingroom/Glass.tres"
+},
+"MALE": {
+"use_external/enabled": true,
+"use_external/path": "res://assets/models/interior/changingroom/MALE.tres"
+},
+"Material_0": {
+"use_external/enabled": true,
+"use_external/path": "res://assets/models/interior/changingroom/Material_0.tres"
+},
+"Walls": {
+"use_external/enabled": true,
+"use_external/path": "res://assets/models/interior/changingroom/Walls.tres"
+},
+"WardrobeSteel": {
+"use_external/enabled": true,
+"use_external/path": "res://assets/models/interior/changingroom/WardrobeSteel.tres"
+},
+"WardrobeWood": {
+"use_external/enabled": true,
+"use_external/path": "res://assets/models/interior/changingroom/WardrobeWood.tres"
+},
+"Wood": {
+"use_external/enabled": true,
+"use_external/path": "res://assets/models/interior/changingroom/Wood.tres"
+},
+"goreInside": {
+"use_external/enabled": true,
+"use_external/path": "res://assets/models/interior/changingroom/goreInside.tres"
+}
+},
+"meshes": {
+"changingroom_Cube_001": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://assets/models/interior/changingroom/changingroom_Cube_001.res"
+},
+"changingroom_Cube_002": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://assets/models/interior/changingroom/changingroom_Cube_002.res"
+},
+"changingroom_Cube_004": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://assets/models/interior/changingroom/changingroom_Cube_004.res"
+},
+"changingroom_Mesh_0": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://assets/models/interior/changingroom/changingroom_Mesh_0.res"
+},
+"changingroom_Mesh_1": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://assets/models/interior/changingroom/changingroom_Mesh_1.res"
+},
+"changingroom_Mesh_10": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://assets/models/interior/changingroom/changingroom_Mesh_10.res"
+},
+"changingroom_Mesh_11": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://assets/models/interior/changingroom/changingroom_Mesh_11.res"
+},
+"changingroom_Mesh_12": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://assets/models/interior/changingroom/changingroom_Mesh_12.res"
+},
+"changingroom_Mesh_13": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://assets/models/interior/changingroom/changingroom_Mesh_13.res"
+},
+"changingroom_Mesh_14": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://assets/models/interior/changingroom/changingroom_Mesh_14.res"
+},
+"changingroom_Mesh_15": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://assets/models/interior/changingroom/changingroom_Mesh_15.res"
+},
+"changingroom_Mesh_16": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://assets/models/interior/changingroom/changingroom_Mesh_16.res"
+},
+"changingroom_Mesh_2": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://assets/models/interior/changingroom/changingroom_Mesh_2.res"
+},
+"changingroom_Mesh_3": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://assets/models/interior/changingroom/changingroom_Mesh_3.res"
+},
+"changingroom_Mesh_4": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://assets/models/interior/changingroom/changingroom_Mesh_4.res"
+},
+"changingroom_Mesh_5": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://assets/models/interior/changingroom/changingroom_Mesh_5.res"
+},
+"changingroom_Mesh_6": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://assets/models/interior/changingroom/changingroom_Mesh_6.res"
+},
+"changingroom_Mesh_7": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://assets/models/interior/changingroom/changingroom_Mesh_7.res"
+},
+"changingroom_Mesh_8": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://assets/models/interior/changingroom/changingroom_Mesh_8.res"
+},
+"changingroom_Mesh_9": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://assets/models/interior/changingroom/changingroom_Mesh_9.res"
+}
+}
+}
+gltf/naming_version=1
+gltf/embedded_image_handling=1

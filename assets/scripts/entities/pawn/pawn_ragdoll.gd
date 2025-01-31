@@ -32,10 +32,7 @@ var physicsBones : Array[PhysicalBone3D]
 @export_category("Ragdoll")
 var savedPose :Array[Transform3D]
 @export_subgroup("Active Ragdoll")
-@export var activeRagdollEnabled:bool = false:
-	set(value):
-		activeRagdollEnabled = value
-		#activeRagdollChanged.emit(value)
+@export var activeRagdollEnabled:bool = false
 @export var targetSkeleton : Skeleton3D
 @export_subgroup("Behavior")
 ##Start simulation on create
@@ -65,6 +62,7 @@ func _ready()-> void:
 	setBoneOwners()
 
 	deathSound.play()
+
 	if startOnInstance:
 		startRagdoll()
 
@@ -73,12 +71,9 @@ func _ready()-> void:
 
 func setBoneOwners()->void:
 	for pb in physicsBones:
-			if pb.get_script() != null:
-				for b in physicsBones:
-					pass
-					pb.exclusionArray.append(RID(b))
-					b.ownerSkeleton = ragdollSkeleton
-					b.ragdoll = self
+		pb.exclusionArray.append(RID(pb))
+		pb.ownerSkeleton = ragdollSkeleton
+		pb.ragdoll = self
 
 func appendPhysicalBoneArray()->void:
 	for bones in physicalBoneSimulator.get_children().filter(func(x): return x is PhysicalBone3D):
@@ -87,7 +82,7 @@ func appendPhysicalBoneArray()->void:
 func startRagdoll()-> void:
 	#ragdollSkeleton.animate_physical_bones = true
 	physicalBoneSimulator.physical_bones_start_simulation()
-	checkClothingHider()
+	#checkClothingHider()
 
 func ragTwitch(convulsionAmount : float = 10.0, bodyPartIDX : int = 0)-> void:
 	pass
@@ -95,30 +90,41 @@ func ragTwitch(convulsionAmount : float = 10.0, bodyPartIDX : int = 0)-> void:
 func checkClothingHider()-> void:
 	for clothes in self.get_children():
 		if clothes is ClothingItem:
-			if clothes.head:
-				head.hide()
-			if clothes.rightUpperarm:
-				rightUpperArm.hide()
-			if clothes.leftUpperarm:
-				leftUpperArm.hide()
-			if clothes.shoulders:
-				shoulders.hide()
-			if clothes.leftForearm:
-				leftForearm.hide()
-			if clothes.rightForearm:
-				rightForearm.hide()
-			if clothes.upperChest:
-				upperChest.hide()
-			if clothes.lowerBody:
-				lowerBody.hide()
-			if clothes.leftUpperLeg:
-				leftUpperLeg.hide()
-			if clothes.rightUpperLeg:
-				rightUpperLeg.hide()
-			if clothes.rightLowerLeg:
-				rightLowerLeg.hide()
-			if clothes.leftLowerLeg:
-				leftLowerLeg.hide()
+			match clothes.head:
+				true: head.hide()
+			match clothes.rightUpperarm:
+				true:
+					rightUpperArm.hide()
+			match clothes.leftUpperarm:
+				true:
+					leftUpperArm.hide()
+			match clothes.shoulders:
+				true:
+					shoulders.hide()
+			match clothes.leftForearm:
+				true:
+					leftForearm.hide()
+			match clothes.rightForearm:
+				true:
+					rightForearm.hide()
+			match clothes.upperChest:
+				true:
+					upperChest.hide()
+			match clothes.lowerBody:
+				true:
+					lowerBody.hide()
+			match clothes.leftUpperLeg:
+				true:
+					leftUpperLeg.hide()
+			match clothes.rightUpperLeg:
+				true:
+					rightUpperLeg.hide()
+			match clothes.rightLowerLeg:
+				true:
+					rightLowerLeg.hide()
+			match clothes.leftLowerLeg:
+				true:
+					leftLowerLeg.hide()
 
 func hookes_law(displacement: Vector3, current_velocity: Vector3, stiffness: float, damping: float) -> Vector3:
 	return (stiffness * displacement) - (damping * current_velocity)
@@ -136,6 +142,8 @@ func doRagdollHeadshot()-> void:
 			#blood.global_position = Vector3(headBone.global_position.x,headBone.global_position.y-1.4,headBone.global_position.z)
 			#blood.apply_impulse(Vector3(randf_range(-10,10),randf_range(-10,10),randf_range(-10,10)) * randf_range(5,10))
 
+	for x in randi_range(2,7):
+		gameManager.createGib(headBone.global_position)
 	var destroyedHeads : Array = [preload("res://assets/models/pawn/male/headDestroyed1.tres"),preload("res://assets/models/pawn/male/headDestroyed2.tres"),preload("res://assets/models/pawn/male/headDestroyed3.tres")]
 	headshotsound.play()
 	deathSound.stop()
@@ -144,27 +152,18 @@ func doRagdollHeadshot()-> void:
 	head.mesh = destroyedHeads.pick_random()
 	var particle = globalParticles.createParticle("BloodSpurt",Vector3(headBone.global_position.x,headBone.global_position.y-1.4,headBone.global_position.z))
 	particle.rotation = headBone.global_rotation
-	particle.amount = randi_range(25,35)
+	particle.maxParticles = randi_range(8,10)
 	for clothes in self.get_children():
 		if clothes is ClothingItem:
 			if clothes.clothingType == 0 or clothes.clothingType == 1:
 				clothes.queue_free()
 				checkClothingHider()
-	gameManager.sprayBlood(headBone.global_position,particle.amount,150,1.2)
+	gameManager.sprayBlood(headBone.global_position,randi_range(1,5),50,1.2)
 
 func setPawnMaterial(material)-> void:
 	for mesh in ragdollSkeleton.get_children():
 		if mesh is MeshInstance3D:
 			mesh.set_surface_override_material(0,material)
-
-
-func _on_visible_on_screen_notifier_3d_screen_entered()-> void:
-	visibleOnScreen = true
-	show()
-
-func _on_visible_on_screen_notifier_3d_screen_exited()-> void:
-	visibleOnScreen = false
-	hide()
 
 
 func moveClothesToRagdoll(pawn:BasePawn) -> void:
@@ -181,7 +180,7 @@ func setRagdollPose(pawn:BasePawn)->void:
 		ragdollSkeleton.set_bone_global_pose(bones, pawn.pawnSkeleton.get_bone_global_pose(bones))
 
 
-func applyRagdollImpulse(pawn:BasePawn,currentVelocity:Vector3,impulseBone:int = 0,hitImpulse:Vector3 = Vector3.ZERO)->void:
+func applyRagdollImpulse(pawn:BasePawn,currentVelocity:Vector3,impulseBone:int = 0,hitImpulse:Vector3 = Vector3.ZERO,hitPosition:Vector3=Vector3.ZERO)->void:
 	for bones in physicalBoneSimulator.get_children():
 		if bones is RagdollBone:
 			bones.linear_velocity = currentVelocity
@@ -189,27 +188,35 @@ func applyRagdollImpulse(pawn:BasePawn,currentVelocity:Vector3,impulseBone:int =
 			bones.apply_central_impulse(currentVelocity)
 			if bones.get_bone_id() == impulseBone:
 				#ragdoll.startRagdoll()
-				bones.apply_central_impulse(hitImpulse * randf_range(1.5,2))
+				bones.canBleed = true
+				bones.apply_impulse(hitImpulse * randf_range(1.5,2),hitPosition)
 
 
-func initializeRagdoll(pawn:BasePawn,pawnvelocity:Vector3 = Vector3.ZERO,lastHit:int=0,impulse:Vector3 = Vector3.ZERO,killer = null)->void:
+func createActiveJoints()->void:
+	if activeRagdollEnabled:
+		for pb in physicsBones:
+			pb.createActiveRagdollJoint()
+
+
+func initializeRagdoll(pawn:BasePawn,pawnvelocity:Vector3 = Vector3.ZERO,lastHit:int=0,impulse:Vector3 = Vector3.ZERO,hitPosition:Vector3=Vector3.ZERO,killer = null)->void:
 	if is_instance_valid(pawn):
+		name = "%s's Ragdoll"%pawn.name
 		setRagdollPositionAndRotation(pawn)
 		moveClothesToRagdoll(pawn)
 		setRagdollPose(pawn)
 		startRagdoll()
-		applyRagdollImpulse(pawn,pawnvelocity,lastHit,impulse)
 		checkClothingHider()
 		damageBoneHitboxes(lastHit,killer)
 		headshotCheck(lastHit,killer,pawn)
 		attachedCamCheck(pawn)
 		activeRagdollDeathCheck(lastHit,pawn)
-		if pawn.currentPawnMat:
+		applyRagdollImpulse(pawn,pawnvelocity,lastHit,impulse,hitPosition)
+		if is_instance_valid(pawn.currentPawnMat):
 			setPawnMaterial(pawn.currentPawnMat.duplicate())
 
 
 func attachedCamCheck(pawn:BasePawn)->void:
-	if !pawn.attachedCam == null:
+	if is_instance_valid(pawn.attachedCam):
 		var cam = pawn.attachedCam
 		cam.unposessObject()
 		cam.posessObject(self, rootCameraNode)
@@ -231,11 +238,11 @@ func activeRagdollDeathCheck(impulse_bone:int,pawn:BasePawn)->void:
 
 func headshotCheck(impulse_bone:int,killer,pawn:BasePawn)->void:
 	if impulse_bone == 41:
-		if killer != null:
-			if killer.currentItem != null:
+		if is_instance_valid(killer):
+			if is_instance_valid(killer.currentItem):
 				if killer.currentItem.weaponResource.headDismember:
 					doRagdollHeadshot()
-			if killer.attachedCam != null:
+			if is_instance_valid(killer.attachedCam):
 				killer.attachedCam.doHeadshotEffect()
 		pawn.headshottedPawn.emit()
 
@@ -248,7 +255,8 @@ func damageBoneHitboxes(impulse_bone:int,killer)->void:
 			if child.get_bone_id() == impulse_bone:
 				child.canBleed = true
 				if child.healthComponent and killer != null and killer.currentItem != null:
-					child.healthComponent.damage(killer.currentItem.weaponResource.weaponDamage * randf_range(1.5,2),killer)
+					var dmgAmount = killer.currentItem.weaponResource.weaponDamage
+					child.healthComponent.damage(dmgAmount,killer)
 
 
 func setRagdollPositionAndRotation(pawn:BasePawn)->void:

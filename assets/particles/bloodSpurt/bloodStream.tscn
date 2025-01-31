@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://dvovreh6l13lj" path="res://assets/textures/blood/realBloodSheets/Blood_1-2_n.png" id="4_250jg"]
 
 [sub_resource type="Curve" id="Curve_4uxkm"]
-max_value = 255.0
+_limits = [0.0, 255.0, 0.0, 1.0]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 255), 357.0, 0.0, 0, 0]
 point_count = 2
 
@@ -16,7 +16,7 @@ point_count = 2
 curve = SubResource("Curve_4uxkm")
 
 [sub_resource type="Curve" id="Curve_kty81"]
-max_value = 2.0
+_limits = [0.0, 2.0, 0.0, 1.0]
 _data = [Vector2(0.0242718, 0.945055), 0.0, -6.86423, 0, 0, Vector2(0.131068, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
@@ -92,15 +92,15 @@ func _on_stop_spurt_timer_timeout():
 _data = [Vector2(0, 1), 0.0, -1.10285, 0, 0, Vector2(0.679612, 0), 0.0263227, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_inqm3"]
+[sub_resource type="CurveTexture" id="CurveTexture_vxqq7"]
 curve = SubResource("Curve_v3mcd")
 
 [sub_resource type="Curve" id="Curve_2tsyi"]
-max_value = 2.0
+_limits = [0.0, 2.0, 0.0, 1.0]
 _data = [Vector2(0, 0.263736), 0.0, 0.0, 0, 0, Vector2(0.519418, 1.51648), 1.9116, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_wvrms"]
+[sub_resource type="CurveTexture" id="CurveTexture_2apnp"]
 curve = SubResource("Curve_2tsyi")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_5fuw5"]
@@ -116,10 +116,10 @@ linear_accel_min = -19.05
 attractor_interaction_enabled = false
 scale_min = 0.8
 scale_max = 5.0
-scale_curve = SubResource("CurveTexture_wvrms")
-alpha_curve = SubResource("CurveTexture_inqm3")
+scale_curve = SubResource("CurveTexture_2apnp")
+alpha_curve = SubResource("CurveTexture_vxqq7")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oedkt"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4ac6o"]
 transparency = 1
 vertex_color_use_as_albedo = true
 albedo_color = Color(0.552941, 0, 0, 0.737255)
@@ -133,7 +133,7 @@ particles_anim_v_frames = 1
 particles_anim_loop = false
 
 [sub_resource type="QuadMesh" id="QuadMesh_l7any"]
-material = SubResource("StandardMaterial3D_oedkt")
+material = SubResource("StandardMaterial3D_4ac6o")
 size = Vector2(0.3, 0.3)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_meh8y"]
@@ -245,6 +245,7 @@ draw_pass_1 = SubResource("QuadMesh_l7any")
 material_override = SubResource("StandardMaterial3D_meh8y")
 amount = 105
 randomness = 0.57
+seed = 312036486
 fixed_fps = 144
 process_material = SubResource("ParticleProcessMaterial_8ptcv")
 draw_pass_1 = SubResource("QuadMesh_01uwf")

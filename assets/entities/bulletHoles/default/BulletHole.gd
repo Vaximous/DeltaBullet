@@ -35,6 +35,16 @@ func deleteHole()->void:
 
 
 func initializeBulletHole()->void:
+	#Play the sounds
+	for sounds in soundArray:
+		sounds.max_db = audioVolume
+		sounds.volume_db = audioVolume
+		sounds.reparent(gameManager.world.worldMisc)
+		gameManager.setSoundVariables(sounds)
+		#print(sounds.volume_db)
+		sounds.finished.connect(sounds.queue_free)
+		sounds.play()
+
 	#Make particle emitters face the direction of the normal
 	global_transform = gameManager.create_surface_transform(colPoint,bulletVelocity,normal)
 
@@ -55,17 +65,19 @@ func initializeBulletHole()->void:
 		var chosenTexture = bulletTextures.pick_random()
 		decal.texture_albedo = chosenTexture
 
-	#Play the sounds
-	for sounds in soundArray:
-		gameManager.setSoundVariables(sounds)
-		sounds.volume_db = audioVolume
-		sounds.play()
 
 	#Emit the particles
 	for particles in particleArray:
 		#Forces the position of the particles to be set to the collision point (Wont be used much, is an old thing)
 		if forceGlobalPosition:
 			particles.global_transform.origin = colPoint
+
+		#Reparent to particles in world
+		particles.reparent(gameManager.world.worldParticles)
+
+		#Connect finished to queue_free()
+		if !particles.finished.is_connected(particles.queue_free):
+			particles.finished.connect(particles.queue_free)
 
 		#Turns the particle on
 		particles.emitting = true

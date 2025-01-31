@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dc3fkfugwvtla" path="res://assets/textures/misc/company-logo (1).png" id="1_jxbia"]
 [ext_resource type="AudioStream" uid="uid://by5epqyt6w7ls" path="res://assets/sounds/ui/smcknecksound.wav" id="2_uy7xn"]
-[ext_resource type="Script" path="res://assets/scripts/AnimationControl/AnimatedControl.gd" id="3_3s61u"]
+[ext_resource type="Script" uid="uid://cuhjeprfmg0lh" path="res://assets/scripts/AnimationControl/AnimatedControl.gd" id="3_3s61u"]
 [ext_resource type="AudioStream" uid="uid://c4rm2sw8drwg2" path="res://assets/sounds/ui/uiswift.wav" id="3_bikbu"]
 [ext_resource type="Texture2D" uid="uid://r25q6c4rfqlf" path="res://assets/textures/misc/Made With Godot Banner.png" id="5_profm"]
 
@@ -12,7 +12,7 @@ script/source = "extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready()->void:
-	musicManager.change_song_to(null)
+	musicManager.fade_all_audioplayers_out()
 	$textureRect.modulate = Color.TRANSPARENT
 	await get_tree().process_frame
 	$AnimationPlayer.play(\"logostart\")
@@ -182,8 +182,8 @@ tracks/5/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_cjnlx"]
 _data = {
-"RESET": SubResource("Animation_2cugh"),
-"logostart": SubResource("Animation_ujmnx")
+&"RESET": SubResource("Animation_2cugh"),
+&"logostart": SubResource("Animation_ujmnx")
 }
 
 [node name="logo" type="Control"]
@@ -207,7 +207,7 @@ texture = SubResource("GradientTexture2D_bett4")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_cjnlx")
+&"": SubResource("AnimationLibrary_cjnlx")
 }
 
 [node name="sound" type="AudioStreamPlayer" parent="."]

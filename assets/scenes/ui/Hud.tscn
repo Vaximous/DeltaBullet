@@ -1,6 +1,6 @@
-[gd_scene load_steps=28 format=3 uid="uid://1d1rfqprpnrb"]
+[gd_scene load_steps=29 format=3 uid="uid://1d1rfqprpnrb"]
 
-[ext_resource type="Script" path="res://assets/entities/camera/HUD.gd" id="1_on6xd"]
+[ext_resource type="Script" uid="uid://bqcb21u5nterd" path="res://assets/entities/camera/HUD.gd" id="1_on6xd"]
 [ext_resource type="FontFile" uid="uid://xmwjvmqspojb" path="res://assets/fonts/Grand_Aventure_Text.otf" id="2_tf7jg"]
 [ext_resource type="Texture2D" uid="uid://dc3fkfugwvtla" path="res://assets/textures/misc/company-logo (1).png" id="3_4nkiw"]
 [ext_resource type="Texture2D" uid="uid://birbjoai58xb7" path="res://assets/textures/crosshair/crosshair001.png" id="4_uhc5s"]
@@ -21,6 +21,7 @@ default_font = ExtResource("2_tf7jg")
 [sub_resource type="GDScript" id="GDScript_quas3"]
 resource_name = "crosshair"
 script/source = "extends TextureRect
+signal crosshairSet(crosshair)
 const  defaultCrosshair = preload(\"res://assets/textures/crosshair/crosshair001.png\")
 @export var dynamicCrosshair : bool = true
 @export var overridePosition : bool = true
@@ -32,13 +33,13 @@ const defaultTint : Color = Color.WHITE
 var tiltSpeed = 15.0
 var tintSpeed = 2.5
 # Called when the node enters the scene tree for the first time.
-func _ready():
+func _ready()->void:
 	if overridePosition:
 		positionOverride = get_viewport_rect().size/2 - pivot_offset
 	setCrosshair(defaultCrosshair)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _physics_process(delta):
+func _physics_process(delta)->void:
 	if dynamicCrosshair:
 		if UserConfig.game_crosshair_dynamic_position:
 			setOverride()
@@ -48,28 +49,29 @@ func _physics_process(delta):
 		self_modulate =  lerp(self_modulate,defaultTint,tintSpeed*delta)
 
 
-func setOverride():
+func setOverride()->void:
 	if positionOverride != null:
 		if overridePosition:
 			position = positionOverride - pivot_offset
 	else:
 		position = get_viewport_rect().size/2 - pivot_offset
 
-func addSize(sizeAmount:float = 0.1):
+func addSize(sizeAmount:float = 0.1)->void:
 	if dynamicCrosshair:
 		self.scale += Vector2(sizeAmount,sizeAmount)
 
-func tintCrosshair(tint:Color):
+func tintCrosshair(tint:Color)->void:
 	if dynamicCrosshair:
 		self_modulate = tint
 
-func setCrosshair(crosshairTexture):
+func setCrosshair(crosshairTexture)->void:
 	if crosshairTexture != null:
 		texture = crosshairTexture
+		crosshairSet.emit(crosshairTexture)
 	else:
 		texture = defaultCrosshair
 
-func addTilt(tilt:float = 0.0):
+func addTilt(tilt:float = 0.0)->void:
 	if dynamicCrosshair:
 		rotation += tilt
 "
@@ -109,6 +111,12 @@ shader = SubResource("Shader_kenmw")
 shader_parameter/color = Color(0.666667, 0, 0, 1)
 shader_parameter/multiplier = 0.25
 shader_parameter/softness = 0.9
+
+[sub_resource type="LabelSettings" id="LabelSettings_5mxeu"]
+outline_size = 7
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 9
+shadow_color = Color(0, 0, 0, 0.376471)
 
 [sub_resource type="Gradient" id="Gradient_jat1a"]
 offsets = PackedFloat32Array(0, 0.995455, 1)
@@ -169,12 +177,13 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_uw0ow"]
 _data = {
-"RESET": SubResource("Animation_jcse6"),
-"rolldown": SubResource("Animation_1hh6o"),
-"rollover": SubResource("Animation_tl6cg")
+&"RESET": SubResource("Animation_jcse6"),
+&"rolldown": SubResource("Animation_1hh6o"),
+&"rollover": SubResource("Animation_tl6cg")
 }
 
 [node name="HUD" type="Control" node_paths=PackedStringArray("crosshair")]
+physics_interpolation_mode = 1
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -220,6 +229,7 @@ texture = ExtResource("3_4nkiw")
 expand_mode = 1
 
 [node name="Crosshair" type="TextureRect" parent="."]
+physics_interpolation_mode = 1
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -411,21 +421,27 @@ offset_bottom = 39.0
 grow_horizontal = 0
 
 [node name="colorRect" type="ColorRect" parent="FPSCounter"]
+visible = false
 layout_mode = 0
 offset_right = 62.0
 offset_bottom = 38.0
 color = Color(0.133333, 0.133333, 0.133333, 0.788235)
 
 [node name="label" type="Label" parent="FPSCounter"]
-layout_mode = 0
-offset_left = 5.0
-offset_right = 70.0
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -61.0
 offset_bottom = 37.0
+grow_horizontal = 0
 theme_override_fonts/font = ExtResource("10_siy77")
 text = "FPS:"
+label_settings = SubResource("LabelSettings_5mxeu")
 vertical_alignment = 1
 
 [node name="Interact" type="Control" parent="."]
+modulate = Color(1, 1, 1, 0)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -469,7 +485,7 @@ text = "Use \"Item\""
 
 [node name="interactAnimPlayer" type="AnimationPlayer" parent="Interact"]
 libraries = {
-"": SubResource("AnimationLibrary_uw0ow")
+&"": SubResource("AnimationLibrary_uw0ow")
 }
 speed_scale = 1.733
 
@@ -524,6 +540,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 color = Color(1, 1, 1, 0)
+metadata/_edit_lock_ = true
 
 [node name="bulletTimeOn" type="AudioStreamPlayer" parent="bulletTimeFlash"]
 stream = ExtResource("13_paei5")
@@ -534,6 +551,37 @@ bus = &"UI"
 stream = ExtResource("14_i7djv")
 volume_db = -7.0
 bus = &"UI"
+
+[node name="worldCrosshair" type="Sprite3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, -1.12949)
+top_level = true
+visible = false
+billboard = 1
+double_sided = false
+render_priority = 1
+texture = ExtResource("4_uhc5s")
+
+[node name="worldEditButton" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchor_top = 0.643
+anchor_bottom = 0.643
+offset_top = 0.299988
+offset_right = 140.0
+offset_bottom = 138.3
+grow_vertical = 2
+
+[node name="panelContainer" type="PanelContainer" parent="worldEditButton"]
+layout_mode = 0
+offset_right = 141.0
+offset_bottom = 141.0
+
+[node name="label" type="Label" parent="worldEditButton/panelContainer"]
+layout_mode = 2
+text = "Press J To Edit
+Safehouse"
+horizontal_alignment = 1
 
 [connection signal="interactionFound" from="." to="Interact/interactAnimPlayer" method="play"]
 [connection signal="interactionFound" from="." to="Interact/audioStreamPlayer" method="play"]

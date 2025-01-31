@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://b4dpjminsf4mx"]
 
-[ext_resource type="Script" path="res://assets/scripts/worldRelated/worldScript/worldScript.gd" id="1_vjirs"]
+[ext_resource type="Script" uid="uid://0jwheadtfh77" path="res://assets/scripts/worldRelated/worldScript/worldScript.gd" id="1_vjirs"]
 [ext_resource type="Environment" uid="uid://dnig6jq4e6pjs" path="res://assets/envs/default_environment.tres" id="2_e62ir"]
 [ext_resource type="PackedScene" uid="uid://dodu8jdt3nw06" path="res://assets/scenes/ui/GamePauseMenu.tscn" id="3_2mura"]
 
@@ -22,37 +22,47 @@ func updateGraphics()->void:
 "
 
 [node name="worldBase" type="Node"]
+physics_interpolation_mode = 1
 script = ExtResource("1_vjirs")
 
 [node name="Spawns" type="Node" parent="."]
+physics_interpolation_mode = 1
 
 [node name="playerSpawns" type="Node" parent="Spawns"]
 
 [node name="pawnSpawns" type="Node" parent="Spawns"]
 
 [node name="Environment" type="Node" parent="."]
+physics_interpolation_mode = 1
 script = SubResource("GDScript_7bgfo")
 
 [node name="worldEnvironment" type="WorldEnvironment" parent="Environment"]
+physics_interpolation_mode = 1
 environment = ExtResource("2_e62ir")
 
 [node name="reflectionProbe" type="ReflectionProbe" parent="Environment"]
+physics_interpolation_mode = 1
 
 [node name="directionalLight3d" type="DirectionalLight3D" parent="Environment"]
+physics_interpolation_mode = 1
 transform = Transform3D(1, 0, 0, 0, 0.912456, 0.409175, 0, -0.409175, 0.912456, 0, 0, 0)
 shadow_enabled = true
 directional_shadow_blend_splits = true
 directional_shadow_fade_start = 1.0
 
 [node name="Geometry" type="Node3D" parent="."]
+physics_interpolation_mode = 1
 
 [node name="Pawns" type="Node3D" parent="."]
+physics_interpolation_mode = 1
 
 [node name="Players" type="Node3D" parent="Pawns"]
 
 [node name="Props" type="Node3D" parent="."]
+physics_interpolation_mode = 1
 
 [node name="Misc" type="Node3D" parent="."]
+physics_interpolation_mode = 1
 
 [node name="Particles" type="Node3D" parent="Misc"]
 
@@ -63,12 +73,14 @@ directional_shadow_fade_start = 1.0
 [node name="AIPOI" type="Node3D" parent="Misc"]
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="Misc"]
-_spawnable_scenes = PackedStringArray("res://assets/entities/camera/camera.tscn")
+_spawnable_scenes = PackedStringArray("uid://c1r6apfs6eb8j")
 spawn_path = NodePath("../../Pawns/Players")
 
 [node name="GamePauseMenu" parent="." instance=ExtResource("3_2mura")]
+physics_interpolation_mode = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="mapLogic" type="Node" parent="."]
+physics_interpolation_mode = 1
 
 [connection signal="worldLoaded" from="." to="." method="playSoundscape"]

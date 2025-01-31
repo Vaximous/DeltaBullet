@@ -1,10 +1,9 @@
 [gd_scene load_steps=2 format=3 uid="uid://cngcjnotfymj5"]
 
-[ext_resource type="Script" path="res://assets/entities/bloodPool/blood_pool.gd" id="1_q50fq"]
+[ext_resource type="Script" uid="uid://cw04pitfb4xqr" path="res://assets/entities/bloodPool/blood_pool.gd" id="1_q50fq"]
 
 [node name="bloodPool" type="Node3D"]
 script = ExtResource("1_q50fq")
 
 [node name="pool" type="Decal" parent="."]
-distance_fade_enabled = true
 cull_mask = 1048551

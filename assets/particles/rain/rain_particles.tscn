@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://dnr0cbfhyguux"]
 
 [ext_resource type="Texture2D" uid="uid://d4flagxbsbgo6" path="res://assets/particles/rain/rain.png" id="1_bddg1"]
-[ext_resource type="Script" path="res://assets/particles/rain/rain_particles.gd" id="2_0bhh6"]
+[ext_resource type="Script" uid="uid://cow6kjs0by8vq" path="res://assets/particles/rain/rain_particles.gd" id="2_0bhh6"]
 [ext_resource type="Texture2D" uid="uid://ckgfb645ckguv" path="res://assets/particles/rain/rainsplash-spritesheet.png" id="3_eb2ri"]
 
 [sub_resource type="Gradient" id="Gradient_86vyc"]
@@ -74,6 +74,7 @@ material = SubResource("StandardMaterial3D_sj05r")
 [node name="RainParticles" type="GPUParticles3D"]
 amount = 256
 sub_emitter = NodePath("GPUParticles3D")
+fixed_fps = 0
 collision_base_size = 0.1
 visibility_aabb = AABB(-66.2762, -53.0501, -97.7908, 132.552, 106.1, 195.582)
 process_material = SubResource("ParticleProcessMaterial_n1ldd")
@@ -84,5 +85,6 @@ script = ExtResource("2_0bhh6")
 amount = 256
 lifetime = 0.3
 randomness = 1.0
+fixed_fps = 0
 process_material = SubResource("ParticleProcessMaterial_4juc7")
 draw_pass_1 = SubResource("QuadMesh_ij0jg")

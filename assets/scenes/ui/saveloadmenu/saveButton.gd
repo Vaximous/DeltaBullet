@@ -61,6 +61,10 @@ func _on_pressed()->void:
 		hoverSound.stop()
 	match buttonType:
 		0:
+			gameManager.removeAllDeathScreens()
+			gameManager.removeCustomization()
+			gameManager.removeShop()
+			gameManager.removeWorldMap()
 			await Fade.fade_out(0.3, Color(0,0,0,1),"GradientVertical",false,true).finished
 			#gameManager.notifyCheck("'%s' Sucessfully Loaded."%saveName.text, 2, 1.5)
 			gameManager.loadGame(saveFile)

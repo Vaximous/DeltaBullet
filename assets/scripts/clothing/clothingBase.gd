@@ -5,7 +5,7 @@ class_name ClothingItem
 
 @export_category("Clothing Item")
 @export_subgroup("Item")
-@export_enum("Hair","Headwear","Facewear","Body","Pants")var clothingCategory : int = 2
+@export_enum("Hair","Headgear","Bling","Body","Pants")var clothingCategory : int = 2
 @export_enum("Headwear","Facewear","Hair","Body","Hands","Legs") var clothingType : int = 0
 @export var itemOffset : Vector3 = Vector3.ZERO:
 	set(value):

@@ -1,7 +1,7 @@
 [gd_scene load_steps=33 format=3 uid="uid://2nj1n64cy47e"]
 
 [ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="1_kx7nb"]
-[ext_resource type="Script" path="res://assets/scenes/ui/customization/clothingEquipPreview.gd" id="2_uwnix"]
+[ext_resource type="Script" uid="uid://dg07ih2i8olgb" path="res://assets/scenes/ui/customization/clothingEquipPreview.gd" id="2_uwnix"]
 [ext_resource type="PackedScene" uid="uid://bg8aarggcxwa8" path="res://assets/entities/pawnEntity/pawnEntity.tscn" id="3_sqnta"]
 [ext_resource type="FontFile" uid="uid://b3s7umd01feyu" path="res://assets/fonts/Carthage Pro Regular.ttf" id="4_8imb8"]
 [ext_resource type="Texture2D" uid="uid://c2al3bxets5mo" path="res://assets/scripts/singletons/notifs/accept_button.png" id="5_wr0bn"]
@@ -109,9 +109,9 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_hvgav"]
 _data = {
-"RESET": SubResource("Animation_h1xa5"),
-"buffer": SubResource("Animation_psy11"),
-"buffer_done": SubResource("Animation_3xnob")
+&"RESET": SubResource("Animation_h1xa5"),
+&"buffer": SubResource("Animation_psy11"),
+&"buffer_done": SubResource("Animation_3xnob")
 }
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_vcg60"]
@@ -219,8 +219,8 @@ layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.974
 anchor_bottom = 1.025
-offset_right = -0.0739899
-offset_bottom = -0.0499878
+offset_right = 147.0
+offset_bottom = 207.0
 
 [node name="button" type="Button" parent="backgroundPanel"]
 layout_mode = 2
@@ -248,7 +248,7 @@ expand_mode = 1
 
 [node name="animationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_hvgav")
+&"": SubResource("AnimationLibrary_hvgav")
 }
 
 [node name="hoverSound" type="AudioStreamPlayer" parent="."]

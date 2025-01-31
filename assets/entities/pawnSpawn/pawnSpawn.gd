@@ -48,6 +48,9 @@ var forceAnimation: bool = false
 		if pawnType == 1:
 			if previewMesh != null:
 				previewMesh.material_override.albedo_color = pawnColor
+var ignore_spawn_on_load : bool = false
+
+
 func _ready()->void:
 	if Engine.is_editor_hint():
 		if previewMesh != null:
@@ -90,6 +93,8 @@ func spawnPawn(forceParent : Node = null):
 				pawn.checkComponents()
 				pawn.fixRot()
 				pawn.add_to_group(&"Player")
+				pawn.set_meta(&"isPlayer", true)
+				gameManager.allPawns.append(pawn)
 				pawn.healthComponent.setHealth(450)
 				if gameManager.temporaryPawnInfo.size() <= 0:
 					if gameManager.currentSave != "" or gameManager.currentSave != " " or gameManager.currentSave != null:
@@ -135,9 +140,11 @@ func spawnPawn(forceParent : Node = null):
 			pawn.checkComponents()
 			pawn.fixRot()
 			controller.pawnType = aiType
-			#controller.aiSkill = aiSkill
+			controller.aiSkill = aiSkill
+			gameManager.allPawns.append(pawn)
 			#controller.hatedPawnGroups = hatedGroups
 			pawn.add_to_group(spawnGroup)
+			pawn.set_meta(&"isPlayer", false)
 
 			if pawnName != "":
 				controller.pawnName = pawnName

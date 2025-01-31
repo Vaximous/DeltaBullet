@@ -15,12 +15,12 @@ var cameraRotation : float
 var gravity : float = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 func _physics_process(delta: float) -> void:
-	if enabled:
+	if enabled and !pawnControlling.isPawnDead and is_instance_valid(pawnControlling):
 		if pawnControlling.pawnEnabled and !pawnControlling.isPawnDead:
 			velocity.x = speed * movementDirection.normalized().x
 			velocity.z = speed * movementDirection.normalized().z
 
-			if not pawnControlling.is_on_floor():
+			if not pawnControlling.is_on_floor() or pawnControlling.snappedToStairsLastFrame:
 				pawnControlling.velocity.y -= gravity * delta
 
 			if !pawnControlling.is_on_floor():
@@ -36,10 +36,13 @@ func _physics_process(delta: float) -> void:
 			elif pawnControlling.meshLookAt:
 				doMeshLookat(delta)
 
-			pawnControlling.move_and_slide()
+
+			if !pawnControlling.snapUpStairCheck(delta):
+				pawnControlling.move_and_slide()
+				pawnControlling.stairSnapCheck()
 
 func onMovementStateSet(state:MovementState)->void:
-	if enabled:
+	if enabled and !pawnControlling.isPawnDead and is_instance_valid(pawnControlling):
 		speed = state.movementSpeed
 		acceleration = state.acceleration
 		if pawnControlling.attachedCam and pawnControlling:

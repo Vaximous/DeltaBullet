@@ -12,6 +12,9 @@
 
 			var inst = placeableObject.instantiate()
 			itemHolder.add_child(inst)
+			if inst is RigidBody3D:
+				inst.freeze = true
+
 
 
 func _process(delta: float) -> void:

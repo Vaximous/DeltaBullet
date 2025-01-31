@@ -1,35 +1,202 @@
-[gd_scene load_steps=3 format=3 uid="uid://euaxty1qfugn"]
+[gd_scene load_steps=5 format=3 uid="uid://euaxty1qfugn"]
 
 [ext_resource type="Script" uid="uid://ch735riwicvap" path="res://assets/scenes/ui/safehouseEditor/safehouse_editor.gd" id="1_8svem"]
 [ext_resource type="PackedScene" uid="uid://uo3piwv2xb4d" path="res://assets/scenes/ui/safehouseEditor/editorItem.tscn" id="2_3feuy"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_8svem"]
+shadow_size = 6
+shadow_color = Color(0, 0, 0, 0.717647)
+
+[sub_resource type="LabelSettings" id="LabelSettings_3feuy"]
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 4
+shadow_color = Color(0, 0, 0, 0.470588)
 
 [node name="safehouseEditor" type="CanvasLayer"]
 script = ExtResource("1_8svem")
 
 [node name="itemContainer" type="MarginContainer" parent="."]
-anchors_preset = -1
-anchor_top = 0.89
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -1.00006
-grow_vertical = 0
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -291.0
+offset_right = 260.0
+offset_bottom = 310.0
+grow_vertical = 2
+size_flags_horizontal = 0
 
 [node name="categoryPanel" type="PanelContainer" parent="itemContainer"]
+clip_contents = true
 layout_mode = 2
 
-[node name="itemContainer" type="HBoxContainer" parent="itemContainer/categoryPanel"]
+[node name="vBoxContainer" type="VBoxContainer" parent="itemContainer/categoryPanel"]
+layout_mode = 2
+
+[node name="label" type="Label" parent="itemContainer/categoryPanel/vBoxContainer"]
+layout_mode = 2
+text = "Toolbox"
+label_settings = SubResource("LabelSettings_8svem")
+horizontal_alignment = 1
+
+[node name="categoryContainer" type="PanelContainer" parent="itemContainer/categoryPanel/vBoxContainer"]
+layout_mode = 2
+
+[node name="hBoxContainer" type="HBoxContainer" parent="itemContainer/categoryPanel/vBoxContainer/categoryContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="categoryLabel" type="Label" parent="itemContainer/categoryPanel/vBoxContainer/categoryContainer/hBoxContainer"]
+layout_mode = 2
+text = "Category:"
+label_settings = SubResource("LabelSettings_3feuy")
+
+[node name="menuButton" type="MenuButton" parent="itemContainer/categoryPanel/vBoxContainer/categoryContainer/hBoxContainer"]
+layout_mode = 2
+text = "Exquisite"
+item_count = 4
+popup/item_0/text = "Living Room"
+popup/item_0/id = 0
+popup/item_1/text = "Exquisite"
+popup/item_1/id = 1
+popup/item_2/text = "Urban"
+popup/item_2/id = 2
+popup/item_3/text = "Kitchen"
+popup/item_3/id = 3
+
+[node name="scrollContainer" type="ScrollContainer" parent="itemContainer/categoryPanel/vBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="itemContainer" type="GridContainer" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer"]
 unique_name_in_owner = true
+clip_contents = true
 layout_mode = 2
-size_flags_vertical = 4
+columns = 3
 
-[node name="safehouseItem" parent="itemContainer/categoryPanel/itemContainer" instance=ExtResource("2_3feuy")]
-layout_mode = 2
-
-[node name="safehouseItem2" parent="itemContainer/categoryPanel/itemContainer" instance=ExtResource("2_3feuy")]
+[node name="safehouseItem" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
 layout_mode = 2
 
-[node name="safehouseItem3" parent="itemContainer/categoryPanel/itemContainer" instance=ExtResource("2_3feuy")]
+[node name="safehouseItem2" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
 layout_mode = 2
 
-[node name="safehouseItem4" parent="itemContainer/categoryPanel/itemContainer" instance=ExtResource("2_3feuy")]
+[node name="safehouseItem3" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
 layout_mode = 2
+
+[node name="safehouseItem4" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
+layout_mode = 2
+
+[node name="safehouseItem5" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
+layout_mode = 2
+
+[node name="safehouseItem6" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
+layout_mode = 2
+
+[node name="safehouseItem7" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
+layout_mode = 2
+
+[node name="safehouseItem8" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
+layout_mode = 2
+
+[node name="safehouseItem9" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
+layout_mode = 2
+
+[node name="safehouseItem10" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
+layout_mode = 2
+
+[node name="safehouseItem11" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
+layout_mode = 2
+
+[node name="safehouseItem12" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
+layout_mode = 2
+
+[node name="safehouseItem13" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
+layout_mode = 2
+
+[node name="safehouseItem14" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
+layout_mode = 2
+
+[node name="safehouseItem15" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
+layout_mode = 2
+
+[node name="safehouseItem16" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
+layout_mode = 2
+
+[node name="safehouseItem17" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
+layout_mode = 2
+
+[node name="safehouseItem18" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
+layout_mode = 2
+
+[node name="safehouseItem19" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
+layout_mode = 2
+
+[node name="safehouseItem20" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
+layout_mode = 2
+
+[node name="safehouseItem21" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
+layout_mode = 2
+
+[node name="safehouseItem22" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
+layout_mode = 2
+
+[node name="safehouseItem23" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
+layout_mode = 2
+
+[node name="safehouseItem24" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
+layout_mode = 2
+
+[node name="safehouseItem25" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
+layout_mode = 2
+
+[node name="safehouseItem26" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
+layout_mode = 2
+
+[node name="safehouseItem27" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
+layout_mode = 2
+
+[node name="safehouseItem28" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
+layout_mode = 2
+
+[node name="safehouseItem29" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
+layout_mode = 2
+
+[node name="safehouseItem30" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
+layout_mode = 2
+
+[node name="safehouseItem31" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
+layout_mode = 2
+
+[node name="editorTools" type="MarginContainer" parent="."]
+offset_right = 610.0
+offset_bottom = 84.0
+
+[node name="panelContainer" type="PanelContainer" parent="editorTools"]
+layout_mode = 2
+
+[node name="hBoxContainer" type="HBoxContainer" parent="editorTools/panelContainer"]
+layout_mode = 2
+
+[node name="selectTool" type="Button" parent="editorTools/panelContainer/hBoxContainer"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "Select Tool "
+
+[node name="translateTool" type="Button" parent="editorTools/panelContainer/hBoxContainer"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "Translate Tool
+"
+
+[node name="rotateTool" type="Button" parent="editorTools/panelContainer/hBoxContainer"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "Rotate Tool
+"
+
+[node name="placeTool" type="Button" parent="editorTools/panelContainer/hBoxContainer"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "Place Tool
+"
+
+[connection signal="pressed" from="editorTools/panelContainer/hBoxContainer/placeTool" to="." method="setTool" binds= [3]]

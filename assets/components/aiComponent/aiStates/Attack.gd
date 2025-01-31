@@ -61,7 +61,13 @@ func on_ai_process(phys_delta : float, ai_delta : float):
 		if tgtDistance >= maxDistance or isSightToTargetBlocked() or tgtDistance<=minDistance:
 			if !aiOwner.pathingToPosition:
 				aiOwner.pathPoint = 0
-				targetPosition = Vector3(aiOwner.targetedPawn.global_position.x,aiOwner.targetedPawn.global_position.y+0.05,aiOwner.targetedPawn.global_position.z)
+				if !gameManager.bulletTime:
+					targetPosition = Vector3(aiOwner.targetedPawn.global_position.x,aiOwner.targetedPawn.global_position.y+0.05,aiOwner.targetedPawn.global_position.z)
+				else:
+					if aiOwner.targetedPawn.isPlayerPawn():
+						targetPosition = Vector3(aiOwner.targetedPawn.global_position.x+randf_range(-2.95,0.95),aiOwner.targetedPawn.global_position.y+randf_range(1.01,1.60),aiOwner.targetedPawn.global_position.z+randf_range(-2.95,2.95))
+					else:
+						targetPosition = Vector3(aiOwner.targetedPawn.global_position.x,aiOwner.targetedPawn.global_position.y+0.05,aiOwner.targetedPawn.global_position.z)
 		#else:
 			#if aiOwner.pathingToPosition:
 				#aiOwner.pathingToPosition = false
@@ -74,7 +80,13 @@ func on_ai_process(phys_delta : float, ai_delta : float):
 			#aiOwner.pawnOwner.freeAim = true
 
 		aiOwner.pawnOwner.movementController.onSetCamRot(aiOwner.pawnOwner.meshRotation)
-		aiOwner.lookAtPosition(aiOwner.targetedPawn.upperChestBone.global_position + aiOwner.targetedPawn.velocity * 0.1 )
+		if gameManager.bulletTime:
+			if aiOwner.targetedPawn.isPlayerPawn():
+				aiOwner.lookAtPosition((aiOwner.targetedPawn.neckBone.global_position + aiOwner.targetedPawn.velocity * 0.25)+Vector3(randf_range(-0.75,1),randf_range(-0.55,0.9),randf_range(-0.55,2)))
+			else:
+				aiOwner.lookAtPosition(aiOwner.targetedPawn.upperChestBone.global_position + aiOwner.targetedPawn.velocity * 0.1 )
+		else:
+				aiOwner.lookAtPosition(aiOwner.targetedPawn.upperChestBone.global_position + aiOwner.targetedPawn.velocity * 0.1 )
 
 		if shootAt and !isSightToTargetBlocked():
 			aiOwner.pawnOwner.currentItem.fire()

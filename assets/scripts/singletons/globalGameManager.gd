@@ -242,6 +242,7 @@ func takeScreenshot(path:String = "user://screenshots",screenshotName:String = "
 	return savedfilepath
 
 func restartScene()->void:
+	playerPawns.clear()
 	targetedEnemies.clear()
 	allPawns.clear()
 	musicManager.fade_all_audioplayers_out(0.5)

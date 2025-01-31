@@ -72,6 +72,7 @@ anchors_preset = -1
 anchor_right = 0.05
 anchor_bottom = 0.089
 offset_bottom = -0.0999985
+mouse_default_cursor_shape = 2
 theme = ExtResource("1_otci6")
 script = ExtResource("2_ayosu")
 
@@ -111,7 +112,7 @@ render_target_update_mode = 4
 
 [node name="itemHolder" type="Node3D" parent="backgroundPanel/subViewportContainer/subViewport"]
 unique_name_in_owner = true
-transform = Transform3D(-0.96926, 0, 0.246037, 0, 1, 0, -0.246037, 0, -0.96926, 0, 0, 0)
+transform = Transform3D(0.999222, 0, 0.0394493, 0, 1, 0, -0.0394493, 0, 0.999222, 0, 0, 0)
 
 [node name="camera3d" type="Camera3D" parent="backgroundPanel/subViewportContainer/subViewport"]
 transform = Transform3D(-0.766711, 0.211272, -0.606233, 0.0237522, 0.952988, 0.302077, 0.641553, 0.217206, -0.735685, -0.501, 0.5, -0.53)
@@ -137,6 +138,7 @@ bus = &"UI"
 
 [node name="button" type="Button" parent="."]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 theme_override_styles/focus = SubResource("StyleBoxEmpty_q57b3")
 theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_jj03y")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_vou74")

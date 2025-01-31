@@ -20,14 +20,13 @@ transparency = 1
 cull_mode = 2
 albedo_color = Color(1, 0, 0, 0.309804)
 
-[sub_resource type="ImmediateMesh" id="ImmediateMesh_rcngy"]
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_nrp35"]
 
-[node name="aiComponent" type="Node3D" node_paths=PackedStringArray("pawnFSM", "visionTimer", "memoryManager")]
+[node name="aiComponent" type="Node3D" node_paths=PackedStringArray("pawnFSM", "visionTimer")]
 script = ExtResource("4_gaqok")
 aimSpeed = 3.0
 pawnFSM = NodePath("pawnFSM")
 visionTimer = NodePath("visionTimer")
-memoryManager = NodePath("")
 meshDistance = 5.0
 collisionMasks = 1
 
@@ -103,6 +102,6 @@ debug_shape_custom_color = Color(1, 0.823529, 0, 1)
 
 [node name="visualMesh" type="MeshInstance3D" parent="."]
 material_override = SubResource("StandardMaterial3D_giynp")
-mesh = SubResource("ImmediateMesh_rcngy")
+mesh = SubResource("ImmediateMesh_nrp35")
 
 [connection signal="timeout" from="pawnFSM/Wander/forceTargetReset" to="pawnFSM/Wander" method="_on_force_target_reset_timeout"]

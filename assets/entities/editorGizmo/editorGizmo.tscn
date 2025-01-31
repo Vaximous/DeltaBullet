@@ -1,0 +1,38 @@
+[gd_scene load_steps=6 format=3 uid="uid://dl2lm7s4bugys"]
+
+[ext_resource type="Script" uid="uid://6mi2kjqcsk3r" path="res://assets/entities/editorGizmo/editor_gizmo.gd" id="1_dik3a"]
+[ext_resource type="Script" uid="uid://omm3noijbrbm" path="res://assets/entities/editorGizmo/gizmoChild.gd" id="2_qv6bp"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qv6bp"]
+albedo_color = Color(0, 1, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fnjs0"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s81ud"]
+albedo_color = Color(0, 0, 1, 1)
+
+[node name="editorGizmo" type="Node3D"]
+script = ExtResource("1_dik3a")
+
+[node name="translate" type="Node3D" parent="."]
+
+[node name="yStick" type="CSGBox3D" parent="translate"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.485806, 0)
+size = Vector3(0.005, 1, 0.005)
+material = SubResource("StandardMaterial3D_qv6bp")
+script = ExtResource("2_qv6bp")
+
+[node name="xStick" type="CSGBox3D" parent="translate"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.500032, -0.00613737, 0)
+size = Vector3(1, 0.005, 0.005)
+material = SubResource("StandardMaterial3D_fnjs0")
+
+[node name="zStick" type="CSGBox3D" parent="translate"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0017556, -0.00613737, 0.488633)
+size = Vector3(0.005, 0.005, 1)
+material = SubResource("StandardMaterial3D_s81ud")
+
+[node name="rotate" type="Node3D" parent="."]
+
+[node name="scale" type="Node3D" parent="."]

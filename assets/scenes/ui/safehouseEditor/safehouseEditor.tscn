@@ -199,4 +199,5 @@ mouse_default_cursor_shape = 2
 text = "Place Tool
 "
 
+[connection signal="pressed" from="editorTools/panelContainer/hBoxContainer/translateTool" to="." method="setTool" binds= [1]]
 [connection signal="pressed" from="editorTools/panelContainer/hBoxContainer/placeTool" to="." method="setTool" binds= [3]]

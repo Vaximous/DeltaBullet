@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://6a0p7prm1yo4"
-path.s3tc="res://.godot/imported/smoke_02.png-342637ac1f576012e5f69daefc0dde85.s3tc.ctex"
+uid="uid://5xv061g2qgrh"
+path.s3tc="res://.godot/imported/spark.png-81510591edeaafcb46d1dae5039251df.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://addons/kenney_particle_pack/smoke_02.png"
-dest_files=["res://.godot/imported/smoke_02.png-342637ac1f576012e5f69daefc0dde85.s3tc.ctex"]
+source_file="res://assets/textures/effects/spark.png"
+dest_files=["res://.godot/imported/spark.png-81510591edeaafcb46d1dae5039251df.s3tc.ctex"]
 
 [params]
 
@@ -31,5 +31,5 @@ process/premult_alpha=false
 process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
-process/size_limit=256
+process/size_limit=0
 detect_3d/compress_to=0

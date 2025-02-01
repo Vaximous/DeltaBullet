@@ -1,5 +1,6 @@
 extends CanvasLayer
 var selectedMaterial = preload("res://assets/materials/editor/editorSelected.tres")
+var autoselectAfterPlace:bool = true
 @onready var itemContainer = %itemContainer
 var placedItems : Array
 var leaving : bool = false
@@ -74,6 +75,16 @@ func clearItemPanel()->void:
 	for i in %itemContainer.get_children():
 		i.queue_free()
 
+func deselectObject()->void:
+	if is_instance_valid(selectedObject):
+		for i in selectedObject.get_children():
+			if i is MeshInstance3D:
+				i.material_override = null
+				for ichild in i.get_children():
+					if ichild is MeshInstance3D:
+						ichild.material_override = null
+	selectedObject = null
+
 func setSelectedItem(item:PackedScene)->void:
 	selectedItem = item
 	selectedTool = 3
@@ -85,15 +96,14 @@ func initEditor()->void:
 	gameManager.activeCamera.unposessObject(true)
 
 func setSelectedObject(object:Node3D)->void:
-	if is_instance_valid(selectedObject):
-		for i in selectedObject.get_children():
-			if i is MeshInstance3D:
-				i.material_override = null
-
+	deselectObject()
 	selectedObject = object
 	for i in object.get_children():
 		if i is MeshInstance3D:
 			i.material_override = selectedMaterial
+			for ichild in i.get_children():
+				if ichild is MeshInstance3D:
+					ichild.material_override = selectedMaterial
 
 func _input(event: InputEvent) -> void:
 	if !leaving:
@@ -106,6 +116,8 @@ func _input(event: InputEvent) -> void:
 				if get_from_mouse().has("collider"):
 					if get_from_mouse()["collider"].get_meta(&"canBeSelected"):
 						setSelectedObject(get_from_mouse()["collider"])
+					else:
+						deselectObject()
 
 		if event.is_action_pressed("gEditorDelete"):
 			if is_instance_valid(selectedObject):
@@ -129,3 +141,5 @@ func placeItem(gPosition:Vector3)->void:
 	gameManager.world.worldProps.add_child(inst)
 	inst.global_position = gPosition
 	inst.set_meta(&"canBeSelected",true)
+	if autoselectAfterPlace:
+		setSelectedObject(inst)

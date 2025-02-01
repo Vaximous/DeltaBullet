@@ -97,6 +97,7 @@ one_shot = true
 preprocess = 0.05
 explosiveness = 1.0
 randomness = 1.0
+seed = 2198199477
 fixed_fps = 0
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_5oy2p")

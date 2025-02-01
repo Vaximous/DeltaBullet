@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://bwo16kxuqgqpi"]
 
-[ext_resource type="Script" path="res://assets/scenes/menu/dev/Console.gd" id="1_81317"]
-[ext_resource type="Script" path="res://assets/scenes/menu/dev/cvars.gd" id="2_bhpyj"]
+[ext_resource type="Script" uid="uid://cpii5stnj3oip" path="res://assets/scenes/menu/dev/Console.gd" id="1_81317"]
+[ext_resource type="Script" uid="uid://ndl8nf8rl6fw" path="res://assets/scenes/menu/dev/cvars.gd" id="2_bhpyj"]
 
 [sub_resource type="FontFile" id="FontFile_d7m8c"]
 cache/0/16/0/ascent = 0.0
@@ -35,11 +35,12 @@ process_mode = 3
 script = ExtResource("1_81317")
 
 [node name="window" type="Window" parent="."]
+unique_name_in_owner = true
 disable_3d = true
 transparent_bg = true
 handle_input_locally = false
 title = "Delta Bullet Console"
-initial_position = 2
+position = Vector2i(25, 62)
 size = Vector2i(720, 480)
 transient = true
 min_size = Vector2i(256, 100)

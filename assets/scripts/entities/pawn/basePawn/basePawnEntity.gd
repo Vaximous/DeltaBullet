@@ -534,20 +534,20 @@ func die(killer) -> void:
 	if is_instance_valid(self) and !isPawnDead:
 		gameManager.allPawns.erase(self)
 		gameManager.doKillEffect(self,killer)
+		dropWeapon()
 		onPawnKilled.emit()
 		playKillSound()
-		#dropWeapon()
 		isPawnDead = true
 		createRagdoll(lastHitPart, killer)
+		moveHitboxDecals()
 		endPawn()
-		#pawnEnabled = false
-		#collisionShape.disabled = true
-		#animationController.enabled = false
-		#movementController.enabled = false
-	#	killAllTweens()
-		#moveHitboxDecals()
-	#	disableAllHitboxes()
-		#process_mode = Node.PROCESS_MODE_DISABLED
+		pawnEnabled = false
+		collisionShape.disabled = true
+		animationController.enabled = false
+		movementController.enabled = false
+		killAllTweens()
+		disableAllHitboxes()
+		process_mode = Node.PROCESS_MODE_DISABLED
 
 
 
@@ -960,7 +960,7 @@ func _on_footsteps_finished() -> void:
 func dropWeapon() -> void:
 	if !isPawnDead:
 		animationTree.set("parameters/weaponBlend/blend_amount", 0)
-	if currentItem:
+	if is_instance_valid(currentItem):
 		currentItem.weaponOwner = null
 		currentItem.resetToDefault()
 		currentItem.collisionEnabled = true

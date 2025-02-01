@@ -26,6 +26,7 @@ var mouseState
 func _ready():
 	#console.focus_entered.connect(setInput)
 	console.hide()
+	%window.position = gameManager.lastConsolePosition
 
 
 func _on_line_edit_text_submitted(new_text: String) -> void:
@@ -80,6 +81,7 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("devConsole"):
 		if console.visible:
 			console.hide()
+			gameManager.lastConsolePosition = %window.position
 		else:
 			mouseState = Input.mouse_mode
 			console.show()

@@ -35,6 +35,10 @@ var sounds : Dictionary = {"healSound" = preload("res://assets/sounds/ui/rareIte
 			}
 
 #Misc
+var lastConsolePosition : Vector2 = Vector2(25,62)
+const defaultTweenSpeed : float = 0.25
+const defaultTransitionType = Tween.TRANS_QUART
+const defaultEaseType = Tween.EASE_OUT
 var worldMapUI : PackedScene = preload("res://assets/scenes/ui/mapOverview/mapScreen.tscn")
 var customizationUI : PackedScene = preload("res://assets/scenes/ui/customization/customizationUI.tscn")
 var orphanedData := []

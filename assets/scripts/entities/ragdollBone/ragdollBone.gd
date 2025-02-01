@@ -74,6 +74,7 @@ func _ready()-> void:
 
 
 func boneSetup()->void:
+	excludeAllAI()
 	set_meta(&"physics_material_override", preload("res://assets/resources/PhysicsMaterials/flesh_physics_material.tres"))
 	setBoneCooldownTimer()
 	audioCooldown = 0.0
@@ -203,6 +204,11 @@ func hit(dmg, dealer=null, hitImpulse:Vector3 = Vector3.ZERO, hitPoint:Vector3 =
 		#print("dmg:%s"%int(dmg))
 		#print("hp:%s"%healthComponent.health)
 		healthComponent.damage(int(dmg),dealer)
+
+func excludeAllAI()->void:
+	for i in gameManager.allPawns:
+		if !i .isPlayerPawn():
+			add_collision_exception_with(i)
 
 
 func hookes_law(displacement: Vector3, current_velocity: Vector3, stiffness: float, damping: float) -> Vector3:

@@ -37,7 +37,7 @@ func explode()->void:
 	explosionTween.tween_property(collisionShape.shape,"radius",explosionRadius,explosionSpeed).finished.connect(collisionShape.queue_free)
 	get_tree().create_timer(1).timeout.connect(queue_free)
 
-	explosionEffect.doRipple(explosionRadius,explosionSpeed,explosionSpeed)
+	explosionEffect.doRipple(explosionRadius,explosionSpeed,2.5)
 
 	if is_instance_valid(explosionEffect):
 		explosionEffect.explosionEffectPlay()

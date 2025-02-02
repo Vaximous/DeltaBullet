@@ -24,6 +24,8 @@ func doRipple(rippleAmount:float=10.0, rippleSpeed : float = 0.25, rippleFadeSpe
 
 
 func explosionEffectPlay()->void:
+	if Engine.is_editor_hint():
+		doRipple(10)
 	explosionLight.light_energy = 5.0
 	if lightTween:
 		lightTween.kill()

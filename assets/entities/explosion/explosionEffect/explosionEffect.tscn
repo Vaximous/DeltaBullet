@@ -26,8 +26,8 @@ noise = SubResource("FastNoiseLite_aa8lc")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_y3ykw"]
 render_priority = 0
 shader = ExtResource("5_aa8lc")
-shader_parameter/distortFactor = 1.0
-shader_parameter/distortSpeed = 1.0
+shader_parameter/distortFactor = 131.06
+shader_parameter/distortSpeed = 1.9
 shader_parameter/noiseTexture = SubResource("NoiseTexture2D_y3ykw")
 
 [sub_resource type="SphereMesh" id="SphereMesh_42obw"]
@@ -141,7 +141,6 @@ script = ExtResource("1_4h0uy")
 [node name="rippleMesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 0, 0)
 material_override = SubResource("ShaderMaterial_y3ykw")
-transparency = 1.0
 mesh = SubResource("SphereMesh_42obw")
 
 [node name="explosionSparks" type="GPUParticles3D" parent="."]
@@ -150,7 +149,7 @@ amount = 24
 one_shot = true
 explosiveness = 1.0
 randomness = 1.0
-seed = 1843770535
+seed = 3939762748
 fixed_fps = 0
 process_material = SubResource("ParticleProcessMaterial_4h0uy")
 draw_pass_1 = SubResource("QuadMesh_aa8lc")
@@ -161,7 +160,7 @@ amount = 12
 one_shot = true
 explosiveness = 1.0
 randomness = 1.0
-seed = 2428737679
+seed = 140456155
 fixed_fps = 0
 process_material = SubResource("ParticleProcessMaterial_y3ykw")
 draw_pass_1 = SubResource("QuadMesh_42obw")
@@ -172,12 +171,12 @@ amount = 12
 one_shot = true
 explosiveness = 1.0
 randomness = 1.0
-seed = 1870141420
+seed = 1891532609
 fixed_fps = 0
 process_material = SubResource("ParticleProcessMaterial_vye17")
 draw_pass_1 = SubResource("QuadMesh_10ejy")
 
 [node name="explosionLight" type="OmniLight3D" parent="."]
 light_color = Color(1, 0.494118, 0, 1)
-light_energy = 0.0
+light_energy = 0.125459
 shadow_enabled = true

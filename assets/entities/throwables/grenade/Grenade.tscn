@@ -1,8 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://dylrxnppg33qw"]
+[gd_scene load_steps=11 format=3 uid="uid://dylrxnppg33qw"]
 
 [ext_resource type="PackedScene" uid="uid://1lm2jr6bfhx2" path="res://assets/entities/throwables/throwableBase/throwableBase.tscn" id="1_c1g2t"]
 [ext_resource type="Script" uid="uid://xnrabr3i45q8" path="res://assets/entities/throwables/grenade/grenade.gd" id="2_xwxxe"]
 [ext_resource type="Script" uid="uid://b1b7keu4relxk" path="res://assets/entities/throwables/throwableResource/throwableResource.gd" id="3_xdnty"]
+[ext_resource type="Script" uid="uid://dd6my2ga34tq7" path="res://assets/components/healthComponent/healthComponent.gd" id="4_mwroi"]
+[ext_resource type="Script" uid="uid://bljf2d3r4oqda" path="res://assets/scripts/entities/hitbox/hitbox.gd" id="5_a7s8l"]
 
 [sub_resource type="Resource" id="Resource_q2uit"]
 script = ExtResource("3_xdnty")
@@ -22,12 +24,16 @@ albedo_color = Color(0.0980392, 0.333333, 0.0313726, 1)
 [sub_resource type="SphereShape3D" id="SphereShape3D_xdnty"]
 radius = 0.0831711
 
-[node name="Grenade" instance=ExtResource("1_c1g2t")]
+[sub_resource type="SphereShape3D" id="SphereShape3D_60wi1"]
+radius = 0.27223
+
+[node name="Grenade" node_paths=PackedStringArray("healthComponent") instance=ExtResource("1_c1g2t")]
 linear_damp = 1.2
 angular_damp = 3.0
 script = ExtResource("2_xwxxe")
 explosionRadius = 9.0
 explosionImpulse = 59.0
+healthComponent = NodePath("healthComponent")
 throwableResource = SubResource("Resource_q2uit")
 
 [node name="grenadeMesh" type="MeshInstance3D" parent="." index="1"]
@@ -36,3 +42,20 @@ surface_material_override/0 = SubResource("StandardMaterial3D_xwxxe")
 
 [node name="collisionShape3d" parent="." index="2"]
 shape = SubResource("SphereShape3D_xdnty")
+
+[node name="healthComponent" type="Node" parent="." index="3"]
+script = ExtResource("4_mwroi")
+health = 1.0
+metadata/_custom_type_script = ExtResource("4_mwroi")
+
+[node name="Hitbox" type="Area3D" parent="." index="4" node_paths=PackedStringArray("healthComponent")]
+collision_layer = 22
+collision_mask = 22
+script = ExtResource("5_a7s8l")
+healthComponent = NodePath("../healthComponent")
+hitboxDamageMult = 5.2
+
+[node name="collisionShape3d" type="CollisionShape3D" parent="Hitbox" index="0"]
+shape = SubResource("SphereShape3D_60wi1")
+
+[connection signal="healthDepleted" from="healthComponent" to="." method="_on_health_component_health_depleted"]

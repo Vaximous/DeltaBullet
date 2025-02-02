@@ -15,3 +15,7 @@ func activateThrowable()->void:
 	super()
 	createExplosion()
 	queue_free()
+
+
+func _on_health_component_health_depleted(dealer: Node3D) -> void:
+	activateThrowable()

@@ -14,9 +14,10 @@ var boneId:int
 func _ready()->void:
 	if enabled:
 		if is_instance_valid(healthComponent.componentOwner):
-			await healthComponent.componentOwner.ready
-			healthComponent.componentOwner.hitboxes.append(self)
-		set_meta(&"physics_material_override", preload("res://assets/resources/PhysicsMaterials/flesh_physics_material.tres"))
+			if healthComponent.componentOwner is BasePawn:
+				await healthComponent.componentOwner.ready
+				healthComponent.componentOwner.hitboxes.append(self)
+				set_meta(&"physics_material_override", preload("res://assets/resources/PhysicsMaterials/flesh_physics_material.tres"))
 		if !get_parent() == null:
 			if get_parent() is BoneAttachment3D:
 				boneId = get_parent().get_bone_idx()
@@ -69,9 +70,10 @@ func getCollisionObject()->CollisionObject3D:
 func addException(exception)->void:
 	if enabled:
 		if is_in_group("Flesh"):
-			if healthComponent.componentOwner:
-				if healthComponent.componentOwner.attachedCam:
-					healthComponent.componentOwner.attachedCam.camCast.add_exception(exception)
-				else:
-					if healthComponent.componentOwner.raycaster:
-						healthComponent.componentOwner.raycaster.add_exception(exception)
+			if is_instance_valid(healthComponent.componentOwner):
+				if healthComponent.componentOwner is BasePawn:
+					if healthComponent.componentOwner.attachedCam:
+						healthComponent.componentOwner.attachedCam.camCast.add_exception(exception)
+					else:
+						if healthComponent.componentOwner.raycaster:
+							healthComponent.componentOwner.raycaster.add_exception(exception)

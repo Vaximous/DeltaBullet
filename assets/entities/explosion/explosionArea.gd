@@ -1,10 +1,13 @@
 @tool
 extends Area3D
 var dealer = null
+var explosionTween : Tween
 @onready var explosionEffect = $explosionEffect
 @onready var explosionPlayer : AudioStreamPlayer3D = $explosionSound
 @onready var collisionShape : CollisionShape3D = $collisionShape3d
 @export_category("Explosion")
+##How fast will this explosion expand?
+@export var explosionSpeed : float = 0.05
 ##Explosion sound... Will play when the explosion is activated
 @export var explosionSound : AudioStream
 ##How much damage will this explosion do?
@@ -27,6 +30,11 @@ func applyHit(object:Node3D):
 			object.hit(explosionDamage,dealer,-(global_position-object.global_position).normalized() * explosionImpulse,Vector3.ZERO)
 
 func explode()->void:
+	collisionShape.shape.radius = 0
+	if explosionTween:
+		explosionTween.kill()
+	explosionTween = create_tween()
+	explosionTween.tween_property(collisionShape.shape,"radius",explosionRadius,explosionSpeed).finished.connect(collisionShape.queue_free)
 	get_tree().create_timer(1).timeout.connect(queue_free)
 	if is_instance_valid(explosionEffect):
 		explosionEffect.explosionEffectPlay()
@@ -38,9 +46,9 @@ func explode()->void:
 		explosionPlayer.play()
 
 
-	await get_tree().process_frame
-	await get_tree().process_frame
-	collisionShape.disabled = true
+	#await get_tree().process_frame
+	#await get_tree().process_frame
+	#collisionShape.disabled = true
 
 func _on_body_entered(body: Node3D) -> void:
 	#print("Bodies:%s" %get_overlapping_bodies())

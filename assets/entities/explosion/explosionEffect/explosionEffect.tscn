@@ -180,3 +180,4 @@ draw_pass_1 = SubResource("QuadMesh_10ejy")
 [node name="explosionLight" type="OmniLight3D" parent="."]
 light_color = Color(1, 0.494118, 0, 1)
 light_energy = 0.0
+shadow_enabled = true

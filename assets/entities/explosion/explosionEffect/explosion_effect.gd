@@ -18,7 +18,7 @@ func doRipple(rippleAmount:float=10.0, rippleSpeed : float = 0.25, rippleFadeSpe
 	rippleTween.parallel().tween_property(rippleMesh,"transparency",1.0,explosionFadeSpeed).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
 
 func explosionEffectPlay()->void:
-	#doRipple(10)
+	doRipple(10)
 	explosionLight.light_energy = 5.0
 	if lightTween:
 		lightTween.kill()

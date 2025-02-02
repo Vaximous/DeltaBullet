@@ -14,5 +14,6 @@ void fragment(){
 	vec2 noise = vec2(texture(noiseTexture,noise_uv).r,texture(noiseTexture2,noise_uv).r);
 	vec2 noise2 = vec2(texture(noiseTexture2,noise_uv).r,texture(noiseTexture2,noise_uv2).r);
 	vec2 base = SCREEN_UV + (noise+noise2)*distortFactor;
-  ALBEDO = texture(albedoTex,base).rgb;
+	ALBEDO = texture(albedoTex,base).rgb;
+	ALBEDO = vec3(1);
 }

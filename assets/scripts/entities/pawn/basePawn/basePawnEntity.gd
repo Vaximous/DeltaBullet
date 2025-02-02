@@ -246,6 +246,7 @@ const maxStepHeight : float = 0.5
 var snappedToStairsLastFrame : bool = false
 var lastFrameOnFloor : int = -INF
 @export_subgroup("Throwables")
+@export var throwForce : float = 35.0
 var throwableItem : PackedScene = load("res://assets/entities/throwables/grenade/Grenade.tscn")
 var heldThrowable : ThrowableBase
 var throwableAmount : int = 3
@@ -1143,6 +1144,7 @@ func armThrowable()->void:
 		heldThrowable = throwableItem.instantiate()
 		%leftHandHold.add_child(heldThrowable)
 		heldThrowable.freeze = true
+		heldThrowable.add_collision_exception_with(self)
 #		heldThrowable.collisionShape.disabled = true
 		animationTree.set("parameters/leftArmed_Throw/request",AnimationNodeOneShot.ONE_SHOT_REQUEST_NONE)
 		isArmingThrowable = true
@@ -1158,7 +1160,15 @@ func throwThrowable()->void:
 		#heldThrowable.collisionShape.disabled = false
 		heldThrowable.reparent(gameManager.world.worldProps)
 		heldThrowable.freeze = false
+		if is_instance_valid(attachedCam):
+			attachedCam.fireRecoil(0.0,0.0,0.8,true)
+			heldThrowable.global_position = neckBone.global_position
+			heldThrowable.global_position.z += 0.25
+			heldThrowable.apply_central_impulse((attachedCam.camCast.global_transform.basis.z * -throwForce) + Vector3(0,-turnAmount,0))
+		else:
+			heldThrowable.apply_central_impulse((pawnMesh.global_transform.basis.z * -throwForce) + Vector3(0,-turnAmount,0))
 		heldThrowable = null
+		%throwSound.play()
 		#heldThrowable.apply_central_impulse()
 		await get_tree().create_timer(0.8).timeout
 		canThrowThrowable = true

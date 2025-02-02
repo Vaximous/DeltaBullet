@@ -21,12 +21,12 @@ func _process(_delta:float)->void:
 			if Input.is_action_pressed("gThrowThrowable"):
 				if is_instance_valid(controllingPawn):
 					controllingPawn.freeAim = true
-					if !controllingPawn.isArmingThrowable and !controllingPawn.isThrowing:
+					if !controllingPawn.isArmingThrowable and !controllingPawn.isThrowing and !is_instance_valid(controllingPawn.heldThrowable):
 						controllingPawn.meshRotation = controllingPawn.attachedCam.camRot
 						controllingPawn.armThrowable()
 
 			if Input.is_action_just_released("gThrowThrowable"):
-				if controllingPawn and !controllingPawn.isThrowing:
+				if is_instance_valid(controllingPawn) and is_instance_valid(controllingPawn.heldThrowable):
 					controllingPawn.freeAimTimer.start()
 					controllingPawn.throwThrowable()
 

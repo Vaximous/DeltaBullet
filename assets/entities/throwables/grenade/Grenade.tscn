@@ -1,0 +1,36 @@
+[gd_scene load_steps=8 format=3 uid="uid://dylrxnppg33qw"]
+
+[ext_resource type="PackedScene" uid="uid://1lm2jr6bfhx2" path="res://assets/entities/throwables/throwableBase/throwableBase.tscn" id="1_c1g2t"]
+[ext_resource type="Script" uid="uid://xnrabr3i45q8" path="res://assets/entities/throwables/grenade/grenade.gd" id="2_xwxxe"]
+[ext_resource type="Script" uid="uid://b1b7keu4relxk" path="res://assets/entities/throwables/throwableResource/throwableResource.gd" id="3_xdnty"]
+
+[sub_resource type="Resource" id="Resource_q2uit"]
+script = ExtResource("3_xdnty")
+itemName = "Grenade"
+canCook = true
+cookTime = 5.0
+throwableDamage = 100.0
+metadata/_custom_type_script = ExtResource("3_xdnty")
+
+[sub_resource type="SphereMesh" id="SphereMesh_c1g2t"]
+radius = 0.074
+height = 0.169
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xwxxe"]
+albedo_color = Color(0.0980392, 0.333333, 0.0313726, 1)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_xdnty"]
+radius = 0.0831711
+
+[node name="Grenade" instance=ExtResource("1_c1g2t")]
+script = ExtResource("2_xwxxe")
+explosionRadius = 9.0
+explosionImpulse = 59.0
+throwableResource = SubResource("Resource_q2uit")
+
+[node name="grenadeMesh" type="MeshInstance3D" parent="." index="1"]
+mesh = SubResource("SphereMesh_c1g2t")
+surface_material_override/0 = SubResource("StandardMaterial3D_xwxxe")
+
+[node name="collisionShape3d" parent="." index="2"]
+shape = SubResource("SphereShape3D_xdnty")

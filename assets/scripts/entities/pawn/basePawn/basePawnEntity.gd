@@ -246,8 +246,9 @@ const maxStepHeight : float = 0.5
 var snappedToStairsLastFrame : bool = false
 var lastFrameOnFloor : int = -INF
 @export_subgroup("Throwables")
-var throwableItem : Node
-var throwableAmount : int = 0
+var throwableItem : PackedScene = load("res://assets/entities/throwables/grenade/Grenade.tscn")
+var heldThrowable : ThrowableBase
+var throwableAmount : int = 3
 var isArmingThrowable : bool = false:
 	set(value):
 		isArmingThrowable = value
@@ -1138,17 +1139,27 @@ func _on_health_component_on_damaged(dealer:Node3D, hitDirection:Vector3)->void:
 		flinch()
 
 func armThrowable()->void:
-	if canThrowThrowable and !isArmingThrowable and throwableAmount>0:
+	if canThrowThrowable and !isArmingThrowable and throwableAmount>0 and !is_instance_valid(heldThrowable):
+		heldThrowable = throwableItem.instantiate()
+		%leftHandHold.add_child(heldThrowable)
+		heldThrowable.freeze = true
+#		heldThrowable.collisionShape.disabled = true
 		animationTree.set("parameters/leftArmed_Throw/request",AnimationNodeOneShot.ONE_SHOT_REQUEST_NONE)
 		isArmingThrowable = true
 		isThrowing = false
 
 func throwThrowable()->void:
-	if isArmingThrowable:
+	if is_instance_valid(heldThrowable):
+		throwableAmount -= 1
 		isThrowing = true
 		canThrowThrowable = false
 		animationTree.set("parameters/leftArmed_Throw/request",AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 		## Throw the actual throwable here
+		#heldThrowable.collisionShape.disabled = false
+		heldThrowable.reparent(gameManager.world.worldProps)
+		heldThrowable.freeze = false
+		heldThrowable = null
+		#heldThrowable.apply_central_impulse()
 		await get_tree().create_timer(0.8).timeout
 		canThrowThrowable = true
 		isThrowing = false
@@ -1372,7 +1383,7 @@ func disableThrowableAnim()->void:
 
 func enableThrowableAnim()->void:
 	if !isPawnDead and is_instance_valid(self):
-		enableLeftHand()
+		#enableLeftHand()
 		if throwableTween:
 			throwableTween.kill()
 		throwableTween = create_tween().bind_node(animationTree)

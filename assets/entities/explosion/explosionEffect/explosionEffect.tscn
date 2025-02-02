@@ -1,9 +1,16 @@
-[gd_scene load_steps=22 format=3 uid="uid://bf7ymojudrmnq"]
+[gd_scene load_steps=25 format=3 uid="uid://bf7ymojudrmnq"]
 
 [ext_resource type="Script" uid="uid://dqn10i1nco4wo" path="res://assets/entities/explosion/explosionEffect/explosion_effect.gd" id="1_4h0uy"]
 [ext_resource type="Material" uid="uid://cy8gqq4kaovdk" path="res://assets/materials/effects/spark/spark.tres" id="2_bgy3i"]
 [ext_resource type="Material" uid="uid://cvq0yr0ijdqjx" path="res://assets/materials/effects/explosionSmoke/explosionSmoke.tres" id="3_a7mqw"]
 [ext_resource type="Texture2D" uid="uid://6a0p7prm1yo4" path="res://addons/kenney_particle_pack/smoke_02.png" id="4_a7mqw"]
+[ext_resource type="Shader" uid="uid://d3vyl7dcth2k2" path="res://assets/entities/explosion/explosionEffect/explosionRipple.gdshader" id="5_aa8lc"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y3ykw"]
+render_priority = 0
+shader = ExtResource("5_aa8lc")
+
+[sub_resource type="SphereMesh" id="SphereMesh_42obw"]
 
 [sub_resource type="Curve" id="Curve_y3ykw"]
 _limits = [0.0, 3.0, 0.0, 1.0]
@@ -111,13 +118,19 @@ material = SubResource("StandardMaterial3D_bkcfs")
 [node name="explosionEffect" type="Node3D"]
 script = ExtResource("1_4h0uy")
 
+[node name="rippleMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+material_override = SubResource("ShaderMaterial_y3ykw")
+transparency = 1.0
+mesh = SubResource("SphereMesh_42obw")
+
 [node name="explosionSparks" type="GPUParticles3D" parent="."]
 emitting = false
 amount = 12
 one_shot = true
 explosiveness = 1.0
 randomness = 1.0
-seed = 4194803075
+seed = 4103699299
 fixed_fps = 0
 process_material = SubResource("ParticleProcessMaterial_4h0uy")
 draw_pass_1 = SubResource("QuadMesh_aa8lc")
@@ -128,7 +141,7 @@ amount = 12
 one_shot = true
 explosiveness = 1.0
 randomness = 1.0
-seed = 2872891283
+seed = 4089618267
 fixed_fps = 0
 process_material = SubResource("ParticleProcessMaterial_y3ykw")
 draw_pass_1 = SubResource("QuadMesh_42obw")
@@ -139,7 +152,7 @@ amount = 12
 one_shot = true
 explosiveness = 1.0
 randomness = 1.0
-seed = 2148641245
+seed = 4185934407
 fixed_fps = 0
 process_material = SubResource("ParticleProcessMaterial_vye17")
 draw_pass_1 = SubResource("QuadMesh_10ejy")

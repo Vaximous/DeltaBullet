@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://bf7ymojudrmnq"]
+[gd_scene load_steps=29 format=3 uid="uid://bf7ymojudrmnq"]
 
 [ext_resource type="Script" uid="uid://dqn10i1nco4wo" path="res://assets/entities/explosion/explosionEffect/explosion_effect.gd" id="1_4h0uy"]
 [ext_resource type="Material" uid="uid://cy8gqq4kaovdk" path="res://assets/materials/effects/spark/spark.tres" id="2_bgy3i"]
@@ -6,9 +6,29 @@
 [ext_resource type="Texture2D" uid="uid://6a0p7prm1yo4" path="res://addons/kenney_particle_pack/smoke_02.png" id="4_a7mqw"]
 [ext_resource type="Shader" uid="uid://d3vyl7dcth2k2" path="res://assets/entities/explosion/explosionEffect/explosionRipple.gdshader" id="5_aa8lc"]
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_aa8lc"]
+seed = 26
+frequency = 0.0334
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_aa8lc"]
+as_normal_map = true
+noise = SubResource("FastNoiseLite_aa8lc")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_y3ykw"]
+seed = 8
+frequency = 0.0199
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_42obw"]
+as_normal_map = true
+noise = SubResource("FastNoiseLite_y3ykw")
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_y3ykw"]
 render_priority = 0
 shader = ExtResource("5_aa8lc")
+shader_parameter/distortFactor = 3.155
+shader_parameter/distortSpeed = 13.555
+shader_parameter/noiseTexture = SubResource("NoiseTexture2D_aa8lc")
+shader_parameter/noiseTexture2 = SubResource("NoiseTexture2D_42obw")
 
 [sub_resource type="SphereMesh" id="SphereMesh_42obw"]
 
@@ -119,18 +139,18 @@ material = SubResource("StandardMaterial3D_bkcfs")
 script = ExtResource("1_4h0uy")
 
 [node name="rippleMesh" type="MeshInstance3D" parent="."]
-transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 0, 0)
 material_override = SubResource("ShaderMaterial_y3ykw")
 transparency = 1.0
 mesh = SubResource("SphereMesh_42obw")
 
 [node name="explosionSparks" type="GPUParticles3D" parent="."]
 emitting = false
-amount = 12
+amount = 24
 one_shot = true
 explosiveness = 1.0
 randomness = 1.0
-seed = 4103699299
+seed = 1843770535
 fixed_fps = 0
 process_material = SubResource("ParticleProcessMaterial_4h0uy")
 draw_pass_1 = SubResource("QuadMesh_aa8lc")
@@ -141,7 +161,7 @@ amount = 12
 one_shot = true
 explosiveness = 1.0
 randomness = 1.0
-seed = 4089618267
+seed = 2428737679
 fixed_fps = 0
 process_material = SubResource("ParticleProcessMaterial_y3ykw")
 draw_pass_1 = SubResource("QuadMesh_42obw")
@@ -152,7 +172,7 @@ amount = 12
 one_shot = true
 explosiveness = 1.0
 randomness = 1.0
-seed = 4185934407
+seed = 1870141420
 fixed_fps = 0
 process_material = SubResource("ParticleProcessMaterial_vye17")
 draw_pass_1 = SubResource("QuadMesh_10ejy")

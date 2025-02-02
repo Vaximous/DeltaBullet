@@ -1,20 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://du4y21jtkhvwk"]
+[gd_scene load_steps=5 format=3 uid="uid://du4y21jtkhvwk"]
 
 [ext_resource type="Script" uid="uid://bcu8gmwt7oiwt" path="res://assets/entities/explosion/explosionArea.gd" id="1_0oqcd"]
 [ext_resource type="PackedScene" uid="uid://bf7ymojudrmnq" path="res://assets/entities/explosion/explosionEffect/explosionEffect.tscn" id="2_4mbl6"]
-[ext_resource type="AudioStream" uid="uid://cnnogrpt2yoiw" path="res://assets/sounds/explosion/explosion1.wav" id="2_o15xk"]
-[ext_resource type="AudioStream" uid="uid://o4vn75la6s7e" path="res://assets/sounds/explosion/explosion2.wav" id="3_r3ol6"]
-[ext_resource type="AudioStream" uid="uid://sm4g64ergq5d" path="res://assets/sounds/explosion/explosion3.wav" id="4_6qac8"]
-[ext_resource type="AudioStream" uid="uid://bs5wo12ssbrea" path="res://assets/sounds/explosion/explosion4.wav" id="5_r3ol6"]
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_wfohv"]
-random_pitch = 1.2
-random_volume_offset_db = 0.9
-streams_count = 4
-stream_0/stream = ExtResource("2_o15xk")
-stream_1/stream = ExtResource("3_r3ol6")
-stream_2/stream = ExtResource("4_6qac8")
-stream_3/stream = ExtResource("5_r3ol6")
+[ext_resource type="AudioStream" uid="uid://trs41aoblx2l" path="res://assets/resources/grenade_explosion_sfx_randomizer.tres" id="4_4360k"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_4mbl6"]
 radius = 10.0
@@ -23,7 +11,8 @@ radius = 10.0
 collision_layer = 27
 collision_mask = 27
 script = ExtResource("1_0oqcd")
-explosionSound = SubResource("AudioStreamRandomizer_wfohv")
+explosionSpeed = 0.1
+explosionSound = ExtResource("4_4360k")
 
 [node name="collisionShape3d" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_4mbl6")
@@ -31,9 +20,11 @@ shape = SubResource("SphereShape3D_4mbl6")
 [node name="explosionEffect" parent="." instance=ExtResource("2_4mbl6")]
 
 [node name="explosionSound" type="AudioStreamPlayer3D" parent="."]
-volume_db = 5.0
+stream = ExtResource("4_4360k")
+max_db = -3.0
 bus = &"Sounds"
-attenuation_filter_db = 0.0
+attenuation_filter_cutoff_hz = 2000.0
+attenuation_filter_db = -12.0
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -1,19 +1,18 @@
 shader_type spatial;
-render_mode unshaded;
+render_mode unshaded, cull_front;
 
 uniform float distortFactor = 0;
 uniform float distortSpeed = 0;
 uniform sampler2D noiseTexture;
-uniform sampler2D noiseTexture2;
-uniform sampler2D albedoTex : hint_screen_texture,repeat_disable;
+//uniform sampler2D noiseTexture2;
+uniform sampler2D screen_tex : hint_screen_texture,repeat_disable,filter_linear_mipmap;
 
 
 void fragment(){
-	vec2 noise_uv = SCREEN_UV + TIME*distortSpeed;
-	vec2 noise_uv2 = SCREEN_UV + TIME*distortSpeed;
-	vec2 noise = vec2(texture(noiseTexture,noise_uv).r,texture(noiseTexture2,noise_uv).r);
-	vec2 noise2 = vec2(texture(noiseTexture2,noise_uv).r,texture(noiseTexture2,noise_uv2).r);
-	vec2 base = SCREEN_UV + (noise+noise2)*distortFactor;
-	ALBEDO = texture(albedoTex,base).rgb;
-	ALBEDO = vec3(1);
+	float dotp = dot(vec3(0.0, 0.0, 1.0), NORMAL);
+	float fresnel = smoothstep(0.5, 1.0, dotp) * smoothstep(0.8, 0.7, dotp) + smoothstep(0.7, 1.0, dotp) * 0.25 * distortFactor;
+	vec3 uv_off = NORMAL * fresnel * 0.1;
+	ALBEDO = textureLod(screen_tex,SCREEN_UV + uv_off.xy, 1.0).rgb;
+	ALBEDO += texture(noiseTexture, UV + vec2(TIME * distortSpeed)).rgb * distortFactor;
+	//ALBEDO = vec3(fresnel);
 }

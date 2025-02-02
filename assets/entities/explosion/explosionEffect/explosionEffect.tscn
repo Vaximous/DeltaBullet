@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://bf7ymojudrmnq"]
+[gd_scene load_steps=28 format=3 uid="uid://bf7ymojudrmnq"]
 
 [ext_resource type="Script" uid="uid://dqn10i1nco4wo" path="res://assets/entities/explosion/explosionEffect/explosion_effect.gd" id="1_4h0uy"]
 [ext_resource type="Material" uid="uid://cy8gqq4kaovdk" path="res://assets/materials/effects/spark/spark.tres" id="2_bgy3i"]
@@ -6,29 +6,29 @@
 [ext_resource type="Texture2D" uid="uid://6a0p7prm1yo4" path="res://addons/kenney_particle_pack/smoke_02.png" id="4_a7mqw"]
 [ext_resource type="Shader" uid="uid://d3vyl7dcth2k2" path="res://assets/entities/explosion/explosionEffect/explosionRipple.gdshader" id="5_aa8lc"]
 
+[sub_resource type="Gradient" id="Gradient_aa8lc"]
+offsets = PackedFloat32Array(0.557562, 1)
+
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_aa8lc"]
+noise_type = 2
 seed = 26
-frequency = 0.0334
+frequency = 0.0475
+fractal_type = 0
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_aa8lc"]
-as_normal_map = true
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_y3ykw"]
+width = 64
+height = 64
+seamless = true
+seamless_blend_skirt = 1.0
+color_ramp = SubResource("Gradient_aa8lc")
 noise = SubResource("FastNoiseLite_aa8lc")
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_y3ykw"]
-seed = 8
-frequency = 0.0199
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_42obw"]
-as_normal_map = true
-noise = SubResource("FastNoiseLite_y3ykw")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_y3ykw"]
 render_priority = 0
 shader = ExtResource("5_aa8lc")
-shader_parameter/distortFactor = 3.155
-shader_parameter/distortSpeed = 13.555
-shader_parameter/noiseTexture = SubResource("NoiseTexture2D_aa8lc")
-shader_parameter/noiseTexture2 = SubResource("NoiseTexture2D_42obw")
+shader_parameter/distortFactor = 1.0
+shader_parameter/distortSpeed = 1.0
+shader_parameter/noiseTexture = SubResource("NoiseTexture2D_y3ykw")
 
 [sub_resource type="SphereMesh" id="SphereMesh_42obw"]
 

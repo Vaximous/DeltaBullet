@@ -35,6 +35,7 @@
 
 [sub_resource type="Resource" id="Resource_o85ge"]
 script = ExtResource("2_ex3qv")
+worldEditable = false
 worldName = "Uncle Tsimks' Shop"
 worldDescription = "Get ripped off at this jackasses pawn shop.."
 worldType = 0

@@ -8,6 +8,11 @@ var explosionFadeSpeed : float = 0.25
 @onready var explosionLight : OmniLight3D = $explosionLight
 @export_tool_button("Play Effect") var previewEffect = explosionEffectPlay
 
+
+func is_emitting() -> bool:
+	return $explosionSparks.emitting or $explosionSmoke.emitting or $explosion.emitting
+
+
 func doRipple(rippleAmount:float=10.0, rippleSpeed : float = 0.25, rippleFadeSpeed : float = 0.25)->void:
 	rippleMesh.scale = Vector3.ZERO
 	rippleMesh.transparency = 0
@@ -17,8 +22,8 @@ func doRipple(rippleAmount:float=10.0, rippleSpeed : float = 0.25, rippleFadeSpe
 	rippleTween.tween_property(rippleMesh,"scale",Vector3(rippleAmount,rippleAmount,rippleAmount)*2,rippleSpeed)
 	rippleTween.parallel().tween_property(rippleMesh,"transparency",1.0,explosionFadeSpeed).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
 
+
 func explosionEffectPlay()->void:
-	doRipple(10)
 	explosionLight.light_energy = 5.0
 	if lightTween:
 		lightTween.kill()

@@ -26,6 +26,7 @@ func fadeFireLightIn()->void:
 	lightTween.tween_property(%burnLight,"light_energy",0.5,1)
 
 func fadeFireLightOut()->void:
+	burnTarget.set_meta("isBurning", false)
 	if lightTween:
 		lightTween.kill()
 	lightTween = create_tween()

@@ -19,8 +19,9 @@ func _ready()->void:
 func _process(_delta:float)->void:
 		if is_instance_valid(controllingPawn) and gameManager.isMouseHidden():
 			if Input.is_action_pressed("gThrowThrowable"):
-				if is_instance_valid(controllingPawn):
-					controllingPawn.freeAim = true
+				if is_instance_valid(controllingPawn) and controllingPawn.throwableAmount > 0:
+					if !controllingPawn.freeAim:
+						controllingPawn.freeAim = true
 					if !controllingPawn.isArmingThrowable and !controllingPawn.isThrowing and !is_instance_valid(controllingPawn.heldThrowable):
 						controllingPawn.meshRotation = controllingPawn.attachedCam.camRot
 						controllingPawn.armThrowable()

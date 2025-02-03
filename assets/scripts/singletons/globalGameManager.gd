@@ -103,6 +103,7 @@ func _process(delta: float) -> void:
 
 func burnTarget(node:Node3D,burnTime:float=10,burnDamage:float=3.5):
 	if node.has_method("hit") or node.get_meta("isFlammable") == true:
+		node.set_meta("isBurning", true)
 		var burner = preload("res://assets/entities/emitters/burnEffect/burnEffect.tscn").instantiate()
 		node.add_child(burner)
 		burner.burnTime = burnTime

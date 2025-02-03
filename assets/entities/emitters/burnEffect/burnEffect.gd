@@ -6,16 +6,21 @@ var lightTween : Tween
 ##How long will it take to tick and damage the target
 @export var burnTickTime : float = 0.5
 ##How long will the target be burned for
-@export var burnTime : float = 10.0
+@export var burnTime : float = 10.0:
+	set(value):
+		burnTime = value
+		if is_instance_valid(burnTimer):
+			burnTimer.stop()
+			burnTimer.wait_time = burnTime
+			burnTimer.start()
+
 ##How much damage will the target be burned for each tick
 @export var burnDamage : float = 10.0
 
 func _ready() -> void:
 	fadeFireLightIn()
 	damageTimer.wait_time = burnTickTime
-	burnTimer.wait_time = burnTime
 	damageTimer.start()
-	burnTimer.start()
 	$burnSound.play()
 
 func fadeFireLightIn()->void:

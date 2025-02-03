@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://7kxdrnrmipu"]
+
+[ext_resource type="Script" uid="uid://c1whsegiv72t3" path="res://assets/components/spawnTriggerArea/wave_spawner.gd" id="1_mnj5e"]
+
+[node name="WaveSpawner" type="Timer"]
+script = ExtResource("1_mnj5e")
+
+[connection signal="timeout" from="." to="." method="_on_timeout"]

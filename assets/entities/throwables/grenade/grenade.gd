@@ -12,6 +12,7 @@ func createExplosion()->void:
 	explo.dealer = dealer
 	explo.explode()
 
+
 func activateThrowable()->void:
 	super()
 	createExplosion()

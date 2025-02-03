@@ -8,11 +8,11 @@ var lastSpawnedPawn : BasePawn = null
 var previewMeshMat = load("res://assets/materials/pawnMaterial/MALE.tres").duplicate()
 @export_category("Pawn Spawn")
 @export var active : bool = true
-@export var pawnName : String:
-	set(value):
-		pawnName = value
-		if value != "" or " ":
-			name = pawnName
+@export var pawnName : String
+	#set(value):
+		#pawnName = value
+		#if value != "" or " ":
+			#name = pawnName
 @export_enum("Player","Pawn") var pawnType : int = 1:
 	set(value):
 		pawnType = value
@@ -69,7 +69,15 @@ func pawnTypeColor(value)->void:
 		if value == 0:
 			previewMesh.material_override.albedo_color = Color.GREEN
 
-func spawnPawn(forceParent : Node = null):
+func spawnPawn(forceParent : Node = null, _params : PawnSpawnParameters = null) -> BasePawn:
+	if _params != null:
+		pawnType = _params.pawn_type
+		pawnName = _params.pawn_name
+		pawnWeapons = _params.weapons
+		pawnClothing = _params.clothes
+		aiType = _params.ai_type
+		aiSkill = _params.ai_skill
+
 	if active:
 		var pawn : BasePawn = gameManager.pawnScene.instantiate()
 		#Player Pawn
@@ -181,6 +189,7 @@ func spawnPawn(forceParent : Node = null):
 			pawn.healthComponent.setHealth(pawnHP)
 		pawnSpawned.emit(pawn)
 		return pawn
+	return null
 
 func setClothesPreview()->void:
 	if Engine.is_editor_hint():

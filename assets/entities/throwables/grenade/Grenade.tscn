@@ -22,7 +22,7 @@ height = 0.169
 albedo_color = Color(0.0980392, 0.333333, 0.0313726, 1)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_xdnty"]
-radius = 0.0831711
+radius = 0.151687
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_60wi1"]
 radius = 0.27223
@@ -31,8 +31,8 @@ radius = 0.27223
 linear_damp = 1.2
 angular_damp = 3.0
 script = ExtResource("2_xwxxe")
-explosionRadius = 9.0
-explosionImpulse = 59.0
+explosionRadius = 4.5
+explosionImpulse = 35.0
 healthComponent = NodePath("healthComponent")
 throwableResource = SubResource("Resource_q2uit")
 

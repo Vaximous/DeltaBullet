@@ -203,7 +203,10 @@ func hit(dmg, dealer=null, hitImpulse:Vector3 = Vector3.ZERO, hitPoint:Vector3 =
 	if is_instance_valid(healthComponent):
 		#print("dmg:%s"%int(dmg))
 		#print("hp:%s"%healthComponent.health)
-		healthComponent.damage(int(dmg),dealer)
+		if is_instance_valid(dealer):
+			healthComponent.damage(int(dmg),dealer)
+		else:
+			healthComponent.damage(int(dmg),null)
 
 func excludeAllAI()->void:
 	for i in gameManager.allPawns:

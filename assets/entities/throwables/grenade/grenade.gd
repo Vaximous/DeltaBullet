@@ -9,6 +9,7 @@ func createExplosion()->void:
 	explo.explosionRadius = explosionRadius
 	explo.explosionImpulse = explosionImpulse
 	explo.explosionDamage = throwableResource.throwableDamage
+	explo.dealer = dealer
 	explo.explode()
 
 func activateThrowable()->void:

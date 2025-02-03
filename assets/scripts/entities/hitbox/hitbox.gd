@@ -56,9 +56,10 @@ func hit(dmg, dealer=null, hitImpulse:Vector3 = Vector3.ZERO, hitPoint:Vector3 =
 			damaged.emit(dmg,hitImpulse,hitPoint, dealer)
 		else:
 			damaged.emit(dmg,hitImpulse,hitPoint,null)
-
+	if is_instance_valid(dealer):
 		healthComponent.damage(dmg * hitboxDamageMult, dealer,hitImpulse)
-
+	else:
+		healthComponent.damage(dmg * hitboxDamageMult, null,hitImpulse)
 
 
 func getCollisionObject()->CollisionObject3D:

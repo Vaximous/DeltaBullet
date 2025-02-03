@@ -101,7 +101,14 @@ func _process(delta: float) -> void:
 	AudioServer.playback_speed_scale = Engine.time_scale
 	DisplayServer.window_set_title(ProjectSettings.get_setting("application/config/name"))
 
-
+func burnTarget(node:Node3D,burnTime:float=10,burnDamage:float=3.5):
+	if node.has_method("hit") or node.get_meta("isFlammable") == true:
+		var burner = preload("res://assets/entities/emitters/burnEffect/burnEffect.tscn").instantiate()
+		node.add_child(burner)
+		burner.burnTime = burnTime
+		burner.burnTarget = node
+		burner.burnDamage = burnDamage
+		burner.global_rotation = Vector3.ZERO
 
 func freeOrphanNodes():
 	var keep := []

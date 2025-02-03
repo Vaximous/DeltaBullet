@@ -1143,6 +1143,7 @@ func armThrowable()->void:
 	if canThrowThrowable and !isArmingThrowable and throwableAmount>0 and !is_instance_valid(heldThrowable):
 		heldThrowable = throwableItem.instantiate()
 		%leftHandHold.add_child(heldThrowable)
+		heldThrowable.dealer = self
 		heldThrowable.freeze = true
 		heldThrowable.add_collision_exception_with(self)
 #		heldThrowable.collisionShape.disabled = true

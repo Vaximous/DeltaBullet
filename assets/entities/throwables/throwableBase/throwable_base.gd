@@ -1,6 +1,7 @@
 class_name ThrowableBase
 extends RigidBody3D
 signal onHit(impulse,vector)
+var dealer : Node3D = null
 @export_category("Throwable")
 @export var healthComponent : HealthComponent
 @onready var collsionShape : CollisionShape3D = $collisionShape3d

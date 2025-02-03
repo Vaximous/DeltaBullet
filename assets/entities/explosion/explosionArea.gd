@@ -23,6 +23,10 @@ var explosionTween : Tween
 
 func applyHit(object:Node3D):
 	if is_instance_valid(object):
+		var burnChance : bool = [true,false].pick_random()
+		if burnChance:
+			gameManager.burnTarget(object,randf_range(3,30),0.8)
+
 		if object.has_method("velocity"):
 			object.velocity += -(global_position-object.global_position).normalized() * explosionImpulse
 
@@ -35,9 +39,9 @@ func explode()->void:
 		explosionTween.kill()
 	explosionTween = create_tween()
 	explosionTween.tween_property(collisionShape.shape,"radius",explosionRadius,explosionSpeed).finished.connect(collisionShape.queue_free)
-	get_tree().create_timer(1).timeout.connect(queue_free)
 
 	explosionEffect.doRipple(explosionRadius,explosionSpeed,2.5)
+
 
 	if is_instance_valid(explosionEffect):
 		explosionEffect.explosionEffectPlay()
@@ -51,6 +55,7 @@ func explode()->void:
 			await explosionPlayer.finished
 		while explosionEffect.is_emitting():
 			await get_tree().create_timer(1.0).timeout
+
 
 
 	#await get_tree().process_frame

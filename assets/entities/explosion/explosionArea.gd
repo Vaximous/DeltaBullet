@@ -25,6 +25,7 @@ func applyHit(object:Node3D):
 	if is_instance_valid(object):
 		var burnChance : bool = [true,false].pick_random()
 		if burnChance:
+			randomize()
 			gameManager.burnTarget(object,randf_range(3,30),0.8)
 
 		if object.has_method("velocity"):

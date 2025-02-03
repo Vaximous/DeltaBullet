@@ -1171,7 +1171,7 @@ func throwThrowable()->void:
 		heldThrowable = null
 		%throwSound.play()
 		#heldThrowable.apply_central_impulse()
-		await get_tree().create_timer(0.8).timeout
+		await get_tree().create_timer(0.3).timeout
 		canThrowThrowable = true
 		isThrowing = false
 		isArmingThrowable = false

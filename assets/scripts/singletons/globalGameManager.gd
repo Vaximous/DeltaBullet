@@ -99,7 +99,7 @@ func _ready()->void:
 func _process(delta: float) -> void:
 	#Set audio pitch to match timescale
 	AudioServer.playback_speed_scale = Engine.time_scale
-	DisplayServer.window_set_title(ProjectSettings.get_setting("application/config/name"))
+	#DisplayServer.window_set_title(ProjectSettings.get_setting("application/config/name"))
 
 func burnTarget(node:Node3D,burnTime:float=10,burnDamage:float=3.5):
 	if node.has_method("hit") or node.get_meta("isFlammable") == true:

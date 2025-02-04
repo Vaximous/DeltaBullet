@@ -26,8 +26,9 @@ noise = SubResource("FastNoiseLite_aa8lc")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_y3ykw"]
 render_priority = 0
 shader = ExtResource("5_aa8lc")
-shader_parameter/distortFactor = 131.06
-shader_parameter/distortSpeed = 1.9
+shader_parameter/innerRange = 0.93
+shader_parameter/distortFactor = 133.605
+shader_parameter/distortSpeed = 2.015
 shader_parameter/noiseTexture = SubResource("NoiseTexture2D_y3ykw")
 
 [sub_resource type="SphereMesh" id="SphereMesh_42obw"]

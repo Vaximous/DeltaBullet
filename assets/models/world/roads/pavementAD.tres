@@ -1,0 +1,35 @@
+[gd_resource type="ArrayMesh" load_steps=3 format=4 uid="uid://bsse6nruhuv6k"]
+
+[ext_resource type="Material" uid="uid://ccvhat2p5n5y1" path="res://assets/materials/world/roads/13 - Default.tres" id="1_otrkw"]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_vbf24"]
+_surfaces = [{
+"aabb": AABB(-7.49999, -7.5, 1.52588e-07, 15, 15, 0.32707),
+"format": 34359742465,
+"index_count": 42,
+"index_data": PackedByteArray("AAABAAIAAwACAAEAAQAEAAMABQABAAAABAABAAUAAAAGAAUABQAHAAQABQAGAAgABwAFAAkACAAJAAUACQAKAAcACQAIAAsACgAJAAsACwAMAAoA"),
+"name": "13 - Default",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 13,
+"vertex_data": PackedByteArray("6P/vwI/C9bW3dac+HJ/cvz/YuMC2dac+6f/vwAQA8MC2dac+6f/vwAQA8MAK1yM0HJ/cvz/YuMAK1yM0LNIrQE7SK8C3dac+6P/vwP3/70C3dac+LNIrQE7SK8AK1yM0CtejtQAA8EC4dac+Hdi4QBSf3D+3dac+Hdi4QBSf3D8K1yM04P/vQAAA8EC4dac+4P/vQAAA8EAK1yM0")
+}]
+blend_shape_mode = 0
+
+[resource]
+resource_name = "Pavement_A_D"
+_surfaces = [{
+"aabb": AABB(-7.49999, -7.5, 1.52588e-07, 15, 15, 0.32707),
+"attribute_data": PackedByteArray("bhKAPrr9Tz9TrZg+L0tcP24SgD7x9l8/aHSrPoG1VT9uEoA+hARAP9gEoD6EBEA/vp+4PvdRTD9D978+hARAP1wWgD7W+V8/XBaAPgBxXz+QDpA+AHFfP5AOkD4AcV8/kA6QPtb5Xz9cFoA+1vlfP8YGoD7W+V8/xgagPgBxXz/6/q8+AHFfP/r+rz7W+V8/kA6QPtb5Xz+QDpA+AHFfP8YGoD4AcV8/xgagPtb5Xz/6/q8+1vlfP/r+rz4AcV8/Lve/PgBxXz8u978+AHFfPy73vz7W+V8/+v6vPtb5Xz8="),
+"format": 34359742487,
+"index_count": 42,
+"index_data": PackedByteArray("AAABAAIAAwABAAAAAAAEAAMAAwAEAAUABQAGAAMABgAFAAcACAAJAAoACwAMAA0ADgAPABAAEAARAA4AEgATABQAFAAVABIAFgAXABgAGQAaABsA"),
+"material": ExtResource("1_otrkw"),
+"name": "13 - Default",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 28,
+"vertex_data": PackedByteArray("6P/vwI/C9bW3dac+HJ/cvz/YuMC2dac+6f/vwAQA8MC2dac+LNIrQE7SK8C3dac+6P/vwP3/70C3dac+CtejtQAA8EC4dac+Hdi4QBSf3D+3dac+4P/vQAAA8EC4dac+6f/vwAQA8MAK1yM06f/vwAQA8MC2dac+HJ/cvz/YuMC2dac+HJ/cvz/YuMC2dac+HJ/cvz/YuMAK1yM06f/vwAQA8MAK1yM0LNIrQE7SK8AK1yM0LNIrQE7SK8C3dac+Hdi4QBSf3D+3dac+Hdi4QBSf3D8K1yM0HJ/cvz/YuMAK1yM0HJ/cvz/YuMC2dac+LNIrQE7SK8C3dac+LNIrQE7SK8AK1yM0Hdi4QBSf3D8K1yM0Hdi4QBSf3D+3dac+4P/vQAAA8EC4dac+4P/vQAAA8EC4dac+4P/vQAAA8EAK1yM0Hdi4QBSf3D8K1yM0/3//f/7//7//f/9//v//v/9//3/+//+//3//f/7//7//f/9/////v/9//3////+//3//f/7//7//f/9/////v2mdah2U4rTOaZ1qHZTitM5pnWodlOK0zmmdah2U4rTOaZ1qHZTitM5pnWodlOK0zjvLO0vDtJ3lO8s7S8O0neU7yztLw7Sd5TvLO0vDtJ3lw7TDNDvLYdrDtMM0O8th2sO0wzQ7y2Haw7TDNDvLYdqU4pViaZ1J8ZTilWJpnUnxlOKVYmmdSfGU4pViaZ1J8ZTilWJpnUnxlOKVYmmdSfE=")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_vbf24")

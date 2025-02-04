@@ -71,12 +71,14 @@ func pawnTypeColor(value)->void:
 
 func spawnPawn(forceParent : Node = null, _params : PawnSpawnParameters = null) -> BasePawn:
 	if _params != null:
+		equipWeaponOnSpawn = true
 		pawnType = _params.pawn_type
 		pawnName = _params.pawn_name
 		pawnWeapons = _params.weapons
 		pawnClothing = _params.clothes
 		aiType = _params.ai_type
 		aiSkill = _params.ai_skill
+		weaponToEquip = _params.weaponEquip
 
 	if active:
 		var pawn : BasePawn = gameManager.pawnScene.instantiate()

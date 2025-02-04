@@ -9,12 +9,14 @@ signal killedWithDismemberingWeapon
 var lastDealer : Node3D = null
 @export var health:float = 100
 @export var isDead:bool = false
+var defaultHP : float
 
 var componentOwner : Node3D
 var killerSignalEmitted :bool= false
 
 # Called when the node enters the scene tree for the first time.
 func _ready()->void:
+	defaultHP = health
 	if is_instance_valid(get_owner()):
 		componentOwner = get_owner()
 

@@ -1,0 +1,35 @@
+[gd_resource type="ArrayMesh" load_steps=3 format=4 uid="uid://co7qh5mmy663l"]
+
+[ext_resource type="Material" uid="uid://ccvhat2p5n5y1" path="res://assets/materials/world/roads/13 - Default.tres" id="1_gddbw"]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_ua1ns"]
+_surfaces = [{
+"aabb": AABB(-7.5, -7.5, 1.52588e-07, 15, 15, 0.32707),
+"format": 34359742465,
+"index_count": 30,
+"index_data": PackedByteArray("AAABAAIAAwACAAEAAQAEAAMABAABAAAAAgADAAUAAAAGAAQABQAHAAIAAgAHAAAABwAFAAYABgAAAAcA"),
+"name": "13 - Default",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("+//vwAoA8EC4dac+CgDwQAoA8EC4dac+CgDwQAoA8MC4dac+CgDwQAoA8MAK1yM0CgDwQAoA8EAK1yM0+//vwAoA8MAK1yM0+//vwAoA8EAK1yM0+//vwAoA8MC4dac+")
+}]
+blend_shape_mode = 0
+
+[resource]
+resource_name = "Pavement_A_A"
+_surfaces = [{
+"aabb": AABB(-7.5, -7.5, 1.52588e-07, 15, 15, 0.32707),
+"attribute_data": PackedByteArray("bhKAPoQEQD9D978+hARAP0P3vz7x9l8/bhKAPvH2Xz9eFoA+APdfP14WgD5Wdl8/MPe/PlZ2Xz8w978+APdfP1wWgD4A918/XBaAPlZ2Xz8s978+VnZfPyz3vz4A918/YBaAPgD3Xz9gFoA+VnZfPzD3vz5Wdl8/MPe/PgD3Xz9cFoA+APdfP1wWgD5Wdl8/Lve/PlZ2Xz8u978+APdfPw=="),
+"format": 34359742487,
+"index_count": 30,
+"index_data": PackedByteArray("AAABAAIAAgADAAAABAAFAAYABgAHAAQACAAJAAoACgALAAgADAANAA4ADgAPAAwAEAARABIAEgATABAA"),
+"material": ExtResource("1_gddbw"),
+"name": "13 - Default",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 20,
+"vertex_data": PackedByteArray("+//vwAoA8EC4dac+CgDwQAoA8EC4dac+CgDwQAoA8MC4dac++//vwAoA8MC4dac+CgDwQAoA8MAK1yM0CgDwQAoA8MC4dac+CgDwQAoA8EC4dac+CgDwQAoA8EAK1yM0+//vwAoA8MAK1yM0+//vwAoA8MC4dac+CgDwQAoA8MC4dac+CgDwQAoA8MAK1yM0CgDwQAoA8EAK1yM0CgDwQAoA8EC4dac++//vwAoA8EC4dac++//vwAoA8EAK1yM0+//vwAoA8EAK1yM0+//vwAoA8EC4dac++//vwAoA8MC4dac++//vwAoA8MAK1yM0/3//f////7//f/9/////v/9//3////+//3//f////7////9//3///////3//f///////f/9///////9//3////9/AAD///+//38AAP///7//fwAA////v/9/AAD///+//3///wAA/7//f///AAD/v/9///8AAP+//3///wAA/78AAP9//38AgAAA/3//fwCAAAD/f/9/AIAAAP9//38AgA==")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_ua1ns")

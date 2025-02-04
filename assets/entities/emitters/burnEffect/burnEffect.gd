@@ -46,7 +46,7 @@ func damageTarget(target:Node3D)->void:
 func stopBurn()->void:
 	for i in get_children():
 		if i is GPUParticles3D:
-			i.amount = 0
+			i.amount = 1
 			i.finished.connect(queue_free)
 			i.one_shot = true
 

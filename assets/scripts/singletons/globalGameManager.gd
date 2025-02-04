@@ -137,6 +137,9 @@ func doKillEffect(pawn:BasePawn,deathDealer:BasePawn)->void:
 				deathDealer.killedPawn.emit()
 				pawn.healthComponent.killerSignalEmitted = true
 
+		if deathDealer.healthComponent.health < deathDealer.healthComponent.defaultHP:
+			deathDealer.healthComponent.setHealth(deathDealer.healthComponent.health+15)
+
 func get_persistent_data() -> Dictionary:
 	if !userDir.file_exists("persistence"):
 		var fa = FileAccess.open(userDir.get_current_dir() + "persistence", FileAccess.WRITE)

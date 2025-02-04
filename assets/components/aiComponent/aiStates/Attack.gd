@@ -18,7 +18,7 @@ var targetPosition : Vector3 = Vector3.ZERO:
 				elif tgtDistance<=minDistance:
 					aiOwner.pathPoint = 0
 					aiOwner.currentPath.clear()
-					aiOwner.goToPosition(-targetPosition, rand.pick_random())
+					aiOwner.goToPosition( -(aiOwner.pawnOwner.global_position-targetPosition).normalized() * 2 , rand.pick_random())
 @onready var attackTimer : Timer = $attackTimer
 @onready var moveTimer : Timer = $moveTimer
 

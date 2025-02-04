@@ -1,0 +1,11 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://1cl8hy2mx3fg"]
+
+[ext_resource type="Texture2D" uid="uid://biibmucklyody" path="res://assets/textures/lowpolystreet/RoadMarkings.png" id="1_2txjo"]
+
+[resource]
+resource_name = "14 - Default"
+transparency = 1
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_2txjo")
+emission_enabled = true
+emission_energy_multiplier = 0.0

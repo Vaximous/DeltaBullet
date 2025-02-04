@@ -242,7 +242,7 @@ var preventWeaponFire : bool = false:
 @export var isJumping : bool = false
 var isGrounded : bool = true
 @export_subgroup("Stair Handling")
-const maxStepHeight : float = 0.5
+const maxStepHeight : float = 0.25
 var snappedToStairsLastFrame : bool = false
 var lastFrameOnFloor : int = -INF
 @export_subgroup("Throwables")
@@ -397,8 +397,6 @@ func _physics_process(delta:float) -> void:
 
 			#Set Last frame on floor
 			if is_on_floor(): lastFrameOnFloor = Engine.get_physics_frames()
-
-			do_stairs(delta)
 			if isCurrentlyMoving():
 				setDirection.emit(direction)
 
@@ -553,88 +551,6 @@ func die(killer) -> void:
 
 
 
-func do_stairs(delta) -> void:
-	if pawnEnabled and !isPawnDead:
-		%stairHandler.rotation.y = atan2(-velocity.x,-velocity.z)
-		pass
-		##Old Staircase Code Below
-		#Does staircase stuff
-		#const step_check_distance : float = 0.5
-		#const step_height_max : float = 1.0
-		#const step_depth_min : float = 0.15
-#
-		#var input_direction : Vector2 = Vector2(direction.x, direction.z)
-		#if !is_on_floor() or input_direction.length() <= 0.1:
-			#return
-		##Check multiple directions
-		#var cam = gameManager.activeCamera
-		#if cam == null:
-			#return
-		#var flat_vel = (velocity * Vector3(1.0, 0.0, 1.0)).normalized()
-		#var check_directions : Array[Vector3] = [
-			#flat_vel,
-			#flat_vel.rotated(Vector3.UP, PI/3),
-			#flat_vel.rotated(Vector3.UP, -PI/3),
-			#]
-		##if gameManager.debugEnabled:
-			##print(input_direction)
-			##print(flat_vel)
-		#for direction in check_directions:
-			#var step_ray_dir := direction * step_check_distance
-			##if step_ray_dir.dot(Vector3(velocity.x, 0, velocity.z).normalized()) < 0.5:
-				##continue
-			#var direct_state = get_world_3d().direct_space_state
-			#var obs_ray_info : PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.new()
-			#obs_ray_info.exclude = [RID(self)]
-			#obs_ray_info.from = global_position
-			#obs_ray_info.to = obs_ray_info.from + step_ray_dir
-			##First check : Is a flat wall found?
-			#var first_collision = direct_state.intersect_ray(obs_ray_info)
-			##print("Ray from %s to %s" % [obs_ray_info.from, obs_ray_info.to])
-			#if !first_collision.is_empty():
-				##if gameManager.debugEnabled:
-					##print("Ray hit something.")
-				#if not first_collision["collider"] is StaticBody3D and not first_collision["collider"] is CSGShape3D:
-					#continue
-				#if first_collision["normal"].angle_to(Vector3.UP) < 1.39626:
-					#var remain_length = step_check_distance - first_collision["position"].distance_to(obs_ray_info.from)
-					#obs_ray_info.from = first_collision["position"]
-					#obs_ray_info.to = obs_ray_info.from + (remain_length * step_ray_dir.slide(first_collision["normal"]))
-					#obs_ray_info.to.y += 0.05
-					#first_collision = direct_state.intersect_ray(obs_ray_info)
-					#if first_collision.is_empty():
-						#return
-					#if first_collision["normal"].angle_to(Vector3.UP) < 1.39626:
-						#return
-				##if gameManager.debugEnabled:
-					##print("Ready to climb up step.")
-				##From that first collision point, we now check if 'min_stair_depth' is met
-				##at the the 'max_step_height'
-				#var depth_check : PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.new()
-				#depth_check.exclude = obs_ray_info.exclude
-				#depth_check.from = global_position + Vector3(0, step_height_max, 0)
-				#depth_check.to = depth_check.from + (step_ray_dir * (step_depth_min + global_position.distance_to(first_collision.position)))
-				#if !direct_state.intersect_ray(depth_check).is_empty():
-					#continue
-				##The step is deep enough.
-				##Last we need to find the top of the step so we can stand on it.
-				##Inch the initial collision up by step_max and forward a tiny bit.
-				##The to-position is just the initial position minus the step_max.
-				#var top_check : PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.new()
-				#top_check.exclude = obs_ray_info.exclude
-				#top_check.from = first_collision.position + Vector3(step_ray_dir.x, step_height_max, step_ray_dir.z)
-				#top_check.to = top_check.from - Vector3(0, step_height_max, 0)
-				#var stair_top_collision = direct_state.intersect_ray(top_check)
-				#if !stair_top_collision.is_empty():
-						##move player up above step
-						#var pre_position = global_position
-						#position.y += stair_top_collision.position.y - obs_ray_info.from.y
-						##move player forward onto step
-						#position += (step_ray_dir * (step_check_distance * 0.5))
-						##interpolate_visual_position(pre_position - global_position)
-						#return
-				##if gameManager.debugEnabled:
-					##print("Couldn't climb up the step.")
 
 
 func _on_health_component_health_depleted(dealer:BasePawn) -> void:

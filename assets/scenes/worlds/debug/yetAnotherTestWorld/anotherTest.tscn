@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=4 uid="uid://ccnq3cc8k6nt5"]
+[gd_scene load_steps=63 format=4 uid="uid://ccnq3cc8k6nt5"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_iq3s1"]
 [ext_resource type="Script" uid="uid://b31u24at18p5t" path="res://assets/resources/customResources/worldData/worldData.gd" id="2_gqs4i"]
@@ -25,6 +25,11 @@
 [ext_resource type="Script" uid="uid://tiffkbp5ry74" path="res://assets/scripts/entities/interactiveObject/interactiveObject.gd" id="19_s4bs4"]
 [ext_resource type="PackedScene" uid="uid://dakipfkiu0xqt" path="res://assets/components/musicChangeZone/music_change_zone.tscn" id="23_akr5q"]
 [ext_resource type="AudioStream" uid="uid://c1mk4s30dq3nc" path="res://assets/music/menu/Idlehoodtune.wav" id="24_qkxav"]
+[ext_resource type="PackedScene" uid="uid://7kxdrnrmipu" path="res://assets/components/spawnTriggerArea/WaveSpawner.tscn" id="25_eaho3"]
+[ext_resource type="Script" uid="uid://fcvxp6w8y4kk" path="res://assets/components/spawnTriggerArea/wavespawnerwave.gd" id="26_snp5j"]
+[ext_resource type="Script" uid="uid://ksi7km8jp8p3" path="res://assets/entities/pawnSpawn/pawn_spawn_parameters.gd" id="27_1fkyr"]
+[ext_resource type="PackedScene" uid="uid://d10o2e44ltrnl" path="res://assets/entities/clothing/ArmoredShirt/armor_shirt.tscn" id="28_0jxwg"]
+[ext_resource type="PackedScene" uid="uid://bb5qvdslt6004" path="res://assets/entities/clothing/Pants/armored_pants.tscn" id="29_twjgx"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_882n8"]
 panorama = ExtResource("4_7ph80")
@@ -46,11 +51,11 @@ colors = PackedColorArray(0, 0, 0, 1, 0.996078, 0.941176, 0.811765, 1)
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_iun5n"]
 gradient = SubResource("Gradient_6voip")
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_2am8s"]
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_eaho3"]
 panorama = ExtResource("4_7ph80")
 
 [sub_resource type="Sky" id="Sky_nj1fe"]
-sky_material = SubResource("PanoramaSkyMaterial_2am8s")
+sky_material = SubResource("PanoramaSkyMaterial_eaho3")
 
 [sub_resource type="Environment" id="Environment_a8ts2"]
 background_mode = 2
@@ -242,6 +247,92 @@ albedo_color = Color(1, 0, 0, 1)
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_cuq5u"]
 data = PackedVector3Array(-0.120483, -0.5, 0.117188, 0.120483, -0.5, 0.117188, 0.120483, -0.5, -0.117188, 0.0939331, 0.5, 0.102539, 0.120483, 0.5, -0.117188, 0.120483, 0.5, 0.117188, 0.0939331, 0.5, 0.102539, 0.120483, 0.5, 0.117188, -0.104492, 0.5, 0.102539, 0.0939331, 0.5, -0.0957031, 0.120483, 0.5, -0.117188, 0.0939331, 0.5, 0.102539, 0.120483, 0.5, 0.117188, 0.120483, 0.5, -0.117188, 0.120483, -0.5, -0.117188, 0.120483, 0.5, -0.117188, 0.0939331, 0.5, -0.0957031, -0.120483, 0.5, -0.117188, 0.120483, -0.5, -0.117188, 0.120483, 0.5, -0.117188, -0.120483, 0.5, -0.117188, 0.120483, -0.5, 0.117188, 0.120483, 0.5, 0.117188, 0.120483, -0.5, -0.117188, 0.120483, 0.5, 0.117188, 0.120483, -0.5, 0.117188, -0.120483, -0.5, 0.117188, -0.120483, -0.5, 0.117188, -0.120483, -0.5, -0.117188, -0.120483, 0.5, -0.117188, -0.104492, 0.5, 0.102539, 0.120483, 0.5, 0.117188, -0.120483, 0.5, 0.117188, -0.104492, 0.5, -0.0957031, -0.120483, 0.5, -0.117188, 0.0939331, 0.5, -0.0957031, -0.120483, -0.5, 0.117188, 0.120483, -0.5, -0.117188, -0.120483, -0.5, -0.117188, 0.120483, -0.5, -0.117188, -0.120483, 0.5, -0.117188, -0.120483, -0.5, -0.117188, -0.104492, 0.5, -0.0957031, -0.120483, 0.5, 0.117188, -0.120483, 0.5, -0.117188, -0.120483, 0.5, -0.117188, -0.120483, 0.5, 0.117188, -0.120483, -0.5, 0.117188, -0.104492, 0.5, 0.102539, -0.120483, 0.5, 0.117188, -0.104492, 0.5, -0.0957031, -0.120483, 0.5, 0.117188, 0.120483, 0.5, 0.117188, -0.120483, -0.5, 0.117188, 0.0939331, 0.5, -0.0957031, -0.104492, 0.548211, -0.0957031, -0.104492, 0.5, -0.0957031, 0.0939331, 0.5, -0.0957031, 0.0939331, 0.548211, -0.0957031, -0.104492, 0.548211, -0.0957031, -0.104492, 0.548211, -0.0957031, 0.0939331, 0.548211, 0.102539, -0.104492, 0.548211, 0.102539, 0.0939331, 0.548211, -0.0957031, 0.0939331, 0.548211, 0.102539, -0.104492, 0.548211, -0.0957031, -0.104492, 0.548211, -0.0957031, -0.104492, 0.548211, 0.102539, -0.104492, 0.5, -0.0957031, 0.0939331, 0.5, -0.0957031, 0.0939331, 0.5, 0.102539, 0.0939331, 0.548211, -0.0957031, -0.104492, 0.5, 0.102539, -0.104492, 0.5, -0.0957031, -0.104492, 0.548211, 0.102539, 0.0939331, 0.548211, 0.102539, 0.0939331, 0.5, 0.102539, -0.104492, 0.5, 0.102539, 0.0939331, 0.548211, 0.102539, 0.0939331, 0.548211, -0.0957031, 0.0939331, 0.5, 0.102539, -0.104492, 0.5, 0.102539, -0.104492, 0.548211, 0.102539, 0.0939331, 0.548211, 0.102539)
+
+[sub_resource type="Resource" id="Resource_2bdf8"]
+script = ExtResource("27_1fkyr")
+spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn")
+pawn_name = "Guy"
+pawn_type = 1
+ai_skill = 1
+ai_type = 1
+weaponEquip = 1
+clothes = Array[PackedScene]([ExtResource("28_0jxwg"), ExtResource("29_twjgx")])
+weapons = Array[PackedScene]([ExtResource("5_wnt7o")])
+metadata/_custom_type_script = ExtResource("27_1fkyr")
+
+[sub_resource type="Resource" id="Resource_hpmgy"]
+script = ExtResource("27_1fkyr")
+spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn6")
+pawn_name = "Guy2"
+pawn_type = 1
+ai_skill = 1
+ai_type = 1
+weaponEquip = 1
+clothes = Array[PackedScene]([ExtResource("28_0jxwg"), ExtResource("29_twjgx")])
+weapons = Array[PackedScene]([ExtResource("5_wnt7o")])
+metadata/_custom_type_script = ExtResource("27_1fkyr")
+
+[sub_resource type="Resource" id="Resource_snp5j"]
+script = ExtResource("27_1fkyr")
+spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn7")
+pawn_name = "Guy"
+pawn_type = 1
+ai_skill = 1
+ai_type = 1
+weaponEquip = 1
+clothes = Array[PackedScene]([ExtResource("28_0jxwg"), ExtResource("29_twjgx")])
+weapons = Array[PackedScene]([ExtResource("5_wnt7o")])
+metadata/_custom_type_script = ExtResource("27_1fkyr")
+
+[sub_resource type="Resource" id="Resource_v8gki"]
+script = ExtResource("26_snp5j")
+wave_time_limit = 120.0
+spawn_parameters = Array[ExtResource("27_1fkyr")]([SubResource("Resource_2bdf8"), SubResource("Resource_hpmgy"), SubResource("Resource_snp5j")])
+time_between_spawns = 5.0
+metadata/_custom_type_script = ExtResource("26_snp5j")
+
+[sub_resource type="Resource" id="Resource_1fkyr"]
+script = ExtResource("27_1fkyr")
+spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn10")
+pawn_name = "Guy1"
+pawn_type = 1
+ai_skill = 1
+ai_type = 1
+weaponEquip = 1
+clothes = Array[PackedScene]([ExtResource("28_0jxwg"), ExtResource("29_twjgx")])
+weapons = Array[PackedScene]([ExtResource("5_wnt7o")])
+metadata/_custom_type_script = ExtResource("27_1fkyr")
+
+[sub_resource type="Resource" id="Resource_0jxwg"]
+script = ExtResource("27_1fkyr")
+spawn_location = NodePath("../../Spawns/pawnSpawns/BogoHead")
+pawn_name = "Guy5"
+pawn_type = 1
+ai_skill = 1
+ai_type = 1
+weaponEquip = 1
+clothes = Array[PackedScene]([ExtResource("28_0jxwg"), ExtResource("29_twjgx")])
+weapons = Array[PackedScene]([ExtResource("5_gs5af")])
+metadata/_custom_type_script = ExtResource("27_1fkyr")
+
+[sub_resource type="Resource" id="Resource_twjgx"]
+script = ExtResource("27_1fkyr")
+spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn9")
+pawn_name = "Guy"
+pawn_type = 1
+ai_skill = 1
+ai_type = 1
+weaponEquip = 1
+clothes = Array[PackedScene]([ExtResource("28_0jxwg"), ExtResource("29_twjgx")])
+weapons = Array[PackedScene]([ExtResource("4_rig7i")])
+metadata/_custom_type_script = ExtResource("27_1fkyr")
+
+[sub_resource type="Resource" id="Resource_r8ua2"]
+script = ExtResource("26_snp5j")
+wave_time_limit = 120.0
+spawn_parameters = Array[ExtResource("27_1fkyr")]([SubResource("Resource_1fkyr"), SubResource("Resource_0jxwg"), SubResource("Resource_twjgx")])
+time_between_spawns = 3.0
+metadata/_custom_type_script = ExtResource("26_snp5j")
 
 [node name="worldBase" instance=ExtResource("1_iq3s1")]
 worldData = SubResource("Resource_6vxwt")
@@ -523,6 +614,19 @@ shape = SubResource("ConcavePolygonShape3D_cuq5u")
 [node name="timer" type="Timer" parent="Props/interactiveObject" index="2"]
 unique_name_in_owner = true
 
+[node name="WaveSpawner" parent="Misc" index="0" instance=ExtResource("25_eaho3")]
+wait_time = 5.0
+one_shot = true
+waves = Array[ExtResource("26_snp5j")]([SubResource("Resource_v8gki"), SubResource("Resource_r8ua2")])
+
+[node name="label" type="Label" parent="Misc/WaveSpawner" index="0"]
+offset_left = 409.0
+offset_top = 40.0
+offset_right = 941.0
+offset_bottom = 218.0
+text = "Current Wave 
+Wave timer"
+
 [node name="aiMarker" parent="Misc/WaypointNodes" index="0" instance=ExtResource("5_bh8tr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.626718, 1.66502, 2.90188)
 
@@ -586,3 +690,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.3854, 1.66502, 3.90188)
 [connection signal="objectUsed" from="Props/interactiveObject" to="Props/interactiveObject" method="_on_object_used"]
 [connection signal="objectUsed" from="Props/interactiveObject" to="Props/interactiveObject" method="spawnSomeEnemies"]
 [connection signal="timeout" from="Props/interactiveObject/timer" to="Props/interactiveObject" method="spawnSomeEnemies"]
+[connection signal="ready" from="Misc/WaveSpawner" to="Misc/WaveSpawner" method="countdown_next_wave"]

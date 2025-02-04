@@ -22,11 +22,10 @@ sky_material = SubResource("PanoramaSkyMaterial_tipwx")
 background_mode = 1
 background_color = Color(0.74978, 0.74978, 0.74978, 1)
 sky = SubResource("Sky_nj1fe")
-ssao_enabled = true
 ssil_intensity = 0.75
-sdfgi_enabled = true
 sdfgi_use_occlusion = true
 sdfgi_cascades = 8
+sdfgi_max_distance = 3276.8
 glow_normalized = true
 glow_bloom = 0.15
 glow_blend_mode = 1
@@ -144,8 +143,6 @@ stretch = true
 own_world_3d = true
 world_3d = SubResource("World3D_kc4o1")
 handle_input_locally = false
-msaa_3d = 2
-screen_space_aa = 1
 size = Vector2i(1600, 900)
 render_target_update_mode = 4
 
@@ -158,8 +155,8 @@ layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.494
 anchor_bottom = 0.079
-offset_right = 790.0
-offset_bottom = 71.0
+offset_right = -0.399963
+offset_bottom = -0.100006
 
 [node name="textureRect" type="TextureRect" parent="mapScreen/topBar"]
 layout_mode = 2

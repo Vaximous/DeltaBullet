@@ -1,6 +1,7 @@
 extends Resource
 class_name WaveSpawnerWaveParams
 
+
 @export var wave_time_limit : float = 120.0
 @export var spawn_parameters : Array[PawnSpawnParameters]
 @export var time_between_spawns : float = 1.0

@@ -10,15 +10,15 @@ var targetPosition : Vector3 = Vector3.ZERO:
 		if !aiOwner.pathingToPosition and is_instance_valid(aiOwner.pawnOwner) and !aiOwner.pawnOwner.isPawnDead and is_instance_valid(gameManager.world) and aiOwner.is_ai_processing():
 			targetPosition = value
 			if is_current_state():
-				var rand : Array = [true,false]
+				var runToggle : bool = [true,false].pick_random()
 				if tgtDistance>=maxDistance or isSightToTargetBlocked():
 					aiOwner.pathPoint = 0
 					aiOwner.currentPath.clear()
-					aiOwner.goToPosition(targetPosition, rand.pick_random())
+					aiOwner.goToPosition(targetPosition, runToggle)
 				elif tgtDistance<=minDistance:
 					aiOwner.pathPoint = 0
 					aiOwner.currentPath.clear()
-					aiOwner.goToPosition( -(aiOwner.pawnOwner.global_position-targetPosition).normalized() * 2 , rand.pick_random())
+					aiOwner.goToPosition( -(aiOwner.pawnOwner.global_position-targetPosition).normalized() * 2 , runToggle)
 @onready var attackTimer : Timer = $attackTimer
 @onready var moveTimer : Timer = $moveTimer
 
@@ -31,7 +31,6 @@ func on_exit():
 	aiOwner.currentPath.clear()
 	if aiOwner.pawnOwner.currentItem != null and aiOwner.pawnOwner.currentItem.canReloadWeapon and !aiOwner.pawnOwner.currentItem.isReloading:
 			aiOwner.pawnOwner.currentItem.reloadWeapon()
-
 			if aiOwner.pawnOwner.currentItem.isAiming:
 				aiOwner.pawnOwner.currentItem.isAiming = false
 

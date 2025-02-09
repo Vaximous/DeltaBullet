@@ -42,6 +42,7 @@ func damageTarget(target:Node3D)->void:
 	if is_instance_valid(target):
 		if target.has_method("hit"):
 			target.hit(burnDamage,null)
+			damageTimer.start()
 
 func stopBurn()->void:
 	for i in get_children():

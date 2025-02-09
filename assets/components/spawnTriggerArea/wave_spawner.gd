@@ -1,5 +1,5 @@
 extends Timer
-
+@export var enabled : bool = true
 @export var autoTargetPlayer : bool = true
 @export var waves : Array[WaveSpawnerWaveParams]
 @export var between_wave_time : float = 5.0
@@ -38,12 +38,13 @@ func _process(delta: float) -> void:
 
 
 func _ready() -> void:
-	one_shot = true
-	set_physics_process(false)
+	if enabled:
+		one_shot = true
+		set_physics_process(false)
 
 
 func _physics_process(delta: float) -> void:
-	if current_wave != null:
+	if current_wave != null and enabled:
 		#If all enemies of the wave are dead, or the time limit for this wave was exceeded, begin the next wave.
 		wave_time -= delta
 		if current_wave.is_wave_complete() or wave_time < 0.0:
@@ -61,6 +62,7 @@ func _physics_process(delta: float) -> void:
 func start_next_wave() -> void:
 	print("Next wave started.")
 	current_wave = get_wave_and_advance()
+	var timeBetween = current_wave.time_between_spawns
 	if current_wave == null:
 		print("--- All waves completed.")
 		set_completed()
@@ -70,18 +72,21 @@ func start_next_wave() -> void:
 	wave_time = current_wave.wave_time_limit
 	wave_started.emit()
 	#Spawn the pawns of the wave.
-	while not current_wave.is_all_spawned():
-		print("Wave %d--- Spawned Pawn" % current_wave_index)
-		var wavePawn = current_wave.spawn_next_pawn(self)
-		if autoTargetPlayer:
-			await get_tree().create_timer(0.1).timeout
-			if is_instance_valid(gameManager.getCurrentPawn()):
-				wavePawn[1].inputComponent.targetedPawn = gameManager.getCurrentPawn()
-				wavePawn[1].inputComponent.pawnFSM.change_state("Attack")
-				wavePawn[1].inputComponent.goToPosition(wavePawn[1].inputComponent.targetedPawn.global_position)
-			#print(wavePawn[1].inputComponent.pawnFSM.current_state)
-		#Wait for the duration before spawning next pawn.
-		await get_tree().create_timer(current_wave.time_between_spawns, false, true, false).timeout
+	if current_wave != null:
+		while not current_wave.is_all_spawned():
+			print("Wave %d--- Spawned Pawn" % current_wave_index)
+			var wavePawn = current_wave.spawn_next_pawn(self)
+			if autoTargetPlayer:
+				await get_tree().create_timer(0.1).timeout
+				if is_instance_valid(gameManager.getCurrentPawn()):
+					wavePawn[1].inputComponent.targetedPawn = gameManager.getCurrentPawn()
+					wavePawn[1].inputComponent.forcedTarget = gameManager.getCurrentPawn()
+					wavePawn[1].inputComponent.pawnFSM.change_state("Attack")
+					wavePawn[1].inputComponent.goToPosition(wavePawn[1].inputComponent.targetedPawn.global_position)
+				#print(wavePawn[1].inputComponent.pawnFSM.current_state)
+			#Wait for the duration before spawning next pawn.
+			if current_wave != null:
+				await get_tree().create_timer(timeBetween, false, true, false).timeout
 
 
 func get_wave_and_advance() -> WaveSpawnerWaveParams:
@@ -97,10 +102,11 @@ func is_last_wave() -> bool:
 
 
 func countdown_next_wave() -> void:
-	clear_wave()
-	starting_next_wave.emit()
-	state = 1
-	start(between_wave_time)
+	if enabled:
+		clear_wave()
+		starting_next_wave.emit()
+		state = 1
+		start(between_wave_time)
 
 
 func clear_wave() -> void:
@@ -115,5 +121,6 @@ func set_completed() -> void:
 
 #Used between waves
 func _on_timeout() -> void:
-	start_next_wave()
-	pass # Replace with function body.
+	if enabled:
+		start_next_wave()
+		pass # Replace with function body.

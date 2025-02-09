@@ -1,5 +1,6 @@
 extends Area3D
 class_name Hitbox
+@export var crosshairHitEffect : bool = true
 @export var enabled : bool = true
 var setup:bool = false
 signal damaged(amount,impulse,vector, dealer)
@@ -38,12 +39,12 @@ func hit(dmg, dealer=null, hitImpulse:Vector3 = Vector3.ZERO, hitPoint:Vector3 =
 			healthComponent.componentOwner.hitImpulse = hitImpulse
 			healthComponent.componentOwner.hitVector = hitPoint
 
-			if is_instance_valid(healthComponent.componentOwner.attachedCam):
+			if is_instance_valid(healthComponent.componentOwner.attachedCam) and crosshairHitEffect:
 				healthComponent.componentOwner.attachedCam.camera.fov -= randf_range(1.8,4.8)
-				healthComponent.componentOwner.attachedCam.fireRecoil(randf_range(8,14),randf_range(1,4),randf_range(9,13),true)
+				healthComponent.componentOwner.attachedCam.fireRecoil(randf_range(0,1),randf_range(0,1),randf_range(2,5),true)
 				healthComponent.componentOwner.attachedCam.fireVignette(1.2,Color.RED)
 
-		if is_in_group("Flesh"):
+		if is_in_group("Flesh") and crosshairHitEffect:
 			if dealer:
 				if dealer.attachedCam:
 					dealer.attachedCam.hud.getCrosshair().tintCrosshair(Color.RED)
@@ -60,7 +61,6 @@ func hit(dmg, dealer=null, hitImpulse:Vector3 = Vector3.ZERO, hitPoint:Vector3 =
 		healthComponent.damage(dmg * hitboxDamageMult, dealer,hitImpulse)
 	else:
 		healthComponent.damage(dmg * hitboxDamageMult, null,hitImpulse)
-
 
 func getCollisionObject()->CollisionObject3D:
 	if get_child(0) is CollisionObject3D:

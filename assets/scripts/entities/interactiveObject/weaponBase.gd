@@ -1,6 +1,6 @@
 extends InteractiveObject
 class_name Weapon
-
+signal reloadingStart
 @onready var collisionObject : CollisionShape3D = $collisionObject
 @onready var animationTree : AnimationTree = $AnimationTree
 @onready var animationPlayer : AnimationPlayer = $AnimationPlayer
@@ -293,6 +293,9 @@ func spawn_bullet_casing() -> void:
 		gameManager.world.add_child(inst)
 		inst.global_position = ejectionPoint.global_position
 
+func setBlendShapeValue(mesh:NodePath,blendShape:int,value:float)->void:
+	print("animating")
+	get_node(mesh).set_blend_shape_value(blendShape,value)
 
 func spawnProjectile(raycaster : RayCast3D) -> void:
 	#print(raycaster.get_path())
@@ -565,6 +568,7 @@ func reloadWeapon()->void:
 		weaponRemoteState.stop()
 		weaponRemoteStateLeft.stop()
 		if canReloadWeapon and !isReloading and weaponResource.canBeReloaded and isEquipped and !weaponOwner.isArmingThrowable and is_instance_valid(weaponResource):
+			reloadingStart.emit()
 			var reloadTime = weaponResource.reloadTime
 			var firedShots = weaponResource.ammoSize - currentAmmo
 			weaponRemoteState.travel("reload")

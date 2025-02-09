@@ -210,8 +210,9 @@ func hit(dmg, dealer=null, hitImpulse:Vector3 = Vector3.ZERO, hitPoint:Vector3 =
 
 func excludeAllAI()->void:
 	for i in gameManager.allPawns:
-		if !i .isPlayerPawn():
-			add_collision_exception_with(i)
+		if is_instance_valid(i):
+			if !i .isPlayerPawn():
+				add_collision_exception_with(i)
 
 
 func hookes_law(displacement: Vector3, current_velocity: Vector3, stiffness: float, damping: float) -> Vector3:
@@ -263,39 +264,41 @@ func createActiveRagdollJoint()->void:
 		activeRagdollJoint = activeRagJoint
 
 func doPulverizeEffect()->void:
-	await get_tree().process_frame
-	gameManager.createGib(global_position)
-	#doBleed()
-	var pulverizeSound : AudioStreamPlayer3D = AudioStreamPlayer3D.new()
-	pulverizeSound.stream = load("res://assets/misc/obliterateStream.tres")
-	pulverizeSound.bus = &"Sounds"
-	pulverizeSound.attenuation_filter_db = 0
-	pulverizeSound.volume_db = -5
-	gameManager.world.worldMisc.add_child(pulverizeSound)
-	pulverizeSound.global_position = global_position
-	pulverizeSound.finished.connect(pulverizeSound.queue_free)
-	pulverizeSound.play()
-	var bloodSpurt : GPUParticles3D = load("res://assets/particles/bloodSpurt/bloodSpurt.tscn").instantiate()
-	gameManager.world.worldMisc.add_child(bloodSpurt)
-	bloodSpurt.global_position = global_position
-	bloodSpurt.maxParticles = 10
-	bloodSpurt.emitting = true
-	collision_layer = 0
-	collision_mask = 1
-	joint_type = JOINT_TYPE_NONE
-	gameManager.sprayBlood(global_position,randi_range(1,5),20,1.2)
-	#mass = 0.01
-	for childrenIDs in getBoneChildren(ragdoll.ragdollSkeleton,self):
-		var bone
-		bone = findPhysicsBone(childrenIDs)
-		if is_instance_valid(bone):
-			bone.doPulverizeEffect()
-			#bone.collision_layer = 0
-			#bone.collision_mask = 0
-			#bone.queue_free()
-			#findPhysicsBone(childrenIDs).mass = 0
-	queue_free()
-	#createBurstOfBlood(10,15,25)
+	if canBeDismembered:
+		await get_tree().process_frame
+		var gib = gameManager.createGib(global_position)
+		gib.velocity += linear_velocity
+		#doBleed()
+		var pulverizeSound : AudioStreamPlayer3D = AudioStreamPlayer3D.new()
+		pulverizeSound.stream = load("res://assets/misc/obliterateStream.tres")
+		pulverizeSound.bus = &"Sounds"
+		pulverizeSound.attenuation_filter_db = 0
+		pulverizeSound.volume_db = -5
+		gameManager.world.worldMisc.add_child(pulverizeSound)
+		pulverizeSound.global_position = global_position
+		pulverizeSound.finished.connect(pulverizeSound.queue_free)
+		pulverizeSound.play()
+		var bloodSpurt : GPUParticles3D = load("res://assets/particles/bloodSpurt/bloodSpurt.tscn").instantiate()
+		gameManager.world.worldMisc.add_child(bloodSpurt)
+		bloodSpurt.global_position = global_position
+		bloodSpurt.maxParticles = 10
+		bloodSpurt.emitting = true
+		collision_layer = 0
+		collision_mask = 1
+		joint_type = JOINT_TYPE_NONE
+		gameManager.sprayBlood(global_position,randi_range(1,5),20,1.2)
+		#mass = 0.01
+		for childrenIDs in getBoneChildren(ragdoll.ragdollSkeleton,self):
+			var bone
+			bone = findPhysicsBone(childrenIDs)
+			if is_instance_valid(bone):
+				bone.doPulverizeEffect()
+				#bone.collision_layer = 0
+				#bone.collision_mask = 0
+				#bone.queue_free()
+				#findPhysicsBone(childrenIDs).mass = 0
+		queue_free()
+		#createBurstOfBlood(10,15,25)
 
 func doBleed()->void:
 	if !hasBled and canBleed:

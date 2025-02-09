@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="ItemDisplayData" load_steps=2 format=3 uid="uid://b0yr3ub2hmc2l"]
 
-[ext_resource type="Script" path="res://assets/resources/customResources/weaponDisplayData/weaponDisplayData.gd" id="1_jkr41"]
+[ext_resource type="Script" uid="uid://bfvbiknnwdu6i" path="res://assets/resources/customResources/weaponDisplayData/weaponDisplayData.gd" id="1_jkr41"]
 
 [resource]
 script = ExtResource("1_jkr41")
@@ -10,4 +10,4 @@ itemDescriptionShort = "Standard Pistol.. gets the job done."
 itemDescriptionLong = "The beretta. A staple in firearms, it's simple and basic shell allow for anyone to get a hold of it and use it as they see fit, Perfect as an entry point to hanguns."
 damage = 0.376
 fireRate = 0.204
-penetration = 0.05
+penetration = 0.0

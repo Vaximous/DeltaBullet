@@ -15,9 +15,17 @@ signal visibleObject(object:Node3D,visibleposition:Vector3)
 @onready var pawnDebugLabel : Label3D = $debugPawnStats
 @export_category("AI Component")
 var castLerp : Transform3D
-var targetedPawn : BasePawn:
+var forcedTarget : Node3D:
 	set(value):
 		targetedPawn = value
+		forcedTarget = value
+var targetedPawn : BasePawn:
+	set(value):
+		if !forcedTarget:
+			targetedPawn = value
+		else:
+			targetedPawn = forcedTarget
+
 		if is_instance_valid(targetedPawn):
 			if targetedPawn.isPlayerPawn():
 				if !gameManager.targetedEnemies.has(self):
@@ -57,6 +65,8 @@ var pathPoint : int = 0
 ##The AI Skill will be dependent on "aimSpeed" which is always going to be multiplied by "aimStrength" to give the pawns the correct amount of speed to aim at a target with
 @export var aimSpeed : float = 12.75
 @export var aimStrength : float = 20
+@export var minMissAmount : float = -2.0
+@export var missAmount : float = 14.0
 @export_enum("Idle","Wander","Patrol") var pawnType :int = 0:
 	set(value):
 		pawnType = value
@@ -65,11 +75,14 @@ var pathPoint : int = 0
 	set(value):
 		aiSkill = value
 		if value == 0:
-			aimSpeed = 5
+			aimSpeed = 1
+			aimStrength = 2
 		elif value == 1:
-			aimSpeed = 4
+			aimSpeed = 2.2
+			aimStrength = 4.7
 		elif value == 2:
 			aimSpeed = 3
+			aimStrength = 5
 @export_subgroup("Nodes")
 
 @export var pawnFSM : FiniteStateMachine:
@@ -89,13 +102,6 @@ var pathPoint : int = 0
 @export_subgroup("Overlap & Detection")
 @export_flags_3d_physics var collisionMasks : int
 @export var visibleObjects : Array = []
-@export var chosenTarget : Node3D = null:
-	set(value):
-		chosenTarget = value
-		if chosenTarget == null:
-			pawnHasTarget = false
-		else:
-			pawnHasTarget = true
 @export var pawnHasTarget : bool = false:
 	set(value):
 		#setExceptions()
@@ -178,21 +184,17 @@ func _ai_process(physics_delta : float) -> void:
 		NavigationServer3D.agent_set_position(aiAgent,pawnOwner.global_position)
 		if pathingToPosition and !currentPath.is_empty():
 			var nextPoint : Vector3 = currentPath[pathPoint] - pawnOwner.global_position
-			if nextPoint.length() > 1.0:
+			if nextPoint.length() >= 1.0:
 				NavigationServer3D.agent_set_velocity(aiAgent,(nextPoint.normalized()*physics_delta))
 				pawnOwner.direction = safeVelocity
 			else:
 				if pathPoint < (currentPath.size() - 1):
 					pathPointReached.emit()
 					pathPoint += 1
-					_ai_process(physics_delta)
+					#_ai_process(physics_delta)
 				else:
 					targetPathReached.emit()
 					pathingToPosition = false
-
-
-
-
 
 
 func getDirFromAngle(angleInDeg:float) -> Vector3:
@@ -275,28 +277,6 @@ func getTarget()->Node3D:
 	return targetedPawn
 
 
-func goToPathPosition(path:PackedVector3Array,sprint:bool=false)->void:
-	if sprint:
-		pawnOwner.setMovementState.emit(pawnOwner.movementStates["sprint"])
-		pawnOwner.isCrouching = false
-	else:
-		if pawnOwner.isCrouching:
-			pawnOwner.setMovementState.emit(pawnOwner.movementStates["crouchWalk"])
-		else:
-			pawnOwner.setMovementState.emit(pawnOwner.movementStates["walk"])
-
-	for p in path:
-		NavigationServer3D.agent_set_velocity(aiAgent,p)
-		pawnOwner.direction = NavigationServer3D.agent_get_velocity(aiAgent)
-		await pawnOwner.position.is_equal_approx(p)
-
-	path.clear()
-	if sprint:
-		goToPathPosition(path,true)
-	else:
-		goToPathPosition(path)
-
-
 func goToPosition(to:Vector3,sprint:bool=false)->void:
 	pawnOwner.isRunning = sprint
 	setPathPosition(to)
@@ -337,6 +317,7 @@ func setPawnType()->void:
 
 
 func setPathPosition(pathPosition:Vector3)->PackedVector3Array:
+	pathPoint = 0
 	var safePosition : Vector3 = NavigationServer3D.map_get_closest_point(navMap,pathPosition)
 	currentPath = NavigationServer3D.map_get_path(navMap,pawnOwner.global_position,pathPosition,true)
 	#if gameManager.debugEnabled:
@@ -350,7 +331,7 @@ func onSafeVelCompute(velocity:Vector3)->void:
 func setupNav()->void:
 	aiAgent = NavigationServer3D.agent_create()
 	NavigationServer3D.agent_set_avoidance_callback(aiAgent, self.onSafeVelCompute)
-	NavigationServer3D.agent_set_radius(aiAgent,0.5)
+	NavigationServer3D.agent_set_radius(aiAgent,0.8)
 	NavigationServer3D.agent_set_position(aiAgent,pawnOwner.global_position)
 	NavigationServer3D.agent_set_avoidance_layers(aiAgent,pawnOwner.collision_layer)
 	NavigationServer3D.agent_set_avoidance_mask(aiAgent,pawnOwner.collision_layer)

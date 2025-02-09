@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://c63b0ewnfkf4n"]
+[gd_scene load_steps=17 format=3 uid="uid://c63b0ewnfkf4n"]
 
 [ext_resource type="Script" uid="uid://t733jevi3esu" path="res://assets/scenes/ui/mapOverview/map/map.gd" id="1_rkk0n"]
 [ext_resource type="Texture2D" uid="uid://d0f0crtwpmoka" path="res://assets/textures/panoramas/panoramatest1.png" id="2_1xklm"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://gunf36bni4oe" path="res://assets/scenes/worlds/areas/Shop/shopArea.tscn" id="7_46huw"]
 [ext_resource type="PackedScene" uid="uid://7idw8rtae15o" path="res://assets/scenes/worlds/missions/Crackhouse/crackhouse-p1.tscn" id="7_dvqh0"]
 [ext_resource type="PackedScene" uid="uid://c8sr5dinhonjs" path="res://assets/scenes/worlds/missions/AbandonedHospital/HospitalMission.tscn" id="8_d0eii"]
+[ext_resource type="PackedScene" uid="uid://ddgk7ndlf2mqo" path="res://assets/scenes/worlds/missions/survivalStreet/survivalStreet.tscn" id="10_mlvph"]
 
 [sub_resource type="Gradient" id="Gradient_6voip"]
 colors = PackedColorArray(0, 0, 0, 1, 0.996078, 0.941176, 0.811765, 1)
@@ -107,6 +108,12 @@ travelScene = ExtResource("7_46huw")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.0693, 7.15974, -20.5189)
 locationName = "Havelona Hospital"
 travelScene = ExtResource("8_d0eii")
+travelGroupID = 1
+
+[node name="mapLocation6" parent="areaNodes" instance=ExtResource("4_fvi35")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.77963, 7.15974, -24.9772)
+locationName = "Survival Street"
+travelScene = ExtResource("10_mlvph")
 travelGroupID = 1
 
 [editable path="model/mapoverview"]

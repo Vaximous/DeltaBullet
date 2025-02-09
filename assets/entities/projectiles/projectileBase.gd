@@ -9,6 +9,11 @@ var projectile_owner : Weapon:
 	set = set_projectile_owner
 func set_projectile_owner(value : Weapon) -> void:
 	projectile_owner = value
+	if value.weaponOwner is BasePawn:
+		if value.weaponOwner.isPlayerPawn():
+			set_meta("isPlayerBullet",true)
+		else:
+			set_meta("isPlayerBullet",false)
 var last_position : Vector3
 
 

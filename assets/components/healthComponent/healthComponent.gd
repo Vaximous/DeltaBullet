@@ -2,28 +2,30 @@ extends Component
 class_name HealthComponent
 signal HPisDead
 signal onDamaged(dealer:Node3D,hitDirection:Vector3)
-signal healthChanged
+signal healthChanged(value:float)
 signal healthDepleted(dealer:Node3D)
 signal killedWithDismemberingWeapon
 @export_category("Component")
 var lastDealer : Node3D = null
 @export var health:float = 100
 @export var isDead:bool = false
-var defaultHP : float
+var defaultHP : float:
+	set(value):
+		defaultHP = value
+		setHealth(value)
 
 var componentOwner : Node3D
 var killerSignalEmitted :bool= false
 
 # Called when the node enters the scene tree for the first time.
 func _ready()->void:
-	defaultHP = health
 	if is_instance_valid(get_owner()):
 		componentOwner = get_owner()
 
 
 func setHealth(value:float)->float:
 	if is_instance_valid(self) and is_instance_valid(componentOwner):
-		healthChanged.emit()
+		healthChanged.emit(value)
 		health = value
 		healthCheck()
 		return health

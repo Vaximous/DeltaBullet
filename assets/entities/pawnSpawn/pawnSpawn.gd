@@ -95,7 +95,7 @@ func spawnPawn(forceParent : Node = null, _params : PawnSpawnParameters = null) 
 				else:
 					forceParent.add_child(pawn)
 				pawn.global_position.x = global_position.x
-				pawn.global_position.y = global_position.y + 1
+				pawn.global_position.y = global_position.y + 0.1
 				pawn.global_position.z = global_position.z
 				pawn.rotation.y = global_rotation.y
 				pawn.componentHolder.add_child(controller)
@@ -105,7 +105,7 @@ func spawnPawn(forceParent : Node = null, _params : PawnSpawnParameters = null) 
 				pawn.add_to_group(&"Player")
 				pawn.set_meta(&"isPlayer", true)
 				gameManager.allPawns.append(pawn)
-				pawn.healthComponent.setHealth(450)
+				pawn.healthComponent.defaultHP = 550
 				if gameManager.temporaryPawnInfo.size() <= 0:
 					if gameManager.currentSave != "" or gameManager.currentSave != " " or gameManager.currentSave != null:
 						var pawnFile = FileAccess.open(gameManager.currentSave,FileAccess.READ)
@@ -142,7 +142,7 @@ func spawnPawn(forceParent : Node = null, _params : PawnSpawnParameters = null) 
 			else:
 				forceParent.add_child(pawn)
 			pawn.global_position.x = global_position.x
-			pawn.global_position.y = global_position.y + 1
+			pawn.global_position.y = global_position.y + 0.1
 			pawn.global_position.z = global_position.z
 			pawn.rotation.y = global_rotation.y
 			pawn.componentHolder.add_child(controller)
@@ -188,7 +188,8 @@ func spawnPawn(forceParent : Node = null, _params : PawnSpawnParameters = null) 
 				pawn.currentItemIndex = weaponToEquip
 			if pawnColor != Color(1.0,0.74,0.44,1.0):
 				pawn.pawnColor = pawnColor
-			pawn.healthComponent.setHealth(pawnHP)
+			pawn.healthComponent.defaultHP = pawnHP
+			pawn.healthComponent.setHealth(pawn.healthComponent.defaultHP)
 		pawnSpawned.emit(pawn)
 		return pawn
 	return null

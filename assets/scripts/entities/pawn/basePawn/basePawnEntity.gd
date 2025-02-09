@@ -242,14 +242,14 @@ var preventWeaponFire : bool = false:
 @export var isJumping : bool = false
 var isGrounded : bool = true
 @export_subgroup("Stair Handling")
-const maxStepHeight : float = 0.25
+const maxStepHeight : float = 0.49
 var snappedToStairsLastFrame : bool = false
 var lastFrameOnFloor : int = -INF
 @export_subgroup("Throwables")
 @export var throwForce : float = 35.0
 var throwableItem : PackedScene = load("res://assets/entities/throwables/grenade/Grenade.tscn")
 var heldThrowable : ThrowableBase
-var throwableAmount : int = 3
+var throwableAmount : int = 5
 var isArmingThrowable : bool = false:
 	set(value):
 		isArmingThrowable = value
@@ -457,8 +457,8 @@ func endPawn()->void:
 
 func snapUpStairCheck(delta)->bool:
 	if not is_on_floor() and not snappedToStairsLastFrame: return false
-	var expectedMotion = self.velocity * Vector3(1,0,1) * delta
-	var stepPositionWithClearance = global_transform.translated(expectedMotion + Vector3(0,maxStepHeight * 2,0))
+	var expectedMotion = self.velocity * Vector3(1.3,0,1.3) * delta
+	var stepPositionWithClearance = global_transform.translated(expectedMotion + Vector3(0,maxStepHeight * 1,0))
 	var downResult = PhysicsTestMotionResult3D.new()
 	if (runBodyTestMotion(stepPositionWithClearance,Vector3(0,-maxStepHeight*2,0),downResult)
 	and (downResult.get_collider().is_class("StaticBody3D") or downResult.get_collider().is_class("CSGShape3D"))):
@@ -508,7 +508,6 @@ func endAttachedCam()->void:
 		attachedCam.stopCameraRecoil()
 		#attachedCam.cameraRotationUpdated.disconnect(doMeshRotation)
 		gameManager.getEventSignal("playerDied").emit()
-		attachedCam.lowHP = false
 		attachedCam.hud.hudEnabled = false
 		attachedCam.resetCamCast()
 		#Dialogic.end_timeline()
@@ -764,7 +763,8 @@ func setupWeaponAnimations() -> void:
 		return
 
 func setLeftHandFilter(value : bool = true) -> void:
-	var filterBlend = animationTree.tree_root.get_node("weaponBlend_Left_blend")
+	var filterBlend : AnimationNodeBlend2 = animationTree.tree_root.get_node("weaponBlend_Left_blend")
+	filterBlend.set_filter_path("..:[Functions/Functions]", true)
 	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:L_Shoulder", value)
 	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:L_UpperArm", value)
 	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:L_Forearm", value)
@@ -786,7 +786,8 @@ func setLeftHandFilter(value : bool = true) -> void:
 	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:L_Pinkie2", value)
 
 func setRightHandFilter(value : bool = true) -> void:
-	var filterBlend = animationTree.tree_root.get_node("weaponBlend")
+	var filterBlend : AnimationNodeBlend2 = animationTree.tree_root.get_node("weaponBlend")
+	filterBlend.set_filter_path("..:[Functions/Functions]", true)
 	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:R_Shoulder", value)
 	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:R_UpperArm", value)
 	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:R_Forearm", value)

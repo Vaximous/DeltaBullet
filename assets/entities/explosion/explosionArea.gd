@@ -22,7 +22,7 @@ var explosionTween : Tween
 			collisionShape.shape.radius = explosionRadius
 
 func applyHit(object:Node3D):
-	if is_instance_valid(object):
+	if is_instance_valid(object) and !object is FakePhysicsEntity:
 		var burnChance : bool = [true,false].pick_random()
 		if burnChance:
 			randomize()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bvvxnmgamquay"]
+[gd_scene load_steps=18 format=3 uid="uid://bvvxnmgamquay"]
 
 [ext_resource type="PackedScene" uid="uid://hsjkl45euvqf" path="res://assets/entities/muzzleFlashes/muzzleFlash.tscn" id="1_cbtny"]
 [ext_resource type="Texture2D" uid="uid://c4wogkx8pvo6g" path="res://assets/textures/smoke/smokeSheet.png" id="2_gd5jg"]
@@ -62,6 +62,8 @@ grow_amount = 0.216
 material = SubResource("StandardMaterial3D_m1cpb")
 orientation = 2
 
+[sub_resource type="QuadMesh" id="QuadMesh_w0qvs"]
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ehpgi"]
 transparency = 1
 blend_mode = 1
@@ -71,6 +73,8 @@ disable_ambient_light = true
 vertex_color_use_as_albedo = true
 albedo_color = Color(2, 1.10196, 0.603922, 1)
 albedo_texture = ExtResource("3_w0qvs")
+billboard_mode = 1
+billboard_keep_scale = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_704oq"]
 transparency = 1
@@ -84,7 +88,7 @@ albedo_texture = ExtResource("6_88iyc")
 
 [node name="Flash1" node_paths=PackedStringArray("muzzleEmitters", "muzzleLights", "muzzleMeshes") instance=ExtResource("1_cbtny")]
 lightIntensity = 2.0
-meshTime = 0.08
+meshTime = 0.18
 muzzleEmitters = [NodePath("smoke")]
 muzzleLights = [NodePath("omniLight3d"), NodePath("omniLight3d2")]
 muzzleMeshes = [NodePath("ShootFlare"), NodePath("ShootFlare2")]
@@ -114,6 +118,8 @@ light_color = Color(1, 0.501961, 0, 1)
 light_energy = 0.0
 
 [node name="ShootFlare" parent="." index="3" instance=ExtResource("5_f74nf")]
+transform = Transform3D(4.75316e-15, 2.29922e-08, 0.87, 0.87, -2.29922e-08, -3.09086e-15, 3.80289e-08, 0.526, -3.80289e-08, 0.226703, 0.00224278, 0.00489535)
+mesh = SubResource("QuadMesh_w0qvs")
 surface_material_override/0 = SubResource("StandardMaterial3D_ehpgi")
 
 [node name="ShootFlare2" parent="." index="4" instance=ExtResource("5_f74nf")]

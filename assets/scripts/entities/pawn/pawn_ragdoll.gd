@@ -133,17 +133,11 @@ func hookes_law(displacement: Vector3, current_velocity: Vector3, stiffness: flo
 func _on_remove_timer_timeout()-> void:
 	queue_free()
 
-func doRagdollHeadshot()-> void:
-	#var droplets : PackedScene = load("res://assets/entities/emitters/bloodDroplet/bloodDroplets.tscn")
-	#for drop in randf_range(10,15):
-		#if gameManager.world != null:
-			#var blood : RigidBody3D = droplets.instantiate()
-			#gameManager.world.worldMisc.add_child(blood)
-			#blood.global_position = Vector3(headBone.global_position.x,headBone.global_position.y-1.4,headBone.global_position.z)
-			#blood.apply_impulse(Vector3(randf_range(-10,10),randf_range(-10,10),randf_range(-10,10)) * randf_range(5,10))
-
+func doRagdollHeadshot(pawn:BasePawn = null)-> void:
 	for x in randi_range(2,7):
-		gameManager.createGib(headBone.global_position)
+		var gib = gameManager.createGib(headBone.global_position)
+		if is_instance_valid(pawn):
+			gib.velocity += pawn.velocity
 	var destroyedHeads : Array = [preload("res://assets/models/pawn/male/headDestroyed1.tres"),preload("res://assets/models/pawn/male/headDestroyed2.tres"),preload("res://assets/models/pawn/male/headDestroyed3.tres")]
 	headshotsound.play()
 	deathSound.stop()
@@ -241,7 +235,7 @@ func headshotCheck(impulse_bone:int,killer,pawn:BasePawn)->void:
 		if is_instance_valid(killer):
 			if is_instance_valid(killer.currentItem):
 				if killer.currentItem.weaponResource.headDismember:
-					doRagdollHeadshot()
+					doRagdollHeadshot(pawn)
 			if is_instance_valid(killer.attachedCam):
 				killer.attachedCam.doHeadshotEffect()
 		pawn.headshottedPawn.emit()

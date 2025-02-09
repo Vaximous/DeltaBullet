@@ -2,9 +2,16 @@ extends Control
 signal interactionunFound
 signal interactionFound
 @export_category("Hud")
+var vignetteTween : Tween
 const defaultTransitionType = Tween.TRANS_QUART
 const defaultEaseType = Tween.EASE_OUT
 var camOwner : PlayerCamera
+var followEntity : Node3D:
+	set(value):
+		followEntity = value
+		if followEntity is BasePawn:
+			followEntity.healthComponent.healthChanged.connect(hpCheck.unbind(1))
+@onready var vignette : ColorRect = $vignette
 @onready var gameNotifications : VBoxContainer = $marginContainer/control/gameNotifications
 @onready var questNotifHolder : MarginContainer = $questNotification
 @export var cam : Camera3D
@@ -56,6 +63,26 @@ func _ready()->void:
 			%worldEditButton.show()
 		else:
 			%worldEditButton.hide()
+
+func enableVignette(color:Color,duration:float)->void:
+	if vignetteTween:
+		vignetteTween.kill()
+	vignetteTween = create_tween()
+	vignetteTween.parallel().tween_method(setVignetteColor,vignette.get_material().get_shader_parameter("color"),Color.DARK_RED,3).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
+	vignetteTween.parallel().tween_method(setVignetteSoftness,vignette.get_material().get_shader_parameter("softness"),0.8,2).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
+
+func setVignetteSoftness(amount:float)->void:
+	vignette.get_material().set_shader_parameter("softness",amount)
+
+func setVignetteColor(color:Color)->void:
+	vignette.get_material().set_shader_parameter("color",color)
+
+func disableVignette()->void:
+	if vignetteTween:
+		vignetteTween.kill()
+	vignetteTween = create_tween()
+	vignetteTween.parallel().tween_method(setVignetteColor,vignette.get_material().get_shader_parameter("color"),Color.TRANSPARENT,3).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
+	vignetteTween.parallel().tween_method(setVignetteSoftness,vignette.get_material().get_shader_parameter("softness"),5,2).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
 
 
 
@@ -140,6 +167,14 @@ func _process(delta)->void:
 		#healthBar.self_modulate = lerp(healthBar.self_modulate,Color.TRANSPARENT,12*delta)
 		#healthBG.self_modulate = lerp(healthBG.self_modulate,Color.TRANSPARENT,12*delta)
 		#healthTexture.self_modulate = lerp(healthTexture.self_modulate,Color.TRANSPARENT,12*delta)
+
+func hpCheck()->void:
+	if is_instance_valid(followEntity) and followEntity is BasePawn:
+		if !followEntity.healthComponent.isDead:
+			if followEntity.healthComponent.health <= 150:
+				enableVignette(Color.DARK_RED,2)
+			else:
+				disableVignette()
 
 	if UserConfig.game_show_fps:
 		fpsControl.show()

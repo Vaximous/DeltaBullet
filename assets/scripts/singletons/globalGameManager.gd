@@ -102,7 +102,7 @@ func _process(delta: float) -> void:
 	#DisplayServer.window_set_title(ProjectSettings.get_setting("application/config/name"))
 
 func burnTarget(node:Node3D,burnTime:float=10,burnDamage:float=3.5):
-	if node.has_method("hit") or node.get_meta("isFlammable") == true:
+	if node.has_method("hit") or node.get_meta("isFlammable") == true and !node.get_meta("isBurning"):
 		node.set_meta("isBurning", true)
 		var burner = preload("res://assets/entities/emitters/burnEffect/burnEffect.tscn").instantiate()
 		node.add_child(burner)
@@ -137,8 +137,8 @@ func doKillEffect(pawn:BasePawn,deathDealer:BasePawn)->void:
 				deathDealer.killedPawn.emit()
 				pawn.healthComponent.killerSignalEmitted = true
 
-		if deathDealer.healthComponent.health < deathDealer.healthComponent.defaultHP:
-			deathDealer.healthComponent.setHealth(deathDealer.healthComponent.health+15)
+		if deathDealer.healthComponent.health < deathDealer.healthComponent.defaultHP and !deathDealer.healthComponent.isDead and deathDealer.isPlayerPawn():
+			deathDealer.healthComponent.setHealth(deathDealer.healthComponent.health+35)
 
 func get_persistent_data() -> Dictionary:
 	if !userDir.file_exists("persistence"):
@@ -257,6 +257,7 @@ func takeScreenshot(path:String = "user://screenshots",screenshotName:String = "
 	return savedfilepath
 
 func restartScene()->void:
+	var curr = get_tree().current_scene.scene_file_path
 	playerPawns.clear()
 	targetedEnemies.clear()
 	allPawns.clear()
@@ -738,7 +739,7 @@ func create_surface_transform(origin : Vector3, incoming_vector : Vector3, surfa
 	return tf
 
 
-func createGib(position:Vector3, velocity : Vector3 = Vector3.ONE)->void:
+func createGib(position:Vector3, velocity : Vector3 = Vector3.ONE)->FakePhysicsEntity:
 	var gib = [preload("res://assets/entities/gore/dismemberGib.tscn"),preload("res://assets/entities/gore/dismemberGib2.tscn")].pick_random()
 	var inst = gib.instantiate()
 	inst.velocity.y = velocity.y * randf_range(5, 16)
@@ -746,6 +747,7 @@ func createGib(position:Vector3, velocity : Vector3 = Vector3.ONE)->void:
 	inst.velocity.z = velocity.z * randf_range(-2, 2)
 	gameManager.world.add_child(inst)
 	inst.global_position = position
+	return inst
 
 
 func hideAllPlayers()->void:

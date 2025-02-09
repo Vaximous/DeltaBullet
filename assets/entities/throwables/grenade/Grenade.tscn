@@ -10,7 +10,7 @@
 script = ExtResource("3_xdnty")
 itemName = "Grenade"
 canCook = true
-cookTime = 5.0
+cookTime = 4.0
 throwableDamage = 100.0
 metadata/_custom_type_script = ExtResource("3_xdnty")
 
@@ -31,7 +31,7 @@ radius = 0.27223
 linear_damp = 1.2
 angular_damp = 3.0
 script = ExtResource("2_xwxxe")
-explosionRadius = 4.5
+explosionRadius = 5.0
 explosionImpulse = 35.0
 healthComponent = NodePath("healthComponent")
 throwableResource = SubResource("Resource_q2uit")

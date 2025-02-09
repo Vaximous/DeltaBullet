@@ -1,16 +1,16 @@
 [gd_resource type="AnimationNodeBlendTree" load_steps=21 format=3 uid="uid://4a47n6lsro4m"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ybwpt"]
-animation = &"weaponAnims/aim"
+animation = &"aim"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_j08dw"]
-animation = &"weaponAnims/fire"
+animation = &"fire"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_u51jk"]
-animation = &"weaponAnims/idle"
+animation = &"idle"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_hie0f"]
-animation = &"weaponAnims/reload"
+animation = &"reload"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fvckn"]
 animation = &"WeaponAnims/sprint"
@@ -74,13 +74,13 @@ states/sprint/position = Vector2(619, -13)
 states/unequip/node = SubResource("AnimationNodeAnimation_syl42")
 states/unequip/position = Vector2(843, 100)
 transitions = ["sprint", "idle", SubResource("AnimationNodeStateMachineTransition_5ul8h"), "idle", "sprint", SubResource("AnimationNodeStateMachineTransition_gga4p"), "idle", "unequip", SubResource("AnimationNodeStateMachineTransition_7mtao"), "unequip", "End", SubResource("AnimationNodeStateMachineTransition_sftbu"), "Start", "idle", SubResource("AnimationNodeStateMachineTransition_2yi56"), "idle", "aim", SubResource("AnimationNodeStateMachineTransition_mh4se"), "aim", "fire", SubResource("AnimationNodeStateMachineTransition_7n2o2"), "fire", "aim", SubResource("AnimationNodeStateMachineTransition_va47p"), "aim", "idle", SubResource("AnimationNodeStateMachineTransition_umbs7"), "idle", "reload", SubResource("AnimationNodeStateMachineTransition_3kfwd"), "reload", "idle", SubResource("AnimationNodeStateMachineTransition_hxj8i")]
-graph_offset = Vector2(19, -25)
+graph_offset = Vector2(115, 1)
 
 [sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_uy32p"]
 
 [resource]
 resource_name = "testWeaponAnimations"
-graph_offset = Vector2(-534.917, 35.4713)
+graph_offset = Vector2(-334, 91)
 nodes/output/position = Vector2(380, 140)
 nodes/weaponState/node = SubResource("AnimationNodeStateMachine_q1np0")
 nodes/weaponState/position = Vector2(-180, 120)

@@ -38,8 +38,8 @@ func _physics_process(delta: float) -> void:
 
 
 			if !pawnControlling.snapUpStairCheck(delta):
-				pawnControlling.move_and_slide()
 				pawnControlling.stairSnapCheck()
+				pawnControlling.move_and_slide()
 
 func onMovementStateSet(state:MovementState)->void:
 	if enabled and !pawnControlling.isPawnDead and is_instance_valid(pawnControlling):

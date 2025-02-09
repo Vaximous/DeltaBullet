@@ -20,4 +20,5 @@ func activateThrowable()->void:
 
 
 func _on_health_component_health_depleted(dealer: Node3D) -> void:
-	activateThrowable()
+	if dealer is BasePawn and dealer.isPlayerPawn():
+		activateThrowable()

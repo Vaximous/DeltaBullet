@@ -33,14 +33,18 @@ func deleteHole()->void:
 	await holeTween.tween_property(decal,"modulate",Color.TRANSPARENT,0.25).finished
 	queue_free()
 
+func setSoundVariables(audio:AudioStreamPlayer3D)->void:
+	audio.bus = &"Sounds"
+	audio.attenuation_filter_db = -24
+	audio.unit_size = 13
 
 func initializeBulletHole()->void:
 	#Play the sounds
 	for sounds in soundArray:
-		sounds.max_db = audioVolume
+		#sounds.max_db = audioVolume
 		sounds.volume_db = audioVolume
 		sounds.reparent(gameManager.world.worldMisc)
-		gameManager.setSoundVariables(sounds)
+		setSoundVariables(sounds)
 		#print(sounds.volume_db)
 		sounds.finished.connect(sounds.queue_free)
 		sounds.play()

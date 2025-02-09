@@ -3,7 +3,6 @@ class_name PlayerCamera
 signal cameraRotationUpdated
 signal setCamRot(camRotation:float)
 ##Variable Set
-var lowHP : bool = false
 var isFreecam : bool = true
 var speed : float = 9.0
 var acceleration: float = 3.0
@@ -23,10 +22,11 @@ var castLerp : Vector3 = Vector3.ZERO
 @export var followNode : Node3D:
 	set(value):
 		followNode = value
+		hud.followEntity = followingEntity
 		if followingEntity is BasePawn:
 			followingEntity.interactRaycast = interactCast
-			if hud:
-				hud.healthBar.max_value = followingEntity.healthComponent.health
+			if is_instance_valid(hud):
+				hud.healthBar.max_value = followingEntity.healthComponent.defaultHP
 			if !followingEntity.killedPawn.is_connected(emitKilleffect):
 				followingEntity.killedPawn.connect(emitKilleffect)
 	get:
@@ -35,7 +35,6 @@ var castLerp : Vector3 = Vector3.ZERO
 @onready var headshotSound : AudioStreamPlayer = $headshotSound
 @onready var killVignette : ColorRect = $HUD/killVignette
 @onready var vignette : ColorRect = $HUD/vignette
-@onready var hpAudio : AudioStreamPlayer = $HUD/vignette/lowHP
 @onready var hud : Control = $HUD
 @onready var weaponHud : TextureRect = $HUD/weaponBar
 @onready var weaponLabel : Label = $HUD/weaponBar/weaponName
@@ -179,7 +178,7 @@ func _physics_process(delta)->void:
 				weaponLabel.text = ""
 				weaponHud.modulate = lerp(weaponHud.modulate,Color(1,1,1,0.0),12*delta)
 
-	##Recoil - Currently broken.. Needs fixing..
+	##Recoil
 	camCast.rotation = lerp(camCast.rotation,castLerp, recoilReturnSpeed*delta)
 	camTargetRot.x = lerp(camTargetRot.x, 0.0, camReturnSpeed * delta)
 	camTargetRot.y = lerp(camTargetRot.y, 0.0, camReturnSpeed * delta)
@@ -253,31 +252,11 @@ func _physics_process(delta)->void:
 			horizontal.position.x = lerp(horizontal.position.x, cameraData.cameraOffset.x, cameraData.camLerpSpeed*delta)
 		else:
 			horizontal.position.x = lerp(horizontal.position.x, cameraData.itemEquipOffset.x, cameraData.itemEquipLerpSpeed*delta)
-	#Low HP
-	if lowHP:
-		#vignette.show()
-		vignette.get_material().set_shader_parameter("color",lerp(vignette.get_material().get_shader_parameter("color"), Color(1,0,0,1),8*delta))
-		vignette.get_material().set_shader_parameter("softness",lerpf(vignette.get_material().get_shader_parameter("softness"), 0.8,8*delta))
-		if UserConfig.game_lowHP_ambience:
-			if !hpAudio.playing:
-				hpAudio.play()
-	else:
-		vignette.get_material().set_shader_parameter("color",lerp(vignette.get_material().get_shader_parameter("color"), Color(0,0,0,1),8*delta))
-		vignette.get_material().set_shader_parameter("softness",lerpf(vignette.get_material().get_shader_parameter("softness"), 0.9,4*delta))
-		hpAudio.stop()
 
 	#Kill Vignette
 	if !killVignette.get_material().get_shader_parameter("softness") >= 9.0:
 		killVignette.get_material().set_shader_parameter("softness",lerpf(killVignette.get_material().get_shader_parameter("softness"), 10.0,0.6*delta))
 
-	if !followNode == null:
-		if followingEntity is BasePawn:
-			if followingEntity.healthComponent:
-				if !followingEntity.healthComponent.isDead:
-					if followingEntity.healthComponent.health <= 30:
-						lowHP = true
-					else:
-						lowHP = false
 	#Freecam Movement
 	if isFreecam:
 		followNode = null

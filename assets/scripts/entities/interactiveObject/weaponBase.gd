@@ -223,7 +223,7 @@ func fire()->void:
 		#The weapon is dry. Do the dry fire and wait a bit.
 		isBusy = true
 		dry_fired.emit()
-		await get_tree().create_timer(weaponResource.weaponFireRate).timeout
+		await get_tree().create_timer(weaponResource.weaponFireRate,false).timeout
 		isBusy = false
 		return
 
@@ -278,7 +278,7 @@ func fire()->void:
 						#var pt = globalParticles.createParticle(globalParticles.detectMaterial(getHitObject(shot_cast)), getRayColPoint(shot_cast))
 						#if !pt == null:
 							#pt.look_at(getRayColPoint(shot_cast) + getRayNormal(shot_cast))
-		await get_tree().create_timer(weaponResource.weaponFireRate).timeout
+		await get_tree().create_timer(weaponResource.weaponFireRate,false).timeout
 		isFiring = false
 	return
 
@@ -577,7 +577,7 @@ func reloadWeapon()->void:
 			weaponRemoteStateLeft.next()
 			isReloading = true
 			canReloadWeapon = false
-			await get_tree().create_timer(reloadTime).timeout
+			await get_tree().create_timer(reloadTime,false).timeout
 			isReloading = false
 			currentMagSize -= firedShots
 			currentAmmo += firedShots

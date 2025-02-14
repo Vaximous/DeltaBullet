@@ -16,6 +16,7 @@ const defaultTweenSpeed : float = 1
 
 func _ready() -> void:
 	scanMarkers()
+	gameManager.setMotionBlur(camera)
 
 func scanMarkers()->void:
 	for markers in %areaNodes.get_children():

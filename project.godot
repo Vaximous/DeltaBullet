@@ -8,6 +8,24 @@
 
 config_version=5
 
+[Fmod]
+
+General/auto_initialize=true
+General/channel_count=1024
+General/is_live_update_enabled=true
+General/is_memory_tracking_enabled=false
+"Software Format/sample_rate"=48000
+"Software Format/speaker_mode"=3
+"Software Format/raw_speaker_count"=0
+General/default_listener_count=1
+General/banks_path="res://"
+General/should_load_by_name=false
+DSP/dsp_buffer_size=512
+DSP/dsp_buffer_count=4
+"3D Settings/doppler_scale"=1.0
+"3D Settings/distance_factor"=1.0
+"3D Settings/rolloff_scale"=1.0
+
 [animation]
 
 warnings/check_invalid_track_paths=false
@@ -38,6 +56,7 @@ Notifications="*res://assets/scripts/singletons/Notifications.tscn"
 cutsceneManager="*res://assets/scripts/singletons/cutsceneManager.gd"
 questManager="*res://assets/scripts/singletons/questManager.gd"
 AiManager="*res://assets/scripts/singletons/AIManager.gd"
+FmodManager="*res://addons/fmod/FmodManager.gd"
 
 [debug]
 
@@ -92,7 +111,7 @@ naming/scene_name_casing=1
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/ez_dialogue/plugin.cfg", "res://addons/finite_state_machine/plugin.cfg", "res://addons/proto_shape/plugin.cfg")
+enabled=PackedStringArray("res://addons/SphynxMotionBlurToolkit/plugin.cfg", "res://addons/ez_dialogue/plugin.cfg", "res://addons/finite_state_machine/plugin.cfg", "res://addons/fmod/plugin.cfg", "res://addons/proto_shape/plugin.cfg")
 
 [file_customization]
 

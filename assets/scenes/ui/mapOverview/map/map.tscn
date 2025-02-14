@@ -79,6 +79,7 @@ transform = Transform3D(-0.927184, 0, -0.374606, 0, 1, 0, 0.374606, 0, -0.927184
 transform = Transform3D(1, 0, 0, 0, 0.799685, 0.60042, 0, -0.60042, 0.799685, 0, 0, 0)
 
 [node name="camera3d" type="Camera3D" parent="Camera/camHoriz/camVert"]
+unique_name_in_owner = true
 
 [node name="areaNodes" type="Node" parent="."]
 unique_name_in_owner = true

@@ -129,19 +129,9 @@ func _ready()->void:
 	Fade.fade_in(0.3, Color(0,0,0,1),"GradientVertical",false,true)
 	#Dialogic.timeline_started.connect(playTextAppearSound)
 	hud.camOwner = self
+	gameManager.setMotionBlur(camera)
+	UserConfig.configs_updated.connect(gameManager.setMotionBlur.bind(camera))
 
-#func checkMotionBlur()->void:
-	#if UserConfig.graphics_motion_blur:
-		#if camera.compositor == null:
-			#var comp = load("res://assets/envs/motionBlurCompositor.tres")
-			#camera.compositor = comp
-		#else:
-			#camera.compositor.compositor_effects[0].set("enabled",true)
-			#camera.compositor.compositor_effects[1].set("enabled",true)
-	#else:
-		#if camera.compositor:
-			#camera.compositor.compositor_effects[0].set("enabled",false)
-			#camera.compositor.compositor_effects[1].set("enabled",false)
 
 func _input(_event)->void:
 	if Input.is_action_pressed("gRightClick") and gameManager.isMouseHidden():

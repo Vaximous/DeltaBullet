@@ -292,7 +292,7 @@ offset_bottom = -63.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_j35o7")
-current_tab = 2
+current_tab = 1
 
 [node name="Game" type="Control" parent="panelHolder/panel/optionsPanel"]
 visible = false
@@ -380,7 +380,6 @@ max_value = 999.0
 value = 25.0
 
 [node name="Video" type="Control" parent="panelHolder/panel/optionsPanel"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
@@ -404,7 +403,6 @@ layout_mode = 2
 text = "Fullscreen"
 
 [node name="motionBlur" type="CheckButton" parent="panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer"]
-visible = false
 layout_mode = 2
 text = "Motion Blur"
 
@@ -533,6 +531,7 @@ popup/item_3/text = "8X"
 popup/item_3/id = 3
 
 [node name="Audio" type="Control" parent="panelHolder/panel/optionsPanel"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 2
 

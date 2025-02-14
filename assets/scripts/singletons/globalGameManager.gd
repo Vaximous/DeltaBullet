@@ -613,6 +613,23 @@ func removeSafehouseEditor()->void:
 	Fade.fade_in(0.5)
 	gameManager.activeCamera.hud.enableHud()
 
+
+func setMotionBlur(camera:Camera3D)->void:
+	UserConfig.configs_updated.connect(setMotionBlur.bind(camera))
+	if UserConfig.graphics_motion_blur:
+		if camera.compositor == null:
+			var comp = load("res://assets/envs/mBlurCompositor.tres")
+			camera.compositor = comp
+		else:
+			camera.compositor.compositor_effects[0].set("enabled",true)
+			camera.compositor.compositor_effects[1].set("enabled",true)
+	else:
+		if camera.compositor:
+			camera.compositor.compositor_effects[0].set("enabled",false)
+			camera.compositor.compositor_effects[1].set("enabled",false)
+
+
+
 func doDeathEffect()->void:
 	const defaultTransitionType = Tween.TRANS_QUART
 	const defaultEaseType = Tween.EASE_OUT

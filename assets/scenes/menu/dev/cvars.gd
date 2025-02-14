@@ -140,6 +140,7 @@ func aggroAll()->void:
 		if i.pawnFSM.current_state != i.pawnFSM.get_state("Attack") and i.pawnOwner.currentItem:
 			i.lookAtPosition(i.targetedPawn.global_position,true)
 			i.pawnFSM.change_state("Attack")
+			i.forcedTarget = gameManager.getCurrentPawn()
 
 func spawnPawn(walk:bool = false,position : Vector3 = Vector3.INF) -> void:
 	var cast : RayCast3D = gameManager.activeCamera.camCast

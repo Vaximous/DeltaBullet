@@ -24,7 +24,7 @@ var explosionTween : Tween
 func applyHit(object:Node3D):
 	if is_instance_valid(object) and !object is FakePhysicsEntity:
 		var burnChance : bool = [true,false].pick_random()
-		if burnChance:
+		if burnChance and object is not FakePhysicsEntity:
 			randomize()
 			gameManager.burnTarget(object,randf_range(3,30),0.8)
 

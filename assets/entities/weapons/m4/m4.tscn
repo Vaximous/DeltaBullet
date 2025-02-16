@@ -1,15 +1,28 @@
-[gd_scene load_steps=23 format=4 uid="uid://bidurnqgd1c74"]
+[gd_scene load_steps=37 format=4 uid="uid://bidurnqgd1c74"]
 
 [ext_resource type="PackedScene" uid="uid://cpd5r8bmx2885" path="res://assets/entities/weapons/weaponBase.tscn" id="1_kohee"]
 [ext_resource type="Resource" uid="uid://cqlbuo5rnaqs5" path="res://assets/resources/customResources/weaponData/M4/M4.tres" id="2_t7j74"]
 [ext_resource type="Texture2D" uid="uid://b2fhcoojuwv3r" path="res://assets/models/weapons/Textures/American Light AssaultRifle.png" id="3_slm2e"]
 [ext_resource type="PackedScene" uid="uid://bvvxnmgamquay" path="res://assets/entities/muzzleFlashes/muzzles/flash1.tscn" id="4_rgg5c"]
-[ext_resource type="AudioStream" uid="uid://l22ec5ipci2g" path="res://assets/sounds/weapons/m4/WEAPONS_RIFLE_Assault_Rifle_Fire_05.wav" id="7_2gub5"]
+[ext_resource type="AudioStream" uid="uid://bbj70j5k7yec7" path="res://assets/sounds/weapons/m4/m4_shot_1.wav" id="5_a5krh"]
+[ext_resource type="AudioStream" uid="uid://cr1ggvwcgs8s8" path="res://assets/sounds/weapons/m4/m4_shot_2.wav" id="6_wlv3p"]
+[ext_resource type="AudioStream" uid="uid://blfsgfav586hc" path="res://assets/sounds/weapons/m4/m4_shot_3.wav" id="7_4wdcl"]
+[ext_resource type="AudioStream" uid="uid://sc1bl34l4nuq" path="res://assets/sounds/weapons/m4/m4_shot_4.wav" id="8_30lnx"]
 [ext_resource type="Animation" uid="uid://cprovv54ucski" path="res://assets/models/weapons/honeybadger/anims/BadgerAim.res" id="8_e6rah"]
 [ext_resource type="AnimationNodeBlendTree" uid="uid://dm3678yui0y2i" path="res://assets/entities/weapons/m4/M4Tree.tres" id="8_k4rby"]
 [ext_resource type="Animation" uid="uid://cps3p6fugfu3m" path="res://assets/models/weapons/honeybadger/anims/BadgerShoot.res" id="9_iqxdj"]
+[ext_resource type="AudioStream" uid="uid://mxxdgqgaepes" path="res://assets/sounds/weapons/m4/m4_shot_5.wav" id="9_noe0u"]
 [ext_resource type="Animation" uid="uid://cr3q5vktr0347" path="res://assets/models/weapons/honeybadger/anims/BadgerIdle.res" id="10_kskv2"]
+[ext_resource type="AudioStream" uid="uid://c5cgwx8hm12xv" path="res://assets/sounds/weapons/m4/m4_shot_6.wav" id="10_q0ej7"]
 [ext_resource type="Animation" uid="uid://bs1bse6dk0ppq" path="res://assets/animations/pawn/BadgerReload.res" id="11_b1h3l"]
+[ext_resource type="AudioStream" uid="uid://d4aum8734j8gk" path="res://assets/sounds/weapons/m4/m4_shot_7.wav" id="11_rdw0s"]
+[ext_resource type="AudioStream" uid="uid://llh1asjdfkc" path="res://assets/sounds/weapons/m4/m4_shot_8.wav" id="12_s53ob"]
+[ext_resource type="AudioStream" uid="uid://d2g54ro4pcaj4" path="res://assets/sounds/weapons/m4/m4_shot_9.wav" id="13_sscyd"]
+[ext_resource type="AudioStream" uid="uid://ceskbwv5buoxq" path="res://assets/sounds/weapons/m4/m4_shot_10.wav" id="14_1c6i0"]
+[ext_resource type="AudioStream" uid="uid://cqqb2fcen14sv" path="res://assets/sounds/weapons/aimSound/m4_lockin_1.wav" id="20_aa0vc"]
+[ext_resource type="AudioStream" uid="uid://c1ha0spgsursu" path="res://assets/sounds/weapons/aimSound/m4_lockin_2.wav" id="21_mwfme"]
+[ext_resource type="AudioStream" uid="uid://ukbh6rvxex23" path="res://assets/sounds/weapons/aimSound/m4_lockin_3.wav" id="22_ytpja"]
+[ext_resource type="AudioStream" uid="uid://crp72lydvug63" path="res://assets/sounds/weapons/aimSound/m4_lockin_4.wav" id="23_skate"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_klf3j"]
 resource_name = "DefaultMaterial"
@@ -125,8 +138,17 @@ shadow_mesh = SubResource("ArrayMesh_jxwwy")
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_upyhg"]
 random_pitch = 1.05
-streams_count = 1
-stream_0/stream = ExtResource("7_2gub5")
+streams_count = 10
+stream_0/stream = ExtResource("5_a5krh")
+stream_1/stream = ExtResource("6_wlv3p")
+stream_2/stream = ExtResource("7_4wdcl")
+stream_3/stream = ExtResource("8_30lnx")
+stream_4/stream = ExtResource("9_noe0u")
+stream_5/stream = ExtResource("10_q0ej7")
+stream_6/stream = ExtResource("11_rdw0s")
+stream_7/stream = ExtResource("12_s53ob")
+stream_8/stream = ExtResource("13_sscyd")
+stream_9/stream = ExtResource("14_1c6i0")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ojrgr"]
 size = Vector3(0.0790253, 0.340725, 0.882185)
@@ -138,6 +160,13 @@ _data = {
 &"idle": ExtResource("10_kskv2"),
 &"reload": ExtResource("11_b1h3l")
 }
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_nrfx1"]
+streams_count = 4
+stream_0/stream = ExtResource("20_aa0vc")
+stream_1/stream = ExtResource("21_mwfme")
+stream_2/stream = ExtResource("22_ytpja")
+stream_3/stream = ExtResource("23_skate")
 
 [node name="M4" node_paths=PackedStringArray("weaponMesh", "ejectionPoint", "muzzlePoint") instance=ExtResource("1_kohee")]
 weaponMesh = NodePath("M4Mesh")
@@ -173,7 +202,8 @@ transform = Transform3D(1, 0, 0, 0, 0.907777, -0.419452, 0, 0.419452, 0.907777, 
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." index="1"]
 stream = SubResource("AudioStreamRandomizer_upyhg")
-volume_db = -10.0
+volume_db = 25.87
+max_db = 6.0
 bus = &"Sounds"
 attenuation_filter_db = 0.0
 
@@ -190,4 +220,11 @@ libraries = {
 &"weaponAnims": SubResource("AnimationLibrary_kytnd")
 }
 
+[node name="aimSound" parent="." index="7"]
+stream = SubResource("AudioStreamRandomizer_nrfx1")
+volume_db = 10.0
+max_db = 6.0
+
+[connection signal="aimingStart" from="." to="." method="playAimSound"]
+[connection signal="freeaimStart" from="." to="." method="playAimSound"]
 [connection signal="shot_fired" from="." to="AudioStreamPlayer3D" method="play"]

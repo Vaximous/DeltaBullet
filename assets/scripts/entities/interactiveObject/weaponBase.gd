@@ -1,6 +1,8 @@
 extends InteractiveObject
 class_name Weapon
 signal reloadingStart
+signal aimingStart
+signal freeaimStart
 @onready var collisionObject : CollisionShape3D = $collisionObject
 @onready var animationTree : AnimationTree = $AnimationTree
 @onready var animationPlayer : AnimationPlayer = $AnimationPlayer
@@ -87,6 +89,8 @@ var defaultBulletTrail = load("res://assets/entities/bulletTrail/bulletTrail.tsc
 			isFreeAiming = weaponOwner.freeAim
 			#weaponOwner.setLeftHandFilter(weaponResource.useLeftHandFreeAiming)
 			weaponOwner.setRightHandFilter(weaponResource.useRightHandFreeAiming)
+			if isFreeAiming:
+				freeaimStart.emit()
 @export var isAiming :bool = false:
 	set(value):
 		isAiming = value
@@ -100,6 +104,7 @@ var defaultBulletTrail = load("res://assets/entities/bulletTrail/bulletTrail.tsc
 			#	weaponOwner.setLeftHandFilter(weaponResource.useLeftHandIdle)
 				weaponOwner.setRightHandFilter(weaponResource.useRightHandIdle)
 		if value == true:
+			aimingStart.emit()
 			weaponOwner.isRunning = false
 @export var isBusy:bool  = false
 @export var isWeaponBlocked :bool = false:
@@ -121,6 +126,10 @@ func _ready()->void:
 			if weaponMesh:
 				weaponMesh.position = weaponResource.weaponPositionOffset
 				weaponMesh.rotation = weaponResource.weaponRotationOffset
+				if is_instance_valid(weaponResource.equipStream):
+					weaponOwner.equipSound.stream = weaponResource.equipStream
+				else:
+					weaponOwner.equipSound.stream = preload("res://assets/sounds/weapons/genericEquip.tres")
 
 ## Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _physics_process(delta)->void:
@@ -555,6 +564,10 @@ func setEquipVariables()->void:
 		remove_from_group("Interactable")
 	canBeUsed = false
 	collisionEnabled = false
+	if is_instance_valid(weaponResource.equipStream):
+		weaponOwner.equipSound.stream = weaponResource.equipStream
+	else:
+		weaponOwner.equipSound.stream = preload("res://assets/sounds/weapons/genericEquip.tres")
 	setWeaponRecoil()
 
 func setWeaponRecoil()->void:
@@ -597,3 +610,7 @@ func reloadWeapon()->void:
 func checkFreeAim()->void:
 	if weaponOwner:
 		isFreeAiming = weaponOwner.freeAim
+
+func playAimSound()->void:
+	if !%aimSound.playing and weaponRemoteState.get_current_node() == "idle":
+		%aimSound.play()

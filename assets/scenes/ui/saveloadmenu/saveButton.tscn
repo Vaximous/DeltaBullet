@@ -1,9 +1,15 @@
-[gd_scene load_steps=13 format=3 uid="uid://dwxr1gnovk0jv"]
+[gd_scene load_steps=21 format=3 uid="uid://dwxr1gnovk0jv"]
 
 [ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="1_6sqyy"]
 [ext_resource type="Script" uid="uid://chj3en6dpytsf" path="res://assets/scenes/ui/saveloadmenu/saveButton.gd" id="2_hc6b0"]
-[ext_resource type="AudioStream" uid="uid://08mwbmwvrolu" path="res://assets/sounds/ui/uiAppear2.wav" id="3_g47wy"]
-[ext_resource type="AudioStream" uid="uid://dbxyo1p3kd36u" path="res://assets/sounds/ui/uievaluate.wav" id="4_qgfjb"]
+[ext_resource type="AudioStream" uid="uid://bu2tsjdwp3sgi" path="res://assets/sounds/ui/menu/Menu hover_1.wav" id="3_ont7j"]
+[ext_resource type="AudioStream" uid="uid://drstgovlvl11k" path="res://assets/sounds/ui/menu/Menu hover_2.wav" id="4_j0nlr"]
+[ext_resource type="AudioStream" uid="uid://cr3ij4oofjpjd" path="res://assets/sounds/ui/menu/Menu_click_1.wav" id="4_qq3no"]
+[ext_resource type="AudioStream" uid="uid://d3ivy7qafrxt8" path="res://assets/sounds/ui/menu/Menu_click_2.wav" id="5_qky3t"]
+[ext_resource type="AudioStream" uid="uid://bqnfn8cqigm0f" path="res://assets/sounds/ui/menu/Menu hover_3.wav" id="5_tyc0u"]
+[ext_resource type="AudioStream" uid="uid://cnowyc1nhuvfd" path="res://assets/sounds/ui/menu/Menu hover_4.wav" id="6_i4uj5"]
+[ext_resource type="AudioStream" uid="uid://b61ylgh6ym6my" path="res://assets/sounds/ui/menu/Menu_click_3.wav" id="6_pbqbx"]
+[ext_resource type="AudioStream" uid="uid://cg2gg2gqhitg4" path="res://assets/sounds/ui/menu/Menu_click_4.wav" id="7_ont7j"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hgw5i"]
 
@@ -22,6 +28,20 @@ colors = PackedColorArray(0.196078, 0, 0, 1, 0.356863, 0, 0, 0)
 gradient = SubResource("Gradient_06uxp")
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_rrhwt"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_feh4n"]
+streams_count = 4
+stream_0/stream = ExtResource("3_ont7j")
+stream_1/stream = ExtResource("4_j0nlr")
+stream_2/stream = ExtResource("5_tyc0u")
+stream_3/stream = ExtResource("6_i4uj5")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_j0nlr"]
+streams_count = 4
+stream_0/stream = ExtResource("4_qq3no")
+stream_1/stream = ExtResource("5_qky3t")
+stream_2/stream = ExtResource("6_pbqbx")
+stream_3/stream = ExtResource("7_ont7j")
 
 [node name="saveButton" type="Button"]
 custom_minimum_size = Vector2(0, 190)
@@ -91,15 +111,13 @@ text = "Save Time
 vertical_alignment = 1
 
 [node name="audioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_g47wy")
-volume_db = -10.0
-pitch_scale = 2.05
+stream = SubResource("AudioStreamRandomizer_feh4n")
+volume_db = -2.0
 bus = &"UI"
 
 [node name="selectSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_qgfjb")
+stream = SubResource("AudioStreamRandomizer_j0nlr")
 volume_db = -10.0
-pitch_scale = 2.05
 bus = &"UI"
 
 [connection signal="focus_entered" from="." to="." method="hoverOn"]

@@ -66,4 +66,6 @@ var useRightHand:bool = true
 @export var weaponPositionOffset = Vector3.ZERO
 @export var weaponRotationOffset = Vector3.ZERO
 @export_subgroup("Misc")
+##When the item is equipped, what sound will it play?
+@export var equipStream : AudioStream
 @export var bulletColor : Color = Color(1,1,0,1)

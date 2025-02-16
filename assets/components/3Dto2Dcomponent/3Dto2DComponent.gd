@@ -18,10 +18,11 @@ func _physics_process(delta: float) -> void:
 	if cam is Camera3D:
 		var unprojected_position = cam.unproject_position(global_position)
 		for n in get_children():
-			n.global_position = unprojected_position
-			n.visible = !cam.is_position_behind(global_position)
-			if clamp_to_edge:
-				clamp_to_screen(n)
+			if !n is AudioStreamPlayer:
+				n.global_position = unprojected_position
+				n.visible = !cam.is_position_behind(global_position)
+				if clamp_to_edge:
+					clamp_to_screen(n)
 
 
 func clamp_to_screen(item : Control) -> void:

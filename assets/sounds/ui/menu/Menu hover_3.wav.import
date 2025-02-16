@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bqnfn8cqigm0f"
+path="res://.godot/imported/Menu hover_3.wav-dfee5cb8954a32a81eb0886c08f8a4f7.sample"
+
+[deps]
+
+source_file="res://assets/sounds/ui/menu/Menu hover_3.wav"
+dest_files=["res://.godot/imported/Menu hover_3.wav-dfee5cb8954a32a81eb0886c08f8a4f7.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=true
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

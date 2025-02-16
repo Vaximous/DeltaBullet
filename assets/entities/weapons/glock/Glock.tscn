@@ -2205,7 +2205,6 @@ playback_default_blend_time = 0.1
 transform = Transform3D(0.065, 0, 0, 0, 0.065, 0, 0, 0, 0.065, 0, 0, 0)
 
 [node name="Glock" parent="glockModel" index="0"]
-blend_shapes/HammerPullBack = 0.977593
 surface_material_override/0 = ExtResource("7_5pyd6")
 surface_material_override/1 = ExtResource("8_vefcy")
 surface_material_override/2 = SubResource("StandardMaterial3D_vefcy")

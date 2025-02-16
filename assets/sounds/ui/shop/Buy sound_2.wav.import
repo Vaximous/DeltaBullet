@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c3bhon2ro1hq7"
+path="res://.godot/imported/Buy sound_2.wav-a27182f02509312030e06d57d960a263.sample"
+
+[deps]
+
+source_file="res://assets/sounds/ui/shop/Buy sound_2.wav"
+dest_files=["res://.godot/imported/Buy sound_2.wav-a27182f02509312030e06d57d960a263.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=true
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

@@ -31,7 +31,8 @@ signal freeOrphans
 #Global Sound Player
 var soundPlayer = AudioStreamPlayer.new()
 var sounds : Dictionary = {"healSound" = preload("res://assets/sounds/ui/rareItemFound.wav"),
-			"alertSound" = preload("res://assets/sounds/ui/uialert.wav")
+			"alertSound" = preload("res://assets/sounds/ui/uialert.wav"),
+			"startGame" = preload("res://assets/sounds/ui/menu/Button start.wav")
 			}
 
 #Misc
@@ -86,6 +87,7 @@ func _enter_tree() -> void:
 
 # Called when the node enters the scene tree for the first time.
 func _ready()->void:
+	add_child(soundPlayer)
 	initializeSteam()
 	DisplayServer.window_set_title(ProjectSettings.get_setting("application/config/name"))
 	soundPlayer.name = "globalSoundPlayer"
@@ -377,9 +379,24 @@ func isMouseHidden()->bool:
 	else:
 		return false
 
-func playSound(stream)->void:
+func playSound(stream,bus:StringName = &"UI",volume:float = 2.0)->void:
 	soundPlayer.stream = stream
+	#print(soundPlayer.stream)
+	soundPlayer.bus = bus
+	soundPlayer.volume_db = linear_to_db(volume)
+	soundPlayer.playing = true
 	soundPlayer.play()
+
+	if soundPlayer.playing:
+		var dupePlayer : AudioStreamPlayer = soundPlayer.duplicate()
+		add_child(dupePlayer)
+		dupePlayer.finished.connect(dupePlayer.queue_free)
+		dupePlayer.stream = stream
+		#print(soundPlayer.stream)
+		dupePlayer.bus = bus
+		dupePlayer.volume_db = linear_to_db(volume)
+		dupePlayer.playing = true
+		dupePlayer.play()
 
 func getGlobalSound(soundname: String):
 	if sounds.get(soundname) != null:

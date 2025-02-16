@@ -112,6 +112,12 @@ func fadeInteractHudOut()->void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta)->void:
+	if UserConfig.game_show_fps:
+		fpsControl.show()
+		fpsLabel.text = "FPS: %s" %int(Engine.get_frames_per_second())
+	else:
+		fpsControl.hide()
+
 	# If in Dialogue
 	if interactVisible:
 		#interactHud.modulate = lerp(interactHud.modulate, Color.WHITE, 8*delta)
@@ -176,11 +182,7 @@ func hpCheck()->void:
 			else:
 				disableVignette()
 
-	if UserConfig.game_show_fps:
-		fpsControl.show()
-		fpsLabel.text = "FPS: %s" %Engine.get_frames_per_second()
-	else:
-		fpsControl.hide()
+
 
 func getCrosshair():
 	if crosshair:

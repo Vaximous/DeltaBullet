@@ -1,0 +1,14 @@
+[gd_resource type="AudioStreamRandomizer" load_steps=5 format=3 uid="uid://d37ngfnaxvq7k"]
+
+[ext_resource type="AudioStream" uid="uid://dt0kko8wgupss" path="res://assets/sounds/ui/transitions/Transition_woosh_1.wav" id="1_bdau5"]
+[ext_resource type="AudioStream" uid="uid://cqgv8gnhg2qne" path="res://assets/sounds/ui/transitions/Transition_woosh_2.wav" id="2_2nys0"]
+[ext_resource type="AudioStream" uid="uid://bssydf1qnwr1m" path="res://assets/sounds/ui/transitions/Transition_woosh_3.wav" id="3_0dqwi"]
+[ext_resource type="AudioStream" uid="uid://k8xovcsvm1jc" path="res://assets/sounds/ui/transitions/Transition_woosh_4.wav" id="4_fcr7i"]
+
+[resource]
+random_pitch = 1.1
+streams_count = 4
+stream_0/stream = ExtResource("1_bdau5")
+stream_1/stream = ExtResource("2_2nys0")
+stream_2/stream = ExtResource("3_0dqwi")
+stream_3/stream = ExtResource("4_fcr7i")

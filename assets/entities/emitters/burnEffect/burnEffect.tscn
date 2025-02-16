@@ -164,7 +164,6 @@ light_energy = 0.5
 amount = 24
 lifetime = 2.0
 randomness = 0.24
-seed = 2620873931
 fixed_fps = 0
 process_material = SubResource("ParticleProcessMaterial_h7mvc")
 draw_pass_1 = SubResource("QuadMesh_grcmm")
@@ -179,10 +178,8 @@ process_material = SubResource("ParticleProcessMaterial_onpp2")
 draw_pass_1 = SubResource("QuadMesh_ildi1")
 
 [node name="explosionSmoke" type="GPUParticles3D" parent="fire"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0762191, -0.0541287)
 amount = 7
 randomness = 1.0
-seed = 1073422642
 fixed_fps = 0
 process_material = SubResource("ParticleProcessMaterial_1tovw")
 draw_pass_1 = SubResource("QuadMesh_3f446")

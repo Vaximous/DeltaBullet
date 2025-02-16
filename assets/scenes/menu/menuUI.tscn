@@ -34,6 +34,7 @@ func _process(delta)->void:
 		buttonHolder.modulate = lerp(buttonHolder.modulate,Color(1, 1, 1, 1),12*delta)
 
 func _on_play_button_pressed()->void:
+	gameManager.playSound(gameManager.getGlobalSound(\"startGame\"))
 	gameManager.clearTemporaryPawnInfo()
 	gameManager.currentSave = \"\"
 	musicManager.change_song_to(null,0.5)
@@ -178,8 +179,8 @@ visible = false
 layout_mode = 1
 
 [connection signal="pressed" from="buttonHolder/playButton" to="." method="_on_play_button_pressed"]
-[connection signal="pressed" from="buttonHolder/loadButton" to="saveLoadMenu" method="show"]
 [connection signal="pressed" from="buttonHolder/loadButton" to="saveLoadMenu" method="initLoadPanel"]
+[connection signal="pressed" from="buttonHolder/loadButton" to="saveLoadMenu" method="show"]
 [connection signal="pressed" from="buttonHolder/optionsButton" to="." method="_on_options_button_pressed"]
 [connection signal="pressed" from="buttonHolder/creditsButton" to="." method="_on_credits_button_pressed"]
 [connection signal="pressed" from="buttonHolder/quitButton" to="." method="_on_quit_button_pressed"]

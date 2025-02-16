@@ -61,6 +61,7 @@ func _on_pressed()->void:
 		hoverSound.stop()
 	match buttonType:
 		0:
+			gameManager.playSound(gameManager.getGlobalSound("startGame"))
 			gameManager.removeAllDeathScreens()
 			gameManager.removeCustomization()
 			gameManager.removeShop()

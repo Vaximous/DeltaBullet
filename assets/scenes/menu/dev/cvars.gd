@@ -72,11 +72,12 @@ func load(path : String):
 	Console.add_console_message("Loaded %s" % path, Color.GREEN)
 	return res
 
-func createExplosion(radius:float=10.0):
+func createExplosion(radius:float=10.0,los:bool = true):
 	var cast : RayCast3D = gameManager.activeCamera.camCast
 	if cast.is_colliding():
 		var explo = preload("res://assets/entities/explosion/explosionArea.tscn").instantiate()
 		gameManager.world.worldMisc.add_child(explo)
+		explo.explosionLOS = los
 		explo.global_position = cast.get_collision_point()
 		explo.explosionRadius = radius
 		explo.explode()

@@ -1,8 +1,8 @@
 [gd_scene load_steps=38 format=3 uid="uid://dt5hl3d1g8pyc"]
 
 [ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="1_n1s24"]
-[ext_resource type="Script" path="res://assets/resources/customResources/shopData/shopData.gd" id="2_bykjx"]
-[ext_resource type="Script" path="res://assets/scripts/shopUI/shopUI.gd" id="2_w7wba"]
+[ext_resource type="Script" uid="uid://dsvoupvqpe7a8" path="res://assets/resources/customResources/shopData/shopData.gd" id="2_bykjx"]
+[ext_resource type="Script" uid="uid://cntqh6qweo6dk" path="res://assets/scripts/shopUI/shopUI.gd" id="2_w7wba"]
 [ext_resource type="Texture2D" uid="uid://d2nrmdb8p2mjv" path="res://assets/textures/ui/statbar.png" id="3_fcqxl"]
 [ext_resource type="PackedScene" uid="uid://ims5mb4jlsni" path="res://assets/scenes/ui/shopui/shopItem.tscn" id="3_x8qdb"]
 [ext_resource type="FontFile" uid="uid://xmwjvmqspojb" path="res://assets/fonts/Grand_Aventure_Text.otf" id="4_sqkig"]
@@ -201,8 +201,8 @@ tracks/6/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_csp7a"]
 _data = {
-"RESET": SubResource("Animation_5t6bp"),
-"new_animation": SubResource("Animation_wtf11")
+&"RESET": SubResource("Animation_5t6bp"),
+&"new_animation": SubResource("Animation_wtf11")
 }
 
 [sub_resource type="Gradient" id="Gradient_lofq7"]
@@ -409,9 +409,9 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vamxx"]
 _data = {
-"RESET": SubResource("Animation_y61yj"),
-"in": SubResource("Animation_dwjxi"),
-"out": SubResource("Animation_7y7pm")
+&"RESET": SubResource("Animation_y61yj"),
+&"in": SubResource("Animation_dwjxi"),
+&"out": SubResource("Animation_7y7pm")
 }
 
 [sub_resource type="Gradient" id="Gradient_6ilb3"]
@@ -475,7 +475,7 @@ vertical_alignment = 1
 [node name="topbarAnim" type="AnimationPlayer" parent="shopUi/topBar"]
 root_node = NodePath("../..")
 libraries = {
-"": SubResource("AnimationLibrary_csp7a")
+&"": SubResource("AnimationLibrary_csp7a")
 }
 
 [node name="previewHolder" type="Control" parent="shopUi"]
@@ -491,11 +491,13 @@ offset_bottom = -0.100037
 
 [node name="previewBG" type="Panel" parent="shopUi/previewHolder"]
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -150.0
-offset_right = -150.0
+offset_left = 1076.0
+offset_top = 115.0
+offset_right = 1076.0
+offset_bottom = 115.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -726,7 +728,7 @@ text = "Purchase"
 
 [node name="animationPlayer" type="AnimationPlayer" parent="shopUi/previewHolder/previewBG"]
 libraries = {
-"": SubResource("AnimationLibrary_vamxx")
+&"": SubResource("AnimationLibrary_vamxx")
 }
 
 [node name="closePreview" type="Button" parent="shopUi/previewHolder/previewBG"]

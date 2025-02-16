@@ -346,6 +346,8 @@ size = Vector3(62.2935, 20, 42.2525)
 [node name="directionalLight3d" parent="Environment" index="2"]
 transform = Transform3D(0.381993, 0.645038, -0.661821, -0.128021, 0.746158, 0.653345, 0.915255, -0.164846, 0.367605, -9.47455, 11.6074, 0)
 
+[node name="lightmapGi" type="LightmapGI" parent="Environment" index="3"]
+
 [node name="navigationRegion3d" type="NavigationRegion3D" parent="Geometry" index="0"]
 navigation_mesh = SubResource("NavigationMesh_2388r")
 
@@ -525,11 +527,11 @@ shape = SubResource("ConcavePolygonShape3D_cuq5u")
 unique_name_in_owner = true
 
 [node name="explosiveBarrel" parent="Props" index="6" instance=ExtResource("31_snp5j")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.45893, 5.44407, 6.48074)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.45893, 2.56812, 6.48074)
 collision_layer = 0
 
 [node name="explosiveBarrel2" parent="Props" index="7" instance=ExtResource("31_snp5j")]
-transform = Transform3D(0.602498, 0, -0.798121, 0, 1, 0, 0.798121, 0, 0.602498, -1.50253, 4.04085, 14.6312)
+transform = Transform3D(0.602498, 0, -0.798121, 0, 1, 0, 0.798121, 0, 0.602498, -1.50253, 2.66202, 14.6312)
 collision_layer = 0
 
 [node name="explosiveBarrel3" parent="Props" index="8" instance=ExtResource("31_snp5j")]

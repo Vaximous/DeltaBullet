@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c5eyh667klffn"
+path="res://.godot/imported/Beretta draw_3.wav-58321998a1d0d0da1a7a27f743656f6d.sample"
+
+[deps]
+
+source_file="res://assets/sounds/weapons/baretta/Beretta draw_3.wav"
+dest_files=["res://.godot/imported/Beretta draw_3.wav-58321998a1d0d0da1a7a27f743656f6d.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=true
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

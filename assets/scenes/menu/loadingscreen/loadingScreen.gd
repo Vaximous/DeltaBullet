@@ -67,6 +67,7 @@ func _process(delta) -> void:
 func _unhandled_key_input(event) -> void:
 	if loadingFinished:
 		if event.is_pressed() and !press:
+			gameManager.playSound(preload("res://assets/sounds/ui/transitions/transitionRandomizer.tres"))
 			press = true
 			await Fade.fade_out(0.5).finished
 			get_tree().change_scene_to_packed(sceneLoading)

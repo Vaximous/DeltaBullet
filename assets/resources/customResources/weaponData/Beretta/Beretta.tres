@@ -1,7 +1,18 @@
-[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3 uid="uid://wy0gfijhuuwl"]
+[gd_resource type="Resource" script_class="ItemData" load_steps=8 format=3 uid="uid://wy0gfijhuuwl"]
 
 [ext_resource type="Script" uid="uid://b6r8ewrq3qb3y" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="1_h8ja1"]
 [ext_resource type="Resource" uid="uid://b0yr3ub2hmc2l" path="res://assets/resources/customResources/weaponData/Beretta/BerettaDisplay.tres" id="1_x8bm3"]
+[ext_resource type="AudioStream" uid="uid://dg36vodkur8m1" path="res://assets/sounds/weapons/baretta/Beretta draw_1.wav" id="2_hcxm1"]
+[ext_resource type="AudioStream" uid="uid://cfcr06w0k80w1" path="res://assets/sounds/weapons/baretta/Beretta draw_2.wav" id="3_tcsnk"]
+[ext_resource type="AudioStream" uid="uid://c5eyh667klffn" path="res://assets/sounds/weapons/baretta/Beretta draw_3.wav" id="4_1ttvl"]
+[ext_resource type="AudioStream" uid="uid://rjjg4bl2k4c" path="res://assets/sounds/weapons/baretta/Beretta draw_4.wav" id="5_x00pk"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_4urcc"]
+streams_count = 4
+stream_0/stream = ExtResource("2_hcxm1")
+stream_1/stream = ExtResource("3_tcsnk")
+stream_2/stream = ExtResource("4_1ttvl")
+stream_3/stream = ExtResource("5_x00pk")
 
 [resource]
 resource_local_to_scene = true
@@ -20,24 +31,25 @@ bulletPenetration = 0.0
 weaponImpulse = 25.0
 weaponShots = 1
 ammoConsumption = 1
-useCustomCrosshairSize = null
-crosshairSizeOverride = null
+useCustomCrosshairSize = false
+crosshairSizeOverride = Vector2(0.8, 0.8)
 useFOV = false
 fovShotAmount = 0.7
 weaponRecoil = Vector3(5, 8, 0.25)
-weaponRecoilStrength = null
+weaponRecoilStrength = 8.0
 weaponSpread = 0.055
-weaponRecoilStrengthAim = null
+weaponRecoilStrengthAim = 4.0
 weaponSpreadAim = 0.05
-leftHandParent = null
-rightHandParent = null
-useWeaponSprintAnim = null
+leftHandParent = false
+rightHandParent = true
+useWeaponSprintAnim = false
 useLeftHandIdle = false
-useRightHandIdle = null
-useLeftHandAiming = null
-useRightHandAiming = null
+useRightHandIdle = true
+useLeftHandAiming = true
+useRightHandAiming = true
 useLeftHandFreeAiming = false
-useRightHandFreeAiming = null
+useRightHandFreeAiming = true
 weaponPositionOffset = Vector3(0, -0.185, 0.055)
 weaponRotationOffset = Vector3(0, -1.63, -1.505)
+equipStream = SubResource("AudioStreamRandomizer_4urcc")
 bulletColor = Color(1, 1, 0, 1)

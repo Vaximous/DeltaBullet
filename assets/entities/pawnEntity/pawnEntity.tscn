@@ -1,4 +1,4 @@
-[gd_scene load_steps=160 format=4 uid="uid://bg8aarggcxwa8"]
+[gd_scene load_steps=154 format=4 uid="uid://bg8aarggcxwa8"]
 
 [ext_resource type="Script" uid="uid://x5wvlp3jp1fa" path="res://assets/scripts/entities/pawn/basePawn/basePawnEntity.gd" id="1_rjm04"]
 [ext_resource type="Resource" uid="uid://1xbs1ip7mf1j" path="res://assets/resources/pawnRelated/pawnDefaultCamData.tres" id="2_pnnqo"]
@@ -16,18 +16,13 @@
 [ext_resource type="Script" uid="uid://dd6my2ga34tq7" path="res://assets/components/healthComponent/healthComponent.gd" id="8_n4rfh"]
 [ext_resource type="Script" uid="uid://bljf2d3r4oqda" path="res://assets/scripts/entities/hitbox/hitbox.gd" id="11_01vdw"]
 [ext_resource type="AnimationLibrary" uid="uid://pdt1e6uuiu5m" path="res://assets/entities/weapons/WeaponAnims.res" id="11_6pxif"]
-[ext_resource type="AudioStream" uid="uid://chfha2dfgnuc4" path="res://assets/sounds/weapons/equip-01.wav" id="12_h81ny"]
 [ext_resource type="PackedScene" uid="uid://cos0eijlpcj7n" path="res://assets/entities/hitbox/hitbox.tscn" id="12_jk4vi"]
-[ext_resource type="AudioStream" uid="uid://b1rjlnrf0thw1" path="res://assets/sounds/weapons/equip-02.wav" id="13_s5xn4"]
-[ext_resource type="AudioStream" uid="uid://dkik106tj8i7a" path="res://assets/sounds/weapons/equip-03.wav" id="14_gk62p"]
 [ext_resource type="Script" uid="uid://dpqk5udahh20c" path="res://assets/entities/pawnEntity/movementController.gd" id="14_p1jqh"]
 [ext_resource type="Script" uid="uid://cpcayg835mg3q" path="res://assets/entities/pawnEntity/animation_controller.gd" id="15_b72br"]
-[ext_resource type="AudioStream" uid="uid://dkqr1hoh7c68v" path="res://assets/sounds/weapons/equip-04.wav" id="15_g1gi7"]
-[ext_resource type="AudioStream" uid="uid://pyylq2qbo2yu" path="res://assets/sounds/weapons/equip-05.wav" id="16_ysufg"]
-[ext_resource type="AudioStream" uid="uid://7ddskfuf0207" path="res://assets/sounds/weapons/equip-06.wav" id="17_o2yl4"]
 [ext_resource type="AudioStream" uid="uid://dmurnathkf31q" path="res://assets/sounds/steps/concrete/concrete1.wav" id="18_r77nh"]
 [ext_resource type="AudioStream" uid="uid://cg248iybmcduw" path="res://assets/sounds/steps/concrete/concrete2.wav" id="19_m4657"]
 [ext_resource type="AudioStream" uid="uid://3yuar7fcmkdn" path="res://assets/sounds/steps/concrete/concrete3.wav" id="20_2sy4m"]
+[ext_resource type="AudioStream" uid="uid://c80s67ld28a8v" path="res://assets/sounds/weapons/genericEquip.tres" id="20_4wvlv"]
 [ext_resource type="AudioStream" uid="uid://60syc0eo2php" path="res://assets/sounds/steps/concrete/concrete4.wav" id="21_qdyh2"]
 [ext_resource type="AudioStream" uid="uid://04nravg6fv14" path="res://assets/sounds/woosh/woosh1.wav" id="30_xyxjj"]
 [ext_resource type="AudioStream" uid="uid://x8pxxf0do0df" path="res://assets/sounds/woosh/woosh3.wav" id="32_ybj6p"]
@@ -1811,16 +1806,6 @@ size = Vector3(0.110632, 0.273865, 0.115265)
 [sub_resource type="BoxShape3D" id="BoxShape3D_pj7u3"]
 size = Vector3(0.148193, 0.246063, 0.108582)
 
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_k8fjm"]
-random_volume_offset_db = 2.0
-streams_count = 6
-stream_0/stream = ExtResource("12_h81ny")
-stream_1/stream = ExtResource("13_s5xn4")
-stream_2/stream = ExtResource("14_gk62p")
-stream_3/stream = ExtResource("15_g1gi7")
-stream_4/stream = ExtResource("16_ysufg")
-stream_5/stream = ExtResource("17_o2yl4")
-
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_yti7c"]
 streams_count = 4
 stream_0/stream = ExtResource("18_r77nh")
@@ -2228,9 +2213,7 @@ bones/50/scale = Vector3(0.999992, 1.00001, 0.99999)
 [node name="Male_LeftArm" type="MeshInstance3D" parent="Mesh/MaleSkeleton/Skeleton3D"]
 layers = 8
 sorting_use_aabb_center = false
-extra_cull_margin = 5.0
-lod_bias = 128.0
-ignore_occlusion_culling = true
+lod_bias = 0.7
 gi_mode = 2
 mesh = SubResource("ArrayMesh_8dic2")
 skin = ExtResource("6_s4qyl")
@@ -2238,9 +2221,7 @@ skin = ExtResource("6_s4qyl")
 [node name="Male_LeftFoot" type="MeshInstance3D" parent="Mesh/MaleSkeleton/Skeleton3D"]
 layers = 8
 sorting_use_aabb_center = false
-extra_cull_margin = 5.0
-lod_bias = 128.0
-ignore_occlusion_culling = true
+lod_bias = 0.7
 gi_mode = 2
 mesh = SubResource("ArrayMesh_vet3s")
 skin = ExtResource("6_s4qyl")
@@ -2248,9 +2229,7 @@ skin = ExtResource("6_s4qyl")
 [node name="Male_LeftForearm" type="MeshInstance3D" parent="Mesh/MaleSkeleton/Skeleton3D"]
 layers = 8
 sorting_use_aabb_center = false
-extra_cull_margin = 5.0
-lod_bias = 128.0
-ignore_occlusion_culling = true
+lod_bias = 0.7
 gi_mode = 2
 mesh = SubResource("ArrayMesh_4hog3")
 skin = ExtResource("6_s4qyl")
@@ -2258,9 +2237,7 @@ skin = ExtResource("6_s4qyl")
 [node name="Male_LeftHand" type="MeshInstance3D" parent="Mesh/MaleSkeleton/Skeleton3D"]
 layers = 8
 sorting_use_aabb_center = false
-extra_cull_margin = 5.0
-lod_bias = 128.0
-ignore_occlusion_culling = true
+lod_bias = 0.7
 gi_mode = 2
 mesh = SubResource("ArrayMesh_yha5c")
 skin = ExtResource("6_s4qyl")
@@ -2268,9 +2245,7 @@ skin = ExtResource("6_s4qyl")
 [node name="Male_LeftKnee" type="MeshInstance3D" parent="Mesh/MaleSkeleton/Skeleton3D"]
 layers = 8
 sorting_use_aabb_center = false
-extra_cull_margin = 5.0
-lod_bias = 128.0
-ignore_occlusion_culling = true
+lod_bias = 0.7
 gi_mode = 2
 mesh = SubResource("ArrayMesh_l8y8i")
 skin = ExtResource("6_s4qyl")
@@ -2278,9 +2253,7 @@ skin = ExtResource("6_s4qyl")
 [node name="Male_LeftThigh" type="MeshInstance3D" parent="Mesh/MaleSkeleton/Skeleton3D"]
 layers = 8
 sorting_use_aabb_center = false
-extra_cull_margin = 5.0
-lod_bias = 128.0
-ignore_occlusion_culling = true
+lod_bias = 0.7
 gi_mode = 2
 mesh = SubResource("ArrayMesh_d2va8")
 skin = ExtResource("6_s4qyl")
@@ -2288,9 +2261,7 @@ skin = ExtResource("6_s4qyl")
 [node name="Male_LowerBody" type="MeshInstance3D" parent="Mesh/MaleSkeleton/Skeleton3D"]
 layers = 8
 sorting_use_aabb_center = false
-extra_cull_margin = 5.0
-lod_bias = 128.0
-ignore_occlusion_culling = true
+lod_bias = 0.7
 gi_mode = 2
 mesh = SubResource("ArrayMesh_kghji")
 skin = ExtResource("6_s4qyl")
@@ -2298,9 +2269,7 @@ skin = ExtResource("6_s4qyl")
 [node name="Male_RightArm" type="MeshInstance3D" parent="Mesh/MaleSkeleton/Skeleton3D"]
 layers = 8
 sorting_use_aabb_center = false
-extra_cull_margin = 5.0
-lod_bias = 128.0
-ignore_occlusion_culling = true
+lod_bias = 0.7
 gi_mode = 2
 mesh = SubResource("ArrayMesh_yy2qw")
 skin = ExtResource("6_s4qyl")
@@ -2308,9 +2277,7 @@ skin = ExtResource("6_s4qyl")
 [node name="Male_RightFoot" type="MeshInstance3D" parent="Mesh/MaleSkeleton/Skeleton3D"]
 layers = 8
 sorting_use_aabb_center = false
-extra_cull_margin = 5.0
-lod_bias = 128.0
-ignore_occlusion_culling = true
+lod_bias = 0.7
 gi_mode = 2
 mesh = SubResource("ArrayMesh_8xihf")
 skin = ExtResource("6_s4qyl")
@@ -2318,9 +2285,7 @@ skin = ExtResource("6_s4qyl")
 [node name="Male_RightForearm" type="MeshInstance3D" parent="Mesh/MaleSkeleton/Skeleton3D"]
 layers = 8
 sorting_use_aabb_center = false
-extra_cull_margin = 5.0
-lod_bias = 128.0
-ignore_occlusion_culling = true
+lod_bias = 0.7
 gi_mode = 2
 mesh = SubResource("ArrayMesh_o14oy")
 skin = ExtResource("6_s4qyl")
@@ -2328,9 +2293,7 @@ skin = ExtResource("6_s4qyl")
 [node name="Male_RightHand" type="MeshInstance3D" parent="Mesh/MaleSkeleton/Skeleton3D"]
 layers = 8
 sorting_use_aabb_center = false
-extra_cull_margin = 5.0
-lod_bias = 128.0
-ignore_occlusion_culling = true
+lod_bias = 0.7
 gi_mode = 2
 mesh = SubResource("ArrayMesh_of10b")
 skin = ExtResource("6_s4qyl")
@@ -2338,9 +2301,7 @@ skin = ExtResource("6_s4qyl")
 [node name="Male_RightKnee" type="MeshInstance3D" parent="Mesh/MaleSkeleton/Skeleton3D"]
 layers = 8
 sorting_use_aabb_center = false
-extra_cull_margin = 5.0
-lod_bias = 128.0
-ignore_occlusion_culling = true
+lod_bias = 0.7
 gi_mode = 2
 mesh = SubResource("ArrayMesh_d75xn")
 skin = ExtResource("6_s4qyl")
@@ -2348,9 +2309,7 @@ skin = ExtResource("6_s4qyl")
 [node name="Male_RightThigh" type="MeshInstance3D" parent="Mesh/MaleSkeleton/Skeleton3D"]
 layers = 8
 sorting_use_aabb_center = false
-extra_cull_margin = 5.0
-lod_bias = 128.0
-ignore_occlusion_culling = true
+lod_bias = 0.7
 gi_mode = 2
 mesh = SubResource("ArrayMesh_c54bo")
 skin = ExtResource("6_s4qyl")
@@ -2358,9 +2317,7 @@ skin = ExtResource("6_s4qyl")
 [node name="Male_Shoulders" type="MeshInstance3D" parent="Mesh/MaleSkeleton/Skeleton3D"]
 layers = 8
 sorting_use_aabb_center = false
-extra_cull_margin = 5.0
-lod_bias = 128.0
-ignore_occlusion_culling = true
+lod_bias = 0.7
 gi_mode = 2
 mesh = SubResource("ArrayMesh_0ublk")
 skin = ExtResource("6_s4qyl")
@@ -2368,9 +2325,7 @@ skin = ExtResource("6_s4qyl")
 [node name="Male_UpperBody" type="MeshInstance3D" parent="Mesh/MaleSkeleton/Skeleton3D"]
 layers = 8
 sorting_use_aabb_center = false
-extra_cull_margin = 5.0
-lod_bias = 128.0
-ignore_occlusion_culling = true
+lod_bias = 0.7
 gi_mode = 2
 mesh = SubResource("ArrayMesh_3wqkm")
 skin = ExtResource("6_s4qyl")
@@ -2378,9 +2333,7 @@ skin = ExtResource("6_s4qyl")
 [node name="MaleHead" type="MeshInstance3D" parent="Mesh/MaleSkeleton/Skeleton3D"]
 layers = 8
 sorting_use_aabb_center = false
-extra_cull_margin = 5.0
-lod_bias = 128.0
-ignore_occlusion_culling = true
+lod_bias = 0.7
 gi_mode = 2
 mesh = SubResource("ArrayMesh_20nhe")
 skin = ExtResource("6_s4qyl")
@@ -2502,7 +2455,7 @@ playback_default_blend_time = 0.5
 unique_name_in_owner = true
 
 [node name="UpperChest" type="BoneAttachment3D" parent="BoneAttatchments"]
-transform = Transform3D(-0.99584, 0.0129792, 0.0901912, 0.0082436, 0.998561, -0.0526879, -0.0907488, -0.0517252, -0.994513, -0.0271664, 1.21752, 0.103921)
+transform = Transform3D(-0.342574, -0.282902, -0.895867, 0.771762, 0.459035, -0.440068, 0.535748, -0.842153, 0.061077, -0.0770124, 0.410127, -0.403065)
 bone_name = "Spine_2"
 bone_idx = 2
 use_external_skeleton = true
@@ -2520,7 +2473,7 @@ transform = Transform3D(1, 0.000917837, -0.000180729, -0.000919151, 0.999976, -0
 shape = SubResource("BoxShape3D_w6p0i")
 
 [node name="LeftThigh" type="BoneAttachment3D" parent="BoneAttatchments"]
-transform = Transform3D(-0.98951, -0.144035, 0.0117085, 0.14307, -0.987792, -0.0612214, 0.0203841, -0.0589022, 0.998055, -0.078929, 0.877321, 0.0808346)
+transform = Transform3D(-0.106622, -0.671887, 0.732923, 0.991944, -0.12266, 0.0318502, 0.068503, 0.730392, 0.679564, -0.0416195, 0.344699, -0.0887128)
 bone_name = "L_UpperLeg"
 bone_idx = 43
 use_external_skeleton = true
@@ -2538,7 +2491,7 @@ transform = Transform3D(1, -0.0001721, -0.000722682, 0.000163683, 0.999931, -0.0
 shape = SubResource("BoxShape3D_muxfy")
 
 [node name="LeftFoot" type="BoneAttachment3D" parent="BoneAttatchments"]
-transform = Transform3D(0.976744, -0.210528, -0.0406728, -0.134812, -0.750389, 0.647036, -0.166748, -0.626506, -0.761349, -0.166894, 0.09906, 0.19092)
+transform = Transform3D(-0.26047, 0.173797, -0.949687, -0.825302, -0.550539, 0.125603, -0.501035, 0.816477, 0.286815, -0.01543, 0.351083, 0.471797)
 bone_name = "L_Foot"
 bone_idx = 45
 use_external_skeleton = true
@@ -2556,7 +2509,7 @@ transform = Transform3D(0.996118, -0.0495916, -0.0727553, -0.0264164, 0.619915, 
 shape = SubResource("BoxShape3D_4f318")
 
 [node name="LeftKnee" type="BoneAttachment3D" parent="BoneAttatchments"]
-transform = Transform3D(-0.995948, -0.07373, 0.0516024, 0.0866768, -0.940185, 0.329381, 0.0242314, 0.332528, 0.942782, -0.137201, 0.47769, 0.0570045)
+transform = Transform3D(0.0802223, 0.740006, 0.667781, 0.953157, 0.139075, -0.268631, -0.291651, 0.658064, -0.694165, -0.313445, 0.295074, 0.206782)
 bone_name = "L_LowerLeg"
 bone_idx = 44
 use_external_skeleton = true
@@ -2574,7 +2527,7 @@ transform = Transform3D(0.99998, 0.00553635, -0.00307082, -0.00557011, 0.999923,
 shape = SubResource("BoxShape3D_wvs88")
 
 [node name="RightThigh" type="BoneAttachment3D" parent="BoneAttatchments"]
-transform = Transform3D(-0.963066, 0.219519, -0.155965, -0.156386, -0.927407, -0.339729, -0.219227, -0.302781, 0.927501, 0.020799, 0.876772, 0.0948597)
+transform = Transform3D(-0.212322, -0.299128, 0.930289, 0.974584, 0.00488288, 0.223999, -0.0715491, 0.954173, 0.290494, -0.0184264, 0.246926, -0.0954446)
 bone_name = "R_UpperLeg"
 bone_idx = 47
 use_external_skeleton = true
@@ -2592,7 +2545,7 @@ transform = Transform3D(1, -0.0001721, -0.000722682, 0.000163683, 0.999931, -0.0
 shape = SubResource("BoxShape3D_li7f8")
 
 [node name="RightFoot" type="BoneAttachment3D" parent="BoneAttatchments"]
-transform = Transform3D(0.9317, 0.318764, 0.174233, 0.0612344, -0.61053, 0.789591, 0.358083, -0.724994, -0.588354, 0.150016, 0.100957, -0.0204566)
+transform = Transform3D(0.352249, -0.722885, -0.594439, -0.923081, -0.163465, -0.348187, 0.154533, 0.671335, -0.724831, -0.130022, 0.302982, 0.689536)
 bone_name = "R_Foot"
 bone_idx = 49
 use_external_skeleton = true
@@ -2610,7 +2563,7 @@ transform = Transform3D(0.998476, 0.0490302, 0.0254299, -0.023974, 0.799504, -0.
 shape = SubResource("BoxShape3D_86emg")
 
 [node name="RightKnee" type="BoneAttachment3D" parent="BoneAttatchments"]
-transform = Transform3D(-0.973025, 0.100334, -0.207763, -0.101855, -0.994771, -0.00344074, -0.20703, 0.0178286, 0.97817, 0.10961, 0.501571, -0.0276365)
+transform = Transform3D(-0.200381, 0.0233978, 0.979437, 0.971465, 0.134289, 0.195539, -0.126953, 0.990643, -0.0496233, -0.139445, 0.248902, 0.290585)
 bone_name = "R_LowerLeg"
 bone_idx = 48
 use_external_skeleton = true
@@ -2628,7 +2581,7 @@ transform = Transform3D(0.99998, 0.00553635, -0.00307082, -0.00557011, 0.999923,
 shape = SubResource("BoxShape3D_betfr")
 
 [node name="Stomach" type="BoneAttachment3D" parent="BoneAttatchments"]
-transform = Transform3D(-0.993546, 0.0358608, 0.107605, 0.0258504, 0.995312, -0.0930242, -0.11044, -0.0896422, -0.989816, -0.0345571, 1.0124, 0.122395)
+transform = Transform3D(-0.186922, -0.239605, -0.95269, 0.818332, 0.498556, -0.285944, 0.5435, -0.833066, 0.102885, -0.0276315, 0.307378, -0.231376)
 bone_name = "Spine_1"
 bone_idx = 1
 use_external_skeleton = true
@@ -2647,7 +2600,7 @@ transform = Transform3D(0.999999, 0.00165, 0.000776134, -0.00164237, 0.999954, -
 shape = SubResource("BoxShape3D_q4n8k")
 
 [node name="Hips" type="BoneAttachment3D" parent="BoneAttatchments"]
-transform = Transform3D(-0.990241, -0.0296101, 0.136186, 0.00545965, 0.968178, 0.250203, -0.139261, 0.248505, -0.958567, -0.0304179, 0.877054, 0.0876569)
+transform = Transform3D(-0.230293, 0.019358, -0.972928, 0.970823, 0.073245, -0.228337, 0.066842, -0.997126, -0.0356611, -0.0303376, 0.297139, -0.0919874)
 bone_name = "Spine_0"
 bone_idx = 0
 use_external_skeleton = true
@@ -2665,7 +2618,7 @@ transform = Transform3D(0.99987, -0.0159997, 0.00229539, 0.0160897, 0.971644, -0
 shape = SubResource("BoxShape3D_mt6l4")
 
 [node name="Neck" type="BoneAttachment3D" parent="BoneAttatchments"]
-transform = Transform3D(-0.99586, 0.0167893, 0.0893393, 0.0076395, 0.994759, -0.101795, -0.0905839, -0.100691, -0.990769, -0.0237412, 1.48104, 0.0902704)
+transform = Transform3D(0.268661, -0.118109, -0.955949, 0.405542, 0.91407, 0.00104415, 0.873695, -0.387948, 0.293479, -0.15167, 0.531266, -0.625309)
 bone_name = "Neck"
 bone_idx = 41
 use_external_skeleton = true
@@ -2685,7 +2638,7 @@ shape = SubResource("SphereShape3D_srvle")
 
 [node name="leftHand" type="BoneAttachment3D" parent="BoneAttatchments"]
 unique_name_in_owner = true
-transform = Transform3D(0.443347, -0.0164213, -0.896193, 0.172948, -0.979451, 0.103506, -0.879482, -0.200882, -0.431413, -0.202911, 0.948747, 0.0467387)
+transform = Transform3D(-0.499433, -0.610053, -0.615106, -0.695978, -0.140254, 0.704217, -0.515905, 0.779816, -0.354533, -0.160979, 0.484313, -0.169377)
 bone_name = "L_Hand"
 bone_idx = 6
 use_external_skeleton = true
@@ -2707,7 +2660,7 @@ unique_name_in_owner = true
 transform = Transform3D(0.413801, 0.233209, -0.880015, -0.0299305, -0.962651, -0.269184, -0.909883, 0.137725, -0.391349, 0.0371511, 0.146776, -0.0809961)
 
 [node name="rightHand" type="BoneAttachment3D" parent="BoneAttatchments"]
-transform = Transform3D(0.164347, 0.187769, 0.968368, -0.082977, -0.97557, 0.203253, 0.982897, -0.113741, -0.144761, 0.142033, 0.951054, 0.150611)
+transform = Transform3D(0.00131374, -0.993156, 0.116369, -0.919018, -0.0470862, -0.391417, 0.394233, -0.106418, -0.912827, -0.436999, 0.224875, -0.539876)
 bone_name = "R_Hand"
 bone_idx = 25
 use_external_skeleton = true
@@ -2736,7 +2689,7 @@ transform = Transform3D(0.930377, -0.0761231, -0.358616, 0.120768, 0.987244, 0.1
 shape = SubResource("BoxShape3D_ols6b")
 
 [node name="leftArm" type="BoneAttachment3D" parent="BoneAttatchments"]
-transform = Transform3D(0.783942, -0.108899, -0.611181, -0.0840396, -0.994018, 0.0693174, -0.615075, -0.00297795, -0.788424, -0.160421, 1.44575, 0.105844)
+transform = Transform3D(-0.753305, 0.626858, -0.198787, -0.574259, -0.479754, 0.663342, 0.320452, 0.613862, 0.721412, -0.162414, 0.630203, -0.523991)
 bone_name = "L_UpperArm"
 bone_idx = 4
 use_external_skeleton = true
@@ -2754,7 +2707,7 @@ transform = Transform3D(1, 1.84751e-07, 2.38419e-07, -4.1211e-08, 1, 1.26893e-08
 shape = SubResource("BoxShape3D_uya4a")
 
 [node name="leftForearm" type="BoneAttachment3D" parent="BoneAttatchments"]
-transform = Transform3D(0.814401, -0.059623, -0.577221, 0.085023, -0.971686, 0.22033, -0.574011, -0.228514, -0.78629, -0.187684, 1.1969, 0.105098)
+transform = Transform3D(-0.159921, -0.608871, -0.776952, -0.955864, -0.100961, 0.275882, -0.24644, 0.786786, -0.565861, -0.00548102, 0.510097, -0.370312)
 bone_name = "L_Forearm"
 bone_idx = 5
 use_external_skeleton = true
@@ -2772,7 +2725,7 @@ transform = Transform3D(0.999991, 0, 0, -5.51343e-07, 1, -1.49012e-08, 4.85778e-
 shape = SubResource("BoxShape3D_c5hhn")
 
 [node name="rightArm" type="BoneAttachment3D" parent="BoneAttatchments"]
-transform = Transform3D(0.52799, 0.0399068, 0.848301, 0.206272, -0.974996, -0.082522, 0.82379, 0.218558, -0.523018, 0.108399, 1.44602, 0.137367)
+transform = Transform3D(0.937791, -0.343982, 0.0465671, -0.256926, -0.778066, -0.573228, 0.233405, 0.525613, -0.81806, -0.097371, 0.399322, -0.648343)
 bone_name = "R_UpperArm"
 bone_idx = 23
 use_external_skeleton = true
@@ -2789,7 +2742,7 @@ transform = Transform3D(0.687935, -0.150469, 0.71001, 0.120799, 0.988371, 0.0924
 shape = SubResource("BoxShape3D_5goft")
 
 [node name="rightForearm" type="BoneAttachment3D" parent="BoneAttatchments"]
-transform = Transform3D(0.569452, 0.0925775, 0.816794, -0.081555, -0.982341, 0.168203, 0.817948, -0.162384, -0.551859, 0.11839, 1.20193, 0.192082)
+transform = Transform3D(-0.0785868, -0.992655, 0.0914683, -0.996789, 0.0796494, 0.00806984, -0.0153011, -0.0905278, -0.995771, -0.183487, 0.204534, -0.516756)
 bone_name = "R_Forearm"
 bone_idx = 24
 use_external_skeleton = true
@@ -2816,7 +2769,7 @@ wait_time = 10.0
 
 [node name="equipSound" type="AudioStreamPlayer3D" parent="Sounds"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.17037, 0)
-stream = SubResource("AudioStreamRandomizer_k8fjm")
+stream = ExtResource("20_4wvlv")
 volume_db = 9.0
 max_polyphony = 2
 bus = &"Sounds"

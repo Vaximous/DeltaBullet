@@ -1,10 +1,18 @@
-[gd_scene load_steps=19 format=3 uid="uid://ims5mb4jlsni"]
+[gd_scene load_steps=27 format=3 uid="uid://ims5mb4jlsni"]
 
 [ext_resource type="Script" uid="uid://bdto10hj8uvkd" path="res://assets/scenes/ui/shopui/shop_item.gd" id="1_hhb87"]
 [ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="1_j1f5m"]
-[ext_resource type="AudioStream" uid="uid://crpcvvr4dupq6" path="res://assets/sounds/ui/slideOpen.wav" id="3_w0iub"]
-[ext_resource type="AudioStream" uid="uid://c7v7iev137c2t" path="res://assets/sounds/ui/notif2_new.wav" id="4_sxe4e"]
-[ext_resource type="AudioStream" uid="uid://bqx5sk7ljcr3n" path="res://assets/sounds/ui/uiDecline.wav" id="5_wuegq"]
+[ext_resource type="AudioStream" uid="uid://bkuos60pwxyx6" path="res://assets/sounds/ui/shop/Shop_hoverUi_1.wav" id="3_3ji3k"]
+[ext_resource type="AudioStream" uid="uid://c7vienkoqhkk3" path="res://assets/sounds/ui/shop/Shop_hoverUi_2.wav" id="4_xg2fy"]
+[ext_resource type="AudioStream" uid="uid://c1vjf0meqp3ov" path="res://assets/sounds/ui/shop/Shop_hoverUi_3.wav" id="5_vri57"]
+[ext_resource type="AudioStream" uid="uid://hxocbf50m46k" path="res://assets/sounds/ui/shop/Shop_hoverUi_4.wav" id="6_kjjof"]
+[ext_resource type="AudioStream" uid="uid://dkkg6cfi7y2d0" path="res://assets/sounds/ui/shop/Shop_clickUi_1.wav" id="7_sp61y"]
+[ext_resource type="AudioStream" uid="uid://cav5mm0y07kde" path="res://assets/sounds/ui/shop/Shop_clickUi_2.wav" id="8_11unq"]
+[ext_resource type="AudioStream" uid="uid://2da6r7jrdsy8" path="res://assets/sounds/ui/shop/Shop_clickUi_3.wav" id="9_6j60n"]
+[ext_resource type="AudioStream" uid="uid://b2gyultgyr3f3" path="res://assets/sounds/ui/shop/Shop_clickUi_4.wav" id="10_3wdg3"]
+[ext_resource type="AudioStream" uid="uid://cpacq6td0fe4q" path="res://assets/sounds/ui/shop/Buy sound_1.wav" id="11_prrko"]
+[ext_resource type="AudioStream" uid="uid://c3bhon2ro1hq7" path="res://assets/sounds/ui/shop/Buy sound_2.wav" id="12_p5gcy"]
+[ext_resource type="AudioStream" uid="uid://cxrbsrsbi167g" path="res://assets/sounds/ui/shop/Buy sound_3.wav" id="13_dn8u3"]
 
 [sub_resource type="Gradient" id="Gradient_63los"]
 offsets = PackedFloat32Array(0, 0.0292398, 0.962343, 1)
@@ -157,18 +165,26 @@ texture = SubResource("GradientTexture2D_miclo")
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_4btg5"]
 random_pitch = 1.36
-streams_count = 1
-stream_0/stream = ExtResource("3_w0iub")
+streams_count = 4
+stream_0/stream = ExtResource("3_3ji3k")
+stream_1/stream = ExtResource("4_xg2fy")
+stream_2/stream = ExtResource("5_vri57")
+stream_3/stream = ExtResource("6_kjjof")
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_xj7en"]
 random_pitch = 1.5
-streams_count = 1
-stream_0/stream = ExtResource("4_sxe4e")
+streams_count = 4
+stream_0/stream = ExtResource("7_sp61y")
+stream_1/stream = ExtResource("8_11unq")
+stream_2/stream = ExtResource("9_6j60n")
+stream_3/stream = ExtResource("10_3wdg3")
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_fjim2"]
 random_pitch = 1.5
-streams_count = 1
-stream_0/stream = ExtResource("5_wuegq")
+streams_count = 3
+stream_0/stream = ExtResource("11_prrko")
+stream_1/stream = ExtResource("12_p5gcy")
+stream_2/stream = ExtResource("13_dn8u3")
 
 [node name="shopItem" type="Button"]
 custom_minimum_size = Vector2(696, 94)
@@ -255,6 +271,7 @@ anchors_preset = -1
 anchor_bottom = 1.0
 offset_left = -34.0
 offset_right = 29.0
+offset_bottom = 94.0
 theme_override_styles/panel = SubResource("StyleBoxTexture_u2iun")
 
 [node name="hoverSound" type="AudioStreamPlayer" parent="."]

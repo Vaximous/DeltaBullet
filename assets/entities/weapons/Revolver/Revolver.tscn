@@ -1,16 +1,32 @@
-[gd_scene load_steps=34 format=3 uid="uid://boh343kalvj5i"]
+[gd_scene load_steps=45 format=3 uid="uid://boh343kalvj5i"]
 
 [ext_resource type="PackedScene" uid="uid://cpd5r8bmx2885" path="res://assets/entities/weapons/weaponBase.tscn" id="1_supac"]
 [ext_resource type="Resource" uid="uid://f30cnkk8nnpb" path="res://assets/entities/weapons/Revolver/RevolverData.tres" id="2_pkn4b"]
-[ext_resource type="AudioStream" uid="uid://dtjbrtbx2hdkv" path="res://assets/sounds/weapons/revolver/revolvershot.wav" id="3_gxaag"]
 [ext_resource type="PackedScene" uid="uid://bvvxnmgamquay" path="res://assets/entities/muzzleFlashes/muzzles/flash1.tscn" id="3_nxigx"]
 [ext_resource type="ArrayMesh" uid="uid://d3hat4g5tlh2f" path="res://assets/entities/weapons/Revolver/Revolver.res" id="3_wr1pw"]
 [ext_resource type="AnimationLibrary" uid="uid://lmpviksxdik2" path="res://assets/entities/weapons/Revolver/RevolverAnims.res" id="4_8kxch"]
+[ext_resource type="AudioStream" uid="uid://drwb0lqls0r7r" path="res://assets/sounds/weapons/revolver/Revolver_shot_1.wav" id="4_pp6wt"]
+[ext_resource type="AudioStream" uid="uid://d34rbfbvkl5lf" path="res://assets/sounds/weapons/revolver/Revolver_shot_2.wav" id="5_huenv"]
+[ext_resource type="AudioStream" uid="uid://cnseyqwf81o50" path="res://assets/sounds/weapons/revolver/Revolver_shot_3.wav" id="6_hfslw"]
+[ext_resource type="AudioStream" uid="uid://dpwcj50orq6w2" path="res://assets/sounds/weapons/revolver/Revolver_shot_4.wav" id="7_horii"]
+[ext_resource type="AudioStream" uid="uid://cqos8qjtu0gwy" path="res://assets/sounds/weapons/revolver/Revolver_shot_5.wav" id="8_rukkk"]
+[ext_resource type="AudioStream" uid="uid://bhlf6q3qf6hd7" path="res://assets/sounds/weapons/revolver/Revolver_shot_8.wav" id="9_6bkpm"]
+[ext_resource type="AudioStream" uid="uid://88jwtphrkn05" path="res://assets/sounds/weapons/revolver/Revolver_shot_7.wav" id="10_j21a7"]
+[ext_resource type="AudioStream" uid="uid://buu3pjvxvx257" path="res://assets/sounds/weapons/revolver/Revolver_lockin_1.wav" id="13_a7g0w"]
+[ext_resource type="AudioStream" uid="uid://bwt3tj47eauao" path="res://assets/sounds/weapons/revolver/Revolver_lockin_2.wav" id="14_8qxnh"]
+[ext_resource type="AudioStream" uid="uid://dinwsl86sty0q" path="res://assets/sounds/weapons/revolver/Revolver_lockin_3.wav" id="15_kqfhf"]
+[ext_resource type="AudioStream" uid="uid://btwwe5ywyecg1" path="res://assets/sounds/weapons/revolver/Revolver_lockin_4.wav" id="16_bfi7e"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_17jky"]
 random_pitch = 1.2
-streams_count = 1
-stream_0/stream = ExtResource("3_gxaag")
+streams_count = 7
+stream_0/stream = ExtResource("4_pp6wt")
+stream_1/stream = ExtResource("5_huenv")
+stream_2/stream = ExtResource("6_hfslw")
+stream_3/stream = ExtResource("7_horii")
+stream_4/stream = ExtResource("8_rukkk")
+stream_5/stream = ExtResource("9_6bkpm")
+stream_6/stream = ExtResource("10_j21a7")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_d7xt5"]
 size = Vector3(0.575928, 0.257515, 0.0437012)
@@ -114,6 +130,14 @@ nodes/weaponStateSpeed/node = SubResource("AnimationNodeTimeScale_uy32p")
 nodes/weaponStateSpeed/position = Vector2(80, 100)
 node_connections = [&"output", 0, &"weaponStateSpeed", &"weaponStateSpeed", 0, &"weaponState"]
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_xrlbv"]
+random_pitch = 1.1
+streams_count = 4
+stream_0/stream = ExtResource("13_a7g0w")
+stream_1/stream = ExtResource("14_8qxnh")
+stream_2/stream = ExtResource("15_kqfhf")
+stream_3/stream = ExtResource("16_bfi7e")
+
 [node name="Revolver" node_paths=PackedStringArray("weaponMesh", "muzzlePoint") instance=ExtResource("1_supac")]
 weaponMesh = NodePath("Mesh")
 weaponResource = ExtResource("2_pkn4b")
@@ -123,6 +147,7 @@ objectName = "Revolver"
 
 [node name="weaponShot" type="AudioStreamPlayer3D" parent="." index="0"]
 stream = SubResource("AudioStreamRandomizer_17jky")
+volume_db = 2.0
 bus = &"Sounds"
 attenuation_filter_db = 0.0
 
@@ -145,5 +170,8 @@ parameters/weaponStateSpeed/scale = 1.0
 libraries = {
 &"weaponAnims": ExtResource("4_8kxch")
 }
+
+[node name="aimSound" parent="." index="7"]
+stream = SubResource("AudioStreamRandomizer_xrlbv")
 
 [connection signal="shot_fired" from="." to="weaponShot" method="play"]

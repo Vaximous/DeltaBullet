@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://2mlt2r4jpb1c"]
+[gd_scene load_steps=7 format=3 uid="uid://2mlt2r4jpb1c"]
 
 [ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="1_7mwi3"]
 [ext_resource type="Texture2D" uid="uid://dwy1ieh8lo0m0" path="res://assets/scenes/worlds/areas/playerHome/previewscreenTest.png" id="2_bhotf"]
 [ext_resource type="Script" uid="uid://bl3u61qcau7of" path="res://assets/scenes/ui/mapOverview/area_information.gd" id="2_ghdy3"]
 [ext_resource type="FontFile" uid="uid://b3s7umd01feyu" path="res://assets/fonts/Carthage Pro Regular.ttf" id="3_ghdy3"]
+[ext_resource type="AudioStream" uid="uid://dnxn6d7ofwex2" path="res://assets/sounds/ui/map/travelRandomizer.tres" id="5_ghdy3"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_okjsk"]
 font = ExtResource("3_ghdy3")
@@ -77,5 +78,10 @@ layout_mode = 2
 layout_mode = 2
 text = "TRAVEL"
 
+[node name="travelSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_ghdy3")
+bus = &"UI"
+
 [connection signal="pressed" from="panelContainer/vBoxContainer/hideButton" to="." method="hide"]
 [connection signal="pressed" from="panelContainer/vBoxContainer/travelButton" to="." method="_on_travel_button_pressed"]
+[connection signal="pressed" from="panelContainer/vBoxContainer/travelButton" to="." method="playTravelSound"]

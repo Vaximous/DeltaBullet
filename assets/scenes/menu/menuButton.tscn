@@ -1,8 +1,14 @@
-[gd_scene load_steps=19 format=3 uid="uid://ba0s8u6mtjxns"]
+[gd_scene load_steps=27 format=3 uid="uid://ba0s8u6mtjxns"]
 
 [ext_resource type="FontFile" uid="uid://xmwjvmqspojb" path="res://assets/fonts/Grand_Aventure_Text.otf" id="1_tp3ek"]
-[ext_resource type="AudioStream" uid="uid://d1pr7ltc6f600" path="res://assets/sounds/ui/uiappear.wav" id="2_s0xtq"]
-[ext_resource type="AudioStream" uid="uid://dmifxlb0c387l" path="res://assets/sounds/ui/uiclick.wav" id="3_fwsfw"]
+[ext_resource type="AudioStream" uid="uid://bu2tsjdwp3sgi" path="res://assets/sounds/ui/menu/Menu hover_1.wav" id="2_neuaf"]
+[ext_resource type="AudioStream" uid="uid://drstgovlvl11k" path="res://assets/sounds/ui/menu/Menu hover_2.wav" id="3_5ds5h"]
+[ext_resource type="AudioStream" uid="uid://bqnfn8cqigm0f" path="res://assets/sounds/ui/menu/Menu hover_3.wav" id="4_31dfc"]
+[ext_resource type="AudioStream" uid="uid://cnowyc1nhuvfd" path="res://assets/sounds/ui/menu/Menu hover_4.wav" id="5_b104e"]
+[ext_resource type="AudioStream" uid="uid://cr3ij4oofjpjd" path="res://assets/sounds/ui/menu/Menu_click_1.wav" id="6_b104e"]
+[ext_resource type="AudioStream" uid="uid://d3ivy7qafrxt8" path="res://assets/sounds/ui/menu/Menu_click_2.wav" id="7_1qtqj"]
+[ext_resource type="AudioStream" uid="uid://b61ylgh6ym6my" path="res://assets/sounds/ui/menu/Menu_click_3.wav" id="8_2ia1i"]
+[ext_resource type="AudioStream" uid="uid://cg2gg2gqhitg4" path="res://assets/sounds/ui/menu/Menu_click_4.wav" id="9_0y6qe"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1lmnn"]
 
@@ -236,6 +242,20 @@ Label/colors/font_outline_color = Color(0, 0, 0, 1)
 Label/colors/font_shadow_color = Color(0, 0, 0, 1)
 Label/fonts/font = ExtResource("1_tp3ek")
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_1qtqj"]
+streams_count = 4
+stream_0/stream = ExtResource("2_neuaf")
+stream_1/stream = ExtResource("3_5ds5h")
+stream_2/stream = ExtResource("4_31dfc")
+stream_3/stream = ExtResource("5_b104e")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_y3pxn"]
+streams_count = 4
+stream_0/stream = ExtResource("6_b104e")
+stream_1/stream = ExtResource("7_1qtqj")
+stream_2/stream = ExtResource("8_2ia1i")
+stream_3/stream = ExtResource("9_0y6qe")
+
 [node name="menuButton" type="Button"]
 custom_minimum_size = Vector2(0, 50)
 anchors_preset = -1
@@ -273,7 +293,7 @@ layout_mode = 1
 anchors_preset = -1
 anchor_bottom = 1.043
 offset_right = 100.0
-offset_bottom = 49.0
+offset_bottom = -3.15
 texture = SubResource("GradientTexture1D_su33n")
 expand_mode = 1
 
@@ -305,13 +325,13 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="hoverSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("2_s0xtq")
-volume_db = -10.0
+stream = SubResource("AudioStreamRandomizer_1qtqj")
+volume_db = -3.0
 bus = &"UI"
 
 [node name="selectSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_fwsfw")
-volume_db = -10.0
+stream = SubResource("AudioStreamRandomizer_y3pxn")
+volume_db = -3.0
 bus = &"UI"
 
 [connection signal="focus_entered" from="." to="." method="_on_focus_entered"]

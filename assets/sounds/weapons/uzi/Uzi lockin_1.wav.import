@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bvr1a4gimw131"
+path="res://.godot/imported/Uzi lockin_1.wav-e376bfd137edd2367c9435291b666533.sample"
+
+[deps]
+
+source_file="res://assets/sounds/weapons/uzi/Uzi lockin_1.wav"
+dest_files=["res://.godot/imported/Uzi lockin_1.wav-e376bfd137edd2367c9435291b666533.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=true
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

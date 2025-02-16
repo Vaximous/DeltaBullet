@@ -1,8 +1,16 @@
-[gd_scene load_steps=17 format=3 uid="uid://vwacetrutvng"]
+[gd_scene load_steps=27 format=3 uid="uid://vwacetrutvng"]
 
 [ext_resource type="PackedScene" uid="uid://cbmy8aewv7g1w" path="res://assets/components/3Dto2Dcomponent/3Dto2DComponent.tscn" id="1_568f0"]
 [ext_resource type="Script" uid="uid://dpnbcwkkk6au2" path="res://assets/scenes/ui/mapOverview/map/map_location.gd" id="2_aptmj"]
 [ext_resource type="Texture2D" uid="uid://c1vivm6xnyiik" path="res://assets/textures/icons/map/mapMarkerNone.png" id="3_aptmj"]
+[ext_resource type="AudioStream" uid="uid://ndkwkgepa84i" path="res://assets/sounds/ui/map/Map_hover_1.wav" id="4_kmnqu"]
+[ext_resource type="AudioStream" uid="uid://be4ww1jibxhyi" path="res://assets/sounds/ui/map/Map_hover_2.wav" id="5_c10ua"]
+[ext_resource type="AudioStream" uid="uid://diqx0wlekf6xi" path="res://assets/sounds/ui/map/Map_hover_3.wav" id="6_eds7j"]
+[ext_resource type="AudioStream" uid="uid://cdyr4qvwerc3x" path="res://assets/sounds/ui/map/Map_hover_4.wav" id="7_6py30"]
+[ext_resource type="AudioStream" uid="uid://bokqs51285pqj" path="res://assets/sounds/ui/map/map_click_1.wav" id="8_uhde6"]
+[ext_resource type="AudioStream" uid="uid://cvcago0pt1fnc" path="res://assets/sounds/ui/map/map_click_2.wav" id="9_3ol1w"]
+[ext_resource type="AudioStream" uid="uid://dduxbmpvf0dq" path="res://assets/sounds/ui/map/map_click_3.wav" id="10_x17kg"]
+[ext_resource type="AudioStream" uid="uid://crx1srwif2i8c" path="res://assets/sounds/ui/map/map_click_4.wav" id="11_5x2qw"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_t3e1d"]
 outline_size = 5
@@ -222,6 +230,20 @@ _data = {
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sbnov"]
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_i54d4"]
+streams_count = 4
+stream_0/stream = ExtResource("4_kmnqu")
+stream_1/stream = ExtResource("5_c10ua")
+stream_2/stream = ExtResource("6_eds7j")
+stream_3/stream = ExtResource("7_6py30")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_21gnk"]
+streams_count = 4
+stream_0/stream = ExtResource("8_uhde6")
+stream_1/stream = ExtResource("9_3ol1w")
+stream_2/stream = ExtResource("10_x17kg")
+stream_3/stream = ExtResource("11_5x2qw")
+
 [node name="mapLocation" instance=ExtResource("1_568f0")]
 script = ExtResource("2_aptmj")
 locationName = ""
@@ -271,7 +293,7 @@ anchor_top = 0.017
 anchor_right = 1.0
 anchor_bottom = 1.15
 offset_left = -3.6
-offset_top = 0.500004
+offset_top = 0.5
 offset_right = 32.4
 offset_bottom = 34.5
 pivot_offset = Vector2(18, 34)
@@ -294,8 +316,19 @@ theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_svgid")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_4dj13")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_sbnov")
 
+[node name="hoverSound" type="AudioStreamPlayer" parent="." index="1"]
+stream = SubResource("AudioStreamRandomizer_i54d4")
+bus = &"UI"
+
+[node name="clickSound" type="AudioStreamPlayer" parent="." index="2"]
+stream = SubResource("AudioStreamRandomizer_21gnk")
+bus = &"UI"
+
 [connection signal="focus_entered" from="Icon/icon/button" to="." method="playOpenAnimation"]
+[connection signal="focus_entered" from="Icon/icon/button" to="hoverSound" method="play"]
 [connection signal="focus_exited" from="Icon/icon/button" to="." method="playCloseAnimation"]
 [connection signal="mouse_entered" from="Icon/icon/button" to="." method="playOpenAnimation"]
+[connection signal="mouse_entered" from="Icon/icon/button" to="hoverSound" method="play"]
 [connection signal="mouse_exited" from="Icon/icon/button" to="." method="playCloseAnimation"]
 [connection signal="pressed" from="Icon/icon/button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Icon/icon/button" to="clickSound" method="play"]

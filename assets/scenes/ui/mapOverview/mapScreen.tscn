@@ -1,10 +1,14 @@
-[gd_scene load_steps=18 format=3 uid="uid://bxog5iq8771kh"]
+[gd_scene load_steps=23 format=3 uid="uid://bxog5iq8771kh"]
 
 [ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="1_iee3r"]
 [ext_resource type="PackedScene" uid="uid://c63b0ewnfkf4n" path="res://assets/scenes/ui/mapOverview/map/map.tscn" id="1_lplem"]
 [ext_resource type="Script" uid="uid://cxxrx1vnyb7mf" path="res://assets/scenes/ui/mapOverview/map_screen.gd" id="1_r48cj"]
 [ext_resource type="Texture2D" uid="uid://d0f0crtwpmoka" path="res://assets/textures/panoramas/panoramatest1.png" id="3_jqm1r"]
 [ext_resource type="PackedScene" uid="uid://2mlt2r4jpb1c" path="res://assets/scenes/ui/mapOverview/areaInformation.tscn" id="5_n3oiv"]
+[ext_resource type="AudioStream" uid="uid://du1ctorps21mp" path="res://assets/sounds/ui/map/Map_transition_1.wav" id="6_avv0b"]
+[ext_resource type="AudioStream" uid="uid://b17pk0i3nawqv" path="res://assets/sounds/ui/map/Map_transition_2.wav" id="7_60wph"]
+[ext_resource type="AudioStream" uid="uid://rileq1nck1o0" path="res://assets/sounds/ui/map/Map_transition_3.wav" id="8_p8ko3"]
+[ext_resource type="AudioStream" uid="uid://dci1eyvaxauee" path="res://assets/sounds/ui/map/Map_transition_4.wav" id="9_od2qg"]
 
 [sub_resource type="Gradient" id="Gradient_6voip"]
 colors = PackedColorArray(0, 0, 0, 1, 0.996078, 0.941176, 0.811765, 1)
@@ -116,6 +120,13 @@ _data = {
 &"open": SubResource("Animation_206y2")
 }
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_s27yt"]
+streams_count = 4
+stream_0/stream = ExtResource("6_avv0b")
+stream_1/stream = ExtResource("7_60wph")
+stream_2/stream = ExtResource("8_p8ko3")
+stream_3/stream = ExtResource("9_od2qg")
+
 [node name="map_screen" type="CanvasLayer" node_paths=PackedStringArray("map")]
 script = ExtResource("1_r48cj")
 map = NodePath("mapScreen/subViewportContainer/subViewport/map")
@@ -155,8 +166,8 @@ layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.494
 anchor_bottom = 0.079
-offset_right = -0.399963
-offset_bottom = -0.100006
+offset_right = 790.0
+offset_bottom = 71.0
 
 [node name="textureRect" type="TextureRect" parent="mapScreen/topBar"]
 layout_mode = 2
@@ -212,5 +223,9 @@ offset_right = -14.0
 offset_bottom = 637.0
 map = NodePath("../..")
 
+[node name="mapOpen" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_s27yt")
+
+[connection signal="ready" from="." to="mapOpen" method="play"]
 [connection signal="pressed" from="mapScreen/forward" to="." method="addIndex"]
 [connection signal="pressed" from="mapScreen/backward" to="." method="subtractIndex"]

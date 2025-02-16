@@ -1,14 +1,23 @@
-[gd_scene load_steps=21 format=4 uid="uid://wtqya32cwdbk"]
+[gd_scene load_steps=35 format=4 uid="uid://wtqya32cwdbk"]
 
 [ext_resource type="PackedScene" uid="uid://cpd5r8bmx2885" path="res://assets/entities/weapons/weaponBase.tscn" id="1_xjnb0"]
 [ext_resource type="Resource" uid="uid://wy0gfijhuuwl" path="res://assets/resources/customResources/weaponData/Beretta/Beretta.tres" id="2_hgmhe"]
-[ext_resource type="AudioStream" uid="uid://cix7ik2at3jmq" path="res://assets/sounds/weapons/baretta/berettafire1.wav" id="2_silaf"]
 [ext_resource type="PackedScene" uid="uid://bvvxnmgamquay" path="res://assets/entities/muzzleFlashes/muzzles/flash1.tscn" id="3_jln3m"]
-[ext_resource type="AudioStream" uid="uid://dadd3eqi4bvcm" path="res://assets/sounds/weapons/baretta/berettafire2.wav" id="3_pino1"]
-[ext_resource type="AudioStream" uid="uid://cy02rf62mbc8d" path="res://assets/sounds/weapons/baretta/berettafire3.wav" id="4_nkjso"]
 [ext_resource type="Texture2D" uid="uid://cm336tglbisl5" path="res://assets/models/weapons/Textures/Italian Pistol.png" id="4_s3emk"]
+[ext_resource type="AudioStream" uid="uid://cptbvtpp2rs5q" path="res://assets/sounds/weapons/baretta/Beretta_shot_1.wav" id="5_ahwe0"]
+[ext_resource type="AudioStream" uid="uid://bwdvx2yxs3uy0" path="res://assets/sounds/weapons/baretta/Beretta_shot_2.wav" id="6_ckupc"]
+[ext_resource type="AudioStream" uid="uid://msq170uec8ok" path="res://assets/sounds/weapons/baretta/Beretta_shot_3.wav" id="7_18udu"]
 [ext_resource type="AnimationLibrary" uid="uid://dckmw2jcqd2e8" path="res://assets/entities/weapons/Beretta/testWeaponsAnims.res" id="7_pxm25"]
+[ext_resource type="AudioStream" uid="uid://mstxlawb1nxq" path="res://assets/sounds/weapons/baretta/Beretta_shot_4.wav" id="8_aprjq"]
+[ext_resource type="AudioStream" uid="uid://c3iuu8u71ewl" path="res://assets/sounds/weapons/baretta/Beretta_shot_5.wav" id="9_tbhou"]
+[ext_resource type="AudioStream" uid="uid://bqs20cgm8g6qd" path="res://assets/sounds/weapons/baretta/Beretta_shot_6.wav" id="10_rb16s"]
 [ext_resource type="AnimationNodeBlendTree" uid="uid://dbj6da0uq4gp2" path="res://assets/entities/weapons/Beretta/berettaRoot.tres" id="10_u2o5m"]
+[ext_resource type="AudioStream" uid="uid://c0o5k75xpehgo" path="res://assets/sounds/weapons/baretta/Beretta_shot_7.wav" id="11_1a7u0"]
+[ext_resource type="AudioStream" uid="uid://bd2rha5jy0g6" path="res://assets/sounds/weapons/baretta/Beretta_shot_8.wav" id="12_regfc"]
+[ext_resource type="AudioStream" uid="uid://b7x3iwycfuwyh" path="res://assets/sounds/weapons/baretta/Lockin_beretta_1.wav" id="15_okmfe"]
+[ext_resource type="AudioStream" uid="uid://cbudy4317mxp" path="res://assets/sounds/weapons/baretta/Lockin_beretta_2.wav" id="16_2u1d5"]
+[ext_resource type="AudioStream" uid="uid://ya4f0cybtt1y" path="res://assets/sounds/weapons/baretta/Lockin_beretta_3.wav" id="17_jwa2y"]
+[ext_resource type="AudioStream" uid="uid://b52wb3d1fo2ob" path="res://assets/sounds/weapons/baretta/Lockin_beretta_4.wav" id="18_o1vs1"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hr0yy"]
 resource_name = "DefaultMaterial"
@@ -95,10 +104,15 @@ uv1_scale = Vector3(0.78, 0.522, 0.78)
 uv1_offset = Vector3(0.11, 0.24, 0)
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_3jed7"]
-streams_count = 3
-stream_0/stream = ExtResource("2_silaf")
-stream_1/stream = ExtResource("3_pino1")
-stream_2/stream = ExtResource("4_nkjso")
+streams_count = 8
+stream_0/stream = ExtResource("5_ahwe0")
+stream_1/stream = ExtResource("6_ckupc")
+stream_2/stream = ExtResource("7_18udu")
+stream_3/stream = ExtResource("8_aprjq")
+stream_4/stream = ExtResource("9_tbhou")
+stream_5/stream = ExtResource("10_rb16s")
+stream_6/stream = ExtResource("11_1a7u0")
+stream_7/stream = ExtResource("12_regfc")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_pqwnp"]
 size = Vector3(0.286377, 0.192932, 0.0449829)
@@ -122,6 +136,67 @@ tracks/0/keys = {
 _data = {
 &"RESET": SubResource("Animation_m8y7p")
 }
+
+[sub_resource type="Animation" id="Animation_jln3m"]
+resource_name = "fire"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Mesh/RootNode/Group001:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(-0.0333333, 0.2, 0.4),
+"transitions": PackedFloat32Array(0.517632, 0.287175, 1),
+"update": 0,
+"values": [Vector3(-3.14, 0, 0), Vector3(-3.44, 0, 0), Vector3(-3.07049, 0, 2.68431e-07)]
+}
+
+[sub_resource type="Animation" id="Animation_krxi8"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Mesh/RootNode/Group001:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-3.07049, 0, 2.68431e-07)]
+}
+
+[sub_resource type="Animation" id="Animation_ahwe0"]
+resource_name = "reload"
+length = 1.83
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Mesh/RootNode/Group001:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.2, 0.500988, 1.5, 1.73333),
+"transitions": PackedFloat32Array(0.203063, 1, 0.0693481, 1),
+"update": 0,
+"values": [Vector3(-3.07, 0, 0), Vector3(-3.655, 0, 0), Vector3(-3.655, 0, 0), Vector3(-3.07, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rqqg5"]
+_data = {
+&"RESET": SubResource("Animation_krxi8"),
+&"fire": SubResource("Animation_jln3m"),
+&"reload": SubResource("Animation_ahwe0")
+}
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_x66jy"]
+streams_count = 4
+stream_0/stream = ExtResource("15_okmfe")
+stream_1/stream = ExtResource("16_2u1d5")
+stream_2/stream = ExtResource("17_jwa2y")
+stream_3/stream = ExtResource("18_o1vs1")
 
 [node name="Beretta" node_paths=PackedStringArray("weaponMesh", "ejectionPoint", "muzzlePoint") instance=ExtResource("1_xjnb0")]
 weaponMesh = NodePath("Mesh")
@@ -176,7 +251,17 @@ libraries = {
 &"weaponAnims": ExtResource("7_pxm25")
 }
 
+[node name="weaponAnimator" type="AnimationPlayer" parent="AnimationPlayer" index="0"]
+libraries = {
+&"": SubResource("AnimationLibrary_rqqg5")
+}
+
 [node name="dryFire" parent="." index="6"]
 volume_db = 0.0
 
+[node name="aimSound" parent="." index="7"]
+stream = SubResource("AudioStreamRandomizer_x66jy")
+
+[connection signal="reloadingStart" from="." to="AnimationPlayer/weaponAnimator" method="play" binds= [&"reload"]]
 [connection signal="shot_fired" from="." to="AudioStreamPlayer3D" method="play"]
+[connection signal="shot_fired" from="." to="AnimationPlayer/weaponAnimator" method="play" binds= [&"fire"]]

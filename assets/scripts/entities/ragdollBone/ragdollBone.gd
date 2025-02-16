@@ -157,8 +157,8 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 		#var contactDot = state.get_contact_local_velocity_at_position(0).normalized().dot(contactNormal)
 		var contactForce = state.get_contact_impulse(0).length()*2
 		##contactForce = clampf(contactForce,0,heavyImpactThreshold)
-		if gameManager.debugEnabled:
-			print("%s Contact Force : %s"%[name,contactForce])
+		#if gameManager.debugEnabled:
+			#print("%s Contact Force : %s"%[name,contactForce])
 		##audioStreamPlayer.attenuation_filter_db = lerp(-20, 0, clamp(abs(contactDot) * contactForce, 0, 1))
 
 

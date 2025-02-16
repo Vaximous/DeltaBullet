@@ -230,6 +230,7 @@ shape = SubResource("SphereShape3D_xphrd")
 
 [node name="fleshBit" type="MeshInstance3D" parent="."]
 layers = 8
+visibility_range_end = 52.85
 mesh = ExtResource("3_34rgu")
 skin = SubResource("Skin_f1w22")
 

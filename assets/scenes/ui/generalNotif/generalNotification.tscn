@@ -1,9 +1,12 @@
-[gd_scene load_steps=15 format=3 uid="uid://dt70i40fi1ttg"]
+[gd_scene load_steps=19 format=3 uid="uid://dt70i40fi1ttg"]
 
 [ext_resource type="FontFile" uid="uid://xmwjvmqspojb" path="res://assets/fonts/Grand_Aventure_Text.otf" id="1_6tx56"]
-[ext_resource type="Script" path="res://assets/scenes/ui/generalNotif/generalNotification.gd" id="1_xjugd"]
-[ext_resource type="AudioStream" uid="uid://jnw14lm3kdap" path="res://assets/sounds/ui/uipanel.wav" id="3_bjat5"]
+[ext_resource type="Script" uid="uid://d37hcmjva6iis" path="res://assets/scenes/ui/generalNotif/generalNotification.gd" id="1_xjugd"]
+[ext_resource type="AudioStream" uid="uid://ufck43lrab1q" path="res://assets/sounds/ui/Ui_item_acquired_1.wav" id="3_45ln0"]
 [ext_resource type="AudioStream" uid="uid://d1pr7ltc6f600" path="res://assets/sounds/ui/uiappear.wav" id="3_l7iv3"]
+[ext_resource type="AudioStream" uid="uid://dbaqci6lw2lt" path="res://assets/sounds/ui/Ui_item_acquired_2.wav" id="4_vomgo"]
+[ext_resource type="AudioStream" uid="uid://bj8c7icwqq1xg" path="res://assets/sounds/ui/Ui_item_acquired_3.wav" id="5_ugvsi"]
+[ext_resource type="AudioStream" uid="uid://dtsfx3hr1an0r" path="res://assets/sounds/ui/Ui_item_acquired_4.wav" id="6_g00l4"]
 
 [sub_resource type="Gradient" id="Gradient_8mawy"]
 offsets = PackedFloat32Array(0.0147783, 0.891626, 1)
@@ -295,8 +298,8 @@ tracks/10/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_1i7sq"]
 _data = {
-"RESET": SubResource("Animation_yv627"),
-"entry": SubResource("Animation_n6nw8")
+&"RESET": SubResource("Animation_yv627"),
+&"entry": SubResource("Animation_n6nw8")
 }
 
 [sub_resource type="Gradient" id="Gradient_l2p0t"]
@@ -305,6 +308,14 @@ colors = PackedColorArray(1, 1, 1, 0.235294, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_36y8x"]
 gradient = SubResource("Gradient_l2p0t")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_08r1i"]
+random_pitch = 1.2
+streams_count = 4
+stream_0/stream = ExtResource("3_45ln0")
+stream_1/stream = ExtResource("4_vomgo")
+stream_2/stream = ExtResource("5_ugvsi")
+stream_3/stream = ExtResource("6_g00l4")
 
 [node name="generalNotification" type="Panel"]
 custom_minimum_size = Vector2(0, 65)
@@ -326,7 +337,7 @@ expand_mode = 1
 
 [node name="animationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_1i7sq")
+&"": SubResource("AnimationLibrary_1i7sq")
 }
 
 [node name="topNotif" type="Label" parent="."]
@@ -335,7 +346,8 @@ layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.943
 anchor_right = 0.943
-offset_right = 303.0
+offset_left = -0.943
+offset_right = 302.057
 offset_bottom = 36.0
 theme_override_fonts/font = ExtResource("1_6tx56")
 theme_override_font_sizes/font_size = 36
@@ -347,9 +359,10 @@ layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.873
 anchor_right = 0.873
+offset_left = -0.873
 offset_top = 30.0
-offset_right = 302.997
-offset_bottom = 66.0
+offset_right = 302.124
+offset_bottom = 87.0
 theme_override_colors/font_color = Color(0.572549, 0, 0, 1)
 theme_override_fonts/font = ExtResource("1_6tx56")
 theme_override_font_sizes/font_size = 26
@@ -361,15 +374,14 @@ layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
 offset_right = 11.0
-offset_bottom = 17.0
+offset_bottom = -48.0
 grow_vertical = 2
 texture = SubResource("GradientTexture2D_36y8x")
 expand_mode = 1
 
 [node name="openSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_bjat5")
+stream = SubResource("AudioStreamRandomizer_08r1i")
 volume_db = -10.0
-pitch_scale = 2.5
 bus = &"UI"
 
 [node name="closeSound" type="AudioStreamPlayer" parent="."]

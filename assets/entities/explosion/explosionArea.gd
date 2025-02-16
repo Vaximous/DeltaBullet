@@ -6,6 +6,8 @@ var explosionTween : Tween
 @onready var explosionPlayer : AudioStreamPlayer3D = $explosionSound
 @onready var collisionShape : CollisionShape3D = $collisionShape3d
 @export_category("Explosion")
+##Line of Sight, Will the explosion use line of sight checking to explode objects?
+@export var explosionLOS : bool = true
 ##How fast will this explosion expand?
 @export var explosionSpeed : float = 0.05
 ##Explosion sound... Will play when the explosion is activated
@@ -20,6 +22,37 @@ var explosionTween : Tween
 		explosionRadius = value
 		if is_instance_valid(collisionShape):
 			collisionShape.shape.radius = explosionRadius
+
+func _ready() -> void:
+	if !Engine.is_editor_hint():
+		collisionShape.shape.radius = 0
+
+
+func explosionRayCheck(object:Node3D):
+	if !explosionLOS:
+		return
+	var directSpace : PhysicsDirectSpaceState3D = gameManager.world.worldMisc.get_world_3d().direct_space_state
+	var ray = PhysicsRayQueryParameters3D.new()
+	var result : Dictionary
+	ray = ray.create(Vector3(global_position.x,global_position.y+1,global_position.z),object.global_position,collision_layer)
+	ray.collide_with_areas = true
+	ray.collide_with_bodies = true
+	result = directSpace.intersect_ray(ray)
+	if result:
+		if gameManager.debugEnabled:
+			var meshInstance : MeshInstance3D = MeshInstance3D.new()
+			var mesh = ImmediateMesh.new()
+			var meshMat : StandardMaterial3D = StandardMaterial3D.new()
+			meshMat.albedo_color = Color.BLUE
+			gameManager.world.worldMisc.add_child(meshInstance)
+			meshInstance.mesh = mesh
+			mesh.surface_begin(Mesh.PRIMITIVE_LINES)
+			mesh.surface_add_vertex(position)
+			mesh.surface_add_vertex(result.position)
+			mesh.surface_end()
+			meshInstance.material_override = meshMat
+	return result
+
 
 func applyHit(object:Node3D):
 	if is_instance_valid(object) and !object is FakePhysicsEntity:
@@ -59,14 +92,20 @@ func explode()->void:
 
 
 
-	#await get_tree().process_frame
-	#await get_tree().process_frame
-	#collisionShape.disabled = true
-
 func _on_body_entered(body: Node3D) -> void:
-	#print("Bodies:%s" %get_overlapping_bodies())
-	applyHit(body)
+	if !explosionLOS:
+		applyHit(body)
+	else:
+		var ray = explosionRayCheck(body)
+		if ray:
+			applyHit(body)
+			#print(explosionRayCheck(body))
+
 
 func _on_area_entered(area: Area3D) -> void:
-	#print("Areas:%s" %get_overlapping_areas())
-	applyHit(area)
+	if !explosionLOS:
+		applyHit(area)
+	else:
+		var ray = explosionRayCheck(area)
+		if ray:
+			applyHit(area)

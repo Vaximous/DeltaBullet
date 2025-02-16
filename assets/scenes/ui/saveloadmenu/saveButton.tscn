@@ -112,12 +112,12 @@ vertical_alignment = 1
 
 [node name="audioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamRandomizer_feh4n")
-volume_db = -2.0
+volume_db = -15.0
 bus = &"UI"
 
 [node name="selectSound" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamRandomizer_j0nlr")
-volume_db = -10.0
+volume_db = -1.0
 bus = &"UI"
 
 [connection signal="focus_entered" from="." to="." method="hoverOn"]

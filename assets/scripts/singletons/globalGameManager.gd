@@ -379,7 +379,7 @@ func isMouseHidden()->bool:
 	else:
 		return false
 
-func playSound(stream,bus:StringName = &"UI",volume:float = 2.0)->void:
+func playSound(stream,volume:float = 2.0,bus:StringName = &"UI")->void:
 	soundPlayer.stream = stream
 	#print(soundPlayer.stream)
 	soundPlayer.bus = bus

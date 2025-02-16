@@ -293,7 +293,7 @@ layout_mode = 1
 anchors_preset = -1
 anchor_bottom = 1.043
 offset_right = 100.0
-offset_bottom = -3.15
+offset_bottom = 49.0
 texture = SubResource("GradientTexture1D_su33n")
 expand_mode = 1
 
@@ -326,12 +326,12 @@ vertical_alignment = 1
 
 [node name="hoverSound" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamRandomizer_1qtqj")
-volume_db = -3.0
+volume_db = -15.0
 bus = &"UI"
 
 [node name="selectSound" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamRandomizer_y3pxn")
-volume_db = -3.0
+volume_db = -1.0
 bus = &"UI"
 
 [connection signal="focus_entered" from="." to="." method="_on_focus_entered"]

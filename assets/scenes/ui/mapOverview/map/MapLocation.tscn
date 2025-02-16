@@ -264,7 +264,7 @@ anchors_preset = -1
 anchor_bottom = 0.092
 offset_left = 8.0
 offset_right = 264.0
-offset_bottom = 40.0
+offset_bottom = 37.24
 
 [node name="hBoxContainer" type="HBoxContainer" parent="Icon/marginContainer" index="0"]
 layout_mode = 2
@@ -293,9 +293,8 @@ anchor_top = 0.017
 anchor_right = 1.0
 anchor_bottom = 1.15
 offset_left = -3.6
-offset_top = 0.5
-offset_right = 32.4
-offset_bottom = 34.5
+offset_top = -0.0100001
+offset_right = 0.400002
 pivot_offset = Vector2(18, 34)
 texture = ExtResource("3_aptmj")
 expand_mode = 1
@@ -318,6 +317,7 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_sbnov")
 
 [node name="hoverSound" type="AudioStreamPlayer" parent="." index="1"]
 stream = SubResource("AudioStreamRandomizer_i54d4")
+volume_db = -15.0
 bus = &"UI"
 
 [node name="clickSound" type="AudioStreamPlayer" parent="." index="2"]

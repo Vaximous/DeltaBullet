@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://b6i2h3dr8mjg1"
+path="res://.godot/imported/Revolver draw_1.wav-805a473d2564f84ea1aaf45e9f9563e0.sample"
+
+[deps]
+
+source_file="res://assets/sounds/weapons/revolver/Revolver draw_1.wav"
+dest_files=["res://.godot/imported/Revolver draw_1.wav-805a473d2564f84ea1aaf45e9f9563e0.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

@@ -6,4 +6,4 @@ func _on_travel_button_pressed() -> void:
 		marker.gotoLocation()
 
 func playTravelSound()->void:
-	gameManager.playSound(preload("res://assets/sounds/ui/map/travelRandomizer.tres"))
+	gameManager.playSound(preload("res://assets/sounds/ui/map/travelRandomizer.tres"),-15)

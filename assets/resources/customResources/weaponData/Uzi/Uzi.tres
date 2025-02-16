@@ -1,26 +1,37 @@
-[gd_resource type="Resource" script_class="ItemData" load_steps=4 format=3 uid="uid://cqugqj8fwtc5j"]
+[gd_resource type="Resource" script_class="ItemData" load_steps=9 format=3 uid="uid://cqugqj8fwtc5j"]
 
 [ext_resource type="Texture2D" uid="uid://rnjqykyxts43" path="res://assets/textures/crosshair/crosshair037.png" id="1_4q1x7"]
 [ext_resource type="Resource" uid="uid://r6qkb05upxjv" path="res://assets/resources/customResources/weaponData/Uzi/UziDisplay.tres" id="1_7jknn"]
+[ext_resource type="AudioStream" uid="uid://bhmql08j0fdpv" path="res://assets/sounds/weapons/uzi/Uzi_Draw_1.wav" id="2_p3mnj"]
 [ext_resource type="Script" uid="uid://b6r8ewrq3qb3y" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="2_xq0ah"]
+[ext_resource type="AudioStream" uid="uid://btbc0yxk203is" path="res://assets/sounds/weapons/uzi/Uzi_Draw_2.wav" id="3_l5do1"]
+[ext_resource type="AudioStream" uid="uid://jlds7pmyxxe3" path="res://assets/sounds/weapons/uzi/Uzi_Draw_3.wav" id="4_4d4ws"]
+[ext_resource type="AudioStream" uid="uid://d4dlpixkm3jtk" path="res://assets/sounds/weapons/uzi/Uzi_Draw_4.wav" id="5_06lqd"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_q5v7x"]
+streams_count = 4
+stream_0/stream = ExtResource("2_p3mnj")
+stream_1/stream = ExtResource("3_l5do1")
+stream_2/stream = ExtResource("4_4d4ws")
+stream_3/stream = ExtResource("5_06lqd")
 
 [resource]
 resource_local_to_scene = true
 script = ExtResource("2_xq0ah")
-useBulletTrail = null
+useBulletTrail = true
 displayData = ExtResource("1_7jknn")
-canBeReloaded = null
+canBeReloaded = true
 weaponMagSize = 511
 ammoSize = 64
 reloadTime = 1.5
-headDismember = null
-weaponDamage = null
+headDismember = false
+weaponDamage = 5.0
 weaponFireRate = 0.065
-bulletSpeed = null
-bulletPenetration = null
+bulletSpeed = 800.0
+bulletPenetration = 1.0
 weaponImpulse = 14.0
-weaponShots = null
-ammoConsumption = null
+weaponShots = 1
+ammoConsumption = 1
 useCustomCrosshairSize = true
 crosshairSizeOverride = Vector2(0.5, 0.5)
 forcedCrosshair = ExtResource("1_4q1x7")
@@ -29,17 +40,18 @@ fovShotAmount = 0.2
 weaponRecoil = Vector3(3, 7, 5)
 weaponRecoilStrength = 4.0
 weaponSpread = 0.08
-weaponRecoilStrengthAim = null
+weaponRecoilStrengthAim = 4.0
 weaponSpreadAim = 0.05
-leftHandParent = null
-rightHandParent = null
-useWeaponSprintAnim = null
+leftHandParent = false
+rightHandParent = true
+useWeaponSprintAnim = false
 useLeftHandIdle = false
-useRightHandIdle = null
+useRightHandIdle = true
 useLeftHandAiming = false
-useRightHandAiming = null
+useRightHandAiming = true
 useLeftHandFreeAiming = false
-useRightHandFreeAiming = null
+useRightHandFreeAiming = true
 weaponPositionOffset = Vector3(-0.02, -0.08, 0.105)
 weaponRotationOffset = Vector3(-0.02, -1.7, -1.605)
-bulletColor = null
+equipStream = SubResource("AudioStreamRandomizer_q5v7x")
+bulletColor = Color(1, 1, 0, 1)

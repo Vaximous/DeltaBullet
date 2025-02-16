@@ -808,10 +808,13 @@ func setRightHandFilter(value : bool = true) -> void:
 	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:R_Pinkie1", value)
 	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:R_Pinkie2", value)
 
-func equipWeapon(index:int) -> void:
-	await unequipWeapon()
+func playEquipSound()->void:
 	if !equipSound.playing:
 		equipSound.play()
+
+func equipWeapon(index:int) -> void:
+	await unequipWeapon()
+	playEquipSound()
 	currentItem = itemInventory[index]
 	freeAimChanged.connect(currentItem.checkFreeAim)
 	#weaponFireChanged.connect(checkWeaponBlend)

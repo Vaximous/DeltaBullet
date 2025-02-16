@@ -126,10 +126,6 @@ func _ready()->void:
 			if weaponMesh:
 				weaponMesh.position = weaponResource.weaponPositionOffset
 				weaponMesh.rotation = weaponResource.weaponRotationOffset
-				if is_instance_valid(weaponResource.equipStream):
-					weaponOwner.equipSound.stream = weaponResource.equipStream
-				else:
-					weaponOwner.equipSound.stream = preload("res://assets/sounds/weapons/genericEquip.tres")
 
 ## Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _physics_process(delta)->void:
@@ -568,6 +564,7 @@ func setEquipVariables()->void:
 		weaponOwner.equipSound.stream = weaponResource.equipStream
 	else:
 		weaponOwner.equipSound.stream = preload("res://assets/sounds/weapons/genericEquip.tres")
+	weaponOwner.playEquipSound()
 	setWeaponRecoil()
 
 func setWeaponRecoil()->void:

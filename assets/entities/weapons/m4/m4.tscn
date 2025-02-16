@@ -225,6 +225,4 @@ stream = SubResource("AudioStreamRandomizer_nrfx1")
 volume_db = 10.0
 max_db = 6.0
 
-[connection signal="aimingStart" from="." to="." method="playAimSound"]
-[connection signal="freeaimStart" from="." to="." method="playAimSound"]
 [connection signal="shot_fired" from="." to="AudioStreamPlayer3D" method="play"]

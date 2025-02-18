@@ -1,9 +1,15 @@
-[gd_scene load_steps=26 format=3 uid="uid://uo3piwv2xb4d"]
+[gd_scene load_steps=32 format=3 uid="uid://uo3piwv2xb4d"]
 
 [ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="1_otci6"]
 [ext_resource type="Script" uid="uid://clsjyahn8krlw" path="res://assets/scenes/ui/safehouseEditor/editor_item.gd" id="2_ayosu"]
-[ext_resource type="AudioStream" uid="uid://bijncj6jexoln" path="res://assets/sounds/ui/select1.wav" id="6_lxbfo"]
-[ext_resource type="AudioStream" uid="uid://b5rkc064kjvpg" path="res://assets/sounds/ui/select2.wav" id="7_ahe27"]
+[ext_resource type="AudioStream" uid="uid://bt1fwymynmi0t" path="res://assets/sounds/ui/toolbox/Hover_toolbox_1.wav" id="3_64fnf"]
+[ext_resource type="AudioStream" uid="uid://c04l0bej0dp45" path="res://assets/sounds/ui/toolbox/Hover_toolbox_2.wav" id="4_248r3"]
+[ext_resource type="AudioStream" uid="uid://d3vljq2lghltf" path="res://assets/sounds/ui/toolbox/Hover_toolbox_3.wav" id="5_m2a8b"]
+[ext_resource type="AudioStream" uid="uid://rhjwu66eunp" path="res://assets/sounds/ui/toolbox/Ui_toolbox_4.wav" id="6_3fp5x"]
+[ext_resource type="AudioStream" uid="uid://dhnyhynlkif8t" path="res://assets/sounds/ui/toolbox/Ui_toolbox_click_1.wav" id="7_jxhlx"]
+[ext_resource type="AudioStream" uid="uid://bqhb61oo4k6ey" path="res://assets/sounds/ui/toolbox/Ui_toolbox_click_2.wav" id="8_qexsl"]
+[ext_resource type="AudioStream" uid="uid://bge2jvcacei4n" path="res://assets/sounds/ui/toolbox/Ui_toolbox_click_3.wav" id="9_716s7"]
+[ext_resource type="AudioStream" uid="uid://ckoiy8al3fvmf" path="res://assets/sounds/ui/toolbox/Ui_toolbox_click_4.wav" id="10_iod54"]
 
 [sub_resource type="Gradient" id="Gradient_b6ksk"]
 colors = PackedColorArray(0, 0, 0, 0, 0.188235, 0, 0, 1)
@@ -34,15 +40,20 @@ _data = {
 &"buffer_done": SubResource("Animation_3xnob")
 }
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_368rd"]
+streams_count = 4
+stream_0/stream = ExtResource("3_64fnf")
+stream_1/stream = ExtResource("4_248r3")
+stream_2/stream = ExtResource("5_m2a8b")
+stream_3/stream = ExtResource("6_3fp5x")
+
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_vcg60"]
 random_pitch = 1.05
-streams_count = 1
-stream_0/stream = ExtResource("6_lxbfo")
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_kme6p"]
-random_pitch = 1.1
-streams_count = 1
-stream_0/stream = ExtResource("7_ahe27")
+streams_count = 4
+stream_0/stream = ExtResource("7_jxhlx")
+stream_1/stream = ExtResource("8_qexsl")
+stream_2/stream = ExtResource("9_716s7")
+stream_3/stream = ExtResource("10_iod54")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_q57b3"]
 
@@ -112,7 +123,7 @@ render_target_update_mode = 4
 
 [node name="itemHolder" type="Node3D" parent="backgroundPanel/subViewportContainer/subViewport"]
 unique_name_in_owner = true
-transform = Transform3D(0.999222, 0, 0.0394493, 0, 1, 0, -0.0394493, 0, 0.999222, 0, 0, 0)
+transform = Transform3D(-0.93906, 0, 0.343755, 0, 1, 0, -0.343755, 0, -0.93906, 0, 0, 0)
 
 [node name="camera3d" type="Camera3D" parent="backgroundPanel/subViewportContainer/subViewport"]
 transform = Transform3D(-0.766711, 0.211272, -0.606233, 0.0237522, 0.952988, 0.302077, 0.641553, 0.217206, -0.735685, -0.501, 0.5, -0.53)
@@ -125,14 +136,14 @@ libraries = {
 }
 
 [node name="hoverSound" type="AudioStreamPlayer" parent="."]
-
-[node name="equipSound" type="AudioStreamPlayer" parent="."]
-stream = SubResource("AudioStreamRandomizer_vcg60")
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_368rd")
 volume_db = -15.0
 bus = &"UI"
 
-[node name="unequipSound" type="AudioStreamPlayer" parent="."]
-stream = SubResource("AudioStreamRandomizer_kme6p")
+[node name="equipSound" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_vcg60")
 volume_db = -15.0
 bus = &"UI"
 
@@ -150,3 +161,9 @@ theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_m2a8b")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_3fp5x")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxTexture_jxhlx")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_qexsl")
+
+[connection signal="focus_entered" from="button" to="." method="_on_button_focus_entered"]
+[connection signal="focus_exited" from="button" to="." method="_on_button_focus_exited"]
+[connection signal="mouse_entered" from="button" to="." method="_on_button_mouse_entered"]
+[connection signal="mouse_exited" from="button" to="." method="_on_button_mouse_exited"]
+[connection signal="pressed" from="button" to="." method="playEquipSound"]

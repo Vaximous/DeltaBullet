@@ -10,7 +10,8 @@ var followEntity : Node3D:
 	set(value):
 		followEntity = value
 		if followEntity is BasePawn:
-			followEntity.healthComponent.healthChanged.connect(hpCheck.unbind(1))
+			if !followEntity.healthComponent.healthChanged.is_connected(hpCheck):
+				followEntity.healthComponent.healthChanged.connect(hpCheck.unbind(1))
 @onready var vignette : ColorRect = $vignette
 @onready var gameNotifications : VBoxContainer = $marginContainer/control/gameNotifications
 @onready var questNotifHolder : MarginContainer = $questNotification

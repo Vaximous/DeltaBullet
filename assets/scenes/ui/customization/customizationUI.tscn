@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://iftsfle430nr"]
+[gd_scene load_steps=62 format=3 uid="uid://iftsfle430nr"]
 
 [ext_resource type="Script" uid="uid://dmkj1xkkt0fwp" path="res://assets/scenes/ui/customization/customizationUI.gd" id="1_2bhr7"]
 [ext_resource type="PackedScene" uid="uid://ctrswootky6q7" path="res://assets/scenes/ui/customization/customizationWorld.tscn" id="1_sgpgn"]
@@ -18,7 +18,15 @@
 [ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="16_b72eo"]
 [ext_resource type="AudioStream" uid="uid://cqe18pm85upwh" path="res://assets/sounds/clothingEquip/cequip1.wav" id="19_ftujg"]
 [ext_resource type="AudioStream" uid="uid://cpw3gvbo8plnb" path="res://assets/sounds/clothingEquip/cequip2.wav" id="20_7m2el"]
+[ext_resource type="AudioStream" uid="uid://bu2tsjdwp3sgi" path="res://assets/sounds/ui/menu/Menu hover_1.wav" id="20_d1uui"]
+[ext_resource type="AudioStream" uid="uid://drstgovlvl11k" path="res://assets/sounds/ui/menu/Menu hover_2.wav" id="21_0pj1c"]
 [ext_resource type="AudioStream" uid="uid://cpvk80t257gca" path="res://assets/sounds/clothingEquip/cequip3.wav" id="21_0w8tm"]
+[ext_resource type="AudioStream" uid="uid://bqnfn8cqigm0f" path="res://assets/sounds/ui/menu/Menu hover_3.wav" id="22_pw2jl"]
+[ext_resource type="AudioStream" uid="uid://cnowyc1nhuvfd" path="res://assets/sounds/ui/menu/Menu hover_4.wav" id="23_rps2f"]
+[ext_resource type="AudioStream" uid="uid://cr3ij4oofjpjd" path="res://assets/sounds/ui/menu/Menu_click_1.wav" id="24_u6yd3"]
+[ext_resource type="AudioStream" uid="uid://d3ivy7qafrxt8" path="res://assets/sounds/ui/menu/Menu_click_2.wav" id="25_fxfao"]
+[ext_resource type="AudioStream" uid="uid://b61ylgh6ym6my" path="res://assets/sounds/ui/menu/Menu_click_3.wav" id="26_2wpuy"]
+[ext_resource type="AudioStream" uid="uid://cg2gg2gqhitg4" path="res://assets/sounds/ui/menu/Menu_click_4.wav" id="27_ybvyx"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_uggvv"]
 shader = ExtResource("2_jrjiw")
@@ -262,6 +270,21 @@ stream_0/stream = ExtResource("19_ftujg")
 stream_1/stream = ExtResource("20_7m2el")
 stream_2/stream = ExtResource("21_0w8tm")
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_8jinp"]
+random_pitch = 1.1
+streams_count = 4
+stream_0/stream = ExtResource("20_d1uui")
+stream_1/stream = ExtResource("21_0pj1c")
+stream_2/stream = ExtResource("22_pw2jl")
+stream_3/stream = ExtResource("23_rps2f")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_83j6x"]
+streams_count = 4
+stream_0/stream = ExtResource("24_u6yd3")
+stream_1/stream = ExtResource("25_fxfao")
+stream_2/stream = ExtResource("26_2wpuy")
+stream_3/stream = ExtResource("27_ybvyx")
+
 [node name="Customization" type="CanvasLayer" node_paths=PackedStringArray("buttonHolder", "clothingButtonsHolder", "sectionLabel")]
 layer = 2
 script = ExtResource("1_2bhr7")
@@ -316,7 +339,7 @@ world_3d = SubResource("World3D_eb65e")
 transparent_bg = true
 handle_input_locally = false
 msaa_3d = 1
-size = Vector2i(2, 2)
+size = Vector2i(661, 794)
 render_target_update_mode = 4
 
 [node name="customizationWorld" parent="customizationUi/characterPreviewContainer/subViewportContainer/subViewport" instance=ExtResource("1_sgpgn")]
@@ -535,3 +558,23 @@ text = "Customization"
 stream = SubResource("AudioStreamRandomizer_k1rsh")
 max_polyphony = 2
 bus = &"UI"
+
+[node name="hoverSound" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_8jinp")
+volume_db = -10.0
+max_polyphony = 2
+bus = &"UI"
+
+[node name="clickSound" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_83j6x")
+volume_db = -10.0
+max_polyphony = 2
+bus = &"UI"
+
+[connection signal="pressed" from="customizationUi/catalogControl/vBoxContainer/topBar/buttons/hairButton" to="." method="playClickSound"]
+[connection signal="pressed" from="customizationUi/catalogControl/vBoxContainer/topBar/buttons/headgearButton" to="." method="playClickSound"]
+[connection signal="pressed" from="customizationUi/catalogControl/vBoxContainer/topBar/buttons/blingbutton" to="." method="playClickSound"]
+[connection signal="pressed" from="customizationUi/catalogControl/vBoxContainer/topBar/buttons/bodyButton" to="." method="playClickSound"]
+[connection signal="pressed" from="customizationUi/catalogControl/vBoxContainer/topBar/buttons/pantsButton" to="." method="playClickSound"]

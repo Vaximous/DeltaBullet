@@ -1,15 +1,30 @@
-[gd_scene load_steps=62 format=3 uid="uid://d0fe1gvul4uht"]
+[gd_scene load_steps=79 format=3 uid="uid://d0fe1gvul4uht"]
 
 [ext_resource type="PackedScene" uid="uid://cpd5r8bmx2885" path="res://assets/entities/weapons/weaponBase.tscn" id="1_dxord"]
 [ext_resource type="Script" uid="uid://bfvbiknnwdu6i" path="res://assets/resources/customResources/weaponDisplayData/weaponDisplayData.gd" id="2_ay6mx"]
 [ext_resource type="Script" uid="uid://b6r8ewrq3qb3y" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="3_5pyd6"]
+[ext_resource type="AudioStream" uid="uid://dg36vodkur8m1" path="res://assets/sounds/weapons/baretta/Beretta draw_1.wav" id="3_a7gyf"]
+[ext_resource type="AudioStream" uid="uid://cfcr06w0k80w1" path="res://assets/sounds/weapons/baretta/Beretta draw_2.wav" id="4_2aw7i"]
 [ext_resource type="PackedScene" uid="uid://bvvxnmgamquay" path="res://assets/entities/muzzleFlashes/muzzles/flash1.tscn" id="4_vefcy"]
+[ext_resource type="AudioStream" uid="uid://c5eyh667klffn" path="res://assets/sounds/weapons/baretta/Beretta draw_3.wav" id="5_mqj12"]
 [ext_resource type="Animation" uid="uid://dheycahhpmdh8" path="res://assets/animations/pawn/PistolIdle.res" id="5_s6m7r"]
+[ext_resource type="AudioStream" uid="uid://rjjg4bl2k4c" path="res://assets/sounds/weapons/baretta/Beretta draw_4.wav" id="6_3pvmk"]
 [ext_resource type="Material" uid="uid://ccrhljrio2qau" path="res://assets/models/weapons/glock/reflectiveBlack.tres" id="7_5pyd6"]
 [ext_resource type="PackedScene" uid="uid://d3l4wqu5togya" path="res://assets/models/weapons/glock/glockModel.fbx" id="7_nhpv5"]
 [ext_resource type="Material" uid="uid://cige5mxmxipb2" path="res://assets/entities/weapons/glock/glockBase.tres" id="8_vefcy"]
 [ext_resource type="Material" uid="uid://irtvpceixwbb" path="res://assets/entities/weapons/glock/glockHammer.tres" id="9_s6m7r"]
-[ext_resource type="AudioStream" uid="uid://bgy2y6kc4djqe" path="res://assets/sounds/weapons/glock/glock-pistol-shot.wav" id="10_vefcy"]
+[ext_resource type="AudioStream" uid="uid://cptbvtpp2rs5q" path="res://assets/sounds/weapons/baretta/Beretta_shot_1.wav" id="10_rd0xh"]
+[ext_resource type="AudioStream" uid="uid://b7x3iwycfuwyh" path="res://assets/sounds/weapons/baretta/Lockin_beretta_1.wav" id="11_d7y4w"]
+[ext_resource type="AudioStream" uid="uid://bwdvx2yxs3uy0" path="res://assets/sounds/weapons/baretta/Beretta_shot_2.wav" id="11_ibpic"]
+[ext_resource type="AudioStream" uid="uid://msq170uec8ok" path="res://assets/sounds/weapons/baretta/Beretta_shot_3.wav" id="12_cu6hs"]
+[ext_resource type="AudioStream" uid="uid://cbudy4317mxp" path="res://assets/sounds/weapons/baretta/Lockin_beretta_2.wav" id="12_vb4b6"]
+[ext_resource type="AudioStream" uid="uid://ya4f0cybtt1y" path="res://assets/sounds/weapons/baretta/Lockin_beretta_3.wav" id="13_n332a"]
+[ext_resource type="AudioStream" uid="uid://mstxlawb1nxq" path="res://assets/sounds/weapons/baretta/Beretta_shot_4.wav" id="13_wjv1p"]
+[ext_resource type="AudioStream" uid="uid://c3iuu8u71ewl" path="res://assets/sounds/weapons/baretta/Beretta_shot_5.wav" id="14_a7gyf"]
+[ext_resource type="AudioStream" uid="uid://b52wb3d1fo2ob" path="res://assets/sounds/weapons/baretta/Lockin_beretta_4.wav" id="14_irtb6"]
+[ext_resource type="AudioStream" uid="uid://bqs20cgm8g6qd" path="res://assets/sounds/weapons/baretta/Beretta_shot_6.wav" id="15_2aw7i"]
+[ext_resource type="AudioStream" uid="uid://c0o5k75xpehgo" path="res://assets/sounds/weapons/baretta/Beretta_shot_7.wav" id="16_mqj12"]
+[ext_resource type="AudioStream" uid="uid://bd2rha5jy0g6" path="res://assets/sounds/weapons/baretta/Beretta_shot_8.wav" id="17_3pvmk"]
 
 [sub_resource type="Resource" id="Resource_d7y4w"]
 script = ExtResource("2_ay6mx")
@@ -21,6 +36,14 @@ damage = 0.416
 fireRate = 0.18
 penetration = 0.0
 metadata/_custom_type_script = ExtResource("2_ay6mx")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_qfu12"]
+random_pitch = 1.24
+streams_count = 4
+stream_0/stream = ExtResource("3_a7gyf")
+stream_1/stream = ExtResource("4_2aw7i")
+stream_2/stream = ExtResource("5_mqj12")
+stream_3/stream = ExtResource("6_3pvmk")
 
 [sub_resource type="Resource" id="Resource_vb4b6"]
 script = ExtResource("3_5pyd6")
@@ -58,6 +81,7 @@ useLeftHandFreeAiming = false
 useRightHandFreeAiming = true
 weaponPositionOffset = Vector3(-0.002, -0.188, 0.03)
 weaponRotationOffset = Vector3(-1.49749, 3.14159, 0)
+equipStream = SubResource("AudioStreamRandomizer_qfu12")
 bulletColor = Color(1, 1, 0, 1)
 metadata/_custom_type_script = ExtResource("3_5pyd6")
 
@@ -2166,10 +2190,24 @@ albedo_color = Color(0.205117, 0.205117, 0.205117, 1)
 metallic = 1.0
 roughness = 0.4
 
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_s6m7r"]
-random_pitch = 1.2
-streams_count = 1
-stream_0/stream = ExtResource("10_vefcy")
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_4i3nc"]
+streams_count = 8
+stream_0/stream = ExtResource("10_rd0xh")
+stream_1/stream = ExtResource("11_ibpic")
+stream_2/stream = ExtResource("12_cu6hs")
+stream_3/stream = ExtResource("13_wjv1p")
+stream_4/stream = ExtResource("14_a7gyf")
+stream_5/stream = ExtResource("15_2aw7i")
+stream_6/stream = ExtResource("16_mqj12")
+stream_7/stream = ExtResource("17_3pvmk")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_yxixb"]
+random_pitch = 1.1
+streams_count = 4
+stream_0/stream = ExtResource("11_d7y4w")
+stream_1/stream = ExtResource("12_vb4b6")
+stream_2/stream = ExtResource("13_n332a")
+stream_3/stream = ExtResource("14_irtb6")
 
 [node name="Glock" node_paths=PackedStringArray("weaponMesh", "ejectionPoint", "muzzlePoint") instance=ExtResource("1_dxord")]
 weaponMesh = NodePath("glockModel")
@@ -2205,6 +2243,7 @@ playback_default_blend_time = 0.1
 transform = Transform3D(0.065, 0, 0, 0, 0.065, 0, 0, 0, 0.065, 0, 0, 0)
 
 [node name="Glock" parent="glockModel" index="0"]
+blend_shapes/MagDissapear = 1.0
 surface_material_override/0 = ExtResource("7_5pyd6")
 surface_material_override/1 = ExtResource("8_vefcy")
 surface_material_override/2 = SubResource("StandardMaterial3D_vefcy")
@@ -2219,12 +2258,15 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -5.731
 transform = Transform3D(1, 0, 0, 0, 0.907777, -0.419452, 0, 0.419452, 0.907777, 0.319865, 1.39204, -0.376921)
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." index="6"]
-stream = SubResource("AudioStreamRandomizer_s6m7r")
-attenuation_model = 2
-volume_db = -5.0
+stream = SubResource("AudioStreamRandomizer_4i3nc")
+pitch_scale = 1.63
 max_polyphony = 5
 bus = &"Sounds"
 attenuation_filter_db = 0.0
+
+[node name="aimSound" parent="." index="7"]
+stream = SubResource("AudioStreamRandomizer_yxixb")
+pitch_scale = 1.2
 
 [connection signal="reloadingStart" from="." to="AnimationPlayer/weaponAnim" method="play" binds= [&"reload"]]
 [connection signal="shot_fired" from="." to="AudioStreamPlayer3D" method="play"]

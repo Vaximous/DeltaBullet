@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://euaxty1qfugn"]
+[gd_scene load_steps=6 format=3 uid="uid://euaxty1qfugn"]
 
 [ext_resource type="Script" uid="uid://ch735riwicvap" path="res://assets/scenes/ui/safehouseEditor/safehouse_editor.gd" id="1_8svem"]
 [ext_resource type="PackedScene" uid="uid://uo3piwv2xb4d" path="res://assets/scenes/ui/safehouseEditor/editorItem.tscn" id="2_3feuy"]
+[ext_resource type="Script" uid="uid://w0n6ndvsufm1" path="res://addons/Gizmo3DScript/gizmo3D.gd" id="3_3feuy"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_8svem"]
 shadow_size = 6
@@ -199,6 +200,14 @@ mouse_default_cursor_shape = 2
 text = "Place Tool
 "
 
+[node name="gizmo3d" type="Node3D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("3_3feuy")
+mode = 0
+metadata/_custom_type_script = ExtResource("3_3feuy")
+
+[connection signal="pressed" from="editorTools/panelContainer/hBoxContainer/selectTool" to="." method="setTool" binds= [0]]
 [connection signal="pressed" from="editorTools/panelContainer/hBoxContainer/translateTool" to="." method="setTool" binds= [1]]
+[connection signal="pressed" from="editorTools/panelContainer/hBoxContainer/rotateTool" to="." method="setTool" binds= [2]]
 [connection signal="pressed" from="editorTools/panelContainer/hBoxContainer/placeTool" to="." method="deselectObject"]
 [connection signal="pressed" from="editorTools/panelContainer/hBoxContainer/placeTool" to="." method="setTool" binds= [3]]

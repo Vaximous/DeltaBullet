@@ -89,6 +89,7 @@ sorting_offset = 2.0
 size = Vector3(0.3, 0.3, 0.3)
 emission_energy = 5.35
 distance_fade_enabled = true
+distance_fade_begin = 15.0
 cull_mask = 1048551
 
 [node name="dropletSound" type="AudioStreamPlayer3D" parent="."]

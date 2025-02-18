@@ -1145,96 +1145,144 @@ bones/50/scale = Vector3(1, 1, 1)
 [node name="Male_LeftArm" type="MeshInstance3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D"]
 layers = 16
 lod_bias = 0.5
+visibility_range_end = 25.0
+visibility_range_end_margin = 1.0
+visibility_range_fade_mode = 1
 mesh = SubResource("ArrayMesh_ehsqa")
 skin = SubResource("Skin_d4meq")
 
 [node name="Male_LeftFoot" type="MeshInstance3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D"]
 layers = 16
 lod_bias = 0.5
+visibility_range_end = 25.0
+visibility_range_end_margin = 1.0
+visibility_range_fade_mode = 1
 mesh = SubResource("ArrayMesh_3pudn")
 skin = SubResource("Skin_d4meq")
 
 [node name="Male_LeftForearm" type="MeshInstance3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D"]
 layers = 16
 lod_bias = 0.5
+visibility_range_end = 25.0
+visibility_range_end_margin = 1.0
+visibility_range_fade_mode = 1
 mesh = SubResource("ArrayMesh_mkhh1")
 skin = SubResource("Skin_d4meq")
 
 [node name="Male_LeftHand" type="MeshInstance3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D"]
 layers = 16
 lod_bias = 0.5
+visibility_range_end = 25.0
+visibility_range_end_margin = 1.0
+visibility_range_fade_mode = 1
 mesh = SubResource("ArrayMesh_j77s2")
 skin = SubResource("Skin_d4meq")
 
 [node name="Male_LeftKnee" type="MeshInstance3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D"]
 layers = 16
 lod_bias = 0.5
+visibility_range_end = 25.0
+visibility_range_end_margin = 1.0
+visibility_range_fade_mode = 1
 mesh = SubResource("ArrayMesh_dbpog")
 skin = SubResource("Skin_d4meq")
 
 [node name="Male_LeftThigh" type="MeshInstance3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D"]
 layers = 16
 lod_bias = 0.5
+visibility_range_end = 25.0
+visibility_range_end_margin = 1.0
+visibility_range_fade_mode = 1
 mesh = SubResource("ArrayMesh_wfr0v")
 skin = SubResource("Skin_d4meq")
 
 [node name="Male_LowerBody" type="MeshInstance3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D"]
 layers = 16
 lod_bias = 0.5
+visibility_range_end = 25.0
+visibility_range_end_margin = 1.0
+visibility_range_fade_mode = 1
 mesh = SubResource("ArrayMesh_n2nil")
 skin = SubResource("Skin_d4meq")
 
 [node name="Male_RightArm" type="MeshInstance3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D"]
 layers = 16
 lod_bias = 0.5
+visibility_range_end = 25.0
+visibility_range_end_margin = 1.0
+visibility_range_fade_mode = 1
 mesh = SubResource("ArrayMesh_kyoil")
 skin = SubResource("Skin_d4meq")
 
 [node name="Male_RightFoot" type="MeshInstance3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D"]
 layers = 16
 lod_bias = 0.5
+visibility_range_end = 25.0
+visibility_range_end_margin = 1.0
+visibility_range_fade_mode = 1
 mesh = SubResource("ArrayMesh_wc3nn")
 skin = SubResource("Skin_d4meq")
 
 [node name="Male_RightForearm" type="MeshInstance3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D"]
 layers = 16
 lod_bias = 0.5
+visibility_range_end = 25.0
+visibility_range_end_margin = 1.0
+visibility_range_fade_mode = 1
 mesh = SubResource("ArrayMesh_hcadd")
 skin = SubResource("Skin_d4meq")
 
 [node name="Male_RightHand" type="MeshInstance3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D"]
 layers = 16
 lod_bias = 0.5
+visibility_range_end = 25.0
+visibility_range_end_margin = 1.0
+visibility_range_fade_mode = 1
 mesh = SubResource("ArrayMesh_one3e")
 skin = SubResource("Skin_d4meq")
 
 [node name="Male_RightKnee" type="MeshInstance3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D"]
 layers = 16
 lod_bias = 0.5
+visibility_range_end = 25.0
+visibility_range_end_margin = 1.0
+visibility_range_fade_mode = 1
 mesh = SubResource("ArrayMesh_ix3ct")
 skin = SubResource("Skin_d4meq")
 
 [node name="Male_RightThigh" type="MeshInstance3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D"]
 layers = 16
 lod_bias = 0.5
+visibility_range_end = 25.0
+visibility_range_end_margin = 1.0
+visibility_range_fade_mode = 1
 mesh = SubResource("ArrayMesh_h1nng")
 skin = SubResource("Skin_d4meq")
 
 [node name="Male_Shoulders" type="MeshInstance3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D"]
 layers = 16
 lod_bias = 0.5
+visibility_range_end = 25.0
+visibility_range_end_margin = 1.0
+visibility_range_fade_mode = 1
 mesh = SubResource("ArrayMesh_0tbph")
 skin = SubResource("Skin_d4meq")
 
 [node name="Male_UpperBody" type="MeshInstance3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D"]
 layers = 16
 lod_bias = 0.5
+visibility_range_end = 25.0
+visibility_range_end_margin = 1.0
+visibility_range_fade_mode = 1
 mesh = SubResource("ArrayMesh_rj71m")
 skin = SubResource("Skin_d4meq")
 
 [node name="MaleHead" type="MeshInstance3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D"]
 layers = 16
 lod_bias = 0.5
+visibility_range_end = 25.0
+visibility_range_end_margin = 1.0
+visibility_range_fade_mode = 1
 mesh = ExtResource("7_aamms")
 skin = SubResource("Skin_d4meq")
 
@@ -1346,9 +1394,9 @@ top_level = true
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
-joint_offset = Transform3D(-3.61999e-06, 0, 1, 0, 1, 0, -1, 0, -3.61999e-06, 0.000486048, -7.86773e-07, 0.103048)
+joint_offset = Transform3D(-3.61999e-06, 0, 1, 0, 1, 0, -1, 0, -3.61999e-06, 0.000486048, -7.94224e-07, 0.103048)
 joint_rotation = Vector3(0, 1.5708, 0)
-body_offset = Transform3D(1, -2.55657e-08, 1.05353e-06, 1.05353e-06, 1.15484e-07, -1, 2.55656e-08, 1, 1.15484e-07, -0.000486157, 0.103048, 7.7486e-07)
+body_offset = Transform3D(1, -2.55657e-08, 1.05353e-06, 1.05353e-06, 1.15484e-07, -1, 2.55656e-08, 1, 1.15484e-07, -0.000486157, 0.103048, 7.82311e-07)
 mass = 1.88
 friction = 0.85
 bounce = 0.5
@@ -2721,14 +2769,14 @@ health = 550.0
 
 [node name="Physical Bone Neck" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
 physics_interpolation_mode = 1
-transform = Transform3D(-1, -2.97834e-08, 1.45722e-07, -1.46368e-07, 0.0229955, -0.999736, 2.64246e-08, -0.999736, -0.0229955, -0.00146565, 1.52345, -0.123776)
+transform = Transform3D(-1, -2.97776e-08, 1.45723e-07, -1.46368e-07, 0.0229553, -0.999737, 2.64246e-08, -0.999737, -0.0229553, -0.00146565, 1.52345, -0.123776)
 top_level = true
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
-joint_offset = Transform3D(1, 1.49012e-08, 4.44089e-16, -1.49012e-08, 1, 2.98023e-08, 1.00585e-21, -2.98023e-08, 1, 1.39269e-06, 0.000901933, 0.0362294)
+joint_offset = Transform3D(1, 1.49012e-08, 4.44089e-16, -1.49012e-08, 1, 2.98023e-08, 1.00585e-21, -2.98023e-08, 1, 1.39269e-06, 0.000903394, 0.0362294)
 joint_rotation = Vector3(-2.98023e-08, 4.44089e-16, -1.49012e-08)
-body_offset = Transform3D(-1, 2.2856e-07, 4.38503e-09, 8.71976e-10, 0.0229957, -0.999742, -2.28601e-07, -0.999741, -0.0229957, 1.39233e-06, 0.0361993, 0.00173482)
+body_offset = Transform3D(-1, 2.2856e-07, 4.37581e-09, 8.71976e-10, 0.0229555, -0.999743, -2.28601e-07, -0.999742, -0.0229554, 1.39233e-06, 0.0361993, 0.00173482)
 mass = 1.75
 friction = 0.05
 bounce = 0.45

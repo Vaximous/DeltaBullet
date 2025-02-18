@@ -20,6 +20,9 @@ shape = SubResource("SphereShape3D_l1elw")
 
 [node name="meshInstance3d" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0, 0)
+visibility_range_end = 10.0
+visibility_range_end_margin = 1.0
+visibility_range_fade_mode = 1
 mesh = ExtResource("1_e5blf")
 
 [node name="Lifetime" type="Timer" parent="."]

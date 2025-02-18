@@ -57,10 +57,21 @@ func setupButtons()->void:
 		for buttons in buttonHolder.get_children():
 			buttons.pivot_offset = buttons.size/2
 			buttons.mouse_entered.connect(enlargeControlScale.bind(buttons,1.15))
+			buttons.mouse_entered.connect(playHoverSound)
 			buttons.mouse_exited.connect(resetControlScale.bind(buttons))
 			buttons.pressed.connect(setSection.bind(getSelectedSectionID(buttons)))
 			buttons.pressed.connect(generateClothingOptions.bind(clothingPawn))
+			#buttons.pressed.connect(playClickSound)
 
+
+func playHoverSound()->void:
+	#if !%hoverSound.playing:
+	%hoverSound.play()
+
+
+func playClickSound()->void:
+	#if !%clickSound.playing:
+	%clickSound.play()
 
 
 func clearClothingItems()->void:

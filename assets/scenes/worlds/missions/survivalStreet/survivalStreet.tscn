@@ -1,4 +1,4 @@
-[gd_scene load_steps=192 format=4 uid="uid://ddgk7ndlf2mqo"]
+[gd_scene load_steps=195 format=4 uid="uid://ddgk7ndlf2mqo"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_m6lju"]
 [ext_resource type="PackedScene" uid="uid://boicvk4qeqmbd" path="res://assets/entities/pawnSpawn/pawnSpawn.tscn" id="2_81ovr"]
@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://cegscmnorofk5" path="res://assets/textures/world/fence/chainlink.png" id="15_cjpgc"]
 [ext_resource type="Texture2D" uid="uid://bkfoc8spht0p1" path="res://assets/textures/urban/sld_Building_40.tga" id="16_ebr84"]
 [ext_resource type="PackedScene" uid="uid://xtveejtd5yy8" path="res://assets/entities/props/ExplosiveBarrel/ExplosiveBarrel.tscn" id="17_avx4k"]
+[ext_resource type="Texture2D" uid="uid://cgw54mi6aoswb" path="res://assets/textures/urban/sld_Building_38.tga" id="17_dsb3y"]
 [ext_resource type="PackedScene" uid="uid://7kxdrnrmipu" path="res://assets/components/spawnTriggerArea/WaveSpawner.tscn" id="17_pu0n2"]
 [ext_resource type="Script" uid="uid://fcvxp6w8y4kk" path="res://assets/components/spawnTriggerArea/wavespawnerwave.gd" id="18_ebr84"]
 [ext_resource type="Script" uid="uid://ksi7km8jp8p3" path="res://assets/entities/pawnSpawn/pawn_spawn_parameters.gd" id="19_i2f5p"]
@@ -406,6 +407,13 @@ normal_enabled = true
 normal_texture = ExtResource("13_cjpgc")
 uv1_scale = Vector3(-0.088, -0.088, -0.088)
 uv1_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mh3o7"]
+albedo_texture = ExtResource("16_ebr84")
+uv1_scale = Vector3(6.71, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uow02"]
+albedo_texture = ExtResource("17_dsb3y")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p20f0"]
 albedo_texture = ExtResource("16_ebr84")
@@ -1523,7 +1531,50 @@ material_override = SubResource("StandardMaterial3D_3bftn")
 use_collision = true
 size = Vector3(17.9497, 67.2156, 18.7737)
 
-[node name="node3d4" type="Node3D" parent="Geometry/navigationRegion3d" index="10"]
+[node name="node3d5" type="Node3D" parent="Geometry/navigationRegion3d" index="10"]
+transform = Transform3D(0.740671, 0, 0, 0, 0.740671, 0, 0, 0, 0.740671, 60.2218, -3.50984, 29.7574)
+
+[node name="csgBox3d5" type="CSGBox3D" parent="Geometry/navigationRegion3d/node3d5" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.173033, 34.0588, 0)
+use_collision = true
+size = Vector3(18.5612, 1.88656, 19.0413)
+material = SubResource("StandardMaterial3D_1vykq")
+
+[node name="csgBox3d8" type="CSGBox3D" parent="Geometry/navigationRegion3d/node3d5" index="1"]
+material_override = SubResource("StandardMaterial3D_mh3o7")
+use_collision = true
+size = Vector3(17.9497, 67.2156, 18.7737)
+
+[node name="node3d7" type="Node3D" parent="Geometry/navigationRegion3d" index="11"]
+transform = Transform3D(0.740671, 0, 0, 0, 0.740671, 0, 0, 0, 0.740671, 60.2218, -6.62917, -6.56813)
+
+[node name="csgBox3d5" type="CSGBox3D" parent="Geometry/navigationRegion3d/node3d7" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.173033, 34.0588, 0)
+use_collision = true
+size = Vector3(18.5612, 1.88656, 19.0413)
+material = SubResource("StandardMaterial3D_1vykq")
+
+[node name="csgBox3d8" type="CSGBox3D" parent="Geometry/navigationRegion3d/node3d7" index="1"]
+material_override = SubResource("StandardMaterial3D_3bftn")
+use_collision = true
+size = Vector3(17.9497, 67.2156, 18.7737)
+
+[node name="node3d6" type="Node3D" parent="Geometry/navigationRegion3d" index="12"]
+transform = Transform3D(0.740671, 0, 0, 0, 0.740671, 0, 0, 0, 0.740671, 60.2218, 3.49016, 15.7574)
+
+[node name="csgBox3d5" type="CSGBox3D" parent="Geometry/navigationRegion3d/node3d6" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.6, -0.173035, 34.0588, -5.66794)
+use_collision = true
+size = Vector3(18.5612, 1.88656, 19.0413)
+material = SubResource("StandardMaterial3D_1vykq")
+
+[node name="csgBox3d8" type="CSGBox3D" parent="Geometry/navigationRegion3d/node3d6" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.6, 0, 14.1691, -5.66794)
+material_override = SubResource("StandardMaterial3D_uow02")
+use_collision = true
+size = Vector3(17.9497, 38.8773, 18.7737)
+
+[node name="node3d4" type="Node3D" parent="Geometry/navigationRegion3d" index="13"]
 transform = Transform3D(0.694939, 0, 0, 0, 0.484648, 0, 0, 0, 0.484648, -17.3752, 5.49992, -10.7278)
 
 [node name="csgBox3d5" type="CSGBox3D" parent="Geometry/navigationRegion3d/node3d4" index="0"]
@@ -1537,37 +1588,37 @@ material_override = SubResource("StandardMaterial3D_3bftn")
 use_collision = true
 size = Vector3(17.9497, 67.2156, 18.7737)
 
-[node name="csgBox3d9" type="CSGBox3D" parent="Geometry/navigationRegion3d" index="11"]
+[node name="csgBox3d9" type="CSGBox3D" parent="Geometry/navigationRegion3d" index="14"]
 transform = Transform3D(0.884051, 0, 0, 0, 0.884051, 0, 0, 0, 0.884051, 17.228, 19.695, -8.043)
 material_override = SubResource("StandardMaterial3D_1vykq")
 use_collision = true
 size = Vector3(18.2151, 1.63249, 19.0413)
 
-[node name="csgBox3d3" type="CSGBox3D" parent="Geometry/navigationRegion3d" index="12"]
+[node name="csgBox3d3" type="CSGBox3D" parent="Geometry/navigationRegion3d" index="15"]
 transform = Transform3D(0.72841, 0, 0, 0, 0.72841, 0, 0, 0, 0.72841, 35.7628, 4.0608, -8.81921)
 material_override = SubResource("StandardMaterial3D_3bftn")
 use_collision = true
 size = Vector3(17.9497, 29.3226, 18.7737)
 
-[node name="csgBox3d6" type="CSGBox3D" parent="Geometry/navigationRegion3d" index="13"]
+[node name="csgBox3d6" type="CSGBox3D" parent="Geometry/navigationRegion3d" index="16"]
 transform = Transform3D(0.72841, 0, 0, 0, 0.72841, 0, 0, 0, 0.72841, 35.7628, 14.2423, -8.81921)
 material_override = SubResource("StandardMaterial3D_1vykq")
 use_collision = true
 size = Vector3(18.2151, 1.63249, 19.0413)
 
-[node name="csgBox3d4" type="CSGBox3D" parent="Geometry/navigationRegion3d" index="14"]
+[node name="csgBox3d4" type="CSGBox3D" parent="Geometry/navigationRegion3d" index="17"]
 transform = Transform3D(0.72841, 0, 0, 0, 0.72841, 0, 0, 0, 0.72841, 34.6033, 6.04114, 9.06426)
 material_override = SubResource("StandardMaterial3D_p20f0")
 use_collision = true
 size = Vector3(17.9497, 23.8852, 18.7737)
 
-[node name="csgBox3d7" type="CSGBox3D" parent="Geometry/navigationRegion3d" index="15"]
+[node name="csgBox3d7" type="CSGBox3D" parent="Geometry/navigationRegion3d" index="18"]
 transform = Transform3D(0.72841, 0, 0, 0, 0.72841, 0, 0, 0, 0.72841, 34.6033, 14.2423, 9.06426)
 material_override = SubResource("StandardMaterial3D_1vykq")
 use_collision = true
 size = Vector3(18.2151, 1.63249, 19.0413)
 
-[node name="Fence_B_A" type="MeshInstance3D" parent="Geometry/navigationRegion3d" index="16"]
+[node name="Fence_B_A" type="MeshInstance3D" parent="Geometry/navigationRegion3d" index="19"]
 transform = Transform3D(0.999444, 0.0333296, 0, 0, 0, 1, 0.0333296, -0.999444, 0, 14.3918, 0.196454, 15.7017)
 mesh = SubResource("ArrayMesh_pu0n2")
 skeleton = NodePath("")
@@ -1578,7 +1629,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_ebr84")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/navigationRegion3d/Fence_B_A/StaticBody3D" index="0"]
 shape = SubResource("ConcavePolygonShape3D_dsb3y")
 
-[node name="Fence_B_A2" type="MeshInstance3D" parent="Geometry/navigationRegion3d" index="17"]
+[node name="Fence_B_A2" type="MeshInstance3D" parent="Geometry/navigationRegion3d" index="20"]
 transform = Transform3D(0.9999, -0.0141541, 0, 0, 0, 1, -0.0141541, -0.9999, 0, 17.7603, 0.196454, 15.7017)
 mesh = SubResource("ArrayMesh_pu0n2")
 skeleton = NodePath("")
@@ -1589,7 +1640,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_ebr84")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/navigationRegion3d/Fence_B_A2/StaticBody3D" index="0"]
 shape = SubResource("ConcavePolygonShape3D_dsb3y")
 
-[node name="Fence_B_B" type="MeshInstance3D" parent="Geometry/navigationRegion3d" index="18"]
+[node name="Fence_B_B" type="MeshInstance3D" parent="Geometry/navigationRegion3d" index="21"]
 transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 26.254, 0.196454, 15.8484)
 mesh = SubResource("ArrayMesh_12yxv")
 skeleton = NodePath("")
@@ -1600,7 +1651,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_ebr84")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/navigationRegion3d/Fence_B_B/StaticBody3D" index="0"]
 shape = SubResource("ConcavePolygonShape3D_mh3o7")
 
-[node name="LampPost_B" type="MeshInstance3D" parent="Geometry/navigationRegion3d" index="19"]
+[node name="LampPost_B" type="MeshInstance3D" parent="Geometry/navigationRegion3d" index="22"]
 transform = Transform3D(-4.37114e-08, 1, 0, 0, 0, 1, 1, 4.37114e-08, 0, 42.7262, 0, 26.8501)
 mesh = SubResource("ArrayMesh_ebr84")
 skeleton = NodePath("")
@@ -1611,7 +1662,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_i2f5p")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/navigationRegion3d/LampPost_B/StaticBody3D" index="0"]
 shape = SubResource("ConcavePolygonShape3D_7otvn")
 
-[node name="Overpass_A" type="MeshInstance3D" parent="Geometry/navigationRegion3d" index="20"]
+[node name="Overpass_A" type="MeshInstance3D" parent="Geometry/navigationRegion3d" index="23"]
 transform = Transform3D(-4.37114e-08, 1, 0, 0, 0, 1, 1, 4.37114e-08, 0, -6.72114, -0.28723, 0.141446)
 mesh = SubResource("ArrayMesh_i2f5p")
 skeleton = NodePath("")
@@ -1622,7 +1673,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_7otvn")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/navigationRegion3d/Overpass_A/StaticBody3D" index="0"]
 shape = SubResource("ConcavePolygonShape3D_w4opb")
 
-[node name="MailBox" type="MeshInstance3D" parent="Geometry/navigationRegion3d" index="21"]
+[node name="MailBox" type="MeshInstance3D" parent="Geometry/navigationRegion3d" index="24"]
 transform = Transform3D(-4.37114e-08, -1, 0, 0, 0, 1, -1, 4.37114e-08, 0, 12.1254, 0.307823, 26.2391)
 mesh = SubResource("ArrayMesh_p20f0")
 skeleton = NodePath("")
@@ -1633,7 +1684,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_gd8nn")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/navigationRegion3d/MailBox/StaticBody3D" index="0"]
 shape = SubResource("ConcavePolygonShape3D_avx4k")
 
-[node name="Fence_C_B3" type="MeshInstance3D" parent="Geometry/navigationRegion3d" index="22"]
+[node name="Fence_C_B3" type="MeshInstance3D" parent="Geometry/navigationRegion3d" index="25"]
 transform = Transform3D(-0.77194, -0.0285467, -0.635054, 0.0377266, -0.999288, -0.000938933, -0.634574, -0.0246832, 0.772467, 19.1027, 0.296596, 10.5454)
 mesh = SubResource("ArrayMesh_dsb3y")
 skeleton = NodePath("")
@@ -1644,7 +1695,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_12yxv")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/navigationRegion3d/Fence_C_B3/StaticBody3D" index="0"]
 shape = SubResource("ConcavePolygonShape3D_uow02")
 
-[node name="Fence_C_B4" type="MeshInstance3D" parent="Geometry/navigationRegion3d" index="23"]
+[node name="Fence_C_B4" type="MeshInstance3D" parent="Geometry/navigationRegion3d" index="26"]
 transform = Transform3D(-0.205226, -0.0676169, -0.976376, 0.0208513, -0.997686, 0.0647101, -0.978492, -0.0070785, 0.206161, 27.5156, 0.220072, 14.1919)
 mesh = SubResource("ArrayMesh_dsb3y")
 skeleton = NodePath("")
@@ -1655,7 +1706,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_12yxv")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/navigationRegion3d/Fence_C_B4/StaticBody3D" index="0"]
 shape = SubResource("ConcavePolygonShape3D_uow02")
 
-[node name="Fence_C_B2" type="MeshInstance3D" parent="Geometry/navigationRegion3d" index="24"]
+[node name="Fence_C_B2" type="MeshInstance3D" parent="Geometry/navigationRegion3d" index="27"]
 transform = Transform3D(0.992303, 0.00159646, 0.123823, 0.00545578, -0.99951, -0.030835, 0.123713, 0.0312733, -0.991825, 20.6755, 0.304491, 7.57434)
 mesh = SubResource("ArrayMesh_dsb3y")
 skeleton = NodePath("")
@@ -1666,7 +1717,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_12yxv")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/navigationRegion3d/Fence_C_B2/StaticBody3D" index="0"]
 shape = SubResource("ConcavePolygonShape3D_uow02")
 
-[node name="Fence_C_B" type="MeshInstance3D" parent="Geometry/navigationRegion3d" index="25"]
+[node name="Fence_C_B" type="MeshInstance3D" parent="Geometry/navigationRegion3d" index="28"]
 transform = Transform3D(0.999814, 0.0192847, 0, 0.00619345, -0.321099, 0.947025, 0.0182631, -0.946849, -0.321158, 12.3433, 0.274824, 0.893075)
 mesh = SubResource("ArrayMesh_dsb3y")
 skeleton = NodePath("")
@@ -1677,7 +1728,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_12yxv")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Geometry/navigationRegion3d/Fence_C_B/StaticBody3D" index="0"]
 shape = SubResource("ConcavePolygonShape3D_uow02")
 
-[node name="ParkLamp" type="MeshInstance3D" parent="Geometry/navigationRegion3d" index="26"]
+[node name="ParkLamp" type="MeshInstance3D" parent="Geometry/navigationRegion3d" index="29"]
 transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 42.8648, 0, 17.0936)
 mesh = SubResource("ArrayMesh_7otvn")
 skeleton = NodePath("")
@@ -1693,7 +1744,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.85273)
 light_color = Color(1, 1, 0.772549, 1)
 omni_range = 11.122
 
-[node name="ParkLamp2" type="MeshInstance3D" parent="Geometry/navigationRegion3d" index="27"]
+[node name="ParkLamp2" type="MeshInstance3D" parent="Geometry/navigationRegion3d" index="30"]
 transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 7.90307, -9.53674e-07, 16.739)
 mesh = SubResource("ArrayMesh_7otvn")
 skeleton = NodePath("")
@@ -1709,7 +1760,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.85273)
 light_color = Color(1, 1, 0.772549, 1)
 omni_range = 11.122
 
-[node name="ParkLamp3" type="MeshInstance3D" parent="Geometry/navigationRegion3d" index="28"]
+[node name="ParkLamp3" type="MeshInstance3D" parent="Geometry/navigationRegion3d" index="31"]
 transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 7.90307, -9.53674e-07, 27.5913)
 mesh = SubResource("ArrayMesh_7otvn")
 skeleton = NodePath("")
@@ -1725,7 +1776,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.85273)
 light_color = Color(1, 1, 0.772549, 1)
 omni_range = 11.122
 
-[node name="ParkLamp4" type="MeshInstance3D" parent="Geometry/navigationRegion3d" index="29"]
+[node name="ParkLamp4" type="MeshInstance3D" parent="Geometry/navigationRegion3d" index="32"]
 transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, -2.84645, -9.53674e-07, 4.74436)
 mesh = SubResource("ArrayMesh_7otvn")
 skeleton = NodePath("")
@@ -1741,7 +1792,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.85273)
 light_color = Color(1, 1, 0.772549, 1)
 omni_range = 11.122
 
-[node name="ParkLamp5" type="MeshInstance3D" parent="Geometry/navigationRegion3d" index="30"]
+[node name="ParkLamp5" type="MeshInstance3D" parent="Geometry/navigationRegion3d" index="33"]
 transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, -2.40672, -9.53674e-07, -18.0659)
 mesh = SubResource("ArrayMesh_7otvn")
 skeleton = NodePath("")
@@ -1838,6 +1889,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.2996, 0.353876, -3.54566)
 [node name="WaveSpawner" parent="Misc" index="5" instance=ExtResource("17_pu0n2")]
 wait_time = 5.0
 one_shot = true
+enabled = false
 waves = Array[ExtResource("18_ebr84")]([SubResource("Resource_mh3o7"), SubResource("Resource_ui04g"), SubResource("Resource_lrxeo"), SubResource("Resource_1lkkp"), SubResource("Resource_61hj7"), SubResource("Resource_6dvpl")])
 
 [node name="label" type="Label" parent="Misc/WaveSpawner" index="0"]

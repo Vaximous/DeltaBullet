@@ -83,6 +83,7 @@ func deselectObject()->void:
 				for ichild in i.get_children():
 					if ichild is MeshInstance3D:
 						ichild.material_override = null
+	%gizmo3d.clear_selection()
 	selectedObject = null
 
 func setSelectedItem(item:PackedScene)->void:
@@ -98,6 +99,7 @@ func initEditor()->void:
 func setSelectedObject(object:Node3D)->void:
 	deselectObject()
 	selectedObject = object
+	%gizmo3d.select(selectedObject)
 	for i in object.get_children():
 		if i is MeshInstance3D:
 			i.material_override = selectedMaterial
@@ -108,22 +110,45 @@ func setSelectedObject(object:Node3D)->void:
 func _input(event: InputEvent) -> void:
 	if !leaving:
 		if event.is_action_pressed("gLeftClick"):
+
+			if %gizmo3d.hovering || %gizmo3d.editing:
+				return
+
 			if selectedTool == 3:
 				if is_instance_valid(selectedItem) and get_from_mouse().has("position"):
 					placeItem(get_from_mouse()["position"])
+
+			if selectedTool == 2:
+				if get_from_mouse().has("collider"):
+					if get_from_mouse()["collider"].get_meta(&"canBeSelected"):
+						setSelectedObject(get_from_mouse()["collider"])
+						%gizmo3d.mode = 2
+					else:
+						deselectObject()
+
+			if selectedTool == 0:
+				if get_from_mouse().has("collider"):
+					if get_from_mouse()["collider"].get_meta(&"canBeSelected"):
+						setSelectedObject(get_from_mouse()["collider"])
+						%gizmo3d.mode = 0
+					else:
+						deselectObject()
 
 			if selectedTool == 1:
 				if get_from_mouse().has("collider"):
 					if get_from_mouse()["collider"].get_meta(&"canBeSelected"):
 						setSelectedObject(get_from_mouse()["collider"])
+						%gizmo3d.mode = 1
 					else:
 						deselectObject()
 
 		if event.is_action_pressed("gEditorDelete"):
 			if is_instance_valid(selectedObject):
+				%gizmo3d.clear_selection()
 				selectedObject.queue_free()
 
 		if event.is_action_pressed("gEscape"):
+			deselectObject()
 			leaving = true
 			gameManager.removeSafehouseEditor()
 			await get_tree().process_frame

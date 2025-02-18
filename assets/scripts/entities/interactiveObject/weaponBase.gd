@@ -190,6 +190,7 @@ func checkWeaponBlend()->void:
 				if !weaponOwner.preventWeaponFire:
 					if !isReloading:
 						if !weaponRemoteState.get_current_node() == "aim":
+							playAimSound()
 							weaponRemoteState.travel("aim")
 							weaponRemoteStateLeft.travel("aim")
 					if weaponOwner.freeAim:

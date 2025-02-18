@@ -1,8 +1,20 @@
-[gd_resource type="Resource" script_class="ItemData" load_steps=4 format=3 uid="uid://mspc5c8w8fqi"]
+[gd_resource type="Resource" script_class="ItemData" load_steps=9 format=3 uid="uid://mspc5c8w8fqi"]
 
 [ext_resource type="Resource" uid="uid://nbth0uf3slwn" path="res://assets/entities/weapons/BattlecadeAssaultRifle/bcARStats.tres" id="1_niglr"]
+[ext_resource type="AudioStream" uid="uid://brxvjv4isdmvu" path="res://assets/sounds/weapons/m4/m4_draw_1.wav" id="2_eok4g"]
 [ext_resource type="Script" uid="uid://b6r8ewrq3qb3y" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="2_g1vh5"]
 [ext_resource type="Texture2D" uid="uid://cffiixp75h8ah" path="res://assets/textures/crosshair/crosshair046.png" id="2_piemj"]
+[ext_resource type="AudioStream" uid="uid://cyxfip8hwv23f" path="res://assets/sounds/weapons/m4/m4_draw_2.wav" id="3_ctog0"]
+[ext_resource type="AudioStream" uid="uid://74p6gclkalsk" path="res://assets/sounds/weapons/m4/m4_draw_3.wav" id="4_wb4om"]
+[ext_resource type="AudioStream" uid="uid://c85mepdrdblyy" path="res://assets/sounds/weapons/m4/m4_draw_4.wav" id="5_ejgvh"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_eok4g"]
+random_pitch = 1.1
+streams_count = 4
+stream_0/stream = ExtResource("2_eok4g")
+stream_1/stream = ExtResource("3_ctog0")
+stream_2/stream = ExtResource("4_wb4om")
+stream_3/stream = ExtResource("5_ejgvh")
 
 [resource]
 script = ExtResource("2_g1vh5")
@@ -41,4 +53,5 @@ useLeftHandFreeAiming = true
 useRightHandFreeAiming = true
 weaponPositionOffset = Vector3(-0.005, -0.355, 0.125)
 weaponRotationOffset = Vector3(-1.42, -3.44, 0.429)
+equipStream = SubResource("AudioStreamRandomizer_eok4g")
 bulletColor = Color(1, 1, 0, 1)

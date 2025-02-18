@@ -7,4 +7,5 @@ script = ExtResource("1_q50fq")
 
 [node name="pool" type="Decal" parent="."]
 distance_fade_enabled = true
+distance_fade_begin = 10.0
 cull_mask = 1048551

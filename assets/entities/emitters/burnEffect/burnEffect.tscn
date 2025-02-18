@@ -159,8 +159,14 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.194569, 0)
 light_color = Color(1, 0.490196, 0.239216, 1)
 light_energy = 0.5
+distance_fade_enabled = true
+distance_fade_begin = 10.0
 
 [node name="explosionSparks" type="GPUParticles3D" parent="."]
+layers = 16
+visibility_range_end = 20.0
+visibility_range_end_margin = 1.0
+visibility_range_fade_mode = 1
 amount = 24
 lifetime = 2.0
 randomness = 0.24
@@ -170,6 +176,10 @@ draw_pass_1 = SubResource("QuadMesh_grcmm")
 
 [node name="fire" type="GPUParticles3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.289257, 0)
+layers = 16
+visibility_range_end = 20.0
+visibility_range_end_margin = 1.0
+visibility_range_fade_mode = 1
 amount = 16
 lifetime = 1.15
 randomness = 1.0
@@ -178,6 +188,10 @@ process_material = SubResource("ParticleProcessMaterial_onpp2")
 draw_pass_1 = SubResource("QuadMesh_ildi1")
 
 [node name="explosionSmoke" type="GPUParticles3D" parent="fire"]
+layers = 16
+visibility_range_end = 20.0
+visibility_range_end_margin = 1.0
+visibility_range_fade_mode = 1
 amount = 7
 randomness = 1.0
 fixed_fps = 0

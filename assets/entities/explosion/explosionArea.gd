@@ -55,7 +55,7 @@ func explosionRayCheck(object:Node3D):
 
 
 func applyHit(object:Node3D):
-	if is_instance_valid(object) and !object is FakePhysicsEntity:
+	if is_instance_valid(object) and object is not FakePhysicsEntity:
 		var burnChance : bool = [true,false].pick_random()
 		if burnChance and object is not FakePhysicsEntity:
 			randomize()
@@ -65,6 +65,8 @@ func applyHit(object:Node3D):
 			object.velocity += -(global_position-object.global_position).normalized() * explosionImpulse
 
 		if object.has_method("hit"):
+			if object.has_method("canBleed"):
+				object.canBleed = false
 			object.hit(explosionDamage,dealer,-(global_position-object.global_position).normalized() * explosionImpulse,Vector3.ZERO)
 
 func explode()->void:

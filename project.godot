@@ -111,7 +111,7 @@ naming/scene_name_casing=1
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/SphynxMotionBlurToolkit/plugin.cfg", "res://addons/ez_dialogue/plugin.cfg", "res://addons/finite_state_machine/plugin.cfg", "res://addons/fmod/plugin.cfg", "res://addons/proto_shape/plugin.cfg")
+enabled=PackedStringArray("res://addons/Gizmo3DScript/plugin.cfg", "res://addons/SphynxMotionBlurToolkit/plugin.cfg", "res://addons/ez_dialogue/plugin.cfg", "res://addons/finite_state_machine/plugin.cfg", "res://addons/proto_shape/plugin.cfg")
 
 [file_customization]
 

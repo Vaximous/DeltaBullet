@@ -29,6 +29,7 @@ size_flags_horizontal = 0
 [node name="categoryPanel" type="PanelContainer" parent="itemContainer"]
 clip_contents = true
 layout_mode = 2
+mouse_filter = 1
 
 [node name="vBoxContainer" type="VBoxContainer" parent="itemContainer/categoryPanel"]
 layout_mode = 2

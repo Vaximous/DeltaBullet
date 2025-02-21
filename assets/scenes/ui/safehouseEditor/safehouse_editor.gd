@@ -63,6 +63,7 @@ func _physics_process(delta: float) -> void:
 
 func setTool(value:int)->void:
 	selectedTool = value
+	%gizmo3d.mode = value
 
 func createItemButtons()->void:
 	for placeable in gameManager.purchasedPlacables:
@@ -107,7 +108,7 @@ func setSelectedObject(object:Node3D)->void:
 				if ichild is MeshInstance3D:
 					ichild.material_override = selectedMaterial
 
-func _input(event: InputEvent) -> void:
+func _unhandled_input(event: InputEvent) -> void:
 	if !leaving:
 		if event.is_action_pressed("gLeftClick"):
 

@@ -1,20 +1,10 @@
-[gd_scene load_steps=62 format=3 uid="uid://iftsfle430nr"]
+[gd_scene load_steps=52 format=3 uid="uid://iftsfle430nr"]
 
 [ext_resource type="Script" uid="uid://dmkj1xkkt0fwp" path="res://assets/scenes/ui/customization/customizationUI.gd" id="1_2bhr7"]
 [ext_resource type="PackedScene" uid="uid://ctrswootky6q7" path="res://assets/scenes/ui/customization/customizationWorld.tscn" id="1_sgpgn"]
 [ext_resource type="Shader" uid="uid://dhylkvfkpaysc" path="res://assets/scripts/shaders/ui_blur.gdshader" id="2_jrjiw"]
-[ext_resource type="PackedScene" uid="uid://2nj1n64cy47e" path="res://assets/scenes/ui/customization/customizationClothing.tscn" id="3_m5e2e"]
-[ext_resource type="PackedScene" uid="uid://d10o2e44ltrnl" path="res://assets/entities/clothing/ArmoredShirt/armor_shirt.tscn" id="4_jnw8h"]
-[ext_resource type="PackedScene" uid="uid://jwq6tye7ok4r" path="res://assets/entities/clothing/Glasses/SiftinShades/SiftinShades.tscn" id="4_lk8ax"]
 [ext_resource type="Texture2D" uid="uid://dw4q4o6g13c6q" path="res://assets/textures/ui/customization/db_customization_buttonicons.png" id="4_tuxjq"]
-[ext_resource type="PackedScene" uid="uid://b026rv1louhqg" path="res://assets/entities/clothing/Longcoats/longCoat.tscn" id="6_3d7ru"]
-[ext_resource type="PackedScene" uid="uid://cgghffeqks1ac" path="res://assets/entities/clothing/Gloves/left_glove_fingerless.tscn" id="7_h6386"]
 [ext_resource type="FontFile" uid="uid://xmwjvmqspojb" path="res://assets/fonts/Grand_Aventure_Text.otf" id="8_1ugh4"]
-[ext_resource type="PackedScene" uid="uid://bap501mpmqgb" path="res://assets/entities/clothing/Gloves/right_glove_fingerless.tscn" id="8_kdgw1"]
-[ext_resource type="PackedScene" uid="uid://cyo2gkchgm6il" path="res://assets/entities/clothing/Hair/Hair1.tscn" id="9_dsji8"]
-[ext_resource type="PackedScene" uid="uid://b4v8dskvpby4c" path="res://assets/entities/clothing/Hair/Hair2.tscn" id="10_052vf"]
-[ext_resource type="PackedScene" uid="uid://b8ttgknyh8e3m" path="res://assets/entities/clothing/Tuxedo/Tuxedo.tscn" id="11_tklms"]
-[ext_resource type="PackedScene" uid="uid://bb5qvdslt6004" path="res://assets/entities/clothing/Pants/armored_pants.tscn" id="12_m43qx"]
 [ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="16_b72eo"]
 [ext_resource type="AudioStream" uid="uid://cqe18pm85upwh" path="res://assets/sounds/clothingEquip/cequip1.wav" id="19_ftujg"]
 [ext_resource type="AudioStream" uid="uid://cpw3gvbo8plnb" path="res://assets/sounds/clothingEquip/cequip2.wav" id="20_7m2el"]
@@ -454,78 +444,6 @@ layout_mode = 2
 layout_mode = 2
 columns = 3
 
-[node name="clothingItemButton" parent="customizationUi/catalogControl/vBoxContainer/catalogOptions/scrollContainer/itemContainer" instance=ExtResource("3_m5e2e")]
-layout_mode = 2
-clothingItem = ExtResource("4_jnw8h")
-
-[node name="clothingItemButton2" parent="customizationUi/catalogControl/vBoxContainer/catalogOptions/scrollContainer/itemContainer" instance=ExtResource("3_m5e2e")]
-layout_mode = 2
-clothingItem = ExtResource("4_lk8ax")
-
-[node name="clothingItemButton3" parent="customizationUi/catalogControl/vBoxContainer/catalogOptions/scrollContainer/itemContainer" instance=ExtResource("3_m5e2e")]
-layout_mode = 2
-clothingItem = ExtResource("6_3d7ru")
-
-[node name="clothingItemButton4" parent="customizationUi/catalogControl/vBoxContainer/catalogOptions/scrollContainer/itemContainer" instance=ExtResource("3_m5e2e")]
-layout_mode = 2
-clothingItem = ExtResource("7_h6386")
-
-[node name="clothingItemButton5" parent="customizationUi/catalogControl/vBoxContainer/catalogOptions/scrollContainer/itemContainer" instance=ExtResource("3_m5e2e")]
-layout_mode = 2
-clothingItem = ExtResource("8_kdgw1")
-
-[node name="clothingItemButton6" parent="customizationUi/catalogControl/vBoxContainer/catalogOptions/scrollContainer/itemContainer" instance=ExtResource("3_m5e2e")]
-layout_mode = 2
-clothingItem = ExtResource("9_dsji8")
-
-[node name="clothingItemButton7" parent="customizationUi/catalogControl/vBoxContainer/catalogOptions/scrollContainer/itemContainer" instance=ExtResource("3_m5e2e")]
-layout_mode = 2
-clothingItem = ExtResource("10_052vf")
-
-[node name="clothingItemButton8" parent="customizationUi/catalogControl/vBoxContainer/catalogOptions/scrollContainer/itemContainer" instance=ExtResource("3_m5e2e")]
-layout_mode = 2
-clothingItem = ExtResource("11_tklms")
-
-[node name="clothingItemButton9" parent="customizationUi/catalogControl/vBoxContainer/catalogOptions/scrollContainer/itemContainer" instance=ExtResource("3_m5e2e")]
-layout_mode = 2
-clothingItem = ExtResource("12_m43qx")
-
-[node name="clothingItemButton10" parent="customizationUi/catalogControl/vBoxContainer/catalogOptions/scrollContainer/itemContainer" instance=ExtResource("3_m5e2e")]
-layout_mode = 2
-clothingItem = ExtResource("4_jnw8h")
-
-[node name="clothingItemButton11" parent="customizationUi/catalogControl/vBoxContainer/catalogOptions/scrollContainer/itemContainer" instance=ExtResource("3_m5e2e")]
-layout_mode = 2
-clothingItem = ExtResource("4_lk8ax")
-
-[node name="clothingItemButton12" parent="customizationUi/catalogControl/vBoxContainer/catalogOptions/scrollContainer/itemContainer" instance=ExtResource("3_m5e2e")]
-layout_mode = 2
-clothingItem = ExtResource("6_3d7ru")
-
-[node name="clothingItemButton13" parent="customizationUi/catalogControl/vBoxContainer/catalogOptions/scrollContainer/itemContainer" instance=ExtResource("3_m5e2e")]
-layout_mode = 2
-clothingItem = ExtResource("7_h6386")
-
-[node name="clothingItemButton14" parent="customizationUi/catalogControl/vBoxContainer/catalogOptions/scrollContainer/itemContainer" instance=ExtResource("3_m5e2e")]
-layout_mode = 2
-clothingItem = ExtResource("8_kdgw1")
-
-[node name="clothingItemButton15" parent="customizationUi/catalogControl/vBoxContainer/catalogOptions/scrollContainer/itemContainer" instance=ExtResource("3_m5e2e")]
-layout_mode = 2
-clothingItem = ExtResource("9_dsji8")
-
-[node name="clothingItemButton16" parent="customizationUi/catalogControl/vBoxContainer/catalogOptions/scrollContainer/itemContainer" instance=ExtResource("3_m5e2e")]
-layout_mode = 2
-clothingItem = ExtResource("10_052vf")
-
-[node name="clothingItemButton17" parent="customizationUi/catalogControl/vBoxContainer/catalogOptions/scrollContainer/itemContainer" instance=ExtResource("3_m5e2e")]
-layout_mode = 2
-clothingItem = ExtResource("11_tklms")
-
-[node name="clothingItemButton18" parent="customizationUi/catalogControl/vBoxContainer/catalogOptions/scrollContainer/itemContainer" instance=ExtResource("3_m5e2e")]
-layout_mode = 2
-clothingItem = ExtResource("12_m43qx")
-
 [node name="customizationLabel" type="Control" parent="customizationUi"]
 anchors_preset = 0
 offset_right = 505.0
@@ -562,7 +480,7 @@ bus = &"UI"
 [node name="hoverSound" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
 stream = SubResource("AudioStreamRandomizer_8jinp")
-volume_db = -10.0
+volume_db = -15.0
 max_polyphony = 2
 bus = &"UI"
 

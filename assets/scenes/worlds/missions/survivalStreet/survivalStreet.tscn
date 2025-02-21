@@ -1889,7 +1889,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.2996, 0.353876, -3.54566)
 [node name="WaveSpawner" parent="Misc" index="5" instance=ExtResource("17_pu0n2")]
 wait_time = 5.0
 one_shot = true
-enabled = false
 waves = Array[ExtResource("18_ebr84")]([SubResource("Resource_mh3o7"), SubResource("Resource_ui04g"), SubResource("Resource_lrxeo"), SubResource("Resource_1lkkp"), SubResource("Resource_61hj7"), SubResource("Resource_6dvpl")])
 
 [node name="label" type="Label" parent="Misc/WaveSpawner" index="0"]

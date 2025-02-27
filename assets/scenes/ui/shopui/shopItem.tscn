@@ -289,8 +289,6 @@ bus = &"UI"
 
 [node name="purchaseSound" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamRandomizer_fjim2")
-volume_db = -10.0
-pitch_scale = 3.0
 bus = &"UI"
 
 [connection signal="mouse_entered" from="." to="hoverSound" method="play"]

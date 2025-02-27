@@ -1,7 +1,6 @@
-[gd_scene load_steps=19 format=3 uid="uid://40svo5e4g5kn"]
+[gd_scene load_steps=18 format=3 uid="uid://40svo5e4g5kn"]
 
 [ext_resource type="Script" uid="uid://b5pkfifrbmps2" path="res://assets/entities/gore/dismember_gib.gd" id="1_ikhea"]
-[ext_resource type="Script" uid="uid://mpu0audo4bfj" path="res://assets/entities/fakePhysics/fake_physics_entity.gd" id="2_fkjti"]
 [ext_resource type="ArrayMesh" uid="uid://dswpjv66fxmyr" path="res://assets/models/gore/gib1.res" id="3_ikhea"]
 [ext_resource type="AudioStream" uid="uid://dj2afeo57p2u8" path="res://assets/sounds/gore/fleshimpact4.wav" id="4_1ci8d"]
 [ext_resource type="Material" uid="uid://co86jd67xrcl" path="res://assets/materials/blood/spurts/bloodSpurt3.tres" id="4_fkjti"]
@@ -223,7 +222,7 @@ script = ExtResource("1_ikhea")
 mesh = NodePath("fleshBit")
 collisionSounds = [NodePath("audioStreamPlayer3d")]
 continuousCollision = true
-metadata/_custom_type_script = ExtResource("2_fkjti")
+metadata/_custom_type_script = "uid://mpu0audo4bfj"
 
 [node name="collisionShape3d" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_xphrd")
@@ -253,8 +252,9 @@ draw_pass_1 = SubResource("QuadMesh_ok4j7")
 [node name="audioStreamPlayer3d" type="AudioStreamPlayer3D" parent="."]
 stream = SubResource("AudioStreamRandomizer_cjxgy")
 volume_db = -25.0
+max_distance = 15.0
 max_polyphony = 2
 bus = &"Sounds"
-attenuation_filter_db = 0.0
+attenuation_filter_cutoff_hz = 20500.0
 
 [connection signal="bounced" from="." to="." method="_on_bounced"]

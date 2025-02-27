@@ -123,7 +123,7 @@ stream_3/stream = ExtResource("15_0v70h")
 [node name="bulletHole_Generic" node_paths=PackedStringArray("particleArray", "soundArray") instance=ExtResource("1_nlopu")]
 bulletTextures = Array[Texture2D]([ExtResource("2_voo5d"), ExtResource("3_8a72t"), ExtResource("4_6cm8d"), ExtResource("5_xyt5t")])
 particleArray = [NodePath("impactParticle"), NodePath("smokeParticle")]
-soundArray = [NodePath("concreteSounds"), NodePath("dirtSounds")]
+soundArray = [NodePath("dirtSounds")]
 decalSize = 0.055
 audioVolume = -1.0
 
@@ -135,7 +135,6 @@ one_shot = true
 speed_scale = 2.1
 explosiveness = 1.0
 randomness = 1.0
-seed = 2508763011
 fixed_fps = 0
 visibility_aabb = AABB(-0.3, -0.3, -0.3, 0.6, 0.6, 0.6)
 process_material = SubResource("ParticleProcessMaterial_b0f7p")
@@ -159,5 +158,5 @@ bus = &"Sounds"
 
 [node name="dirtSounds" type="AudioStreamPlayer3D" parent="." index="4"]
 stream = SubResource("AudioStreamRandomizer_wh3o0")
-volume_db = -5.0
 bus = &"Sounds"
+attenuation_filter_cutoff_hz = 20500.0

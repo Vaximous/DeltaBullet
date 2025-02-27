@@ -128,8 +128,8 @@ func createAudioPlayer()->void:
 	audioStreamPlayer.max_distance = 32
 	audioStreamPlayer.unit_size = 0.5
 	audioStreamPlayer.bus = &"Sounds"
-	audioStreamPlayer.attenuation_filter_db = 0
-	audioStreamPlayer.attenuation_filter_cutoff_hz = 3000
+	#audioStreamPlayer.attenuation_filter_db = 0
+	audioStreamPlayer.attenuation_filter_cutoff_hz = 20500
 
 
 func updateRagdollScale()->void:
@@ -164,8 +164,8 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 
 		if contactForce >= heavyImpactThreshold:
 			createSpurtInstance(state.get_contact_collider_position(0))
-			gameManager.sprayBlood(state.get_contact_collider_position(0),15,3)
-			gameManager.createSplat(state.get_contact_collider_position(0))
+			#gameManager.sprayBlood(state.get_contact_collider_position(0),15,3)
+			gameManager.createSplat(global_position,(state.get_contact_local_normal(0).normalized()))
 			if is_instance_valid(audioStreamPlayer):
 				audioStreamPlayer.stream = heavyImpactSounds
 				audioStreamPlayer.play()
@@ -174,7 +174,7 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 				healthComponent.damage(contactForce * randi_range(2,16))
 
 		elif contactForce >= mediumImpactThreshold:
-			gameManager.createSplat(state.get_contact_collider_position(0))
+			var dec = gameManager.createSplat(global_position,(state.get_contact_local_normal(0).normalized()))
 			if is_instance_valid(audioStreamPlayer):
 				audioStreamPlayer.stream = mediumImpactSounds
 				audioStreamPlayer.play()
@@ -184,7 +184,7 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 
 		elif contactForce >= lightImpactThreshold:
 			createSpurtInstance(state.get_contact_collider_position(0))
-			gameManager.createSplat(state.get_contact_collider_position(0))
+			gameManager.createSplat(global_position,(state.get_contact_local_normal(0).normalized()))
 			if is_instance_valid(audioStreamPlayer):
 				audioStreamPlayer.stream = lightImpactSounds
 				audioStreamPlayer.play()
@@ -194,7 +194,8 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 
 
 func hit(dmg, dealer=null, hitImpulse:Vector3 = Vector3.ZERO, hitPoint:Vector3 = Vector3.ZERO)->void:
-	canBleed = true
+	if !has_meta("exploded"):
+		canBleed = true
 	onHit.emit(hitImpulse,hitPoint)
 	apply_impulse(hitImpulse,hitPoint)
 	if get_bone_id() == 41:
@@ -272,8 +273,10 @@ func doPulverizeEffect()->void:
 		var pulverizeSound : AudioStreamPlayer3D = AudioStreamPlayer3D.new()
 		pulverizeSound.stream = load("res://assets/misc/obliterateStream.tres")
 		pulverizeSound.bus = &"Sounds"
-		pulverizeSound.attenuation_filter_db = 0
+		#pulverizeSound.attenuation_filter_db = 0
+		pulverizeSound.attenuation_filter_cutoff_hz = 20500
 		pulverizeSound.volume_db = -5
+		pulverizeSound.max_distance = 10
 		gameManager.world.worldMisc.add_child(pulverizeSound)
 		pulverizeSound.global_position = global_position
 		pulverizeSound.finished.connect(pulverizeSound.queue_free)
@@ -301,7 +304,7 @@ func doPulverizeEffect()->void:
 		#createBurstOfBlood(10,15,25)
 
 func doBleed()->void:
-	if !hasBled and canBleed:
+	if !hasBled and canBleed and !has_meta("exploded"):
 		gameManager.createBloodPool(global_position,randf_range(0.3,1.6))
 		hasBled = true
 

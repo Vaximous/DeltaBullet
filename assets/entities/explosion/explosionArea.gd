@@ -65,8 +65,9 @@ func applyHit(object:Node3D):
 			object.velocity += -(global_position-object.global_position).normalized() * explosionImpulse
 
 		if object.has_method("hit"):
-			if object.has_method("canBleed"):
+			if object is RagdollBone:
 				object.canBleed = false
+				object.set_meta("exploded",true)
 			object.hit(explosionDamage,dealer,-(global_position-object.global_position).normalized() * explosionImpulse,Vector3.ZERO)
 
 func explode()->void:

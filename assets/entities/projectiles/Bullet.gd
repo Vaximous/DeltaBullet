@@ -51,6 +51,12 @@ func enter_material(material : DB_PhysicsMaterial, hit_data : Dictionary) -> voi
 			#just return for now
 			print("Unaccounted State")
 	if penetration_power > 0:
+		#var hit = gather_collision_info()
+		#if hit:
+			#var trail = preload("res://assets/entities/bulletTrail/bulletTrail.tscn").instantiate()
+			#gameManager.world.worldMisc.add_child(trail)
+			#trail.initTrail(global_position,velocity)
+			#globalParticles.spawnBulletHolePackedScene(material.bullet_hole, hit['col'], velocity, randf_range(0, TAU), hit['col_normal'],hit['velocity'])
 		distance_traveled += (material.penetration_entry_cost / penetration_power)
 		#print("Power reduction = %s" % [material.penetration_entry_cost / penetration_power])
 	else:

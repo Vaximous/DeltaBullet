@@ -40,8 +40,8 @@ run/main_loop_type="PEMainLoop"
 config/features=PackedStringArray("4.4", "Forward Plus")
 boot_splash/bg_color=Color(0, 0, 0, 1)
 boot_splash/show_image=false
-boot_splash/image="res://assets/textures/misc/bootlogo.png"
 boot_splash/fullsize=false
+boot_splash/image="res://assets/textures/misc/bootlogo.png"
 config/icon="res://assets/textures/misc/gameIcon.png"
 boot_splash/minimum_display_time=1
 

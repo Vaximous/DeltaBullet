@@ -5,4 +5,4 @@ func _ready() -> void:
 
 func _on_bounced() -> void:
 	%bloodSpurt.restart()
-	var splat = gameManager.createSplat(global_position,colNormal)
+	var splat = gameManager.createSplat(global_position,colNormal.normalized())

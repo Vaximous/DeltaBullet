@@ -36,13 +36,15 @@ func deleteHole()->void:
 func setSoundVariables(audio:AudioStreamPlayer3D)->void:
 	audio.bus = &"Sounds"
 	audio.attenuation_filter_db = -24
-	audio.unit_size = 13
+	audio.attenuation_filter_cutoff_hz = 20500
+	audio.unit_size = 4
+	audio.max_distance = 15
 
 func initializeBulletHole()->void:
 	#Play the sounds
 	for sounds in soundArray:
 		#sounds.max_db = audioVolume
-		sounds.volume_db = audioVolume
+		sounds.volume_db = linear_to_db(audioVolume)
 		sounds.reparent(gameManager.world.worldMisc)
 		setSoundVariables(sounds)
 		#print(sounds.volume_db)

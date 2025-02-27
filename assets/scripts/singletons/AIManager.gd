@@ -5,8 +5,7 @@ var ai_process_counter : int = 0
 #How many AI are processed per tick.
 const ai_processed_per_tick : int = 2
 
-
-func _physics_process(_delta: float) -> void:
+func updateAI(delta:float)->void:
 	#Update the AI
 	for i in ai_processed_per_tick:
 		if AIComponent.instances.size() > 0:
@@ -19,4 +18,9 @@ func _physics_process(_delta: float) -> void:
 			#If the next one over still isn't processing, just skip this iteration.
 			if !component.is_ai_processing():
 				return
-			component._ai_process(_delta)
+			component._ai_process(delta)
+
+
+
+func _physics_process(_delta: float) -> void:
+	updateAI(_delta)

@@ -34,3 +34,4 @@ stretch_mode = 5
 
 [node name="AudioStreamPlayer" parent="." index="3"]
 stream = ExtResource("3_atvh5")
+stream_paused = false

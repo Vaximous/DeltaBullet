@@ -292,7 +292,7 @@ func notifyFade(text : String, position : NOTIF_POSITION = 2, fade_time : float 
 		new_notif.timer.start(fade_time)
 	return new_notif
 
-func notifyCheck(text : String, position : NOTIF_POSITION = 2, fade_time : float = -1, texture : Texture = Notifications.checkmarkTexture):
+func notifyCheck(text : String, position : NOTIF_POSITION = 2, fade_time : float = -1, texture : Texture = Notifications.checkmarkTexture,sound:bool = true):
 	var new_notif
 	var container = Notifications.hudPositions[position]
 
@@ -664,9 +664,15 @@ func createSplat(gposition:Vector3 = Vector3.ZERO,normal:Vector3 = Vector3.ZERO,
 		parent.add_child(_b)
 		if parent.has_node(_b.get_path()) and _b.is_inside_tree():
 			_b.position = gposition
-			if !Vector3.UP.is_equal_approx(normal.normalized()) and !normal.normalized().is_equal_approx(Vector3.ZERO):
-				_b.transform.basis = _b.transform.basis.looking_at(normal.normalized())
-			_b.rotate(normal.normalized(),randf_range(0, 2)*PI)
+			if normal == Vector3(0,1,0):
+				_b.look_at(gposition + normal.normalized(), Vector3.RIGHT)
+			elif normal == Vector3(0,-1,0):
+				_b.look_at(gposition + normal.normalized(), Vector3.RIGHT)
+			else:
+				_b.look_at(gposition + normal)
+		#if !Vector3.UP.is_equal_approx(normal.normalized()) and !normal.normalized().is_equal_approx(Vector3.ZERO):
+			#_b.transform.basis = _b.transform.basis.looking_at(normal.normalized())
+		#_b.rotate(normal.normalized(),randf_range(0, 2)*PI)
 			return _b
 		else:
 			_b.queue_free()

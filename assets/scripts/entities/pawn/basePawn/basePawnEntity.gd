@@ -28,6 +28,8 @@ signal headshottedPawn
 @onready var interactRaycast : RayCast3D = $Mesh/interactRaycast
 
 ##IK
+@onready var neckMarker :Marker3D = $Mesh/neckLook
+@onready var neckModifier : LookAtModifier3D = $%neckModifier
 @onready var bodyIK : SkeletonIK3D= $Mesh/MaleSkeleton/Skeleton3D/bodyIK
 @onready var bodyIKMarker : Marker3D = $Mesh/bodyIKMarker:
 	set(value):
@@ -437,6 +439,8 @@ func checkComponents()->void:
 				headHitbox.hitboxDamageMult = 1.3
 				raycaster = _cam.camCast
 				add_to_group("Player")
+				neckMarker.reparent(_cam.camera, true)
+				neckModifier.target_node = neckMarker.get_path()
 
 
 func endPawn()->void:

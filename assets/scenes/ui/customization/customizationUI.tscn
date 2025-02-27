@@ -5,14 +5,14 @@
 [ext_resource type="Shader" uid="uid://dhylkvfkpaysc" path="res://assets/scripts/shaders/ui_blur.gdshader" id="2_jrjiw"]
 [ext_resource type="Texture2D" uid="uid://dw4q4o6g13c6q" path="res://assets/textures/ui/customization/db_customization_buttonicons.png" id="4_tuxjq"]
 [ext_resource type="FontFile" uid="uid://xmwjvmqspojb" path="res://assets/fonts/Grand_Aventure_Text.otf" id="8_1ugh4"]
+[ext_resource type="AudioStream" uid="uid://c20qx4vf2yvyx" path="res://assets/sounds/ui/customizationui/Hover_cabinet_1.wav" id="10_b24yg"]
+[ext_resource type="AudioStream" uid="uid://d2d4k2w8ysi1f" path="res://assets/sounds/ui/customizationui/Hover_cabinet_2.wav" id="11_8vuu3"]
+[ext_resource type="AudioStream" uid="uid://dqv5h6su5dpac" path="res://assets/sounds/ui/customizationui/Hover_cabinet_3.wav" id="12_tuxjq"]
+[ext_resource type="AudioStream" uid="uid://lkxt10d4mocr" path="res://assets/sounds/ui/customizationui/Hover_cabinet_4.wav" id="13_mv1bo"]
 [ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="16_b72eo"]
 [ext_resource type="AudioStream" uid="uid://cqe18pm85upwh" path="res://assets/sounds/clothingEquip/cequip1.wav" id="19_ftujg"]
 [ext_resource type="AudioStream" uid="uid://cpw3gvbo8plnb" path="res://assets/sounds/clothingEquip/cequip2.wav" id="20_7m2el"]
-[ext_resource type="AudioStream" uid="uid://bu2tsjdwp3sgi" path="res://assets/sounds/ui/menu/Menu hover_1.wav" id="20_d1uui"]
-[ext_resource type="AudioStream" uid="uid://drstgovlvl11k" path="res://assets/sounds/ui/menu/Menu hover_2.wav" id="21_0pj1c"]
 [ext_resource type="AudioStream" uid="uid://cpvk80t257gca" path="res://assets/sounds/clothingEquip/cequip3.wav" id="21_0w8tm"]
-[ext_resource type="AudioStream" uid="uid://bqnfn8cqigm0f" path="res://assets/sounds/ui/menu/Menu hover_3.wav" id="22_pw2jl"]
-[ext_resource type="AudioStream" uid="uid://cnowyc1nhuvfd" path="res://assets/sounds/ui/menu/Menu hover_4.wav" id="23_rps2f"]
 [ext_resource type="AudioStream" uid="uid://cr3ij4oofjpjd" path="res://assets/sounds/ui/menu/Menu_click_1.wav" id="24_u6yd3"]
 [ext_resource type="AudioStream" uid="uid://d3ivy7qafrxt8" path="res://assets/sounds/ui/menu/Menu_click_2.wav" id="25_fxfao"]
 [ext_resource type="AudioStream" uid="uid://b61ylgh6ym6my" path="res://assets/sounds/ui/menu/Menu_click_3.wav" id="26_2wpuy"]
@@ -263,10 +263,10 @@ stream_2/stream = ExtResource("21_0w8tm")
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_8jinp"]
 random_pitch = 1.1
 streams_count = 4
-stream_0/stream = ExtResource("20_d1uui")
-stream_1/stream = ExtResource("21_0pj1c")
-stream_2/stream = ExtResource("22_pw2jl")
-stream_3/stream = ExtResource("23_rps2f")
+stream_0/stream = ExtResource("10_b24yg")
+stream_1/stream = ExtResource("11_8vuu3")
+stream_2/stream = ExtResource("12_tuxjq")
+stream_3/stream = ExtResource("13_mv1bo")
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_83j6x"]
 streams_count = 4

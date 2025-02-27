@@ -26,7 +26,7 @@ func purchase_item()->void:
 						isPurchased = true
 						gameManager.world.add_child(_instancedItem)
 						_instancedItem.equipToPawn(gameManager.playerPawns[0])
-						gameManager.notifyCheck("Purchased %s!"%_instancedItem.objectName,4,5)
+						#gameManager.notifyCheck("Purchased %s!"%_instancedItem.objectName,4,5)
 						gameManager.playerPawns[0].pawnCash -= _instancedItem.weaponResource.displayData.gritPrice
 				else:
 					_instancedItem.queue_free()

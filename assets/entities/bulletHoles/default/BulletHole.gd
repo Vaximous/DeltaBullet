@@ -8,12 +8,12 @@ var bulletVelocity : Vector3
 @export var decal : Decal
 @export var particleArray : Array[GPUParticles3D]
 @export var soundArray : Array[AudioStreamPlayer3D]
-@export_range(0.0,1.0) var decalSize : float = 0.15:
+@export_range(0.001,1.0) var decalSize : float = 0.15:
 	set(value):
 		decalSize = value
 		if decal!=null:
 			decal.scale = Vector3(decalSize,decalSize,decalSize)
-@export_range(-80.00,80.00) var audioVolume : float = 0.15
+@export_range(-80,80) var audioVolume : float = 1
 const defaultTweenSpeed : float = 35
 const defaultTransitionType = Tween.TRANS_QUART
 const defaultEaseType = Tween.EASE_OUT
@@ -44,7 +44,8 @@ func initializeBulletHole()->void:
 	#Play the sounds
 	for sounds in soundArray:
 		#sounds.max_db = audioVolume
-		sounds.volume_db = linear_to_db(audioVolume)
+		#print(audioVolume)
+		sounds.volume_db = audioVolume
 		sounds.reparent(gameManager.world.worldMisc)
 		setSoundVariables(sounds)
 		#print(sounds.volume_db)

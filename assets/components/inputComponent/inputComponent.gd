@@ -52,9 +52,10 @@ func _process(_delta:float)->void:
 					if controllingPawn.currentItem:
 						if controllingPawn.currentItem.isAiming != false:
 							controllingPawn.currentItem.isAiming = false
-					controllingPawn.meshLookAt = false
+					if !controllingPawn.isArmingThrowable:
+						controllingPawn.meshLookAt = false
 					controllingPawn.canRun = true
-					if !controllingPawn.freeAim:
+					if !controllingPawn.freeAim and !controllingPawn.isArmingThrowable:
 						controllingPawn.freeAim = false
 
 			if Input.is_action_pressed("gLeftClick"):

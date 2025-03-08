@@ -25,7 +25,7 @@ var explosionTween : Tween
 
 func _ready() -> void:
 	if !Engine.is_editor_hint():
-		collisionShape.shape.radius = 0
+		collisionShape.shape.radius = 0.01
 
 
 func explosionRayCheck(object:Node3D):
@@ -71,7 +71,7 @@ func applyHit(object:Node3D):
 			object.hit(explosionDamage,dealer,-(global_position-object.global_position).normalized() * explosionImpulse,Vector3.ZERO)
 
 func explode()->void:
-	collisionShape.shape.radius = 0
+	collisionShape.shape.radius = 0.01
 	if explosionTween:
 		explosionTween.kill()
 	explosionTween = create_tween()

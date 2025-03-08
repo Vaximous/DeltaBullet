@@ -1085,6 +1085,8 @@ func throwThrowable()->void:
 		#heldThrowable.collisionShape.disabled = false
 		heldThrowable.reparent(gameManager.world.worldProps)
 		heldThrowable.freeze = false
+		heldThrowable.thrown.emit()
+		heldThrowable.isThrown = true
 		if is_instance_valid(attachedCam):
 			attachedCam.fireRecoil(0.0,0.0,0.8,true)
 			heldThrowable.global_position = neckBone.global_position

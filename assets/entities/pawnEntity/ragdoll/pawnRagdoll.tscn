@@ -1145,7 +1145,7 @@ bones/50/scale = Vector3(1, 1, 1)
 [node name="Male_LeftArm" type="MeshInstance3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D"]
 layers = 16
 lod_bias = 0.5
-visibility_range_end = 25.0
+visibility_range_end = 35.0
 visibility_range_end_margin = 1.0
 visibility_range_fade_mode = 1
 mesh = SubResource("ArrayMesh_ehsqa")
@@ -1154,7 +1154,7 @@ skin = SubResource("Skin_d4meq")
 [node name="Male_LeftFoot" type="MeshInstance3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D"]
 layers = 16
 lod_bias = 0.5
-visibility_range_end = 25.0
+visibility_range_end = 35.0
 visibility_range_end_margin = 1.0
 visibility_range_fade_mode = 1
 mesh = SubResource("ArrayMesh_3pudn")
@@ -1163,7 +1163,7 @@ skin = SubResource("Skin_d4meq")
 [node name="Male_LeftForearm" type="MeshInstance3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D"]
 layers = 16
 lod_bias = 0.5
-visibility_range_end = 25.0
+visibility_range_end = 35.0
 visibility_range_end_margin = 1.0
 visibility_range_fade_mode = 1
 mesh = SubResource("ArrayMesh_mkhh1")
@@ -1172,7 +1172,7 @@ skin = SubResource("Skin_d4meq")
 [node name="Male_LeftHand" type="MeshInstance3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D"]
 layers = 16
 lod_bias = 0.5
-visibility_range_end = 25.0
+visibility_range_end = 35.0
 visibility_range_end_margin = 1.0
 visibility_range_fade_mode = 1
 mesh = SubResource("ArrayMesh_j77s2")
@@ -1181,7 +1181,7 @@ skin = SubResource("Skin_d4meq")
 [node name="Male_LeftKnee" type="MeshInstance3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D"]
 layers = 16
 lod_bias = 0.5
-visibility_range_end = 25.0
+visibility_range_end = 35.0
 visibility_range_end_margin = 1.0
 visibility_range_fade_mode = 1
 mesh = SubResource("ArrayMesh_dbpog")
@@ -1190,7 +1190,7 @@ skin = SubResource("Skin_d4meq")
 [node name="Male_LeftThigh" type="MeshInstance3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D"]
 layers = 16
 lod_bias = 0.5
-visibility_range_end = 25.0
+visibility_range_end = 35.0
 visibility_range_end_margin = 1.0
 visibility_range_fade_mode = 1
 mesh = SubResource("ArrayMesh_wfr0v")
@@ -1199,7 +1199,7 @@ skin = SubResource("Skin_d4meq")
 [node name="Male_LowerBody" type="MeshInstance3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D"]
 layers = 16
 lod_bias = 0.5
-visibility_range_end = 25.0
+visibility_range_end = 35.0
 visibility_range_end_margin = 1.0
 visibility_range_fade_mode = 1
 mesh = SubResource("ArrayMesh_n2nil")
@@ -1208,7 +1208,7 @@ skin = SubResource("Skin_d4meq")
 [node name="Male_RightArm" type="MeshInstance3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D"]
 layers = 16
 lod_bias = 0.5
-visibility_range_end = 25.0
+visibility_range_end = 35.0
 visibility_range_end_margin = 1.0
 visibility_range_fade_mode = 1
 mesh = SubResource("ArrayMesh_kyoil")
@@ -1217,7 +1217,7 @@ skin = SubResource("Skin_d4meq")
 [node name="Male_RightFoot" type="MeshInstance3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D"]
 layers = 16
 lod_bias = 0.5
-visibility_range_end = 25.0
+visibility_range_end = 35.0
 visibility_range_end_margin = 1.0
 visibility_range_fade_mode = 1
 mesh = SubResource("ArrayMesh_wc3nn")
@@ -1226,7 +1226,7 @@ skin = SubResource("Skin_d4meq")
 [node name="Male_RightForearm" type="MeshInstance3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D"]
 layers = 16
 lod_bias = 0.5
-visibility_range_end = 25.0
+visibility_range_end = 35.0
 visibility_range_end_margin = 1.0
 visibility_range_fade_mode = 1
 mesh = SubResource("ArrayMesh_hcadd")
@@ -1235,7 +1235,7 @@ skin = SubResource("Skin_d4meq")
 [node name="Male_RightHand" type="MeshInstance3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D"]
 layers = 16
 lod_bias = 0.5
-visibility_range_end = 25.0
+visibility_range_end = 35.0
 visibility_range_end_margin = 1.0
 visibility_range_fade_mode = 1
 mesh = SubResource("ArrayMesh_one3e")
@@ -1244,7 +1244,7 @@ skin = SubResource("Skin_d4meq")
 [node name="Male_RightKnee" type="MeshInstance3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D"]
 layers = 16
 lod_bias = 0.5
-visibility_range_end = 25.0
+visibility_range_end = 35.0
 visibility_range_end_margin = 1.0
 visibility_range_fade_mode = 1
 mesh = SubResource("ArrayMesh_ix3ct")
@@ -1253,7 +1253,7 @@ skin = SubResource("Skin_d4meq")
 [node name="Male_RightThigh" type="MeshInstance3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D"]
 layers = 16
 lod_bias = 0.5
-visibility_range_end = 25.0
+visibility_range_end = 35.0
 visibility_range_end_margin = 1.0
 visibility_range_fade_mode = 1
 mesh = SubResource("ArrayMesh_h1nng")
@@ -1262,7 +1262,7 @@ skin = SubResource("Skin_d4meq")
 [node name="Male_Shoulders" type="MeshInstance3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D"]
 layers = 16
 lod_bias = 0.5
-visibility_range_end = 25.0
+visibility_range_end = 35.0
 visibility_range_end_margin = 1.0
 visibility_range_fade_mode = 1
 mesh = SubResource("ArrayMesh_0tbph")
@@ -1271,7 +1271,7 @@ skin = SubResource("Skin_d4meq")
 [node name="Male_UpperBody" type="MeshInstance3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D"]
 layers = 16
 lod_bias = 0.5
-visibility_range_end = 25.0
+visibility_range_end = 35.0
 visibility_range_end_margin = 1.0
 visibility_range_fade_mode = 1
 mesh = SubResource("ArrayMesh_rj71m")
@@ -1280,7 +1280,7 @@ skin = SubResource("Skin_d4meq")
 [node name="MaleHead" type="MeshInstance3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D"]
 layers = 16
 lod_bias = 0.5
-visibility_range_end = 25.0
+visibility_range_end = 35.0
 visibility_range_end_margin = 1.0
 visibility_range_fade_mode = 1
 mesh = ExtResource("7_aamms")
@@ -1291,8 +1291,7 @@ physics_interpolation_mode = 1
 
 [node name="Physical Bone Spine_0" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
 physics_interpolation_mode = 1
-transform = Transform3D(1, 2.42116e-07, -6.71153e-09, 4.03346e-11, -0.0278761, -0.999611, -2.42209e-07, 0.999611, -0.0278761, -0.00195313, 0.948701, -0.0942243)
-top_level = true
+transform = Transform3D(1, 6.73382e-08, -1.83751e-09, 4.03346e-11, -0.0278761, -0.999611, -6.73633e-08, 0.999611, -0.0278761, -0.00195311, 0.948701, -0.0942243)
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
@@ -1389,14 +1388,13 @@ health = 250.0
 
 [node name="Physical Bone Spine_1" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
 physics_interpolation_mode = 1
-transform = Transform3D(1, 2.30076e-07, 1.20368e-06, 1.1921e-06, 0.0450308, -0.998986, -2.84045e-07, 0.998986, 0.0450308, -0.00195312, 1.1215, -0.0969169)
-top_level = true
+transform = Transform3D(1, 5.54078e-08, 1.19581e-06, 1.1921e-06, 0.0450308, -0.998986, -1.092e-07, 0.998986, 0.0450308, -0.00195311, 1.1215, -0.0969169)
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
-joint_offset = Transform3D(-3.61999e-06, 0, 1, 0, 1, 0, -1, 0, -3.61999e-06, 0.000486048, -7.94224e-07, 0.103048)
+joint_offset = Transform3D(-3.61999e-06, 0, 1, 0, 1, 0, -1, 0, -3.61999e-06, 0.000486048, -8.09125e-07, 0.103048)
 joint_rotation = Vector3(0, 1.5708, 0)
-body_offset = Transform3D(1, -2.55657e-08, 1.05353e-06, 1.05353e-06, 1.15484e-07, -1, 2.55656e-08, 1, 1.15484e-07, -0.000486157, 0.103048, 7.82311e-07)
+body_offset = Transform3D(1, -2.55657e-08, 1.05353e-06, 1.05353e-06, 1.15484e-07, -1, 2.55656e-08, 1, 1.15484e-07, -0.000486157, 0.103048, 7.97212e-07)
 mass = 1.88
 friction = 0.85
 bounce = 0.5
@@ -1487,8 +1485,7 @@ health = 250.0
 
 [node name="Physical Bone Spine_2" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
 physics_interpolation_mode = 1
-transform = Transform3D(1, 1.9161e-07, 2.0225e-06, 1.99676e-06, 0.0907651, -0.995872, -3.74392e-07, 0.995872, 0.0907651, -0.00146711, 1.35583, -0.113533)
-top_level = true
+transform = Transform3D(1, 1.74866e-08, 2.00663e-06, 1.99676e-06, 0.0907651, -0.995872, -1.99546e-07, 0.995872, 0.0907651, -0.00146709, 1.35583, -0.113533)
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
@@ -1585,8 +1582,7 @@ health = 550.0
 
 [node name="Physical Bone L_UpperArm" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
 physics_interpolation_mode = 1
-transform = Transform3D(-0.0223745, 0.911734, -0.410172, 0.0496621, 0.410782, 0.91038, 0.998515, -7.29374e-07, -0.0544697, 0.17808, 1.33502, -0.144702)
-top_level = true
+transform = Transform3D(-0.0223747, 0.911734, -0.410172, 0.0496621, 0.410782, 0.91038, 0.998515, -5.69962e-07, -0.0544697, 0.17808, 1.33502, -0.144702)
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
@@ -1683,8 +1679,7 @@ health = 550.0
 
 [node name="Physical Bone L_Forearm" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
 physics_interpolation_mode = 1
-transform = Transform3D(-0.127091, 0.838414, -0.530009, 0.187233, 0.545014, 0.817254, 0.97406, 0.00463011, -0.226245, 0.301662, 1.11069, -0.107246)
-top_level = true
+transform = Transform3D(-0.127091, 0.838414, -0.530009, 0.187233, 0.545014, 0.817254, 0.97406, 0.00463025, -0.226245, 0.301662, 1.11069, -0.107246)
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
@@ -1782,8 +1777,7 @@ health = 550.0
 
 [node name="Physical Bone L_Hand" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
 physics_interpolation_mode = 1
-transform = Transform3D(0.805081, 0.524111, -0.277762, 0.576918, -0.583027, 0.572054, 0.137877, -0.620796, -0.771753, 0.38264, 0.97899, -0.0415716)
-top_level = true
+transform = Transform3D(0.805081, 0.524111, -0.277762, 0.576918, -0.583027, 0.572054, 0.137877, -0.620795, -0.771753, 0.38264, 0.97899, -0.0415715)
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
@@ -1881,14 +1875,13 @@ health = 550.0
 
 [node name="Physical Bone R_UpperArm" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
 physics_interpolation_mode = 1
-transform = Transform3D(-0.0223749, -0.911733, 0.410173, -0.0496621, 0.410783, 0.91038, -0.998515, -3.936e-07, -0.0544698, -0.188273, 1.32907, -0.143012)
-top_level = true
+transform = Transform3D(-0.0223747, -0.911733, 0.410173, -0.0496621, 0.410783, 0.91038, -0.998515, -5.53012e-07, -0.0544697, -0.188273, 1.32907, -0.143012)
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
 joint_offset = Transform3D(1, 0, 0, 0, 0.600978, 0.799265, 0, -0.799265, 0.600978, 1.70291e-06, 3.1502e-07, 0.12515)
 joint_rotation = Vector3(-0.926072, 0, 0)
-body_offset = Transform3D(1, 3.53877e-08, 8.56817e-08, 7.07805e-08, -1.45195e-06, -1, -3.57967e-08, 1, -1.56461e-06, -1.71363e-06, 0.12515, -1.19209e-07)
+body_offset = Transform3D(1, 3.53876e-08, 8.56817e-08, 7.07805e-08, -1.45195e-06, -1, -3.57967e-08, 1, -1.56461e-06, -1.71363e-06, 0.12515, -1.19209e-07)
 mass = 1.3
 friction = 0.15
 bounce = 0.25
@@ -1980,8 +1973,7 @@ health = 550.0
 
 [node name="Physical Bone R_Forearm" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
 physics_interpolation_mode = 1
-transform = Transform3D(-0.127093, -0.838414, 0.530009, -0.187231, 0.545014, 0.817254, -0.97406, 0.00463321, -0.226244, -0.307305, 1.11074, -0.107303)
-top_level = true
+transform = Transform3D(-0.127093, -0.838414, 0.530009, -0.187231, 0.545014, 0.817254, -0.97406, 0.00463306, -0.226244, -0.307305, 1.11074, -0.107303)
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
@@ -2079,8 +2071,7 @@ health = 550.0
 
 [node name="Physical Bone R_Hand" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
 physics_interpolation_mode = 1
-transform = Transform3D(0.83003, -0.51424, 0.215886, -0.532388, -0.615232, 0.581423, -0.166171, -0.597534, -0.784436, -0.385109, 0.979111, -0.0416234)
-top_level = true
+transform = Transform3D(0.83003, -0.51424, 0.215887, -0.532388, -0.615232, 0.581423, -0.166171, -0.597534, -0.784436, -0.385109, 0.979111, -0.0416234)
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
@@ -2177,8 +2168,7 @@ health = 550.0
 
 [node name="Physical Bone L_UpperLeg" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
 physics_interpolation_mode = 1
-transform = Transform3D(0.981452, -0.00314959, -0.191683, 0.191582, 0.0524232, 0.980076, 0.00696178, -0.99862, 0.0520543, 0.0862981, 0.680569, -0.106704)
-top_level = true
+transform = Transform3D(0.981452, -0.00314942, -0.191683, 0.191582, 0.0524232, 0.980076, 0.00696195, -0.99862, 0.0520542, 0.0862981, 0.680569, -0.106704)
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
@@ -2276,8 +2266,7 @@ health = 550.0
 
 [node name="Physical Bone L_LowerLeg" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
 physics_interpolation_mode = 1
-transform = Transform3D(0.990494, -0.000589495, -0.137552, 0.137317, 0.0627061, 0.98854, 0.00804257, -0.998032, 0.0621909, 0.152775, 0.283262, -0.129753)
-top_level = true
+transform = Transform3D(0.990494, -0.000589321, -0.137552, 0.137317, 0.0627061, 0.98854, 0.00804275, -0.998032, 0.0621909, 0.152775, 0.283262, -0.129753)
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
@@ -2375,8 +2364,7 @@ health = 550.0
 
 [node name="Physical Bone L_Foot" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
 physics_interpolation_mode = 1
-transform = Transform3D(-0.977137, 0.0799436, -0.197006, -0.0750996, 0.7371, 0.671598, 0.198903, 0.671038, -0.714244, 0.18972, 0.0526522, -0.108718)
-top_level = true
+transform = Transform3D(-0.977138, 0.0799435, -0.197006, -0.0750996, 0.7371, 0.671598, 0.198903, 0.671038, -0.714244, 0.18972, 0.0526522, -0.108718)
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
@@ -2473,8 +2461,7 @@ health = 550.0
 
 [node name="Physical Bone R_UpperLeg" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
 physics_interpolation_mode = 1
-transform = Transform3D(0.981452, 0.0031494, 0.19168, -0.19158, 0.0524231, 0.980076, -0.00696183, -0.99862, 0.0520541, -0.0919615, 0.680576, -0.106704)
-top_level = true
+transform = Transform3D(0.981452, 0.00314957, 0.19168, -0.19158, 0.0524231, 0.980076, -0.00696165, -0.99862, 0.0520541, -0.0919615, 0.680576, -0.106704)
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
@@ -2572,8 +2559,7 @@ health = 550.0
 
 [node name="Physical Bone R_LowerLeg" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
 physics_interpolation_mode = 1
-transform = Transform3D(0.990494, 0.000589113, 0.137552, -0.137318, 0.0627058, 0.98854, -0.00804295, -0.998032, 0.0621907, -0.158436, 0.283263, -0.129757)
-top_level = true
+transform = Transform3D(0.990494, 0.000589288, 0.137552, -0.137318, 0.0627058, 0.98854, -0.00804277, -0.998032, 0.0621907, -0.158436, 0.283263, -0.129757)
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
@@ -2671,8 +2657,7 @@ health = 550.0
 
 [node name="Physical Bone R_Foot" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
 physics_interpolation_mode = 1
-transform = Transform3D(-0.987933, -0.080835, 0.132117, 0.0307913, 0.733473, 0.679021, -0.151793, 0.674895, -0.722133, -0.192269, 0.0741513, -0.125248)
-top_level = true
+transform = Transform3D(-0.987933, -0.0808351, 0.132117, 0.0307913, 0.733473, 0.679021, -0.151793, 0.674895, -0.722133, -0.192269, 0.0741513, -0.125248)
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
@@ -2769,14 +2754,13 @@ health = 550.0
 
 [node name="Physical Bone Neck" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
 physics_interpolation_mode = 1
-transform = Transform3D(-1, -2.97776e-08, 1.45723e-07, -1.46368e-07, 0.0229553, -0.999737, 2.64246e-08, -0.999737, -0.0229553, -0.00146565, 1.52345, -0.123776)
-top_level = true
+transform = Transform3D(-1, 1.4639e-07, 1.484e-07, -1.46368e-07, 0.0137806, -0.999905, -1.48421e-07, -0.999905, -0.0137806, -0.00146563, 1.52345, -0.123776)
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
-joint_offset = Transform3D(1, 1.49012e-08, 4.44089e-16, -1.49012e-08, 1, 2.98023e-08, 1.00585e-21, -2.98023e-08, 1, 1.39269e-06, 0.000903394, 0.0362294)
+joint_offset = Transform3D(1, 1.49012e-08, 4.44089e-16, -1.49012e-08, 1, 2.98023e-08, 1.00585e-21, -2.98023e-08, 1, 1.39269e-06, 0.0012358, 0.0362196)
 joint_rotation = Vector3(-2.98023e-08, 4.44089e-16, -1.49012e-08)
-body_offset = Transform3D(-1, 2.2856e-07, 4.37581e-09, 8.71976e-10, 0.0229555, -0.999743, -2.28601e-07, -0.999742, -0.0229554, 1.39233e-06, 0.0361993, 0.00173482)
+body_offset = Transform3D(-1, 2.28591e-07, 2.27833e-09, 8.71976e-10, 0.0137807, -0.999911, -2.28601e-07, -0.99991, -0.0137807, 1.39233e-06, 0.0361993, 0.00173482)
 mass = 1.75
 friction = 0.05
 bounce = 0.45

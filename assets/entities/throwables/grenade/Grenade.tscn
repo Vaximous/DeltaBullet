@@ -12,6 +12,7 @@ itemName = "Grenade"
 canCook = true
 cookTime = 4.0
 throwableDamage = 100.0
+countdownVisual = true
 metadata/_custom_type_script = ExtResource("3_xdnty")
 
 [sub_resource type="SphereMesh" id="SphereMesh_c1g2t"]
@@ -46,7 +47,7 @@ shape = SubResource("SphereShape3D_xdnty")
 [node name="healthComponent" type="Node" parent="." index="3"]
 script = ExtResource("4_mwroi")
 health = 1.0
-metadata/_custom_type_script = ExtResource("4_mwroi")
+metadata/_custom_type_script = "uid://dd6my2ga34tq7"
 
 [node name="Hitbox" type="Area3D" parent="." index="4" node_paths=PackedStringArray("healthComponent")]
 collision_layer = 22
@@ -57,5 +58,13 @@ hitboxDamageMult = 5.2
 
 [node name="collisionShape3d" type="CollisionShape3D" parent="Hitbox" index="0"]
 shape = SubResource("SphereShape3D_60wi1")
+
+[node name="countdown" parent="." index="5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.200096)
+visible = true
+
+[node name="textureProgressBar" parent="countdown" index="0"]
+visible = true
+z_index = 1
 
 [connection signal="healthDepleted" from="healthComponent" to="." method="_on_health_component_health_depleted"]

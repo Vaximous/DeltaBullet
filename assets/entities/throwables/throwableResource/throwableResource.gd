@@ -9,3 +9,5 @@ extends Resource
 @export var cookTime : float = 5.0
 ##How much damage does this throwable do?
 @export var throwableDamage : float = 100.0
+##This will enable the visual indicator for the countdown, if its an explosive on a timer then this'd be helpful
+@export var countdownVisual : bool = false

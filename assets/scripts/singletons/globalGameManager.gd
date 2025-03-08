@@ -383,7 +383,7 @@ func playSound(stream,volume:float = 2.0,bus:StringName = &"UI")->void:
 	soundPlayer.stream = stream
 	#print(soundPlayer.stream)
 	soundPlayer.bus = bus
-	soundPlayer.volume_db = linear_to_db(volume)
+	soundPlayer.volume_db = volume
 	soundPlayer.playing = true
 	soundPlayer.play()
 
@@ -394,7 +394,7 @@ func playSound(stream,volume:float = 2.0,bus:StringName = &"UI")->void:
 		dupePlayer.stream = stream
 		#print(soundPlayer.stream)
 		dupePlayer.bus = bus
-		dupePlayer.volume_db = linear_to_db(volume)
+		dupePlayer.volume_db = volume
 		dupePlayer.playing = true
 		dupePlayer.play()
 

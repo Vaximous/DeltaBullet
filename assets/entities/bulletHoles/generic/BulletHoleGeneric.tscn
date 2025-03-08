@@ -125,7 +125,6 @@ bulletTextures = Array[Texture2D]([ExtResource("2_voo5d"), ExtResource("3_8a72t"
 particleArray = [NodePath("impactParticle"), NodePath("smokeParticle")]
 soundArray = [NodePath("dirtSounds")]
 decalSize = 0.055
-audioVolume = -1.0
 
 [node name="impactParticle" type="GPUParticles3D" parent="." index="0"]
 emitting = false

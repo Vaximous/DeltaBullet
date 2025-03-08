@@ -71,11 +71,11 @@ func on_ai_process(phys_delta : float, ai_delta : float):
 			#if aiOwner.pathingToPosition:
 				#aiOwner.pathingToPosition = false
 
-		if !aiOwner.pawnOwner.currentItem.isAiming:
+		if !aiOwner.pawnOwner.freeAim:
 			if !isSightToTargetBlocked():
-				aiOwner.pawnOwner.currentItem.isAiming = true
+				aiOwner.pawnOwner.freeAim = true
 			else:
-				aiOwner.pawnOwner.currentItem.isAiming = false
+				aiOwner.pawnOwner.freeAim = false
 			#aiOwner.pawnOwner.freeAim = true
 
 		aiOwner.pawnOwner.movementController.onSetCamRot(aiOwner.pawnOwner.meshRotation)

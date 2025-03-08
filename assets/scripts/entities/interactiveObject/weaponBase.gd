@@ -566,6 +566,8 @@ func setEquipVariables()->void:
 	else:
 		weaponOwner.equipSound.stream = preload("res://assets/sounds/weapons/genericEquip.tres")
 	weaponOwner.playEquipSound()
+	if weaponOwner.isPlayerPawn():
+		weaponOwner.attachedCam.hud.hideReloadProgress()
 	setWeaponRecoil()
 
 func setWeaponRecoil()->void:
@@ -580,6 +582,8 @@ func reloadWeapon()->void:
 		weaponRemoteStateLeft.stop()
 		if canReloadWeapon and !isReloading and weaponResource.canBeReloaded and isEquipped and !weaponOwner.isArmingThrowable and is_instance_valid(weaponResource):
 			reloadingStart.emit()
+			if weaponOwner.isPlayerPawn():
+				weaponOwner.attachedCam.hud.reloadProgressActivate(weaponResource.reloadTime)
 			var reloadTime = weaponResource.reloadTime
 			var firedShots = weaponResource.ammoSize - currentAmmo
 			weaponRemoteState.travel("reload")

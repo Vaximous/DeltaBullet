@@ -3,6 +3,7 @@ signal interactionunFound
 signal interactionFound
 @export_category("Hud")
 var vignetteTween : Tween
+var reloadTween : Tween
 const defaultTransitionType = Tween.TRANS_QUART
 const defaultEaseType = Tween.EASE_OUT
 var camOwner : PlayerCamera
@@ -13,6 +14,7 @@ var followEntity : Node3D:
 			if !followEntity.healthComponent.healthChanged.is_connected(hpCheck):
 				followEntity.healthComponent.healthChanged.connect(hpCheck.unbind(1))
 @onready var vignette : ColorRect = $vignette
+@onready var reloadProgress : TextureProgressBar = $Crosshair/reloadProgress
 @onready var gameNotifications : VBoxContainer = $marginContainer/control/gameNotifications
 @onready var questNotifHolder : MarginContainer = $questNotification
 @export var cam : Camera3D
@@ -85,7 +87,31 @@ func disableVignette()->void:
 	vignetteTween.parallel().tween_method(setVignetteColor,vignette.get_material().get_shader_parameter("color"),Color.TRANSPARENT,3).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
 	vignetteTween.parallel().tween_method(setVignetteSoftness,vignette.get_material().get_shader_parameter("softness"),5,2).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
 
+func showReloadProgress()->void:
+	if reloadTween:
+		reloadTween.kill()
+	reloadTween = create_tween()
+	reloadProgress.modulate = Color.TRANSPARENT
+	reloadProgress.show()
+	reloadTween.parallel().tween_property(reloadProgress,"modulate",Color.WHITE,0.25).set_trans(gameManager.defaultTransitionType).set_ease(gameManager.defaultEaseType)
 
+func hideReloadProgress()->void:
+	if reloadTween:
+		reloadTween.kill()
+	reloadTween = create_tween()
+	reloadProgress.show()
+	await reloadTween.parallel().tween_property(reloadProgress,"modulate",Color.TRANSPARENT,0.25).set_trans(gameManager.defaultTransitionType).set_ease(gameManager.defaultEaseType).finished
+	reloadProgress.hide()
+
+func reloadProgressActivate(time:float)->void:
+	if reloadTween:
+		reloadTween.kill()
+	reloadTween = create_tween()
+	reloadProgress.show()
+	reloadProgress.value = 0
+	reloadTween.parallel().tween_property(reloadProgress,"modulate",Color.WHITE,0.25).set_trans(gameManager.defaultTransitionType).set_ease(gameManager.defaultEaseType)
+	await reloadTween.parallel().tween_property(reloadProgress,"value",100,time).finished
+	hideReloadProgress()
 
 func flashColor(color:Color)->void:
 	if flashTween:

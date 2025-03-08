@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://1lm2jr6bfhx2"]
+[gd_scene load_steps=5 format=3 uid="uid://1lm2jr6bfhx2"]
 
 [ext_resource type="Script" uid="uid://d15dyf58sc0ql" path="res://assets/entities/throwables/throwableBase/throwable_base.gd" id="1_61ugi"]
+[ext_resource type="PackedScene" uid="uid://cbmy8aewv7g1w" path="res://assets/components/3Dto2Dcomponent/3Dto2DComponent.tscn" id="2_j8xwf"]
+[ext_resource type="Texture2D" uid="uid://d13uc5afdtwk3" path="res://assets/textures/ui/tempCircleProgress/progress-bar-frame.png" id="3_gh1sl"]
+[ext_resource type="Texture2D" uid="uid://b7ckmtn8agn8h" path="res://assets/textures/ui/tempCircleProgress/progress-bar-circle.png" id="4_4o3nq"]
 
 [node name="throwableBase" type="RigidBody3D"]
 collision_layer = 0
@@ -10,5 +13,22 @@ script = ExtResource("1_61ugi")
 [node name="throwableActivateTimer" type="Timer" parent="."]
 
 [node name="collisionShape3d" type="CollisionShape3D" parent="."]
+
+[node name="countdown" parent="." instance=ExtResource("2_j8xwf")]
+visible = false
+
+[node name="textureProgressBar" type="TextureProgressBar" parent="countdown"]
+visible = false
+offset_left = -65.0
+offset_top = -64.0
+offset_right = 63.0
+offset_bottom = 64.0
+scale = Vector2(0.57, 0.57)
+pivot_offset = Vector2(65, 65)
+step = 0.1
+value = 25.6
+fill_mode = 4
+texture_over = ExtResource("3_gh1sl")
+texture_progress = ExtResource("4_4o3nq")
 
 [connection signal="timeout" from="throwableActivateTimer" to="." method="activateThrowable"]

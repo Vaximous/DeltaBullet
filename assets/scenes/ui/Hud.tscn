@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://1d1rfqprpnrb"]
+[gd_scene load_steps=31 format=3 uid="uid://1d1rfqprpnrb"]
 
 [ext_resource type="Script" uid="uid://bqcb21u5nterd" path="res://assets/entities/camera/HUD.gd" id="1_on6xd"]
 [ext_resource type="FontFile" uid="uid://xmwjvmqspojb" path="res://assets/fonts/Grand_Aventure_Text.otf" id="2_tf7jg"]
@@ -75,6 +75,12 @@ func addTilt(tilt:float = 0.0)->void:
 	if dynamicCrosshair:
 		rotation += tilt
 "
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_5mxeu"]
+load_path = "res://.godot/imported/progress-bar-frame.png-591d7f5f3df325c0c895b43991d7ea2c.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_dux2x"]
+load_path = "res://.godot/imported/progress-bar-circle.png-9e8fc9f0c3a4cef2c063cf5953baecdb.ctex"
 
 [sub_resource type="Shader" id="Shader_1wy2d"]
 code = "shader_type canvas_item;
@@ -245,6 +251,29 @@ grow_vertical = 2
 pivot_offset = Vector2(36.255, 36.145)
 texture = ExtResource("4_uhc5s")
 script = SubResource("GDScript_quas3")
+
+[node name="reloadProgress" type="TextureProgressBar" parent="Crosshair"]
+visible = false
+z_index = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -65.0
+offset_top = -64.0
+offset_right = 63.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.75, 0.75)
+pivot_offset = Vector2(65, 65)
+step = 0.1
+value = 9.0
+fill_mode = 4
+texture_over = SubResource("CompressedTexture2D_5mxeu")
+texture_progress = SubResource("CompressedTexture2D_dux2x")
 
 [node name="stableCrosshair" type="TextureRect" parent="."]
 visible = false

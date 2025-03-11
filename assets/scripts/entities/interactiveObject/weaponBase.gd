@@ -389,8 +389,8 @@ func applyRecoil(raycaster:RayCast3D)->void:
 
 		#Apply Camera Recoil
 		if weaponOwner.get(&"attachedCam") is CharacterBody3D:
-			weaponOwner.attachedCam.camRecoilStrength = weaponResource.weaponRecoilStrengthAim
-			weaponOwner.attachedCam.applyWeaponSpreadEffect(weaponResource.weaponSpreadAim)
+			weaponOwner.attachedCam.camRecoilStrength = weaponResource.weaponRecoilStrength
+			weaponOwner.attachedCam.applyWeaponSpreadEffect(weaponResource.weaponSpread)
 
 
 

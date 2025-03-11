@@ -96,12 +96,13 @@ func showReloadProgress()->void:
 	reloadTween.parallel().tween_property(reloadProgress,"modulate",Color.WHITE,0.25).set_trans(gameManager.defaultTransitionType).set_ease(gameManager.defaultEaseType)
 
 func hideReloadProgress()->void:
-	if reloadTween:
-		reloadTween.kill()
-	reloadTween = create_tween()
-	reloadProgress.show()
-	await reloadTween.parallel().tween_property(reloadProgress,"modulate",Color.TRANSPARENT,0.25).set_trans(gameManager.defaultTransitionType).set_ease(gameManager.defaultEaseType).finished
-	reloadProgress.hide()
+	if reloadProgress.visible:
+		if reloadTween:
+			reloadTween.kill()
+		reloadTween = create_tween()
+		reloadProgress.show()
+		await reloadTween.parallel().tween_property(reloadProgress,"modulate",Color.TRANSPARENT,0.25).set_trans(gameManager.defaultTransitionType).set_ease(gameManager.defaultEaseType).finished
+		reloadProgress.hide()
 
 func reloadProgressActivate(time:float)->void:
 	if reloadTween:

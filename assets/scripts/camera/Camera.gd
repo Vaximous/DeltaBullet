@@ -355,7 +355,7 @@ func fireRecoil(setRecoilX:float = 0.0,setRecoilY:float = 0.0,setRecoilZ:float =
 
 func applyWeaponSpreadEffect(spread)->void:
 	#camCast.rotation += Vector3(randf_range(0.0, spread),randf_range(-spread, spread),0)
-	hud.getCrosshair().addSize(0.85)
+	hud.getCrosshair().addSize(0.05)
 	if UserConfig.game_crosshair_tilt:
 		hud.getCrosshair().addTilt(randf_range(-spread*7,spread*7))
 	#camCast.rotation = Vector3.ZERO
@@ -370,13 +370,13 @@ func emitKilleffect()->void:
 	fireRecoil(0,0,randf_range(20.8,21.2))
 	fireVignette(0.9,Color.DARK_RED)
 	hud.getCrosshair().tintCrosshair(Color.DARK_RED)
-	hud.getCrosshair().addSize(1.5)
+	#hud.getCrosshair().addSize(1.5)
 
 func doHeadshotEffect()->void:
 	if !headshotSound.is_playing():
 		headshotSound.play()
 	fireVignette(0.9,Color.RED)
-	hud.getCrosshair().addSize(1.9)
+	#hud.getCrosshair().addSize(1.9)
 	camera.fov += randf_range(4.0,5.0)
 
 func fireVignette(intensity:float = 0.9,color:Color = Color.DARK_RED)->void:

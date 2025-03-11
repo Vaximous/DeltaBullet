@@ -41,7 +41,7 @@ gradient = SubResource("Gradient_cbu73")
 gradient = SubResource("Gradient_cbu73")
 
 [sub_resource type="Curve" id="Curve_nx3pv"]
-max_value = 2.0
+_limits = [0.0, 2.0, 0.0, 1.0]
 _data = [Vector2(0, 0.131868), 0.0, 2.33233, 0, 0, Vector2(1, 0.0219779), -2.55396, 0.0, 0, 0]
 point_count = 2
 

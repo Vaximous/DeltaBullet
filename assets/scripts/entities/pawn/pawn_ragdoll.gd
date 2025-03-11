@@ -32,6 +32,8 @@ var physicsBones : Array[PhysicalBone3D]
 @export_category("Ragdoll")
 var savedPose :Array[Transform3D]
 @export_subgroup("Active Ragdoll")
+var totalMass : float
+var angularVelocity : Vector3
 @export var activeRagdollEnabled:bool = false
 @export var targetSkeleton : Skeleton3D
 @export_subgroup("Behavior")
@@ -68,6 +70,12 @@ func _ready()-> void:
 
 	#physicalBoneSimulator.ragdoll = self
 	checkClothingHider()
+
+	if activeRagdollEnabled:
+		for b in physicsBones:
+			totalMass += b.mass
+			b.createActiveRagdollJoint()
+
 
 func setBoneOwners()->void:
 	for pb in physicsBones:
@@ -126,9 +134,26 @@ func checkClothingHider()-> void:
 				true:
 					leftLowerLeg.hide()
 
-func hookes_law(displacement: Vector3, current_velocity: Vector3, stiffness: float, damping: float) -> Vector3:
-	return (stiffness * displacement) - (damping * current_velocity)
+func hookes_law(displacement: Vector3, velocity: Vector3, stiffness: float, damping: float) -> Vector3:
+# See: "https://en.wikipedia.org/wiki/Hooke's_law"
+	var dis: = displacement * stiffness
+	var vel: = velocity * damping
+	return dis - vel
 
+func _physics_process(delta: float) -> void:
+	if activeRagdollEnabled:
+		var totalAngleVelocity : = Vector3.ZERO
+
+		for b in physicsBones:
+			if is_instance_valid(b):
+				totalAngleVelocity += b.angular_velocity * b.mass
+				angularVelocity = totalAngleVelocity / totalMass
+
+		for b in physicsBones:
+			if is_instance_valid(b):
+				b.angular_velocity = angularVelocity
+				if is_instance_valid(b.activeRagdollJoint):
+					animate_bone_by_joint_motor(b,b.activeRagdollJoint,delta,200,0.01)
 
 func _on_remove_timer_timeout()-> void:
 	queue_free()
@@ -168,6 +193,51 @@ func moveClothesToRagdoll(pawn:BasePawn) -> void:
 			clothes.remapSkeleton()
 		return
 
+func animate_bone_by_joint_motor(bone: PhysicalBone3D, joint: Generic6DOFJoint3D, delta: float, stiffness: float, damping: float) -> void:
+	# Get local-space quaternion rotations of bone to it's "joint parent" bone.
+	# NOTE: Here we assume that `bone` is the same as `joint.node_b`, with `node_a` being the 'parent' bone.
+	var joint_parent_bone: PhysicalBone3D = bone.findPhysicsBone(ragdollSkeleton.get_bone_parent(bone.get_bone_id()))
+	var joint_parent_quat: = joint_parent_bone.global_basis.get_rotation_quaternion()
+	var bone_current_global_quat: = bone.global_basis.get_rotation_quaternion()
+	var bone_current_local_quat: = joint_parent_quat.inverse() * bone_current_global_quat
+	var bone_target_local_quat: = targetSkeleton.get_bone_pose_rotation(bone.get_bone_id())
+
+	# Get rotational difference between current and animated poses (relative to bone).
+	# NOTE: We assume that the `joint` is at bone's origin and has no relative rotation.
+	var diff: = bone_target_local_quat.inverse() * bone_current_local_quat
+	var axis: = diff.get_axis()
+	var angle: = diff.get_angle()
+	if angle > PI: angle -= TAU
+	if axis.is_finite():
+		var target_vel: = axis.normalized() * (angle / delta)
+		var current_vel: = bone_current_global_quat.inverse() * bone.angular_velocity
+		target_vel = hookes_law(target_vel, current_vel, stiffness, damping)
+		joint.set_param_x(Generic6DOFJoint3D.PARAM_ANGULAR_MOTOR_TARGET_VELOCITY, target_vel.x)
+		joint.set_param_y(Generic6DOFJoint3D.PARAM_ANGULAR_MOTOR_TARGET_VELOCITY, target_vel.y)
+		joint.set_param_z(Generic6DOFJoint3D.PARAM_ANGULAR_MOTOR_TARGET_VELOCITY, target_vel.z)
+	else:
+		joint.set_param_x(Generic6DOFJoint3D.PARAM_ANGULAR_MOTOR_TARGET_VELOCITY, 0.0)
+		joint.set_param_y(Generic6DOFJoint3D.PARAM_ANGULAR_MOTOR_TARGET_VELOCITY, 0.0)
+		joint.set_param_z(Generic6DOFJoint3D.PARAM_ANGULAR_MOTOR_TARGET_VELOCITY, 0.0)
+
+func animate_bone_by_angular_velocity(bone: PhysicalBone3D, delta: float) -> void:
+	# Get world-space quaternion rotations of bone and animation target.
+	var bone_id: = bone.get_bone_id()
+	var skeleton_quat: = ragdollSkeleton.global_basis.get_rotation_quaternion()
+	var bone_target_pose: = targetSkeleton.get_bone_global_pose(bone_id)
+	var bone_target_quat: = skeleton_quat * bone_target_pose.basis.get_rotation_quaternion()
+	var bone_current_quat: = bone.global_basis.get_rotation_quaternion()
+
+	# Set rotational difference to bone's angular velocity.
+	# NOTE: If you reset the bone's angular velocity BEFORE then ADD velocity instead.
+	var diff_quat: = bone_target_quat * bone_current_quat.inverse()
+	var axis: = diff_quat.get_axis()
+	var angle: = diff_quat.get_angle()
+	if angle > PI: angle -= TAU
+	if axis.is_finite():
+		bone.angular_velocity = axis.normalized() * (angle / delta)
+	else:
+		bone.angular_velocity = Vector3.ZERO
 
 func setRagdollPose(pawn:BasePawn)->void:
 	for bones in ragdollSkeleton.get_bone_count():

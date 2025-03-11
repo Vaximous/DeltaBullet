@@ -290,6 +290,21 @@ _data = {
 &"reload": ExtResource("12_12yrj")
 }
 
+[sub_resource type="Animation" id="Animation_snnw3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Mesh/Group002:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.628842, 0, 6.83556e-09)]
+}
+
 [sub_resource type="Animation" id="Animation_yfvii"]
 resource_name = "fire"
 length = 0.3075
@@ -304,21 +319,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(0.203063, 1),
 "update": 0,
 "values": [Vector3(-0.566758, 0, 4.12175e-09), Vector3(-0.472463, 0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_snnw3"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("../Mesh/Group002:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(-0.628842, 0, 6.83556e-09)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_q5jtw"]
@@ -421,4 +421,4 @@ libraries = {
 stream = SubResource("AudioStreamRandomizer_2oysb")
 
 [connection signal="shot_fired" from="." to="audioStreamPlayer3d" method="play"]
-[connection signal="shot_fired" from="." to="AnimationPlayer/weaponAnim" method="play" binds= [&"fire"]]
+[connection signal="shot_fired" from="." to="." method="playWeaponAnimation" binds= [&"weaponAnim", &"fire"]]

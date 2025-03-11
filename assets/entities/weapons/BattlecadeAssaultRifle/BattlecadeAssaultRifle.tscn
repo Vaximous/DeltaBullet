@@ -248,6 +248,6 @@ attenuation_filter_db = 0.0
 stream = SubResource("AudioStreamRandomizer_xtq4g")
 pitch_scale = 1.69
 
-[connection signal="reloadingStart" from="." to="AnimationPlayer/weaponAnimations" method="play" binds= [&"reload"]]
+[connection signal="reloadingStart" from="." to="." method="playWeaponAnimation" binds= [&"weaponAnimations", &"reload"]]
 [connection signal="shot_fired" from="." to="shot" method="play"]
-[connection signal="shot_fired" from="." to="AnimationPlayer/weaponAnimations" method="play_section" binds= [&"fire", 0.0]]
+[connection signal="shot_fired" from="." to="." method="playWeaponAnimation" binds= [&"weaponAnimations", &"fire"]]

@@ -33,7 +33,7 @@ linear_damp = 1.2
 angular_damp = 3.0
 script = ExtResource("2_xwxxe")
 explosionRadius = 5.0
-explosionImpulse = 35.0
+explosionImpulse = 15.0
 healthComponent = NodePath("healthComponent")
 throwableResource = SubResource("Resource_q2uit")
 

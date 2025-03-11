@@ -253,8 +253,8 @@ func fire()->void:
 				weaponOwner.attachedCam.camera.fov += weaponResource.fovShotAmount
 			weaponOwner.attachedCam.fireRecoil(0.0,0.0,0.0,false)
 
+		currentAmmo -= weaponResource.ammoConsumption
 		for b in weaponResource.weaponShots:
-			currentAmmo -= weaponResource.ammoConsumption
 			#var bullet = createMuzzle()
 			#if weaponResource.weaponShots > 1:
 				##randomize the muzzle pos?
@@ -612,6 +612,14 @@ func reloadWeapon()->void:
 func checkFreeAim()->void:
 	if weaponOwner:
 		isFreeAiming = weaponOwner.freeAim
+
+func playWeaponAnimation(animatorNode:String,animationName:StringName)->void:
+	var wepAnimator : AnimationPlayer = animationPlayer.get_node(animatorNode)
+	wepAnimator.play(animationName)
+	if wepAnimator.is_playing():
+		wepAnimator.stop()
+		wepAnimator.seek(0.0,true)
+		wepAnimator.play(animationName)
 
 func playAimSound()->void:
 	if !%aimSound.playing and weaponRemoteState.get_current_node() == "idle":

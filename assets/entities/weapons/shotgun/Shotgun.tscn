@@ -1,0 +1,307 @@
+[gd_scene load_steps=65 format=3 uid="uid://bporbvksq0guk"]
+
+[ext_resource type="PackedScene" uid="uid://cpd5r8bmx2885" path="res://assets/entities/weapons/weaponBase.tscn" id="1_0fsk8"]
+[ext_resource type="Script" uid="uid://bfvbiknnwdu6i" path="res://assets/resources/customResources/weaponDisplayData/weaponDisplayData.gd" id="2_itg47"]
+[ext_resource type="PackedScene" uid="uid://dofw2d7ywfhuj" path="res://assets/models/weapons/shotgun/ShotgunModelRemake.gltf" id="2_knrn7"]
+[ext_resource type="Animation" uid="uid://br570qqsgqjn2" path="res://assets/animations/pawn/shotgunAim.res" id="3_ktcep"]
+[ext_resource type="AudioStream" uid="uid://brxvjv4isdmvu" path="res://assets/sounds/weapons/m4/m4_draw_1.wav" id="3_u8p3u"]
+[ext_resource type="Script" uid="uid://b6r8ewrq3qb3y" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="3_ygwk7"]
+[ext_resource type="Animation" uid="uid://ddw580uybuefv" path="res://assets/animations/pawn/shotgunFire.res" id="4_den26"]
+[ext_resource type="PackedScene" uid="uid://bvvxnmgamquay" path="res://assets/entities/muzzleFlashes/muzzles/flash1.tscn" id="4_k1gaq"]
+[ext_resource type="AudioStream" uid="uid://cyxfip8hwv23f" path="res://assets/sounds/weapons/m4/m4_draw_2.wav" id="4_lwauh"]
+[ext_resource type="AudioStream" uid="uid://74p6gclkalsk" path="res://assets/sounds/weapons/m4/m4_draw_3.wav" id="5_kgmay"]
+[ext_resource type="Animation" uid="uid://be53w68fsr0ii" path="res://assets/animations/pawn/shotgunIdle.res" id="5_oa30s"]
+[ext_resource type="AudioStream" uid="uid://c85mepdrdblyy" path="res://assets/sounds/weapons/m4/m4_draw_4.wav" id="6_dihwv"]
+[ext_resource type="Texture2D" uid="uid://dreu5hrqw1l7u" path="res://assets/textures/crosshair/crosshair066.png" id="7_lwauh"]
+[ext_resource type="AudioStream" uid="uid://cqqb2fcen14sv" path="res://assets/sounds/weapons/aimSound/m4_lockin_1.wav" id="8_0s4ct"]
+[ext_resource type="Animation" uid="uid://c0a5ijqwnb6ca" path="res://assets/entities/weapons/shotgun/shotgunFire.res" id="9_k1gaq"]
+[ext_resource type="AudioStream" uid="uid://c1ha0spgsursu" path="res://assets/sounds/weapons/aimSound/m4_lockin_2.wav" id="9_rbujw"]
+[ext_resource type="AudioStream" uid="uid://ukbh6rvxex23" path="res://assets/sounds/weapons/aimSound/m4_lockin_3.wav" id="10_wgu5u"]
+[ext_resource type="AudioStream" uid="uid://crp72lydvug63" path="res://assets/sounds/weapons/aimSound/m4_lockin_4.wav" id="11_k1gaq"]
+[ext_resource type="AudioStream" uid="uid://cckr5sjhu2bne" path="res://assets/sounds/weapons/shotgun/shotgunFire1.wav" id="13_wgu5u"]
+[ext_resource type="AudioStream" uid="uid://bsdw6vyxe4u1o" path="res://assets/sounds/weapons/shotgun/shotgunFire2.wav" id="14_k1gaq"]
+[ext_resource type="AudioStream" uid="uid://buoo6bg3q0e7a" path="res://assets/sounds/weapons/shotgun/shotgunFire3.wav" id="15_0wivs"]
+
+[sub_resource type="Resource" id="Resource_0wivs"]
+script = ExtResource("2_itg47")
+saleCategory = 2
+gritPrice = 0
+itemDescriptionShort = "The mothafuckin' Breadstick.."
+itemDescriptionLong = "\"The Breadstick\" as we call it is a high powered shotgun that will obliterate anything that's in front of the muzzle, do NOT get close to the front of this thing unless you want a second asshole."
+damage = 0.56
+fireRate = 0.15
+penetration = 0.25
+metadata/_custom_type_script = "uid://bfvbiknnwdu6i"
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_16b2g"]
+random_pitch = 1.1
+streams_count = 4
+stream_0/stream = ExtResource("3_u8p3u")
+stream_1/stream = ExtResource("4_lwauh")
+stream_2/stream = ExtResource("5_kgmay")
+stream_3/stream = ExtResource("6_dihwv")
+
+[sub_resource type="Resource" id="Resource_vy7wp"]
+script = ExtResource("3_ygwk7")
+useBulletTrail = true
+displayData = SubResource("Resource_0wivs")
+canBeReloaded = true
+weaponMagSize = 128
+ammoSize = 8
+reloadTime = 0.8
+headDismember = true
+weaponDamage = 55.0
+weaponFireRate = 1.2
+bulletSpeed = 800.0
+bulletPenetration = 1.0
+weaponImpulse = 65.0
+weaponShots = 5
+ammoConsumption = 1
+useCustomCrosshairSize = true
+crosshairSizeOverride = Vector2(0.5, 0.5)
+forcedCrosshair = ExtResource("7_lwauh")
+useFOV = false
+fovShotAmount = 1.5
+weaponRecoil = Vector3(15, 10, 3.25)
+weaponRecoilStrength = 15.0
+weaponSpread = 0.09
+weaponRecoilStrengthAim = 10.0
+weaponSpreadAim = 0.05
+leftHandParent = false
+rightHandParent = true
+useWeaponSprintAnim = false
+useLeftHandIdle = true
+useRightHandIdle = true
+useLeftHandAiming = true
+useRightHandAiming = true
+useLeftHandFreeAiming = true
+useRightHandFreeAiming = true
+weaponPositionOffset = Vector3(-0.065, -0.32, 0.025)
+weaponRotationOffset = Vector3(-0.287979, -1.71042, -1.39626)
+equipStream = SubResource("AudioStreamRandomizer_16b2g")
+bulletColor = Color(1, 1, 0, 1)
+metadata/_custom_type_script = "uid://b6r8ewrq3qb3y"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_itg47"]
+size = Vector3(1.14345, 0.201904, 0.0509796)
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ybwpt"]
+animation = &"weaponAnims/aim"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_j08dw"]
+animation = &"weaponAnims/fire"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_u51jk"]
+animation = &"weaponAnims/idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_hie0f"]
+animation = &"weaponAnims/reload"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fvckn"]
+animation = &"WeaponAnims/sprint"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_syl42"]
+animation = &"WeaponAnims/unequip"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_5ul8h"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_gga4p"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_7mtao"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_sftbu"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_2yi56"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_mh4se"]
+xfade_time = 0.05
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_7n2o2"]
+xfade_time = 0.03
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_va47p"]
+xfade_time = 0.08
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="Curve" id="Curve_udpny"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.992064, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_umbs7"]
+xfade_time = 0.08
+xfade_curve = SubResource("Curve_udpny")
+
+[sub_resource type="Curve" id="Curve_w25qq"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 1.4, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_3kfwd"]
+xfade_time = 0.2
+xfade_curve = SubResource("Curve_w25qq")
+
+[sub_resource type="Curve" id="Curve_dxord"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 1.4, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_hxj8i"]
+xfade_time = 0.2
+xfade_curve = SubResource("Curve_dxord")
+
+[sub_resource type="Curve" id="Curve_ay6mx"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 1.4, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_dxord"]
+xfade_time = 0.2
+xfade_curve = SubResource("Curve_ay6mx")
+
+[sub_resource type="Curve" id="Curve_5pyd6"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 1.4, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ay6mx"]
+xfade_time = 0.2
+xfade_curve = SubResource("Curve_5pyd6")
+
+[sub_resource type="Curve" id="Curve_vefcy"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 1.4, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_5pyd6"]
+xfade_time = 0.2
+xfade_curve = SubResource("Curve_vefcy")
+
+[sub_resource type="Curve" id="Curve_s6m7r"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 1.4, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_vefcy"]
+xfade_time = 0.2
+xfade_curve = SubResource("Curve_s6m7r")
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_q1np0"]
+states/End/position = Vector2(1041, 100)
+states/aim/node = SubResource("AnimationNodeAnimation_ybwpt")
+states/aim/position = Vector2(619, 191)
+states/fire/node = SubResource("AnimationNodeAnimation_j08dw")
+states/fire/position = Vector2(619, 302)
+states/idle/node = SubResource("AnimationNodeAnimation_u51jk")
+states/idle/position = Vector2(619, 100)
+states/reload/node = SubResource("AnimationNodeAnimation_hie0f")
+states/reload/position = Vector2(815, 183)
+states/sprint/node = SubResource("AnimationNodeAnimation_fvckn")
+states/sprint/position = Vector2(619, -13)
+states/unequip/node = SubResource("AnimationNodeAnimation_syl42")
+states/unequip/position = Vector2(843, 100)
+transitions = ["sprint", "idle", SubResource("AnimationNodeStateMachineTransition_5ul8h"), "idle", "sprint", SubResource("AnimationNodeStateMachineTransition_gga4p"), "idle", "unequip", SubResource("AnimationNodeStateMachineTransition_7mtao"), "unequip", "End", SubResource("AnimationNodeStateMachineTransition_sftbu"), "Start", "idle", SubResource("AnimationNodeStateMachineTransition_2yi56"), "idle", "aim", SubResource("AnimationNodeStateMachineTransition_mh4se"), "aim", "fire", SubResource("AnimationNodeStateMachineTransition_7n2o2"), "fire", "aim", SubResource("AnimationNodeStateMachineTransition_va47p"), "aim", "idle", SubResource("AnimationNodeStateMachineTransition_umbs7"), "idle", "reload", SubResource("AnimationNodeStateMachineTransition_3kfwd"), "reload", "idle", SubResource("AnimationNodeStateMachineTransition_hxj8i"), "aim", "reload", SubResource("AnimationNodeStateMachineTransition_dxord"), "reload", "aim", SubResource("AnimationNodeStateMachineTransition_ay6mx"), "fire", "reload", SubResource("AnimationNodeStateMachineTransition_5pyd6"), "reload", "fire", SubResource("AnimationNodeStateMachineTransition_vefcy")]
+graph_offset = Vector2(47, 68)
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_uy32p"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_0fsk8"]
+resource_name = "shotgunAnimation"
+graph_offset = Vector2(-418, 16)
+nodes/output/position = Vector2(380, 140)
+nodes/weaponState/node = SubResource("AnimationNodeStateMachine_q1np0")
+nodes/weaponState/position = Vector2(-180, 120)
+nodes/weaponStateSpeed/node = SubResource("AnimationNodeTimeScale_uy32p")
+nodes/weaponStateSpeed/position = Vector2(80, 100)
+node_connections = [&"output", 0, &"weaponStateSpeed", &"weaponStateSpeed", 0, &"weaponState"]
+
+[sub_resource type="Animation" id="Animation_j0w07"]
+resource_name = "new_animation"
+
+[sub_resource type="Animation" id="Animation_itg47"]
+
+[sub_resource type="Animation" id="Animation_ygwk7"]
+
+[sub_resource type="Animation" id="Animation_0s4ct"]
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rbujw"]
+_data = {
+&"aim": ExtResource("3_ktcep"),
+&"equip": SubResource("Animation_j0w07"),
+&"fire": ExtResource("4_den26"),
+&"idle": ExtResource("5_oa30s"),
+&"reload": SubResource("Animation_itg47"),
+&"sprint": SubResource("Animation_ygwk7"),
+&"unequip": SubResource("Animation_0s4ct")
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0wivs"]
+_data = {
+&"fire": ExtResource("9_k1gaq")
+}
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_cv6fd"]
+random_pitch = 1.05
+streams_count = 4
+stream_0/stream = ExtResource("8_0s4ct")
+stream_1/stream = ExtResource("9_rbujw")
+stream_2/stream = ExtResource("10_wgu5u")
+stream_3/stream = ExtResource("11_k1gaq")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_vy7wp"]
+random_pitch = 1.08
+streams_count = 3
+stream_0/stream = ExtResource("13_wgu5u")
+stream_1/stream = ExtResource("14_k1gaq")
+stream_2/stream = ExtResource("15_0wivs")
+
+[node name="Shotgun" node_paths=PackedStringArray("weaponMesh", "ejectionPoint", "muzzlePoint") instance=ExtResource("1_0fsk8")]
+weaponMesh = NodePath("ShotgunModelRemake")
+weaponResource = SubResource("Resource_vy7wp")
+ejectionPoint = NodePath("ShotgunModelRemake/shotgunSkel/Skeleton3D/eject")
+muzzlePoint = NodePath("ShotgunModelRemake/shotgunSkel/Skeleton3D/muzzle")
+muzzleFlashes = Array[PackedScene]([ExtResource("4_k1gaq")])
+objectName = "The Breadstick"
+
+[node name="ShotgunModelRemake" parent="." index="0" instance=ExtResource("2_knrn7")]
+transform = Transform3D(0.065, 0, 0, 0, 0.065, 0, 0, 0, 0.065, 0, 0, 0)
+
+[node name="Skeleton3D" parent="ShotgunModelRemake/shotgunSkel" index="0"]
+bones/1/position = Vector3(7.344, 0.307, -0.042)
+
+[node name="muzzle" type="Marker3D" parent="ShotgunModelRemake/shotgunSkel/Skeleton3D" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.2503, 0.891331, 0.710402)
+
+[node name="eject" type="Marker3D" parent="ShotgunModelRemake/shotgunSkel/Skeleton3D" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.36074, 0.830486, 1.02182)
+
+[node name="collisionObject" parent="." index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00215911, -0.00476074, -0.00305938)
+shape = SubResource("BoxShape3D_itg47")
+
+[node name="AnimationTree" parent="." index="2"]
+tree_root = SubResource("AnimationNodeBlendTree_0fsk8")
+parameters/weaponStateSpeed/scale = 1.0
+
+[node name="AnimationPlayer" parent="." index="3"]
+libraries = {
+&"weaponAnims": SubResource("AnimationLibrary_rbujw")
+}
+
+[node name="weaponPlayer" type="AnimationPlayer" parent="AnimationPlayer" index="0"]
+root_node = NodePath("../../ShotgunModelRemake/shotgunSkel")
+libraries = {
+&"": SubResource("AnimationLibrary_0wivs")
+}
+
+[node name="aimSound" parent="." index="6"]
+stream = SubResource("AudioStreamRandomizer_cv6fd")
+
+[node name="fireSound" type="AudioStreamPlayer3D" parent="." index="7"]
+stream = SubResource("AudioStreamRandomizer_vy7wp")
+max_polyphony = 5
+bus = &"Sounds"
+attenuation_filter_cutoff_hz = 20500.0
+
+[connection signal="shot_fired" from="." to="fireSound" method="play"]
+[connection signal="shot_fired" from="." to="." method="playWeaponAnimation" binds= [&"weaponPlayer", &"fire"]]
+
+[editable path="ShotgunModelRemake"]

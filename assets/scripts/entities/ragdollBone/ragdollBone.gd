@@ -32,8 +32,8 @@ var boneState:bool:
 var whirrSound : bool = false
 var canBleed : bool = false
 var hasBled : bool = false
-@export var activeRagdollBone : bool = true
-@export var activeRagdollForce = 1
+#@export var activeRagdollBone : bool = true
+#@export var activeRagdollForce = 1
 @export_subgroup("Impact Hits")
 @export var canBeDismembered : bool = false
 @export var hardImpactEffectEnabled : bool = true
@@ -253,13 +253,13 @@ func createActiveRagdollJoint()->void:
 		activeRagJoint.set_flag_x(Generic6DOFJoint3D.FLAG_ENABLE_MOTOR, true)
 		activeRagJoint.set_flag_y(Generic6DOFJoint3D.FLAG_ENABLE_MOTOR, true)
 		activeRagJoint.set_flag_z(Generic6DOFJoint3D.FLAG_ENABLE_MOTOR, true)
-		if joint_type == PhysicalBone3D.JOINT_TYPE_6DOF:
-			activeRagJoint.set_param_x(Generic6DOFJoint3D.PARAM_ANGULAR_UPPER_LIMIT,findPhysicsBone(boneParent).get("joint_constraints/x/angular_limit_upper"))
-			activeRagJoint.set_param_x(Generic6DOFJoint3D.PARAM_ANGULAR_LOWER_LIMIT,findPhysicsBone(boneParent).get("joint_constraints/x/angular_limit_lower"))
-			activeRagJoint.set_param_y(Generic6DOFJoint3D.PARAM_ANGULAR_UPPER_LIMIT,findPhysicsBone(boneParent).get("joint_constraints/y/angular_limit_upper"))
-			activeRagJoint.set_param_y(Generic6DOFJoint3D.PARAM_ANGULAR_LOWER_LIMIT,findPhysicsBone(boneParent).get("joint_constraints/y/angular_limit_lower"))
-			activeRagJoint.set_param_z(Generic6DOFJoint3D.PARAM_ANGULAR_UPPER_LIMIT,findPhysicsBone(boneParent).get("joint_constraints/z/angular_limit_upper"))
-			activeRagJoint.set_param_z(Generic6DOFJoint3D.PARAM_ANGULAR_LOWER_LIMIT,findPhysicsBone(boneParent).get("joint_constraints/z/angular_limit_lower"))
+		#if joint_type == PhysicalBone3D.JOINT_TYPE_6DOF:
+			#activeRagJoint.set_param_x(Generic6DOFJoint3D.PARAM_ANGULAR_UPPER_LIMIT,findPhysicsBone(boneParent).get("joint_constraints/x/angular_limit_upper"))
+			#activeRagJoint.set_param_x(Generic6DOFJoint3D.PARAM_ANGULAR_LOWER_LIMIT,findPhysicsBone(boneParent).get("joint_constraints/x/angular_limit_lower"))
+			#activeRagJoint.set_param_y(Generic6DOFJoint3D.PARAM_ANGULAR_UPPER_LIMIT,findPhysicsBone(boneParent).get("joint_constraints/y/angular_limit_upper"))
+			#activeRagJoint.set_param_y(Generic6DOFJoint3D.PARAM_ANGULAR_LOWER_LIMIT,findPhysicsBone(boneParent).get("joint_constraints/y/angular_limit_lower"))
+			#activeRagJoint.set_param_z(Generic6DOFJoint3D.PARAM_ANGULAR_UPPER_LIMIT,findPhysicsBone(boneParent).get("joint_constraints/z/angular_limit_upper"))
+			#activeRagJoint.set_param_z(Generic6DOFJoint3D.PARAM_ANGULAR_LOWER_LIMIT,findPhysicsBone(boneParent).get("joint_constraints/z/angular_limit_lower"))
 		#joint_type = PhysicalBone3D.JOINT_TYPE_NONE
 		activeRagJoint.name = "AR_%s"%ownerSkeleton.get_bone_name(get_bone_id())
 		activeRagdollJoint = activeRagJoint
@@ -309,8 +309,8 @@ func doBleed()->void:
 		hasBled = true
 
 
-func doActiveRagdoll(value:bool)->void:
-	if get_owner().targetSkeleton != null:
-		var boneTarget = get_owner().targetSkeleton.global_transform * get_owner().targetSkeleton.get_bone_global_pose(get_bone_id())
-		var boneTargetRotation = get_owner().targetSkeleton.quaternion * get_owner().targetSkeleton.get_bone_pose_rotation(get_bone_id())
-		print("%s Rotation : %s"%[name,boneTargetRotation])
+#func doActiveRagdoll(value:bool)->void:
+	#if get_owner().targetSkeleton != null:
+		#var boneTarget = get_owner().targetSkeleton.global_transform * get_owner().targetSkeleton.get_bone_global_pose(get_bone_id())
+		#var boneTargetRotation = get_owner().targetSkeleton.quaternion * get_owner().targetSkeleton.get_bone_pose_rotation(get_bone_id())
+		#print("%s Rotation : %s"%[name,boneTargetRotation])

@@ -33,6 +33,7 @@ stream_1/stream = ExtResource("3_7jnid")
 
 [sub_resource type="Resource" id="Resource_vjbvd"]
 script = ExtResource("2_mvtic")
+worldEditable = false
 worldName = "Active Ragdoll Testing"
 worldDescription = "You're not supposed to be here.."
 worldLoadingTexture = ExtResource("5_6wdlm")
@@ -357,6 +358,7 @@ enable_shadows = true
 
 [node name="directionalLight3d" parent="Environment" index="2"]
 transform = Transform3D(1, 0, 0, 0, 0.861071, 0.508485, 0, -0.508485, 0.861071, 0, 5.37935, 0)
+light_energy = 2.5
 
 [node name="navigationRegion3d" type="NavigationRegion3D" parent="Geometry" index="0"]
 navigation_mesh = SubResource("NavigationMesh_57wiy")
@@ -385,7 +387,6 @@ shape = SubResource("BoxShape3D_6khn8")
 
 [node name="pawnRagdoll" parent="Props" index="0" instance=ExtResource("15_4qgq4")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1.13853, 0.5, -0.267807)
-activeRagdollEnabled = true
 startOnInstance = true
 
 [node name="untitled" parent="Props" index="1" instance=ExtResource("7_4j4hu")]

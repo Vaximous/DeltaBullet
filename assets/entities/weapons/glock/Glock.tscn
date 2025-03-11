@@ -1,4 +1,4 @@
-[gd_scene load_steps=79 format=3 uid="uid://d0fe1gvul4uht"]
+[gd_scene load_steps=49 format=3 uid="uid://d0fe1gvul4uht"]
 
 [ext_resource type="PackedScene" uid="uid://cpd5r8bmx2885" path="res://assets/entities/weapons/weaponBase.tscn" id="1_dxord"]
 [ext_resource type="Script" uid="uid://bfvbiknnwdu6i" path="res://assets/resources/customResources/weaponDisplayData/weaponDisplayData.gd" id="2_ay6mx"]
@@ -12,6 +12,7 @@
 [ext_resource type="Material" uid="uid://ccrhljrio2qau" path="res://assets/models/weapons/glock/reflectiveBlack.tres" id="7_5pyd6"]
 [ext_resource type="PackedScene" uid="uid://d3l4wqu5togya" path="res://assets/models/weapons/glock/glockModel.fbx" id="7_nhpv5"]
 [ext_resource type="Material" uid="uid://cige5mxmxipb2" path="res://assets/entities/weapons/glock/glockBase.tres" id="8_vefcy"]
+[ext_resource type="AnimationNodeBlendTree" uid="uid://bra7ttrutfhvm" path="res://assets/entities/weapons/glock/GlockTree.tres" id="9_2aw7i"]
 [ext_resource type="Material" uid="uid://irtvpceixwbb" path="res://assets/entities/weapons/glock/glockHammer.tres" id="9_s6m7r"]
 [ext_resource type="AudioStream" uid="uid://cptbvtpp2rs5q" path="res://assets/sounds/weapons/baretta/Beretta_shot_1.wav" id="10_rd0xh"]
 [ext_resource type="AudioStream" uid="uid://b7x3iwycfuwyh" path="res://assets/sounds/weapons/baretta/Lockin_beretta_1.wav" id="11_d7y4w"]
@@ -87,134 +88,6 @@ metadata/_custom_type_script = ExtResource("3_5pyd6")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_n332a"]
 size = Vector3(0.0258789, 0.194567, 0.303554)
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ybwpt"]
-animation = &"weaponAnims/aim"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_j08dw"]
-animation = &"weaponAnims/fire"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_u51jk"]
-animation = &"weaponAnims/idle"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_hie0f"]
-animation = &"weaponAnims/reload"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fvckn"]
-animation = &"WeaponAnims/sprint"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_syl42"]
-animation = &"WeaponAnims/unequip"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_5ul8h"]
-switch_mode = 2
-advance_mode = 2
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_gga4p"]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_7mtao"]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_sftbu"]
-advance_mode = 2
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_2yi56"]
-advance_mode = 2
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_mh4se"]
-xfade_time = 0.05
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_7n2o2"]
-xfade_time = 0.03
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_va47p"]
-xfade_time = 0.02
-switch_mode = 2
-advance_mode = 2
-
-[sub_resource type="Curve" id="Curve_udpny"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.992064, 1), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_umbs7"]
-xfade_time = 0.08
-xfade_curve = SubResource("Curve_udpny")
-
-[sub_resource type="Curve" id="Curve_w25qq"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 1.4, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_3kfwd"]
-xfade_time = 0.2
-xfade_curve = SubResource("Curve_w25qq")
-
-[sub_resource type="Curve" id="Curve_dxord"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 1.4, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_hxj8i"]
-xfade_time = 0.2
-xfade_curve = SubResource("Curve_dxord")
-
-[sub_resource type="Curve" id="Curve_ay6mx"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 1.4, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_dxord"]
-xfade_time = 0.2
-xfade_curve = SubResource("Curve_ay6mx")
-
-[sub_resource type="Curve" id="Curve_5pyd6"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 1.4, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ay6mx"]
-xfade_time = 0.2
-xfade_curve = SubResource("Curve_5pyd6")
-
-[sub_resource type="Curve" id="Curve_vefcy"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 1.4, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_5pyd6"]
-xfade_time = 0.2
-xfade_curve = SubResource("Curve_vefcy")
-
-[sub_resource type="Curve" id="Curve_s6m7r"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 1.4, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_vefcy"]
-xfade_time = 0.2
-xfade_curve = SubResource("Curve_s6m7r")
-
-[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_q1np0"]
-states/End/position = Vector2(1041, 100)
-states/aim/node = SubResource("AnimationNodeAnimation_ybwpt")
-states/aim/position = Vector2(619, 191)
-states/fire/node = SubResource("AnimationNodeAnimation_j08dw")
-states/fire/position = Vector2(619, 302)
-states/idle/node = SubResource("AnimationNodeAnimation_u51jk")
-states/idle/position = Vector2(619, 100)
-states/reload/node = SubResource("AnimationNodeAnimation_hie0f")
-states/reload/position = Vector2(815, 183)
-states/sprint/node = SubResource("AnimationNodeAnimation_fvckn")
-states/sprint/position = Vector2(619, -13)
-states/unequip/node = SubResource("AnimationNodeAnimation_syl42")
-states/unequip/position = Vector2(843, 100)
-transitions = ["sprint", "idle", SubResource("AnimationNodeStateMachineTransition_5ul8h"), "idle", "sprint", SubResource("AnimationNodeStateMachineTransition_gga4p"), "idle", "unequip", SubResource("AnimationNodeStateMachineTransition_7mtao"), "unequip", "End", SubResource("AnimationNodeStateMachineTransition_sftbu"), "Start", "idle", SubResource("AnimationNodeStateMachineTransition_2yi56"), "idle", "aim", SubResource("AnimationNodeStateMachineTransition_mh4se"), "aim", "fire", SubResource("AnimationNodeStateMachineTransition_7n2o2"), "fire", "aim", SubResource("AnimationNodeStateMachineTransition_va47p"), "aim", "idle", SubResource("AnimationNodeStateMachineTransition_umbs7"), "idle", "reload", SubResource("AnimationNodeStateMachineTransition_3kfwd"), "reload", "idle", SubResource("AnimationNodeStateMachineTransition_hxj8i"), "aim", "reload", SubResource("AnimationNodeStateMachineTransition_dxord"), "reload", "aim", SubResource("AnimationNodeStateMachineTransition_ay6mx"), "fire", "reload", SubResource("AnimationNodeStateMachineTransition_5pyd6"), "reload", "fire", SubResource("AnimationNodeStateMachineTransition_vefcy")]
-graph_offset = Vector2(37, 90)
-
-[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_uy32p"]
-
-[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_dxord"]
-resource_name = "testWeaponAnimations"
-graph_offset = Vector2(-577.307, 26.342)
-nodes/output/position = Vector2(380, 140)
-nodes/weaponState/node = SubResource("AnimationNodeStateMachine_q1np0")
-nodes/weaponState/position = Vector2(-180, 120)
-nodes/weaponStateSpeed/node = SubResource("AnimationNodeTimeScale_uy32p")
-nodes/weaponStateSpeed/position = Vector2(80, 100)
-node_connections = [&"output", 0, &"weaponStateSpeed", &"weaponStateSpeed", 0, &"weaponState"]
 
 [sub_resource type="Animation" id="Animation_dxord"]
 length = 0.001
@@ -2222,7 +2095,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00431539, 0.00136896)
 shape = SubResource("BoxShape3D_n332a")
 
 [node name="AnimationTree" parent="." index="1"]
-tree_root = SubResource("AnimationNodeBlendTree_dxord")
+tree_root = ExtResource("9_2aw7i")
 parameters/weaponStateSpeed/scale = 1.0
 
 [node name="AnimationPlayer" parent="." index="2"]
@@ -2268,8 +2141,8 @@ attenuation_filter_db = 0.0
 stream = SubResource("AudioStreamRandomizer_yxixb")
 pitch_scale = 1.2
 
-[connection signal="reloadingStart" from="." to="AnimationPlayer/weaponAnim" method="play" binds= [&"reload"]]
+[connection signal="reloadingStart" from="." to="." method="playWeaponAnimation" binds= [&"weaponAnim", &"reload"]]
 [connection signal="shot_fired" from="." to="AudioStreamPlayer3D" method="play"]
-[connection signal="shot_fired" from="." to="AnimationPlayer/weaponAnim" method="play_section" binds= [&"shotFired", 0.0]]
+[connection signal="shot_fired" from="." to="." method="playWeaponAnimation" binds= [&"weaponAnim", &"shotFired"]]
 
 [editable path="glockModel"]

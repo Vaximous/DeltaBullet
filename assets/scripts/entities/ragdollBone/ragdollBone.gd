@@ -161,6 +161,8 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 			#print("%s Contact Force : %s"%[name,contactForce])
 		##audioStreamPlayer.attenuation_filter_db = lerp(-20, 0, clamp(abs(contactDot) * contactForce, 0, 1))
 
+		if is_instance_valid(healthComponent):
+			healthComponent.damage(contactForce)
 
 		if contactForce >= heavyImpactThreshold:
 			createSpurtInstance(state.get_contact_collider_position(0))
@@ -170,8 +172,6 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 				audioStreamPlayer.stream = heavyImpactSounds
 				audioStreamPlayer.play()
 				audioCooldown = 0.25
-			if is_instance_valid(healthComponent):
-				healthComponent.damage(contactForce)
 
 		elif contactForce >= mediumImpactThreshold:
 			var dec = gameManager.createSplat(global_position,(state.get_contact_local_normal(0).normalized()))
@@ -179,8 +179,6 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 				audioStreamPlayer.stream = mediumImpactSounds
 				audioStreamPlayer.play()
 				audioCooldown = 0.25
-			if is_instance_valid(healthComponent):
-				healthComponent.damage(contactForce)
 
 		elif contactForce >= lightImpactThreshold:
 			createSpurtInstance(state.get_contact_collider_position(0))
@@ -189,8 +187,6 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 				audioStreamPlayer.stream = lightImpactSounds
 				audioStreamPlayer.play()
 				audioCooldown = 0.35
-			if is_instance_valid(healthComponent):
-				healthComponent.damage(contactForce)
 
 
 func hit(dmg, dealer=null, hitImpulse:Vector3 = Vector3.ZERO, hitPoint:Vector3 = Vector3.ZERO)->void:

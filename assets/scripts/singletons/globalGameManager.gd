@@ -460,6 +460,7 @@ func hideHUD()->void:
 
 func loadWorld(worldscene:String, fadein:bool = false)->void:
 	decals.clear()
+	physicsEntities.clear()
 	saveTemporaryPawnInfo()
 	targetedEnemies.clear()
 	playerPawns.clear()

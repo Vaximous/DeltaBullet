@@ -93,12 +93,6 @@ var pathPoint : int = 0
 				state.aiOwner = self
 @export var navPointGrabber : Area3D
 @export var visionTimer : Timer
-@export_subgroup("Memory")
-@onready var memorySpanTimer : Timer = $memorySpan
-@export var memoryManager : AiMemoryManager:
-	set(value):
-		memoryManager = value
-		#memoryManager.brainOwner = self
 @export_subgroup("Overlap & Detection")
 @export_flags_3d_physics var collisionMasks : int
 @export var visibleObjects : Array = []

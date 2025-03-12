@@ -37,7 +37,13 @@ var defaultBloodSize : Vector3 = Vector3(0.3,0.3,0.3)
 var splatTween : Tween
 #var bloodNormals : Array = [\"res://assets/textures/blood/bloodSplat/blood1_n.png\",\"res://assets/textures/blood/bloodSplat/blood2_n.png\",\"res://assets/textures/blood/bloodSplat/blood3_n.png\",\"res://assets/textures/blood/bloodSplat/blood4_n.png\"]
 # Called when the node enters the scene tree for the first time.
+
+func _exit_tree() -> void:
+	gameManager.decals.erase(self)
+
 func _ready()->void:
+	gameManager.decals.append(self)
+	gameManager.decalAdded.emit()
 	splatDecal.size = Vector3.ZERO
 	growSpeed = randf_range(growSpeedMin,growSpeedMax)
 	var timer = get_tree().create_timer(UserConfig.game_decal_remove_time)

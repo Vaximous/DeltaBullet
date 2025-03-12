@@ -171,7 +171,7 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 				audioStreamPlayer.play()
 				audioCooldown = 0.25
 			if is_instance_valid(healthComponent):
-				healthComponent.damage(contactForce * randi_range(2,16))
+				healthComponent.damage(contactForce)
 
 		elif contactForce >= mediumImpactThreshold:
 			var dec = gameManager.createSplat(global_position,(state.get_contact_local_normal(0).normalized()))
@@ -180,7 +180,7 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 				audioStreamPlayer.play()
 				audioCooldown = 0.25
 			if is_instance_valid(healthComponent):
-				healthComponent.damage(contactForce * randi_range(2,3))
+				healthComponent.damage(contactForce)
 
 		elif contactForce >= lightImpactThreshold:
 			createSpurtInstance(state.get_contact_collider_position(0))
@@ -190,7 +190,7 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 				audioStreamPlayer.play()
 				audioCooldown = 0.35
 			if is_instance_valid(healthComponent):
-				healthComponent.damage(contactForce + randi_range(0,5))
+				healthComponent.damage(contactForce)
 
 
 func hit(dmg, dealer=null, hitImpulse:Vector3 = Vector3.ZERO, hitPoint:Vector3 = Vector3.ZERO)->void:
@@ -221,8 +221,8 @@ func hookes_law(displacement: Vector3, current_velocity: Vector3, stiffness: flo
 
 func pulverizeBone()->void:
 	#await get_tree().process_frame
-	ragdoll.ragdollSkeleton.set_bone_pose_scale(get_bone_id(),Vector3.ZERO)
-	ragdoll.ragdollSkeleton.force_update_bone_child_transform(get_bone_id())
+	ragdoll.ragdollSkeleton.set_bone_pose_scale(get_bone_id(),Vector3(0.001,0.001,0.001))
+	#ragdoll.ragdollSkeleton.force_update_bone_child_transform(get_bone_id())
 	if bonePulverized != true:
 		bonePulverized = true
 

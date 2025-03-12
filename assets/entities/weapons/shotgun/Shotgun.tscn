@@ -199,7 +199,7 @@ states/sprint/position = Vector2(619, -13)
 states/unequip/node = SubResource("AnimationNodeAnimation_syl42")
 states/unequip/position = Vector2(843, 100)
 transitions = ["sprint", "idle", SubResource("AnimationNodeStateMachineTransition_5ul8h"), "idle", "sprint", SubResource("AnimationNodeStateMachineTransition_gga4p"), "idle", "unequip", SubResource("AnimationNodeStateMachineTransition_7mtao"), "unequip", "End", SubResource("AnimationNodeStateMachineTransition_sftbu"), "Start", "idle", SubResource("AnimationNodeStateMachineTransition_2yi56"), "idle", "aim", SubResource("AnimationNodeStateMachineTransition_mh4se"), "aim", "fire", SubResource("AnimationNodeStateMachineTransition_7n2o2"), "fire", "aim", SubResource("AnimationNodeStateMachineTransition_va47p"), "aim", "idle", SubResource("AnimationNodeStateMachineTransition_umbs7"), "idle", "reload", SubResource("AnimationNodeStateMachineTransition_3kfwd"), "reload", "idle", SubResource("AnimationNodeStateMachineTransition_hxj8i"), "aim", "reload", SubResource("AnimationNodeStateMachineTransition_dxord"), "reload", "aim", SubResource("AnimationNodeStateMachineTransition_ay6mx"), "fire", "reload", SubResource("AnimationNodeStateMachineTransition_5pyd6"), "reload", "fire", SubResource("AnimationNodeStateMachineTransition_vefcy")]
-graph_offset = Vector2(47, 68)
+graph_offset = Vector2(-3, -20)
 
 [sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_uy32p"]
 

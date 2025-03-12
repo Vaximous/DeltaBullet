@@ -6,6 +6,13 @@ const defaultTransitionType = Tween.TRANS_QUART
 const defaultEaseType = Tween.EASE_OUT
 var poolTween : Tween
 
+func _exit_tree() -> void:
+	gameManager.decals.erase(self)
+
+func _ready() -> void:
+	gameManager.decals.append(self)
+	gameManager.decalAdded.emit()
+
 func startPool(_size:float = 0.5)->void:
 	var timer := get_tree().create_timer(UserConfig.game_decal_remove_time).timeout.connect(deletePool)
 	decal.scale = Vector3(0.00001,0.00001,0.00001)

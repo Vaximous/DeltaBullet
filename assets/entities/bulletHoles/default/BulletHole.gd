@@ -22,7 +22,12 @@ var normal : Vector3
 var colPoint : Vector3
 var rot : float
 
+func _exit_tree() -> void:
+	gameManager.decals.erase(self)
+
 func _ready()->void:
+	gameManager.decals.append(self)
+	gameManager.decalAdded.emit()
 	initializeBulletHole()
 
 
@@ -77,7 +82,7 @@ func initializeBulletHole()->void:
 	for particles in particleArray:
 		#Forces the position of the particles to be set to the collision point (Wont be used much, is an old thing)
 		if forceGlobalPosition:
-			particles.global_transform.origin = colPoint
+			particles.global_position = colPoint
 
 		#Reparent to particles in world
 		particles.reparent(gameManager.world.worldParticles)

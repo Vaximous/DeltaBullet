@@ -12,7 +12,7 @@ collision_layer = 0
 script = ExtResource("1_f76y0")
 mesh = NodePath("meshInstance3d")
 collisionSounds = [NodePath("audioStreamPlayer3d")]
-metadata/_custom_type_script = ExtResource("1_f76y0")
+metadata/_custom_type_script = "uid://mpu0audo4bfj"
 
 [node name="collisionShape3d" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0213982, 0)

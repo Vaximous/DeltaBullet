@@ -254,36 +254,26 @@ func fire()->void:
 			weaponOwner.attachedCam.fireRecoil(0.0,0.0,0.0,false)
 
 		currentAmmo -= weaponResource.ammoConsumption
-		for b in weaponResource.weaponShots:
-			#var bullet = createMuzzle()
-			#if weaponResource.weaponShots > 1:
-				##randomize the muzzle pos?
-				#bullet.position.x += randf_range(-0.09,0.09)
-				#bullet.position.y += randf_range(-0.05,0.05)
 
-			if weaponCast != null:
-
-				if muzzleFlashes:
-					var flash = muzzleFlashes.pick_random().instantiate()
-					gameManager.world.worldParticles.add_child(flash)
-					flash.global_position = muzzlePoint.global_position
-					flash.global_rotation = muzzlePoint.global_rotation
-					flash.playFlash()
-
-				if smokeEffect:
-					var smokeInstance = smokeEffect.instantiate()
-					gameManager.world.worldParticles.add_child(smokeInstance)
-					smokeInstance.global_position = muzzlePoint.global_position
-					smokeInstance.global_rotation = muzzlePoint.global_rotation
-
+		if weaponCast != null:
+			for b in weaponResource.weaponShots:
 				spawnProjectile(weaponCast)
 				applyRecoil(weaponCast)
-					#raycastHit(shot_cast)
-					#var hit = globalParticles.detectMaterial(getHitObject(shot_cast))
-					#if hit != null:
-						#var pt = globalParticles.createParticle(globalParticles.detectMaterial(getHitObject(shot_cast)), getRayColPoint(shot_cast))
-						#if !pt == null:
-							#pt.look_at(getRayColPoint(shot_cast) + getRayNormal(shot_cast))
+
+			if muzzleFlashes:
+				var flash = muzzleFlashes.pick_random().instantiate()
+				gameManager.world.worldParticles.add_child(flash)
+				flash.global_position = muzzlePoint.global_position
+				flash.global_rotation = muzzlePoint.global_rotation
+				flash.playFlash()
+
+			if smokeEffect:
+				var smokeInstance = smokeEffect.instantiate()
+				gameManager.world.worldParticles.add_child(smokeInstance)
+				smokeInstance.global_position = muzzlePoint.global_position
+				smokeInstance.global_rotation = muzzlePoint.global_rotation
+
+
 		await get_tree().create_timer(weaponResource.weaponFireRate,false).timeout
 		isFiring = false
 	return
@@ -299,9 +289,10 @@ func spawn_bullet_casing() -> void:
 		gameManager.world.add_child(inst)
 		inst.global_position = ejectionPoint.global_position
 
+
 func setBlendShapeValue(mesh:NodePath,blendShape:int,value:float)->void:
-	print("animating")
 	get_node(mesh).set_blend_shape_value(blendShape,value)
+
 
 func spawnProjectile(raycaster : RayCast3D) -> void:
 	#print(raycaster.get_path())

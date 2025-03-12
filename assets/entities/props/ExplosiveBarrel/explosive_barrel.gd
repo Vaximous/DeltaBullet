@@ -4,8 +4,9 @@ var _dealer
 @export var explosionRadius : float = 7.0
 @export var explosionImpulse :float  = 35.0
 
+
 func burn()->void:
-	if !get_meta("isBurning"):
+	if !get_meta("isBurning") or !has_meta("isBurning"):
 		gameManager.burnTarget(self,100000,15)
 
 

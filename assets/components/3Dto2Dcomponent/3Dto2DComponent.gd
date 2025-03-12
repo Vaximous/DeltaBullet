@@ -8,9 +8,7 @@ static var control_nodes : Array[Control]
 @export var clamp_to_edge : bool = true
 
 
-func _enter_tree() -> void:
-	child_entered_tree.connect(_on_child_entered_tree)
-	child_exiting_tree.connect(_on_child_exiting_tree)
+
 
 
 func _physics_process(delta: float) -> void:

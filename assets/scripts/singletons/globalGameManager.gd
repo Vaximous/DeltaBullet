@@ -35,6 +35,14 @@ var sounds : Dictionary = {"healSound" = preload("res://assets/sounds/ui/rareIte
 			"startGame" = preload("res://assets/sounds/ui/menu/Button start.wav")
 			}
 
+#Entity Managers
+signal physicsEntityAdded
+var physicsEntities : Array = []
+
+signal decalAdded
+var decals : Array = []
+
+
 #Misc
 var lastConsolePosition : Vector2 = Vector2(25,62)
 const defaultTweenSpeed : float = 0.25
@@ -97,6 +105,9 @@ func _ready()->void:
 	soundPlayer.bus = "Sounds"
 	if richPresenceEnabled:
 		pass
+
+	decalAdded.connect(decalAmountCheck)
+	physicsEntityAdded.connect(physEntityCheck)
 
 func _process(delta: float) -> void:
 	#Set audio pitch to match timescale
@@ -448,6 +459,8 @@ func hideHUD()->void:
 
 
 func loadWorld(worldscene:String, fadein:bool = false)->void:
+	decals.clear()
+	physicsEntities.clear()
 	saveTemporaryPawnInfo()
 	targetedEnemies.clear()
 	playerPawns.clear()
@@ -662,6 +675,7 @@ func createSplat(gposition:Vector3 = Vector3.ZERO,normal:Vector3 = Vector3.ZERO,
 	if is_instance_valid(parent):
 		var _b = bloodDecal.instantiate()
 		parent.add_child(_b)
+		#print((normal).cross(Vector3.UP))
 		if parent.has_node(_b.get_path()) and _b.is_inside_tree():
 			_b.position = gposition
 			if normal == Vector3(0,1,0):
@@ -669,7 +683,8 @@ func createSplat(gposition:Vector3 = Vector3.ZERO,normal:Vector3 = Vector3.ZERO,
 			elif normal == Vector3(0,-1,0):
 				_b.look_at(gposition + normal.normalized(), Vector3.RIGHT)
 			else:
-				_b.look_at(gposition + normal)
+				_b.look_at(normal - gposition)
+
 		#if !Vector3.UP.is_equal_approx(normal.normalized()) and !normal.normalized().is_equal_approx(Vector3.ZERO):
 			#_b.transform.basis = _b.transform.basis.looking_at(normal.normalized())
 		#_b.rotate(normal.normalized(),randf_range(0, 2)*PI)
@@ -831,3 +846,21 @@ func get_weight_sum(weightedArray) -> float:
 	for i in weightedArray:
 		sum += i
 	return sum
+
+
+func decalAmountCheck()->void:
+	while decals.size() > UserConfig.game_max_decals:
+		if decals[0].has_method("deleteSplat"):
+			decals[0].deleteSplat()
+		elif decals[0].has_method("deletePool"):
+			decals[0].deletePool()
+		elif decals[0].has_method("deleteHole"):
+			decals[0].deleteHole()
+
+		decals.remove_at(0)
+
+
+func physEntityCheck()->void:
+	while physicsEntities.size() > UserConfig.game_max_physics_entities:
+		physicsEntities[0].queue_free()
+		physicsEntities.remove_at(0)

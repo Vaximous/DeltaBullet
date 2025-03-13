@@ -1,7 +1,8 @@
-[gd_scene load_steps=65 format=3 uid="uid://bporbvksq0guk"]
+[gd_scene load_steps=66 format=3 uid="uid://bporbvksq0guk"]
 
 [ext_resource type="PackedScene" uid="uid://cpd5r8bmx2885" path="res://assets/entities/weapons/weaponBase.tscn" id="1_0fsk8"]
 [ext_resource type="Script" uid="uid://bfvbiknnwdu6i" path="res://assets/resources/customResources/weaponDisplayData/weaponDisplayData.gd" id="2_itg47"]
+[ext_resource type="Curve" uid="uid://bofowgxnuih6c" path="res://assets/resources/weaponCurves/veryCloseRange.tres" id="2_kgmay"]
 [ext_resource type="PackedScene" uid="uid://dofw2d7ywfhuj" path="res://assets/models/weapons/shotgun/ShotgunModelRemake.gltf" id="2_knrn7"]
 [ext_resource type="Animation" uid="uid://br570qqsgqjn2" path="res://assets/animations/pawn/shotgunAim.res" id="3_ktcep"]
 [ext_resource type="AudioStream" uid="uid://brxvjv4isdmvu" path="res://assets/sounds/weapons/m4/m4_draw_1.wav" id="3_u8p3u"]
@@ -50,13 +51,14 @@ weaponMagSize = 128
 ammoSize = 8
 reloadTime = 0.8
 headDismember = true
-weaponDamage = 55.0
+weaponDamage = 160.0
 weaponFireRate = 1.2
 bulletSpeed = 800.0
 bulletPenetration = 1.0
-weaponImpulse = 85.0
+weaponImpulse = 95.0
 weaponShots = 8
 ammoConsumption = 1
+damageFalloff = ExtResource("2_kgmay")
 useCustomCrosshairSize = true
 crosshairSizeOverride = Vector2(0.5, 0.5)
 forcedCrosshair = ExtResource("7_lwauh")

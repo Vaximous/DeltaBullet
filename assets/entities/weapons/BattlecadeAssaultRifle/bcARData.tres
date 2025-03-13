@@ -1,5 +1,6 @@
-[gd_resource type="Resource" script_class="ItemData" load_steps=9 format=3 uid="uid://mspc5c8w8fqi"]
+[gd_resource type="Resource" script_class="ItemData" load_steps=10 format=3 uid="uid://mspc5c8w8fqi"]
 
+[ext_resource type="Curve" uid="uid://tfly44mh7tb3" path="res://assets/resources/weaponCurves/longRange.tres" id="1_ctog0"]
 [ext_resource type="Resource" uid="uid://nbth0uf3slwn" path="res://assets/entities/weapons/BattlecadeAssaultRifle/bcARStats.tres" id="1_niglr"]
 [ext_resource type="AudioStream" uid="uid://brxvjv4isdmvu" path="res://assets/sounds/weapons/m4/m4_draw_1.wav" id="2_eok4g"]
 [ext_resource type="Script" uid="uid://b6r8ewrq3qb3y" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="2_g1vh5"]
@@ -32,6 +33,7 @@ bulletPenetration = 0.0
 weaponImpulse = 19.0
 weaponShots = 1
 ammoConsumption = 1
+damageFalloff = ExtResource("1_ctog0")
 useCustomCrosshairSize = true
 crosshairSizeOverride = Vector2(0.5, 0.5)
 forcedCrosshair = ExtResource("2_piemj")

@@ -144,6 +144,11 @@ func createSpurtInstance(globalPosition : Vector3)->void:
 	spurtInstance.global_rotation = global_rotation
 	spurtInstance.emitting = true
 
+func createContactBlood(state:PhysicsDirectBodyState3D)->void:
+		var dec = gameManager.createSplat(state.get_contact_collider_position(0),state.get_contact_local_normal(0))
+		createSpurtInstance(state.get_contact_collider_position(0))
+		print(state.get_contact_local_normal(0))
+
 func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 	boneState = state.sleeping
 	currentVelocity = state.get_velocity_at_local_position(position)
@@ -161,28 +166,28 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 			#print("%s Contact Force : %s"%[name,contactForce])
 		##audioStreamPlayer.attenuation_filter_db = lerp(-20, 0, clamp(abs(contactDot) * contactForce, 0, 1))
 
+
+
 		if is_instance_valid(healthComponent):
 			healthComponent.damage(contactForce)
 
 		if contactForce >= heavyImpactThreshold:
-			createSpurtInstance(state.get_contact_collider_position(0))
+			createContactBlood(state)
 			#gameManager.sprayBlood(state.get_contact_collider_position(0),15,3)
-			gameManager.createSplat(global_position,(state.get_contact_local_normal(0).normalized()))
 			if is_instance_valid(audioStreamPlayer):
 				audioStreamPlayer.stream = heavyImpactSounds
 				audioStreamPlayer.play()
 				audioCooldown = 0.25
 
 		elif contactForce >= mediumImpactThreshold:
-			var dec = gameManager.createSplat(global_position,(state.get_contact_local_normal(0).normalized()))
+			createContactBlood(state)
 			if is_instance_valid(audioStreamPlayer):
 				audioStreamPlayer.stream = mediumImpactSounds
 				audioStreamPlayer.play()
 				audioCooldown = 0.25
 
 		elif contactForce >= lightImpactThreshold:
-			createSpurtInstance(state.get_contact_collider_position(0))
-			gameManager.createSplat(global_position,(state.get_contact_local_normal(0).normalized()))
+			createContactBlood(state)
 			if is_instance_valid(audioStreamPlayer):
 				audioStreamPlayer.stream = lightImpactSounds
 				audioStreamPlayer.play()

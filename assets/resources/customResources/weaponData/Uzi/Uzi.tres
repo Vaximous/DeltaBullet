@@ -1,7 +1,8 @@
-[gd_resource type="Resource" script_class="ItemData" load_steps=9 format=3 uid="uid://cqugqj8fwtc5j"]
+[gd_resource type="Resource" script_class="ItemData" load_steps=10 format=3 uid="uid://cqugqj8fwtc5j"]
 
 [ext_resource type="Texture2D" uid="uid://rnjqykyxts43" path="res://assets/textures/crosshair/crosshair037.png" id="1_4q1x7"]
 [ext_resource type="Resource" uid="uid://r6qkb05upxjv" path="res://assets/resources/customResources/weaponData/Uzi/UziDisplay.tres" id="1_7jknn"]
+[ext_resource type="Curve" uid="uid://ba3idydj71l2p" path="res://assets/resources/weaponCurves/mediumRange.tres" id="1_l5do1"]
 [ext_resource type="AudioStream" uid="uid://bhmql08j0fdpv" path="res://assets/sounds/weapons/uzi/Uzi_Draw_1.wav" id="2_p3mnj"]
 [ext_resource type="Script" uid="uid://b6r8ewrq3qb3y" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="2_xq0ah"]
 [ext_resource type="AudioStream" uid="uid://btbc0yxk203is" path="res://assets/sounds/weapons/uzi/Uzi_Draw_2.wav" id="3_l5do1"]
@@ -32,6 +33,7 @@ bulletPenetration = 1.0
 weaponImpulse = 14.0
 weaponShots = 1
 ammoConsumption = 1
+damageFalloff = ExtResource("1_l5do1")
 useCustomCrosshairSize = true
 crosshairSizeOverride = Vector2(0.5, 0.5)
 forcedCrosshair = ExtResource("1_4q1x7")

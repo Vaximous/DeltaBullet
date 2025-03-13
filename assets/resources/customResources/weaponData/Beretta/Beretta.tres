@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="ItemData" load_steps=8 format=3 uid="uid://wy0gfijhuuwl"]
+[gd_resource type="Resource" script_class="ItemData" load_steps=9 format=3 uid="uid://wy0gfijhuuwl"]
 
 [ext_resource type="Script" uid="uid://b6r8ewrq3qb3y" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="1_h8ja1"]
+[ext_resource type="Curve" uid="uid://ba3idydj71l2p" path="res://assets/resources/weaponCurves/mediumRange.tres" id="1_tcsnk"]
 [ext_resource type="Resource" uid="uid://b0yr3ub2hmc2l" path="res://assets/resources/customResources/weaponData/Beretta/BerettaDisplay.tres" id="1_x8bm3"]
 [ext_resource type="AudioStream" uid="uid://dg36vodkur8m1" path="res://assets/sounds/weapons/baretta/Beretta draw_1.wav" id="2_hcxm1"]
 [ext_resource type="AudioStream" uid="uid://cfcr06w0k80w1" path="res://assets/sounds/weapons/baretta/Beretta draw_2.wav" id="3_tcsnk"]
@@ -31,6 +32,7 @@ bulletPenetration = 0.0
 weaponImpulse = 25.0
 weaponShots = 1
 ammoConsumption = 1
+damageFalloff = ExtResource("1_tcsnk")
 useCustomCrosshairSize = false
 crosshairSizeOverride = Vector2(0.8, 0.8)
 useFOV = false

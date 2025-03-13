@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://boicvk4qeqmbd" path="res://assets/entities/pawnSpawn/pawnSpawn.tscn" id="2_81ovr"]
 [ext_resource type="Script" uid="uid://b31u24at18p5t" path="res://assets/resources/customResources/worldData/worldData.gd" id="2_yyaa6"]
 [ext_resource type="ArrayMesh" uid="uid://c6ns8yxo4a464" path="res://assets/models/world/roads/roadIntersectionA.tres" id="3_4swrl"]
-[ext_resource type="Texture2D" uid="uid://dvfkpbe83xcf4" path="res://assets/textures/panoramas/panoramatest3.png" id="3_i2f5p"]
+[ext_resource type="Texture2D" uid="uid://d0f0crtwpmoka" path="res://assets/textures/panoramas/panoramatest1.png" id="3_dsb3y"]
 [ext_resource type="ArrayMesh" uid="uid://bkjw5e3kv7ey2" path="res://assets/models/world/roads/roadEndA.tres" id="5_8wg4f"]
 [ext_resource type="ArrayMesh" uid="uid://biw8dw4ltwp2k" path="res://assets/models/world/roads/roadStraight.tres" id="6_hqscl"]
 [ext_resource type="ArrayMesh" uid="uid://6pomvtcjcr1i" path="res://assets/models/world/roads/pavementAC.tres" id="7_rf6xg"]
@@ -35,8 +35,7 @@
 [ext_resource type="PackedScene" uid="uid://bgk584lddf4aa" path="res://assets/entities/weapons/BattlecadeAssaultRifle/BattlecadeAssaultRifle.tscn" id="29_p20f0"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_6tefn"]
-panorama = ExtResource("3_i2f5p")
-energy_multiplier = 3.0
+panorama = ExtResource("3_dsb3y")
 
 [sub_resource type="Resource" id="Resource_j802f"]
 script = ExtResource("2_yyaa6")

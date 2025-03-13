@@ -77,7 +77,7 @@ func explode()->void:
 	explosionTween = create_tween()
 	explosionTween.tween_property(collisionShape.shape,"radius",explosionRadius,explosionSpeed).finished.connect(collisionShape.queue_free)
 
-	explosionEffect.doRipple(explosionRadius,explosionSpeed,2.5)
+	explosionEffect.doRipple(explosionRadius*3,explosionSpeed,2.5)
 
 
 	if is_instance_valid(explosionEffect):
@@ -90,9 +90,9 @@ func explode()->void:
 		explosionPlayer.play()
 		if explosionPlayer.playing:
 			await explosionPlayer.finished
-		while explosionEffect.is_emitting():
-			await get_tree().create_timer(1.0).timeout
-
+	while explosionEffect.is_emitting():
+		await get_tree().create_timer(0.05).timeout
+	queue_free()
 
 
 func _on_body_entered(body: Node3D) -> void:

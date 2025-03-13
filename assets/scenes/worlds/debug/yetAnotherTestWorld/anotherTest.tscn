@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=4 uid="uid://ccnq3cc8k6nt5"]
+[gd_scene load_steps=51 format=4 uid="uid://ccnq3cc8k6nt5"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_iq3s1"]
 [ext_resource type="Script" uid="uid://b31u24at18p5t" path="res://assets/resources/customResources/worldData/worldData.gd" id="2_gqs4i"]
@@ -22,6 +22,7 @@
 [ext_resource type="PackedScene" uid="uid://n500uprpwbbk" path="res://assets/models/csgmodels/csgtruck.tscn" id="13_512dd"]
 [ext_resource type="PackedScene" uid="uid://7ueyays7enj5" path="res://assets/entities/trigger/pawnTrigger.tscn" id="14_sl7fe"]
 [ext_resource type="Script" uid="uid://d01nxiqfv4lfd" path="res://assets/scenes/worlds/areas/playerHome/player_closet.gd" id="18_lux1e"]
+[ext_resource type="Curve" uid="uid://cex2ggwxevnuj" path="res://assets/entities/projectiles/linear_falloff_curve.tres" id="19_qkxav"]
 [ext_resource type="Script" uid="uid://tiffkbp5ry74" path="res://assets/scripts/entities/interactiveObject/interactiveObject.gd" id="19_s4bs4"]
 [ext_resource type="PackedScene" uid="uid://dakipfkiu0xqt" path="res://assets/components/musicChangeZone/music_change_zone.tscn" id="23_akr5q"]
 [ext_resource type="AudioStream" uid="uid://c1mk4s30dq3nc" path="res://assets/music/menu/Idlehoodtune.wav" id="24_qkxav"]
@@ -122,6 +123,7 @@ bulletPenetration = 1.0
 weaponImpulse = 14.0
 weaponShots = 1
 ammoConsumption = 1
+damageFalloff = ExtResource("19_qkxav")
 useCustomCrosshairSize = true
 crosshairSizeOverride = Vector2(0.5, 0.5)
 forcedCrosshair = ExtResource("7_1sogm")

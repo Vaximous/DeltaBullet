@@ -1,4 +1,5 @@
 extends InteractiveObject
+@onready var healthComponent : HealthComponent = $healthComponent
 @export var defaultStream : AudioStream
 var peer : HTTPClient = HTTPClient.new()
 var radioURL : String = "nosystem.giize.com:2086/psyradium"
@@ -47,6 +48,19 @@ func _on_health_component_health_depleted()->void:
 
 func _on_hitbox_damaged(amount, impulse, vector)->void:
 	apply_impulse(impulse,vector)
+
+
+func hit(dmg, dealer=null, hitImpulse:Vector3 = Vector3.ZERO, hitPoint:Vector3 = Vector3.ZERO)->void:
+	apply_impulse(hitImpulse,hitPoint)
+
+	if is_instance_valid(healthComponent):
+		#print("dmg:%s"%int(dmg))
+		#print("hp:%s"%healthComponent.health)
+		if is_instance_valid(dealer):
+			healthComponent.damage(int(dmg),dealer)
+		else:
+			healthComponent.damage(int(dmg),null)
+
 	$audioStreamPlayer3d.play()
 	if active:
 		active = false

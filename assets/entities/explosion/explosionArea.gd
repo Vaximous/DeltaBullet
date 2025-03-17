@@ -6,6 +6,8 @@ var explosionTween : Tween
 @onready var explosionPlayer : AudioStreamPlayer3D = $explosionSound
 @onready var collisionShape : CollisionShape3D = $collisionShape3d
 @export_category("Explosion")
+##Does this explosion burn objects?
+@export var doesBurn : bool = true
 ##Line of Sight, Will the explosion use line of sight checking to explode objects?
 @export var explosionLOS : bool = true
 ##How fast will this explosion expand?
@@ -23,9 +25,8 @@ var explosionTween : Tween
 		if is_instance_valid(collisionShape):
 			collisionShape.shape.radius = explosionRadius
 
-func _ready() -> void:
-	if !Engine.is_editor_hint():
-		collisionShape.shape.radius = 0.01
+
+
 
 
 func explosionRayCheck(object:Node3D):
@@ -53,11 +54,10 @@ func explosionRayCheck(object:Node3D):
 			meshInstance.material_override = meshMat
 	return result
 
-
 func applyHit(object:Node3D):
 	if is_instance_valid(object) and object is not FakePhysicsEntity:
 		var burnChance : bool = [true,false].pick_random()
-		if burnChance and object is not FakePhysicsEntity:
+		if burnChance and object is not FakePhysicsEntity and doesBurn:
 			randomize()
 			gameManager.burnTarget(object,randf_range(3,30),0.8)
 
@@ -67,11 +67,10 @@ func applyHit(object:Node3D):
 		if object.has_method("hit"):
 			if object is RagdollBone:
 				object.canBleed = false
-				object.set_meta("exploded",true)
+				#object.set_meta("exploded",true)
 			object.hit(explosionDamage,dealer,-(global_position-object.global_position).normalized() * explosionImpulse,Vector3.ZERO)
 
 func explode()->void:
-	collisionShape.shape.radius = 0.01
 	if explosionTween:
 		explosionTween.kill()
 	explosionTween = create_tween()
@@ -96,6 +95,9 @@ func explode()->void:
 
 
 func _on_body_entered(body: Node3D) -> void:
+	if body is FakePhysicsEntity:
+		body.queue_free()
+
 	if !explosionLOS:
 		applyHit(body)
 	else:

@@ -5,6 +5,8 @@ var ai_process_counter : int = 0
 #How many AI are processed per tick.
 const ai_processed_per_tick : int = 5
 
+
+
 func updateAI(delta:float)->void:
 	#Update the AI
 	for i in ai_processed_per_tick:

@@ -368,14 +368,14 @@ func emitKilleffect()->void:
 	killSound.play()
 	killEffect = true
 	fireRecoil(0,0,randf_range(20.8,21.2))
-	fireVignette(0.9,Color.DARK_RED)
+	#fireVignette(0.9,Color.DARK_RED)
 	hud.getCrosshair().tintCrosshair(Color.DARK_RED)
 	#hud.getCrosshair().addSize(1.5)
 
 func doHeadshotEffect()->void:
 	if !headshotSound.is_playing():
 		headshotSound.play()
-	fireVignette(0.9,Color.RED)
+	#fireVignette(0.9,Color.RED)
 	#hud.getCrosshair().addSize(1.9)
 	camera.fov += randf_range(4.0,5.0)
 

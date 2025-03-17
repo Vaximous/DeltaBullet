@@ -266,7 +266,7 @@ func createActiveRagdollJoint()->void:
 		activeRagdollJoint = activeRagJoint
 
 func doPulverizeEffect()->void:
-	if canBeDismembered:
+	if canBeDismembered and !has_meta("exploded"):
 		await get_tree().process_frame
 		var gib = gameManager.createGib(global_position)
 		gib.velocity += linear_velocity

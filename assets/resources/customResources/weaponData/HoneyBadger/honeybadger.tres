@@ -1,7 +1,8 @@
-[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3 uid="uid://b2ai53knvexou"]
+[gd_resource type="Resource" script_class="ItemData" load_steps=4 format=3 uid="uid://b2ai53knvexou"]
 
 [ext_resource type="Script" uid="uid://b6r8ewrq3qb3y" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="1_3lyem"]
 [ext_resource type="Texture2D" uid="uid://c7b38t83ckisx" path="res://assets/textures/crosshair/crosshair161.png" id="1_s2o5w"]
+[ext_resource type="Curve" uid="uid://cex2ggwxevnuj" path="res://assets/entities/projectiles/linear_falloff_curve.tres" id="1_wcdp8"]
 
 [resource]
 resource_local_to_scene = true
@@ -19,6 +20,7 @@ bulletPenetration = null
 weaponImpulse = 25.0
 weaponShots = null
 ammoConsumption = null
+damageFalloff = ExtResource("1_wcdp8")
 useCustomCrosshairSize = true
 crosshairSizeOverride = Vector2(0.6, 0.6)
 forcedCrosshair = ExtResource("1_s2o5w")

@@ -301,6 +301,7 @@ func spawnProjectile(raycaster : RayCast3D) -> void:
 		bulletTrail = weaponResource.defaultBulletTrail.instantiate()
 	var p : Projectile = projectile.instantiate() as Projectile
 
+
 	var ray_target_point := get_hit_target(raycaster)
 
 	p.projectile_owner = self

@@ -57,6 +57,8 @@ transform = Transform3D(1, 0, -1.49012e-08, 0, 1, 0, 1.49012e-08, 0, 1, 0.069214
 shape = SubResource("BoxShape3D_xr5it")
 
 [node name="hitbox" type="Area3D" parent="." node_paths=PackedStringArray("healthComponent")]
+collision_layer = 22
+collision_mask = 22
 script = ExtResource("3_wwei6")
 healthComponent = NodePath("../healthComponent")
 
@@ -80,7 +82,6 @@ volume_db = -10.0
 bus = &"Sounds"
 attenuation_filter_db = 0.0
 
-[connection signal="damaged" from="hitbox" to="." method="_on_hitbox_damaged"]
 [connection signal="healthDepleted" from="healthComponent" to="." method="_on_health_component_health_depleted"]
 
 [editable path="radio"]

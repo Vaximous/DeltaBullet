@@ -33,6 +33,8 @@ var defaultBulletTrail = load("res://assets/entities/bulletTrail/bulletTrail.tsc
 @export var weaponShots : int = 1
 ## How many bullets are consumed in a shot. 0 = infinite
 @export var ammoConsumption : int = 1
+## Defining the damage falloff if you'd want a weapon with a less or more pronounced falloff
+@export var damageFalloff : Curve = preload("res://assets/entities/projectiles/linear_falloff_curve.tres")
 ## What crosshair should the weapon force?
 @export_subgroup("Crosshair")
 @export var useCustomCrosshairSize:bool = false

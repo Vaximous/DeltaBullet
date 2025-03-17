@@ -30,7 +30,7 @@ func _on_pawn_entity_set_movement_state(state: MovementState) -> void:
 		if tweener:
 			tweener.kill()
 		tweener = create_tween().set_ease(defaultEaseType).set_trans(defaultTransitionType)
-		tweener.tween_property(animationTree,"parameters/idleSpace/blend_position",state.movementID,defaultTweenSpeed)
+		tweener.parallel().tween_property(animationTree,"parameters/idleSpace/blend_position",state.movementID,defaultTweenSpeed)
 		tweener.parallel().tween_property(animationTree,"parameters/idleSpaceSpeed/scale",state.animationSpeed,0.7)
 
 		tweener.parallel().tween_property(animationTree,"parameters/crouchSpace/blend_position",state.movementID,defaultTweenSpeed)

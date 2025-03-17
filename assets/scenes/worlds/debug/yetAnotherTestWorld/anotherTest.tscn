@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=4 uid="uid://ccnq3cc8k6nt5"]
+[gd_scene load_steps=51 format=4 uid="uid://ccnq3cc8k6nt5"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_iq3s1"]
 [ext_resource type="Script" uid="uid://b31u24at18p5t" path="res://assets/resources/customResources/worldData/worldData.gd" id="2_gqs4i"]
@@ -22,6 +22,7 @@
 [ext_resource type="PackedScene" uid="uid://n500uprpwbbk" path="res://assets/models/csgmodels/csgtruck.tscn" id="13_512dd"]
 [ext_resource type="PackedScene" uid="uid://7ueyays7enj5" path="res://assets/entities/trigger/pawnTrigger.tscn" id="14_sl7fe"]
 [ext_resource type="Script" uid="uid://d01nxiqfv4lfd" path="res://assets/scenes/worlds/areas/playerHome/player_closet.gd" id="18_lux1e"]
+[ext_resource type="Curve" uid="uid://cex2ggwxevnuj" path="res://assets/entities/projectiles/linear_falloff_curve.tres" id="19_qkxav"]
 [ext_resource type="Script" uid="uid://tiffkbp5ry74" path="res://assets/scripts/entities/interactiveObject/interactiveObject.gd" id="19_s4bs4"]
 [ext_resource type="PackedScene" uid="uid://dakipfkiu0xqt" path="res://assets/components/musicChangeZone/music_change_zone.tscn" id="23_akr5q"]
 [ext_resource type="AudioStream" uid="uid://c1mk4s30dq3nc" path="res://assets/music/menu/Idlehoodtune.wav" id="24_qkxav"]
@@ -47,11 +48,11 @@ colors = PackedColorArray(0, 0, 0, 1, 0.996078, 0.941176, 0.811765, 1)
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_iun5n"]
 gradient = SubResource("Gradient_6voip")
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_akr5q"]
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_qkxav"]
 panorama = ExtResource("4_7ph80")
 
 [sub_resource type="Sky" id="Sky_nj1fe"]
-sky_material = SubResource("PanoramaSkyMaterial_akr5q")
+sky_material = SubResource("PanoramaSkyMaterial_qkxav")
 
 [sub_resource type="Environment" id="Environment_a8ts2"]
 background_mode = 2
@@ -122,6 +123,7 @@ bulletPenetration = 1.0
 weaponImpulse = 14.0
 weaponShots = 1
 ammoConsumption = 1
+damageFalloff = ExtResource("19_qkxav")
 useCustomCrosshairSize = true
 crosshairSizeOverride = Vector2(0.5, 0.5)
 forcedCrosshair = ExtResource("7_1sogm")
@@ -544,30 +546,51 @@ unique_name_in_owner = true
 [node name="explosiveBarrel" parent="Props" index="5" instance=ExtResource("31_snp5j")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.45893, 2.56812, 6.48074)
 collision_layer = 0
+burnChance = false
+explosionRadius = 3.5
+explosionImpulse = 5.0
 
 [node name="explosiveBarrel2" parent="Props" index="6" instance=ExtResource("31_snp5j")]
 transform = Transform3D(0.602498, 0, -0.798121, 0, 1, 0, 0.798121, 0, 0.602498, -1.50253, 2.66202, 14.6312)
 collision_layer = 0
+burnChance = false
+explosionRadius = 3.0
+explosionImpulse = 5.0
 
 [node name="explosiveBarrel3" parent="Props" index="7" instance=ExtResource("31_snp5j")]
 transform = Transform3D(0.602498, 0, -0.798121, 0, 1, 0, 0.798121, 0, 0.602498, 22.7101, 2.06077, 18.4883)
 collision_layer = 0
+burnChance = false
+explosionRadius = 3.0
+explosionImpulse = 5.0
 
 [node name="explosiveBarrel4" parent="Props" index="8" instance=ExtResource("31_snp5j")]
 transform = Transform3D(0.602498, 0, -0.798121, 0, 1, 0, 0.798121, 0, 0.602498, -3.67849, 3.76455, 31.7449)
 collision_layer = 0
+burnChance = false
+explosionRadius = 3.0
+explosionImpulse = 5.0
 
 [node name="explosiveBarrel5" parent="Props" index="9" instance=ExtResource("31_snp5j")]
 transform = Transform3D(0.602498, 0, -0.798121, 0, 1, 0, 0.798121, 0, 0.602498, 13.4463, 3.76455, 30.5147)
 collision_layer = 0
+burnChance = false
+explosionRadius = 3.0
+explosionImpulse = 5.0
 
 [node name="explosiveBarrel6" parent="Props" index="10" instance=ExtResource("31_snp5j")]
 transform = Transform3D(0.602498, 0, -0.798121, 0, 1, 0, 0.798121, 0, 0.602498, 27.6772, 2.1876, 34.9476)
 collision_layer = 0
+burnChance = false
+explosionRadius = 3.0
+explosionImpulse = 5.0
 
 [node name="explosiveBarrel7" parent="Props" index="11" instance=ExtResource("31_snp5j")]
 transform = Transform3D(0.602498, 0, -0.798121, 0, 1, 0, 0.798121, 0, 0.602498, -8.23577, 2.89645, -2.33645)
 collision_layer = 0
+burnChance = false
+explosionRadius = 3.0
+explosionImpulse = 5.0
 
 [node name="aiMarker" parent="Misc/WaypointNodes" index="0" instance=ExtResource("5_bh8tr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.626718, 1.66502, 2.90188)
@@ -629,6 +652,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.3854, 1.66502, 3.90188)
 [connection signal="objectUsed" from="Geometry/navigationRegion3d/PlayerCloset/closetInteraction" to="Geometry/navigationRegion3d/PlayerCloset" method="_onClosetUsed"]
 [connection signal="objectUsed" from="Geometry/navigationRegion3d/csgtruck/worldMapInteract" to="Geometry/navigationRegion3d/csgtruck/worldMapInteract" method="_on_object_used"]
 [connection signal="triggerActivated" from="Props/node3d/pawnTrigger" to="Props/node3d" method="_on_pawn_trigger_trigger_activated"]
-[connection signal="objectUsed" from="Props/interactiveObject" to="Props/interactiveObject" method="_on_object_used"]
 [connection signal="objectUsed" from="Props/interactiveObject" to="Props/interactiveObject" method="spawnSomeEnemies"]
+[connection signal="objectUsed" from="Props/interactiveObject" to="Props/interactiveObject" method="_on_object_used"]
 [connection signal="timeout" from="Props/interactiveObject/timer" to="Props/interactiveObject" method="spawnSomeEnemies"]

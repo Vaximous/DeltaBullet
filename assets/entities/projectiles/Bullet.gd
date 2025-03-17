@@ -12,6 +12,7 @@ func set_projectile_owner(value : Node) -> void:
 	if value is Weapon:
 		max_damage = value.weaponResource.weaponDamage
 		penetration_power = value.weaponResource.bulletPenetration
+		falloff = value.weaponResource.damageFalloff
 	projectile_owner = value
 
 func _ready() -> void:
@@ -19,9 +20,8 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	var hit_data = step(velocity * delta)
+
 	while hit_data.has("col"):
-		if expire_by_distance():
-			return
 		var col : Object = hit_data['col']
 		#print(col)
 		var col_point : Vector3 = hit_data['col_point']
@@ -30,10 +30,10 @@ func _physics_process(delta: float) -> void:
 		last_hit_data = hit_data
 
 		var collision_material : DB_PhysicsMaterial = gameManager.getColliderPhysicsMaterial(col)
-		if collision_material == inside_material:
-			exit_material(hit_data)
-		else:
+		if collision_material != inside_material:
 			enter_material(collision_material, hit_data)
+		else:
+			exit_material(hit_data)
 		#tiny step to move past the collider
 		global_position += velocity.normalized()
 		hit_data = step(velocity.normalized() * remainder)
@@ -41,15 +41,16 @@ func _physics_process(delta: float) -> void:
 func enter_material(material : DB_PhysicsMaterial, hit_data : Dictionary) -> void:
 	#print(">> Entered material %s" % material)
 	inside_material = material
+	#print(material)
 	globalParticles.spawnBulletHolePackedScene(material.bullet_hole, hit_data['col'], hit_data['col_point'], randf_range(0, TAU), hit_data['col_normal'],hit_data['velocity'])
 	var col : Object = hit_data['col']
+	get_damage()
 	if col.has_method(&"hit"):
 		if is_instance_valid(projectile_owner):
 			if projectile_owner is Weapon:
-				col.hit(get_damage(),projectile_owner.weaponOwner,velocity.normalized() * projectile_owner.weaponResource.weaponImpulse,to_global(to_local(hit_data['col_point'])-position))
+				col.hit(get_damage(),projectile_owner.weaponOwner,velocity.normalized() * (falloff.sample(get_travel_progress()*3) * projectile_owner.weaponResource.weaponImpulse),to_global(to_local(hit_data['col_point'])-position))
 		else:
-			#just return for now
-			print("Unaccounted State")
+			return
 	if penetration_power > 0:
 		#var hit = gather_collision_info()
 		#if hit:
@@ -77,8 +78,9 @@ func _add_distance(distance : float) -> void:
 	distance_traveled += distance
 
 func get_damage() -> float:
-	#print("Falloff damage : %s (travel : %s)" % [falloff.sample(get_travel_progress()) * max_damage, get_travel_progress()])
-	return falloff.sample(get_travel_progress()) * max_damage
+	var _falloff = falloff.sample(get_travel_progress()*3) * max_damage
+	#print("Falloff damage : %s (travel : %s)" % [_falloff, get_travel_progress()])
+	return _falloff
 
 
 func _on_flyby_area_body_entered(body: Node3D) -> void:

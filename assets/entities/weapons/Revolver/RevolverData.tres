@@ -1,7 +1,8 @@
-[gd_resource type="Resource" script_class="ItemData" load_steps=9 format=3 uid="uid://f30cnkk8nnpb"]
+[gd_resource type="Resource" script_class="ItemData" load_steps=10 format=3 uid="uid://f30cnkk8nnpb"]
 
 [ext_resource type="Script" uid="uid://b6r8ewrq3qb3y" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="1_1ufyd"]
 [ext_resource type="Texture2D" uid="uid://bado0y6x8is5j" path="res://assets/textures/crosshair/crosshair008.png" id="1_22a00"]
+[ext_resource type="Curve" uid="uid://ba3idydj71l2p" path="res://assets/resources/weaponCurves/mediumRange.tres" id="1_threb"]
 [ext_resource type="Resource" uid="uid://chv5hapb5gdq5" path="res://assets/entities/weapons/Revolver/revolverDisplay.tres" id="1_v5w1c"]
 [ext_resource type="AudioStream" uid="uid://b6i2h3dr8mjg1" path="res://assets/sounds/weapons/revolver/Revolver draw_1.wav" id="2_0hsyh"]
 [ext_resource type="AudioStream" uid="uid://bb0smjbok276g" path="res://assets/sounds/weapons/revolver/Revolver draw_2.wav" id="3_threb"]
@@ -31,6 +32,7 @@ bulletPenetration = 1000.0
 weaponImpulse = 70.0
 weaponShots = 1
 ammoConsumption = 1
+damageFalloff = ExtResource("1_threb")
 useCustomCrosshairSize = false
 crosshairSizeOverride = Vector2(0.8, 0.8)
 forcedCrosshair = ExtResource("1_22a00")

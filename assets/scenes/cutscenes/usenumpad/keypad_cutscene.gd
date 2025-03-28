@@ -17,7 +17,7 @@ var cutscene_return_value : Variant = null
 
 func do() -> Variant:
 	old_mouse_mode = Input.mouse_mode
-	Input.mouse_mode = Input.MOUSE_MODE_CONFINED_HIDDEN
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 	var v = get_viewport()
 	if v is Window:

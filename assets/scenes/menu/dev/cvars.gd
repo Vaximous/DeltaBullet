@@ -158,7 +158,7 @@ func spawnPawn(walk:bool = false,position : Vector3 = Vector3.INF) -> void:
 			pawn.componentHolder.add_child(controller)
 			pawn.inputComponent = controller
 			pawn.checkComponents()
-			controller.pawnType = 1
+#			controller.pawnType = 1
 		pawn.fixRot()
 		if gameManager.debugEnabled:
 			Console.add_console_message("spawned %s at %s" % [pawn, pawn.global_position])

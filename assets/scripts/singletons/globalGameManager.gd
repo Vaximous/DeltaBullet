@@ -3,30 +3,7 @@ extends Node
 var bloodSpurts : Array[StandardMaterial3D] = [preload("res://assets/materials/blood/spurts/bloodSpurt.tres"),preload("res://assets/materials/blood/spurts/bloodSpurt2.tres"),preload("res://assets/materials/blood/spurts/bloodSpurt3.tres"),preload("res://assets/materials/blood/spurts/bloodSpurt4.tres"),preload("res://assets/materials/blood/spurts/bloodSpurt5.tres"),preload("res://assets/materials/blood/spurts/bloodSpurt6.tres"),preload("res://assets/materials/blood/spurts/bloodSpurt7.tres")]
 var pawnScene = preload("res://assets/entities/pawnEntity/pawnEntity.tscn").duplicate()
 var menuScenes = [preload("res://assets/scenes/menu/menuScenes/menuscene1.tscn"),preload("res://assets/scenes/menu/menuScenes/menuScene2.tscn"),preload("res://assets/scenes/menu/menuScenes/menuScene3.tscn")]
-var preloadTextureDirectories : Array = [
-	"res://assets/textures/blood/bloodPool/",
-	"res://assets/textures/blood/bloodSplat/",
-	"res://assets/textures/blood/bloodSpot/",
-	"res://assets/textures/bullet/holes/default/",
-	"res://assets/textures/bullet/holes/flesh/",
-	"res://assets/textures/crosshair/",
-	"res://assets/textures/Developer_Textures/Dark/",
-	"res://assets/textures/Developer_Textures/Green/",
-	"res://assets/textures/Developer_Textures/Light/",
-	"res://assets/textures/Developer_Textures/Orange/",
-	"res://assets/textures/Developer_Textures/Purple/",
-	"res://assets/textures/Developer_Textures/Red/",
-	"res://assets/textures/pawn_tex/",
-	"res://assets/textures/smoke/",
-	"res://assets/textures/urban/",
-	"res://assets/textures/ui/",
-	"res://assets/textures/areas/airduct/",
-	"res://assets/textures/areas/carpet/",
-	"res://assets/textures/areas/ceiling/",
-	"res://assets/textures/areas/marble/",
-	"res://assets/textures/areas/plaster/",
-	"res://assets/textures/areas/wood/"
-]
+
 signal freeOrphans
 #Global Sound Player
 var soundPlayer = AudioStreamPlayer.new()
@@ -68,7 +45,6 @@ var temporaryPawnInfo : Array
 var playerPosition : Vector3 = Vector3.ZERO
 var playerPawns : Array[BasePawn] = []
 var controllerSens : float = 0.015
-var mouseSens : float = 0.0020
 var deadzone : float = 0.1
 var defaultFOV : int = 90
 
@@ -84,6 +60,7 @@ var dialogueCamLerpSpeed:float = 5.0
 var world : WorldScene
 var pauseMenu : PauseMenu
 const bloodDecal = preload("res://assets/entities/bloodSplat/bloodSplat1.tscn")
+const bloodDrop = preload("res://assets/entities/emitters/bloodDroplet/bloodDrop.tscn")
 
 #Multiplayer
 var isMultiplayerGame:bool = false
@@ -92,6 +69,8 @@ const dialogue_cam : PackedScene = preload("res://assets/entities/camera/Dialogu
 
 func _enter_tree() -> void:
 	get_tree().connect("node_added",orphanedData.append)
+	decalAdded.connect(decalAmountCheck)
+	physicsEntityAdded.connect(physEntityCheck)
 
 # Called when the node enters the scene tree for the first time.
 func _ready()->void:
@@ -106,12 +85,11 @@ func _ready()->void:
 	if richPresenceEnabled:
 		pass
 
-	decalAdded.connect(decalAmountCheck)
-	physicsEntityAdded.connect(physEntityCheck)
 
 func _process(delta: float) -> void:
 	#Set audio pitch to match timescale
 	AudioServer.playback_speed_scale = Engine.time_scale
+	#physEntityCheck()
 	#DisplayServer.window_set_title(ProjectSettings.get_setting("application/config/name"))
 
 func burnTarget(node:Node3D,burnTime:float=10,burnDamage:float=3.5):
@@ -274,6 +252,8 @@ func restartScene()->void:
 	playerPawns.clear()
 	targetedEnemies.clear()
 	allPawns.clear()
+	physicsEntities.clear()
+	decals.clear()
 	musicManager.fade_all_audioplayers_out(0.5)
 	await Fade.fade_out(0.3, Color(0,0,0,1),"GradientVertical",false,true).finished
 	get_tree().reload_current_scene()
@@ -371,6 +351,16 @@ func castRay(cam : Camera3D, range : float = 50000, mask := 0b10111, exceptions 
 	return state.intersect_ray(params)
 
 
+func createDroplet(position:Vector3, velocity : Vector3 = Vector3.ZERO, amount : int = 1):
+	if is_instance_valid(world):
+		for i in amount:
+			var droplet : BloodDroplet = bloodDrop.instantiate()
+			world.worldParticles.add_child(droplet)
+			droplet.global_position = position
+			droplet.velocity += velocity
+
+
+
 func getEventSignal(event : StringName) -> Signal:
 	event = &"__gameEventSignals__" + str(event)
 	if !has_user_signal(event):
@@ -459,12 +449,12 @@ func hideHUD()->void:
 
 
 func loadWorld(worldscene:String, fadein:bool = false)->void:
-	decals.clear()
-	physicsEntities.clear()
 	saveTemporaryPawnInfo()
 	targetedEnemies.clear()
 	playerPawns.clear()
 	get_tree().change_scene_to_file("res://assets/scenes/menu/loadingscreen/emptyLoaderScene.tscn")
+	decals.clear()
+	physicsEntities.clear()
 	await get_tree().process_frame
 	allPawns.clear()
 	#freeOrphanNodes()
@@ -678,16 +668,7 @@ func createSplat(gposition:Vector3 = Vector3.ZERO,normal:Vector3 = Vector3.ZERO,
 		#print((normal).cross(Vector3.UP))
 		if parent.has_node(_b.get_path()) and _b.is_inside_tree():
 			_b.position = gposition
-			if normal == Vector3(0,1,0):
-				_b.look_at(gposition + normal.normalized(), Vector3.RIGHT)
-			elif normal == Vector3(0,-1,0):
-				_b.look_at(gposition + normal.normalized(), Vector3.RIGHT)
-			else:
-				_b.look_at(normal - gposition)
-
-		#if !Vector3.UP.is_equal_approx(normal.normalized()) and !normal.normalized().is_equal_approx(Vector3.ZERO):
-			#_b.transform.basis = _b.transform.basis.looking_at(normal.normalized())
-		#_b.rotate(normal.normalized(),randf_range(0, 2)*PI)
+			_b.look_at(_b.global_transform.origin + normal, Vector3.UP)
 			return _b
 		else:
 			_b.queue_free()
@@ -795,8 +776,11 @@ func create_surface_transform(origin : Vector3, incoming_vector : Vector3, surfa
 
 
 func createGib(position:Vector3, velocity : Vector3 = Vector3.ONE)->FakePhysicsEntity:
+	if physicsEntities.size() >= UserConfig.game_max_physics_entities:
+		return
 	var gib = [preload("res://assets/entities/gore/dismemberGib.tscn"),preload("res://assets/entities/gore/dismemberGib2.tscn")].pick_random()
 	var inst = gib.instantiate()
+	physicsEntityAdded.emit()
 	inst.velocity.y = velocity.y * randf_range(5, 16)
 	inst.velocity.x = velocity.x * randf_range(-2, 2)
 	inst.velocity.z = velocity.z * randf_range(-2, 2)
@@ -861,6 +845,6 @@ func decalAmountCheck()->void:
 
 
 func physEntityCheck()->void:
-	while physicsEntities.size() > UserConfig.game_max_physics_entities:
+	while physicsEntities.size() >= UserConfig.game_max_physics_entities:
 		physicsEntities[0].queue_free()
 		physicsEntities.remove_at(0)

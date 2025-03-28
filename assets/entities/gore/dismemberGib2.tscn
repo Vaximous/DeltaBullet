@@ -221,7 +221,6 @@ collision_layer = 0
 script = ExtResource("1_ikhea")
 mesh = NodePath("fleshBit")
 collisionSounds = [NodePath("audioStreamPlayer3d")]
-continuousCollision = true
 metadata/_custom_type_script = "uid://mpu0audo4bfj"
 
 [node name="collisionShape3d" type="CollisionShape3D" parent="."]

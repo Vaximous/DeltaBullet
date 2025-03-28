@@ -55,6 +55,7 @@ var interactVisible:bool = false:
 # Called when the node enters the scene tree for the first time.
 func _ready()->void:
 	enableHud()
+	%scope.modulate = Color.TRANSPARENT
 	gameManager.getEventSignal("playerDied").connect(gameManager.onPlayerDeath)
 	gameManager.getEventSignal(&"playerShot").connect(spawnBulletCasing)
 	#Dialogic.timeline_started.connect(disableHud)
@@ -137,6 +138,21 @@ func fadeInteractHudOut()->void:
 	interactTween = create_tween()
 	interactTween.tween_property(interactHud,"modulate",Color.TRANSPARENT,0.25).set_ease(defaultEaseType).set_trans(defaultTransitionType)
 
+func disableScope()->void:
+	if hudTween:
+		hudTween.kill()
+	hudTween = create_tween()
+	hudTween.parallel().tween_property(%scope,"modulate",Color.TRANSPARENT,0.10)
+	hudTween.parallel().tween_property(crosshair,"self_modulate",Color.WHITE,0.25)
+	camOwner.set_meta("scopedAiming",true)
+
+func enableScope()->void:
+	if hudTween:
+		hudTween.kill()
+	hudTween = create_tween()
+	hudTween.parallel().tween_property(%scope,"modulate",Color.WHITE,0.05)
+	hudTween.parallel().tween_property(crosshair,"self_modulate",Color.TRANSPARENT,0.25)
+	camOwner.set_meta("scopedAiming",false)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta)->void:

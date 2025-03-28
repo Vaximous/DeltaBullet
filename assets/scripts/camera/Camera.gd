@@ -279,11 +279,16 @@ func _physics_process(delta)->void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MouseMode.MOUSE_MODE_CAPTURED:
-		motionX = rad_to_deg(-event.relative.x * gameManager.mouseSens)
-		motionY = rad_to_deg(-event.relative.y * gameManager.mouseSens)
-		castLerp = Vector3(motionY* recoilLookSpeed+0.01,motionX* recoilLookSpeed,0)
-		camPivot.rotation_degrees.y += motionX
-		vertical.rotation_degrees.x += motionY
+		if is_instance_valid(cameraData):
+			if !has_meta("scopedAiming") or get_meta("scopedAiming",false):
+				motionX = deg_to_rad(-event.relative.x * UserConfig.game_control_mouseSens)
+				motionY = deg_to_rad(-event.relative.y * UserConfig.game_control_mouseSens)
+			else:
+				motionX = deg_to_rad(-event.relative.x * UserConfig.game_control_ScopedMouseSens)
+				motionY = deg_to_rad(-event.relative.y * UserConfig.game_control_ScopedMouseSens)
+		castLerp = Vector3(motionY* recoilLookSpeed*20,motionX* recoilLookSpeed*20,0)
+		camPivot.rotate_y(motionX)
+		vertical.rotate_x(motionY)
 		#Lock Cam
 		vertical.rotation.x = clamp(vertical.rotation.x, deg_to_rad(-88), deg_to_rad(88))
 

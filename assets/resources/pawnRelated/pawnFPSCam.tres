@@ -1,10 +1,17 @@
 [gd_resource type="Resource" script_class="CameraData" load_steps=2 format=3 uid="uid://hmfvk3i3jpgk"]
 
-[ext_resource type="Script" path="res://assets/resources/customResources/cameraData/cameraData.gd" id="1_jfyyt"]
+[ext_resource type="Script" uid="uid://sc514jx5wxy6" path="res://assets/resources/customResources/cameraData/cameraData.gd" id="1_jfyyt"]
 
 [resource]
 script = ExtResource("1_jfyyt")
+isHudEnabled = true
+useZoomFOV = true
+zoomSpringAmount = 2.0
 cameraOffset = Vector3(0, 0.17, -0.235)
 camLerpSpeed = 125.0
 itemEquipOffset = Vector3(0, 0, 0)
 itemEquipLerpSpeed = 5.0
+zoomAmount = 25.0
+zoomInSpeed = 16.0
+zoomOutSpeed = 16.0
+zoomSpeed = 5.0

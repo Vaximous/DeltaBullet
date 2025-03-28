@@ -11,7 +11,7 @@ script = ExtResource("3_xdnty")
 itemName = "Grenade"
 canCook = true
 cookTime = 4.0
-throwableDamage = 100.0
+throwableDamage = 150.0
 countdownVisual = true
 metadata/_custom_type_script = ExtResource("3_xdnty")
 

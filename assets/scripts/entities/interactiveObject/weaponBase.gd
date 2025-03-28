@@ -100,9 +100,20 @@ var defaultBulletTrail = load("res://assets/entities/bulletTrail/bulletTrail.tsc
 			if value:
 				#weaponOwner.setLeftHandFilter(weaponResource.useLeftHandAiming)
 				weaponOwner.setRightHandFilter(weaponResource.useRightHandAiming)
+				if weaponResource.scopedWeapon and weaponOwner.isPlayerPawn():
+					weaponOwner.setFirstperson()
+					weaponOwner.attachedCam.hud.enableScope()
+					weaponOwner.attachedCam.aimFOV = weaponResource.scopedFOV
+				else:
+					if !weaponResource.scopedWeapon and weaponOwner.isPlayerPawn() or isReloading and weaponOwner.isPlayerPawn():
+						weaponOwner.setThirdperson()
+						weaponOwner.attachedCam.hud.disableScope()
 			else:
 			#	weaponOwner.setLeftHandFilter(weaponResource.useLeftHandIdle)
 				weaponOwner.setRightHandFilter(weaponResource.useRightHandIdle)
+				if weaponResource.scopedWeapon and weaponOwner.isPlayerPawn()  or isReloading and weaponOwner.isPlayerPawn():
+					weaponOwner.setThirdperson()
+					weaponOwner.attachedCam.hud.disableScope()
 		if value == true:
 			aimingStart.emit()
 			weaponOwner.isRunning = false

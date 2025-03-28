@@ -1,16 +1,13 @@
 extends ThrowableBase
 @export var explosionRadius : float = 65.0
-@export var explosionImpulse :float  = 10.0
+@export var explosionImpulse :float  = 20.0
 
 func createExplosion()->void:
-	var explo = preload("res://assets/entities/explosion/explosionArea.tscn").instantiate()
+	var explo : ExplosionArea = ExplosionArea.createExplosionArea(explosionRadius,throwableResource.throwableDamage,explosionImpulse,get_node_or_null(dealer.get_path()))
 	gameManager.world.worldMisc.add_child(explo)
-	explo.explosionLOS = true
+	explo.explosionFalloff = load("res://assets/resources/defaultExplosionCurve.tres")
 	explo.global_position = global_position
-	explo.explosionRadius = explosionRadius
-	explo.explosionImpulse = explosionImpulse
-	explo.explosionDamage = throwableResource.throwableDamage
-	explo.dealer = dealer
+	explo.doesBurn = false
 	explo.explode()
 
 

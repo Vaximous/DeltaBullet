@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://bm8ylk1xdojch"]
+
+[ext_resource type="Script" uid="uid://cmkwdvxjfsb4l" path="res://assets/entities/emitters/bloodDroplet/bloodDroplets.gd" id="1_250ge"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_mq2q0"]
+radius = 0.08
+
+[sub_resource type="SphereMesh" id="SphereMesh_250ge"]
+radius = 0.055
+height = 0.105
+
+[node name="bloodDrop" type="CharacterBody3D"]
+collision_layer = 0
+script = ExtResource("1_250ge")
+metadata/_custom_type_script = "uid://cmkwdvxjfsb4l"
+
+[node name="collisionShape3d" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_mq2q0")
+
+[node name="meshInstance3d" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("SphereMesh_250ge")

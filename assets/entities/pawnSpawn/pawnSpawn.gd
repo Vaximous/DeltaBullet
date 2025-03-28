@@ -149,8 +149,8 @@ func spawnPawn(forceParent : Node = null, _params : PawnSpawnParameters = null) 
 			pawn.inputComponent = controller
 			pawn.checkComponents()
 			pawn.fixRot()
-			controller.pawnType = aiType
-			controller.aiSkill = aiSkill
+			#controller.pawnType = aiType
+			#controller.aiSkill = aiSkill
 			gameManager.allPawns.append(pawn)
 			#controller.hatedPawnGroups = hatedGroups
 			pawn.add_to_group(spawnGroup)
@@ -175,17 +175,13 @@ func spawnPawn(forceParent : Node = null, _params : PawnSpawnParameters = null) 
 					pawn.checkItems()
 
 			#AI Flags
-			if dialogueStartingCam != null:
-				controller.dialogueStartingCamera = dialogueStartingCam
-			if dialogueName != "" or " ":
-				controller.dialogueString = dialogueName
 			if forceAnimation:
 				pawn.forceAnimation = forceAnimation
 				pawn.animationToForce = animationToForce
-			if isInteractable:
-				controller.setInteractablePawn(true)
-			if equipWeaponOnSpawn:
-				pawn.currentItemIndex = weaponToEquip
+			#if isInteractable:
+				#controller.setInteractablePawn(true)
+			#if equipWeaponOnSpawn:
+				#pawn.currentItemIndex = weaponToEquip
 			if pawnColor != Color(1.0,0.74,0.44,1.0):
 				pawn.pawnColor = pawnColor
 			pawn.healthComponent.defaultHP = pawnHP

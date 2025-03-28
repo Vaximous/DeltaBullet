@@ -145,9 +145,10 @@ func createSpurtInstance(globalPosition : Vector3)->void:
 	spurtInstance.emitting = true
 
 func createContactBlood(state:PhysicsDirectBodyState3D)->void:
-		var dec = gameManager.createSplat(state.get_contact_collider_position(0),state.get_contact_local_normal(0))
-		createSpurtInstance(state.get_contact_collider_position(0))
-		print(state.get_contact_local_normal(0))
+		gameManager.createDroplet(state.get_contact_collider_position(0),currentVelocity* 0.15)
+		#var dec = gameManager.createSplat(state.get_contact_collider_position(0),state.get_contact_local_normal(0))
+		#createSpurtInstance(state.get_contact_collider_position(0))
+		#print(state.get_contact_local_normal(0))
 
 func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 	boneState = state.sleeping
@@ -290,7 +291,9 @@ func doPulverizeEffect()->void:
 		collision_layer = 0
 		collision_mask = 1
 		joint_type = JOINT_TYPE_NONE
-		gameManager.sprayBlood(global_position,randi_range(1,5),20,1.2)
+		for i in randi_range(1,6):
+			gameManager.createDroplet(global_position,currentVelocity*0.25)
+		#gameManager.sprayBlood(global_position,randi_range(1,5),20,1.2)
 		#mass = 0.01
 		for childrenIDs in getBoneChildren(ragdoll.ragdollSkeleton,self):
 			var bone

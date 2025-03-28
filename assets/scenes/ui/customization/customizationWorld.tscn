@@ -45,7 +45,7 @@ material = SubResource("StandardMaterial3D_kfmsv")
 environment = SubResource("Environment_e7eu0")
 
 [node name="pawnEntity" parent="." instance=ExtResource("1_ch2jg")]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0.284462, -0.45583)
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0.220544, -0.45583)
 
 [node name="spotLight3d" type="SpotLight3D" parent="."]
 transform = Transform3D(0.992265, 0.0714207, -0.101535, -7.34382e-09, 0.817919, 0.575333, 0.124138, -0.570883, 0.811592, -1.80485, 3.1419, 1.60217)

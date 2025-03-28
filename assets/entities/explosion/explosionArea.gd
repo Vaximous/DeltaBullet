@@ -1,7 +1,9 @@
 @tool
+class_name ExplosionArea
 extends Area3D
 var dealer = null
 var explosionTween : Tween
+const explosion : PackedScene = preload("res://assets/entities/explosion/explosionArea.tscn")
 @onready var explosionEffect = $explosionEffect
 @onready var explosionPlayer : AudioStreamPlayer3D = $explosionSound
 @onready var collisionShape : CollisionShape3D = $collisionShape3d
@@ -24,10 +26,18 @@ var explosionTween : Tween
 		explosionRadius = value
 		if is_instance_valid(collisionShape):
 			collisionShape.shape.radius = explosionRadius
+@export var explosionFalloff : Curve
 
 
-
-
+static func createExplosionArea(radius : float = 10,dmg : float = 50, impulse:float = 10,dealer:Node3D = null,losEnabled:bool = true,falloff:Curve = load("res://assets/resources/defaultExplosionCurve.tres")):
+	var _explosion : Area3D = explosion.instantiate()
+	_explosion.explosionRadius = radius
+	_explosion.explosionDamage = dmg
+	_explosion.explosionImpulse = impulse
+	_explosion.explosionFalloff = falloff
+	_explosion.explosionLOS = losEnabled
+	_explosion.dealer = dealer
+	return _explosion
 
 func explosionRayCheck(object:Node3D):
 	if !explosionLOS:
@@ -56,19 +66,25 @@ func explosionRayCheck(object:Node3D):
 
 func applyHit(object:Node3D):
 	if is_instance_valid(object) and object is not FakePhysicsEntity:
+		var distance : float = global_position.distance_to(object.global_position)
+		var dmgAmnt: float = lerpf(2,explosionDamage,distance/explosionRadius)
+		var impAmnt: float = lerpf(2,explosionImpulse,distance/explosionRadius)
+		var dmgClamped : float = clampf(dmgAmnt,2,dmgAmnt)
+		var impClamped : float = clampf(impAmnt,2,impAmnt)
 		var burnChance : bool = [true,false].pick_random()
 		if burnChance and object is not FakePhysicsEntity and doesBurn:
 			randomize()
 			gameManager.burnTarget(object,randf_range(3,30),0.8)
 
 		if object.has_method("velocity"):
-			object.velocity += -(global_position-object.global_position).normalized() * explosionImpulse
+			object.velocity += -(global_position-object.global_position).normalized() * int(impAmnt)
 
 		if object.has_method("hit"):
 			if object is RagdollBone:
 				object.canBleed = false
 				#object.set_meta("exploded",true)
-			object.hit(explosionDamage,dealer,-(global_position-object.global_position).normalized() * explosionImpulse,Vector3.ZERO)
+			#print(dmgClamped)
+			object.hit(dmgClamped,dealer,-(global_position-object.global_position).normalized() * int(impAmnt),Vector3.ZERO)
 
 func explode()->void:
 	if explosionTween:

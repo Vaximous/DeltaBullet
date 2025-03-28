@@ -2,7 +2,7 @@ extends Node
 
 #game configs
 var game_max_decals = 64
-var game_max_physics_entities = 64
+var game_max_physics_entities = 0
 var game_slow_motion_death : bool = true
 var game_lowHP_ambience : bool = false
 var game_show_fps : bool = false
@@ -55,6 +55,9 @@ enum WORLD_DETAILS{VERY_FEW, LESS, NORMAL}
 var graphics_particle_amount : PARTICLE_COUNT = PARTICLE_COUNT.NORMAL
 var graphics_world_details : WORLD_DETAILS = WORLD_DETAILS.NORMAL
 
+##controls
+var game_control_mouseSens : float = 0.0020
+var game_control_ScopedMouseSens : float = 0.012
 
 var configs_loaded : bool = false
 signal finish_loading_configs

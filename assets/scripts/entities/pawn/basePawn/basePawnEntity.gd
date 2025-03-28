@@ -250,7 +250,9 @@ var lastFrameOnFloor : int = -INF
 @export_subgroup("Throwables")
 @export var throwForce : float = 35.0
 var throwableItem : PackedScene = load("res://assets/entities/throwables/grenade/Grenade.tscn")
-var heldThrowable : ThrowableBase
+var heldThrowable : ThrowableBase:
+	set(value):
+		heldThrowable = value
 var throwableAmount : int = 5
 var isArmingThrowable : bool = false:
 	set(value):
@@ -314,6 +316,8 @@ var currentItem : InteractiveObject = null
 					#Dialogic.VAR.set('playerHasWeaponEquipped',false)
 					attachedCam.itemEquipOffsetToggle = false
 					attachedCam.hud.getCrosshair().setCrosshair(null)
+					attachedCam.hud.disableScope()
+					setThirdperson()
 					#attachedCam.resetCamCast()
 @export var purchasedClothing : Array
 
@@ -1074,6 +1078,14 @@ func armThrowable()->void:
 		animationTree.set("parameters/leftArmed_Throw/request",AnimationNodeOneShot.ONE_SHOT_REQUEST_NONE)
 		isArmingThrowable = true
 		isThrowing = false
+
+func disarmThrowable()->void:
+	if isArmingThrowable:
+		animationTree.set("parameters/leftArmed_Throw/request",AnimationNodeOneShot.ONE_SHOT_REQUEST_FADE_OUT)
+		canThrowThrowable = true
+		isThrowing = false
+		isArmingThrowable = false
+
 
 func throwThrowable()->void:
 	if is_instance_valid(heldThrowable):

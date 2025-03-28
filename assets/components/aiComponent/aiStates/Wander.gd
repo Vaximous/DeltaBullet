@@ -4,22 +4,20 @@ var targetPosition : Vector3 = Vector3.ZERO:
 	set(value):
 		if is_instance_valid(aiOwner.pawnOwner) and !aiOwner.pawnOwner.isPawnDead and is_instance_valid(gameManager.world) and aiOwner.is_ai_processing():
 			targetPosition = value
-			if is_current_state():
-				aiOwner.goToPosition(targetPosition)
+			aiOwner.targetPosition = value
+
 @export var aiOwner : AIComponent:
 	set(value):
 		aiOwner = value
 		if is_current_state() and is_instance_valid(aiOwner.pawnOwner) and !aiOwner.pawnOwner.isPawnDead and is_instance_valid(gameManager.world) and aiOwner.is_ai_processing():
 			targetPosition = getRandomNavPoints().global_position
-			aiOwner.targetPathReached.connect(finishedPath)
+			#aiOwner.targetPathReached.connect(finishedPath)
 
 func on_enter()->void:
 	if is_instance_valid(aiOwner.pawnOwner) and !aiOwner.pawnOwner.isPawnDead and is_instance_valid(gameManager.world) and aiOwner.is_ai_processing():
 		var navpoint = getRandomNavPoints()
 		if navpoint:
 			targetPosition = navpoint.global_position
-		if !aiOwner.targetPathReached.is_connected(finishedPath):
-			aiOwner.targetPathReached.connect(finishedPath)
 
 
 func getRandomNavPoints()->AIMarker:

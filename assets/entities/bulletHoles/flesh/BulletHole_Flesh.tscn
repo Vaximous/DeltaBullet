@@ -833,6 +833,7 @@ attenuation_filter_db = 0.0
 
 [node name="bloodSpurt" parent="." index="2" instance=ExtResource("6_b318v")]
 top_level = true
+emitting = true
 
 [node name="impactParticle" type="GPUParticles3D" parent="." index="3"]
 emitting = false

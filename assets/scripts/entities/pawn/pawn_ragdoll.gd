@@ -162,6 +162,7 @@ func doRagdollHeadshot(pawn:BasePawn = null)-> void:
 	for x in randi_range(2,7):
 		var gib = gameManager.createGib(headBone.global_position)
 		if is_instance_valid(pawn):
+			gameManager.createDroplet(headBone.global_position,pawn.velocity*0.25)
 			gib.velocity += pawn.velocity
 	var destroyedHeads : Array = [preload("res://assets/models/pawn/male/headDestroyed1.tres"),preload("res://assets/models/pawn/male/headDestroyed2.tres"),preload("res://assets/models/pawn/male/headDestroyed3.tres")]
 	headshotsound.play()
@@ -177,7 +178,7 @@ func doRagdollHeadshot(pawn:BasePawn = null)-> void:
 			if clothes.clothingType == 0 or clothes.clothingType == 1:
 				clothes.queue_free()
 				checkClothingHider()
-	gameManager.sprayBlood(headBone.global_position,randi_range(1,5),50,1.2)
+
 
 func setPawnMaterial(material)-> void:
 	for mesh in ragdollSkeleton.get_children():

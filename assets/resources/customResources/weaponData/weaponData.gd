@@ -35,10 +35,17 @@ var defaultBulletTrail = load("res://assets/entities/bulletTrail/bulletTrail.tsc
 @export var ammoConsumption : int = 1
 ## Defining the damage falloff if you'd want a weapon with a less or more pronounced falloff
 @export var damageFalloff : Curve = preload("res://assets/entities/projectiles/linear_falloff_curve.tres")
+##Scope
+@export_subgroup("Scope")
+#Is this weapon a scoped weapon?
+@export var scopedWeapon : bool = false
+@export var scopedFOV : int = 25
+##Scope Texture
+@export var scopedTexture : Texture2D = load("res://assets/textures/ui/sniperscope.png")
 ## What crosshair should the weapon force?
 @export_subgroup("Crosshair")
 @export var useCustomCrosshairSize:bool = false
-@export var crosshairSizeOverride : Vector2 = Vector2(0.8,0.8)
+@export var crosshairSizeOverride : float = 0.8
 @export var forcedCrosshair : Texture2D
 @export_subgroup("Recoil")
 @export var useFOV:bool = false

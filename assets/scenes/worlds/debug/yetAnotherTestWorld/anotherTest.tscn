@@ -55,11 +55,11 @@ colors = PackedColorArray(0, 0, 0, 1, 0.996078, 0.941176, 0.811765, 1)
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_iun5n"]
 gradient = SubResource("Gradient_6voip")
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_eaho3"]
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_twjgx"]
 panorama = ExtResource("4_7ph80")
 
 [sub_resource type="Sky" id="Sky_nj1fe"]
-sky_material = SubResource("PanoramaSkyMaterial_eaho3")
+sky_material = SubResource("PanoramaSkyMaterial_twjgx")
 
 [sub_resource type="Environment" id="Environment_a8ts2"]
 background_mode = 2
@@ -746,9 +746,6 @@ explosionImpulse = 5.0
 [node name="explosiveBarrel2" parent="Props" index="6" instance=ExtResource("31_snp5j")]
 transform = Transform3D(0.602498, 0, -0.798121, 0, 1, 0, 0.798121, 0, 0.602498, -1.50253, 2.66202, 14.6312)
 collision_layer = 0
-burnChance = false
-explosionRadius = 58.655
-explosionImpulse = 5.0
 
 [node name="explosiveBarrel3" parent="Props" index="7" instance=ExtResource("31_snp5j")]
 transform = Transform3D(0.602498, 0, -0.798121, 0, 1, 0, 0.798121, 0, 0.602498, 22.7101, 2.06077, 18.4883)
@@ -845,6 +842,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.3854, 1.66502, 3.90188)
 [connection signal="objectUsed" from="Geometry/navigationRegion3d/PlayerCloset/closetInteraction" to="Geometry/navigationRegion3d/PlayerCloset" method="_onClosetUsed"]
 [connection signal="objectUsed" from="Geometry/navigationRegion3d/csgtruck/worldMapInteract" to="Geometry/navigationRegion3d/csgtruck/worldMapInteract" method="_on_object_used"]
 [connection signal="triggerActivated" from="Props/node3d/pawnTrigger" to="Props/node3d" method="_on_pawn_trigger_trigger_activated"]
-[connection signal="objectUsed" from="Props/interactiveObject" to="Props/interactiveObject" method="_on_object_used"]
 [connection signal="objectUsed" from="Props/interactiveObject" to="Props/interactiveObject" method="spawnSomeEnemies"]
+[connection signal="objectUsed" from="Props/interactiveObject" to="Props/interactiveObject" method="_on_object_used"]
 [connection signal="timeout" from="Props/interactiveObject/timer" to="Props/interactiveObject" method="spawnSomeEnemies"]

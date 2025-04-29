@@ -1,5 +1,6 @@
 extends StateMachineState
 @export_category("Wander State")
+var resetCount = 0
 var targetPosition : Vector3 = Vector3.ZERO:
 	set(value):
 		if is_instance_valid(aiOwner.pawnOwner) and !aiOwner.pawnOwner.isPawnDead and is_instance_valid(gameManager.world) and aiOwner.is_ai_processing():
@@ -25,6 +26,17 @@ func getRandomNavPoints()->AIMarker:
 		return gameManager.world.getWaypoints(0).pick_random()
 	else:
 		return null
+
+func on_ai_process(_delta,ai_delta):
+	super(aiOwner.get_and_update_ai_process_delta(Time.get_ticks_msec()),aiOwner.get_and_update_ai_process_delta(Time.get_ticks_msec()))
+
+	if AiManager.framesSinceRecalc >= AiManager.framesRecalculation and aiOwner.navigationAgent.is_navigation_finished():
+		resetCount +=1
+		if resetCount >=10:
+			var navpoint = getRandomNavPoints()
+			await get_tree().create_timer(randf_range(0.5,5)).timeout
+			if navpoint:
+				targetPosition = navpoint.global_position
 
 
 func finishedPath()->void:

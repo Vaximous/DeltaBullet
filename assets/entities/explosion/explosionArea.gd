@@ -36,7 +36,10 @@ static func createExplosionArea(radius : float = 10,dmg : float = 50, impulse:fl
 	_explosion.explosionImpulse = impulse
 	_explosion.explosionFalloff = falloff
 	_explosion.explosionLOS = losEnabled
-	_explosion.dealer = dealer
+	if is_instance_valid(dealer):
+		_explosion.dealer = dealer
+	else:
+		_explosion.dealer = null
 	return _explosion
 
 func explosionRayCheck(object:Node3D):
@@ -65,26 +68,24 @@ func explosionRayCheck(object:Node3D):
 	return result
 
 func applyHit(object:Node3D):
-	if is_instance_valid(object) and object is not FakePhysicsEntity:
+	if is_instance_valid(object) and object is not FakePhysicsEntity and object is not BloodDroplet:
 		var distance : float = global_position.distance_to(object.global_position)
 		var dmgAmnt: float = lerpf(2,explosionDamage,distance/explosionRadius)
-		var impAmnt: float = lerpf(2,explosionImpulse,distance/explosionRadius)
 		var dmgClamped : float = clampf(dmgAmnt,2,dmgAmnt)
-		var impClamped : float = clampf(impAmnt,2,impAmnt)
 		var burnChance : bool = [true,false].pick_random()
 		if burnChance and object is not FakePhysicsEntity and doesBurn:
 			randomize()
 			gameManager.burnTarget(object,randf_range(3,30),0.8)
 
 		if object.has_method("velocity"):
-			object.velocity += -(global_position-object.global_position).normalized() * int(impAmnt)
+			object.velocity += -(global_position-object.global_position).normalized() * explosionImpulse
 
 		if object.has_method("hit"):
 			if object is RagdollBone:
 				object.canBleed = false
 				#object.set_meta("exploded",true)
 			#print(dmgClamped)
-			object.hit(dmgClamped,dealer,-(global_position-object.global_position).normalized() * int(impAmnt),Vector3.ZERO)
+			object.hit(dmgClamped,dealer,-(global_position-object.global_position).normalized() * explosionImpulse,Vector3.ZERO)
 
 func explode()->void:
 	if explosionTween:
@@ -111,7 +112,7 @@ func explode()->void:
 
 
 func _on_body_entered(body: Node3D) -> void:
-	if body is FakePhysicsEntity:
+	if body is FakePhysicsEntity or body is BloodDroplet:
 		body.queue_free()
 
 	if !explosionLOS:

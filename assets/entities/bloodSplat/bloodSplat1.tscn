@@ -38,13 +38,16 @@ var splatTween : Tween
 #var bloodNormals : Array = [\"res://assets/textures/blood/bloodSplat/blood1_n.png\",\"res://assets/textures/blood/bloodSplat/blood2_n.png\",\"res://assets/textures/blood/bloodSplat/blood3_n.png\",\"res://assets/textures/blood/bloodSplat/blood4_n.png\"]
 # Called when the node enters the scene tree for the first time.
 
-func _exit_tree() -> void:
-	gameManager.decals.erase(self)
+
+
+func _enter_tree() -> void:
+	#gameManager.decals.erase(self)
+	#gameManager.decalAmountCheck()
+	pass
 
 func _ready()->void:
-	gameManager.decals.append(self)
-	gameManager.decalAdded.emit()
-	splatDecal.size = Vector3.ZERO
+#	gameManager.beginCleanup()
+	splatDecal.size = Vector3(0.01,0.01,0.01)
 	growSpeed = randf_range(growSpeedMin,growSpeedMax)
 	var timer = get_tree().create_timer(UserConfig.game_decal_remove_time)
 	timer.timeout.connect(deleteSplat)
@@ -54,6 +57,7 @@ func _ready()->void:
 	#splatDecal.texture_normal = load(bloodNormals[textureInt])
 	dropletSound.play()
 	grow()
+	#decalCollisionCheck(Vector3(maxSize,maxSize,maxSize))
 
 func deleteSplat()->void:
 	if splatTween:
@@ -73,6 +77,15 @@ func grow()->void:
 	tween.set_ease(defaultEaseType)
 	tween.set_trans(defaultTransitionType)
 	tween.tween_property(splatDecal,\"size\",Vector3(maxSize,maxSize,maxSize),growSpeed)
+	#decalCollisionCheck(Vector3(maxSize,maxSize,maxSize))
+
+#func decalCollisionCheck(_scale:Vector3)->void:
+	#%collisionShape3d.shape.size = _scale
+	#await get_tree().process_frame
+	#var overlap = %collisionChecker.get_overlapping_areas()
+	#print(overlap)
+	#for i in overlap:
+		#i.get_owner().queue_free()
 "
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_dej56"]
@@ -84,26 +97,26 @@ stream_2/stream = ExtResource("16_dg0rv")
 stream_3/stream = ExtResource("17_7ryyk")
 stream_4/stream = ExtResource("18_gjub7")
 
-[node name="decal" type="Node3D"]
+[node name="decal" type="Node3D" groups=["decal"]]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
 script = SubResource("GDScript_xai0k")
 bloodTextures = Array[Texture2D]([ExtResource("1_3l6hn"), ExtResource("2_t3m5m"), ExtResource("3_01s3m"), ExtResource("4_6tdj2"), ExtResource("5_2rcag"), ExtResource("6_6ytpf"), ExtResource("7_81e7q"), ExtResource("8_5bt3b"), ExtResource("9_tiryh"), ExtResource("10_mrbtf"), ExtResource("11_ej6ce"), ExtResource("12_80ser"), ExtResource("13_mjrd1")])
 
 [node name="bloodSplat1" type="Decal" parent="." groups=["bloodDecal"]]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
-sorting_offset = 2.0
 size = Vector3(0.3, 0.3, 0.3)
 emission_energy = 5.35
 upper_fade = 0.00826699
 lower_fade = 0.00502397
 distance_fade_enabled = true
 distance_fade_begin = 15.0
-cull_mask = 1048551
+cull_mask = 1048423
 
 [node name="dropletSound" type="AudioStreamPlayer3D" parent="."]
 stream = SubResource("AudioStreamRandomizer_dej56")
 volume_db = -18.0
+max_distance = 10.0
 bus = &"Sounds"
-attenuation_filter_db = 0.0
+attenuation_filter_cutoff_hz = 20500.0
 
 [node name="visibleOnScreenEnabler3d" type="VisibleOnScreenEnabler3D" parent="."]

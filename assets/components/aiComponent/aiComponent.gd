@@ -22,6 +22,7 @@ var pawnOwner : BasePawn = null
 @export var pawnName : String = ""
 @export var forceAnimation : bool = false
 @export var animationToForce : String = ""
+@export_enum("Idle","Wander","Patrol") var pawnType : int = 0
 @export var pawnColor : Color = Color(1.0,0.74,0.44,1.0):
 	set(value):
 		pawnColor = value
@@ -34,10 +35,7 @@ var nextPosition : Vector3 = Vector3.ZERO
 	set(value):
 		targetPosition = value
 		navigationAgent.target_position = targetPosition
-##AI's current location
-@export var targetLocations:Array[Vector3] = []
-##The index path in the navigation agent array
-var currentPath : int = 0
+
 @export var newVelocity:Vector3 = Vector3.ZERO
 @export var safeVelocity:Vector3 = Vector3.ZERO
 
@@ -54,6 +52,8 @@ var last_ai_process_tick : int
 @export_category("Debug")
 static var instances : Array[AIComponent]
 
+func _ready() -> void:
+	setPawnType()
 
 func _enter_tree() -> void:
 	instances.append(self)
@@ -81,19 +81,34 @@ func _ai_process(physics_delta : float) -> void:
 	if navigationAgent and is_ai_processing():
 		stateMachine._ai_process(physics_delta,ai_process_delta)
 
-		if targetPosition != Vector3.ZERO:
+		if navigationAgent.is_navigation_finished():
+			pawnOwner.direction = Vector3.ZERO
 			nextPosition = navigationAgent.get_next_path_position()
+			return
+
+
+		nextPosition = navigationAgent.get_next_path_position()
+
 		pawnOwner.direction = pawnOwner.global_position.direction_to(nextPosition)
+
+func setPawnDirection(dir:Vector3)->void:
+	if pawnOwner.direction != dir:
+		pawnOwner.global_position.direction_to(dir)
+
+func setNextPosition(nextPos:Vector3)->void:
+	if nextPosition != nextPos:
+		nextPosition = nextPos
 
 
 func getDirFromAngle(angleInDeg:float) -> Vector3:
 	return Vector3(sin(angleInDeg * deg_to_rad(angleInDeg)),0,cos(angleInDeg*deg_to_rad(angleInDeg)))
 
-
-func _on_navigation_agent_3d_navigation_finished() -> void:
-	if is_ai_processing():
-		currentPath = currentPath + 1
-		if currentPath >= targetLocations.size():
-			currentPath = 0
-		nextPosition = navigationAgent.get_next_path_position()
-		navigationAgent.target_position = nextPosition
+func setPawnType()->void:
+	await get_tree().process_frame
+	match pawnType:
+		0:
+			stateMachine.change_state("Idle")
+		1:
+			stateMachine.change_state("Wander")
+		2:
+			stateMachine.change_state("Patrol")

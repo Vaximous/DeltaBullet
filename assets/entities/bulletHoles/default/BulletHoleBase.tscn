@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c21wgrmlie8rw" path="res://assets/entities/bulletHoles/default/BulletHole.gd" id="1_t8p33"]
 
-[node name="bulletHole_Base" type="Node3D" node_paths=PackedStringArray("decal")]
+[node name="bulletHole_Base" type="Node3D" node_paths=PackedStringArray("decal") groups=["decal"]]
 script = ExtResource("1_t8p33")
 decal = NodePath("decal")
 

@@ -23,12 +23,17 @@ var colPoint : Vector3
 var rot : float
 
 func _exit_tree() -> void:
-	gameManager.decals.erase(self)
+	pass
+
+func _enter_tree() -> void:
+	#gameManager.decals.erase(self)
+	#gameManager.decalAmountCheck()
+	pass
 
 func _ready()->void:
-	gameManager.decals.append(self)
-	gameManager.decalAdded.emit()
+	#gameManager.decals.append(self)
 	initializeBulletHole()
+#	gameManager.beginCleanup()
 
 
 func deleteHole()->void:
@@ -44,6 +49,13 @@ func setSoundVariables(audio:AudioStreamPlayer3D)->void:
 	audio.attenuation_filter_cutoff_hz = 20500
 	audio.unit_size = 4
 	audio.max_distance = 15
+
+#func decalCollisionCheck(_scale:Vector3)->void:
+	#%collisionShape3d.shape.size = _scale
+	#var overlap = %collisionChecker.get_overlapping_areas()
+	#print(overlap)
+	#for i in overlap:
+		#i.get_owner().queue_free()
 
 func initializeBulletHole()->void:
 	#Play the sounds
@@ -98,3 +110,4 @@ func initializeBulletHole()->void:
 func setDecalScale()->void:
 	#scale = Vector3.ONE
 	decal.scale = Vector3(decalSize,decalSize,decalSize)
+	#decalCollisionCheck(Vector3(decalSize,decalSize,decalSize))

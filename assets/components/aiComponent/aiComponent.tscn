@@ -24,12 +24,7 @@ albedo_color = Color(1, 0, 0, 0.309804)
 
 [node name="aiComponent" type="Node3D"]
 script = ExtResource("4_gaqok")
-pawnName = null
-forceAnimation = null
-animationToForce = null
-pawnColor = null
-targetPosition = null
-targetLocations = null
+pawnType = 1
 
 [node name="pawnFSM" type="Node" parent="." node_paths=PackedStringArray("current_state", "animation_player")]
 script = ExtResource("2_ubyph")
@@ -52,7 +47,6 @@ aiOwner = NodePath("../..")
 [node name="forceTargetReset" type="Timer" parent="pawnFSM/Wander"]
 process_callback = 0
 wait_time = 10.0
-autostart = true
 
 [node name="Attack" type="Node" parent="pawnFSM" node_paths=PackedStringArray("aiOwner")]
 script = ExtResource("7_m2cst")
@@ -104,7 +98,7 @@ material_override = SubResource("StandardMaterial3D_giynp")
 mesh = SubResource("ImmediateMesh_nrp35")
 
 [node name="navigationAgent3d" type="NavigationAgent3D" parent="."]
+path_desired_distance = 2.0
 avoidance_enabled = true
 
 [connection signal="timeout" from="pawnFSM/Wander/forceTargetReset" to="pawnFSM/Wander" method="_on_force_target_reset_timeout"]
-[connection signal="navigation_finished" from="navigationAgent3d" to="." method="_on_navigation_agent_3d_navigation_finished"]

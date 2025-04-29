@@ -1,7 +1,7 @@
 extends Node
 
 #game configs
-var game_max_decals = 64
+var game_max_decals = 128
 var game_max_physics_entities = 0
 var game_slow_motion_death : bool = true
 var game_lowHP_ambience : bool = false

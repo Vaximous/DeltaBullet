@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://mpu0audo4bfj" path="res://assets/entities/fakePhysics/fake_physics_entity.gd" id="1_gfee5"]
 
-[node name="fakePhysicsEntity" type="CharacterBody3D"]
+[node name="fakePhysicsEntity" type="CharacterBody3D" groups=["physicsEntity"]]
 collision_layer = 0
 script = ExtResource("1_gfee5")
 

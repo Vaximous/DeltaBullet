@@ -16,7 +16,7 @@ func createExplosion(burnchance:bool=true)->void:
 	var explo = preload("res://assets/entities/explosion/explosionArea.tscn").instantiate()
 	gameManager.world.worldMisc.add_child(explo)
 	explo.doesBurn = burnchance
-	explo.explosionLOS = true
+	explo.explosionLOS = false
 	explo.global_position = global_position
 	explo.explosionRadius = explosionRadius
 	explo.explosionImpulse = explosionImpulse

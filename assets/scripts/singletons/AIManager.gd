@@ -1,6 +1,6 @@
 extends Node
 ## This will control how often the AI is calculates per frame. Default is 20, so every 20 frames the AI will be recalculated
-const framesRecalculation : int = 20
+const framesRecalculation : int = 60
 var framesSinceRecalc : int = 0
 
 var ai_process_counter : int = 0

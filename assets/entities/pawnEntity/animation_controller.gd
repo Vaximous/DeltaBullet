@@ -11,6 +11,12 @@ var tweener : Tween
 
 func _physics_process(delta: float) -> void:
 	if enabled and !pawn.isPawnDead and is_instance_valid(pawn):
+		if pawn.isOnGround():
+			pawn.pawnMesh.rotation.x = clamp(lerp_angle(pawn.pawnMesh.rotation.x, (Vector3(pawn.velocity.x, 0.0, pawn.velocity.z) * pawn.pawnMesh.global_transform.basis).z * 0.02, delta * 5), -PI/6, PI/6)
+		else:
+			pawn.pawnMesh.rotation.x = clamp(lerp_angle(pawn.pawnMesh.rotation.x, (Vector3(pawn.velocity.y, 0.0, pawn.velocity.z) * pawn.pawnMesh.global_transform.basis).z * 0.02, delta * 5), -PI/6, PI/6)
+		pawn.pawnMesh.rotation.z = clamp(lerp_angle(pawn.pawnMesh.rotation.z, -(Vector3(pawn.velocity.x, 0.0, pawn.velocity.z) * pawn.pawnMesh.global_transform.basis).x * 0.045, delta * 5), -PI/6, PI/6)
+
 		if pawn.is_on_floor():
 			animationTree.set("parameters/fallBlend/blend_amount", lerpf(animationTree.get("parameters/fallBlend/blend_amount"), 0.0, delta * 12))
 		elif pawn.velocity.y > 0:

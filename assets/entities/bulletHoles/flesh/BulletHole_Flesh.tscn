@@ -76,17 +76,17 @@ size = Vector2(0.3, 0.3)
 _data = [Vector2(0.00980393, 1), 0.0, -3.05128, 0, 0, Vector2(0.495098, 0), -0.275909, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_he7j2"]
+[sub_resource type="CurveTexture" id="CurveTexture_jgsgg"]
 curve = SubResource("Curve_vxifn")
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_enttc"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_fnqiu"]
 gradient = SubResource("Gradient_cb5rd")
 
 [sub_resource type="Curve" id="Curve_e1inj"]
 _data = [Vector2(0, 1), 0.0, 0.263736, 0, 0, Vector2(1, 0), -1.4011, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_cnpb0"]
+[sub_resource type="CurveTexture" id="CurveTexture_0kdwa"]
 curve = SubResource("Curve_e1inj")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_sh7fp"]
@@ -102,19 +102,19 @@ initial_velocity_max = 3.0
 gravity = Vector3(0, -1.125, 0)
 scale_min = 0.95
 scale_max = 0.95
-scale_curve = SubResource("CurveTexture_cnpb0")
-color_ramp = SubResource("GradientTexture1D_enttc")
-color_initial_ramp = SubResource("GradientTexture1D_enttc")
-alpha_curve = SubResource("CurveTexture_he7j2")
+scale_curve = SubResource("CurveTexture_0kdwa")
+color_ramp = SubResource("GradientTexture1D_fnqiu")
+color_initial_ramp = SubResource("GradientTexture1D_fnqiu")
+alpha_curve = SubResource("CurveTexture_jgsgg")
 anim_offset_min = 1.0
 anim_offset_max = 1.0
 collision_mode = 2
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_umnpp"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1rstt"]
 transparency = 1
+shading_mode = 0
 vertex_color_use_as_albedo = true
 albedo_texture = ExtResource("8_lq38g")
-metallic_specular = 0.0
 billboard_mode = 3
 billboard_keep_scale = true
 particles_anim_h_frames = 1
@@ -122,7 +122,7 @@ particles_anim_v_frames = 1
 particles_anim_loop = false
 
 [sub_resource type="QuadMesh" id="QuadMesh_bqllu"]
-material = SubResource("StandardMaterial3D_umnpp")
+material = SubResource("StandardMaterial3D_1rstt")
 size = Vector2(0.3, 0.3)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fnqiu"]
@@ -832,8 +832,6 @@ bus = &"Sounds"
 attenuation_filter_db = 0.0
 
 [node name="bloodSpurt" parent="." index="2" instance=ExtResource("6_b318v")]
-top_level = true
-emitting = true
 
 [node name="impactParticle" type="GPUParticles3D" parent="." index="3"]
 emitting = false

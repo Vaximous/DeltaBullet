@@ -223,7 +223,7 @@ func hookes_law(displacement: Vector3, current_velocity: Vector3, stiffness: flo
 
 func pulverizeBone()->void:
 	#await get_tree().process_frame
-	ragdoll.ragdollSkeleton.set_bone_pose_scale(get_bone_id(),Vector3(0.001,0.001,0.001))
+	ragdoll.ragdollSkeleton.set_bone_pose_scale(get_bone_id(),Vector3(0.01,0.01,0.01))
 	#ragdoll.ragdollSkeleton.force_update_bone_child_transform(get_bone_id())
 	if bonePulverized != true:
 		bonePulverized = true

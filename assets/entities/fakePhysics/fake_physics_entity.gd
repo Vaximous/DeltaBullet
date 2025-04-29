@@ -10,18 +10,11 @@ var first_bounce = true
 var colNormal : Vector3
 
 
-func _exit_tree() -> void:
-	pass
-	#gameManager.physEntityCheck()
-#	gameManager.physicsEntities.erase(self)
 
-func _enter_tree() -> void:
-	pass
-	#gameManager.physicsEntities.append(self)
-	#gameManager.physicsEntityAdded.emit()
 
 
 func _ready() -> void:
+	#gameManager.beginCleanup()
 	rotational_velocity = Vector3(randf_range(-PI, PI), randf_range(-PI, PI), randf_range(-PI, PI)) * 10.0
 
 func playAudios()->void:

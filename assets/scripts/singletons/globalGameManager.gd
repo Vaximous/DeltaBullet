@@ -12,12 +12,6 @@ var sounds : Dictionary = {"healSound" = preload("res://assets/sounds/ui/rareIte
 			"startGame" = preload("res://assets/sounds/ui/menu/Button start.wav")
 			}
 
-#Entity Managers
-signal physicsEntityAdded
-var physicsEntities : Array = []
-
-signal decalAdded
-var decals : Array = []
 
 
 #Misc
@@ -67,10 +61,7 @@ var isMultiplayerGame:bool = false
 
 const dialogue_cam : PackedScene = preload("res://assets/entities/camera/DialogueCamera.tscn")
 
-func _enter_tree() -> void:
-	get_tree().connect("node_added",orphanedData.append)
-	decalAdded.connect(decalAmountCheck)
-	physicsEntityAdded.connect(physEntityCheck)
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready()->void:
@@ -84,6 +75,12 @@ func _ready()->void:
 	soundPlayer.bus = "Sounds"
 	if richPresenceEnabled:
 		pass
+
+func cleanupWorld()->void:
+	physEntityCheck()
+	await decalAmountCheck()
+	#worldCleanup.emit()
+
 
 
 func _process(delta: float) -> void:
@@ -252,8 +249,6 @@ func restartScene()->void:
 	playerPawns.clear()
 	targetedEnemies.clear()
 	allPawns.clear()
-	physicsEntities.clear()
-	decals.clear()
 	musicManager.fade_all_audioplayers_out(0.5)
 	await Fade.fade_out(0.3, Color(0,0,0,1),"GradientVertical",false,true).finished
 	get_tree().reload_current_scene()
@@ -354,10 +349,14 @@ func castRay(cam : Camera3D, range : float = 50000, mask := 0b10111, exceptions 
 func createDroplet(position:Vector3, velocity : Vector3 = Vector3.ZERO, amount : int = 1):
 	if is_instance_valid(world):
 		for i in amount:
+			var flipVel = [true,false].pick_random()
 			var droplet : BloodDroplet = bloodDrop.instantiate()
 			world.worldParticles.add_child(droplet)
 			droplet.global_position = position
-			droplet.velocity += velocity
+			if !flipVel:
+				droplet.velocity += velocity
+			else:
+				droplet.velocity += -velocity
 
 
 
@@ -453,8 +452,6 @@ func loadWorld(worldscene:String, fadein:bool = false)->void:
 	targetedEnemies.clear()
 	playerPawns.clear()
 	get_tree().change_scene_to_file("res://assets/scenes/menu/loadingscreen/emptyLoaderScene.tscn")
-	decals.clear()
-	physicsEntities.clear()
 	await get_tree().process_frame
 	allPawns.clear()
 	#freeOrphanNodes()
@@ -668,7 +665,8 @@ func createSplat(gposition:Vector3 = Vector3.ZERO,normal:Vector3 = Vector3.ZERO,
 		#print((normal).cross(Vector3.UP))
 		if parent.has_node(_b.get_path()) and _b.is_inside_tree():
 			_b.position = gposition
-			_b.look_at(_b.global_transform.origin + normal, Vector3.UP)
+			if !_b.global_transform.origin == gposition:
+				_b.look_at(_b.global_transform.origin + normal, Vector3.UP)
 			return _b
 		else:
 			_b.queue_free()
@@ -776,11 +774,8 @@ func create_surface_transform(origin : Vector3, incoming_vector : Vector3, surfa
 
 
 func createGib(position:Vector3, velocity : Vector3 = Vector3.ONE)->FakePhysicsEntity:
-	if physicsEntities.size() >= UserConfig.game_max_physics_entities:
-		return
 	var gib = [preload("res://assets/entities/gore/dismemberGib.tscn"),preload("res://assets/entities/gore/dismemberGib2.tscn")].pick_random()
 	var inst = gib.instantiate()
-	physicsEntityAdded.emit()
 	inst.velocity.y = velocity.y * randf_range(5, 16)
 	inst.velocity.x = velocity.x * randf_range(-2, 2)
 	inst.velocity.z = velocity.z * randf_range(-2, 2)
@@ -833,18 +828,25 @@ func get_weight_sum(weightedArray) -> float:
 
 
 func decalAmountCheck()->void:
+	var decals = Engine.get_main_loop().get_nodes_in_group(&"decal")
+	#print(decals)
 	while decals.size() > UserConfig.game_max_decals:
-		if decals[0].has_method("deleteSplat"):
-			decals[0].deleteSplat()
-		elif decals[0].has_method("deletePool"):
-			decals[0].deletePool()
-		elif decals[0].has_method("deleteHole"):
-			decals[0].deleteHole()
-
-		decals.remove_at(0)
+		if is_instance_valid(decals[0]):
+			if decals[0].has_method("deleteSplat"):
+				decals[0].deleteSplat()
+			elif decals[0].has_method("deletePool"):
+				decals[0].deletePool()
+			elif decals[0].has_method("deleteHole"):
+				decals[0].deleteHole()
+			decals.remove_at(0)
+	return
 
 
 func physEntityCheck()->void:
-	while physicsEntities.size() >= UserConfig.game_max_physics_entities:
-		physicsEntities[0].queue_free()
-		physicsEntities.remove_at(0)
+	var physEntities : Array = Engine.get_main_loop().get_nodes_in_group(&"physicsEntity")
+	#print(physEntities)
+	while physEntities.size() > UserConfig.game_max_physics_entities:
+		if is_instance_valid(physEntities[0]):
+			physEntities[0].queue_free()
+			physEntities.remove_at(0)
+	return

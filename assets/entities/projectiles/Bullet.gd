@@ -42,7 +42,7 @@ func enter_material(material : DB_PhysicsMaterial, hit_data : Dictionary) -> voi
 	#print(">> Entered material %s" % material)
 	inside_material = material
 	#print(material)
-	globalParticles.spawnBulletHolePackedScene(material.bullet_hole, hit_data['col'], hit_data['col_point'], randf_range(0, TAU), hit_data['col_normal'],hit_data['velocity'])
+	globalParticles.spawnBulletHolePackedScene(material.bullet_hole, hit_data['col'], hit_data['col_point'], randf_range(0, TAU), hit_data['col_normal'],velocity.normalized() * (falloff.sample(get_travel_progress()*3) * projectile_owner.weaponResource.weaponImpulse))
 	var col : Object = hit_data['col']
 	get_damage()
 	if col.has_method(&"hit"):
@@ -51,18 +51,18 @@ func enter_material(material : DB_PhysicsMaterial, hit_data : Dictionary) -> voi
 				col.hit(get_damage(),projectile_owner.weaponOwner,velocity.normalized() * (falloff.sample(get_travel_progress()*3) * projectile_owner.weaponResource.weaponImpulse),to_global(to_local(hit_data['col_point'])-position))
 		else:
 			return
-	if penetration_power > 0:
+	#if penetration_power > 0:
 		#var hit = gather_collision_info()
 		#if hit:
 			#var trail = preload("res://assets/entities/bulletTrail/bulletTrail.tscn").instantiate()
 			#gameManager.world.worldMisc.add_child(trail)
 			#trail.initTrail(global_position,velocity)
 			#globalParticles.spawnBulletHolePackedScene(material.bullet_hole, hit['col'], velocity, randf_range(0, TAU), hit['col_normal'],hit['velocity'])
-		distance_traveled += (material.penetration_entry_cost / penetration_power)
+		#distance_traveled += (material.penetration_entry_cost / penetration_power)
 		#print("Power reduction = %s" % [material.penetration_entry_cost / penetration_power])
-	else:
-		distance_traveled = max_distance
-	expire_by_distance()
+	#else:
+	#distance_traveled = max_distance
+	queue_free()
 
 func exit_material(hit_data : Dictionary) -> void:
 	if expire_by_distance():

@@ -1,7 +1,6 @@
-[gd_scene load_steps=20 format=3 uid="uid://drq6en2cfpbyl"]
+[gd_scene load_steps=19 format=3 uid="uid://drq6en2cfpbyl"]
 
 [ext_resource type="Script" uid="uid://bmomup8h2bpxq" path="res://assets/entities/emitters/bloodStringEmitter/string_droplet.gd" id="1_6fk8d"]
-[ext_resource type="Script" uid="uid://mpu0audo4bfj" path="res://assets/entities/fakePhysics/fake_physics_entity.gd" id="1_a35ji"]
 [ext_resource type="SphereMesh" uid="uid://dniya8jwodiae" path="res://assets/models/misc/debug_diamond.tres" id="2_556pd"]
 [ext_resource type="Material" uid="uid://co86jd67xrcl" path="res://assets/materials/blood/spurts/bloodSpurt3.tres" id="4_pxfsx"]
 [ext_resource type="AudioStream" uid="uid://dj2afeo57p2u8" path="res://assets/sounds/gore/fleshimpact4.wav" id="5_md3kv"]
@@ -228,7 +227,7 @@ script = ExtResource("1_6fk8d")
 mesh = NodePath("debug")
 collisionSounds = [NodePath("audioStreamPlayer3d")]
 continuousCollision = true
-metadata/_custom_type_script = ExtResource("1_a35ji")
+metadata/_custom_type_script = "uid://mpu0audo4bfj"
 
 [node name="collisionShape3d" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_xphrd")
@@ -238,7 +237,6 @@ unique_name_in_owner = true
 material_override = SubResource("StandardMaterial3D_bhauq")
 
 [node name="debug" type="MeshInstance3D" parent="."]
-visible = false
 layers = 8
 mesh = ExtResource("2_556pd")
 skin = SubResource("Skin_f1w22")

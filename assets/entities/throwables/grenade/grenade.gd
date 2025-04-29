@@ -8,6 +8,7 @@ func createExplosion()->void:
 	explo.explosionFalloff = load("res://assets/resources/defaultExplosionCurve.tres")
 	explo.global_position = global_position
 	explo.doesBurn = false
+	explo.explosionLOS = false
 	explo.explode()
 
 

@@ -79,10 +79,11 @@ func start_next_wave() -> void:
 			if autoTargetPlayer:
 				await get_tree().create_timer(0.1).timeout
 				if is_instance_valid(gameManager.getCurrentPawn()):
-					wavePawn[1].inputComponent.targetedPawn = gameManager.getCurrentPawn()
-					wavePawn[1].inputComponent.forcedTarget = gameManager.getCurrentPawn()
-					wavePawn[1].inputComponent.pawnFSM.change_state("Attack")
-					wavePawn[1].inputComponent.goToPosition(wavePawn[1].inputComponent.targetedPawn.global_position)
+					pass
+					#wavePawn[1].inputComponent.targetedPawn = gameManager.getCurrentPawn()
+					#wavePawn[1].inputComponent.forcedTarget = gameManager.getCurrentPawn()
+					#wavePawn[1].inputComponent.pawnFSM.change_state("Attack")
+					#wavePawn[1].inputComponent.goToPosition(wavePawn[1].inputComponent.targetedPawn.global_position)
 				#print(wavePawn[1].inputComponent.pawnFSM.current_state)
 			#Wait for the duration before spawning next pawn.
 			if current_wave != null:

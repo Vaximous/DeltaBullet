@@ -13,6 +13,7 @@ collision_layer = 27
 collision_mask = 27
 monitorable = false
 script = ExtResource("1_0oqcd")
+explosionLOS = false
 explosionSound = ExtResource("4_4360k")
 explosionFalloff = ExtResource("3_4360k")
 

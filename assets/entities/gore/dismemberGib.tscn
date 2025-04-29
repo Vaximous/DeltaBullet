@@ -216,7 +216,7 @@ stream_0/stream = ExtResource("3_f1w22")
 stream_1/stream = ExtResource("4_34rgu")
 stream_2/stream = ExtResource("5_ky12t")
 
-[node name="dismemberGib" type="CharacterBody3D" node_paths=PackedStringArray("mesh", "collisionSounds")]
+[node name="dismemberGib" type="CharacterBody3D" node_paths=PackedStringArray("mesh", "collisionSounds") groups=["physicsEntity"]]
 collision_layer = 0
 script = ExtResource("1_tx5q2")
 mesh = NodePath("fleshBit")

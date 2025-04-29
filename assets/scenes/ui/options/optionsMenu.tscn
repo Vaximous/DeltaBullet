@@ -33,8 +33,10 @@ const setting_remap : Dictionary = {
 	\"audio_MusicVolume\" = ^'panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer2/hBoxContainer/musicSlider:value',
 	\"audio_UiVolume\" = ^'panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer4/hBoxContainer/uiSlider:value',
 	\"audio_GameVolume\" = ^'panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer3/hBoxContainer/soundsSlider:value',
-	\"game_ragdoll_remove_time\" = ^'panelHolder/panel/optionsPanel/Game/marginContainer/vBoxContainer/ragdollDeleteTime:value',
-	\"game_decal_remove_time\" = ^'panelHolder/panel/optionsPanel/Game/marginContainer/vBoxContainer/decalRemoveTimeSlider:value',
+	\"game_ragdoll_remove_time\" = ^'panelHolder/panel/optionsPanel/Performance/marginContainer/vBoxContainer/ragdollDeleteTime:value',
+	\"game_decal_remove_time\" = ^'panelHolder/panel/optionsPanel/Performance/marginContainer/vBoxContainer/decalRemoveTimeSlider:value',
+	\"game_max_decals\" = ^'panelHolder/panel/optionsPanel/Performance/marginContainer/vBoxContainer/maxDecalSlider:value',
+	\"game_max_physics_entities\" = ^'panelHolder/panel/optionsPanel/Performance/marginContainer/vBoxContainer/maxPhysicsObjectsSlider:value',
 	\"game_slow_motion_death\" = ^'panelHolder/panel/optionsPanel/Game/marginContainer/vBoxContainer/slowMotionDeath:button_pressed',
 	\"audio_ambience_volume\" = ^'panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer5/hBoxContainer/AmbienceSlider:value'
 }
@@ -43,8 +45,14 @@ func _ready() -> void:
 	applyAudio()
 	setupMenuPopups()
 	UserConfig.configs_updated.connect(getSettingsFromConfig)
-	$panelHolder/panel/optionsPanel/Game/marginContainer/vBoxContainer/maxRagdolls/maxRagdollsAmount.text = str(UserConfig.game_ragdoll_remove_time)
-	$panelHolder/panel/optionsPanel/Game/marginContainer/vBoxContainer/decalRemoveTime/decalRemoveTimeAmt.text = str(UserConfig.game_decal_remove_time)
+	setText()
+
+
+func setText()->void:
+	%maxDecalAmount.text = str(UserConfig.game_max_decals)
+	%maxPhysicsObjectsAmount.text = str(UserConfig.game_max_physics_entities)
+	$panelHolder/panel/optionsPanel/Performance/marginContainer/vBoxContainer/maxRagdolls/maxRagdollsAmount.text = str(UserConfig.game_ragdoll_remove_time)
+	$panelHolder/panel/optionsPanel/Performance/marginContainer/vBoxContainer/decalRemoveTime/decalRemoveTimeAmt.text = str(UserConfig.game_decal_remove_time)
 
 func _process(delta)->void:
 	if visible:
@@ -110,8 +118,8 @@ func checkChangesExist() -> bool:
 func _on_options_panel_tab_clicked(tab)->void:
 	$uiclick.play()
 	var tab_idx : int = $panelHolder/panel/optionsPanel.current_tab
-	const colors = [Color(0.25098, 0.45098, 1, 1), Color.RED, Color.GREEN, Color.WHITE]
-	var positions = [Vector3.BACK * 10, Vector3.RIGHT * 10, Vector3.FORWARD * 10, Vector3.LEFT * 10]
+	const colors = [Color(0.25098, 0.45098, 1, 1), Color.RED, Color.GREEN, Color.WHITE, Color.ORANGE]
+	var positions = [Vector3.BACK * 10, Vector3.RIGHT * 10, Vector3.FORWARD * 10, Vector3.LEFT * 10,Vector3.DOWN * 10]
 	$panelHolder/panel/textureRect/subViewportContainer/subViewport/Node3D.fog_color = colors[tab_idx]
 	$panelHolder/panel/textureRect/subViewportContainer/subViewport/Node3D.camera_tgt_pos = positions[tab_idx]
 
@@ -136,11 +144,11 @@ func applyAudio()->void:
 
 
 func _on_ragdoll_delete_time_value_changed(value)->void:
-	$panelHolder/panel/optionsPanel/Game/marginContainer/vBoxContainer/maxRagdolls/maxRagdollsAmount.text = str(value)
+	$panelHolder/panel/optionsPanel/Performance/marginContainer/vBoxContainer/maxRagdolls/maxRagdollsAmount.text = str(value)
 
 
 func _on_decal_remove_time_slider_value_changed(value)->void:
-	$panelHolder/panel/optionsPanel/Game/marginContainer/vBoxContainer/decalRemoveTime/decalRemoveTimeAmt.text = str(value)
+	$panelHolder/panel/optionsPanel/Performance/marginContainer/vBoxContainer/decalRemoveTime/decalRemoveTimeAmt.text = str(value)
 
 func changeQualitytext(id)->void:
 	var selectedID = id
@@ -174,6 +182,13 @@ func setupMenuPopups():
 	msaaOption.get_popup().id_pressed.connect(changeMsaatext)
 	msaaOption.get_popup().set_focused_item(UserConfig.graphics_msaa)
 	msaaOption.text = msaaOption.get_popup().get_item_text(UserConfig.graphics_msaa)
+
+
+func _on_max_decal_slider_value_changed(value: float) -> void:
+	%maxDecalAmount.text = str(value)
+
+func _on_max_physics_objects_slider_value_changed(value: float) -> void:
+	%maxPhysicsObjectsAmount.text = str(value)
 "
 
 [sub_resource type="Gradient" id="Gradient_txbf0"]
@@ -297,7 +312,7 @@ offset_bottom = -63.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_j35o7")
-current_tab = 1
+current_tab = 4
 
 [node name="Game" type="Control" parent="panelHolder/panel/optionsPanel"]
 visible = false
@@ -340,51 +355,8 @@ layout_mode = 2
 text = "Simple Crosshairs
 "
 
-[node name="maxRagdolls" type="Label" parent="panelHolder/panel/optionsPanel/Game/marginContainer/vBoxContainer"]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("2_rm30o")
-theme_override_font_sizes/font_size = 25
-text = "Ragdoll Disappear Time"
-
-[node name="maxRagdollsAmount" type="Label" parent="panelHolder/panel/optionsPanel/Game/marginContainer/vBoxContainer/maxRagdolls"]
-layout_mode = 0
-offset_left = 902.0
-offset_top = 8.0
-offset_right = 942.0
-offset_bottom = 33.0
-theme_override_fonts/font = ExtResource("2_rm30o")
-theme_override_font_sizes/font_size = 21
-text = "50"
-
-[node name="ragdollDeleteTime" type="HSlider" parent="panelHolder/panel/optionsPanel/Game/marginContainer/vBoxContainer"]
-layout_mode = 2
-min_value = 1.0
-max_value = 999.0
-value = 25.0
-
-[node name="decalRemoveTime" type="Label" parent="panelHolder/panel/optionsPanel/Game/marginContainer/vBoxContainer"]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("2_rm30o")
-theme_override_font_sizes/font_size = 25
-text = "Decal Remove Time"
-
-[node name="decalRemoveTimeAmt" type="Label" parent="panelHolder/panel/optionsPanel/Game/marginContainer/vBoxContainer/decalRemoveTime"]
-layout_mode = 0
-offset_left = 902.0
-offset_top = 8.0
-offset_right = 942.0
-offset_bottom = 33.0
-theme_override_fonts/font = ExtResource("2_rm30o")
-theme_override_font_sizes/font_size = 21
-text = "50"
-
-[node name="decalRemoveTimeSlider" type="HSlider" parent="panelHolder/panel/optionsPanel/Game/marginContainer/vBoxContainer"]
-layout_mode = 2
-min_value = 1.0
-max_value = 999.0
-value = 25.0
-
 [node name="Video" type="Control" parent="panelHolder/panel/optionsPanel"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
@@ -680,6 +652,111 @@ visible = false
 layout_mode = 2
 metadata/_tab_index = 3
 
+[node name="Performance" type="Control" parent="panelHolder/panel/optionsPanel"]
+layout_mode = 2
+metadata/_tab_index = 4
+
+[node name="marginContainer" type="MarginContainer" parent="panelHolder/panel/optionsPanel/Performance"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="vBoxContainer" type="VBoxContainer" parent="panelHolder/panel/optionsPanel/Performance/marginContainer"]
+layout_mode = 2
+
+[node name="maxPhysicsObjects" type="Label" parent="panelHolder/panel/optionsPanel/Performance/marginContainer/vBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_rm30o")
+theme_override_font_sizes/font_size = 25
+text = "Max Physics Objects"
+
+[node name="maxPhysicsObjectsAmount" type="Label" parent="panelHolder/panel/optionsPanel/Performance/marginContainer/vBoxContainer/maxPhysicsObjects"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 902.0
+offset_top = 8.0
+offset_right = 942.0
+offset_bottom = 33.0
+theme_override_fonts/font = ExtResource("2_rm30o")
+theme_override_font_sizes/font_size = 21
+text = "50"
+
+[node name="maxPhysicsObjectsSlider" type="HSlider" parent="panelHolder/panel/optionsPanel/Performance/marginContainer/vBoxContainer"]
+layout_mode = 2
+min_value = 1.0
+max_value = 999.0
+value = 25.0
+
+[node name="maxDecals" type="Label" parent="panelHolder/panel/optionsPanel/Performance/marginContainer/vBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_rm30o")
+theme_override_font_sizes/font_size = 25
+text = "Max Decals"
+
+[node name="maxDecalAmount" type="Label" parent="panelHolder/panel/optionsPanel/Performance/marginContainer/vBoxContainer/maxDecals"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 902.0
+offset_top = 8.0
+offset_right = 942.0
+offset_bottom = 33.0
+theme_override_fonts/font = ExtResource("2_rm30o")
+theme_override_font_sizes/font_size = 21
+text = "50"
+
+[node name="maxDecalSlider" type="HSlider" parent="panelHolder/panel/optionsPanel/Performance/marginContainer/vBoxContainer"]
+layout_mode = 2
+min_value = 1.0
+max_value = 999.0
+value = 25.0
+
+[node name="maxRagdolls" type="Label" parent="panelHolder/panel/optionsPanel/Performance/marginContainer/vBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_rm30o")
+theme_override_font_sizes/font_size = 25
+text = "Ragdoll Disappear Time"
+
+[node name="maxRagdollsAmount" type="Label" parent="panelHolder/panel/optionsPanel/Performance/marginContainer/vBoxContainer/maxRagdolls"]
+layout_mode = 0
+offset_left = 902.0
+offset_top = 8.0
+offset_right = 942.0
+offset_bottom = 33.0
+theme_override_fonts/font = ExtResource("2_rm30o")
+theme_override_font_sizes/font_size = 21
+text = "50"
+
+[node name="ragdollDeleteTime" type="HSlider" parent="panelHolder/panel/optionsPanel/Performance/marginContainer/vBoxContainer"]
+layout_mode = 2
+min_value = 1.0
+max_value = 999.0
+value = 25.0
+
+[node name="decalRemoveTime" type="Label" parent="panelHolder/panel/optionsPanel/Performance/marginContainer/vBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_rm30o")
+theme_override_font_sizes/font_size = 25
+text = "Decal Remove Time"
+
+[node name="decalRemoveTimeAmt" type="Label" parent="panelHolder/panel/optionsPanel/Performance/marginContainer/vBoxContainer/decalRemoveTime"]
+layout_mode = 0
+offset_left = 902.0
+offset_top = 8.0
+offset_right = 942.0
+offset_bottom = 33.0
+theme_override_fonts/font = ExtResource("2_rm30o")
+theme_override_font_sizes/font_size = 21
+text = "50"
+
+[node name="decalRemoveTimeSlider" type="HSlider" parent="panelHolder/panel/optionsPanel/Performance/marginContainer/vBoxContainer"]
+layout_mode = 2
+min_value = 1.0
+max_value = 999.0
+value = 25.0
+
 [node name="saveSettings" type="Button" parent="panelHolder/panel"]
 layout_mode = 1
 anchors_preset = -1
@@ -739,8 +816,6 @@ bus = &"UI"
 
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
 [connection signal="tab_clicked" from="panelHolder/panel/optionsPanel" to="." method="_on_options_panel_tab_clicked"]
-[connection signal="value_changed" from="panelHolder/panel/optionsPanel/Game/marginContainer/vBoxContainer/ragdollDeleteTime" to="." method="_on_ragdoll_delete_time_value_changed"]
-[connection signal="value_changed" from="panelHolder/panel/optionsPanel/Game/marginContainer/vBoxContainer/decalRemoveTimeSlider" to="." method="_on_decal_remove_time_slider_value_changed"]
 [connection signal="changed" from="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer/hBoxContainer/masterVolSlider" to="." method="refreshAudioLabels"]
 [connection signal="drag_ended" from="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer/hBoxContainer/masterVolSlider" to="." method="refreshAudioLabels"]
 [connection signal="drag_started" from="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer/hBoxContainer/masterVolSlider" to="." method="refreshAudioLabels"]
@@ -749,6 +824,10 @@ bus = &"UI"
 [connection signal="value_changed" from="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer3/hBoxContainer/soundsSlider" to="." method="refreshAudioLabels" unbinds=1]
 [connection signal="value_changed" from="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer4/hBoxContainer/uiSlider" to="." method="refreshAudioLabels" unbinds=1]
 [connection signal="value_changed" from="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer5/hBoxContainer/AmbienceSlider" to="." method="refreshAudioLabels" unbinds=1]
+[connection signal="value_changed" from="panelHolder/panel/optionsPanel/Performance/marginContainer/vBoxContainer/maxPhysicsObjectsSlider" to="." method="_on_max_physics_objects_slider_value_changed"]
+[connection signal="value_changed" from="panelHolder/panel/optionsPanel/Performance/marginContainer/vBoxContainer/maxDecalSlider" to="." method="_on_max_decal_slider_value_changed"]
+[connection signal="value_changed" from="panelHolder/panel/optionsPanel/Performance/marginContainer/vBoxContainer/ragdollDeleteTime" to="." method="_on_ragdoll_delete_time_value_changed"]
+[connection signal="value_changed" from="panelHolder/panel/optionsPanel/Performance/marginContainer/vBoxContainer/decalRemoveTimeSlider" to="." method="_on_decal_remove_time_slider_value_changed"]
 [connection signal="pressed" from="panelHolder/panel/saveSettings" to="." method="_on_save_pressed"]
 [connection signal="pressed" from="panelHolder/panel/revertSettings" to="." method="_on_revert_pressed"]
 [connection signal="pressed" from="closeButton" to="." method="_on_close_button_pressed"]

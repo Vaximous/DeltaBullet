@@ -79,7 +79,8 @@ func boneSetup()->void:
 	setBoneCooldownTimer()
 	audioCooldown = 0.0
 	createAudioPlayer()
-	bonePhysicsServer.body_set_max_contacts_reported(RID(self), 1)
+	body_entered.connect(boneCollision)
+	#bonePhysicsServer.body_set_max_contacts_reported(RID(self), 1)
 	isAsleep.connect(doBleed)
 	if canBeDismembered:
 		if is_instance_valid(healthComponent):
@@ -153,15 +154,15 @@ func createContactBlood(state:PhysicsDirectBodyState3D)->void:
 func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 	boneState = state.sleeping
 	currentVelocity = state.get_velocity_at_local_position(position)
-	if audioCooldown > 0 or boneState == true:
-			return
-
-	if state.get_contact_count() > 0 and !boneState and is_instance_valid(ragdoll):
-		if exclusionArray.has(state.get_contact_collider(0)):
-			return
-		#var contactNormal = state.get_contact_local_normal(0)
-		#var contactDot = state.get_contact_local_velocity_at_position(0).normalized().dot(contactNormal)
-		var contactForce = state.get_contact_impulse(0).length()*2
+	#if audioCooldown > 0 or boneState == true:
+			#return
+##
+	#if state.get_contact_count() > 0 and !boneState and is_instance_valid(ragdoll):
+		#if exclusionArray.has(state.get_contact_collider(0)):
+			#return
+		##var contactNormal = state.get_contact_local_normal(0)
+		##var contactDot = state.get_contact_local_velocity_at_position(0).normalized().dot(contactNormal)
+		#var contactForce = state.get_contact_impulse(0).length()*2
 		##contactForce = clampf(contactForce,0,heavyImpactThreshold)
 		#if gameManager.debugEnabled:
 			#print("%s Contact Force : %s"%[name,contactForce])
@@ -169,30 +170,29 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 
 
 
-		if is_instance_valid(healthComponent):
-			healthComponent.damage(contactForce)
 
-		if contactForce >= heavyImpactThreshold:
-			createContactBlood(state)
-			#gameManager.sprayBlood(state.get_contact_collider_position(0),15,3)
-			if is_instance_valid(audioStreamPlayer):
-				audioStreamPlayer.stream = heavyImpactSounds
-				audioStreamPlayer.play()
-				audioCooldown = 0.25
 
-		elif contactForce >= mediumImpactThreshold:
-			createContactBlood(state)
-			if is_instance_valid(audioStreamPlayer):
-				audioStreamPlayer.stream = mediumImpactSounds
-				audioStreamPlayer.play()
-				audioCooldown = 0.25
-
-		elif contactForce >= lightImpactThreshold:
-			createContactBlood(state)
-			if is_instance_valid(audioStreamPlayer):
-				audioStreamPlayer.stream = lightImpactSounds
-				audioStreamPlayer.play()
-				audioCooldown = 0.35
+		#if contactForce >= heavyImpactThreshold:
+			#createContactBlood(state)
+			##gameManager.sprayBlood(state.get_contact_collider_position(0),15,3)
+			#if is_instance_valid(audioStreamPlayer):
+				#audioStreamPlayer.stream = heavyImpactSounds
+				#audioStreamPlayer.play()
+				#audioCooldown = 0.25
+#
+		#elif contactForce >= mediumImpactThreshold:
+			#createContactBlood(state)
+			#if is_instance_valid(audioStreamPlayer):
+				#audioStreamPlayer.stream = mediumImpactSounds
+				#audioStreamPlayer.play()
+				#audioCooldown = 0.25
+#
+		#elif contactForce >= lightImpactThreshold:
+			#createContactBlood(state)
+			#if is_instance_valid(audioStreamPlayer):
+				#audioStreamPlayer.stream = lightImpactSounds
+				#audioStreamPlayer.play()
+				#audioCooldown = 0.35
 
 
 func hit(dmg, dealer=null, hitImpulse:Vector3 = Vector3.ZERO, hitPoint:Vector3 = Vector3.ZERO)->void:
@@ -312,6 +312,37 @@ func doBleed()->void:
 		gameManager.createBloodPool(global_position,randf_range(0.3,1.6))
 		hasBled = true
 
+func boneCollision(body:Node)->void:
+	var colliders : Array = get_colliding_bodies()
+	var velocityHit : float = linear_velocity.length() *2
+
+	if audioCooldown > 0 or boneState == true:
+			return
+
+	for i in colliders:
+		if i is not PhysicalBone3D and i != self:
+			if velocityHit >= heavyImpactThreshold:
+				if is_instance_valid(audioStreamPlayer):
+					audioStreamPlayer.stream = heavyImpactSounds
+					audioStreamPlayer.play()
+					audioCooldown = 0.25
+					healthComponent.damage(velocityHit * 7)
+			elif velocityHit >= mediumImpactThreshold:
+				if is_instance_valid(audioStreamPlayer):
+					audioStreamPlayer.stream = mediumImpactSounds
+					audioStreamPlayer.play()
+					audioCooldown = 0.45
+			elif velocityHit >= lightImpactThreshold:
+				if is_instance_valid(audioStreamPlayer):
+					audioStreamPlayer.stream = lightImpactSounds
+					audioStreamPlayer.play()
+					audioCooldown = 0.55
+
+			##Create Blood
+			if velocityHit > 8.8:
+				if is_instance_valid(healthComponent):
+					gameManager.createDroplet(global_position,currentVelocity* 0.15)
+					healthComponent.damage(velocityHit * 2)
 
 #func doActiveRagdoll(value:bool)->void:
 	#if get_owner().targetSkeleton != null:

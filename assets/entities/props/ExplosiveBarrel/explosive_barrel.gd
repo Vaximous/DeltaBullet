@@ -8,19 +8,17 @@ var _dealer
 
 
 func burn()->void:
-	if !get_meta("isBurning") or !has_meta("isBurning"):
+	if !has_meta("isBurning"):
 		gameManager.burnTarget(self,100000,15)
 
 
 func createExplosion(burnchance:bool=true)->void:
-	var explo = preload("res://assets/entities/explosion/explosionArea.tscn").instantiate()
+	var explo : ExplosionArea = ExplosionArea.createExplosionArea(explosionRadius,90,explosionImpulse,null)
 	gameManager.world.worldMisc.add_child(explo)
+	explo.explosionFalloff = load("res://assets/resources/defaultExplosionCurve.tres")
+	explo.global_position = global_position
 	explo.doesBurn = burnchance
 	explo.explosionLOS = false
-	explo.global_position = global_position
-	explo.explosionRadius = explosionRadius
-	explo.explosionImpulse = explosionImpulse
-	explo.dealer = _dealer
 	explo.explode()
 
 

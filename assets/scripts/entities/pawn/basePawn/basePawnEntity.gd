@@ -449,12 +449,13 @@ func checkComponents()->void:
 
 func endPawn()->void:
 	if (is_instance_valid(self) and not self.is_queued_for_deletion()):
-		process_mode = Node.PROCESS_MODE_DISABLED
+		get_tree().create_timer(5).timeout.connect(queue_free)
+		#process_mode = Node.PROCESS_MODE_DISABLED
 		#direction = Vector3.ZERO
 		#velocity = Vector3.ZERO
 		#removeComponents()
 		#dropWeapon()
-		queue_free()
+		#queue_free()
 		#currentItemIndex = 0
 		#pawnEnabled = false
 		#collisionEnabled = false
@@ -548,13 +549,14 @@ func die(killer) -> void:
 		createRagdoll(lastHitPart, killer)
 		moveHitboxDecals()
 		endPawn()
+		hide()
 		pawnEnabled = false
 		collisionShape.disabled = true
 		animationController.enabled = false
 		movementController.enabled = false
 		killAllTweens()
 		disableAllHitboxes()
-		process_mode = Node.PROCESS_MODE_DISABLED
+		#process_mode = Node.PROCESS_MODE_DISABLED
 
 
 
@@ -876,7 +878,7 @@ func removeComponents() -> void:
 		#return
 
 func playFootstepAudio(soundprofile : AudioStream = null) -> void:
-	if !footstepSounds == null:
+	if !footstepSounds == null and !isPawnDead:
 		if is_on_floor() and isMoving:
 			if !soundprofile == null:
 				footstepSounds.stream = soundprofile

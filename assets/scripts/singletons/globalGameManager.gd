@@ -90,7 +90,7 @@ func _process(delta: float) -> void:
 	#DisplayServer.window_set_title(ProjectSettings.get_setting("application/config/name"))
 
 func burnTarget(node:Node3D,burnTime:float=10,burnDamage:float=3.5):
-	if node.has_method("hit") or node.get_meta("isFlammable") == true and !node.get_meta("isBurning"):
+	if node.has_method("hit") or node.has_meta("isFlammable") and node.get_meta("isFlammable") == true and !node.get_meta("isBurning"):
 		node.set_meta("isBurning", true)
 		var burner = preload("res://assets/entities/emitters/burnEffect/burnEffect.tscn").instantiate()
 		node.add_child(burner)
@@ -632,7 +632,8 @@ func removeSafehouseEditor()->void:
 
 
 func setMotionBlur(camera:Camera3D)->void:
-	UserConfig.configs_updated.connect(setMotionBlur.bind(camera))
+	if !UserConfig.configs_updated.is_connected(setMotionBlur.bind(camera)):
+		UserConfig.configs_updated.connect(setMotionBlur.bind(camera))
 	if UserConfig.graphics_motion_blur:
 		if camera.compositor == null:
 			var comp = load("res://assets/envs/mBlurCompositor.tres")
@@ -658,11 +659,10 @@ func doDeathEffect()->void:
 	deathTween.tween_property(Engine,"time_scale",1,1.5).set_ease(defaultEaseType).set_trans(defaultTransitionType)
 
 
-func createSplat(gposition:Vector3 = Vector3.ZERO,normal:Vector3 = Vector3.ZERO,parent : Node3D = world.worldMisc)->Node3D:
+func createSplat(gposition:Vector3 = Vector3.ONE,normal:Vector3 = Vector3.ONE,parent : Node3D = world.worldMisc)->Node3D:
 	if is_instance_valid(parent):
 		var _b = bloodDecal.instantiate()
 		parent.add_child(_b)
-		#print((normal).cross(Vector3.UP))
 		if parent.has_node(_b.get_path()) and _b.is_inside_tree():
 			_b.position = gposition
 			if !_b.global_transform.origin == gposition:

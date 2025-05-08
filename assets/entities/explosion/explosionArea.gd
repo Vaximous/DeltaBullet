@@ -85,7 +85,7 @@ func applyHit(object:Node3D):
 				object.canBleed = false
 				#object.set_meta("exploded",true)
 			#print(dmgClamped)
-			object.hit(dmgClamped,dealer,-(global_position-object.global_position).normalized() * explosionImpulse,Vector3.ZERO)
+			object.hit(dmgClamped,null,-(global_position-object.global_position).normalized() * explosionImpulse,Vector3.ZERO)
 
 func explode()->void:
 	if explosionTween:

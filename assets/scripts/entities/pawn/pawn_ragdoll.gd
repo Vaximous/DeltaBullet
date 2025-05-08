@@ -34,7 +34,12 @@ var savedPose :Array[Transform3D]
 @export_subgroup("Active Ragdoll")
 var totalMass : float
 var angularVelocity : Vector3
-@export var activeRagdollEnabled:bool = false
+@export var activeRagdollEnabled:bool = false:
+	set(value):
+		activeRagdollEnabled = value
+		for i in physicsBones:
+			if is_instance_valid(i):
+				setAngularMotor(i,value)
 @export var targetSkeleton : Skeleton3D
 @export_subgroup("Behavior")
 ##Start simulation on create
@@ -71,10 +76,10 @@ func _ready()-> void:
 	#physicalBoneSimulator.ragdoll = self
 	checkClothingHider()
 
+	#Active Ragdoll Stuff
 	if activeRagdollEnabled:
-		for b in physicsBones:
-			totalMass += b.mass
-			b.createActiveRagdollJoint()
+		# Calculate total ragdoll mass.
+		for bone in physicsBones: totalMass += bone.mass
 
 
 func setBoneOwners()->void:
@@ -141,19 +146,61 @@ func hookes_law(displacement: Vector3, velocity: Vector3, stiffness: float, damp
 	return dis - vel
 
 func _physics_process(delta: float) -> void:
-	if activeRagdollEnabled:
-		var totalAngleVelocity : = Vector3.ZERO
+	pass
+	#if activeRagdollEnabled:
+		#var total_ang_vel := Vector3.ZERO
+		#angularVelocity = total_ang_vel / totalMass
+#
+		#for b in physicsBones:
+			#if is_instance_valid(b) and is_instance_valid(targetSkeleton):
+				#total_ang_vel += b.angular_velocity * b.mass
+				#b.angular_velocity = angularVelocity
+				#if is_instance_valid(findPhysicsBone(ragdollSkeleton.get_bone_parent(b.get_bone_id()))):
+					#var joint_parent_bone: = findPhysicsBone(ragdollSkeleton.get_bone_parent(b.get_bone_id())) as PhysicalBone3D
+					#var joint_parent_quat: = joint_parent_bone.global_basis.get_rotation_quaternion()
+					#var bone_current_global_quat: = b.global_basis.get_rotation_quaternion()
+					#var bone_current_local_quat: = joint_parent_quat.inverse() * bone_current_global_quat
+					#var bone_target_local_quat: = targetSkeleton.get_bone_pose_rotation(b.get_bone_id())
+					#var diff = bone_target_local_quat.inverse() * bone_current_local_quat
+					#var axis = diff.get_axis()
+					#var angle = diff.get_angle()
+					#if angle>PI : angle-=TAU
+#
+					#if axis.is_finite():
+						#var stiffness = 0
+						#var damping = 0
+						#var targetVel = axis.normalized() * (angle/delta)
+						#var currentVel = bone_current_global_quat.inverse()
+						##targetVel *= hookes_law(currentVel, targetVel, stiffness, damping)
+						#setAngularMotor(b,true)
+						#setAngularMotorForceLimit(b,5)
+						#setAngularMotorTargetVelocity(b,(currentVel * targetVel))
+					#else:
+						#setAngularMotorTargetVelocity(b,Vector3.ZERO)
+#
+					#var targtransfrm: Transform3D = targetSkeleton.get_bone_global_pose(b.get_bone_id())
+					##ragdollSkeleton.set_bone_global_pose(b.get_bone_id(),targtransfrm)
+					#var currtransform : Transform3D = ragdollSkeleton.get_bone_pose(b.get_bone_id())
+					#var rotdif : Transform3D = (targtransfrm.inverse() * currtransform)
+#
+					#var target_velocity : Vector3 = rotdif.basis.get_euler() * 1
+			#else:
+				#activeRagdollEnabled = false
 
-		for b in physicsBones:
-			if is_instance_valid(b):
-				totalAngleVelocity += b.angular_velocity * b.mass
-				angularVelocity = totalAngleVelocity / totalMass
+func setAngularMotorTargetVelocity(b:PhysicalBone3D,value:Vector3 = Vector3.ZERO):
+	b.set("joint_constraints/x/target_velocity",value.x)
+	b.set("joint_constraints/y/target_velocity",value.y)
+	b.set("joint_constraints/z/target_velocity",value.z)
 
-		for b in physicsBones:
-			if is_instance_valid(b):
-				b.angular_velocity = angularVelocity
-				if is_instance_valid(b.activeRagdollJoint):
-					animate_bone_by_joint_motor(b,b.activeRagdollJoint,delta,200,0.01)
+func setAngularMotor(b:PhysicalBone3D,value:bool = false):
+	b.set("joint_constraints/x/angular_motor_enabled",value)
+	b.set("joint_constraints/y/angular_motor_enabled",value)
+	b.set("joint_constraints/z/angular_motor_enabled",value)
+
+func setAngularMotorForceLimit(b:PhysicalBone3D,value:float = 0):
+	b.set("joint_constraints/x/angular_motor_force_limit",value)
+	b.set("joint_constraints/y/angular_motor_force_limit",value)
+	b.set("joint_constraints/z/angular_motor_force_limit",value)
 
 func _on_remove_timer_timeout()-> void:
 	queue_free()
@@ -338,3 +385,10 @@ func _on_skeleton_3d_skeleton_updated() -> void:
 
 func getBoneChildren(skeleton3d:Skeleton3D,bone:PhysicalBone3D)->Array:
 	return skeleton3d.get_bone_children(bone.get_bone_id())
+
+func findPhysicsBone(id:int)->PhysicalBone3D:
+	var foundBone : PhysicalBone3D
+	for bones in physicsBones:
+		if is_instance_valid(bones) and bones.get_bone_id() == id:
+			foundBone = bones
+	return foundBone

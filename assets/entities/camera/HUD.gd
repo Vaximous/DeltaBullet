@@ -56,8 +56,10 @@ var interactVisible:bool = false:
 func _ready()->void:
 	enableHud()
 	%scope.modulate = Color.TRANSPARENT
-	gameManager.getEventSignal("playerDied").connect(gameManager.onPlayerDeath)
-	gameManager.getEventSignal(&"playerShot").connect(spawnBulletCasing)
+	if !gameManager.getEventSignal("playerDied").is_connected(gameManager.onPlayerDeath):
+		gameManager.getEventSignal("playerDied").connect(gameManager.onPlayerDeath)
+	if !gameManager.getEventSignal(&"playerShot").is_connected(spawnBulletCasing):
+		gameManager.getEventSignal(&"playerShot").connect(spawnBulletCasing)
 	#Dialogic.timeline_started.connect(disableHud)
 	#Dialogic.timeline_ended.connect(enableHud)
 	#Dialogic.timeline_started.connect(gameManager.showMouse)

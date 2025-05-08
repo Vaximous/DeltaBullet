@@ -130,7 +130,8 @@ func _ready()->void:
 	#Dialogic.timeline_started.connect(playTextAppearSound)
 	hud.camOwner = self
 	gameManager.setMotionBlur(camera)
-	UserConfig.configs_updated.connect(gameManager.setMotionBlur.bind(camera))
+	if !UserConfig.configs_updated.is_connected(gameManager.setMotionBlur.bind(camera)):
+		UserConfig.configs_updated.connect(gameManager.setMotionBlur.bind(camera))
 
 
 func _input(_event)->void:

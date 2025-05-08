@@ -32,8 +32,10 @@ func _physics_process(delta: float) -> void:
 		var collision_material : DB_PhysicsMaterial = gameManager.getColliderPhysicsMaterial(col)
 		if collision_material != inside_material:
 			enter_material(collision_material, hit_data)
+			queue_free()
 		else:
-			exit_material(hit_data)
+			queue_free()
+			#exit_material(hit_data)
 		#tiny step to move past the collider
 		global_position += velocity.normalized()
 		hit_data = step(velocity.normalized() * remainder)
@@ -41,16 +43,15 @@ func _physics_process(delta: float) -> void:
 func enter_material(material : DB_PhysicsMaterial, hit_data : Dictionary) -> void:
 	#print(">> Entered material %s" % material)
 	inside_material = material
-	#print(material)
-	globalParticles.spawnBulletHolePackedScene(material.bullet_hole, hit_data['col'], hit_data['col_point'], randf_range(0, TAU), hit_data['col_normal'],velocity.normalized() * (falloff.sample(get_travel_progress()*3) * projectile_owner.weaponResource.weaponImpulse))
+	#print(hit_data['col_point'])
+	globalParticles.spawnBulletHolePackedScene(material.bullet_hole, hit_data['col'], hit_data['col_point'], randf_range(0,360), hit_data['col_normal'],velocity)
 	var col : Object = hit_data['col']
 	get_damage()
 	if col.has_method(&"hit"):
 		if is_instance_valid(projectile_owner):
 			if projectile_owner is Weapon:
 				col.hit(get_damage(),projectile_owner.weaponOwner,velocity.normalized() * (falloff.sample(get_travel_progress()*3) * projectile_owner.weaponResource.weaponImpulse),to_global(to_local(hit_data['col_point'])-position))
-		else:
-			return
+				queue_free()
 	#if penetration_power > 0:
 		#var hit = gather_collision_info()
 		#if hit:
@@ -65,11 +66,12 @@ func enter_material(material : DB_PhysicsMaterial, hit_data : Dictionary) -> voi
 	queue_free()
 
 func exit_material(hit_data : Dictionary) -> void:
-	if expire_by_distance():
-		return
+	queue_free()
+	#if expire_by_distance():
+		#return
 	#print("<< Exited material %s" % inside_material)
-	globalParticles.spawnBulletHolePackedScene(inside_material.bullet_hole, hit_data['col'], hit_data['col_point'], randf_range(0, TAU), -last_hit_data['col_normal'])
-	inside_material = null
+	#globalParticles.spawnBulletHolePackedScene(inside_material.bullet_hole, hit_data['col'], hit_data['col_point'], randf_range(0, TAU), -last_hit_data['col_normal'])
+	#inside_material = null
 
 func _add_distance(distance : float) -> void:
 	if inside_material:

@@ -1,6 +1,6 @@
 extends CharacterBody3D
 class_name BloodDroplet
-const framesRecalculation : int = 2
+const framesRecalculation : int = 5
 var framesSinceRecalc : int = 0
 var meshDraw = ImmediateMesh.new()
 

@@ -1,10 +1,11 @@
 extends PropRigidBody
 @export_category("Barrel")
 var _dealer
+var exploded : bool = false
 ##Will this barrel set things on fire when exploded?
 @export var burnChance : bool = true
 @export var explosionRadius : float = 7.0
-@export var explosionImpulse :float  = 35.0
+@export var explosionImpulse :float  = 20
 
 
 func burn()->void:
@@ -13,6 +14,8 @@ func burn()->void:
 
 
 func createExplosion(burnchance:bool=true)->void:
+	if exploded: queue_free()
+	exploded = true
 	var explo : ExplosionArea = ExplosionArea.createExplosionArea(explosionRadius,90,explosionImpulse,null)
 	gameManager.world.worldMisc.add_child(explo)
 	explo.explosionFalloff = load("res://assets/resources/defaultExplosionCurve.tres")
@@ -24,7 +27,8 @@ func createExplosion(burnchance:bool=true)->void:
 
 func _on_health_component_health_depleted(dealer: Node3D) -> void:
 	_dealer = dealer
-	createExplosion(burnChance)
+	if !exploded:
+		createExplosion(burnChance)
 	queue_free()
 
 

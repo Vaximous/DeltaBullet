@@ -11,7 +11,7 @@ var last_hit_data : Dictionary
 func set_projectile_owner(value : Node) -> void:
 	if value is Weapon:
 		max_damage = value.weaponResource.weaponDamage
-		penetration_power = value.weaponResource.bulletPenetration
+		#penetration_power = value.weaponResource.bulletPenetration
 		falloff = value.weaponResource.damageFalloff
 	projectile_owner = value
 
@@ -43,14 +43,16 @@ func _physics_process(delta: float) -> void:
 func enter_material(material : DB_PhysicsMaterial, hit_data : Dictionary) -> void:
 	#print(">> Entered material %s" % material)
 	inside_material = material
-	#print(hit_data['col_point'])
-	globalParticles.spawnBulletHolePackedScene(material.bullet_hole, hit_data['col'], hit_data['col_point'], randf_range(0,360), hit_data['col_normal'],velocity)
+	var collisionPoint : Vector3 = hit_data['col_point']
+	#print(collisionPoint.normalized())
+
+	if collisionPoint.is_finite():
+		globalParticles.spawnBulletHolePackedScene(material.bullet_hole, hit_data['col'], collisionPoint, randf_range(0,180), hit_data['col_normal'].round(),velocity.normalized() * randf_range(8,20) )
 	var col : Object = hit_data['col']
-	get_damage()
 	if col.has_method(&"hit"):
 		if is_instance_valid(projectile_owner):
 			if projectile_owner is Weapon:
-				col.hit(get_damage(),projectile_owner.weaponOwner,velocity.normalized() * (falloff.sample(get_travel_progress()*3) * projectile_owner.weaponResource.weaponImpulse),to_global(to_local(hit_data['col_point'])-position))
+				col.hit(get_damage(),projectile_owner.weaponOwner,velocity.normalized() * (falloff.sample(get_travel_progress()*3) * projectile_owner.weaponResource.weaponImpulse),to_global(to_local(collisionPoint))-position)
 				queue_free()
 	#if penetration_power > 0:
 		#var hit = gather_collision_info()

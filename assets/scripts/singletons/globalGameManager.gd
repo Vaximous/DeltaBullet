@@ -476,6 +476,7 @@ func saveGame(saveName:String = "Save1"):
 		var pawnFile = playerPawns[0].savePawnFile(playerPawns[0].savePawnInformation(),"user://saves/%s/%s"%[saveName,saveName])
 		var saveDict : Dictionary = {
 			"saveName" : saveName,
+			"prologueComplete" : get_persistent_data()["seen_prologue"],
 			"saveLocation" : gameManager.world.worldData.worldName,
 			"scene" : get_tree().current_scene.get_scene_file_path(),
 			"timestamp" : Time.get_unix_time_from_system(),
@@ -487,6 +488,9 @@ func saveGame(saveName:String = "Save1"):
 		var stringy = JSON.stringify(saveDict)
 		saveFile.store_line(stringy)
 		Console.add_rich_console_message("[color=green] Saved game '%s' sucessfully!"%saveName)
+		modify_persistent_data("lastSaveData", saveDict)
+		modify_persistent_data("lastSave", currentSave)
+		#print(get_persistent_data()["lastSaveData"])
 		return saveFile
 
 func loadGame(save:String)->void:
@@ -504,7 +508,10 @@ func loadGame(save:String)->void:
 					return
 				var nodeData = json.get_data()
 				currentSave = save
+				modify_persistent_data("lastSave", save)
 				loadWorld(nodeData["scene"])
+				modify_persistent_data("lastSaveData", nodeData)
+				#print(get_persistent_data()["lastSaveData"])
 				#purchasedPlacables = nodeData["purchasePlacables"]
 				#temporaryPawnInfo.clear()
 		else:
@@ -643,8 +650,9 @@ func setMotionBlur(camera:Camera3D)->void:
 			camera.compositor.compositor_effects[1].set("enabled",true)
 	else:
 		if camera.compositor:
-			camera.compositor.compositor_effects[0].set("enabled",false)
-			camera.compositor.compositor_effects[1].set("enabled",false)
+			camera.compositor.free()
+			#camera.compositor.compositor_effects[0].set("enabled",false)
+			#camera.compositor.compositor_effects[1].set("enabled",false)
 
 
 
@@ -666,7 +674,7 @@ func createSplat(gposition:Vector3 = Vector3.ONE,normal:Vector3 = Vector3.ONE,pa
 		if parent.has_node(_b.get_path()) and _b.is_inside_tree():
 			_b.position = gposition
 			if !_b.global_transform.origin == gposition:
-				_b.look_at(_b.global_transform.origin + normal, Vector3.UP)
+				_b.look_at(_b.global_transform.origin + normal.round(), Vector3.UP)
 			return _b
 		else:
 			_b.queue_free()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://1uuvtqrmyqus"]
+[gd_scene load_steps=51 format=3 uid="uid://1uuvtqrmyqus"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_fy66m"]
 [ext_resource type="PackedScene" uid="uid://boicvk4qeqmbd" path="res://assets/entities/pawnSpawn/pawnSpawn.tscn" id="2_mn033"]
@@ -18,6 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://b026rv1louhqg" path="res://assets/entities/clothing/Longcoats/longCoat.tscn" id="9_oa5hw"]
 [ext_resource type="PackedScene" uid="uid://4seyitfkc6wn" path="res://assets/entities/clothing/Pants/pants.tscn" id="10_ogp5d"]
 [ext_resource type="PackedScene" uid="uid://b4v8dskvpby4c" path="res://assets/entities/clothing/Hair/Hair2.tscn" id="14_bhjxw"]
+[ext_resource type="PackedScene" uid="uid://bporbvksq0guk" path="res://assets/entities/weapons/shotgun/Shotgun.tscn" id="14_gkqa0"]
 [ext_resource type="PackedScene" uid="uid://di4i31dg7lojx" path="res://assets/entities/pawnEntity/ragdoll/pawnRagdoll.tscn" id="15_4qgq4"]
 [ext_resource type="PackedScene" uid="uid://nyee136gj7vd" path="res://assets/entities/clothing/longSleeve/long_sleeved_jacket.tscn" id="15_wjsdj"]
 [ext_resource type="PackedScene" uid="uid://dend7ate7mq6e" path="res://assets/entities/bulletHoles/default/BulletHoleBase.tscn" id="17_4tm44"]
@@ -26,6 +27,7 @@
 [ext_resource type="Script" uid="uid://b6r8ewrq3qb3y" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="22_js4nn"]
 [ext_resource type="Texture2D" uid="uid://ds3g0xorlwkrr" path="res://assets/textures/urban/swnjnwkwin7.tga" id="23_ng86g"]
 [ext_resource type="Curve" uid="uid://cex2ggwxevnuj" path="res://assets/entities/projectiles/linear_falloff_curve.tres" id="25_besv3"]
+[ext_resource type="Script" uid="uid://bib6xho41672k" path="res://assets/entities/aiMarker/aiMarker.gd" id="28_aj0bf"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_14nxj"]
 streams_count = 2
@@ -81,8 +83,9 @@ adjustment_saturation = 1.15
 adjustment_color_correction = ExtResource("4_qmki0")
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_57wiy"]
-vertices = PackedVector3Array(5.26401, 1, -5.7359, 5.26401, 1, -4.2359, 77.514, 1, -4.4859, 4.26401, 1, -5.9859, 5.26401, 1, -5.7359, 77.514, 1, -4.4859, 77.514, 1, -166.986, 4.51401, 1, 117.014, 4.51401, 1, 8.7641, 4.01401, 1, 8.5141, -308.736, 1, 117.014, -308.736, 1, 117.014, 4.01401, 1, 8.5141, 4.26401, 1, -5.9859, 4.26401, 1, -5.9859, 77.514, 1, -166.986, -308.736, 1, -166.986, -308.736, 1, 117.014, 5.26401, 1, -4.2359, 5.26401, 1, 7.0141, 77.514, 1, 7.2641, 77.514, 1, -4.4859, 77.514, 1, 7.2641, 5.26401, 1, 7.0141, 5.26401, 1, 8.5141, 77.514, 1, 7.2641, 5.26401, 1, 8.5141, 4.51401, 1, 8.7641, 4.51401, 1, 117.014, 77.514, 1, 117.014)
-polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(4, 3, 5), PackedInt32Array(5, 3, 6), PackedInt32Array(8, 7, 9), PackedInt32Array(9, 7, 10), PackedInt32Array(11, 13, 12), PackedInt32Array(15, 14, 16), PackedInt32Array(16, 14, 17), PackedInt32Array(18, 21, 19), PackedInt32Array(19, 21, 20), PackedInt32Array(24, 23, 22), PackedInt32Array(26, 25, 27), PackedInt32Array(27, 25, 28), PackedInt32Array(28, 25, 29)]
+vertices = PackedVector3Array(5.26401, 0.52, -5.7359, 5.26401, 0.52, -4.2359, 77.514, 0.52, -4.4859, 4.26401, 0.52, -5.9859, 77.514, 0.52, -166.986, 4.51401, 0.52, 117.014, 4.51401, 0.52, 8.7641, 4.01401, 0.52, 8.5141, -308.736, 0.52, 117.014, -308.736, 0.52, -166.986, 5.26401, 0.52, 7.0141, 77.514, 0.52, 7.2641, 5.26401, 0.52, 8.5141, 77.514, 0.52, 117.014)
+polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(0, 3, 2), PackedInt32Array(2, 3, 4), PackedInt32Array(6, 5, 7), PackedInt32Array(7, 5, 8), PackedInt32Array(8, 3, 7), PackedInt32Array(4, 3, 9), PackedInt32Array(9, 3, 8), PackedInt32Array(1, 2, 10), PackedInt32Array(10, 2, 11), PackedInt32Array(12, 10, 11), PackedInt32Array(12, 11, 6), PackedInt32Array(6, 11, 5), PackedInt32Array(5, 11, 13)]
+cell_height = 0.01
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ooyfj"]
 albedo_color = Color(1, 0.761369, 0.717776, 1)
@@ -329,17 +332,20 @@ transform = Transform3D(0.77901, 0, -0.627012, 0, 1, 0, 0.627012, 0, 0.77901, 1.
 pawnType = 0
 pawnWeapons = Array[PackedScene]([ExtResource("4_a2bgr"), ExtResource("5_pk0d2"), ExtResource("6_81xn8")])
 pawnClothing = Array[PackedScene]([ExtResource("7_qm1ts"), ExtResource("8_30e07"), ExtResource("9_oa5hw"), ExtResource("10_ogp5d")])
+hatedGroups = Array[StringName]([&"Player", &"Hostile"])
+spawnGroup = &"Hostile"
+randomAnimationSpeed = false
 
 [node name="pawnSpawn" parent="Spawns/pawnSpawns" index="0" groups=["badboss"] instance=ExtResource("2_mn033")]
 transform = Transform3D(-0.863642, 0, 0.504106, 0, 1, 0, -0.504106, 0, -0.863642, 7.89555, 0.5, 2.78226)
 active = false
 pawnName = "Jerry"
-pawnWeapons = Array[PackedScene]([ExtResource("4_a2bgr"), ExtResource("5_pk0d2")])
+pawnWeapons = Array[PackedScene]([ExtResource("14_gkqa0"), ExtResource("14_gkqa0")])
 pawnClothing = Array[PackedScene]([ExtResource("14_bhjxw"), ExtResource("15_wjsdj"), ExtResource("10_ogp5d")])
 equipWeaponOnSpawn = true
 weaponToEquip = 2
-aiType = 1
 pawnHP = 3500
+randomAnimationSpeed = false
 pawnColor = Color(0.926594, 0.735976, 0.847277, 1)
 
 [node name="worldEnvironment" parent="Environment" index="0"]
@@ -382,6 +388,93 @@ shape = SubResource("BoxShape3D_6khn8")
 [node name="pawnRagdoll" parent="Props" index="0" instance=ExtResource("15_4qgq4")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1.13853, 0.5, -0.267807)
 startOnInstance = true
+
+[node name="Physical Bone Spine_0" parent="Props/pawnRagdoll/Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" index="0"]
+transform = Transform3D(1, 6.73382e-08, -1.83751e-09, 4.03357e-11, -0.0278761, -0.999611, -6.73633e-08, 0.999611, -0.0278761, 0.0608976, 0.948313, -0.0942157)
+joint_offset = Transform3D(-3.61999e-06, 0, 1, 0, 1, 0, -1, 0, -3.61999e-06, -0.0623643, -2.0663e-05, 0.0695174)
+body_offset = Transform3D(1, -2.44657e-08, -1.56453e-07, -1.56453e-07, -2.62633e-07, -1, 2.44657e-08, 1, -2.62633e-07, 0.0623643, 0.0695174, 2.06828e-05)
+
+[node name="Physical Bone Spine_1" parent="Props/pawnRagdoll/Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" index="1"]
+transform = Transform3D(1, 5.54078e-08, 1.19581e-06, 1.1921e-06, 0.0450308, -0.998986, -1.092e-07, 0.998986, 0.0450308, 0.0608976, 1.1215, -0.0969312)
+joint_offset = Transform3D(-3.61999e-06, 0, 1, 0, 1, 0, -1, 0, -3.61999e-06, -0.0623646, 1.37286e-05, 0.103043)
+body_offset = Transform3D(1, -2.55657e-08, 1.05353e-06, 1.05353e-06, 1.15484e-07, -1, 2.55656e-08, 1, 1.15484e-07, 0.0623645, 0.103043, -1.37389e-05)
+
+[node name="Physical Bone Spine_2" parent="Props/pawnRagdoll/Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" index="2"]
+transform = Transform3D(1, 1.74866e-08, 2.00663e-06, 1.99676e-06, 0.0907651, -0.995872, -1.99546e-07, 0.995872, 0.0907651, 0.0613835, 1.35584, -0.113537)
+joint_offset = Transform3D(-3.61999e-06, 0, 1, 0, 1, 0, -1, 0, -3.61999e-06, -0.0628506, 3.29528e-06, 0.131939)
+body_offset = Transform3D(1, -6.08438e-08, 1.87362e-06, 1.87362e-06, 9.08971e-07, -1, 6.08421e-08, 1, 9.16421e-07, 0.0628504, 0.131939, -3.41237e-06)
+
+[node name="Physical Bone L_UpperArm" parent="Props/pawnRagdoll/Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" index="3"]
+transform = Transform3D(-0.0223747, 0.911734, -0.410172, 0.0496621, 0.410782, 0.91038, 0.998515, -5.68102e-07, -0.0544697, 0.178085, 1.33501, -0.144704)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00129221, 0.00168063, 0.117793)
+body_offset = Transform3D(1, 2.30965e-07, -9.68575e-08, -1.00583e-07, -1.58837e-07, -1, -2.07242e-07, 1, -1.58192e-07, -0.0012922, 0.117793, -0.00168061)
+
+[node name="Physical Bone L_Forearm" parent="Props/pawnRagdoll/Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" index="4"]
+transform = Transform3D(-0.127091, 0.838414, -0.530009, 0.187233, 0.545014, 0.817254, 0.97406, 0.00463025, -0.226245, 0.301669, 1.11069, -0.107369)
+joint_offset = Transform3D(-3.61999e-06, 0, -1, 0, 1, 0, 1, 0, -3.61999e-06, 7.5433e-05, -2.60829e-06, 0.12773)
+body_offset = Transform3D(0.99952, -1.23261e-06, -1.60933e-06, -1.63913e-06, -1.67405e-07, -0.99952, 1.25682e-06, 0.99952, -1.22585e-07, -7.51913e-05, 0.127669, 2.6226e-06)
+
+[node name="Physical Bone L_Hand" parent="Props/pawnRagdoll/Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" index="5"]
+transform = Transform3D(0.805081, 0.524111, -0.277762, 0.576918, -0.583027, 0.572054, 0.137877, -0.620795, -0.771753, 0.382639, 0.97899, -0.0415715)
+joint_offset = Transform3D(-3.61999e-06, 0, -1, 0, 1, 0, 1, 0, -3.61999e-06, -7.27596e-06, -2.15444e-06, 0.0477029)
+body_offset = Transform3D(0.132587, -0.706801, -0.693495, -7.3649e-06, 0.699684, -0.713109, 0.990203, 0.0946448, 0.092853, 0.0330812, 0.0340189, -0.00442195)
+
+[node name="Physical Bone R_UpperArm" parent="Props/pawnRagdoll/Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" index="6"]
+transform = Transform3D(-0.0223747, -0.911733, 0.410173, -0.0496621, 0.410783, 0.91038, -0.998515, -5.53012e-07, -0.0544697, -0.188258, 1.3291, -0.143012)
+joint_offset = Transform3D(1, 0, 0, 0, 0.600978, 0.799265, 0, -0.799265, 0.600978, 2.99931e-06, 3.83165e-06, 0.12512)
+joint_rotation = Vector3(-0.926072, 0, 0)
+body_offset = Transform3D(1, 3.53876e-08, 8.56817e-08, 7.07805e-08, -1.45195e-06, -1, -3.57967e-08, 1, -1.56461e-06, -3.01003e-06, 0.12512, -3.63588e-06)
+
+[node name="Physical Bone R_Forearm" parent="Props/pawnRagdoll/Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" index="7"]
+transform = Transform3D(-0.127093, -0.838414, 0.530009, -0.187231, 0.545014, 0.817254, -0.97406, 0.00463306, -0.226244, -0.307305, 1.11074, -0.107303)
+joint_offset = Transform3D(-3.61999e-06, 0, 1, 0, 1, 0, -1, 0, -3.61999e-06, 1.12547e-06, -5.35864e-07, 0.127692)
+body_offset = Transform3D(1, -1.43144e-06, 1.2219e-06, 1.2666e-06, 1.1432e-07, -1, 1.46264e-06, 1, -4.5402e-09, -1.2815e-06, 0.127692, 5.36442e-07)
+
+[node name="Physical Bone R_Hand" parent="Props/pawnRagdoll/Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" index="8"]
+transform = Transform3D(0.83003, -0.51424, 0.215887, -0.532388, -0.615232, 0.581423, -0.166171, -0.597534, -0.784436, -0.384663, 0.979514, -0.0419008)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000200316, 0.000313807, 0.0463504)
+body_offset = Transform3D(0.153807, 0.690184, 0.707099, 4.59515e-06, 0.715614, -0.698496, -0.988101, 0.107437, 0.110063, -0.0329601, 0.032151, -0.00533311)
+
+[node name="Physical Bone L_UpperLeg" parent="Props/pawnRagdoll/Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" index="9"]
+transform = Transform3D(0.981452, -0.00314942, -0.191683, 0.191582, 0.0524232, 0.980076, 0.00696195, -0.99862, 0.0520542, 0.0863241, 0.680568, -0.106704)
+joint_offset = Transform3D(-3.61999e-06, 0, 1, 0, 1, 0, -1, 0, -3.61999e-06, -2.65524e-05, 5.16441e-07, 0.202291)
+body_offset = Transform3D(1, -1.69501e-07, -7.4401e-07, -7.38946e-07, -5.58794e-08, -1, 1.71363e-07, 1, -4.84288e-08, 2.67029e-05, 0.202291, -5.06639e-07)
+
+[node name="Physical Bone L_LowerLeg" parent="Props/pawnRagdoll/Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" index="10"]
+transform = Transform3D(0.990494, -0.000589321, -0.137552, 0.137317, 0.0627061, 0.98854, 0.00804275, -0.998032, 0.0621909, 0.152783, 0.283266, -0.129753)
+joint_offset = Transform3D(-3.61999e-06, 0, -1, 0, 1, 0, 1, 0, -3.61999e-06, -1.48503e-05, 3.05334e-06, 0.201357)
+body_offset = Transform3D(1, -8.3819e-08, -8.4471e-07, -8.36677e-07, -7.07805e-08, -1, 8.56817e-08, 1, -6.70552e-08, 1.50204e-05, 0.201357, -3.03984e-06)
+
+[node name="Physical Bone L_Foot" parent="Props/pawnRagdoll/Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" index="11"]
+transform = Transform3D(-0.977138, 0.0799435, -0.197006, -0.0750996, 0.7371, 0.671598, 0.198903, 0.671038, -0.714244, 0.189721, 0.0526522, -0.108718)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.35434e-06, 2.7385e-07, 0.0469881)
+body_offset = Transform3D(1, 6.70552e-06, 1.6138e-05, 1.61529e-05, -4.58956e-06, -1, -6.70552e-06, 1, -4.55976e-06, 5.96046e-07, 0.0469881, -5.96046e-08)
+
+[node name="Physical Bone R_UpperLeg" parent="Props/pawnRagdoll/Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" index="12"]
+transform = Transform3D(0.981452, 0.00314957, 0.19168, -0.19158, 0.0524231, 0.980076, -0.00696165, -0.99862, 0.0520541, -0.091904, 0.680576, -0.106704)
+joint_offset = Transform3D(-3.61999e-06, 0, 1, 0, 1, 0, -1, 0, -3.61999e-06, -5.60608e-05, -4.9191e-07, 0.202266)
+body_offset = Transform3D(1, 5.07571e-08, -1.31293e-06, -1.34527e-06, 8.19564e-08, -1, -5.07571e-08, 1, 7.45058e-08, 5.63264e-05, 0.202266, 4.76837e-07)
+
+[node name="Physical Bone R_LowerLeg" parent="Props/pawnRagdoll/Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" index="13"]
+transform = Transform3D(0.990494, 0.000589288, 0.137552, -0.137318, 0.0627058, 0.98854, -0.00804277, -0.998032, 0.0621907, -0.158436, 0.283263, -0.129757)
+joint_offset = Transform3D(-3.61999e-06, 0, 1, 0, 1, 0, -1, 0, -3.61999e-06, 1.26541e-06, -5.28393e-07, 0.201358)
+body_offset = Transform3D(1, -2.38419e-07, 1.41194e-06, 1.41049e-06, 9.68575e-08, -1, 2.37487e-07, 1, 1.08033e-07, -1.54972e-06, 0.201358, 5.06639e-07)
+
+[node name="Physical Bone R_Foot" parent="Props/pawnRagdoll/Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" index="14"]
+transform = Transform3D(-0.987933, -0.0808351, 0.132117, 0.0307913, 0.733473, 0.679021, -0.151793, 0.674895, -0.722133, -0.192267, 0.0741513, -0.125249)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00316668, -0.00461213, 0.0199386)
+body_offset = Transform3D(1, 7.45058e-07, 5.81145e-07, 5.58794e-07, 3.27826e-07, -1, -7.37607e-07, 1, 3.57628e-07, 0.00316668, 0.0199386, 0.00461212)
+
+[node name="Physical Bone Neck" parent="Props/pawnRagdoll/Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" index="15"]
+transform = Transform3D(-1, 1.47438e-07, 1.47359e-07, -1.46368e-07, 0.00669672, -0.999978, -1.48421e-07, -0.999978, -0.00669672, 0.0613852, 1.52345, -0.119306)
+axis_lock_linear_x = true
+axis_lock_linear_y = true
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+joint_offset = Transform3D(1, 1.49012e-08, 4.44089e-16, -1.49012e-08, 1, 2.98023e-08, 1.00585e-21, -2.98023e-08, 1, 0.062852, 0.00596146, 0.03624)
+body_offset = Transform3D(-1, 2.28601e-07, 6.58897e-10, 8.71976e-10, 0.00669683, -0.999984, -2.28601e-07, -0.999983, -0.00669683, 0.062852, 0.0361995, 0.00620407)
 
 [node name="untitled" parent="Props" index="1" instance=ExtResource("7_4j4hu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.7448, 0.5, -3.38265)
@@ -592,56 +685,89 @@ collisionEnabled = true
 
 [node name="marker3d" type="Marker3D" parent="Misc/WaypointNodes" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.937254, 0)
+script = ExtResource("28_aj0bf")
+metadata/_custom_type_script = "uid://bib6xho41672k"
 
 [node name="marker3d2" type="Marker3D" parent="Misc/WaypointNodes" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 59.0449, 0.937254, -125.439)
+script = ExtResource("28_aj0bf")
+metadata/_custom_type_script = "uid://bib6xho41672k"
 
 [node name="marker3d3" type="Marker3D" parent="Misc/WaypointNodes" index="2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -93.4034, 0.937254, -125.439)
+script = ExtResource("28_aj0bf")
+metadata/_custom_type_script = "uid://bib6xho41672k"
 
 [node name="marker3d4" type="Marker3D" parent="Misc/WaypointNodes" index="3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -93.4034, 0.937254, 22.3994)
+script = ExtResource("28_aj0bf")
+metadata/_custom_type_script = "uid://bib6xho41672k"
 
 [node name="marker3d5" type="Marker3D" parent="Misc/WaypointNodes" index="4"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -93.4034, 0.937254, 88.551)
+script = ExtResource("28_aj0bf")
+metadata/_custom_type_script = "uid://bib6xho41672k"
 
 [node name="marker3d6" type="Marker3D" parent="Misc/WaypointNodes" index="5"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.5681, 0.937254, 88.551)
+script = ExtResource("28_aj0bf")
+metadata/_custom_type_script = "uid://bib6xho41672k"
 
 [node name="marker3d7" type="Marker3D" parent="Misc/WaypointNodes" index="6"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.3496, 0.937254, 88.551)
+script = ExtResource("28_aj0bf")
+metadata/_custom_type_script = "uid://bib6xho41672k"
 
 [node name="marker3d8" type="Marker3D" parent="Misc/WaypointNodes" index="7"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.3496, 0.937254, 10.4237)
+script = ExtResource("28_aj0bf")
+metadata/_custom_type_script = "uid://bib6xho41672k"
 
 [node name="marker3d9" type="Marker3D" parent="Misc/WaypointNodes" index="8"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.3496, 0.937254, -25.7237)
+script = ExtResource("28_aj0bf")
+metadata/_custom_type_script = "uid://bib6xho41672k"
 
 [node name="marker3d10" type="Marker3D" parent="Misc/WaypointNodes" index="9"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.63706, 0.937254, -25.7237)
+script = ExtResource("28_aj0bf")
+metadata/_custom_type_script = "uid://bib6xho41672k"
 
 [node name="marker3d11" type="Marker3D" parent="Misc/WaypointNodes" index="10"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -70.6917, 0.937254, -25.7237)
+script = ExtResource("28_aj0bf")
+metadata/_custom_type_script = "uid://bib6xho41672k"
 
 [node name="marker3d12" type="Marker3D" parent="Misc/WaypointNodes" index="11"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -241.403, 0.937254, -25.7237)
+script = ExtResource("28_aj0bf")
+metadata/_custom_type_script = "uid://bib6xho41672k"
 
 [node name="marker3d13" type="Marker3D" parent="Misc/WaypointNodes" index="12"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -241.403, 0.937254, -122.884)
+script = ExtResource("28_aj0bf")
+metadata/_custom_type_script = "uid://bib6xho41672k"
 
 [node name="marker3d14" type="Marker3D" parent="Misc/WaypointNodes" index="13"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -241.403, 0.937254, 67.8986)
+script = ExtResource("28_aj0bf")
+metadata/_custom_type_script = "uid://bib6xho41672k"
 
 [node name="marker3d15" type="Marker3D" parent="Misc/WaypointNodes" index="14"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -69.0004, 0.937254, 67.8986)
+script = ExtResource("28_aj0bf")
+metadata/_custom_type_script = "uid://bib6xho41672k"
 
 [node name="marker3d16" type="Marker3D" parent="Misc/WaypointNodes" index="15"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -69.0004, 0.937254, 67.8986)
+script = ExtResource("28_aj0bf")
+metadata/_custom_type_script = "uid://bib6xho41672k"
 
 [node name="mapLogic" parent="." index="7"]
 script = SubResource("GDScript_3oo1c")
 
 [connection signal="pawnSpawned" from="Spawns/playerSpawns/pawnSpawn" to="Geometry/navigationRegion3d/node" method="_on_pawn_spawn_pawn_spawned"]
 
+[editable path="Props/pawnRagdoll"]
 [editable path="Props/untitled"]
 [editable path="Props/untitled2"]

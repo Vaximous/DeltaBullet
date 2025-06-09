@@ -20,9 +20,9 @@ func _physics_process(delta: float):
 		time_elapsed_ai_physics_process = 0
 
 
-func _ai_process(delta:float):
+func _ai_process(_delta:float):
 	pass
 
 
-func _ai_physics_process(delta:float):
+func _ai_physics_process(_delta:float):
 	pass

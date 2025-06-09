@@ -29,6 +29,7 @@ var castLerp : Vector3 = Vector3.ZERO
 				hud.healthBar.max_value = followingEntity.healthComponent.defaultHP
 			if !followingEntity.killedPawn.is_connected(emitKilleffect):
 				followingEntity.killedPawn.connect(emitKilleffect)
+			hud.hpCheck()
 	get:
 		return followNode
 #onReady Set
@@ -130,8 +131,7 @@ func _ready()->void:
 	#Dialogic.timeline_started.connect(playTextAppearSound)
 	hud.camOwner = self
 	gameManager.setMotionBlur(camera)
-	if !UserConfig.configs_updated.is_connected(gameManager.setMotionBlur.bind(camera)):
-		UserConfig.configs_updated.connect(gameManager.setMotionBlur.bind(camera))
+	UserConfig.configs_updated.connect(gameManager.setMotionBlur.bind(camera))
 
 
 func _input(_event)->void:

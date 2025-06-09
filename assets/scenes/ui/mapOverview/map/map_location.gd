@@ -26,7 +26,8 @@ func setupMap()->void:
 	playCloseAnimation()
 	markerLabel.text = locationName
 	if map:
-		map.mapScreen.index_changed.connect(updateVisibility.unbind(1))
+		if !map.mapScreen.index_changed.is_connected(updateVisibility.unbind(1)):
+			map.mapScreen.index_changed.connect(updateVisibility.unbind(1))
 
 func updateVisibility()->void:
 	if map.mapScreen.selectedIndex == travelGroupID:

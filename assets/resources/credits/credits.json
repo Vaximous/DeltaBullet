@@ -1,60 +1,60 @@
 {
-    "3D Modelers":[
-        "toaflo",
+	"3D Modelers":[
+		"toaflo",
 		"Vax"
-    ],
-    "Texture Artists":[
-        "toaflo",
+	],
+	"Texture Artists":[
+		"toaflo",
 		"Vax"
-    ],
-    "Programmers":[
-        "toaflo",
-        "Vax"
-    ],
-    "UI / UX":[
+	],
+	"Programmers":[
+		"toaflo",
+		"Vax"
+	],
+	"UI / UX":[
 	"toaflo",
 	"Vax"
-    ],
-    "Sound Effects":[
+	],
+	"Sound Effects":[
 	"Vax",
 	"Hanada Caio"
-    ],
-    "Music":[
+	],
+	"Music":[
 	"Hanada Caio"
-    ],
-    "Game Testers":[
-	
-    ],
-    "Misc Contribution":[
-	
-    ],
-    "Asset Attribution":{
-        "Sounds":[
+	],
+	"Game Testers":[
 
-        ],
-        "Music":[
+	],
+	"Misc Contribution":[
 
-        ],
-        "Textures":[
-            {
-                "author":"Kenney",
-                "assets":["Kenney Crosshair Pack", "Kenney Particle Pack", "Kenney Prototype Textures"],
-                "icon":"",
-                "site":"https://www.kenney.nl/"
-            }
-        ],
-        "Shaders":[
-            {
-                "author":"Zach Bernal and contributors",
-                "assets":["Boujie Water Shader"],
-                "icon":"",
-                "site":"https://www.kenney.nl/"
-            }
-        ],
-        "Code":[
-        ],
-    }
-    "Supporters":[
-	
-    ]
+	],
+	"Asset Attribution":{
+		"Sounds":[
+
+		],
+		"Music":[
+
+		],
+		"Textures":[
+			{
+				"author":"Kenney",
+				"assets":["Kenney Crosshair Pack", "Kenney Particle Pack", "Kenney Prototype Textures"],
+				"icon":"",
+				"site":"https://www.kenney.nl/"
+			}
+		],
+		"Shaders":[
+			{
+				"author":"Zach Bernal and contributors",
+				"assets":["Boujie Water Shader"],
+				"icon":"",
+				"site":"https://www.kenney.nl/"
+			}
+		],
+		"Code":[
+		],
+	},
+	"Supporters":[
+
+	]
 }

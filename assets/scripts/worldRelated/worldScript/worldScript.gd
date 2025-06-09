@@ -69,7 +69,7 @@ func orphanDelete()->void:
 	queue_free()
 
 
-func getSpawnPoints(offset:Vector3 = Vector3(0,0,0), pickRandom:bool = true, spawn_idx:int = 0):
+func getSpawnPoints(_offset:Vector3 = Vector3(0,0,0), pickRandom:bool = true, _spawn_idx:int = 0):
 	if pickRandom:
 		var spawnZone = pawnWorldSpawns.get_children().pick_random()
 		if spawnZone is PawnSpawn:
@@ -87,7 +87,7 @@ func getWaypoints(waypointType:int = 0)->Array:
 				waypointArray.append(i)
 	return waypointArray
 
-func getPlayerSpawnPoints(offset:Vector3 = Vector3(0,0,0), pickRandom:bool = true, spawn_idx:int = 0):
+func getPlayerSpawnPoints(_offset:Vector3 = Vector3(0,0,0), pickRandom:bool = true, _spawn_idx:int = 0):
 	if pickRandom:
 		var spawnZone = playerWorldSpawns.get_children().pick_random()
 		if spawnZone is PawnSpawn and !null:
@@ -101,7 +101,7 @@ func playSoundscape()->void:
 	if worldData.soundScape:
 		var audioStreamPlayer : AudioStreamPlayer = AudioStreamPlayer.new()
 		add_child(audioStreamPlayer)
-		audioStreamPlayer.bus = 'Ambience'
+		audioStreamPlayer.bus = &'Ambience'
 		audioStreamPlayer.stream = worldData.soundScape
 		audioStreamPlayer.play()
 

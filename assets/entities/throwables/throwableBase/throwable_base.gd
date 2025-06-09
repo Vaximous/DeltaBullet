@@ -43,6 +43,7 @@ func startThrowable()->void:
 			throwTween.parallel().tween_property(countdownProgress,"modulate",Color.DARK_RED,throwableResource.cookTime)
 
 func activateThrowable()->void:
+	thrown.emit()
 	pass
 
 

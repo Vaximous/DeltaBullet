@@ -63,7 +63,7 @@ func _ready() -> void:
 # Called every physics frame.
 # Calls the 'on_physics_process' function on the current state.
 func _physics_process(delta: float) -> void:
-	if is_instance_valid(current_state):
+	if is_instance_valid(current_state) and current_state.is_current_state():
 		current_state.on_physics_process(delta)
 
 
@@ -100,6 +100,7 @@ func change_state(node_path: NodePath) -> void:
 	# Use the cached value if that state has already been accessed
 	if is_instance_valid(_cache.get(node_path)):
 		current_state = _cache[node_path]
+		#print("Changed state to %s from %s" %[_cache[node_path],current_state])
 	# Get the node if the requested state has not been accessed yet or if it was deleted
 	else:
 		# Get the node or log an error if the path does not exist
@@ -108,6 +109,7 @@ func change_state(node_path: NodePath) -> void:
 		if is_instance_valid(next_state):
 			_cache[node_path] = next_state
 			current_state = next_state
+			#print("Changed state to %s from %s" %[next_state,current_state])
 		# Log an error if the result is null or it is not a StateMachineState node.
 		else:
 			push_error("Node ", next_state, " at path ", node_path, " is not a valid StateMachineState")

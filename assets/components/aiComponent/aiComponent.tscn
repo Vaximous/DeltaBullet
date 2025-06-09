@@ -26,6 +26,12 @@ albedo_color = Color(1, 0, 0, 0.309804)
 script = ExtResource("4_gaqok")
 pawnType = 1
 
+[node name="navigationAgent3d" type="NavigationAgent3D" parent="."]
+path_desired_distance = 2.0
+target_desired_distance = 2.0
+avoidance_enabled = true
+debug_path_custom_color = Color(0.0980392, 1, 0, 1)
+
 [node name="pawnFSM" type="Node" parent="." node_paths=PackedStringArray("current_state", "animation_player")]
 script = ExtResource("2_ubyph")
 current_state = NodePath("Wander")
@@ -37,8 +43,9 @@ animation_player = NodePath("animationPlayer")
 script = ExtResource("4_p56ey")
 aiOwner = NodePath("../..")
 
-[node name="Search" type="Node" parent="pawnFSM"]
+[node name="Search" type="Node" parent="pawnFSM" node_paths=PackedStringArray("aiOwner")]
 script = ExtResource("5_uyejc")
+aiOwner = NodePath("../..")
 
 [node name="Wander" type="Node" parent="pawnFSM" node_paths=PackedStringArray("aiOwner")]
 script = ExtResource("6_vgbdp")
@@ -97,8 +104,5 @@ debug_shape_custom_color = Color(1, 0.823529, 0, 1)
 material_override = SubResource("StandardMaterial3D_giynp")
 mesh = SubResource("ImmediateMesh_nrp35")
 
-[node name="navigationAgent3d" type="NavigationAgent3D" parent="."]
-path_desired_distance = 2.0
-avoidance_enabled = true
-
+[connection signal="velocity_computed" from="navigationAgent3d" to="." method="_on_navigation_agent_3d_velocity_computed"]
 [connection signal="timeout" from="pawnFSM/Wander/forceTargetReset" to="pawnFSM/Wander" method="_on_force_target_reset_timeout"]

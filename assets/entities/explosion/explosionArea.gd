@@ -13,7 +13,7 @@ const explosion : PackedScene = preload("res://assets/entities/explosion/explosi
 ##Line of Sight, Will the explosion use line of sight checking to explode objects?
 @export var explosionLOS : bool = true
 ##How fast will this explosion expand?
-@export var explosionSpeed : float = 0.05
+@export var explosionSpeed : float = 0.08
 ##Explosion sound... Will play when the explosion is activated
 @export var explosionSound : AudioStream
 ##How much damage will this explosion do?
@@ -68,7 +68,7 @@ func explosionRayCheck(object:Node3D):
 	return result
 
 func applyHit(object:Node3D):
-	if is_instance_valid(object) and object is not FakePhysicsEntity and object is not BloodDroplet:
+	if is_instance_valid(object) and object is not FakePhysicsEntity and object is not BloodDroplet and object is not Projectile:
 		var distance : float = global_position.distance_to(object.global_position)
 		var dmgAmnt: float = lerpf(2,explosionDamage,distance/explosionRadius)
 		var dmgClamped : float = clampf(dmgAmnt,2,dmgAmnt)
@@ -91,9 +91,11 @@ func explode()->void:
 	if explosionTween:
 		explosionTween.kill()
 	explosionTween = create_tween()
-	explosionTween.tween_property(collisionShape.shape,"radius",explosionRadius,explosionSpeed).finished.connect(collisionShape.queue_free)
+	var explosionRadiusTo = explosionRadius
+	explosionRadius = 0.1
+	explosionTween.tween_property(self,"explosionRadius",explosionRadiusTo,explosionSpeed)
 
-	explosionEffect.doRipple(explosionRadius*3,explosionSpeed,2.5)
+	explosionEffect.doRipple(explosionRadiusTo*3,0.15,15.5).finished.connect(collisionShape.queue_free)
 
 
 	if is_instance_valid(explosionEffect):
@@ -112,7 +114,7 @@ func explode()->void:
 
 
 func _on_body_entered(body: Node3D) -> void:
-	if body is FakePhysicsEntity or body is BloodDroplet:
+	if body is FakePhysicsEntity or body is BloodDroplet or body is Projectile:
 		body.queue_free()
 
 	if !explosionLOS:

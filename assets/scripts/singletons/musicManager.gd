@@ -13,7 +13,7 @@ func fade_all_audioplayers_out(fade_time : float = 2.0) -> void:
 		fade_audioplayer_out_and_free(t.name, fade_time)
 
 
-func instance_new_audioplayer(channel : StringName, stream : AudioStream = null, bus : StringName = &"Music") -> AudioStreamPlayer:
+func instance_new_audioplayer(channel : StringName = &"Music", stream : AudioStream = null) -> AudioStreamPlayer:
 	var new_audio_stream_player = AudioStreamPlayer.new()
 	new_audio_stream_player.name = channel
 	add_child(new_audio_stream_player)
@@ -38,7 +38,7 @@ func save_stream_time(channel : String = "Music") -> void:
 			saved_times[ch.stream] = [ch.get_playback_position(), Time.get_ticks_msec()]
 
 
-func create_audioplayer_with_stream(stream : AudioStream, fade_time : float = 2.0, channel : StringName = "Music", volume_db : float = 0.0, continue_from_stored : bool = true, bus : StringName = &"Music"):
+func create_audioplayer_with_stream(stream : AudioStream, fade_time : float = 2.0, channel : StringName = &"Music", volume_db : float = 0.0, continue_from_stored : bool = true):
 	fade_time = max(fade_time, 0.05)
 	var existing = get_node_or_null(String(channel))
 	if existing != null:

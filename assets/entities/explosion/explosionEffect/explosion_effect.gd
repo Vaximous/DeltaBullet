@@ -13,15 +13,15 @@ func is_emitting() -> bool:
 	return $explosionSparks.emitting or $explosionSmoke.emitting or $explosion.emitting
 
 
-func doRipple(rippleAmount:float=10.0, rippleSpeed : float = 0.25, rippleFadeSpeed : float = 0.25)->void:
+func doRipple(rippleAmount:float=10.0, rippleSpeed : float = 0.25, rippleFadeSpeed : float = 0.25)->Tweener:
 	rippleMesh.scale = Vector3.ZERO
 	rippleMesh.transparency = 0
 	if rippleTween:
 		rippleTween.kill()
 	rippleTween = create_tween()
-	rippleTween.tween_property(rippleMesh,"scale",Vector3(rippleAmount,rippleAmount,rippleAmount)*2,rippleSpeed)
+	var ripple := rippleTween.tween_property(rippleMesh,"scale",Vector3(rippleAmount,rippleAmount,rippleAmount)*2,rippleSpeed)
 	rippleTween.parallel().tween_property(rippleMesh,"transparency",1.0,explosionFadeSpeed).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
-
+	return ripple
 
 func explosionEffectPlay()->void:
 	if Engine.is_editor_hint():

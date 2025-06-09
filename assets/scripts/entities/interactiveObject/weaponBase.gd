@@ -133,7 +133,8 @@ func _ready()->void:
 		animationTree.tree_root = animationTree.tree_root.duplicate(true)
 		weaponState = (animationTree.get("parameters/weaponState/playback") as AnimationNodeStateMachinePlayback)
 		if get_parent().name == "Weapons":
-			set("gravity_scale", 0)
+			#set("gravity_scale", 0)
+			freeze = true
 			if weaponMesh:
 				weaponMesh.position = weaponResource.weaponPositionOffset
 				weaponMesh.rotation = weaponResource.weaponRotationOffset
@@ -510,6 +511,7 @@ func resetToDefault()->void:
 
 func equipToPawn(pawn:BasePawn):
 	if pawn:
+		freeze = true
 		if !pawn.itemNames.has(objectName):
 			collisionEnabled = false
 			collisionObject.disabled = true
@@ -572,6 +574,7 @@ func setEquipVariables()->void:
 	if weaponOwner.isPlayerPawn():
 		weaponOwner.attachedCam.hud.hideReloadProgress()
 	setWeaponRecoil()
+	freeze = true
 
 func setWeaponRecoil()->void:
 	if weaponOwner != null:
@@ -625,5 +628,5 @@ func playWeaponAnimation(animatorNode:String,animationName:StringName)->void:
 		wepAnimator.play(animationName)
 
 func playAimSound()->void:
-	if !%aimSound.playing and weaponRemoteState.get_current_node() == "idle":
+	if !%aimSound.playing and weaponRemoteState.get_current_node() == "idle" and !weaponOwner.isUsingPhone:
 		%aimSound.play()

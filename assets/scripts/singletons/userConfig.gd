@@ -85,6 +85,7 @@ func loadConfigs() -> void:
 #	print("Loaded configs.")
 	configs_loaded = true
 	applyConfigs()
+	finish_loading_configs.emit()
 
 
 func saveConfigs() -> void:

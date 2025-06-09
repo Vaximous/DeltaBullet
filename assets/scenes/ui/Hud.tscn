@@ -514,7 +514,7 @@ grow_vertical = 2
 layout_mode = 2
 
 [node name="gameNotifications" type="VBoxContainer" parent="marginContainer/control"]
-layout_mode = 2
+layout_mode = 0
 offset_right = 428.0
 offset_bottom = 412.0
 grow_horizontal = 0
@@ -629,7 +629,6 @@ offset_bottom = 107.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(107, 107)
-mouse_filter = 2
 texture = ExtResource("15_dux2x")
 expand_mode = 1
 metadata/_edit_use_anchors_ = true
@@ -646,6 +645,7 @@ offset_right = -0.0180664
 offset_bottom = 0.0273438
 grow_horizontal = 2
 grow_vertical = 0
+mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
 [node name="scopeBlack2" type="ColorRect" parent="Crosshair/scope"]
@@ -658,6 +658,7 @@ offset_left = 0.0541992
 offset_top = 0.100098
 offset_right = -0.0844727
 grow_horizontal = 2
+mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
 [node name="scopeBlack3" type="ColorRect" parent="Crosshair/scope"]
@@ -670,6 +671,7 @@ offset_left = 0.0742188
 offset_top = -0.0698242
 offset_bottom = 0.0698242
 grow_vertical = 2
+mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
 [node name="scopeBlack4" type="ColorRect" parent="Crosshair/scope"]
@@ -684,6 +686,7 @@ offset_right = 0.0395508
 offset_bottom = 0.0319824
 grow_horizontal = 0
 grow_vertical = 2
+mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
 [connection signal="interactionFound" from="." to="Interact/interactAnimPlayer" method="play"]

@@ -85,14 +85,14 @@ func _input(event: InputEvent) -> void:
 				#emit_signal("mouseButtonPressed", event.button_index)
 				if controllingPawn:
 					if !controllingPawn.healthComponent == null:
-						if !controllingPawn.healthComponent.isDead:
+						if !controllingPawn.healthComponent.isDead and !controllingPawn.isUsingPhone:
 							if !controllingPawn.currentItemIndex == controllingPawn.itemInventory.size()-1:
 								controllingPawn.currentItemIndex = controllingPawn.currentItemIndex+1
 
 			if event.is_action_pressed("gMwheelDown"):
 				#emit_signal("actionPressed", str(event.button_index))
 				if controllingPawn:
-					if !controllingPawn.healthComponent == null:
+					if !controllingPawn.healthComponent == null and !controllingPawn.isUsingPhone:
 						if !controllingPawn.healthComponent.isDead:
 							controllingPawn.currentItemIndex = controllingPawn.currentItemIndex-1
 
@@ -106,20 +106,27 @@ func _input(event: InputEvent) -> void:
 			if gameManager.world.worldData.worldEditable:
 				gameManager.initializeSafehouseEditor()
 
+		if event.is_action_pressed("gCover"):
+			#emit_signal("actionPressed", str(event.keycode))
+			if controllingPawn:
+				if controllingPawn.canUseCover:
+					controllingPawn.toggleCover()
+
+
 		if event.is_action_pressed("gJump"):
 			#emit_signal("actionPressed", str(event.keycode))
 			if controllingPawn:
-				if controllingPawn.canJump:
+				if controllingPawn.canJump and !controllingPawn.isUsingPhone:
 					controllingPawn.jump()
 
 		if event.is_action_pressed("gBulletTimeToggle"):
 			#emit_signal("actionPressed", str(event.keycode))
-			if controllingPawn:
+			if controllingPawn and !controllingPawn.isUsingPhone:
 				controllingPawn.toggleBulletTime()
 
 		if event.is_action_pressed("gReloadWeapon"):
 			#emit_signal("actionPressed", str(event.keycode))
-			if is_instance_valid(controllingPawn.currentItem):
+			if is_instance_valid(controllingPawn.currentItem) and !controllingPawn.isUsingPhone:
 				if controllingPawn.currentItem.canReloadWeapon:
 					controllingPawn.currentItem.reloadWeapon()
 
@@ -141,6 +148,9 @@ func _input(event: InputEvent) -> void:
 					controllingPawn.attachedCam.fireVignette(0.8,Color.DARK_RED)
 					gameManager.notifyFade("You've died! Press F6 to restart!", 4, 5)
 
+		if event.is_action_pressed("gTabMenu"):
+			controllingPawn.togglePhone()
+
 		##Movement Code
 		if gameManager.isMouseHidden():
 			if !event is InputEventMouseMotion and !event is InputEventMouseButton:
@@ -149,15 +159,22 @@ func _input(event: InputEvent) -> void:
 					controllingPawn.direction.z = getInputDir().z
 					if controllingPawn.isCurrentlyMoving():
 						if Input.is_action_pressed("gSprint"):
-							controllingPawn.setMovementState.emit(controllingPawn.movementStates["sprint"])
-							controllingPawn.isCrouching = false
+							if !controllingPawn.isInCover:
+								controllingPawn.setMovementState.emit(controllingPawn.movementStates["sprint"])
+								controllingPawn.isCrouching = false
 						else:
 							if !controllingPawn.isCrouching:
-								controllingPawn.setMovementState.emit(controllingPawn.movementStates["walk"])
+								if controllingPawn.isInCover:
+									controllingPawn.setMovementState.emit(controllingPawn.movementStates["coverwalk"])
+								else:
+									controllingPawn.setMovementState.emit(controllingPawn.movementStates["walk"])
 							else:
 								controllingPawn.setMovementState.emit(controllingPawn.movementStates["crouchWalk"])
 					else:
 						if !controllingPawn.isCrouching:
-							controllingPawn.setMovementState.emit(controllingPawn.movementStates["standing"])
+							if controllingPawn.isInCover:
+								controllingPawn.setMovementState.emit(controllingPawn.movementStates["coveridle"])
+							else:
+								controllingPawn.setMovementState.emit(controllingPawn.movementStates["standing"])
 						else:
 							controllingPawn.setMovementState.emit(controllingPawn.movementStates["crouch"])

@@ -1,0 +1,51 @@
+[gd_scene load_steps=5 format=3 uid="uid://dkg3fd6gogwqg"]
+
+[ext_resource type="PackedScene" uid="uid://b1x2t2na1bc2b" path="res://assets/scenes/menu/menuUI.tscn" id="1_r8rpe"]
+[ext_resource type="AudioStream" uid="uid://c6npk7fsik6eg" path="res://assets/music/menu/BulletArrived.mp3" id="2_csa12"]
+
+[sub_resource type="GDScript" id="GDScript_42td0"]
+resource_name = "MenuScript"
+script/source = "extends Node
+@onready var menuMusic = $menuMusic
+
+# Called when the node enters the scene tree for the first time.
+func _ready()->void:
+	gameManager.freeOrphanNodes()
+	gameManager.clearTemporaryPawnInfo()
+	menuSceneLoad()
+
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	Fade.fade_in(0.8, Color(0,0,0,1),\"GradientVertical\",false,true)
+	musicManager.create_audioplayer_with_stream(menuMusic.stream,0.5)
+
+func menuSceneLoad():
+	var lastSaveData = gameManager.get_persistent_data()[lastSaveData]
+	print(lastSaveData)
+	if !has_seen_prologue() or lastSaveData:
+		var menu = load(\"res://assets/scenes/menu/menuScenes/prePrologueMenuScene.tscn\").instantiate()
+		add_child(menu)
+	else:
+		var menu = gameManager.menuScenes[randi_range(0,gameManager.menuScenes.size()-1)].instantiate()
+		add_child(menu)
+
+func _process(delta)->void:
+	gameManager.showMouse()
+
+func has_seen_prologue() -> bool:
+	var data = gameManager.get_persistent_data()
+	return data.has(\"seen_prologue\")
+"
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_jmo12"]
+streams_count = 1
+stream_0/stream = ExtResource("2_csa12")
+
+[node name="Menu" type="Node"]
+script = SubResource("GDScript_42td0")
+
+[node name="MenuUI" parent="." instance=ExtResource("1_r8rpe")]
+
+[node name="menuMusic" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_jmo12")
+volume_db = -5.0
+bus = &"Music"

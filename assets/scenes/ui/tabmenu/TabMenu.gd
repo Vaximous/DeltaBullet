@@ -2,14 +2,14 @@ extends CanvasLayer
 @onready var backgroundElement : ColorRect = $gradientBG
 @onready var contractsPanel : Control = $gradientBG/tabContainer/Contracts/contractsPanel
 @onready var background : TextureRect = $gradientBG/background
-func _input(event)->void:
-	if event.is_action_pressed("gTabMenu"):
-		if visible:
-			unpauseGame()
-		else:
-			#gradientAnim.play("in")
-			contractsPanel.scanContracts()
-			pauseGame()
+#func _input(event)->void:
+	#if event.is_action_pressed("gTabMenu"):
+		#if visible:
+			#unpauseGame()
+		#else:
+			##gradientAnim.play("in")
+			#contractsPanel.scanContracts()
+			#pauseGame()
 
 func pauseGame()->void:
 	show()

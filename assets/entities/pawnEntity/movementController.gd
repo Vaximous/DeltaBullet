@@ -1,15 +1,20 @@
 extends Node
+class_name MovementController
 @export var enabled : bool = true
 var meshRotationTween : Tween
 var meshRotationTweenMovement : Tween
+var movementDirection : Vector3
 @export var pawnControlling : BasePawn:
 	set(value):
 		pawnControlling = value
+		if pawnControlling.isPlayerPawn():
+			movementDirection = pawnControlling.direction.rotated(Vector3.UP,cameraRotation)
+		else:
+			movementDirection = pawnControlling.direction
 @export var meshNode : Node3D
 @export var rotationSpeed : float = 8
 var acceleration : float
 var speed : float
-var movementDirection : Vector3
 var velocity : Vector3
 var cameraRotation : float
 var gravity : float = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -31,7 +36,7 @@ func _physics_process(delta: float) -> void:
 			pawnControlling.velocity.z = pawnControlling.velocity.lerp(velocity,acceleration*delta).z
 			pawnControlling.velocity.x = pawnControlling.velocity.lerp(velocity,acceleration*delta).x
 
-			if velocity != Vector3.ZERO and !pawnControlling.meshLookAt:
+			if velocity != Vector3.ZERO and !pawnControlling.meshLookAt and !pawnControlling.isInCover:
 				doMeshRotation(delta)
 			elif pawnControlling.meshLookAt:
 				doMeshLookat(delta)
@@ -50,7 +55,13 @@ func onMovementStateSet(state:MovementState)->void:
 				pawnControlling.attachedCam.setCamRot.connect(onSetCamRot)
 
 func onMovementDirectionSet(direction:Vector3)->void:
-	movementDirection = direction.rotated(Vector3.UP,cameraRotation)
+	if pawnControlling.isPlayerPawn():
+		if !pawnControlling.isInCover:
+			movementDirection = direction.rotated(Vector3.UP,cameraRotation)
+		else:
+			movementDirection = direction
+	else:
+		movementDirection = direction
 
 func onSetCamRot(camRotation:float)->void:
 	cameraRotation = camRotation

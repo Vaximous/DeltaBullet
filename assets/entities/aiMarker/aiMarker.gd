@@ -12,9 +12,11 @@ class_name AIMarker
 
 func _ready() -> void:
 	if Engine.is_editor_hint():
-		markerMesh.show()
+		if markerMesh:
+			markerMesh.show()
 	else:
-		markerMesh.hide()
+		if markerMesh:
+			markerMesh.hide()
 
 
 func setVisual()->void:

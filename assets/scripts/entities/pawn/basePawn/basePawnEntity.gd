@@ -79,6 +79,23 @@ var direction : Vector3 = Vector3.ZERO:
 		if direction != value:
 			if is_instance_valid(self):
 				direction = value
+				if isInCover:
+					if value.z > 0:
+						isInCover = false
+
+					if coverMoveTween:
+						coverMoveTween.kill()
+					coverMoveTween = create_tween()
+					direction = Vector3(value.x,0,0)
+
+					coverMoveTween.tween_method(setCoverMoveLBlend,animationTree.get("parameters/coverMoveL/blend_position"),value.x,0.25).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+					coverMoveTween.tween_method(setCoverMoveRBlend,animationTree.get("parameters/coverMoveR/blend_position"),value.x,0.25).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+
+					if value.x > 0:
+						animationTree.set("parameters/coverTransition/transition_request","movingRight")
+					else:
+						animationTree.set("parameters/coverTransition/transition_request","movingLeft")
+
 				#print(direction)
 				directionChanged.emit()
 				setDirection.emit(direction)
@@ -119,7 +136,7 @@ var raycaster : RayCast3D
 #Base Components - Components required for this entity to even be used
 @export_subgroup("Base Components")
 @export var animationController : Node
-@export var movementController : Node
+@export var movementController : MovementController
 @export var healthComponent : HealthComponent
 @export_subgroup("Sub-Components")
 @export var inputComponent : Node:
@@ -148,6 +165,16 @@ signal cameraAttached
 	get:
 		return attachedCam
 @export_subgroup("Behavior")
+var isUsingPhone : bool = false:
+	set(value):
+		isUsingPhone = value
+		if !value:
+			canThrowThrowable = true
+			playPhoneCloseAnimation()
+		else:
+			canThrowThrowable = false
+			currentItem = null
+			currentItemIndex = 0
 @export var isCrouching : bool = false:
 	set(value):
 		isCrouching = value
@@ -199,6 +226,11 @@ signal cameraAttached
 @export var collisionEnabled : bool = true:
 	set(value):
 		collisionEnabled = value
+		if collisionShape:
+			if collisionEnabled:
+				collisionShape.disabled = false
+			else:
+				collisionShape.disabled = true
 	get:
 		return collisionEnabled
 
@@ -227,6 +259,14 @@ var preventWeaponFire : bool = false:
 					if footstepSounds.playing:
 						footstepSounds.stop()
 @export_subgroup("Movement")
+@export var isInCover : bool = false:
+	set(value):
+		isInCover = value
+		if isInCover:
+			enableCoverTransition()
+		else:
+			disableCoverTransition()
+@export var canUseCover : bool = false
 @export var movementStates : Dictionary
 @export var canRun : bool = true:
 	set(value):
@@ -257,7 +297,7 @@ var throwableAmount : int = 5
 var isArmingThrowable : bool = false:
 	set(value):
 		isArmingThrowable = value
-		if isArmingThrowable:
+		if isArmingThrowable and !isUsingPhone:
 			enableThrowableAnim()
 		else:
 			disableThrowableAnim()
@@ -271,18 +311,22 @@ var currentItem : InteractiveObject = null
 @export var currentItemIndex : int = 0:
 	set(value):
 		if !isPawnDead and is_instance_valid(self):
+			if isUsingPhone:
+				currentItemIndex = 0
+
 			currentItemIndex = clamp(value, 0, itemInventory.size()-1)
 			currentItem = itemInventory[currentItemIndex]
-			if !currentItem == null:
+			if !currentItem == null and !isUsingPhone:
 				emit_signal("itemChanged")
 				currentItem.isAiming = false
 				equipWeapon(currentItemIndex)
 				currentItem.isAiming = false
 				currentItem.weaponOwner = self
+				#setupWeaponAnimations()
 				enableRightHand()
 				checkMeshLookat()
 				if is_instance_valid(currentItem.weaponResource):
-					await get_tree().process_frame
+					#await get_tree().process_frame
 					if currentItem.weaponResource.leftHandParent:
 						itemHolder.reparent(leftHandBone)
 						itemHolder.position = Vector3.ZERO
@@ -307,6 +351,8 @@ var currentItem : InteractiveObject = null
 			else:
 				disableRightHand()
 				disableLeftHand()
+				setLeftHandFilterCover(true)
+				setRightHandFilterCover(true)
 				checkMeshLookat()
 				for weapon in itemHolder.get_children():
 					if weapon.isEquipped != false:
@@ -365,6 +411,9 @@ var bodyIKTween : Tween
 var meshRotationTween : Tween
 var meshRotationTweenMovement : Tween
 var flinchTween : Tween
+var phoneTween : Tween
+var coverTween : Tween
+var coverMoveTween : Tween
 var lastLeftBlend : AnimationNodeStateMachinePlayback
 ## First-person, just for shits and giggles
 var isFirstperson : bool = false:
@@ -383,10 +432,7 @@ func _ready() -> void:
 	checkComponents()
 	checkClothes()
 	checkItems()
-	if collisionEnabled:
-		collisionShape.disabled = false
-	else:
-		collisionShape.disabled = false
+
 
 	if forceAnimation:
 		animationTree.active = false
@@ -412,6 +458,11 @@ func _physics_process(delta:float) -> void:
 						die(null)
 
 			preventWeaponFire = aimBlockRaycast.is_colliding()
+			canUseCover = %lowerCoverCast.is_colliding()
+
+			#Point the cover casts in the direction of the player, if its the player. otherwise just use the meshrotation
+			if isPlayerPawn():
+				%coverHolder.rotation_degrees.y = attachedCam.horizontal.global_rotation_degrees.y
 
 
 
@@ -436,7 +487,6 @@ func checkComponents()->void:
 				var _cam = cam.instantiate()
 				gameManager.world.worldMisc.add_child(_cam)
 				_cam.global_position = self.global_position
-				await get_tree().process_frame
 				_cam.posessObject(self, followNode)
 				_cam.camCast.add_exception(self)
 				_cam.interactCast.add_exception(self)
@@ -445,11 +495,12 @@ func checkComponents()->void:
 				add_to_group("Player")
 				neckMarker.reparent(_cam.camera, true)
 				neckModifier.target_node = neckMarker.get_path()
+				attachedCam.setCamRot.connect(movementController.onSetCamRot)
 
 
 func endPawn()->void:
 	if (is_instance_valid(self) and not self.is_queued_for_deletion()):
-		get_tree().create_timer(5).timeout.connect(queue_free)
+		get_tree().create_timer(2).timeout.connect(queue_free)
 		#process_mode = Node.PROCESS_MODE_DISABLED
 		#direction = Vector3.ZERO
 		#velocity = Vector3.ZERO
@@ -540,6 +591,7 @@ func playKillSound()->void:
 
 func die(killer) -> void:
 	if is_instance_valid(self) and !isPawnDead:
+		%flipphone.queue_free()
 		gameManager.allPawns.erase(self)
 		gameManager.doKillEffect(self,killer)
 		dropWeapon()
@@ -741,31 +793,36 @@ func jump() -> void:
 	velocity.y = JUMP_VELOCITY
 
 func setupWeaponAnimations() -> void:
+	if !is_instance_valid(animationTree): return
 	var blendSet
 	if is_instance_valid(currentItem):
 		blendSet = currentItem.animationTree.tree_root
-		if !currentItem.weaponAnimSet:
-			#Swap out animationLibraries
-			if is_instance_valid(animationPlayer):
-				if animationPlayer.has_animation_library("weaponAnims"):
-					animationPlayer.remove_animation_library("weaponAnims")
-				if is_instance_valid(currentItem.animationPlayer):
-					var libraryToAdd = currentItem.animationPlayer.get_animation_library("weaponAnims").duplicate()
-					animationPlayer.add_animation_library("weaponAnims", libraryToAdd)
+		#print(blendSet)
+		#if !currentItem.weaponAnimSet:
+			##Swap out animationLibraries
+		if is_instance_valid(animationPlayer):
+			if animationPlayer.has_animation_library("weaponAnims"):
+				animationPlayer.remove_animation_library("weaponAnims")
+			if is_instance_valid(currentItem.animationPlayer):
+				var libraryToAdd = currentItem.animationPlayer.get_animation_library("weaponAnims").duplicate()
+				animationPlayer.add_animation_library("weaponAnims", libraryToAdd)
 
-			#Add the weapons stateMachine to the player
+
+			#Add the weapons stateMachine to the pawn
 			(animationTree.tree_root as AnimationNodeBlendTree).disconnect_node("weaponBlend", 1)
-			animationTree.tree_root.remove_node("weaponState")
-			animationTree.tree_root.add_node("weaponState", blendSet)
-			(animationTree.tree_root as AnimationNodeBlendTree).connect_node("weaponBlend", 1, "weaponState")
+			animationTree.tree_root.remove_node(&"weaponState")
+			animationTree.tree_root.add_node(&"weaponState", blendSet.duplicate())
+			(animationTree.tree_root as AnimationNodeBlendTree).connect_node(&"weaponBlend", 1, &"weaponState")
 			currentItem.weaponRemoteState = animationTree.get("parameters/weaponState/weaponState/playback")
+			animationTree.set("parameters/weaponState/weaponState/playback",currentItem.weaponRemoteState)
 			##Left Hand
 			(animationTree.tree_root as AnimationNodeBlendTree).disconnect_node("weaponBlend_Left_blend", 1)
 			animationTree.tree_root.remove_node("weaponBlend_left")
-			animationTree.tree_root.add_node("weaponBlend_left", blendSet)
+			animationTree.tree_root.add_node("weaponBlend_left", blendSet.duplicate())
 			(animationTree.tree_root as AnimationNodeBlendTree).connect_node("weaponBlend_Left_blend", 1, "weaponBlend_left")
 			currentItem.weaponRemoteStateLeft = animationTree.get("parameters/weaponBlend_left/weaponState/playback")
 			lastLeftBlend = currentItem.weaponRemoteStateLeft
+
 			currentItem.weaponAnimSet = true
 			return
 	else:
@@ -818,8 +875,54 @@ func setRightHandFilter(value : bool = true) -> void:
 	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:R_Pinkie1", value)
 	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:R_Pinkie2", value)
 
+func setLeftHandFilterCover(value : bool = true) -> void:
+	var filterBlend : AnimationNodeBlend2 = animationTree.tree_root.get_node("coverBlend")
+	filterBlend.set_filter_path("..:[Functions/Functions]", true)
+	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:L_Shoulder", value)
+	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:L_UpperArm", value)
+	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:L_Forearm", value)
+	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:L_Hand", value)
+	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:L_Thumb0", value)
+	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:L_Thumb1", value)
+	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:L_Thumb2", value)
+	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:L_Index0", value)
+	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:L_Index1", value)
+	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:L_Index2", value)
+	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:L_Middle0", value)
+	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:L_Middle1", value)
+	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:L_Middle2", value)
+	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:L_Ring0", value)
+	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:L_Ring1", value)
+	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:L_Ring2", value)
+	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:L_Pinkie0", value)
+	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:L_Pinkie1", value)
+	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:L_Pinkie2", value)
+
+func setRightHandFilterCover(value : bool = true) -> void:
+	var filterBlend : AnimationNodeBlend2 = animationTree.tree_root.get_node("coverBlend")
+	filterBlend.set_filter_path("..:[Functions/Functions]", true)
+	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:R_Shoulder", value)
+	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:R_UpperArm", value)
+	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:R_Forearm", value)
+	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:R_Hand", value)
+	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:R_Thumb0", value)
+	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:R_Thumb1", value)
+	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:R_Thumb2", value)
+	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:R_Index0", value)
+	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:R_Index1", value)
+	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:R_Index2", value)
+	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:R_Middle0", value)
+	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:R_Middle1", value)
+	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:R_Middle2", value)
+	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:R_Ring0", value)
+	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:R_Ring1", value)
+	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:R_Ring2", value)
+	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:R_Pinkie0", value)
+	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:R_Pinkie1", value)
+	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:R_Pinkie2", value)
+
 func playEquipSound()->void:
-	if !equipSound.playing:
+	if !equipSound.playing and !isUsingPhone:
 		equipSound.play()
 
 func equipWeapon(index:int) -> void:
@@ -831,7 +934,12 @@ func equipWeapon(index:int) -> void:
 	currentItem.weaponOwner = self
 	currentItem.isEquipped = true
 	currentItem.visible = true
-	await setupWeaponAnimations()
+	currentItem.freeze = true
+	setupWeaponAnimations()
+	if currentItem.weaponResource.useRightHandAiming:
+		setRightHandFilterCover(false)
+	if currentItem.weaponResource.useLeftHandAiming:
+		setLeftHandFilterCover(false)
 
 func unequipWeapon() -> void:
 	animationTree.set("parameters/weaponBlend/blend_amount", 0)
@@ -852,6 +960,8 @@ func unequipWeapon() -> void:
 		currentItem.isAiming = false
 		currentItem.hide()
 		currentItem = null
+		setRightHandFilterCover(true)
+		setLeftHandFilterCover(true)
 
 func _on_free_aim_timer_timeout() -> void:
 	freeAim = false
@@ -1070,7 +1180,7 @@ func _on_health_component_on_damaged(dealer:Node3D, hitDirection:Vector3)->void:
 		flinch()
 
 func armThrowable()->void:
-	if canThrowThrowable and !isArmingThrowable and throwableAmount>0 and !is_instance_valid(heldThrowable):
+	if canThrowThrowable and !isArmingThrowable and throwableAmount>0 and !is_instance_valid(heldThrowable) and !isUsingPhone:
 		heldThrowable = throwableItem.instantiate()
 		%leftHandHold.add_child(heldThrowable)
 		heldThrowable.dealer = self
@@ -1353,6 +1463,22 @@ func setIdleBlend(value:float)->void:
 	if !isPawnDead and is_instance_valid(self):
 		animationTree.set("parameters/idleSpace/blend_position", value)
 
+func setCoverBlend(value:float)->void:
+	if !isPawnDead and is_instance_valid(self):
+		animationTree.set("parameters/coverBlend/blend_amount", value)
+
+func setPhoneBlend(value:float)->void:
+	if !isPawnDead and is_instance_valid(self):
+		animationTree.set("parameters/phoneOpened/blend_amount", value)
+
+func setCoverMoveLBlend(value:float)->void:
+	if !isPawnDead and is_instance_valid(self):
+		animationTree.set("parameters/coverMoveL/blend_position", value)
+
+func setCoverMoveRBlend(value:float)->void:
+	if !isPawnDead and is_instance_valid(self):
+		animationTree.set("parameters/coverMoveR/blend_position", value)
+
 func setBodyIKInterpolation(value:float)->void:
 	if !isPawnDead and is_instance_valid(self):
 		bodyIK.interpolation = value
@@ -1422,6 +1548,19 @@ func toggleBulletTime()->void:
 		if gameManager.canBulletTime:
 			setBulletTime(true)
 
+func enableCoverTransition()->void:
+	if coverTween:
+		coverTween.kill()
+	coverTween = create_tween()
+	coverTween.tween_method(setCoverBlend,animationTree.get("parameters/coverBlend/blend_amount"),1,0.25).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+
+func disableCoverTransition()->void:
+	if coverTween:
+		coverTween.kill()
+	coverTween = create_tween()
+	coverTween.tween_method(setCoverBlend,animationTree.get("parameters/coverBlend/blend_amount"),0,0.25).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+
+
 func playInteractAnimation()->void:
 	if !isPawnDead and is_instance_valid(self):
 		animationTree.set("parameters/useType/transition_request", "interactL")
@@ -1436,3 +1575,60 @@ func playGrabAnimation()->void:
 	if !isPawnDead and is_instance_valid(self):
 		animationTree.set("parameters/useType/transition_request", "grabL")
 		animationTree.set("parameters/useShot/request",AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+
+func playPhoneOpenAnimation()->void:
+	if !isPawnDead and is_instance_valid(self):
+		if phoneTween:
+			phoneTween.kill()
+		phoneTween = create_tween()
+		#animationTree.set("parameters/phoneSeek/seek_request",0)
+		%flipphone.visible = true
+		phoneTween.tween_method(setPhoneBlend,animationTree.get("parameters/phoneOpened/blend_amount"),1,0.15).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+
+func playPhoneCloseAnimation()->void:
+	if !isPawnDead and is_instance_valid(self):
+		%flipphone.visible = false
+		if phoneTween:
+			phoneTween.kill()
+		phoneTween = create_tween()
+		phoneTween.tween_method(setPhoneBlend,animationTree.get("parameters/phoneOpened/blend_amount"),0,0.25).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+
+func togglePhone()->void:
+	if isUsingPhone:
+		closePhone()
+	else:
+		openPhone()
+
+func openPhone()->void:
+	if isPlayerPawn() and !isPawnDead:
+		currentItemIndex = 0
+		currentItem = null
+		playPhoneOpenAnimation()
+		isUsingPhone = true
+
+func closePhone()->void:
+	if isPlayerPawn() and !isPawnDead:
+		currentItem = null
+		currentItemIndex = 0
+		isUsingPhone = false
+
+func toggleCover()->void:
+	if !isInCover:
+		var tween = create_tween()
+
+		## 0 = Crouching cover, 1 = standing cover
+		var coverType = 0
+
+		##If the player is at a knee-high cover, then crouch. Otherwise, stand
+		if %lowerCoverCast.is_colliding() and !%topCoverCast.is_colliding():
+			coverType = 0
+		else:
+			coverType = 1
+
+		isInCover = true
+
+		pawnMesh.rotation.y = 0
+		tween.parallel().tween_property(self,"global_position:x",%lowerCoverCast.get_collision_point().x,0.25).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+		tween.parallel().tween_property(self,"global_position:z",%lowerCoverCast.get_collision_point().z ,0.25).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+	else:
+		isInCover = false

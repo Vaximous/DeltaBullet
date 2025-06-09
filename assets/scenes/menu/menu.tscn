@@ -12,18 +12,26 @@ script/source = "extends Node
 func _ready()->void:
 	gameManager.freeOrphanNodes()
 	gameManager.clearTemporaryPawnInfo()
-	if has_seen_prologue():
-		var menu = load(\"res://assets/scenes/menu/menuScenes/prePrologueMenuScene.tscn\").instantiate()
-		add_child(menu)
-	else:
-		var menu = gameManager.menuScenes[randi_range(0,gameManager.menuScenes.size()-1)].instantiate()
-		add_child(menu)
+	menuSceneLoad()
 
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	Fade.fade_in(0.8, Color(0,0,0,1),\"GradientVertical\",false,true)
 	musicManager.create_audioplayer_with_stream(menuMusic.stream,0.5)
 
-
+func menuSceneLoad():
+	var json = JSON.new()
+	var lastSaveData : Dictionary
+	var parsed
+	var isPrologueComplete : bool
+	if gameManager.get_persistent_data().has(\"lastSaveData\"):
+		lastSaveData = gameManager.get_persistent_data()[\"lastSaveData\"]
+		isPrologueComplete = lastSaveData[\"prologueComplete\"]
+	if !has_seen_prologue() or !isPrologueComplete:
+		var menu = load(\"res://assets/scenes/menu/menuScenes/prePrologueMenuScene.tscn\").instantiate()
+		add_child(menu)
+	else:
+		var menu = gameManager.menuScenes[randi_range(0,gameManager.menuScenes.size()-1)].instantiate()
+		add_child(menu)
 
 func _process(delta)->void:
 	gameManager.showMouse()

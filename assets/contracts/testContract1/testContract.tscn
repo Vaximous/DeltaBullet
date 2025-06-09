@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://8ua50jm475he"]
 
-[ext_resource type="Script" path="res://assets/entities/questEntity/quest.gd" id="1_2v5ky"]
+[ext_resource type="Script" uid="uid://tgr4deqsvm42" path="res://assets/entities/questEntity/quest.gd" id="1_2v5ky"]
 
 [sub_resource type="GDScript" id="GDScript_v70ju"]
 resource_name = "test"

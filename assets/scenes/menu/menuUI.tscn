@@ -20,6 +20,8 @@ var pressed = false
 func _ready()->void:
 	gameManager.clearTemporaryPawnInfo()
 	versionLabel.text = ProjectSettings.get_setting(\"application/config/version\")
+	if checkCurrentSave():
+		%continueButton.show()
 
 func _process(delta)->void:
 	if optionsMenu.visible:
@@ -34,7 +36,7 @@ func _process(delta)->void:
 		buttonHolder.modulate = lerp(buttonHolder.modulate,Color(1, 1, 1, 1),12*delta)
 
 func _on_play_button_pressed()->void:
-	gameManager.playSound(gameManager.getGlobalSound(\"startGame\"))
+	gameManager.playSound(gameManager.getGlobalSound(\"startGame\"), -15)
 	gameManager.clearTemporaryPawnInfo()
 	gameManager.currentSave = \"\"
 	musicManager.change_song_to(null,0.5)
@@ -50,6 +52,17 @@ func _on_options_button_pressed()->void:
 
 func _on_credits_button_pressed()->void:
 	gameManager.notify_warn(\"Not yet implemented.\", 2, 10)
+
+func _on_continue_button_pressed() -> void:
+	gameManager.playSound(gameManager.getGlobalSound(\"startGame\"), -15)
+	gameManager.clearTemporaryPawnInfo()
+	gameManager.currentSave = gameManager.get_persistent_data()[\"lastSave\"]
+	musicManager.change_song_to(null,0.5)
+	await Fade.fade_out(0.3, Color(0,0,0,1),\"GradientVertical\",false,true).finished
+	gameManager.loadGame(gameManager.get_persistent_data()[\"lastSave\"])
+
+func checkCurrentSave():
+	return gameManager.get_persistent_data().has(\"lastSave\")
 "
 
 [sub_resource type="Gradient" id="Gradient_qjgg7"]
@@ -126,6 +139,12 @@ scale = Vector2(1.05, 1.05)
 layout_mode = 2
 text = "New game"
 
+[node name="continueButton" parent="buttonHolder" instance=ExtResource("5_nxhqu")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+text = "Continue"
+
 [node name="loadButton" parent="buttonHolder" instance=ExtResource("5_nxhqu")]
 layout_mode = 2
 text = "load game"
@@ -179,8 +198,9 @@ visible = false
 layout_mode = 1
 
 [connection signal="pressed" from="buttonHolder/playButton" to="." method="_on_play_button_pressed"]
-[connection signal="pressed" from="buttonHolder/loadButton" to="saveLoadMenu" method="show"]
+[connection signal="pressed" from="buttonHolder/continueButton" to="." method="_on_continue_button_pressed"]
 [connection signal="pressed" from="buttonHolder/loadButton" to="saveLoadMenu" method="initLoadPanel"]
+[connection signal="pressed" from="buttonHolder/loadButton" to="saveLoadMenu" method="show"]
 [connection signal="pressed" from="buttonHolder/optionsButton" to="." method="_on_options_button_pressed"]
 [connection signal="pressed" from="buttonHolder/creditsButton" to="." method="_on_credits_button_pressed"]
 [connection signal="pressed" from="buttonHolder/quitButton" to="." method="_on_quit_button_pressed"]

@@ -1,8 +1,9 @@
-[gd_scene load_steps=62 format=3 uid="uid://gunf36bni4oe"]
+[gd_scene load_steps=64 format=3 uid="uid://gunf36bni4oe"]
 
 [ext_resource type="Script" uid="uid://0jwheadtfh77" path="res://assets/scripts/worldRelated/worldScript/worldScript.gd" id="1_t2nyd"]
 [ext_resource type="PackedScene" uid="uid://boicvk4qeqmbd" path="res://assets/entities/pawnSpawn/pawnSpawn.tscn" id="2_cx0r4"]
 [ext_resource type="Script" uid="uid://b31u24at18p5t" path="res://assets/resources/customResources/worldData/worldData.gd" id="2_ex3qv"]
+[ext_resource type="Texture2D" uid="uid://dvfkpbe83xcf4" path="res://assets/textures/panoramas/panoramatest3.png" id="3_4yesb"]
 [ext_resource type="PackedScene" uid="uid://dsxt078giobel" path="res://assets/entities/weapons/Uzi/Uzi.tscn" id="3_s544t"]
 [ext_resource type="PackedScene" uid="uid://wtqya32cwdbk" path="res://assets/entities/weapons/Beretta/Beretta.tscn" id="6_h8kok"]
 [ext_resource type="PackedScene" uid="uid://boh343kalvj5i" path="res://assets/entities/weapons/Revolver/Revolver.tscn" id="7_rht07"]
@@ -33,9 +34,13 @@
 [ext_resource type="PhysicsMaterial" uid="uid://cc5ltv4umlj8t" path="res://assets/resources/PhysicsMaterials/metal_physics_material.tres" id="30_shitk"]
 [ext_resource type="Script" uid="uid://tiffkbp5ry74" path="res://assets/scripts/entities/interactiveObject/interactiveObject.gd" id="30_tgd3s"]
 
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_eirrc"]
+panorama = ExtResource("3_4yesb")
+
 [sub_resource type="Resource" id="Resource_o85ge"]
 script = ExtResource("2_ex3qv")
 worldEditable = false
+skyTexture = SubResource("PanoramaSkyMaterial_eirrc")
 worldName = "Uncle Tsimks' Shop"
 worldDescription = "Get ripped off at this jackasses pawn shop.."
 worldType = 0
@@ -96,7 +101,8 @@ func disableShop():
 
 
 func _on_pawn_spawn_pawn_spawned(pawn: BasePawn) -> void:
-	pawn.inputComponent.interactSpeakTrigger.connect(enableShop)
+	pass
+	#pawn.inputComponent.interactSpeakTrigger.connect(enableShop)
 "
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_7757a"]
@@ -217,6 +223,7 @@ pawnWeapons = Array[PackedScene]([ExtResource("7_rht07"), ExtResource("3_s544t")
 pawnClothing = Array[PackedScene]([ExtResource("16_crfc1")])
 aiSkill = null
 aiType = null
+randomAnimationSpeed = false
 
 [node name="pawnSpawns" type="Node" parent="Spawns"]
 
@@ -229,9 +236,11 @@ aiSkill = 0
 weaponToEquip = 1
 isInteractable = true
 hatedGroups = Array[StringName]([&"Hostile"])
+spawnGroup = Array[StringName]([&"Friendly"])
 dialogueStartingCam = NodePath("../../../Misc/dialogueCam")
 dialogueName = &"uncleTalk"
 animationToForce = &"PawnAnim/shopIdle1"
+randomAnimationSpeed = false
 pawnColor = Color(0.225761, 0.616941, 0.860719, 1)
 
 [node name="Environment" type="Node" parent="."]

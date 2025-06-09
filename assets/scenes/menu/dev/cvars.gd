@@ -129,18 +129,19 @@ func aggroRandom()->void:
 		if randomEnemy == i:
 			randomEnemy = AIComponent.instances.pick_random()
 
-		i.targetedPawn = randomEnemy.pawnOwner
-		if i.pawnFSM.current_state != i.pawnFSM.get_state("Attack") and i.pawnOwner.currentItem:
-			i.lookAtPosition(i.targetedPawn.global_position,true)
-			i.pawnFSM.change_state("Attack")
+		if !i.targetedPawns.has(randomEnemy.pawnOwner):
+			i.targetedPawns.append(randomEnemy.pawnOwner)
+		if i.stateMachine.current_state != i.stateMachine.get_state("Attack") and i.pawnOwner.currentItem:
+			#i.lookAtPosition(i.targetedPawn.global_position,true)
+			i.stateMachine.change_state("Attack")
 
 
 func aggroAll()->void:
 	for i in AIComponent.instances:
 		i.targetedPawn = gameManager.getCurrentPawn()
-		if i.pawnFSM.current_state != i.pawnFSM.get_state("Attack") and i.pawnOwner.currentItem:
+		if i.stateMachine.current_state != i.stateMachine.get_state("Attack") and i.pawnOwner.currentItem:
 			i.lookAtPosition(i.targetedPawn.global_position,true)
-			i.pawnFSM.change_state("Attack")
+			i.stateMachine.change_state("Attack")
 			i.forcedTarget = gameManager.getCurrentPawn()
 
 func spawnPawn(walk:bool = false,position : Vector3 = Vector3.INF) -> void:

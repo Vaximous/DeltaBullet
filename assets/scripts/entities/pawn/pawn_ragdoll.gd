@@ -147,45 +147,25 @@ func hookes_law(displacement: Vector3, velocity: Vector3, stiffness: float, damp
 
 func _physics_process(delta: float) -> void:
 	pass
-	#if activeRagdollEnabled:
-		#var total_ang_vel := Vector3.ZERO
-		#angularVelocity = total_ang_vel / totalMass
-#
-		#for b in physicsBones:
-			#if is_instance_valid(b) and is_instance_valid(targetSkeleton):
-				#total_ang_vel += b.angular_velocity * b.mass
+	if activeRagdollEnabled:
+		var total_ang_vel := Vector3.ZERO
+		angularVelocity = total_ang_vel / totalMass
+
+		for b in physicsBones:
+			if is_instance_valid(b) and is_instance_valid(targetSkeleton):
+				total_ang_vel += b.angular_velocity * b.mass
 				#b.angular_velocity = angularVelocity
-				#if is_instance_valid(findPhysicsBone(ragdollSkeleton.get_bone_parent(b.get_bone_id()))):
-					#var joint_parent_bone: = findPhysicsBone(ragdollSkeleton.get_bone_parent(b.get_bone_id())) as PhysicalBone3D
-					#var joint_parent_quat: = joint_parent_bone.global_basis.get_rotation_quaternion()
-					#var bone_current_global_quat: = b.global_basis.get_rotation_quaternion()
-					#var bone_current_local_quat: = joint_parent_quat.inverse() * bone_current_global_quat
-					#var bone_target_local_quat: = targetSkeleton.get_bone_pose_rotation(b.get_bone_id())
-					#var diff = bone_target_local_quat.inverse() * bone_current_local_quat
-					#var axis = diff.get_axis()
-					#var angle = diff.get_angle()
-					#if angle>PI : angle-=TAU
-#
-					#if axis.is_finite():
-						#var stiffness = 0
-						#var damping = 0
-						#var targetVel = axis.normalized() * (angle/delta)
-						#var currentVel = bone_current_global_quat.inverse()
-						##targetVel *= hookes_law(currentVel, targetVel, stiffness, damping)
-						#setAngularMotor(b,true)
-						#setAngularMotorForceLimit(b,5)
-						#setAngularMotorTargetVelocity(b,(currentVel * targetVel))
-					#else:
-						#setAngularMotorTargetVelocity(b,Vector3.ZERO)
-#
-					#var targtransfrm: Transform3D = targetSkeleton.get_bone_global_pose(b.get_bone_id())
-					##ragdollSkeleton.set_bone_global_pose(b.get_bone_id(),targtransfrm)
-					#var currtransform : Transform3D = ragdollSkeleton.get_bone_pose(b.get_bone_id())
-					#var rotdif : Transform3D = (targtransfrm.inverse() * currtransform)
-#
-					#var target_velocity : Vector3 = rotdif.basis.get_euler() * 1
-			#else:
-				#activeRagdollEnabled = false
+				if is_instance_valid(findPhysicsBone(ragdollSkeleton.get_bone_parent(b.get_bone_id()))):
+					var target_rotation : Basis = targetSkeleton.get_bone_global_pose(b.get_bone_id()).basis.inverse() * ragdollSkeleton.get_bone_global_pose(b.get_bone_id()).basis
+					var target_velocity : Vector3 = target_rotation.get_euler() * 1
+
+					setAngularMotor(b,true)
+					setAngularMotorForceLimit(b,100)
+					setAngularMotorTargetVelocity(b,target_velocity)
+				else:
+					setAngularMotorTargetVelocity(b,Vector3.ZERO)
+			else:
+				activeRagdollEnabled = false
 
 func setAngularMotorTargetVelocity(b:PhysicalBone3D,value:Vector3 = Vector3.ZERO):
 	b.set("joint_constraints/x/target_velocity",value.x)
@@ -205,7 +185,7 @@ func setAngularMotorForceLimit(b:PhysicalBone3D,value:float = 0):
 func _on_remove_timer_timeout()-> void:
 	queue_free()
 
-func doRagdollHeadshot(pawn:BasePawn = null)-> void:
+func doRagdollHeadshot(pawn:BasePawn = null, dismember : bool = false, shotvel:Vector3 = Vector3.ONE)-> void:
 	for x in randi_range(2,7):
 		var gib = gameManager.createGib(headBone.global_position)
 		if is_instance_valid(pawn):
@@ -226,6 +206,19 @@ func doRagdollHeadshot(pawn:BasePawn = null)-> void:
 			if clothes.clothingType == 0 or clothes.clothingType == 1:
 				clothes.queue_free()
 				checkClothingHider()
+	if dismember:
+		var headPos : = findPhysicsBone(41).position
+		findPhysicsBone(41).friction = 0.5
+		findPhysicsBone(41).mass = 20
+		findPhysicsBone(2).apply_central_impulse(shotvel*3)
+		findPhysicsBone(41).linear_velocity = shotvel.normalized()
+		findPhysicsBone(41).set("joint_constraints/x/linear_limit_enabled",false)
+		findPhysicsBone(41).set("joint_constraints/y/linear_limit_enabled",false)
+		findPhysicsBone(41).set("joint_constraints/z/linear_limit_enabled",false)
+		findPhysicsBone(41).set("joint_constraints/x/angular_limit_enabled",false)
+		findPhysicsBone(41).set("joint_constraints/y/angular_limit_enabled",false)
+		findPhysicsBone(41).set("joint_constraints/z/angular_limit_enabled",false)
+
 
 
 func setPawnMaterial(material)-> void:
@@ -302,7 +295,7 @@ func applyRagdollImpulse(pawn:BasePawn,currentVelocity:Vector3,impulseBone:int =
 			if bones.get_bone_id() == impulseBone:
 				#ragdoll.startRagdoll()
 				bones.canBleed = true
-				bones.apply_impulse(hitImpulse * randf_range(1.5,2),hitPosition)
+				bones.apply_impulse(hitImpulse * randf_range(2,4),hitPosition)
 
 
 func createActiveJoints()->void:
@@ -320,7 +313,7 @@ func initializeRagdoll(pawn:BasePawn,pawnvelocity:Vector3 = Vector3.ZERO,lastHit
 		startRagdoll()
 		checkClothingHider()
 		damageBoneHitboxes(lastHit,killer)
-		headshotCheck(lastHit,killer,pawn)
+		headshotCheck(lastHit,killer,pawn,impulse)
 		attachedCamCheck(pawn)
 		activeRagdollDeathCheck(lastHit,pawn)
 		applyRagdollImpulse(pawn,pawnvelocity,lastHit,impulse,hitPosition)
@@ -349,12 +342,13 @@ func activeRagdollDeathCheck(impulse_bone:int,pawn:BasePawn)->void:
 		pawn.animationToForce = "PawnAnim/WritheRightKneeBack"
 
 
-func headshotCheck(impulse_bone:int,killer,pawn:BasePawn)->void:
+func headshotCheck(impulse_bone:int,killer,pawn:BasePawn, shotVel:Vector3 = Vector3.ONE)->void:
+	var dismemberchance : bool = [true,false].pick_random()
 	if impulse_bone == 41:
 		if is_instance_valid(killer):
 			if is_instance_valid(killer.currentItem):
 				if killer.currentItem.weaponResource.headDismember:
-					doRagdollHeadshot(pawn)
+					doRagdollHeadshot(pawn,dismemberchance,shotVel)
 			if is_instance_valid(killer.attachedCam):
 				killer.attachedCam.doHeadshotEffect()
 		pawn.headshottedPawn.emit()

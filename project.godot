@@ -317,7 +317,7 @@ gCrouch={
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194326,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
 ]
 }
-gDive={
+gCover={
 "deadzone": 0.5,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":86,"key_label":0,"unicode":118,"location":0,"echo":false,"script":null)
 ]
@@ -352,6 +352,7 @@ gEditorDelete={
 3d_physics/layer_4="Pawn"
 3d_physics/layer_5="Hitbox"
 3d_physics/layer_6="Interactive"
+3d_physics/layer_7="cover"
 3d_physics/layer_8="decalColl"
 
 [network]
@@ -360,9 +361,9 @@ limits/debugger/max_chars_per_second=132768
 
 [physics]
 
-common/physics_ticks_per_second=120
-common/max_physics_steps_per_frame=16
+common/physics_ticks_per_second=72
 3d/physics_engine="Jolt Physics"
+jolt_physics_3d/simulation/position_steps=4
 jolt_physics_3d/simulation/sleep_velocity_threshold=0.06
 3d/default_gravity=16.8
 3d/solver/solver_iterations=18

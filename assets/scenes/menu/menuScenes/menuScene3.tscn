@@ -1,7 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://6ee1o0ffv8jr"]
 
 [ext_resource type="CompressedTexture3D" uid="uid://sr0kr5d88j54" path="res://assets/textures/misc/neutral-lut.png" id="2_abjs3"]
-[ext_resource type="Texture2D" uid="uid://dvfkpbe83xcf4" path="res://assets/textures/panoramas/panoramatest3.png" id="3_ec2ms"]
 [ext_resource type="PackedScene" uid="uid://dq84qs80t1u0d" path="res://assets/scenes/worlds/areas/playerHome/distantBuildings.glb" id="16_6nah1"]
 
 [sub_resource type="GDScript" id="GDScript_bcvoe"]
@@ -18,20 +17,22 @@ func free_me_orphan()->void:
 		queue_free()
 "
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_4cifk"]
-panorama = ExtResource("3_ec2ms")
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_v20cj"]
+load_path = "res://.godot/imported/panoramatest3.png-95241e7d825bbc8e58d5ec42bdc6509f.bptc.ctex"
 
-[sub_resource type="Sky" id="Sky_4k04w"]
-sky_material = SubResource("PanoramaSkyMaterial_4cifk")
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_p330l"]
+panorama = SubResource("CompressedTexture2D_v20cj")
+
+[sub_resource type="Sky" id="Sky_x0cde"]
+sky_material = SubResource("PanoramaSkyMaterial_p330l")
 
 [sub_resource type="Environment" id="Environment_2lsrc"]
 background_mode = 2
-sky = SubResource("Sky_4k04w")
+sky = SubResource("Sky_x0cde")
 ambient_light_source = 3
 ambient_light_energy = 4.11
 reflected_light_source = 2
 tonemap_white = 1.85
-ssao_enabled = true
 ssao_radius = 19.4
 ssao_intensity = 1.4
 ssao_detail = 2.05
@@ -54,7 +55,6 @@ fog_density = 0.002
 fog_sky_affect = 0.765
 fog_height = 121.7
 fog_height_density = 0.049
-volumetric_fog_enabled = true
 volumetric_fog_density = 0.0034
 volumetric_fog_gi_inject = 4.91
 volumetric_fog_ambient_inject = 0.6
@@ -121,8 +121,8 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_dsfnc"]
 _data = {
-"RESET": SubResource("Animation_76wgt"),
-"new_animation": SubResource("Animation_wjrec")
+&"RESET": SubResource("Animation_76wgt"),
+&"new_animation": SubResource("Animation_wjrec")
 }
 
 [node name="menu" type="Node3D"]
@@ -156,5 +156,8 @@ fov = 90.0
 
 [node name="animationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_dsfnc")
+&"": SubResource("AnimationLibrary_dsfnc")
 }
+
+[node name="worldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_2lsrc")

@@ -79,22 +79,6 @@ var direction : Vector3 = Vector3.ZERO:
 		if direction != value:
 			if is_instance_valid(self):
 				direction = value
-				if isInCover:
-					if value.z > 0:
-						isInCover = false
-
-					if coverMoveTween:
-						coverMoveTween.kill()
-					coverMoveTween = create_tween()
-					direction = Vector3(value.x,0,0)
-
-					coverMoveTween.tween_method(setCoverMoveLBlend,animationTree.get("parameters/coverMoveL/blend_position"),value.x,0.25).set_ease(defaultEaseType).set_trans(defaultTransitionType)
-					coverMoveTween.tween_method(setCoverMoveRBlend,animationTree.get("parameters/coverMoveR/blend_position"),value.x,0.25).set_ease(defaultEaseType).set_trans(defaultTransitionType)
-
-					if value.x > 0:
-						animationTree.set("parameters/coverTransition/transition_request","movingRight")
-					else:
-						animationTree.set("parameters/coverTransition/transition_request","movingLeft")
 
 				#print(direction)
 				directionChanged.emit()
@@ -259,6 +243,8 @@ var preventWeaponFire : bool = false:
 					if footstepSounds.playing:
 						footstepSounds.stop()
 @export_subgroup("Movement")
+var coverNormal : Vector3
+var coverDirection : int = 0
 @export var isInCover : bool = false:
 	set(value):
 		isInCover = value
@@ -460,8 +446,26 @@ func _physics_process(delta:float) -> void:
 			preventWeaponFire = aimBlockRaycast.is_colliding()
 			canUseCover = %lowerCoverCast.is_colliding()
 
+			if isInCover:
+				#var norm := get_slide_collision(0).get_normal()
+				if coverDirection == 0:
+					animationTree.set("parameters/coverTransition/transition_request","movingLeft")
+				else:
+					animationTree.set("parameters/coverTransition/transition_request","movingRight")
+
+				if $%lowerCoverCast.is_colliding():
+					coverNormal = %lowerCoverCast.get_collision_normal()
+
+				%coverHolder.rotation.y = atan2(coverNormal.x,coverNormal.z)
+
+				pawnMesh.rotation.y = lerpf(pawnMesh.rotation.y,atan2(coverNormal.x,coverNormal.z),12*delta)
+
+				setCoverMoveLBlend(lerpf(animationTree.get("parameters/coverMoveL/blend_position"),velocity.rotated(Vector3.UP,pawnMesh.global_basis.get_euler().x).x,16*delta))
+				setCoverMoveRBlend(lerpf(animationTree.get("parameters/coverMoveR/blend_position"),-velocity.rotated(Vector3.UP,pawnMesh.global_basis.get_euler().x).x,16*delta))
+
+
 			#Point the cover casts in the direction of the player, if its the player. otherwise just use the meshrotation
-			if isPlayerPawn():
+			if isPlayerPawn() and is_instance_valid(attachedCam) and !isInCover:
 				%coverHolder.rotation_degrees.y = attachedCam.horizontal.global_rotation_degrees.y
 
 
@@ -936,9 +940,9 @@ func equipWeapon(index:int) -> void:
 	currentItem.visible = true
 	currentItem.freeze = true
 	setupWeaponAnimations()
-	if currentItem.weaponResource.useRightHandAiming:
+	if currentItem.weaponResource.useRightHandCover:
 		setRightHandFilterCover(false)
-	if currentItem.weaponResource.useLeftHandAiming:
+	if currentItem.weaponResource.useLeftHandCover:
 		setLeftHandFilterCover(false)
 
 func unequipWeapon() -> void:
@@ -950,8 +954,7 @@ func unequipWeapon() -> void:
 		weapon.hide()
 		weapon.resetToDefault()
 	if currentItem:
-		if freeAimChanged.is_connected(currentItem.checkFreeAim):
-			freeAimChanged.disconnect(currentItem.checkFreeAim)
+		freeAimChanged.disconnect(currentItem.checkFreeAim)
 		if weaponFireChanged.is_connected(currentItem.checkWeaponBlend):
 			weaponFireChanged.disconnect(currentItem.checkWeaponBlend)
 		currentItem.resetToDefault()
@@ -1620,6 +1623,7 @@ func toggleCover()->void:
 		var coverType = 0
 
 		##If the player is at a knee-high cover, then crouch. Otherwise, stand
+		coverNormal = %lowerCoverCast.get_collision_normal()
 		if %lowerCoverCast.is_colliding() and !%topCoverCast.is_colliding():
 			coverType = 0
 		else:
@@ -1627,7 +1631,9 @@ func toggleCover()->void:
 
 		isInCover = true
 
-		pawnMesh.rotation.y = 0
+		print(%lowerCoverCast.get_collision_normal())
+		var rot := atan2(coverNormal.x,coverNormal.y)
+		pawnMesh.rotation.y = rot
 		tween.parallel().tween_property(self,"global_position:x",%lowerCoverCast.get_collision_point().x,0.25).set_ease(defaultEaseType).set_trans(defaultTransitionType)
 		tween.parallel().tween_property(self,"global_position:z",%lowerCoverCast.get_collision_point().z ,0.25).set_ease(defaultEaseType).set_trans(defaultTransitionType)
 	else:

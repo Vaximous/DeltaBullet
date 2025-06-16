@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://c1r6apfs6eb8j"]
+[gd_scene load_steps=12 format=3 uid="uid://c1r6apfs6eb8j"]
 
 [ext_resource type="Script" uid="uid://dc5csltpb6sdj" path="res://assets/scripts/camera/Camera.gd" id="1_r7vh5"]
 [ext_resource type="PackedScene" uid="uid://cvynv7sgqowum" path="res://assets/components/velocityComponent/velocityComponent.tscn" id="2_rb4ck"]
@@ -10,9 +10,6 @@
 [ext_resource type="AudioStream" uid="uid://0epkm8qqx836" path="res://assets/sounds/gore/Headshot_3.wav" id="8_0ng1w"]
 [ext_resource type="AudioStream" uid="uid://bnj4aa320lb1r" path="res://assets/sounds/gore/Headshot_4.wav" id="9_0am4k"]
 [ext_resource type="PackedScene" uid="uid://7hcwtpln33no" path="res://assets/scenes/ui/tabmenu/TabMenu.tscn" id="19_jpkgf"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_seysn"]
-radius = 0.55
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_bpylg"]
 random_pitch = 1.05
@@ -48,7 +45,6 @@ inputComponent = NodePath("inputComponent")
 
 [node name="springArm3d" type="SpringArm3D" parent="camPivot/horizonal/vertholder/vertical"]
 collision_mask = 3
-shape = SubResource("SphereShape3D_seysn")
 
 [node name="Camera" type="Camera3D" parent="camPivot/horizonal/vertholder/vertical/springArm3d"]
 

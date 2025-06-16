@@ -3,6 +3,7 @@ class_name PlayerCamera
 signal cameraRotationUpdated
 signal setCamRot(camRotation:float)
 ##Variable Set
+var mirroredCamera : bool = false
 var isFreecam : bool = true
 var speed : float = 9.0
 var acceleration: float = 3.0
@@ -240,9 +241,15 @@ func _physics_process(delta)->void:
 		#vertical.position.z = lerp(vertical.position.z , cameraData.cameraOffset.z, cameraData.camLerpSpeed*delta)
 		vertical.position.y = lerp(vertical.position.y, cameraData.cameraOffset.y, cameraData.camLerpSpeed*delta)
 		if !itemEquipOffsetToggle:
-			horizontal.position.x = lerp(horizontal.position.x, cameraData.cameraOffset.x, cameraData.camLerpSpeed*delta)
+			if !mirroredCamera:
+				horizontal.position.x = lerp(horizontal.position.x, cameraData.cameraOffset.x, cameraData.camLerpSpeed*delta)
+			else:
+				horizontal.position.x = lerp(horizontal.position.x, -cameraData.cameraOffset.x, cameraData.camLerpSpeed*delta)
 		else:
-			horizontal.position.x = lerp(horizontal.position.x, cameraData.itemEquipOffset.x, cameraData.itemEquipLerpSpeed*delta)
+			if !mirroredCamera:
+				horizontal.position.x = lerp(horizontal.position.x, cameraData.itemEquipOffset.x, cameraData.itemEquipLerpSpeed*delta)
+			else:
+				horizontal.position.x = lerp(horizontal.position.x, -cameraData.itemEquipOffset.x, cameraData.itemEquipLerpSpeed*delta)
 
 	#Kill Vignette
 	if !killVignette.get_material().get_shader_parameter("softness") >= 9.0:

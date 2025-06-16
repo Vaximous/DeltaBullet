@@ -62,6 +62,9 @@ var useRightHand:bool = true
 @export var leftHandParent:bool = false
 @export var rightHandParent:bool = true
 @export var useWeaponSprintAnim:bool = false
+@export_subgroup("Cover Handling")
+@export var useLeftHandCover:bool = true
+@export var useRightHandCover:bool = true
 @export_subgroup("Idle Weapon Handling")
 @export var useLeftHandIdle:bool = true
 @export var useRightHandIdle:bool = true

@@ -112,6 +112,14 @@ func _input(event: InputEvent) -> void:
 				if controllingPawn.canUseCover:
 					controllingPawn.toggleCover()
 
+		if event.is_action_pressed("gToggleCamera"):
+			#emit_signal("actionPressed", str(event.keycode))
+			if controllingPawn:
+				if !controllingPawn.attachedCam.mirroredCamera:
+					controllingPawn.attachedCam.mirroredCamera = true
+				else:
+					controllingPawn.attachedCam.mirroredCamera = false
+
 
 		if event.is_action_pressed("gJump"):
 			#emit_signal("actionPressed", str(event.keycode))

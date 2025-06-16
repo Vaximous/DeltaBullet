@@ -5,6 +5,6 @@
 [resource]
 script = ExtResource("1_dytyk")
 movementID = 1
-movementSpeed = 1.5
+movementSpeed = 2.2
 acceleration = 7.0
 animationSpeed = 1.0

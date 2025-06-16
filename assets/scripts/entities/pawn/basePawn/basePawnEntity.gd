@@ -70,7 +70,7 @@ signal headshottedPawn
 @onready var collisionShape : CollisionShape3D = $Collider
 @onready var clothingHolder : Node3D = $Mesh/MaleSkeleton/Skeleton3D/Clothing
 @onready var pawnMesh : Node3D = $Mesh
-@onready var itemHolder : Node3D = $BoneAttatchments/rightHand/Weapons
+@onready var itemHolder : Node3D = $Mesh/MaleSkeleton/Skeleton3D/rightHand/Weapons
 @onready var animationPlayer : AnimationPlayer = $AnimationPlayer
 ##Internal Variables
 

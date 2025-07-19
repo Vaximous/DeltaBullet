@@ -207,17 +207,17 @@ func doRagdollHeadshot(pawn:BasePawn = null, dismember : bool = false, shotvel:V
 				clothes.queue_free()
 				checkClothingHider()
 	if dismember:
-		var headPos : = findPhysicsBone(41).position
-		findPhysicsBone(41).friction = 0.5
-		findPhysicsBone(41).mass = 20
-		findPhysicsBone(2).apply_central_impulse(shotvel*3)
-		findPhysicsBone(41).linear_velocity = shotvel.normalized()
-		findPhysicsBone(41).set("joint_constraints/x/linear_limit_enabled",false)
-		findPhysicsBone(41).set("joint_constraints/y/linear_limit_enabled",false)
-		findPhysicsBone(41).set("joint_constraints/z/linear_limit_enabled",false)
-		findPhysicsBone(41).set("joint_constraints/x/angular_limit_enabled",false)
-		findPhysicsBone(41).set("joint_constraints/y/angular_limit_enabled",false)
-		findPhysicsBone(41).set("joint_constraints/z/angular_limit_enabled",false)
+		var headPos : = findPhysicsBone(42).position
+		findPhysicsBone(42).friction = 0.5
+		findPhysicsBone(42).mass = 20
+		findPhysicsBone(3).apply_central_impulse(shotvel*3)
+		findPhysicsBone(42).linear_velocity = shotvel.normalized()
+		findPhysicsBone(42).set("joint_constraints/x/linear_limit_enabled",false)
+		findPhysicsBone(42).set("joint_constraints/y/linear_limit_enabled",false)
+		findPhysicsBone(42).set("joint_constraints/z/linear_limit_enabled",false)
+		findPhysicsBone(42).set("joint_constraints/x/angular_limit_enabled",false)
+		findPhysicsBone(42).set("joint_constraints/y/angular_limit_enabled",false)
+		findPhysicsBone(42).set("joint_constraints/z/angular_limit_enabled",false)
 
 
 
@@ -344,7 +344,7 @@ func activeRagdollDeathCheck(impulse_bone:int,pawn:BasePawn)->void:
 
 func headshotCheck(impulse_bone:int,killer,pawn:BasePawn, shotVel:Vector3 = Vector3.ONE)->void:
 	var dismemberchance : bool = [true,false].pick_random()
-	if impulse_bone == 41:
+	if impulse_bone == 42:
 		if is_instance_valid(killer):
 			if is_instance_valid(killer.currentItem):
 				if killer.currentItem.weaponResource.headDismember:

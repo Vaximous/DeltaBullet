@@ -1,0 +1,29 @@
+[gd_resource type="Compositor" load_steps=3 format=3 uid="uid://0e0nh5rmqeuj"]
+
+[ext_resource type="Script" uid="uid://dugg7l517taai" path="res://assets/entities/camera/testCompositor.gd" id="1_dgga1"]
+
+[sub_resource type="CompositorEffect" id="CompositorEffect_0ng1w"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = false
+needs_normal_roughness = false
+script = ExtResource("1_dgga1")
+shader_code = "vec3 light_position;
+float light_radius = 50.0;
+
+void vertex() {
+	vec3 rd = VERTEX - light_position;
+	vec3 rn = normalize(rd);
+	if (dot(NORMAL, rn) > 0.0) {
+		VERTEX += rn*clamp(light_radius-length(rd), 0.0, light_radius);
+	}
+	else {
+		VERTEX -= NORMAL*0.01;
+	}
+"
+metadata/_custom_type_script = "uid://dugg7l517taai"
+
+[resource]
+compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_0ng1w")])

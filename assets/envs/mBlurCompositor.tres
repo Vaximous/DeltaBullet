@@ -64,4 +64,4 @@ center_fade = 0.0
 framerate_independent = true
 uncapped_independence = false
 target_constant_framerate = 60.0
-metadata/_custom_type_script = ExtResource("1_3v37r")
+metadata/_custom_type_script = "uid://buj8yio6lnyh1"

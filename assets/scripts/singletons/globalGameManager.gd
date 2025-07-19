@@ -649,8 +649,8 @@ func setMotionBlur(camera:Camera3D)->void:
 			camera.compositor.compositor_effects[0].set("enabled",true)
 			camera.compositor.compositor_effects[1].set("enabled",true)
 	else:
-		if camera.compositor:
-			camera.compositor.free()
+		var comp = load("res://assets/entities/camera/testComp.tres")
+		camera.compositor = comp
 			#camera.compositor.compositor_effects[0].set("enabled",false)
 			#camera.compositor.compositor_effects[1].set("enabled",false)
 

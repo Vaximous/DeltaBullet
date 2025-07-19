@@ -195,7 +195,7 @@ func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 				#audioCooldown = 0.35
 
 
-func hit(dmg, dealer=null, hitImpulse:Vector3 = Vector3.ZERO, hitPoint:Vector3 = Vector3.ZERO)->void:
+func hit(dmg, dealer=null, hitImpulse:Vector3 = Vector3.ZERO, hitPoint:Vector3 = Vector3.ZERO, bullet:Projectile = null)->void:
 	if !has_meta("exploded"):
 		canBleed = true
 	onHit.emit(hitImpulse,hitPoint)

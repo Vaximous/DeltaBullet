@@ -226,7 +226,7 @@ func checkWeaponBlend()->void:
 							weaponResource.useRightHand = false
 						if !weaponOwner.meshLookAt:
 							weaponOwner.meshLookAt = true
-				elif weaponOwner.preventWeaponFire and !isReloading:
+				elif weaponOwner.preventWeaponFire and !isReloading and !weaponOwner.isInCover and !weaponOwner.isPeeking:
 					weaponRemoteState.travel("idle")
 					weaponRemoteStateLeft.travel("idle")
 	else:
@@ -247,6 +247,7 @@ func fire()->void:
 
 	#Weapon is capable of firing.
 	if !isFiring:
+
 		shot_fired.emit()
 		spawn_bullet_casing()
 		isFiring = true

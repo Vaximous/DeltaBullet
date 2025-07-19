@@ -101,7 +101,7 @@ func setupPhysicsProp()->void:
 func setMaterial(resource:DB_PhysicsMaterial)->void:
 	set_meta(&"physics_material_override", resource)
 
-func hit(dmg, dealer=null, hitImpulse:Vector3 = Vector3.ZERO, hitPoint:Vector3 = Vector3.ZERO)->void:
+func hit(dmg, dealer=null, hitImpulse:Vector3 = Vector3.ZERO, hitPoint:Vector3 = Vector3.ZERO, bullet:Projectile = null)->void:
 	if hitImpulseEnabled:
 		onHit.emit(hitImpulse,hitPoint)
 		apply_impulse(hitImpulse, hitPoint)

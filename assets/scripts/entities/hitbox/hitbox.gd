@@ -1,5 +1,7 @@
 extends Area3D
 class_name Hitbox
+signal damagedFront
+signal damagedBack
 @export var crosshairHitEffect : bool = true
 @export var enabled : bool = true
 var setup:bool = false
@@ -32,12 +34,20 @@ func _ready()->void:
 			#addException(self)
 			#setup = true
 
-func hit(dmg, dealer=null, hitImpulse:Vector3 = Vector3.ZERO, hitPoint:Vector3 = Vector3.ZERO)->void:
+func hit(dmg, dealer=null, hitImpulse:Vector3 = Vector3.ZERO, hitPoint:Vector3 = Vector3.ZERO, bullet:Projectile = null)->void:
 	if enabled:
 		if healthComponent.componentOwner is BasePawn:
 			healthComponent.componentOwner.lastHitPart = boneId
 			healthComponent.componentOwner.hitImpulse = hitImpulse
 			healthComponent.componentOwner.hitVector = hitPoint
+
+			if bullet:
+				if bullet.global_position < global_position:
+					#print("hit from front")
+					damagedFront.emit()
+				else:
+					damagedBack.emit()
+					#print("hit from back")
 
 			if is_instance_valid(healthComponent.componentOwner.attachedCam) and crosshairHitEffect:
 				healthComponent.componentOwner.attachedCam.camera.fov -= randf_range(1.8,4.8)

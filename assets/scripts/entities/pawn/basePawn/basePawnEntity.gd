@@ -70,7 +70,7 @@ signal headshottedPawn
 @onready var collisionShape : CollisionShape3D = $Collider
 @onready var clothingHolder : Node3D = $Mesh/MaleSkeleton/Skeleton3D/Clothing
 @onready var pawnMesh : Node3D = $Mesh
-@onready var itemHolder : Node3D = $Mesh/MaleSkeleton/Skeleton3D/rightHand/Weapons
+@onready var itemHolder : Node3D = $BoneAttatchments/rightHand/Weapons
 @onready var animationPlayer : AnimationPlayer = $AnimationPlayer
 ##Internal Variables
 
@@ -202,6 +202,9 @@ var isUsingPhone : bool = false:
 			freeAimChanged.emit()
 			#print(freeAim)
 @export var pawnEnabled : bool = true
+@export var isUsingFlashlight : bool = false:
+	set(value):
+		isUsingFlashlight = value
 @export var animationPlayerSpeed : float = 1.0:
 	set(value):
 		animationPlayerSpeed = value
@@ -227,6 +230,8 @@ var preventWeaponFire : bool = false:
 		if preventWeaponFire != value:
 			preventWeaponFire = value
 			weaponFireChanged.emit()
+			if currentItem:
+				currentItem.checkWeaponBlend()
 @export var isPawnDead : bool = false:
 	set(value):
 		isPawnDead = value
@@ -244,15 +249,42 @@ var preventWeaponFire : bool = false:
 						footstepSounds.stop()
 @export_subgroup("Movement")
 var coverNormal : Vector3
+var directionNormal
+var coverPosition : Vector3
 var coverDirection : int = 0
+var inPeekingProgress : bool = false
+var peekable : bool = false
+var isPeeking : bool = false:
+	set(value):
+		await get_tree().process_frame
+		isPeeking = value
+		if value:
+			peekFromCover()
+			disableCoverTransition()
+		else:
+			unPeekFromCover()
+			enableCoverTransition()
+
+var peekPos : Vector3
 @export var isInCover : bool = false:
 	set(value):
-		isInCover = value
+		if isInCover != value:
+			isInCover = value
 		if isInCover:
+			hideCoverLabel()
 			enableCoverTransition()
+			isUsingPhone = false
 		else:
 			disableCoverTransition()
-@export var canUseCover : bool = false
+@export var canUseCover : bool = false:
+	set(value):
+		if canUseCover != value:
+			canUseCover = value
+		if value:
+			if !isInCover and isPlayerPawn():
+				showCoverLabel()
+		else:
+			hideCoverLabel()
 @export var movementStates : Dictionary
 @export var canRun : bool = true:
 	set(value):
@@ -364,12 +396,21 @@ var currentItem : InteractiveObject = null
 ##Makes the mesh look at a certain thing, mainly used for aiming
 @export var meshLookAt : bool = false:
 	set(value):
-		meshLookAt = value
-		meshLookAtChanged.emit(value)
-		if value == true:
+		if meshLookAt != value:
+			meshLookAt = value
+			meshLookAtChanged.emit(value)
+		if meshLookAt:
 			startBodyIK()
+			if isInCover:
+				disableCoverTransition()
+				if peekable and !isPeeking:
+					#isPeeking = true
+					peekPos = global_position
+					isPeeking = true
 		else:
 			disableBodyIK()
+
+
 		#if meshLookAt != value:
 			#checkWeaponBlend()
 
@@ -386,9 +427,11 @@ var currentItem : InteractiveObject = null
 const defaultTweenSpeed : float = 0.25
 const defaultTransitionType = Tween.TRANS_QUART
 const defaultEaseType = Tween.EASE_OUT
+var coverIndicatorTween : Tween
 var throwableTween : Tween
 var leftHandTween : Tween
 var rightHandTween : Tween
+var coverTween : Tween
 var runTween : Tween
 var fallTween : Tween
 var idleSpaceTween : Tween
@@ -398,8 +441,8 @@ var meshRotationTween : Tween
 var meshRotationTweenMovement : Tween
 var flinchTween : Tween
 var phoneTween : Tween
-var coverTween : Tween
 var coverMoveTween : Tween
+var peekTween : Tween
 var lastLeftBlend : AnimationNodeStateMachinePlayback
 ## First-person, just for shits and giggles
 var isFirstperson : bool = false:
@@ -443,8 +486,26 @@ func _physics_process(delta:float) -> void:
 					if velocity.y <= -15:
 						die(null)
 
+
+			#Flashlight
+			if isPlayerPawn() and isUsingFlashlight:
+				%flashlight.global_rotation.y = attachedCam.camPivot.global_rotation.y
+				%flashlight.global_rotation.x = attachedCam.vertical.global_rotation.x
+
 			preventWeaponFire = aimBlockRaycast.is_colliding()
 			canUseCover = %lowerCoverCast.is_colliding()
+
+			if $%lowerCoverCast.is_colliding():
+				var offset = 0.2
+				var colNormal : Vector3 = %lowerCoverCast.get_collision_normal()
+				var colPoint : Vector3 = Vector3(%lowerCoverCast.get_collision_point().x,%lowerCoverCast.get_collision_point().y,%lowerCoverCast.get_collision_point().z)
+				var normalAtan = atan2(colNormal.x,colNormal.y)
+				var col:Vector3= colPoint + Vector3(offset,0,offset).rotated(Vector3.UP,normalAtan)
+				#var dist : Vector3 = (%lowerCoverCast.get_collision_point() - global_position.distance_to(%lowerCoverCast.get_collision_point()))
+				coverPosition = col
+				%covermarker.global_position = coverPosition
+
+
 
 			if isInCover:
 				#var norm := get_slide_collision(0).get_normal()
@@ -455,14 +516,35 @@ func _physics_process(delta:float) -> void:
 
 				if $%lowerCoverCast.is_colliding():
 					coverNormal = %lowerCoverCast.get_collision_normal()
+					#print(d.dot(Vector3(coverNormal.x,0,coverNormal.z)))
 
+				directionNormal = direction.rotated(Vector3.UP,movementController.cameraRotation)
 				%coverHolder.rotation.y = atan2(coverNormal.x,coverNormal.z)
 
-				pawnMesh.rotation.y = lerpf(pawnMesh.rotation.y,atan2(coverNormal.x,coverNormal.z),12*delta)
+				pawnMesh.rotation.y = lerpf(pawnMesh.rotation.y,atan2(coverNormal.x,coverNormal.z),18*delta)
 
-				setCoverMoveLBlend(lerpf(animationTree.get("parameters/coverMoveL/blend_position"),velocity.rotated(Vector3.UP,pawnMesh.global_basis.get_euler().x).x,16*delta))
-				setCoverMoveRBlend(lerpf(animationTree.get("parameters/coverMoveR/blend_position"),-velocity.rotated(Vector3.UP,pawnMesh.global_basis.get_euler().x).x,16*delta))
+				if attachedCam:
+					#directionNormal = directionNormal.rotated(Vector3.UP,-attachedCam.horizontal.global_rotation_degrees.y).normalized()
+					print(directionNormal.dot(Vector3(coverNormal.x,0,coverNormal.z)))
+					if directionNormal.dot(Vector3(coverNormal.x,0,coverNormal.z)) > 0.9:
+						if peekTween:
+							peekTween.kill()
+						toggleCover()
 
+
+
+				if coverDirection == 0 and !%rightCoverCast.is_colliding():
+					peekable = true
+					if atan2(direction.x,direction.z) < 0:
+						direction = Vector3.ZERO
+						#velocity= lerp(velocity,Vector3.ZERO,movementController.acceleration*delta*80)
+				elif coverDirection == 1 and !%leftCoverCast.is_colliding():
+					peekable = true
+					if atan2(direction.x,direction.z) > 0:
+						direction = Vector3.ZERO
+						#velocity= lerp(velocity,Vector3.ZERO,movementController.acceleration*delta)
+				else:
+					peekable = false
 
 			#Point the cover casts in the direction of the player, if its the player. otherwise just use the meshrotation
 			if isPlayerPawn() and is_instance_valid(attachedCam) and !isInCover:
@@ -480,6 +562,7 @@ func checkComponents()->void:
 			for hitbox in getAllHitboxes():
 				inputComponent.aimCast.add_exception(hitbox)
 			raycaster = inputComponent.aimCast
+			%coverLabel.hide()
 			#healthComponent.connect("onDamaged",inputComponent.instantDetect.bind())
 			#inputComponent.position = self.position
 
@@ -497,8 +580,8 @@ func checkComponents()->void:
 				headHitbox.hitboxDamageMult = 1.3
 				raycaster = _cam.camCast
 				add_to_group("Player")
-				neckMarker.reparent(_cam.camera, true)
-				neckModifier.target_node = neckMarker.get_path()
+				#neckMarker.reparent(_cam.camera, true)
+				#neckModifier.target_node = neckMarker.get_path()
 				attachedCam.setCamRot.connect(movementController.onSetCamRot)
 
 
@@ -1513,8 +1596,14 @@ func checkMeshLookat()->void:
 					else:
 						if currentItem.isAiming != false:
 							currentItem.isAiming = false
+
+
+
 		else:
 			disableBodyIK()
+
+			if isInCover:
+				enableCoverTransition()
 
 func getShortTweenAngle(currentAngle:float,targetAngle:float)->float:
 	return currentAngle + wrapf(targetAngle-currentAngle,-PI,PI)
@@ -1600,6 +1689,9 @@ func togglePhone()->void:
 	if isUsingPhone:
 		closePhone()
 	else:
+		if isInCover:
+			isInCover = false
+
 		openPhone()
 
 func openPhone()->void:
@@ -1616,7 +1708,13 @@ func closePhone()->void:
 		isUsingPhone = false
 
 func toggleCover()->void:
-	if !isInCover:
+	if !isInCover and is_on_floor():
+		#if %lowerCoverCast.get_collision_normal().y > 0:
+			#return
+		#var collisionPoint = %lowerCoverCast.get_collision_point()
+
+		freeAim = false
+		meshLookAt = false
 		var tween = create_tween()
 
 		## 0 = Crouching cover, 1 = standing cover
@@ -1630,11 +1728,67 @@ func toggleCover()->void:
 			coverType = 1
 
 		isInCover = true
-
-		print(%lowerCoverCast.get_collision_normal())
+		#print(get_wall_normal())
 		var rot := atan2(coverNormal.x,coverNormal.y)
 		pawnMesh.rotation.y = rot
-		tween.parallel().tween_property(self,"global_position:x",%lowerCoverCast.get_collision_point().x,0.25).set_ease(defaultEaseType).set_trans(defaultTransitionType)
-		tween.parallel().tween_property(self,"global_position:z",%lowerCoverCast.get_collision_point().z ,0.25).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+
+
+		#velocity.move_toward(coverPosition,0.25)
+		tween.parallel().tween_property(self,"global_position:x",coverPosition.x,0.55).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+		tween.parallel().tween_property(self,"global_position:z",coverPosition.z,0.55).set_ease(defaultEaseType).set_trans(defaultTransitionType)
 	else:
 		isInCover = false
+
+func peekFromCover()->void:
+	if peekTween:
+		peekTween.kill()
+	peekTween = create_tween()
+	if coverDirection == 0:
+		preventWeaponFire = false
+		peekTween.parallel().tween_property(self,"global_position:x",%rightPeekCast.get_collision_point().x,0.4).set_trans(defaultTransitionType).set_ease(defaultEaseType)
+		peekTween.parallel().tween_property(self,"global_position:z",%rightPeekCast.get_collision_point().z,0.4).set_trans(defaultTransitionType).set_ease(defaultEaseType)
+		#isPeeking = true
+	else:
+		preventWeaponFire = false
+		peekTween.parallel().tween_property(self,"global_position:x",%leftPeekCast.get_collision_point().x,0.4).set_trans(defaultTransitionType).set_ease(defaultEaseType)
+		peekTween.parallel().tween_property(self,"global_position:z",%leftPeekCast.get_collision_point().z,0.4).set_trans(defaultTransitionType).set_ease(defaultEaseType)
+		#isPeeking = true
+
+func unPeekFromCover()->void:
+		if peekTween:
+			peekTween.kill()
+		peekTween = create_tween()
+		peekTween.parallel().tween_property(self,"global_position:x",peekPos.x,0.4).set_trans(defaultTransitionType).set_ease(defaultEaseType)
+		peekTween.parallel().tween_property(self,"global_position:z",peekPos.z,0.4).set_trans(defaultTransitionType).set_ease(defaultEaseType)
+
+func hideCoverLabel()->void:
+	if coverIndicatorTween:
+		coverIndicatorTween.kill()
+	coverIndicatorTween = create_tween()
+	coverIndicatorTween.parallel().tween_property(%coverLabel,"outline_modulate",Color.TRANSPARENT,.15).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+	coverIndicatorTween.parallel().tween_property(%coverLabel,"modulate",Color.TRANSPARENT,.15).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+	coverIndicatorTween.parallel().tween_property(%coverLabel,"position:y",0.5,0.55).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+
+func showCoverLabel()->void:
+	if coverIndicatorTween:
+		coverIndicatorTween.kill()
+	coverIndicatorTween = create_tween()
+	#%coverLabel.position = Vector3.ZERO
+	%coverLabel.show()
+	coverIndicatorTween.parallel().tween_property(%coverLabel,"outline_modulate",Color.BLACK,1.05).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+	coverIndicatorTween.parallel().tween_property(%coverLabel,"modulate",Color.WHITE,1.05).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+	coverIndicatorTween.parallel().tween_property(%coverLabel,"position:y",0.00,0.35).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+
+func disableFlashlight()->void:
+	isUsingFlashlight = false
+	%flashlight.visible = false
+
+func enableFlashlight()->void:
+	isUsingFlashlight = true
+	%flashlight.visible = true
+
+func toggleFlashlight()->void:
+	if !isUsingFlashlight:
+		enableFlashlight()
+	else:
+		disableFlashlight()

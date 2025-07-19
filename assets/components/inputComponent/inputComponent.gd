@@ -37,12 +37,36 @@ func _process(_delta:float)->void:
 						if is_instance_valid(controllingPawn.attachedCam):
 							if is_instance_valid(controllingPawn.currentItem):
 									if controllingPawn.currentItem.isAiming != true:
-										controllingPawn.currentItem.isAiming = true
+										if !controllingPawn.isInCover:
+											controllingPawn.currentItem.isAiming = true
+										else:
+											if controllingPawn.peekable:
+												controllingPawn.currentItem.isAiming = true
 							controllingPawn.turnAmount = -controllingPawn.attachedCam.vertical.rotation.x
 							controllingPawn.freeAim = false
 							controllingPawn.freeAimTimer.stop()
-							if !controllingPawn.meshLookAt:
+							if !controllingPawn.meshLookAt and !controllingPawn.isInCover:
 								controllingPawn.meshLookAt = true
+
+							if controllingPawn.isInCover:
+								#controllingPawn.enableCoverTransition()
+								if controllingPawn.peekable and !controllingPawn.isPeeking:
+									controllingPawn.meshLookAt = true
+									controllingPawn.disableCoverTransition()
+									#isPeeking = true
+									controllingPawn.peekPos = controllingPawn.global_position
+									controllingPawn.isPeeking = true
+								elif !controllingPawn.peekable and controllingPawn.isPeeking:
+									controllingPawn.isPeeking = false
+									controllingPawn.enableCoverTransition()
+									controllingPawn.meshLookAt = false
+									if controllingPawn.currentItem and controllingPawn.currentItem.isAiming:
+										controllingPawn.currentItem.isAiming = false
+
+
+								#if controllingPawn.isPeeking:
+									#controllingPawn.isPeeking = false
+
 								if !is_instance_valid(controllingPawn.attachedCam):
 									if controllingPawn.meshRotation:
 										controllingPawn.meshRotation = controllingPawn.attachedCam.camRot
@@ -57,13 +81,33 @@ func _process(_delta:float)->void:
 					controllingPawn.canRun = true
 					if !controllingPawn.freeAim and !controllingPawn.isArmingThrowable:
 						controllingPawn.freeAim = false
+					if controllingPawn.isInCover and controllingPawn.isPeeking and !Input.is_action_pressed("gLeftClick"):
+						controllingPawn.meshLookAt = false
+						controllingPawn.disableCoverTransition()
+						#isPeeking = true
+						#controllingPawn.peekPos = controllingPawn.global_position
+						controllingPawn.isPeeking = false
+
+						#if controllingPawn.isPeeking:
+							#controllingPawn.isPeeking = false
 
 			if Input.is_action_pressed("gLeftClick"):
 				if controllingPawn:
 					if !controllingPawn.currentItem == null:
 						if !Input.is_action_pressed("gRightClick"):
 							if !controllingPawn.freeAim:
-								controllingPawn.freeAim = true
+								if !controllingPawn.isInCover:
+									controllingPawn.freeAim = true
+								else:
+									if controllingPawn.peekable:
+										controllingPawn.freeAim = true
+									else:
+										if controllingPawn.freeAim:
+											controllingPawn.freeAim = false
+
+						if controllingPawn.isInCover and !controllingPawn.isPeeking:
+							await get_tree().create_timer(0.055).timeout
+
 						controllingPawn.currentItem.fire()
 						controllingPawn.freeAimTimer.start()
 
@@ -95,6 +139,10 @@ func _input(event: InputEvent) -> void:
 					if !controllingPawn.healthComponent == null and !controllingPawn.isUsingPhone:
 						if !controllingPawn.healthComponent.isDead:
 							controllingPawn.currentItemIndex = controllingPawn.currentItemIndex-1
+
+		if event.is_action_pressed("gFlashlight"):
+			if controllingPawn:
+				controllingPawn.toggleFlashlight()
 
 		if event.is_action_pressed("gCrouch"):
 			if controllingPawn.isCrouching:

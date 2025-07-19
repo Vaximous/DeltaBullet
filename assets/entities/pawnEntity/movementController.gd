@@ -59,13 +59,17 @@ func onMovementDirectionSet(direction:Vector3)->void:
 		if !pawnControlling.isInCover:
 			movementDirection = direction.rotated(Vector3.UP,cameraRotation)
 		else:
-			movementDirection = direction.rotated(Vector3.UP,pawnControlling.pawnMesh.global_basis.get_euler().y)
-			if movementDirection.x > 0 and movementDirection != Vector3.ZERO:
+			movementDirection = direction.rotated(Vector3.UP,atan2(pawnControlling.coverNormal.x,pawnControlling.coverNormal.z))
+			#print(atan2(direction.x,direction.z))
+			if atan2(direction.x,direction.z) > 0 and movementDirection != Vector3.ZERO:
 				pawnControlling.coverDirection = 1
-				pawnControlling.attachedCam.mirroredCamera = false
+				if pawnControlling.attachedCam:
+					pawnControlling.attachedCam.mirroredCamera = false
 			elif movementDirection != Vector3.ZERO:
 				pawnControlling.coverDirection = 0
-				pawnControlling.attachedCam.mirroredCamera = true
+				if pawnControlling.attachedCam:
+					#print(atan2(direction.x,direction.z))
+					pawnControlling.attachedCam.mirroredCamera = true
 	else:
 		movementDirection = direction
 

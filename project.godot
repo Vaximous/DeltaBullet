@@ -35,6 +35,7 @@ warnings/check_angle_interpolation_type_conflicting=false
 
 config/name="Delta Bullet"
 config/version="0.75.96.2"
+config/tags=PackedStringArray("smackneck_studios")
 run/main_scene="res://bootscene.tscn"
 run/main_loop_type="PEMainLoop"
 config/features=PackedStringArray("4.5", "Forward Plus")

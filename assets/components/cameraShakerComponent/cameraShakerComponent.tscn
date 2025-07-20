@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://y86yk01lcygf"]
+
+[ext_resource type="Script" uid="uid://bu7qd08rxrnbf" path="res://assets/components/cameraShakerComponent/camera_shaker_component.gd" id="1_jyrig"]
+
+[node name="cameraShakerComponent" type="Node"]
+script = ExtResource("1_jyrig")

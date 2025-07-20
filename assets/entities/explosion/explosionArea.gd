@@ -7,6 +7,7 @@ const explosion : PackedScene = preload("res://assets/entities/explosion/explosi
 @onready var explosionEffect = $explosionEffect
 @onready var explosionPlayer : AudioStreamPlayer3D = $explosionSound
 @onready var collisionShape : CollisionShape3D = $collisionShape3d
+@onready var shakerArea : Area3D = %shakerArea
 @export_category("Explosion")
 ##Does this explosion burn objects?
 @export var doesBurn : bool = true
@@ -88,16 +89,16 @@ func applyHit(object:Node3D):
 			object.hit(dmgClamped,null,-(global_position-object.global_position).normalized() * explosionImpulse,Vector3.ZERO)
 
 func explode()->void:
+	var explosionRadiusTo = explosionRadius
+	%shakerCollider.shape.radius = explosionRadiusTo*2.7
+
 	if explosionTween:
 		explosionTween.kill()
 	explosionTween = create_tween()
-	var explosionRadiusTo = explosionRadius
 	explosionRadius = 0.1
 	explosionTween.tween_property(self,"explosionRadius",explosionRadiusTo,explosionSpeed)
 
 	explosionEffect.doRipple(explosionRadiusTo*3,0.15,15.5).finished.connect(collisionShape.queue_free)
-
-
 	if is_instance_valid(explosionEffect):
 		explosionEffect.explosionEffectPlay()
 
@@ -133,3 +134,14 @@ func _on_area_entered(area: Area3D) -> void:
 		var ray = explosionRayCheck(area)
 		if ray:
 			applyHit(area)
+
+
+func _on_shaker_area_body_entered(body: Node3D) -> void:
+	if body is BasePawn:
+		var distance = global_position.distance_to(body.global_position + Vector3.DOWN * 1.2) / %shakerCollider.shape.radius
+		if body.isPlayerPawn() and is_instance_valid(body.attachedCam):
+			%cameraShakerComponent.shakeCam(distance,body.attachedCam,global_position.direction_to(body.attachedCam.camera.global_position))
+
+
+func _on_timer_timeout() -> void:
+	%shakerArea.monitoring = false

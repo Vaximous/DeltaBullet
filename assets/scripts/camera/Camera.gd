@@ -142,6 +142,40 @@ func _input(_event)->void:
 		isZoomed = false
 
 
+#creates a camerashaker which shakes the camera in such a way that it eventually returns to normal
+class CameraShaker extends RefCounted:
+	var shakeAmp : Vector3
+	var shakeFreq : Vector3
+	var time : float = 0.0
+	var duration : float = 0.0
+	var output : Vector3
+
+	func _init(_amp : Vector3, _freq : Vector3, _dur : float) -> void:
+		shakeAmp = _amp
+		shakeFreq = _freq
+		duration = _dur
+
+	func iterate(delta : float) -> void:
+		time += delta
+		var power := duration - time
+		if power <= 0:
+			output = Vector3.ZERO
+			return
+		output = Vector3(
+		cos(shakeFreq.x * time) * shakeFreq.x,
+		cos(shakeFreq.y * time) * shakeFreq.y,
+		cos(shakeFreq.z * time) * shakeFreq.z
+		) * (power / duration)
+
+var shakers : Array[CameraShaker]
+var rotation_offset : Vector3
+var additional_rotation : Vector3
+var transform_override = null
+
+func shakeCam(amplitude : Vector3, frequency : Vector3, falloff : float) -> void:
+	var newShake : CameraShaker = CameraShaker.new(amplitude, frequency, falloff)
+	shakers.append(newShake)
+
 func _physics_process(delta)->void:
 	controllerVector = Input.get_vector("gLookLeft","gLookRight","gLookDown","gLookUp",gameManager.deadzone)
 	#Interact Cast HUD
@@ -169,6 +203,13 @@ func _physics_process(delta)->void:
 				weaponMagCountLabel.text = ""
 				weaponLabel.text = ""
 				weaponHud.modulate = lerp(weaponHud.modulate,Color(1,1,1,0.0),12*delta)
+
+	##Shake
+	camera.rotation = Vector3.ZERO
+	decayShakers(delta)
+	rotation_offset = accumulateShakers()
+	camera.rotation = rotation_offset + additional_rotation
+	additional_rotation = Vector3.ZERO
 
 	##Recoil
 	camCast.rotation = lerp(camCast.rotation,castLerp, recoilReturnSpeed*delta)
@@ -433,3 +474,16 @@ func interactCheck()->void:
 
 func _exit_tree()->void:
 	gameManager.activeCamera = null
+
+func accumulateShakers() -> Vector3:
+	var rotation_offset : Vector3 = Vector3.ZERO
+	for i in shakers:
+		rotation_offset += Vector3(deg_to_rad(i.output.x), deg_to_rad(i.output.y), deg_to_rad(i.output.z))
+	return rotation_offset
+
+
+func decayShakers(delta : float) -> void:
+	for i in shakers:
+		i.iterate(delta)
+		if i.time > i.duration:
+			shakers.erase(i)

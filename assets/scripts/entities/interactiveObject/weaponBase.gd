@@ -224,7 +224,7 @@ func checkWeaponBlend()->void:
 							weaponResource.useRightHand = true
 						else:
 							weaponResource.useRightHand = false
-						if !weaponOwner.meshLookAt:
+						if !weaponOwner.meshLookAt and !weaponOwner.isStaggered:
 							weaponOwner.meshLookAt = true
 				elif weaponOwner.preventWeaponFire and !isReloading and !weaponOwner.isInCover and !weaponOwner.isPeeking:
 					weaponRemoteState.travel("idle")

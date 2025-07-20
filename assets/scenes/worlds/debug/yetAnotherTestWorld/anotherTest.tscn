@@ -175,6 +175,8 @@ weaponSpreadAim = 0.05
 leftHandParent = false
 rightHandParent = true
 useWeaponSprintAnim = false
+useLeftHandCover = true
+useRightHandCover = true
 useLeftHandIdle = false
 useRightHandIdle = true
 useLeftHandAiming = false
@@ -297,46 +299,57 @@ pawnWeapons = Array[PackedScene]([ExtResource("5_akr5q")])
 equipWeaponOnSpawn = true
 weaponToEquip = 1
 aiType = 1
+hatedGroups = Array[StringName]([])
 randomAnimationSpeed = false
 
 [node name="pawnSpawn2" parent="Spawns/pawnSpawns" index="1" instance=ExtResource("4_0r0wx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.9229, 1.5, 36.5646)
+active = false
 pawnWeapons = Array[PackedScene]([ExtResource("4_rig7i")])
 equipWeaponOnSpawn = true
 weaponToEquip = 1
 aiType = 1
+hatedGroups = Array[StringName]([])
 randomAnimationSpeed = false
 
 [node name="pawnSpawn4" parent="Spawns/pawnSpawns" index="2" instance=ExtResource("4_0r0wx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.7186, 1.5, 36.8336)
+active = false
 pawnWeapons = Array[PackedScene]([ExtResource("4_rig7i")])
 equipWeaponOnSpawn = true
 weaponToEquip = 1
 aiType = 1
+hatedGroups = Array[StringName]([])
 randomAnimationSpeed = false
 
 [node name="pawnSpawn3" parent="Spawns/pawnSpawns" index="3" instance=ExtResource("4_0r0wx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.1442, 1.5, 10.7581)
+active = false
 pawnWeapons = Array[PackedScene]([ExtResource("5_wnt7o")])
 equipWeaponOnSpawn = true
 weaponToEquip = 1
 aiType = 1
+hatedGroups = Array[StringName]([])
 randomAnimationSpeed = false
 
 [node name="pawnSpawn5" parent="Spawns/pawnSpawns" index="4" instance=ExtResource("4_0r0wx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.23665, 1.5, 8.3449)
+active = false
 pawnWeapons = Array[PackedScene]([ExtResource("4_rig7i")])
 equipWeaponOnSpawn = true
 weaponToEquip = 1
 aiType = 1
+hatedGroups = Array[StringName]([])
 randomAnimationSpeed = false
 
 [node name="pawnSpawn6" parent="Spawns/pawnSpawns" index="5" instance=ExtResource("4_0r0wx")]
 transform = Transform3D(0.870347, 0, 0.492439, 0, 1, 0, -0.492439, 0, 0.870347, 1.50652, 1.5, 33.3465)
+active = false
 pawnWeapons = Array[PackedScene]([ExtResource("5_wnt7o")])
 equipWeaponOnSpawn = true
 weaponToEquip = 1
 aiType = 1
+hatedGroups = Array[StringName]([])
 randomAnimationSpeed = false
 
 [node name="pawnSpawn12" parent="Spawns/pawnSpawns" index="6" instance=ExtResource("4_0r0wx")]
@@ -345,6 +358,7 @@ pawnWeapons = Array[PackedScene]([ExtResource("5_wnt7o")])
 pawnClothing = Array[PackedScene]([ExtResource("10_jltsg"), ExtResource("12_ax0jb"), ExtResource("11_0op2q"), ExtResource("11_givre")])
 equipWeaponOnSpawn = true
 weaponToEquip = 1
+hatedGroups = Array[StringName]([])
 pawnHP = 1
 animationToForce = &"PawnAnim/SitRestless"
 randomAnimationSpeed = true
@@ -356,6 +370,7 @@ pawnWeapons = Array[PackedScene]([ExtResource("5_wnt7o")])
 pawnClothing = Array[PackedScene]([ExtResource("8_7aw8d"), ExtResource("9_givre"), ExtResource("10_jltsg")])
 equipWeaponOnSpawn = true
 weaponToEquip = 1
+hatedGroups = Array[StringName]([])
 pawnHP = 1
 animationToForce = &"PawnAnim/SitRestless"
 randomAnimationSpeed = true
@@ -367,6 +382,7 @@ pawnWeapons = Array[PackedScene]([ExtResource("5_wnt7o")])
 pawnClothing = Array[PackedScene]([ExtResource("8_7aw8d"), ExtResource("9_givre"), ExtResource("10_jltsg")])
 equipWeaponOnSpawn = true
 weaponToEquip = 1
+hatedGroups = Array[StringName]([])
 pawnHP = 1
 animationToForce = &"PawnAnim/SitRestless"
 randomAnimationSpeed = true
@@ -378,6 +394,7 @@ pawnWeapons = Array[PackedScene]([ExtResource("5_wnt7o")])
 pawnClothing = Array[PackedScene]([ExtResource("8_7aw8d"), ExtResource("10_jltsg"), ExtResource("11_givre"), ExtResource("11_0op2q"), ExtResource("12_ax0jb"), ExtResource("6_71o2e")])
 equipWeaponOnSpawn = true
 weaponToEquip = 1
+hatedGroups = Array[StringName]([])
 pawnHP = 1
 animationToForce = &"PawnAnim/SitRestless"
 randomAnimationSpeed = true
@@ -389,6 +406,7 @@ pawnWeapons = Array[PackedScene]([ExtResource("5_wnt7o")])
 pawnClothing = Array[PackedScene]([ExtResource("8_7aw8d"), ExtResource("10_jltsg"), ExtResource("11_0op2q"), ExtResource("12_ax0jb")])
 equipWeaponOnSpawn = true
 weaponToEquip = 1
+hatedGroups = Array[StringName]([])
 pawnHP = 1
 animationToForce = &"PawnAnim/SitRestless"
 randomAnimationSpeed = true
@@ -399,6 +417,7 @@ pawnWeapons = Array[PackedScene]([ExtResource("5_wnt7o")])
 pawnClothing = Array[PackedScene]([ExtResource("9_mvwmk"), ExtResource("14_fccdg"), ExtResource("6_71o2e"), ExtResource("7_u38u0")])
 equipWeaponOnSpawn = true
 weaponToEquip = 1
+hatedGroups = Array[StringName]([])
 pawnHP = 1
 animationToForce = &"PawnAnim/SitRestless"
 randomAnimationSpeed = true
@@ -410,43 +429,53 @@ pawnWeapons = Array[PackedScene]([ExtResource("5_gs5af")])
 equipWeaponOnSpawn = true
 weaponToEquip = 1
 aiType = 1
+hatedGroups = Array[StringName]([])
 randomAnimationSpeed = false
 
 [node name="pawnSpawn7" parent="Spawns/pawnSpawns" index="13" instance=ExtResource("4_0r0wx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.6399, 1.5, -12.177)
+active = false
 pawnWeapons = Array[PackedScene]([ExtResource("4_rig7i")])
 equipWeaponOnSpawn = true
 weaponToEquip = 1
 aiType = 1
+hatedGroups = Array[StringName]([])
 randomAnimationSpeed = false
 
 [node name="pawnSpawn8" parent="Spawns/pawnSpawns" index="14" instance=ExtResource("4_0r0wx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.0346, 1.5, -0.0404625)
+active = false
 pawnWeapons = Array[PackedScene]([ExtResource("12_wtwgc")])
 pawnClothing = Array[PackedScene]([ExtResource("6_71o2e")])
 equipWeaponOnSpawn = true
 weaponToEquip = 1
 aiType = 1
+hatedGroups = Array[StringName]([])
 randomAnimationSpeed = false
 
 [node name="pawnSpawn9" parent="Spawns/pawnSpawns" index="15" instance=ExtResource("4_0r0wx")]
 transform = Transform3D(0.410162, 0, -0.912013, 0, 1, 0, 0.912013, 0, 0.410162, -15.738, 1.5, 17.5443)
+active = false
 pawnWeapons = Array[PackedScene]([ExtResource("9_3ukc6")])
 equipWeaponOnSpawn = true
 weaponToEquip = 1
 aiType = 1
+hatedGroups = Array[StringName]([])
 randomAnimationSpeed = false
 
 [node name="pawnSpawn10" parent="Spawns/pawnSpawns" index="16" instance=ExtResource("4_0r0wx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.23665, 1.5, 5.61552)
+active = false
 pawnWeapons = Array[PackedScene]([ExtResource("9_3ukc6")])
 equipWeaponOnSpawn = true
 weaponToEquip = 1
 aiType = 1
+hatedGroups = Array[StringName]([])
 randomAnimationSpeed = false
 
 [node name="BogoHead" parent="Spawns/pawnSpawns" index="17" instance=ExtResource("4_0r0wx")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 12.7499, 1.98264, 26.6831)
+active = false
 pawnName = "BogoHead"
 pawnWeapons = Array[PackedScene]([ExtResource("5_wnt7o")])
 pawnClothing = Array[PackedScene]([ExtResource("6_71o2e"), ExtResource("7_u38u0"), ExtResource("8_00u34"), ExtResource("9_mvwmk")])
@@ -454,6 +483,7 @@ aiSkill = 0
 equipWeaponOnSpawn = true
 weaponToEquip = 1
 aiType = 1
+hatedGroups = Array[StringName]([])
 randomAnimationSpeed = false
 
 [node name="worldEnvironment" parent="Environment" index="0"]
@@ -599,7 +629,13 @@ use_collision = true
 size = Vector3(11, 0.0952148, 10.1826)
 material = SubResource("StandardMaterial3D_iw4gj")
 
-[node name="Wall23" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgCombiner3d/csgCombiner3d" index="2"]
+[node name="Wall25" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgCombiner3d/csgCombiner3d" index="2"]
+transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, -2.98023e-08, 0, 1, -9.53674e-07, 2.0164, 4.59131)
+use_collision = true
+size = Vector3(11, 0.0952148, 10.1826)
+material = SubResource("StandardMaterial3D_iw4gj")
+
+[node name="Wall23" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgCombiner3d/csgCombiner3d" index="3"]
 transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, -2.98023e-08, 0, 1, 0.114982, -0.490112, 0.12714)
 operation = 2
 use_collision = true
@@ -961,6 +997,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.3854, 1.66502, 3.90188)
 [connection signal="objectUsed" from="Geometry/navigationRegion3d/PlayerCloset/closetInteraction" to="Geometry/navigationRegion3d/PlayerCloset" method="_onClosetUsed"]
 [connection signal="objectUsed" from="Geometry/navigationRegion3d/csgtruck/worldMapInteract" to="Geometry/navigationRegion3d/csgtruck/worldMapInteract" method="_on_object_used"]
 [connection signal="triggerActivated" from="Props/node3d/pawnTrigger" to="Props/node3d" method="_on_pawn_trigger_trigger_activated"]
-[connection signal="objectUsed" from="Props/interactiveObject" to="Props/interactiveObject" method="_on_object_used"]
 [connection signal="objectUsed" from="Props/interactiveObject" to="Props/interactiveObject" method="spawnSomeEnemies"]
+[connection signal="objectUsed" from="Props/interactiveObject" to="Props/interactiveObject" method="_on_object_used"]
 [connection signal="timeout" from="Props/interactiveObject/timer" to="Props/interactiveObject" method="spawnSomeEnemies"]

@@ -14,7 +14,7 @@ var targetPosition : Vector3 = Vector3.ZERO:
 				lastKnownPosition = Vector3(targetPosition.x,targetPosition.y + 1.25, targetPosition.z)
 
 func on_physics_process(_delta):
-	if !is_current_state() or aiOwner.pawnOwner.isPawnDead: return
+	if !is_current_state() or aiOwner.pawnOwner.isPawnDead or aiOwner.pawnOwner.isStaggered: return
 	super(_delta)
 
 	#Check if has a target(s)
@@ -70,13 +70,13 @@ func on_physics_process(_delta):
 
 			##If the target is within the max range, start shooting
 			if nearestTarget.global_position.distance_to(aiOwner.pawnOwner.global_position) <= aiOwner.maxAttackRange and aiOwner.canSeeObject(nearestTarget.upperChestBone):
-				if aiOwner.getCurrentWeapon() and aiOwner.canSeeObject(nearestTarget) and aiOwner.getCurrentWeapon().currentAmmo > 0:
+				if aiOwner.getCurrentWeapon() and !aiOwner.pawnOwner.isStaggered and aiOwner.canSeeObject(nearestTarget) and aiOwner.getCurrentWeapon().currentAmmo > 0:
 					aiOwner.getCurrentWeapon().weaponCast = aiOwner.aimCast
 					aiOwner.getCurrentWeapon().fire()
 					#aiOwner.stopMoving()
 
 				##Check if needs to reload
-				if aiOwner.getCurrentWeapon() and aiOwner.getCurrentWeapon().currentAmmo <= 0 and !aiOwner.getCurrentWeapon().isReloading and !aiOwner.getCurrentWeapon().isFiring and aiOwner.getCurrentWeapon().currentMagSize > 0:
+				if aiOwner.getCurrentWeapon() and !aiOwner.pawnOwner.isStaggered and aiOwner.getCurrentWeapon().currentAmmo <= 0 and !aiOwner.getCurrentWeapon().isReloading and !aiOwner.getCurrentWeapon().isFiring and aiOwner.getCurrentWeapon().currentMagSize > 0:
 					aiOwner.getCurrentWeapon().reloadWeapon()
 
 			##Pawn seeking, would get closer if out of range

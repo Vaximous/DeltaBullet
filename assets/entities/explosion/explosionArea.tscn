@@ -1,12 +1,15 @@
-[gd_scene load_steps=6 format=3 uid="uid://du4y21jtkhvwk"]
+[gd_scene load_steps=8 format=3 uid="uid://du4y21jtkhvwk"]
 
 [ext_resource type="Script" uid="uid://bcu8gmwt7oiwt" path="res://assets/entities/explosion/explosionArea.gd" id="1_0oqcd"]
 [ext_resource type="PackedScene" uid="uid://bf7ymojudrmnq" path="res://assets/entities/explosion/explosionEffect/explosionEffect.tscn" id="2_4mbl6"]
 [ext_resource type="Curve" uid="uid://d21ybdg6q5cxs" path="res://assets/resources/defaultExplosionCurve.tres" id="3_4360k"]
 [ext_resource type="AudioStream" uid="uid://trs41aoblx2l" path="res://assets/resources/grenade_explosion_sfx_randomizer.tres" id="4_4360k"]
+[ext_resource type="Script" uid="uid://bu7qd08rxrnbf" path="res://assets/components/cameraShakerComponent/camera_shaker_component.gd" id="4_o15xk"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_4mbl6"]
 radius = 10.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_o15xk"]
 
 [node name="explosionArea" type="Area3D"]
 collision_layer = 27
@@ -17,6 +20,15 @@ explosionLOS = false
 explosionSpeed = 0.05
 explosionSound = ExtResource("4_4360k")
 explosionFalloff = ExtResource("3_4360k")
+
+[node name="cameraShakerComponent" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("4_o15xk")
+shakeAmp = Vector3(2, 5.605, 6.135)
+shakeFreq = Vector3(20, 20, 2)
+shakeDuration = 0.8
+randoms = Vector3(1, 2, 4)
+metadata/_custom_type_script = "uid://bu7qd08rxrnbf"
 
 [node name="collisionShape3d" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_4mbl6")
@@ -30,5 +42,23 @@ bus = &"Sounds"
 attenuation_filter_cutoff_hz = 2000.0
 attenuation_filter_db = -12.0
 
+[node name="shakerArea" type="Area3D" parent="."]
+unique_name_in_owner = true
+collision_layer = 31
+collision_mask = 31
+
+[node name="shakerCollider" type="CollisionShape3D" parent="shakerArea"]
+unique_name_in_owner = true
+shape = SubResource("SphereShape3D_o15xk")
+debug_color = Color(0.631373, 0.352941, 0.984314, 1)
+
+[node name="timer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+autostart = true
+ignore_time_scale = true
+
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_entered" from="shakerArea" to="." method="_on_shaker_area_body_entered"]
+[connection signal="timeout" from="timer" to="." method="_on_timer_timeout"]

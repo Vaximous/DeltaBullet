@@ -191,7 +191,7 @@ func lookAtPosition(pos:Vector3,snap:bool = false)->void:
 	if lookTween:
 		lookTween.kill()
 	lookTween = create_tween()
-	if !pawnOwner.meshLookAt:
+	if !pawnOwner.meshLookAt and !pawnOwner.isStaggered:
 		pawnOwner.meshLookAt = true
 
 	castLerp = castLerp.looking_at(-dir)

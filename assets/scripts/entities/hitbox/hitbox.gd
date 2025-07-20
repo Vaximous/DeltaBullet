@@ -42,7 +42,7 @@ func hit(dmg, dealer=null, hitImpulse:Vector3 = Vector3.ZERO, hitPoint:Vector3 =
 			healthComponent.componentOwner.hitVector = hitPoint
 
 			if bullet:
-				if bullet.global_position < global_position:
+				if Vector3(bullet.global_position.x,0,bullet.global_position.z) < Vector3(healthComponent.componentOwner.pawnMesh.global_position.x,0,healthComponent.componentOwner.pawnMesh.global_position.z):
 					#print("hit from front")
 					damagedFront.emit()
 				else:

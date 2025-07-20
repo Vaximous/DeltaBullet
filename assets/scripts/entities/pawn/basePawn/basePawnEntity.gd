@@ -29,7 +29,6 @@ signal headshottedPawn
 
 ##IK
 @onready var neckMarker :Marker3D = $Mesh/neckLook
-@onready var neckModifier : LookAtModifier3D = $%neckModifier
 @onready var bodyIK : SkeletonIK3D= $Mesh/MaleSkeleton/Skeleton3D/bodyIK
 @onready var bodyIKMarker : Marker3D = $Mesh/bodyIKMarker:
 	set(value):
@@ -149,6 +148,22 @@ signal cameraAttached
 	get:
 		return attachedCam
 @export_subgroup("Behavior")
+var isStaggered : bool = false:
+	set(value):
+		isStaggered = value
+		if value:
+			isMoving = false
+			velocity = Vector3.ZERO
+			disableBodyIK()
+			turnAmount = 0
+			meshLookAt = false
+			freeAim = false
+			if currentItem and currentItem.isAiming:
+				currentItem.isAiming = false
+			movementController.enabled = false
+			direction = Vector3.ZERO
+		else:
+			movementController.enabled = true
 var isUsingPhone : bool = false:
 	set(value):
 		isUsingPhone = value
@@ -196,7 +211,8 @@ var isUsingPhone : bool = false:
 		if freeAim != value:
 			freeAim = value
 			if freeAim:
-				meshLookAt = true
+				if !isStaggered:
+					meshLookAt = true
 			else:
 				meshLookAt = false
 			freeAimChanged.emit()
@@ -443,6 +459,7 @@ var flinchTween : Tween
 var phoneTween : Tween
 var coverMoveTween : Tween
 var peekTween : Tween
+var staggerTween : Tween
 var lastLeftBlend : AnimationNodeStateMachinePlayback
 ## First-person, just for shits and giggles
 var isFirstperson : bool = false:
@@ -456,6 +473,7 @@ var defaultBodyIKMarkerPosition : Vector3
 var gravity : float = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 func _ready() -> void:
+	setupAnimationTree()
 	itemInventory.append(null)
 	setMovementState.emit(movementStates["standing"])
 	checkComponents()
@@ -469,7 +487,6 @@ func _ready() -> void:
 
 	fixRot()
 	setupPawnColor()
-	setupAnimationTree()
 	#getAllHitboxes()
 
 func _physics_process(delta:float) -> void:
@@ -493,7 +510,8 @@ func _physics_process(delta:float) -> void:
 				%flashlight.global_rotation.x = attachedCam.vertical.global_rotation.x
 
 			preventWeaponFire = aimBlockRaycast.is_colliding()
-			canUseCover = %lowerCoverCast.is_colliding()
+
+			#canUseCover = %lowerCoverCast.is_colliding()
 
 			if $%lowerCoverCast.is_colliding():
 				var offset = 0.2
@@ -562,7 +580,8 @@ func checkComponents()->void:
 			for hitbox in getAllHitboxes():
 				inputComponent.aimCast.add_exception(hitbox)
 			raycaster = inputComponent.aimCast
-			%coverLabel.hide()
+			#%coverLabel.hide()
+			set_meta(&"canBeStaggered", true)
 			#healthComponent.connect("onDamaged",inputComponent.instantDetect.bind())
 			#inputComponent.position = self.position
 
@@ -1016,7 +1035,8 @@ func equipWeapon(index:int) -> void:
 	await unequipWeapon()
 	playEquipSound()
 	currentItem = itemInventory[index]
-	freeAimChanged.connect(currentItem.checkFreeAim)
+	if !freeAimChanged.is_connected(currentItem.checkFreeAim):
+		freeAimChanged.connect(currentItem.checkFreeAim)
 	#weaponFireChanged.connect(checkWeaponBlend)
 	currentItem.weaponOwner = self
 	currentItem.isEquipped = true
@@ -1037,7 +1057,8 @@ func unequipWeapon() -> void:
 		weapon.hide()
 		weapon.resetToDefault()
 	if currentItem:
-		freeAimChanged.disconnect(currentItem.checkFreeAim)
+		if weaponFireChanged.is_connected(currentItem.checkFreeAim):
+			weaponFireChanged.disconnect(currentItem.checkFreeAim)
 		if weaponFireChanged.is_connected(currentItem.checkWeaponBlend):
 			weaponFireChanged.disconnect(currentItem.checkWeaponBlend)
 		currentItem.resetToDefault()
@@ -1553,6 +1574,10 @@ func setCoverBlend(value:float)->void:
 	if !isPawnDead and is_instance_valid(self):
 		animationTree.set("parameters/coverBlend/blend_amount", value)
 
+func setStaggerBlend(value:float)->void:
+	if !isPawnDead and is_instance_valid(self):
+		animationTree.set("parameters/staggerBlend/blend_amount", value)
+
 func setPhoneBlend(value:float)->void:
 	if !isPawnDead and is_instance_valid(self):
 		animationTree.set("parameters/phoneOpened/blend_amount", value)
@@ -1792,3 +1817,36 @@ func toggleFlashlight()->void:
 		enableFlashlight()
 	else:
 		disableFlashlight()
+
+func enableStaggerBlend()->void:
+	if staggerTween:
+		staggerTween.kill()
+	staggerTween = create_tween()
+	staggerTween.tween_method(setStaggerBlend,animationTree.get("parameters/staggerBlend/blend_amount"),1,0.25).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+
+func disableStaggerBlend()->void:
+	if staggerTween:
+		staggerTween.kill()
+	staggerTween = create_tween()
+	staggerTween.tween_method(setStaggerBlend,animationTree.get("parameters/staggerBlend/blend_amount"),0,0.25).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+
+
+func staggerEnd()->void:
+	isStaggered = false
+
+func doStagger(stagger:StringName, speed:float = 1.0,randomChance:bool=false)->void:
+	if get_meta(&"canBeStaggered") == false or isStaggered or forceAnimation: return
+	if randomChance:
+		if [true,false].pick_random() == false:
+			return
+	print("Staggering..")
+	isStaggered = true
+	#Upon Calling the stagger, it should trigger the animation and play it. Freezing the pawn
+	#until it ends.
+
+	#Set the transition to the stagger var alongside the seek and speed
+	print("Setting Stagger Animation")
+	animationTree.set("parameters/staggerTransition/transition_request",stagger)
+	print("Setting Stagger Speed")
+	animationTree.set("parameters/staggerScale/scale",speed)
+	animationTree.set("parameters/staggerShot/request",AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)

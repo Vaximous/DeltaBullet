@@ -161,6 +161,7 @@ func spawnPawn(forceParent : Node = null, _params : PawnSpawnParameters = null) 
 				controller.pawnTeam = spawnGroup
 				controller.hatedPawnTeams = hatedGroups
 				pawn.set_meta(&"isPlayer", false)
+				pawn.set_meta(&"canBeStaggered", true)
 
 				if pawnName != "":
 					controller.pawnName = pawnName

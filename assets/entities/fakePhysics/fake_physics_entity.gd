@@ -21,6 +21,7 @@ func _ready() -> void:
 		mesh.show()
 		fadeInMesh()
 		mesh.position = global_position
+		#mesh.global_transform = self.get_global_transform_interpolated()
 		mesh.top_level = true
 	rotational_velocity = Vector3(randf_range(-PI, PI), randf_range(-PI, PI), randf_range(-PI, PI)) * 10.0
 

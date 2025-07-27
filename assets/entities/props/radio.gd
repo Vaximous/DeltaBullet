@@ -20,8 +20,7 @@ func toggleRadio(pawn:BasePawn)->void:
 		pawn.attachedCam.fireRecoil(randf_range(2.5,8.5),0,randf_range(12.5,15.5),true)
 	if !active:
 		active = true
-		stream = defaultStream
-		musicManager.change_song_to(stream,0.5)
+		musicManager.change_song_to(defaultStream,0.5)
 	else:
 		active = false
 		musicManager.change_song_to(null,0.5)

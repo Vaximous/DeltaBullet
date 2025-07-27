@@ -185,7 +185,7 @@ func setAngularMotorForceLimit(b:PhysicalBone3D,value:float = 0):
 func _on_remove_timer_timeout()-> void:
 	queue_free()
 
-func doRagdollHeadshot(pawn:BasePawn = null, dismember : bool = false, shotvel:Vector3 = Vector3.ONE)-> void:
+func doRagdollHeadshot(pawn:BasePawn = null, dismember : bool = false, shotvel:Vector3 = Vector3.ONE,hitPos: Vector3 = Vector3.ZERO)-> void:
 	for x in randi_range(2,7):
 		var gib = gameManager.createGib(headBone.global_position)
 		if is_instance_valid(pawn):
@@ -210,7 +210,8 @@ func doRagdollHeadshot(pawn:BasePawn = null, dismember : bool = false, shotvel:V
 		var headPos : = findPhysicsBone(42).position
 		findPhysicsBone(42).friction = 0.5
 		findPhysicsBone(42).mass = 20
-		findPhysicsBone(3).apply_central_impulse(shotvel*3)
+		findPhysicsBone(3).apply_impulse(shotvel*3,hitPos)
+		findPhysicsBone(2).apply_impulse(shotvel*3,hitPos)
 		findPhysicsBone(42).linear_velocity = shotvel.normalized()
 		findPhysicsBone(42).set("joint_constraints/x/linear_limit_enabled",false)
 		findPhysicsBone(42).set("joint_constraints/y/linear_limit_enabled",false)
@@ -218,7 +219,6 @@ func doRagdollHeadshot(pawn:BasePawn = null, dismember : bool = false, shotvel:V
 		findPhysicsBone(42).set("joint_constraints/x/angular_limit_enabled",false)
 		findPhysicsBone(42).set("joint_constraints/y/angular_limit_enabled",false)
 		findPhysicsBone(42).set("joint_constraints/z/angular_limit_enabled",false)
-
 
 
 func setPawnMaterial(material)-> void:
@@ -342,13 +342,13 @@ func activeRagdollDeathCheck(impulse_bone:int,pawn:BasePawn)->void:
 		pawn.animationToForce = "PawnAnim/WritheRightKneeBack"
 
 
-func headshotCheck(impulse_bone:int,killer,pawn:BasePawn, shotVel:Vector3 = Vector3.ONE)->void:
+func headshotCheck(impulse_bone:int,killer,pawn:BasePawn, shotVel:Vector3 = Vector3.ONE, hitPos: Vector3 = Vector3.ZERO)->void:
 	var dismemberchance : bool = [true,false].pick_random()
 	if impulse_bone == 42:
 		if is_instance_valid(killer):
 			if is_instance_valid(killer.currentItem):
 				if killer.currentItem.weaponResource.headDismember:
-					doRagdollHeadshot(pawn,dismemberchance,shotVel)
+					doRagdollHeadshot(pawn,dismemberchance,shotVel,hitPos)
 			if is_instance_valid(killer.attachedCam):
 				killer.attachedCam.doHeadshotEffect()
 		pawn.headshottedPawn.emit()

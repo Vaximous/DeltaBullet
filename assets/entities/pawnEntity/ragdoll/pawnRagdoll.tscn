@@ -2459,12 +2459,12 @@ health = 250.0
 
 [node name="Physical Bone R_Foot" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
 physics_interpolation_mode = 1
-transform = Transform3D(-0.9879312, -0.08127012, 0.13186085, 0.030353101, 0.73321664, 0.67931736, -0.15189078, 0.6751212, -0.72190076, -0.18557742, 0.076078, -0.13667151)
+transform = Transform3D(-0.9879309, -0.08134059, 0.1318197, 0.030276634, 0.7332005, 0.6793382, -0.15190805, 0.6751303, -0.72188854, -0.18557742, 0.076078, -0.13667151)
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0010206694, 0.0024843258, 0.007783566)
-body_offset = Transform3D(1.0000005, 0.00038527697, 0.00022350252, 0.00023129582, 0.00038185716, -1.0000145, -0.00039105117, 1.0000236, 0.00040778518, 0.0010179728, 0.007782966, -0.0024879575)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0010211443, 0.0024840478, 0.007783591)
+body_offset = Transform3D(1.0000005, 0.00045303255, 0.0002629459, 0.0002707094, 0.00040873885, -1.0000147, -0.00045882165, 1.0000236, 0.00043457747, 0.0010179728, 0.007782966, -0.0024879575)
 mass = 1.3
 friction = 0.85
 bounce = 0.35
@@ -2565,13 +2565,13 @@ health = 300.0
 
 [node name="Physical Bone Neck" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
 physics_interpolation_mode = 1
-transform = Transform3D(-1, -2.0236342e-08, -7.935903e-09, 7.795266e-09, 0.0069402424, -0.9999759, 2.0290926e-08, -0.999976, -0.006940242, -0.0014486504, 1.4761835, -0.12088087)
+transform = Transform3D(-1, -3.9022567e-08, -8.078228e-09, 7.807207e-09, 0.0069402424, -0.9999759, 3.907769e-08, -0.999976, -0.006940242, -0.0014486504, 1.4761835, -0.12088087)
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
-joint_offset = Transform3D(1, 1.49012e-08, 4.44089e-16, -1.49012e-08, 1, 2.98023e-08, 1.0058516e-21, -2.98023e-08, 1, -6.2783977e-07, 0.0029689195, 0.007981752)
+joint_offset = Transform3D(1, 1.49012e-08, 4.44089e-16, -1.49012e-08, 1, 2.98023e-08, 1.0058516e-21, -2.98023e-08, 1, -6.278967e-07, 0.0029689195, 0.007981752)
 joint_rotation = Vector3(-2.98023e-08, 4.44089e-16, -1.49012e-08)
-body_offset = Transform3D(-1.0000091, 2.2743292e-07, 7.065346e-10, 8.719822e-10, 0.00694049, -0.999986, -2.274324e-07, -0.999985, -0.0069405288, -6.285263e-07, 0.007961035, 0.0030242726)
+body_offset = Transform3D(-1.0000091, 2.0864653e-07, 5.642067e-10, 8.8392044e-10, 0.00694049, -0.999986, -2.0864546e-07, -0.999985, -0.0069405288, -6.285263e-07, 0.007961035, 0.0030242726)
 mass = 1.75
 friction = 0.05
 bounce = 0.45

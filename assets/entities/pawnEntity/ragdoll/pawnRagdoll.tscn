@@ -875,66 +875,82 @@ bones/51/rotation = Quaternion(0.331119, 0.0106161, -0.000485887, 0.943529)
 bones/51/scale = Vector3(0.999992, 0.999999, 0.999989)
 
 [node name="Male_LeftArm" type="MeshInstance3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D"]
+layers = 8
 mesh = ExtResource("3_wux4v")
 skin = SubResource("Skin_ds5ii")
 
 [node name="Male_LeftFoot" type="MeshInstance3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D"]
+layers = 8
 mesh = ExtResource("4_rtyn0")
 skin = SubResource("Skin_ds5ii")
 
 [node name="Male_LeftThigh" type="MeshInstance3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D"]
+layers = 8
 mesh = ExtResource("8_jii27")
 skin = SubResource("Skin_wux4v")
 
 [node name="Male_LeftForearm" type="MeshInstance3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D"]
+layers = 8
 mesh = ExtResource("5_hno4c")
 skin = SubResource("Skin_ds5ii")
 
 [node name="Male_LeftHand" type="MeshInstance3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D"]
+layers = 8
 mesh = ExtResource("6_fgspw")
 skin = SubResource("Skin_ds5ii")
 
 [node name="Male_LeftKnee" type="MeshInstance3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D"]
+layers = 8
 mesh = ExtResource("7_6g4xb")
 skin = SubResource("Skin_ds5ii")
 
 [node name="Male_LowerBody" type="MeshInstance3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D"]
+layers = 8
 mesh = ExtResource("10_76de7")
 skin = SubResource("Skin_ds5ii")
 
 [node name="Male_RightArm" type="MeshInstance3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D"]
+layers = 8
 mesh = ExtResource("11_xd1rc")
 skin = SubResource("Skin_ds5ii")
 
 [node name="Male_RightFoot" type="MeshInstance3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D"]
+layers = 8
 mesh = ExtResource("12_k4sqs")
 skin = SubResource("Skin_ds5ii")
 
 [node name="Male_RightForearm" type="MeshInstance3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D"]
+layers = 8
 mesh = ExtResource("13_wlmpo")
 skin = SubResource("Skin_ds5ii")
 
 [node name="Male_RightHand" type="MeshInstance3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D"]
+layers = 8
 mesh = ExtResource("14_17p7v")
 skin = SubResource("Skin_ds5ii")
 
 [node name="Male_RightKnee" type="MeshInstance3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D"]
+layers = 8
 mesh = ExtResource("15_ae6x6")
 skin = SubResource("Skin_ds5ii")
 
 [node name="Male_RightThigh" type="MeshInstance3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D"]
+layers = 8
 mesh = ExtResource("16_g2jx8")
 skin = SubResource("Skin_ds5ii")
 
 [node name="Male_Shoulders" type="MeshInstance3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D"]
+layers = 8
 mesh = ExtResource("17_8jpuh")
 skin = SubResource("Skin_ds5ii")
 
 [node name="Male_UpperBody" type="MeshInstance3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D"]
+layers = 8
 mesh = ExtResource("18_tippa")
 skin = SubResource("Skin_ds5ii")
 
 [node name="MaleHead" type="MeshInstance3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D"]
+layers = 8
 mesh = SubResource("ArrayMesh_wux4v")
 skin = SubResource("Skin_ds5ii")
 
@@ -951,13 +967,13 @@ physics_interpolation_mode = 1
 
 [node name="Physical Bone Spine_0" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
 physics_interpolation_mode = 1
-transform = Transform3D(1, 2.17678e-07, -1.63905e-07, -1.57773e-07, -0.0278783, -0.999611, -2.22163e-07, 0.999611, -0.0278783, -0.00111127, 0.887431, -0.0932389)
+transform = Transform3D(1, 2.1767833e-07, -1.6390482e-07, -1.5777259e-07, -0.027878318, -0.9996114, -2.2216311e-07, 0.9996113, -0.027878318, -0.0011112741, 0.88743067, -0.093238905)
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
-joint_offset = Transform3D(1, -9.92614e-24, -5.32907e-15, 0, 1, -1.86264e-09, 5.32907e-15, 1.86264e-09, 1, -0.000336751, -0.00115136, 0.0198887)
+joint_offset = Transform3D(1, -9.92614e-24, -5.32907e-15, 0, 1, -1.86264e-09, 5.32907e-15, 1.86264e-09, 1, -0.00033675085, -0.0011513622, 0.01988874)
 joint_rotation = Vector3(1.86264e-09, -5.32907e-15, 0)
-body_offset = Transform3D(1.00001, -2.44664e-08, -1.56455e-07, -1.56454e-07, -2.37301e-06, -1, 2.44658e-08, 1, -2.37115e-06, 0.000336757, 0.0198888, 0.00115141)
+body_offset = Transform3D(1.000009, -2.4466345e-08, -1.5645503e-07, -1.5645429e-07, -2.37301e-06, -1.000004, 2.4465749e-08, 1.000003, -2.3711473e-06, 0.00033675693, 0.019888818, 0.0011514127)
 mass = 1.88
 friction = 0.85
 bounce = 0.5
@@ -1001,7 +1017,7 @@ joint_constraints/y/linear_equilibrium_point = 0.0
 joint_constraints/y/linear_restitution = 0.5
 joint_constraints/y/linear_damping = 1.0
 joint_constraints/y/angular_limit_enabled = true
-joint_constraints/y/angular_limit_upper = -35.0
+joint_constraints/y/angular_limit_upper = -34.999996
 joint_constraints/y/angular_limit_lower = 0.0
 joint_constraints/y/angular_limit_softness = 0.5
 joint_constraints/y/angular_restitution = 0.0
@@ -1057,13 +1073,13 @@ health = 250.0
 
 [node name="Physical Bone Spine_1" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
 physics_interpolation_mode = 1
-transform = Transform3D(1, 2.20945e-07, 1.04343e-06, 1.03242e-06, 0.0450318, -0.998986, -2.67709e-07, 0.998986, 0.0450318, -0.00193629, 1.03744, -0.0957371)
+transform = Transform3D(1, 2.2094514e-07, 1.0434321e-06, 1.0324239e-06, 0.045031812, -0.99898565, -2.6770863e-07, 0.9989856, 0.045031812, -0.0019362886, 1.0374417, -0.09573713)
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
-joint_offset = Transform3D(-3.61999e-06, 0, 1, 0, 1, 0, -1, 0, -3.61999e-06, 0.000488243, 0.00319803, 0.0320886)
+joint_offset = Transform3D(-3.6199901e-06, 0, 1, 0, 1, 0, -1, 0, -3.6199901e-06, 0.00048824286, 0.003198029, 0.032088626)
 joint_rotation = Vector3(0, 1.5708, 0)
-body_offset = Transform3D(1.00001, -2.55685e-08, 1.05357e-06, 1.05358e-06, 1.09151e-06, -1.00002, 2.55678e-08, 1.00002, 9.49949e-07, -0.000488281, 0.0320892, -0.00319812)
+body_offset = Transform3D(1.0000091, -2.5568482e-08, 1.0535688e-06, 1.0535795e-06, 1.0915101e-06, -1.0000191, 2.55678e-08, 1.000018, 9.49949e-07, -0.00048828102, 0.032089233, -0.003198117)
 mass = 1.88
 friction = 0.85
 bounce = 0.5
@@ -1107,7 +1123,7 @@ joint_constraints/y/linear_equilibrium_point = 0.0
 joint_constraints/y/linear_restitution = 0.5
 joint_constraints/y/linear_damping = 1.0
 joint_constraints/y/angular_limit_enabled = true
-joint_constraints/y/angular_limit_upper = 35.0
+joint_constraints/y/angular_limit_upper = 34.999996
 joint_constraints/y/angular_limit_lower = 0.0
 joint_constraints/y/angular_limit_softness = 0.5
 joint_constraints/y/angular_restitution = 0.0
@@ -1131,8 +1147,8 @@ joint_constraints/z/linear_equilibrium_point = 0.0
 joint_constraints/z/linear_restitution = 0.5
 joint_constraints/z/linear_damping = 1.0
 joint_constraints/z/angular_limit_enabled = true
-joint_constraints/z/angular_limit_upper = 10.0
-joint_constraints/z/angular_limit_lower = -55.0
+joint_constraints/z/angular_limit_upper = 9.999999
+joint_constraints/z/angular_limit_lower = -54.999996
 joint_constraints/z/angular_limit_softness = 0.5
 joint_constraints/z/angular_restitution = 0.0
 joint_constraints/z/angular_damping = 1.0
@@ -1163,13 +1179,13 @@ health = 250.0
 
 [node name="Physical Bone Spine_2" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
 physics_interpolation_mode = 1
-transform = Transform3D(1, 1.85557e-07, 1.8643e-06, 1.83977e-06, 0.0907651, -0.995872, -3.54004e-07, 0.995872, 0.0907651, -0.0012525, 1.24646, -0.100456)
+transform = Transform3D(1, 1.8555654e-07, 1.8643037e-06, 1.8397662e-06, 0.09076514, -0.9958724, -3.5400438e-07, 0.9958723, 0.09076515, -0.001252498, 1.246458, -0.100455716)
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
-joint_offset = Transform3D(-3.61999e-06, 0, 1, 0, 1, 0, -1, 0, -3.61999e-06, -0.000195613, -0.00322429, 0.037544)
+joint_offset = Transform3D(-3.6199901e-06, 0, 1, 0, 1, 0, -1, 0, -3.6199901e-06, -0.0001956128, -0.0032242902, 0.037544027)
 joint_rotation = Vector3(0, 1.5708, 0)
-body_offset = Transform3D(1.00001, -6.07196e-08, 1.8743e-06, 1.8743e-06, 9.0152e-07, -1.00001, 6.07184e-08, 1.00001, 6.70552e-07, 0.000195544, 0.0375444, 0.00322429)
+body_offset = Transform3D(1.000009, -6.0719714e-08, 1.8743e-06, 1.8742999e-06, 9.0152025e-07, -1.0000091, 6.071849e-08, 1.000008, 6.7055225e-07, 0.00019554398, 0.03754437, 0.003224291)
 mass = 1.89
 friction = 0.85
 bounce = 0.5
@@ -1190,7 +1206,7 @@ joint_constraints/x/linear_restitution = 0.5
 joint_constraints/x/linear_damping = 1.0
 joint_constraints/x/angular_limit_enabled = true
 joint_constraints/x/angular_limit_upper = 12.0
-joint_constraints/x/angular_limit_lower = -50.0
+joint_constraints/x/angular_limit_lower = -49.999996
 joint_constraints/x/angular_limit_softness = 0.5
 joint_constraints/x/angular_restitution = 0.0
 joint_constraints/x/angular_damping = 1.0
@@ -1213,8 +1229,8 @@ joint_constraints/y/linear_equilibrium_point = 0.0
 joint_constraints/y/linear_restitution = 0.5
 joint_constraints/y/linear_damping = 1.0
 joint_constraints/y/angular_limit_enabled = true
-joint_constraints/y/angular_limit_upper = 8.0
-joint_constraints/y/angular_limit_lower = -10.0
+joint_constraints/y/angular_limit_upper = 7.9999995
+joint_constraints/y/angular_limit_lower = -9.999999
 joint_constraints/y/angular_limit_softness = 0.5
 joint_constraints/y/angular_restitution = 0.0
 joint_constraints/y/angular_damping = 1.0
@@ -1269,12 +1285,12 @@ health = 250.0
 
 [node name="Physical Bone L_UpperArm" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
 physics_interpolation_mode = 1
-transform = Transform3D(-0.0223787, 0.911735, -0.410168, 0.0496637, 0.410778, 0.910382, 0.998515, 2.70757e-06, -0.0544728, 0.142423, 1.39724, -0.145424)
+transform = Transform3D(-0.022378694, 0.9117354, -0.41016805, 0.049663655, 0.4107781, 0.91038173, 0.99851525, 2.7094334e-06, -0.05447279, 0.14242303, 1.397244, -0.1454241)
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000843294, -0.000482822, 0.0302487)
-body_offset = Transform3D(1.00004, 6.67955e-06, -6.75395e-06, 4.88013e-07, 4.94033e-08, -1.00003, -2.09374e-07, 1.00001, 8.86933e-06, 0.000843532, 0.0302495, 0.000482559)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00084329507, -0.0004828232, 0.030248687)
+body_offset = Transform3D(1.000037, 6.679539e-06, -6.709248e-06, 5.327165e-07, 7.93069e-08, -1.0000261, -2.0937387e-07, 1.0000111, 8.899135e-06, 0.0008435324, 0.030249476, 0.0004825592)
 mass = 1.3
 friction = 0.5
 bounce = 0.25
@@ -1318,7 +1334,7 @@ joint_constraints/y/linear_equilibrium_point = 0.0
 joint_constraints/y/linear_restitution = 0.5
 joint_constraints/y/linear_damping = 1.0
 joint_constraints/y/angular_limit_enabled = true
-joint_constraints/y/angular_limit_upper = 55.0
+joint_constraints/y/angular_limit_upper = 54.999996
 joint_constraints/y/angular_limit_lower = 0.0
 joint_constraints/y/angular_limit_softness = 0.5
 joint_constraints/y/angular_restitution = 0.0
@@ -1342,8 +1358,8 @@ joint_constraints/z/linear_equilibrium_point = 0.0
 joint_constraints/z/linear_restitution = 0.5
 joint_constraints/z/linear_damping = 1.0
 joint_constraints/z/angular_limit_enabled = true
-joint_constraints/z/angular_limit_upper = 20.0
-joint_constraints/z/angular_limit_lower = 10.0
+joint_constraints/z/angular_limit_upper = 19.999998
+joint_constraints/z/angular_limit_lower = 9.999999
 joint_constraints/z/angular_limit_softness = 0.5
 joint_constraints/z/angular_restitution = 0.0
 joint_constraints/z/angular_damping = 1.0
@@ -1375,13 +1391,13 @@ health = 250.0
 
 [node name="Physical Bone L_Forearm" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
 physics_interpolation_mode = 1
-transform = Transform3D(-0.127097, 0.838417, -0.530004, 0.187236, 0.54501, 0.817256, 0.974058, 0.0046349, -0.22625, 0.243802, 1.17902, -0.129385)
+transform = Transform3D(-0.12709662, 0.83841676, -0.53000367, 0.18723561, 0.5450101, 0.8172557, 0.97405815, 0.004634881, -0.22625041, 0.24380158, 1.1790158, -0.12938507)
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
-joint_offset = Transform3D(-3.61999e-06, 0, -1, 0, 1, 0, 1, 0, -3.61999e-06, 0.000539754, 0.000406458, 0.0247325)
+joint_offset = Transform3D(-3.6199901e-06, 0, -1, 0, 1, 0, 1, 0, -3.6199901e-06, 0.0005397689, 0.00040645638, 0.024732487)
 joint_rotation = Vector3(0, -1.5708, 0)
-body_offset = Transform3D(1.00003, 6.43823e-06, -1.34856e-05, -1.41561e-06, -2.09082e-07, -1.00002, 1.62516e-06, 1, 1.14116e-05, -0.000539437, 0.0247329, -0.000406742)
+body_offset = Transform3D(1.000025, 6.423332e-06, -1.347065e-05, -1.4007092e-06, -2.1257438e-07, -1.0000162, 1.640059e-06, 1.0000027, 1.1471217e-05, -0.00053945184, 0.024732888, -0.0004067421)
 mass = 1.3
 friction = 0.5
 bounce = 0.25
@@ -1482,13 +1498,13 @@ health = 250.0
 
 [node name="Physical Bone L_Hand" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
 physics_interpolation_mode = 1
-transform = Transform3D(0.805084, 0.52411, -0.277758, 0.576917, -0.583039, 0.572042, 0.137869, -0.620785, -0.771763, 0.364529, 0.986841, -0.0750128)
+transform = Transform3D(0.8050836, 0.52410966, -0.27775818, 0.57691664, -0.5830396, 0.57204205, 0.13786876, -0.62078494, -0.7717631, 0.36452913, 0.9868407, -0.075012825)
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
-joint_offset = Transform3D(-3.61999e-06, 0, -1, 0, 1, 0, 1, 0, -3.61999e-06, 0.00356528, -0.00236362, 0.00565059)
+joint_offset = Transform3D(-3.6199901e-06, 0, -1, 0, 1, 0, 1, 0, -3.6199901e-06, 0.0035652798, -0.0023636261, 0.0056505944)
 joint_rotation = Vector3(0, -1.5708, 0)
-body_offset = Transform3D(0.132713, -0.707486, -0.694195, -1.1811e-05, 0.700365, -0.713791, 0.991168, 0.0947218, 0.092942, 0.00177722, 0.00568879, -0.00383508)
+body_offset = Transform3D(0.13271308, -0.70748615, -0.6941953, -1.1811033e-05, 0.7003652, -0.7137909, 0.9911679, 0.09472174, 0.09294205, 0.0017772242, 0.0056887865, -0.003835082)
 mass = 1.3
 friction = 0.5
 bounce = 0.25
@@ -1508,8 +1524,8 @@ joint_constraints/x/linear_equilibrium_point = 0.0
 joint_constraints/x/linear_restitution = 0.5
 joint_constraints/x/linear_damping = 1.0
 joint_constraints/x/angular_limit_enabled = true
-joint_constraints/x/angular_limit_upper = 10.0
-joint_constraints/x/angular_limit_lower = -10.0
+joint_constraints/x/angular_limit_upper = 9.999999
+joint_constraints/x/angular_limit_lower = -9.999999
 joint_constraints/x/angular_limit_softness = 0.5
 joint_constraints/x/angular_restitution = 0.0
 joint_constraints/x/angular_damping = 1.0
@@ -1533,7 +1549,7 @@ joint_constraints/y/linear_restitution = 0.5
 joint_constraints/y/linear_damping = 1.0
 joint_constraints/y/angular_limit_enabled = true
 joint_constraints/y/angular_limit_upper = 30.0
-joint_constraints/y/angular_limit_lower = -20.0
+joint_constraints/y/angular_limit_lower = -19.999998
 joint_constraints/y/angular_limit_softness = 0.5
 joint_constraints/y/angular_restitution = 0.0
 joint_constraints/y/angular_damping = 1.0
@@ -1557,7 +1573,7 @@ joint_constraints/z/linear_restitution = 0.5
 joint_constraints/z/linear_damping = 1.0
 joint_constraints/z/angular_limit_enabled = true
 joint_constraints/z/angular_limit_upper = 15.0
-joint_constraints/z/angular_limit_lower = -20.0
+joint_constraints/z/angular_limit_lower = -19.999998
 joint_constraints/z/angular_limit_softness = 0.5
 joint_constraints/z/angular_restitution = 0.0
 joint_constraints/z/angular_damping = 1.0
@@ -1589,13 +1605,13 @@ health = 300.0
 
 [node name="Physical Bone R_UpperArm" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
 physics_interpolation_mode = 1
-transform = Transform3D(-0.0223794, -0.911734, 0.410172, -0.0496642, 0.410782, 0.91038, -0.998515, 2.8551e-06, -0.0544735, -0.144755, 1.40152, -0.146125)
+transform = Transform3D(-0.02237936, -0.9117335, 0.41017216, -0.049664177, 0.41078225, 0.9103798, -0.99851525, 2.855095e-06, -0.054473534, -0.14475463, 1.4015242, -0.14612523)
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
-joint_offset = Transform3D(1, 0, 0, 0, 0.600978, 0.799265, 0, -0.799265, 0.600978, 0.000428551, 0.000733259, 0.024976)
+joint_offset = Transform3D(1, 0, 0, 0, 0.6009779, 0.7992651, 0, -0.7992651, 0.6009779, 0.00042853563, 0.00073325884, 0.024976002)
 joint_rotation = Vector3(-0.926072, 0, 0)
-body_offset = Transform3D(1.00003, -6.42809e-06, 7.33882e-06, 1.00583e-07, -4.48495e-06, -1.00001, -3.32195e-08, 1.00001, 4.40684e-06, -0.000428744, 0.0249761, -0.000733376)
+body_offset = Transform3D(1.000034, -6.428089e-06, 7.338822e-06, 1.0058284e-07, -4.4849508e-06, -1.0000051, -3.321952e-08, 1.0000091, 4.40684e-06, -0.00042872876, 0.024976134, -0.00073337555)
 mass = 1.3
 friction = 0.15
 bounce = 0.25
@@ -1639,7 +1655,7 @@ joint_constraints/y/linear_equilibrium_point = 0.0
 joint_constraints/y/linear_restitution = 0.5
 joint_constraints/y/linear_damping = 1.0
 joint_constraints/y/angular_limit_enabled = true
-joint_constraints/y/angular_limit_upper = 55.0
+joint_constraints/y/angular_limit_upper = 54.999996
 joint_constraints/y/angular_limit_lower = 0.0
 joint_constraints/y/angular_limit_softness = 0.5
 joint_constraints/y/angular_restitution = 0.0
@@ -1663,8 +1679,8 @@ joint_constraints/z/linear_equilibrium_point = 0.0
 joint_constraints/z/linear_restitution = 0.5
 joint_constraints/z/linear_damping = 1.0
 joint_constraints/z/angular_limit_enabled = true
-joint_constraints/z/angular_limit_upper = 20.0
-joint_constraints/z/angular_limit_lower = 10.0
+joint_constraints/z/angular_limit_upper = 19.999998
+joint_constraints/z/angular_limit_lower = 9.999999
 joint_constraints/z/angular_limit_softness = 0.5
 joint_constraints/z/angular_restitution = 0.0
 joint_constraints/z/angular_damping = 1.0
@@ -1696,13 +1712,13 @@ health = 250.0
 
 [node name="Physical Bone R_Forearm" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
 physics_interpolation_mode = 1
-transform = Transform3D(-0.127101, -0.838416, 0.530003, -0.187236, 0.545011, 0.817255, -0.974057, 0.00463817, -0.226253, -0.244818, 1.18291, -0.129914)
+transform = Transform3D(-0.12710111, -0.8384164, 0.5300032, -0.18723638, 0.54501057, 0.8172552, -0.97405744, 0.0046381713, -0.22625348, -0.24481803, 1.1829127, -0.12991433)
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
-joint_offset = Transform3D(-3.61999e-06, 0, 1, 0, 1, 0, -1, 0, -3.61999e-06, 0.00025675, 0.00212182, 0.018996)
+joint_offset = Transform3D(-3.6199901e-06, 0, 1, 0, 1, 0, -1, 0, -3.6199901e-06, 0.0002567499, 0.00212182, 0.018995987)
 joint_rotation = Vector3(0, 1.5708, 0)
-body_offset = Transform3D(1.00002, -8.43266e-06, 1.93268e-05, 1.40071e-06, 2.73995e-06, -1.00003, 1.38674e-06, 1, 8.64058e-06, -0.000257105, 0.0189965, -0.00212198)
+body_offset = Transform3D(1.0000215, -8.43266e-06, 1.9326806e-05, 1.4007092e-06, 2.739951e-06, -1.0000261, 1.3867393e-06, 1.0000002, 8.640578e-06, -0.00025710464, 0.018996477, -0.002121985)
 mass = 1.3
 friction = 0.15
 bounce = 0.25
@@ -1746,8 +1762,8 @@ joint_constraints/y/linear_equilibrium_point = 0.0
 joint_constraints/y/linear_restitution = 0.5
 joint_constraints/y/linear_damping = 1.0
 joint_constraints/y/angular_limit_enabled = true
-joint_constraints/y/angular_limit_upper = 20.0
-joint_constraints/y/angular_limit_lower = -45.25
+joint_constraints/y/angular_limit_upper = 19.999998
+joint_constraints/y/angular_limit_lower = -45.249996
 joint_constraints/y/angular_limit_softness = 0.5
 joint_constraints/y/angular_restitution = 0.0
 joint_constraints/y/angular_damping = 1.0
@@ -1770,7 +1786,7 @@ joint_constraints/z/linear_equilibrium_point = 0.0
 joint_constraints/z/linear_restitution = 0.5
 joint_constraints/z/linear_damping = 1.0
 joint_constraints/z/angular_limit_enabled = true
-joint_constraints/z/angular_limit_upper = 5.0
+joint_constraints/z/angular_limit_upper = 4.9999995
 joint_constraints/z/angular_limit_lower = 0.0
 joint_constraints/z/angular_limit_softness = 0.5
 joint_constraints/z/angular_restitution = 0.0
@@ -1803,12 +1819,12 @@ health = 250.0
 
 [node name="Physical Bone R_Hand" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
 physics_interpolation_mode = 1
-transform = Transform3D(0.830025, -0.514243, 0.215899, -0.532396, -0.615221, 0.581427, -0.166168, -0.597543, -0.78443, -0.370755, 0.993778, -0.0692461)
+transform = Transform3D(0.8300166, -0.51425254, 0.21590917, -0.53241, -0.6152125, 0.58142346, -0.16616842, -0.59754336, -0.7844298, -0.3707549, 0.9937781, -0.06924609)
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00197606, 0.00475736, 0.00637188)
-body_offset = Transform3D(0.153811, 0.690194, 0.707107, 1.57133e-05, 0.71562, -0.698533, -0.988102, 0.10744, 0.110053, -0.00809304, 0.00104648, 0.00074017)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.001976057, 0.004757352, 0.0063718855)
+body_offset = Transform3D(0.15381294, 0.6901947, 0.7071066, 3.1685457e-05, 0.71561795, -0.69853544, -0.98810154, 0.107452765, 0.11004341, -0.008093044, 0.0010464787, 0.0007401705)
 mass = 1.3
 friction = 0.15
 bounce = 0.25
@@ -1828,8 +1844,8 @@ joint_constraints/x/linear_equilibrium_point = 0.0
 joint_constraints/x/linear_restitution = 0.5
 joint_constraints/x/linear_damping = 1.0
 joint_constraints/x/angular_limit_enabled = true
-joint_constraints/x/angular_limit_upper = 10.0
-joint_constraints/x/angular_limit_lower = -10.0
+joint_constraints/x/angular_limit_upper = 9.999999
+joint_constraints/x/angular_limit_lower = -9.999999
 joint_constraints/x/angular_limit_softness = 0.5
 joint_constraints/x/angular_restitution = 0.0
 joint_constraints/x/angular_damping = 1.0
@@ -1853,7 +1869,7 @@ joint_constraints/y/linear_restitution = 0.5
 joint_constraints/y/linear_damping = 1.0
 joint_constraints/y/angular_limit_enabled = true
 joint_constraints/y/angular_limit_upper = 30.0
-joint_constraints/y/angular_limit_lower = -20.0
+joint_constraints/y/angular_limit_lower = -19.999998
 joint_constraints/y/angular_limit_softness = 0.5
 joint_constraints/y/angular_restitution = 0.0
 joint_constraints/y/angular_damping = 1.0
@@ -1877,7 +1893,7 @@ joint_constraints/z/linear_restitution = 0.5
 joint_constraints/z/linear_damping = 1.0
 joint_constraints/z/angular_limit_enabled = true
 joint_constraints/z/angular_limit_upper = 15.0
-joint_constraints/z/angular_limit_lower = -20.0
+joint_constraints/z/angular_limit_lower = -19.999998
 joint_constraints/z/angular_limit_softness = 0.5
 joint_constraints/z/angular_restitution = 0.0
 joint_constraints/z/angular_damping = 1.0
@@ -1909,13 +1925,13 @@ health = 300.0
 
 [node name="Physical Bone L_UpperLeg" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
 physics_interpolation_mode = 1
-transform = Transform3D(0.981453, -0.0031493, -0.191677, 0.191577, 0.0524228, 0.980077, 0.00696169, -0.99862, 0.0520538, 0.0363635, 0.82618, -0.0952084)
+transform = Transform3D(0.981453, -0.003149304, -0.19167726, 0.19157666, 0.05242278, 0.98007673, 0.0069616935, -0.9986201, 0.052053828, 0.03636348, 0.8261796, -0.095208354)
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
-joint_offset = Transform3D(-3.61999e-06, 0, 1, 0, 1, 0, -1, 0, -3.61999e-06, 0.0182885, 0.00187349, 0.0385686)
+joint_offset = Transform3D(-3.6199901e-06, 0, 1, 0, 1, 0, -1, 0, -3.6199901e-06, 0.018288486, 0.0018734859, 0.03856864)
 joint_rotation = Vector3(0, 1.5708, 0)
-body_offset = Transform3D(0.999999, -3.09199e-07, 3.8484e-06, 5.71783e-06, 2.30968e-07, -1.00003, 2.82191e-07, 1, 2.90573e-07, -0.0182886, 0.0385696, -0.00187351)
+body_offset = Transform3D(0.99999887, -3.091991e-07, 3.8483995e-06, 5.717826e-06, 2.30968e-07, -1.0000284, 2.8219074e-07, 1.0000031, 2.9057264e-07, -0.018288612, 0.03856963, -0.0018735081)
 mass = 1.3
 friction = 0.45
 bounce = 0.6
@@ -1983,7 +1999,7 @@ joint_constraints/z/linear_equilibrium_point = 0.0
 joint_constraints/z/linear_restitution = 0.5
 joint_constraints/z/linear_damping = 1.0
 joint_constraints/z/angular_limit_enabled = true
-joint_constraints/z/angular_limit_upper = 125.0
+joint_constraints/z/angular_limit_upper = 124.99999
 joint_constraints/z/angular_limit_lower = 0.0
 joint_constraints/z/angular_limit_softness = 0.5
 joint_constraints/z/angular_restitution = 0.0
@@ -2016,13 +2032,13 @@ health = 250.0
 
 [node name="Physical Bone L_LowerLeg" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
 physics_interpolation_mode = 1
-transform = Transform3D(0.990494, -0.000589336, -0.137554, 0.13732, 0.0627057, 0.98854, 0.00804285, -0.998032, 0.0621905, 0.126149, 0.437856, -0.113575)
+transform = Transform3D(0.9904941, -0.00058933656, -0.13755429, 0.13732022, 0.06270569, 0.98853993, 0.008042852, -0.998032, 0.062190536, 0.12614858, 0.4378559, -0.11357516)
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
-joint_offset = Transform3D(-3.61999e-06, 0, -1, 0, 1, 0, 1, 0, -3.61999e-06, 0.00258723, 0.00455761, 0.038095)
+joint_offset = Transform3D(-3.6199901e-06, 0, -1, 0, 1, 0, 1, 0, -3.6199901e-06, 0.0025872283, 0.004557611, 0.038094953)
 joint_rotation = Vector3(0, -1.5708, 0)
-body_offset = Transform3D(1.00001, -1.86265e-07, -6.11029e-06, -1.04832e-06, -1.49012e-07, -1.00003, 7.35745e-08, 1, 3.94881e-07, -0.00258702, 0.0380961, -0.00455764)
+body_offset = Transform3D(1.00001, -1.8626451e-07, -6.110233e-06, -1.04832e-06, -1.5646219e-07, -1.00003, 7.357448e-08, 1.000003, 3.874302e-07, -0.0025870204, 0.0380961, -0.0045576394)
 mass = 1.3
 friction = 0.45
 bounce = 0.6
@@ -2042,7 +2058,7 @@ joint_constraints/x/linear_equilibrium_point = 0.0
 joint_constraints/x/linear_restitution = 0.5
 joint_constraints/x/linear_damping = 1.0
 joint_constraints/x/angular_limit_enabled = true
-joint_constraints/x/angular_limit_upper = 50.0
+joint_constraints/x/angular_limit_upper = 49.999996
 joint_constraints/x/angular_limit_lower = -15.0
 joint_constraints/x/angular_limit_softness = 0.5
 joint_constraints/x/angular_restitution = 0.0
@@ -2090,7 +2106,7 @@ joint_constraints/z/linear_equilibrium_point = 0.0
 joint_constraints/z/linear_restitution = 0.5
 joint_constraints/z/linear_damping = 1.0
 joint_constraints/z/angular_limit_enabled = true
-joint_constraints/z/angular_limit_upper = 150.0
+joint_constraints/z/angular_limit_upper = 149.99998
 joint_constraints/z/angular_limit_lower = 0.0
 joint_constraints/z/angular_limit_softness = 0.5
 joint_constraints/z/angular_restitution = 0.0
@@ -2123,12 +2139,12 @@ health = 250.0
 
 [node name="Physical Bone L_Foot" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
 physics_interpolation_mode = 1
-transform = Transform3D(-0.977137, 0.0799435, -0.197009, -0.075103, 0.737094, 0.671604, 0.198904, 0.671045, -0.714238, 0.183202, 0.0781224, -0.132393)
+transform = Transform3D(-0.97713697, 0.07994348, -0.19700871, -0.075103, 0.7370942, 0.6716038, 0.19890434, 0.67104477, -0.71423805, 0.18320225, 0.078122504, -0.13239267)
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00295299, -0.00210595, 0.0101363)
-body_offset = Transform3D(1.00001, 1.05053e-05, 2.33203e-05, 1.59889e-05, -9.14931e-06, -1.00004, -6.58631e-06, 1.00003, 1.71363e-05, -0.00295323, 0.0101366, 0.00210585)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0029530914, -0.0021059522, 0.010136223)
+body_offset = Transform3D(1.0000101, 1.0505319e-05, 2.3320317e-05, 1.5988946e-05, -9.149313e-06, -1.0000398, -6.5863132e-06, 1.0000267, 1.7136335e-05, -0.0029533356, 0.01013656, 0.0021058545)
 mass = 1.3
 friction = 0.85
 bounce = 0.6
@@ -2148,8 +2164,8 @@ joint_constraints/x/linear_equilibrium_point = 0.0
 joint_constraints/x/linear_restitution = 0.5
 joint_constraints/x/linear_damping = 1.0
 joint_constraints/x/angular_limit_enabled = true
-joint_constraints/x/angular_limit_upper = 50.0
-joint_constraints/x/angular_limit_lower = 10.0
+joint_constraints/x/angular_limit_upper = 49.999996
+joint_constraints/x/angular_limit_lower = 9.999999
 joint_constraints/x/angular_limit_softness = 0.5
 joint_constraints/x/angular_restitution = 0.0
 joint_constraints/x/angular_damping = 1.0
@@ -2172,7 +2188,7 @@ joint_constraints/y/linear_equilibrium_point = 0.0
 joint_constraints/y/linear_restitution = 0.5
 joint_constraints/y/linear_damping = 1.0
 joint_constraints/y/angular_limit_enabled = true
-joint_constraints/y/angular_limit_upper = 5.0
+joint_constraints/y/angular_limit_upper = 4.9999995
 joint_constraints/y/angular_limit_lower = 0.0
 joint_constraints/y/angular_limit_softness = 0.5
 joint_constraints/y/angular_restitution = 0.0
@@ -2196,7 +2212,7 @@ joint_constraints/z/linear_equilibrium_point = 0.0
 joint_constraints/z/linear_restitution = 0.5
 joint_constraints/z/linear_damping = 1.0
 joint_constraints/z/angular_limit_enabled = true
-joint_constraints/z/angular_limit_upper = -10.0
+joint_constraints/z/angular_limit_upper = -9.999999
 joint_constraints/z/angular_limit_lower = -30.0
 joint_constraints/z/angular_limit_softness = 0.5
 joint_constraints/z/angular_restitution = 0.0
@@ -2229,13 +2245,13 @@ health = 300.0
 
 [node name="Physical Bone R_UpperLeg" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
 physics_interpolation_mode = 1
-transform = Transform3D(0.981451, 0.00314166, 0.191686, -0.191585, 0.0524316, 0.980075, -0.00697134, -0.99862, 0.0520609, -0.0612688, 0.826395, -0.0978093)
+transform = Transform3D(0.9814513, 0.0031416558, 0.19168605, -0.191585, 0.052431554, 0.9800745, -0.006971341, -0.99861956, 0.05206091, -0.061268795, 0.8263948, -0.09780932)
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
-joint_offset = Transform3D(-3.61999e-06, 0, 1, 0, 1, 0, -1, 0, -3.61999e-06, 0.000687904, -0.00067408, 0.0421949)
+joint_offset = Transform3D(-3.6199901e-06, 0, 1, 0, 1, 0, -1, 0, -3.6199901e-06, 0.00068793347, -0.0006740795, 0.04219491)
 joint_rotation = Vector3(0, 1.5708, 0)
-body_offset = Transform3D(0.999999, -8.9705e-06, 5.37347e-06, 3.47404e-06, -6.96629e-06, -1.00003, 8.99844e-06, 1, -6.91041e-06, -0.000688136, 0.0421961, 0.000674367)
+body_offset = Transform3D(0.9999988, -8.971896e-06, 5.3734693e-06, 3.4740951e-06, -6.966293e-06, -1.0000283, 8.99937e-06, 1.000003, -6.9104135e-06, -0.0006881654, 0.042196095, 0.00067436695)
 mass = 1.3
 friction = 0.45
 bounce = 0.6
@@ -2303,7 +2319,7 @@ joint_constraints/z/linear_equilibrium_point = 0.0
 joint_constraints/z/linear_restitution = 0.5
 joint_constraints/z/linear_damping = 1.0
 joint_constraints/z/angular_limit_enabled = true
-joint_constraints/z/angular_limit_upper = 125.0
+joint_constraints/z/angular_limit_upper = 124.99999
 joint_constraints/z/angular_limit_lower = 0.0
 joint_constraints/z/angular_limit_softness = 0.5
 joint_constraints/z/angular_restitution = 0.0
@@ -2336,13 +2352,13 @@ health = 250.0
 
 [node name="Physical Bone R_LowerLeg" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
 physics_interpolation_mode = 1
-transform = Transform3D(0.990494, 0.000586952, 0.137558, -0.137324, 0.0627078, 0.988539, -0.00804573, -0.998032, 0.0621923, -0.133361, 0.435968, -0.115343)
+transform = Transform3D(0.99049354, 0.0005869525, 0.13755798, -0.13732374, 0.06270779, 0.9885393, -0.008045731, -0.99803174, 0.06219226, -0.13336067, 0.43596786, -0.11534316)
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
-joint_offset = Transform3D(-3.61999e-06, 0, 1, 0, 1, 0, -1, 0, -3.61999e-06, -0.00125749, 0.00291252, 0.0402941)
+joint_offset = Transform3D(-3.6199901e-06, 0, 1, 0, 1, 0, -1, 0, -3.6199901e-06, -0.0012574914, 0.0029125232, 0.040294077)
 joint_rotation = Vector3(0, 1.5708, 0)
-body_offset = Transform3D(1.00001, -2.57604e-06, 1.00465e-05, 4.94486e-06, -1.81422e-06, -1.00003, 2.68873e-06, 1, -1.27777e-06, 0.00125711, 0.0402953, -0.00291248)
+body_offset = Transform3D(1.00001, -2.5760382e-06, 1.0046468e-05, 4.944857e-06, -1.821667e-06, -1.0000302, 2.6887283e-06, 1.000003, -1.2852252e-06, 0.0012571067, 0.040295303, -0.0029124767)
 mass = 1.3
 friction = 0.45
 bounce = 0.6
@@ -2362,7 +2378,7 @@ joint_constraints/x/linear_equilibrium_point = 0.0
 joint_constraints/x/linear_restitution = 0.5
 joint_constraints/x/linear_damping = 1.0
 joint_constraints/x/angular_limit_enabled = true
-joint_constraints/x/angular_limit_upper = 50.0
+joint_constraints/x/angular_limit_upper = 49.999996
 joint_constraints/x/angular_limit_lower = -15.0
 joint_constraints/x/angular_limit_softness = 0.5
 joint_constraints/x/angular_restitution = 0.0
@@ -2411,7 +2427,7 @@ joint_constraints/z/linear_restitution = 0.5
 joint_constraints/z/linear_damping = 1.0
 joint_constraints/z/angular_limit_enabled = true
 joint_constraints/z/angular_limit_upper = 0.0
-joint_constraints/z/angular_limit_lower = -160.0
+joint_constraints/z/angular_limit_lower = -159.99998
 joint_constraints/z/angular_limit_softness = 0.5
 joint_constraints/z/angular_restitution = 0.0
 joint_constraints/z/angular_damping = 1.0
@@ -2443,12 +2459,12 @@ health = 250.0
 
 [node name="Physical Bone R_Foot" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
 physics_interpolation_mode = 1
-transform = Transform3D(-0.987932, -0.0812339, 0.131878, 0.0303898, 0.733225, 0.679307, -0.151879, 0.675117, -0.721907, -0.185577, 0.076078, -0.136672)
+transform = Transform3D(-0.9879312, -0.08127012, 0.13186085, 0.030353101, 0.73321664, 0.67931736, -0.15189078, 0.6751212, -0.72190076, -0.18557742, 0.076078, -0.13667151)
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00102045, 0.00248447, 0.00778355)
-body_offset = Transform3D(1, 0.000350468, 0.000207022, 0.00021483, 0.000368357, -1.00001, -0.000356212, 1.00002, 0.000394255, 0.00101797, 0.00778297, -0.00248796)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0010206694, 0.0024843258, 0.007783566)
+body_offset = Transform3D(1.0000005, 0.00038527697, 0.00022350252, 0.00023129582, 0.00038185716, -1.0000145, -0.00039105117, 1.0000236, 0.00040778518, 0.0010179728, 0.007782966, -0.0024879575)
 mass = 1.3
 friction = 0.85
 bounce = 0.35
@@ -2468,8 +2484,8 @@ joint_constraints/x/linear_equilibrium_point = 0.0
 joint_constraints/x/linear_restitution = 0.5
 joint_constraints/x/linear_damping = 1.0
 joint_constraints/x/angular_limit_enabled = true
-joint_constraints/x/angular_limit_upper = 50.0
-joint_constraints/x/angular_limit_lower = 10.0
+joint_constraints/x/angular_limit_upper = 49.999996
+joint_constraints/x/angular_limit_lower = 9.999999
 joint_constraints/x/angular_limit_softness = 0.5
 joint_constraints/x/angular_restitution = 0.0
 joint_constraints/x/angular_damping = 1.0
@@ -2493,7 +2509,7 @@ joint_constraints/y/linear_restitution = 0.5
 joint_constraints/y/linear_damping = 1.0
 joint_constraints/y/angular_limit_enabled = true
 joint_constraints/y/angular_limit_upper = 0.0
-joint_constraints/y/angular_limit_lower = -5.0
+joint_constraints/y/angular_limit_lower = -4.9999995
 joint_constraints/y/angular_limit_softness = 0.5
 joint_constraints/y/angular_restitution = 0.0
 joint_constraints/y/angular_damping = 1.0
@@ -2516,8 +2532,8 @@ joint_constraints/z/linear_equilibrium_point = 0.0
 joint_constraints/z/linear_restitution = 0.5
 joint_constraints/z/linear_damping = 1.0
 joint_constraints/z/angular_limit_enabled = true
-joint_constraints/z/angular_limit_upper = -10.0
-joint_constraints/z/angular_limit_lower = -35.0
+joint_constraints/z/angular_limit_upper = -9.999999
+joint_constraints/z/angular_limit_lower = -34.999996
 joint_constraints/z/angular_limit_softness = 0.5
 joint_constraints/z/angular_restitution = 0.0
 joint_constraints/z/angular_damping = 1.0
@@ -2549,13 +2565,13 @@ health = 300.0
 
 [node name="Physical Bone Neck" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
 physics_interpolation_mode = 1
-transform = Transform3D(-1, -2.01752e-08, -7.93548e-09, 7.79527e-09, 0.00694024, -0.999976, 2.02298e-08, -0.999976, -0.00694024, -0.00144865, 1.47618, -0.120881)
+transform = Transform3D(-1, -2.0236342e-08, -7.935903e-09, 7.795266e-09, 0.0069402424, -0.9999759, 2.0290926e-08, -0.999976, -0.006940242, -0.0014486504, 1.4761835, -0.12088087)
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
-joint_offset = Transform3D(1, 1.49012e-08, 4.44089e-16, -1.49012e-08, 1, 2.98023e-08, 1.00585e-21, -2.98023e-08, 1, -6.2784e-07, 0.00296892, 0.00798175)
+joint_offset = Transform3D(1, 1.49012e-08, 4.44089e-16, -1.49012e-08, 1, 2.98023e-08, 1.0058516e-21, -2.98023e-08, 1, -6.2783977e-07, 0.0029689195, 0.007981752)
 joint_rotation = Vector3(-2.98023e-08, 4.44089e-16, -1.49012e-08)
-body_offset = Transform3D(-1.00001, 2.27494e-07, 7.06957e-10, 8.71983e-10, 0.00694049, -0.999986, -2.27494e-07, -0.999985, -0.00694053, -6.28526e-07, 0.00796103, 0.00302427)
+body_offset = Transform3D(-1.0000091, 2.2743292e-07, 7.065346e-10, 8.719822e-10, 0.00694049, -0.999986, -2.274324e-07, -0.999985, -0.0069405288, -6.285263e-07, 0.007961035, 0.0030242726)
 mass = 1.75
 friction = 0.05
 bounce = 0.45
@@ -2574,7 +2590,7 @@ joint_constraints/x/linear_equilibrium_point = 0.0
 joint_constraints/x/linear_restitution = 0.5
 joint_constraints/x/linear_damping = 1.0
 joint_constraints/x/angular_limit_enabled = true
-joint_constraints/x/angular_limit_upper = 81.16
+joint_constraints/x/angular_limit_upper = 81.159996
 joint_constraints/x/angular_limit_lower = -90.0
 joint_constraints/x/angular_limit_softness = 0.5
 joint_constraints/x/angular_restitution = 0.0
@@ -2598,8 +2614,8 @@ joint_constraints/y/linear_equilibrium_point = 0.0
 joint_constraints/y/linear_restitution = 0.5
 joint_constraints/y/linear_damping = 1.0
 joint_constraints/y/angular_limit_enabled = true
-joint_constraints/y/angular_limit_upper = 22.89
-joint_constraints/y/angular_limit_lower = -43.7
+joint_constraints/y/angular_limit_upper = 22.889997
+joint_constraints/y/angular_limit_lower = -43.699997
 joint_constraints/y/angular_limit_softness = 0.5
 joint_constraints/y/angular_restitution = 0.0
 joint_constraints/y/angular_damping = 1.0

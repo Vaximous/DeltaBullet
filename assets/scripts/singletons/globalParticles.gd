@@ -2,7 +2,7 @@ extends Node
 const particles = {"BloodSpurt" : preload("res://assets/particles/bloodSpurt/bloodSpurt.tscn"),
 					"BloodStream" : preload("res://assets/particles/bloodSpurt/bloodStream.tscn")
 					}
-const bulletHoles = {"Flesh": preload("res://assets/entities/bulletHoles/flesh/flesh.tscn"),
+const bulletHoles = {"Flesh": preload("res://assets/entities/bulletHoles/flesh/BulletHole_Flesh.tscn"),
 "default":preload("res://assets/entities/bulletHoles/generic/BulletHoleGeneric.tscn") }
 
 func detectMaterial(object:Object):

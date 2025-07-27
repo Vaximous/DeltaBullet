@@ -39,8 +39,7 @@ shape = SubResource("SphereShape3D_4mbl6")
 stream = ExtResource("4_4360k")
 max_db = -3.0
 bus = &"Sounds"
-attenuation_filter_cutoff_hz = 2000.0
-attenuation_filter_db = -12.0
+attenuation_filter_cutoff_hz = 20500.0
 
 [node name="shakerArea" type="Area3D" parent="."]
 unique_name_in_owner = true

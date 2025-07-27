@@ -1,11 +1,11 @@
-[gd_scene load_steps=42 format=3 uid="uid://guuwxb1s6c86"]
+[gd_scene load_steps=43 format=3 uid="uid://guuwxb1s6c86"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_kfgfw"]
 [ext_resource type="PackedScene" uid="uid://boicvk4qeqmbd" path="res://assets/entities/pawnSpawn/pawnSpawn.tscn" id="2_b53fi"]
 [ext_resource type="Script" uid="uid://b31u24at18p5t" path="res://assets/resources/customResources/worldData/worldData.gd" id="2_jhlmf"]
 [ext_resource type="PackedScene" uid="uid://bidurnqgd1c74" path="res://assets/entities/weapons/m4/m4.tscn" id="3_6fcsa"]
 [ext_resource type="Texture2D" uid="uid://b74rxor67cbxk" path="res://assets/textures/world/filth/trak_floor_yellow.jpg" id="3_f1p3k"]
-[ext_resource type="AudioStream" uid="uid://bawfxkkyqcufb" path="res://assets/music/menu/portla.mp3" id="4_62c75"]
+[ext_resource type="AudioStream" uid="uid://cwmpbbuastcma" path="res://assets/music/comeon.mp3" id="4_81g3a"]
 [ext_resource type="PackedScene" uid="uid://7kxdrnrmipu" path="res://assets/components/spawnTriggerArea/WaveSpawner.tscn" id="4_yom2c"]
 [ext_resource type="Script" uid="uid://fcvxp6w8y4kk" path="res://assets/components/spawnTriggerArea/wavespawnerwave.gd" id="5_nk0i3"]
 [ext_resource type="Script" uid="uid://ksi7km8jp8p3" path="res://assets/entities/pawnSpawn/pawn_spawn_parameters.gd" id="6_hs6fo"]
@@ -18,6 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://d10o2e44ltrnl" path="res://assets/entities/clothing/ArmoredShirt/armor_shirt.tscn" id="12_8gaxs"]
 [ext_resource type="Script" uid="uid://b6r8ewrq3qb3y" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="12_8umm3"]
 [ext_resource type="PackedScene" uid="uid://bb5qvdslt6004" path="res://assets/entities/clothing/Pants/armored_pants.tscn" id="13_kogde"]
+[ext_resource type="Curve" uid="uid://cex2ggwxevnuj" path="res://assets/entities/projectiles/linear_falloff_curve.tres" id="17_8lt0s"]
 [ext_resource type="PackedScene" uid="uid://dvmmlj4mvj88r" path="res://assets/entities/aiMarker/aiMarker.tscn" id="18_kogde"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_h62op"]
@@ -25,26 +26,17 @@ panorama = ExtResource("3_f1p3k")
 
 [sub_resource type="Resource" id="Resource_rhokj"]
 script = ExtResource("2_jhlmf")
-worldEditable = false
 skyTexture = SubResource("PanoramaSkyMaterial_h62op")
 worldName = "Wave Spawner Test"
 worldDescription = "Testing the Wave spawner for spawning a bunch of dudes."
 worldLoadingTexture = ExtResource("3_f1p3k")
-worldType = 0
-spawnPawnsOnLoad = true
-playOnStart = false
-soundScape = ExtResource("4_62c75")
-spawnType = 0
+soundScape = ExtResource("4_81g3a")
 metadata/_custom_type_script = ExtResource("2_jhlmf")
 
 [sub_resource type="Resource" id="Resource_y5s1r"]
 script = ExtResource("6_hs6fo")
 spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn3")
 pawn_name = "GuySuperior"
-pawn_type = 1
-ai_skill = 1
-ai_type = 1
-weaponEquip = 1
 clothes = Array[PackedScene]([ExtResource("10_ifu6l")])
 weapons = Array[PackedScene]([ExtResource("3_6fcsa")])
 metadata/_custom_type_script = ExtResource("6_hs6fo")
@@ -53,72 +45,40 @@ metadata/_custom_type_script = ExtResource("6_hs6fo")
 script = ExtResource("5_nk0i3")
 wave_time_limit = 6.0
 spawn_parameters = Array[ExtResource("6_hs6fo")]([SubResource("Resource_y5s1r")])
-time_between_spawns = 1.0
 metadata/_custom_type_script = ExtResource("5_nk0i3")
 
 [sub_resource type="Resource" id="Resource_yom2c"]
 script = ExtResource("6_hs6fo")
 spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn")
-pawn_name = "Guy"
-pawn_type = 1
-ai_skill = 1
-ai_type = 1
-weaponEquip = 1
-clothes = Array[PackedScene]([])
 weapons = Array[PackedScene]([ExtResource("10_8umm3")])
 metadata/_custom_type_script = ExtResource("6_hs6fo")
 
 [sub_resource type="Resource" id="Resource_nk0i3"]
 script = ExtResource("6_hs6fo")
 spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn2")
-pawn_name = "Guy"
-pawn_type = 1
-ai_skill = 1
-ai_type = 1
-weaponEquip = 1
-clothes = Array[PackedScene]([])
 weapons = Array[PackedScene]([ExtResource("10_8umm3")])
 metadata/_custom_type_script = ExtResource("6_hs6fo")
 
 [sub_resource type="Resource" id="Resource_katji"]
 script = ExtResource("6_hs6fo")
 spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn")
-pawn_name = "Guy"
-pawn_type = 1
-ai_skill = 1
-ai_type = 1
-weaponEquip = 1
-clothes = Array[PackedScene]([])
 weapons = Array[PackedScene]([ExtResource("10_8umm3")])
 metadata/_custom_type_script = ExtResource("6_hs6fo")
 
 [sub_resource type="Resource" id="Resource_8umm3"]
 script = ExtResource("6_hs6fo")
 spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn")
-pawn_name = "Guy"
-pawn_type = 1
-ai_skill = 1
-ai_type = 1
-weaponEquip = 1
-clothes = Array[PackedScene]([])
 weapons = Array[PackedScene]([ExtResource("3_6fcsa")])
 metadata/_custom_type_script = ExtResource("6_hs6fo")
 
 [sub_resource type="Resource" id="Resource_8gaxs"]
 script = ExtResource("6_hs6fo")
 spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn")
-pawn_name = "Guy"
-pawn_type = 1
-ai_skill = 1
-ai_type = 1
-weaponEquip = 1
-clothes = Array[PackedScene]([])
 weapons = Array[PackedScene]([ExtResource("11_qxayr")])
 metadata/_custom_type_script = ExtResource("6_hs6fo")
 
 [sub_resource type="Resource" id="Resource_jhlmf"]
 script = ExtResource("5_nk0i3")
-wave_time_limit = 120.0
 spawn_parameters = Array[ExtResource("6_hs6fo")]([SubResource("Resource_yom2c"), SubResource("Resource_nk0i3"), SubResource("Resource_katji"), SubResource("Resource_8umm3"), SubResource("Resource_8gaxs")])
 time_between_spawns = 3.0
 metadata/_custom_type_script = ExtResource("5_nk0i3")
@@ -126,135 +86,69 @@ metadata/_custom_type_script = ExtResource("5_nk0i3")
 [sub_resource type="Resource" id="Resource_kogde"]
 script = ExtResource("6_hs6fo")
 spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn")
-pawn_name = "Guy"
-pawn_type = 1
-ai_skill = 1
-ai_type = 1
-weaponEquip = 1
-clothes = Array[PackedScene]([])
 weapons = Array[PackedScene]([ExtResource("11_qxayr")])
 metadata/_custom_type_script = ExtResource("6_hs6fo")
 
 [sub_resource type="Resource" id="Resource_ifu6l"]
 script = ExtResource("6_hs6fo")
 spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn2")
-pawn_name = "Guy"
-pawn_type = 1
-ai_skill = 1
-ai_type = 1
-weaponEquip = 1
 clothes = Array[PackedScene]([ExtResource("12_8gaxs"), ExtResource("13_kogde")])
 weapons = Array[PackedScene]([ExtResource("3_6fcsa")])
 metadata/_custom_type_script = ExtResource("6_hs6fo")
 
 [sub_resource type="Resource" id="Resource_81g3a"]
 script = ExtResource("5_nk0i3")
-wave_time_limit = 120.0
 spawn_parameters = Array[ExtResource("6_hs6fo")]([SubResource("Resource_kogde"), SubResource("Resource_ifu6l")])
-time_between_spawns = 1.0
 metadata/_custom_type_script = ExtResource("5_nk0i3")
 
 [sub_resource type="Resource" id="Resource_8lt0s"]
 script = ExtResource("6_hs6fo")
 spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn")
-pawn_name = "Guy"
-pawn_type = 1
-ai_skill = 1
-ai_type = 1
-weaponEquip = 1
-clothes = Array[PackedScene]([])
-weapons = Array[PackedScene]([])
 metadata/_custom_type_script = ExtResource("6_hs6fo")
 
 [sub_resource type="Resource" id="Resource_pu1nq"]
 script = ExtResource("6_hs6fo")
 spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn2")
-pawn_name = "Guy"
-pawn_type = 1
-ai_skill = 1
-ai_type = 1
-weaponEquip = 1
-clothes = Array[PackedScene]([])
-weapons = Array[PackedScene]([])
 metadata/_custom_type_script = ExtResource("6_hs6fo")
 
 [sub_resource type="Resource" id="Resource_juc33"]
 script = ExtResource("6_hs6fo")
 spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn")
-pawn_name = "Guy"
-pawn_type = 1
-ai_skill = 1
-ai_type = 1
-weaponEquip = 1
-clothes = Array[PackedScene]([])
-weapons = Array[PackedScene]([])
 metadata/_custom_type_script = ExtResource("6_hs6fo")
 
 [sub_resource type="Resource" id="Resource_qt2cm"]
 script = ExtResource("6_hs6fo")
 spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn2")
-pawn_name = "Guy"
-pawn_type = 1
-ai_skill = 1
-ai_type = 1
-weaponEquip = 1
-clothes = Array[PackedScene]([])
-weapons = Array[PackedScene]([])
 metadata/_custom_type_script = ExtResource("6_hs6fo")
 
 [sub_resource type="Resource" id="Resource_akbhf"]
 script = ExtResource("6_hs6fo")
 spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn2")
-pawn_name = "Guy"
-pawn_type = 1
-ai_skill = 1
-ai_type = 1
-weaponEquip = 1
-clothes = Array[PackedScene]([])
-weapons = Array[PackedScene]([])
 metadata/_custom_type_script = ExtResource("6_hs6fo")
 
 [sub_resource type="Resource" id="Resource_wko7f"]
 script = ExtResource("6_hs6fo")
 spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn3")
-pawn_name = "Guy"
-pawn_type = 1
-ai_skill = 1
-ai_type = 1
-weaponEquip = 1
-clothes = Array[PackedScene]([])
-weapons = Array[PackedScene]([])
 metadata/_custom_type_script = ExtResource("6_hs6fo")
 
 [sub_resource type="Resource" id="Resource_tq1sb"]
 script = ExtResource("6_hs6fo")
 spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn3")
-pawn_name = "Guy"
-pawn_type = 1
-ai_skill = 1
-ai_type = 1
-weaponEquip = 1
-clothes = Array[PackedScene]([])
-weapons = Array[PackedScene]([])
 metadata/_custom_type_script = ExtResource("6_hs6fo")
 
 [sub_resource type="Resource" id="Resource_iytwq"]
 script = ExtResource("5_nk0i3")
-wave_time_limit = 120.0
 spawn_parameters = Array[ExtResource("6_hs6fo")]([SubResource("Resource_8lt0s"), SubResource("Resource_pu1nq"), SubResource("Resource_juc33"), SubResource("Resource_qt2cm"), SubResource("Resource_akbhf"), SubResource("Resource_wko7f"), SubResource("Resource_tq1sb")])
-time_between_spawns = 1.0
 metadata/_custom_type_script = ExtResource("5_nk0i3")
 
 [sub_resource type="Resource" id="Resource_qxayr"]
 resource_local_to_scene = true
 script = ExtResource("12_8umm3")
-useBulletTrail = true
 displayData = ExtResource("10_katji")
 canBeReloaded = null
 weaponMagSize = null
 ammoSize = null
 reloadTime = 1.9
-headDismember = false
 weaponDamage = 7.9
 weaponFireRate = 0.1
 bulletSpeed = null
@@ -263,7 +157,6 @@ weaponImpulse = 27.0
 weaponShots = null
 ammoConsumption = null
 useCustomCrosshairSize = true
-crosshairSizeOverride = Vector2(0.6, 0.6)
 forcedCrosshair = ExtResource("11_rhokj")
 useFOV = true
 fovShotAmount = 0.8
@@ -292,18 +185,22 @@ worldData = SubResource("Resource_rhokj")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.50799, 10.0552)
 pawnType = 0
 pawnWeapons = Array[PackedScene]([ExtResource("3_6fcsa")])
+randomAnimationSpeed = false
 
 [node name="pawnSpawn" parent="Spawns/pawnSpawns" index="0" instance=ExtResource("2_b53fi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.079, -0.414169, -3)
 active = false
+randomAnimationSpeed = false
 
 [node name="pawnSpawn2" parent="Spawns/pawnSpawns" index="1" instance=ExtResource("2_b53fi")]
 transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 8.92407, -0.441364, -12.2023)
 active = false
+randomAnimationSpeed = false
 
 [node name="pawnSpawn3" parent="Spawns/pawnSpawns" index="2" instance=ExtResource("2_b53fi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.0481, -0.291638, -13.9659)
 active = false
+randomAnimationSpeed = false
 
 [node name="navigationRegion3d" type="NavigationRegion3D" parent="Geometry" index="0"]
 navigation_mesh = ExtResource("10_f1p3k")
@@ -351,6 +248,7 @@ one_shot = true
 waves = Array[ExtResource("5_nk0i3")]([SubResource("Resource_dx34i"), SubResource("Resource_jhlmf"), SubResource("Resource_81g3a"), SubResource("Resource_iytwq")])
 
 [node name="label" type="Label" parent="Misc/WaveSpawner" index="0"]
+anchors_preset = -1
 offset_left = 409.0
 offset_top = 40.0
 offset_right = 941.0

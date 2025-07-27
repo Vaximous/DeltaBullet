@@ -69,9 +69,11 @@ func explosionRayCheck(object:Node3D):
 	return result
 
 func applyHit(object:Node3D):
+	if object is FakePhysicsEntity: return
+
 	if is_instance_valid(object) and object is not FakePhysicsEntity and object is not BloodDroplet and object is not Projectile:
 		var distance : float = global_position.distance_to(object.global_position)
-		var dmgAmnt: float = lerpf(2,explosionDamage,distance/explosionRadius)
+		var dmgAmnt: float = lerpf(2,explosionDamage,distance/explosionRadius*2)
 		var dmgClamped : float = clampf(dmgAmnt,2,dmgAmnt)
 		var burnChance : bool = [true,false].pick_random()
 		if burnChance and object is not FakePhysicsEntity and doesBurn:
@@ -86,7 +88,7 @@ func applyHit(object:Node3D):
 				object.canBleed = false
 				#object.set_meta("exploded",true)
 			#print(dmgClamped)
-			object.hit(dmgClamped,null,-(global_position-object.global_position).normalized() * explosionImpulse,Vector3.ZERO)
+			object.hit(dmgClamped*randf_range(1.1,1.8),null,-(global_position-object.global_position).normalized() * explosionImpulse * randf_range(1.3,1.8),Vector3.ZERO)
 
 func explode()->void:
 	var explosionRadiusTo = explosionRadius

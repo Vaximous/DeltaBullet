@@ -5,6 +5,7 @@ const HELP_DICT := {
 	"world":"The current World, which is the root of the level.",
 	"hit":"The collider the camera ray is colliding with, is null if none is found.",
 	"hitPos":"The point the camera ray is colliding, is null if none is found.",
+	"hitNormal":"The normal at the point the camera ray is colliding, is null if none is found.",
 	"userDir":"Globalized user:// directory.",
 	"customParams":"A list of custom parameters. See _s() and _g()",
 	"echo(var)":"Displays the variable input on the console.",
@@ -51,6 +52,11 @@ var hitPos:
 	get:
 		if gameManager.activeCamera.camCast.is_colliding:
 			return gameManager.activeCamera.camCast.get_collision_point()
+		return null
+var hitNormal:
+	get:
+		if gameManager.activeCamera.camCast.is_colliding:
+			return gameManager.activeCamera.camCast.get_collision_normal()
 		return null
 var customParams : Dictionary = {}
 

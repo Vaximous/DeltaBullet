@@ -372,7 +372,6 @@ limits/debugger/max_chars_per_second=132768
 
 [physics]
 
-common/physics_ticks_per_second=72
 3d/physics_engine="Jolt Physics"
 jolt_physics_3d/simulation/position_steps=4
 jolt_physics_3d/simulation/sleep_velocity_threshold=0.06
@@ -396,3 +395,8 @@ limits/cluster_builder/max_clustered_elements=4096.0
 anti_aliasing/quality/screen_space_aa=1
 occlusion_culling/use_occlusion_culling=true
 environment/defaults/default_environment="res://assets/envs/default/debugWorld.tres"
+
+[steam]
+
+initialization/app_id=2689810
+initialization/initialize_on_startup=true

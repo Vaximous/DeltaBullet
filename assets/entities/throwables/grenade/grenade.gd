@@ -1,7 +1,7 @@
 extends ThrowableBase
 var exploded : bool = false
 @export var explosionRadius : float = 65.0
-@export var explosionImpulse :float  = 20.0
+@export var explosionImpulse :float  = 25.0
 
 func createExplosion()->void:
 	if exploded: queue_free()

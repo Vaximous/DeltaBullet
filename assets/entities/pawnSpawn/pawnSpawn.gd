@@ -109,6 +109,7 @@ func spawnPawn(forceParent : Node = null, _params : PawnSpawnParameters = null) 
 					pawn.add_to_group(&"Player")
 					pawn.set_meta(&"teams", [&"Player",&"Friendly"])
 					pawn.set_meta(&"isPlayer", true)
+					pawn.set_meta(&"canBeStaggered", false)
 					gameManager.allPawns.append(pawn)
 					if gameManager.temporaryPawnInfo.size() <= 0:
 						if gameManager.currentSave != "" or gameManager.currentSave != " " or gameManager.currentSave != null:

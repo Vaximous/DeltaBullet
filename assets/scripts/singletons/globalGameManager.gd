@@ -672,9 +672,8 @@ func createSplat(gposition:Vector3 = Vector3.ONE,normal:Vector3 = Vector3.ONE,pa
 		var _b = bloodDecal.instantiate()
 		parent.add_child(_b)
 		if parent.has_node(_b.get_path()) and _b.is_inside_tree():
-			_b.position = gposition
-			if !_b.global_transform.origin == gposition:
-				_b.look_at(_b.global_transform.origin + normal.round(), Vector3.UP)
+			_b.global_transform.origin = gposition
+			_b.look_at(_b.global_transform.origin + normal, Vector3.ONE)
 			return _b
 		else:
 			_b.queue_free()
@@ -849,6 +848,26 @@ func decalAmountCheck()->void:
 			decals.remove_at(0)
 	return
 
+func createBloodPuff(bPosition:Vector3 = Vector3.ZERO,minAmount:int=2,maxAmount:int=10)->void:
+		var bloodSpurt : GPUParticles3D = load("res://assets/particles/bloodSpurt/bloodSpurt.tscn").instantiate()
+		gameManager.world.worldMisc.add_child(bloodSpurt)
+		bloodSpurt.global_position = bPosition
+		bloodSpurt.minParticles = minAmount
+		bloodSpurt.maxParticles = maxAmount
+		bloodSpurt.emitting = true
+
+func createPulverizeSound(pPosition:Vector3 = Vector3.ZERO)->void:
+	var pulverizeSound : AudioStreamPlayer3D = AudioStreamPlayer3D.new()
+	pulverizeSound.stream = load("res://assets/misc/obliterateStream.tres")
+	pulverizeSound.bus = &"Sounds"
+	#pulverizeSound.attenuation_filter_db = 0
+	pulverizeSound.attenuation_filter_cutoff_hz = 20500
+	pulverizeSound.volume_db = -5
+	pulverizeSound.max_distance = 10
+	gameManager.world.worldMisc.add_child(pulverizeSound)
+	pulverizeSound.global_position = pPosition
+	pulverizeSound.finished.connect(pulverizeSound.queue_free)
+	pulverizeSound.play()
 
 func physEntityCheck()->void:
 	var physEntities : Array = Engine.get_main_loop().get_nodes_in_group(&"physicsEntity")

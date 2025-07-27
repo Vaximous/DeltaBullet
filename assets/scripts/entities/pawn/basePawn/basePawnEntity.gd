@@ -28,7 +28,6 @@ signal headshottedPawn
 @onready var interactRaycast : RayCast3D = $Mesh/interactRaycast
 
 ##IK
-@onready var neckMarker :Marker3D = $Mesh/neckLook
 @onready var bodyIK : SkeletonIK3D= $Mesh/MaleSkeleton/Skeleton3D/bodyIK
 @onready var bodyIKMarker : Marker3D = $Mesh/bodyIKMarker:
 	set(value):
@@ -1834,19 +1833,22 @@ func disableStaggerBlend()->void:
 func staggerEnd()->void:
 	isStaggered = false
 
-func doStagger(stagger:StringName, speed:float = 1.0,randomChance:bool=false)->void:
+func doStagger(stagger, speed:float = 1.0,randomChance:bool=false)->void:
 	if get_meta(&"canBeStaggered") == false or isStaggered or forceAnimation: return
 	if randomChance:
 		if [true,false].pick_random() == false:
 			return
-	print("Staggering..")
+	print(stagger)
 	isStaggered = true
 	#Upon Calling the stagger, it should trigger the animation and play it. Freezing the pawn
 	#until it ends.
 
 	#Set the transition to the stagger var alongside the seek and speed
-	print("Setting Stagger Animation")
-	animationTree.set("parameters/staggerTransition/transition_request",stagger)
-	print("Setting Stagger Speed")
+	if stagger is String or stagger is StringName:
+		animationTree.set("parameters/staggerTransition/transition_request",str(stagger))
+	elif stagger is Array:
+		var staggerToUse = stagger.pick_random()
+		if staggerToUse is String or staggerToUse is StringName:
+			animationTree.set("parameters/staggerTransition/transition_request",str(staggerToUse))
 	animationTree.set("parameters/staggerScale/scale",speed)
 	animationTree.set("parameters/staggerShot/request",AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)

@@ -266,34 +266,17 @@ func createActiveRagdollJoint()->void:
 		activeRagJoint.name = "AR_%s"%ownerSkeleton.get_bone_name(get_bone_id())
 		activeRagdollJoint = activeRagJoint
 
+
 func doPulverizeEffect()->void:
 	if canBeDismembered and !has_meta("exploded"):
 		var gib = gameManager.createGib(global_position)
 		gib.velocity += linear_velocity
 		#doBleed()
-		var pulverizeSound : AudioStreamPlayer3D = AudioStreamPlayer3D.new()
-		pulverizeSound.stream = load("res://assets/misc/obliterateStream.tres")
-		pulverizeSound.bus = &"Sounds"
-		#pulverizeSound.attenuation_filter_db = 0
-		pulverizeSound.attenuation_filter_cutoff_hz = 20500
-		pulverizeSound.volume_db = -5
-		pulverizeSound.max_distance = 10
-		gameManager.world.worldMisc.add_child(pulverizeSound)
-		pulverizeSound.global_position = global_position
-		pulverizeSound.finished.connect(pulverizeSound.queue_free)
-		pulverizeSound.play()
-		var bloodSpurt : GPUParticles3D = load("res://assets/particles/bloodSpurt/bloodSpurt.tscn").instantiate()
-		gameManager.world.worldMisc.add_child(bloodSpurt)
-		bloodSpurt.global_position = global_position
-		bloodSpurt.maxParticles = 10
-		bloodSpurt.emitting = true
+		gameManager.createPulverizeSound(global_position)
+		gameManager.createBloodPuff(global_position,randi_range(1,3),randi_range(4,10))
 		collision_layer = 0
 		collision_mask = 1
 		joint_type = JOINT_TYPE_NONE
-		for i in randi_range(1,6):
-			gameManager.createDroplet(global_position,currentVelocity*0.25)
-		#gameManager.sprayBlood(global_position,randi_range(1,5),20,1.2)
-		#mass = 0.01
 		for childrenIDs in getBoneChildren(ragdoll.ragdollSkeleton,self):
 			var bone
 			bone = findPhysicsBone(childrenIDs)
@@ -303,6 +286,10 @@ func doPulverizeEffect()->void:
 				#bone.collision_mask = 0
 				#bone.queue_free()
 				#findPhysicsBone(childrenIDs).mass = 0
+		#for i in randi_range(1,6):
+			#gameManager.createDroplet(global_position,currentVelocity*0.25)
+		#gameManager.sprayBlood(global_position,randi_range(1,5),20,1.2)
+		#mass = 0.01
 		queue_free()
 		#createBurstOfBlood(10,15,25)
 

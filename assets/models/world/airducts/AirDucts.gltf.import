@@ -1,0 +1,189 @@
+[remap]
+
+importer="scene"
+importer_version=1
+type="PackedScene"
+uid="uid://mspa8nbabg1b"
+path="res://.godot/imported/AirDucts.gltf-d460685cb6359ff69777a5196e0bf0fa.scn"
+
+[deps]
+
+source_file="res://assets/models/world/airducts/AirDucts.gltf"
+dest_files=["res://.godot/imported/AirDucts.gltf-d460685cb6359ff69777a5196e0bf0fa.scn"]
+
+[params]
+
+nodes/root_type=""
+nodes/root_name=""
+nodes/root_script=null
+nodes/apply_root_scale=true
+nodes/root_scale=1.0
+nodes/import_as_skeleton_bones=false
+nodes/use_name_suffixes=true
+nodes/use_node_type_suffixes=true
+meshes/ensure_tangents=true
+meshes/generate_lods=true
+meshes/create_shadow_meshes=true
+meshes/light_baking=1
+meshes/lightmap_texel_size=0.2
+meshes/force_disable_compression=false
+skins/use_named_skins=true
+animation/import=true
+animation/fps=30
+animation/trimming=false
+animation/remove_immutable_tracks=true
+animation/import_rest_as_RESET=false
+import_script/path=""
+materials/extract=0
+materials/extract_format=0
+materials/extract_path=""
+_subresources={
+"meshes": {
+"AirDucts_CeilingWires": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://assets/models/world/airducts/meshes/AirDucts_CeilingWires.res",
+"save_to_file/path": "uid://bh7531tmbkn4f"
+},
+"AirDucts_Duct45BendLeft": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://assets/models/world/airducts/meshes/AirDucts_Duct45BendLeft.res",
+"save_to_file/path": "uid://dfmojc5d2eo1x"
+},
+"AirDucts_Duct45BendRight": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://assets/models/world/airducts/meshes/AirDucts_Duct45BendRight.res",
+"save_to_file/path": "uid://cvktg8a7bql3i"
+},
+"AirDucts_Duct4Split": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://assets/models/world/airducts/meshes/AirDucts_Duct4Split.res",
+"save_to_file/path": "uid://biljmnecag4dl"
+},
+"AirDucts_Duct90BendLeft": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://assets/models/world/airducts/meshes/AirDucts_Duct90BendLeft.res",
+"save_to_file/path": "uid://78dqqiyd05n"
+},
+"AirDucts_Duct90BendRight": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://assets/models/world/airducts/meshes/AirDucts_Duct90BendRight.res",
+"save_to_file/path": "uid://cofjtvdpkyck3"
+},
+"AirDucts_DuctConnector": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://assets/models/world/airducts/meshes/AirDucts_DuctConnector.res",
+"save_to_file/path": "uid://3c1dklxevgqx"
+},
+"AirDucts_DuctDownVentCover": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://assets/models/world/airducts/meshes/AirDucts_DuctDownVentCover.res",
+"save_to_file/path": "uid://cvsvbp1fmx8fp"
+},
+"AirDucts_DuctLong": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://assets/models/world/airducts/meshes/AirDucts_DuctLong.res",
+"save_to_file/path": "uid://0irl5jhbhhhy"
+},
+"AirDucts_DuctSingle": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://assets/models/world/airducts/meshes/AirDucts_DuctSingle.res",
+"save_to_file/path": "uid://bkks2kqt4isw4"
+},
+"AirDucts_DuctSingleHoleDown": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://assets/models/world/airducts/meshes/AirDucts_DuctSingleHoleDown.res",
+"save_to_file/path": "uid://da5xv7u7nmtx5"
+},
+"AirDucts_DuctSingleHoleLeft": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://assets/models/world/airducts/meshes/AirDucts_DuctSingleHoleLeft.res",
+"save_to_file/path": "uid://ckmrm6lwxm7s7"
+},
+"AirDucts_DuctSingleHoleLeftVentCover": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://assets/models/world/airducts/meshes/AirDucts_DuctSingleHoleLeftVentCover.res",
+"save_to_file/path": "uid://d1frw72k3omir"
+},
+"AirDucts_DuctSingleHoleRight": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://assets/models/world/airducts/meshes/AirDucts_DuctSingleHoleRight.res",
+"save_to_file/path": "uid://dg4ck5cgy4bcb"
+},
+"AirDucts_DuctSingleHoleRightVentCover": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://assets/models/world/airducts/meshes/AirDucts_DuctSingleHoleRightVentCover.res",
+"save_to_file/path": "uid://f5lsns4e7hvb"
+},
+"AirDucts_DuctTSplit": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://assets/models/world/airducts/meshes/AirDucts_DuctTSplit.res",
+"save_to_file/path": "uid://bf5frdqrpllbt"
+}
+}
+}
+gltf/naming_version=2
+gltf/embedded_image_handling=1

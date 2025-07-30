@@ -1,0 +1,49 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=11 format=3 uid="uid://dk5r5pieqny0u"]
+
+[ext_resource type="Curve" uid="uid://bofowgxnuih6c" path="res://assets/resources/weaponCurves/veryCloseRange.tres" id="1_s844f"]
+[ext_resource type="Script" uid="uid://bfvbiknnwdu6i" path="res://assets/resources/customResources/weaponDisplayData/weaponDisplayData.gd" id="2_5cx12"]
+[ext_resource type="AudioStream" uid="uid://brxvjv4isdmvu" path="res://assets/sounds/weapons/m4/m4_draw_1.wav" id="3_b3rs5"]
+[ext_resource type="AudioStream" uid="uid://cyxfip8hwv23f" path="res://assets/sounds/weapons/m4/m4_draw_2.wav" id="4_b5quo"]
+[ext_resource type="AudioStream" uid="uid://74p6gclkalsk" path="res://assets/sounds/weapons/m4/m4_draw_3.wav" id="5_jcjk3"]
+[ext_resource type="AudioStream" uid="uid://c85mepdrdblyy" path="res://assets/sounds/weapons/m4/m4_draw_4.wav" id="6_mf15x"]
+[ext_resource type="Texture2D" uid="uid://dreu5hrqw1l7u" path="res://assets/textures/crosshair/crosshair066.png" id="7_ljyjj"]
+[ext_resource type="Script" uid="uid://b6r8ewrq3qb3y" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="8_sdu1s"]
+
+[sub_resource type="Resource" id="Resource_0wivs"]
+script = ExtResource("2_5cx12")
+saleCategory = 2
+itemDescriptionShort = "The mothafuckin' Breadstick.."
+itemDescriptionLong = "\"The Breadstick\" as we call it is a high powered shotgun that will obliterate anything that's in front of the muzzle, do NOT get close to the front of this thing unless you want a second asshole."
+damage = 0.56
+metadata/_custom_type_script = "uid://bfvbiknnwdu6i"
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_16b2g"]
+random_pitch = 1.1
+streams_count = 4
+stream_0/stream = ExtResource("3_b3rs5")
+stream_1/stream = ExtResource("4_b5quo")
+stream_2/stream = ExtResource("5_jcjk3")
+stream_3/stream = ExtResource("6_mf15x")
+
+[resource]
+script = ExtResource("8_sdu1s")
+displayData = SubResource("Resource_0wivs")
+ammoSize = 8
+reloadTime = 0.8
+headDismember = true
+weaponDamage = 180.0
+weaponFireRate = 1.2
+weaponImpulse = 535.0
+weaponShots = 8
+damageFalloff = ExtResource("1_s844f")
+useCustomCrosshairSize = true
+forcedCrosshair = ExtResource("7_ljyjj")
+weaponRecoil = Vector3(15, 15, 0)
+weaponRecoilStrength = 15.0
+weaponSpread = 0.09
+weaponRecoilStrengthAim = 10.0
+weaponSpreadAim = 0.045
+weaponPositionOffset = Vector3(-0.065, -0.32, 0.025)
+weaponRotationOffset = Vector3(-0.287979, -1.71042, -1.39626)
+equipStream = SubResource("AudioStreamRandomizer_16b2g")
+metadata/_custom_type_script = "uid://b6r8ewrq3qb3y"

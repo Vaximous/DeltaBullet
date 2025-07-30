@@ -5,7 +5,7 @@ signal damagedBack
 @export var crosshairHitEffect : bool = true
 @export var enabled : bool = true
 var setup:bool = false
-signal damaged(amount,impulse,vector, dealer)
+signal damaged(amount,impulse,vector, dealer,bone)
 @export_category("Hitbox")
 @export var healthComponent : HealthComponent:
 	set(value):

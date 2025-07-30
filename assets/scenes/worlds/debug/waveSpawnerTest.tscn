@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://guuwxb1s6c86"]
+[gd_scene load_steps=44 format=3 uid="uid://guuwxb1s6c86"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_kfgfw"]
 [ext_resource type="PackedScene" uid="uid://boicvk4qeqmbd" path="res://assets/entities/pawnSpawn/pawnSpawn.tscn" id="2_b53fi"]
@@ -18,7 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://d10o2e44ltrnl" path="res://assets/entities/clothing/ArmoredShirt/armor_shirt.tscn" id="12_8gaxs"]
 [ext_resource type="Script" uid="uid://b6r8ewrq3qb3y" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="12_8umm3"]
 [ext_resource type="PackedScene" uid="uid://bb5qvdslt6004" path="res://assets/entities/clothing/Pants/armored_pants.tscn" id="13_kogde"]
-[ext_resource type="Curve" uid="uid://cex2ggwxevnuj" path="res://assets/entities/projectiles/linear_falloff_curve.tres" id="17_8lt0s"]
+[ext_resource type="Curve" uid="uid://cex2ggwxevnuj" path="res://assets/entities/projectiles/linear_falloff_curve.tres" id="17_81g3a"]
 [ext_resource type="PackedScene" uid="uid://dvmmlj4mvj88r" path="res://assets/entities/aiMarker/aiMarker.tscn" id="18_kogde"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_h62op"]
@@ -178,6 +178,8 @@ weaponPositionOffset = Vector3(-0.015, 0.13, 0.075)
 weaponRotationOffset = Vector3(0, -1.74, -1.48)
 bulletColor = null
 
+[sub_resource type="AudioStreamInteractive" id="AudioStreamInteractive_8lt0s"]
+
 [node name="worldBase" instance=ExtResource("1_kfgfw")]
 worldData = SubResource("Resource_rhokj")
 
@@ -259,5 +261,8 @@ Wave timer"
 [node name="M4" parent="Misc/WaveSpawner" index="1" instance=ExtResource("3_6fcsa")]
 transform = Transform3D(0.5, -0.866025, 0, 0.866025, 0.5, 0, 0, 0, 1, -4, 0, 6)
 weaponResource = SubResource("Resource_qxayr")
+
+[node name="audioStreamPlayer" type="AudioStreamPlayer" parent="." index="8"]
+stream = SubResource("AudioStreamInteractive_8lt0s")
 
 [connection signal="ready" from="Misc/WaveSpawner" to="Misc/WaveSpawner" method="countdown_next_wave"]

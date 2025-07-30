@@ -486,7 +486,8 @@ func _ready() -> void:
 
 	fixRot()
 	setupPawnColor()
-	#getAllHitboxes()
+	for i in getAllHitboxes():
+		i.connect(&"damaged",flinch.bind(2,i.boneId))
 
 func _physics_process(delta:float) -> void:
 	if pawnEnabled:
@@ -703,8 +704,9 @@ func die(killer) -> void:
 		onPawnKilled.emit()
 		playKillSound()
 		isPawnDead = true
-		createRagdoll(lastHitPart, killer)
-		moveHitboxDecals()
+		var ragdoll = createRagdoll(lastHitPart, killer)
+		#moveHitboxDecals()
+		moveDecalsToRagdoll(ragdoll)
 		endPawn()
 		hide()
 		pawnEnabled = false
@@ -845,13 +847,12 @@ func moveDecalsToRagdoll(ragdoll:PawnRagdoll)->bool:
 	for hboxes in getAllHitboxes():
 		for decals in hboxes.get_children():
 			if decals is BulletHole:
-				await get_tree().process_frame
-				for bone in ragdoll.ragdollSkeleton.get_children():
-					if bone is PhysicalBone3D:
-						if bone.get_bone_id() == hboxes.boneId:
-							decals.reparent(bone,true)
-							#print(decals.get_parent())
-							#Console.add_console_message("For %s, %s" %[self,getCurrentDecalBones()])
+				#print(decals)
+				for bone in ragdoll.physicsBones:
+					if bone.get_bone_id() == hboxes.boneId:
+						decals.reparent(bone,true)
+						#print(decals.get_parent())
+						#Console.add_console_message("For %s, %s" %[self,getCurrentDecalBones()])
 	return true
 
 func getAllHitboxes() -> Array[Hitbox]:
@@ -1261,9 +1262,20 @@ func doMeshRotation() -> void:
 		#pawnMesh.rotation.x = lerpf(pawnMesh.rotation.x, 0, 12*delta)
 		#pawnMesh.rotation.z = lerpf(pawnMesh.rotation.z, 0, 12*delta)
 
-func flinch() -> void:
-	animationTree.set("parameters/flinchSpace/blend_position",Vector2(randf_range(-1,1),randf_range(-0.25,1)))
-	animationTree.set("parameters/flinchShot/request",AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+func getPawnSkeleton()->Skeleton3D:
+	#When the female skeleton gets added we will use this to get the skeleton of the character, but for now just return the male one
+	return $Mesh/MaleSkeleton/Skeleton3D
+
+
+func flinch(flinchDirection : Vector3,bone:int = 0) -> void:
+	##New Flinch
+	var flinchQuat = Quaternion(flinchDirection,Vector3.ONE)
+	var oldRot = getPawnSkeleton().get_bone_pose_rotation(bone)
+	getPawnSkeleton().set_bone_pose_rotation(bone,flinchQuat)
+
+
+	#animationTree.set("parameters/flinchSpace/blend_position",Vector2(randf_range(-1,1),randf_range(-0.25,1)))
+	#animationTree.set("parameters/flinchShot/request",AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 
 	##Old flinch
 	#if flinchTween:
@@ -1283,7 +1295,8 @@ func flinch() -> void:
 
 func _on_health_component_on_damaged(dealer:Node3D, hitDirection:Vector3)->void:
 	if is_instance_valid(self) and !isPawnDead:
-		flinch()
+		#flinch()
+		pass
 
 func armThrowable()->void:
 	if canThrowThrowable and !isArmingThrowable and throwableAmount>0 and !is_instance_valid(heldThrowable) and !isUsingPhone:

@@ -823,10 +823,8 @@ particleArray = [NodePath("bloodSpurt"), NodePath("impactParticle"), NodePath("s
 soundArray = [NodePath("audioStreamPlayer3d")]
 decalSize = 0.055
 
-[node name="decal" parent="." index="0"]
-physics_interpolation_mode = 1
-
 [node name="audioStreamPlayer3d" type="AudioStreamPlayer3D" parent="." index="1"]
+physics_interpolation_mode = 1
 stream = SubResource("AudioStreamRandomizer_17daq")
 attenuation_model = 3
 pitch_scale = 0.75
@@ -835,8 +833,10 @@ bus = &"Sounds"
 attenuation_filter_db = 0.0
 
 [node name="bloodSpurt" parent="." index="2" instance=ExtResource("6_b318v")]
+physics_interpolation_mode = 1
 
 [node name="impactParticle" type="GPUParticles3D" parent="." index="3"]
+physics_interpolation_mode = 1
 emitting = false
 amount = 30
 one_shot = true
@@ -848,6 +848,7 @@ process_material = SubResource("ParticleProcessMaterial_ppysv")
 draw_pass_1 = SubResource("QuadMesh_m4v2p")
 
 [node name="smokeParticle" type="GPUParticles3D" parent="." index="4"]
+physics_interpolation_mode = 1
 emitting = false
 amount = 14
 one_shot = true
@@ -860,6 +861,7 @@ draw_pass_1 = SubResource("QuadMesh_bqllu")
 
 [node name="gush1" type="AnimatedSprite3D" parent="." index="5"]
 unique_name_in_owner = true
+physics_interpolation_mode = 1
 transform = Transform3D(-1.77031e-08, 0, 0.405, 0, 0.405, 0, -0.405, 0, -1.77031e-08, -0.0589, -0.0164808, -0.566288)
 visible = false
 modulate = Color(0.996945, 6.23293e-06, 1.54018e-06, 1)
@@ -868,6 +870,7 @@ animation = &"gush1"
 
 [node name="gush2" type="AnimatedSprite3D" parent="." index="6"]
 unique_name_in_owner = true
+physics_interpolation_mode = 1
 transform = Transform3D(-1.77031e-08, -0.405, -1.77031e-08, 0, -1.77031e-08, 0.405, -0.405, 1.77031e-08, 7.73828e-16, -0.0589, -0.0164808, -0.566288)
 visible = false
 modulate = Color(0.996945, 6.23293e-06, 1.54018e-06, 1)
@@ -876,6 +879,7 @@ animation = &"gush2"
 
 [node name="gush3" type="AnimatedSprite3D" parent="." index="7"]
 unique_name_in_owner = true
+physics_interpolation_mode = 1
 transform = Transform3D(-1.77031e-08, -0.256902, 0.313092, 0, 0.313092, 0.256902, -0.405, 1.12295e-08, -1.36857e-08, -0.0589, 0.0273328, -0.537164)
 visible = false
 modulate = Color(0.996945, 6.23293e-06, 1.54018e-06, 1)

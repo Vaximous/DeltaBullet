@@ -265,6 +265,9 @@ func fire()->void:
 			if weaponResource.useFOV:
 				weaponOwner.attachedCam.camera.fov += weaponResource.fovShotAmount
 			weaponOwner.attachedCam.fireRecoil(0.0,0.0,0.0,false)
+		else:
+			if !weaponOwner.isPlayerPawn():
+				weaponOwner.inputComponent.fireRecoil(0,0,0,false)
 
 		currentAmmo -= weaponResource.ammoConsumption
 
@@ -581,6 +584,8 @@ func setWeaponRecoil()->void:
 	if weaponOwner != null:
 		if weaponOwner.attachedCam != null:
 			weaponOwner.attachedCam.camRecoil = weaponResource.weaponRecoil
+		if !weaponOwner.isPlayerPawn():
+			weaponOwner.inputComponent.aimRecoil = weaponResource.weaponRecoil
 
 func reloadWeapon()->void:
 	#await get_tree().process_frame

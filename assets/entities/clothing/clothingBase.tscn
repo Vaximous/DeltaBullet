@@ -4,8 +4,10 @@
 [ext_resource type="Skin" uid="uid://dni81a81m0edc" path="res://assets/models/pawn/male/pawnSkin.tres" id="2_vog81"]
 
 [node name="clothingBase" type="Node3D"]
+physics_interpolation_mode = 1
 script = ExtResource("1_ouwi3")
 
 [node name="clothingMesh" type="MeshInstance3D" parent="."]
+physics_interpolation_mode = 1
 layers = 8
 skin = ExtResource("2_vog81")

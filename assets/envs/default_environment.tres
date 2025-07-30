@@ -8,11 +8,11 @@ colors = PackedColorArray(0.0156863, 0, 0, 1, 0.996078, 0.941176, 0.811765, 1)
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_iun5n"]
 gradient = SubResource("Gradient_6voip")
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_afll2"]
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_tipwx"]
 panorama = ExtResource("1_tipwx")
 
 [sub_resource type="Sky" id="Sky_nj1fe"]
-sky_material = SubResource("PanoramaSkyMaterial_afll2")
+sky_material = SubResource("PanoramaSkyMaterial_tipwx")
 
 [resource]
 background_mode = 2

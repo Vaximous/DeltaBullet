@@ -17,7 +17,10 @@ class_name AIComponent
 @onready var pawnDebugLabel : Label3D = $debugPawnStats
 @onready var stateMachine : FiniteStateMachine = $pawnFSM
 @export var aimSpeed : float = 8
-
+@export var aimTargetRecoil : Vector3 = Vector3.ZERO
+@export var aimRecoilStrength : float = 0.15
+@export var recoilReturnSpeed : float = 5.5
+@export var aimRecoil : Vector3 = Vector3.ZERO
 var pawnOwner : BasePawn = null:
 	set(value):
 		pawnOwner = value
@@ -138,6 +141,11 @@ func _physics_process(delta: float) -> void:
 
 	if pawnOwner.forceAnimation: return
 
+	#Pawn Recoil Work
+	aimTargetRecoil.x = lerp(aimTargetRecoil.x, 0.0, recoilReturnSpeed * delta)
+	aimTargetRecoil.y = lerp(aimTargetRecoil.y, 0.0, recoilReturnSpeed * delta)
+	aimTargetRecoil.z = lerp(aimTargetRecoil.z, 0.0, recoilReturnSpeed * delta)
+
 	##Add the pawns that the pawn currently has in their view
 	for i in gameManager.allPawns:
 		if canSeeObject(i) and i != pawnOwner and pawnOwner.global_position.distance_to(i.global_position) < maxDetectionRange:
@@ -186,8 +194,8 @@ func setToAttackState(amount,impulse,vector, dealer:BasePawn)->void:
 		lookAtPosition(dealer.global_position)
 
 func lookAtPosition(pos:Vector3,snap:bool = false)->void:
-	aimCast.look_at(pos)
-	var dir = (aimCast.global_position - pos)
+	aimCast.look_at(pos + aimTargetRecoil * aimRecoilStrength)
+	var dir = (aimCast.global_position - pos) + aimTargetRecoil * aimRecoilStrength
 	if lookTween:
 		lookTween.kill()
 	lookTween = create_tween()
@@ -265,3 +273,15 @@ func checkIfTargetIsOnHostileTeam(target:BasePawn)->bool:
 	for team in pawnOwner.get_meta(&"hatedTeams"):
 		if target.get_meta(&"teams").has(team): verdict = true
 	return verdict
+
+func fireRecoil(setRecoilX:float = 0.0,setRecoilY:float = 0.0,setRecoilZ:float = 0.0,useSetRecoil:bool = false)->void:
+	if setRecoilX:
+		aimRecoil.x += setRecoilX
+	if setRecoilY:
+		aimRecoil.y += setRecoilY
+	if setRecoilZ:
+		aimRecoil.z += setRecoilZ
+	if !useSetRecoil:
+		aimTargetRecoil += Vector3(randf_range(-2,aimRecoil.x), randf_range(-2,aimRecoil.y), randf_range(-aimRecoil.z,aimRecoil.z) )
+	else:
+		aimTargetRecoil += Vector3(setRecoilX, randf_range(-setRecoilY,setRecoilY), randf_range(-setRecoilZ,setRecoilZ) )

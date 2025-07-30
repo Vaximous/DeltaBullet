@@ -185,18 +185,22 @@ func setAngularMotorForceLimit(b:PhysicalBone3D,value:float = 0):
 func _on_remove_timer_timeout()-> void:
 	queue_free()
 
-func doRagdollHeadshot(pawn:BasePawn = null, dismember : bool = false, shotvel:Vector3 = Vector3.ONE,hitPos: Vector3 = Vector3.ZERO)-> void:
+func doRagdollHeadshot(pawn:BasePawn = null, dismember : bool = false, shotvel:Vector3 = Vector3.ONE,hitPos: Vector3 = Vector3.ZERO,sound:bool = true)-> void:
 	for x in randi_range(2,7):
 		var gib = gameManager.createGib(headBone.global_position)
 		if is_instance_valid(pawn):
 			gib.velocity += pawn.velocity
 	var destroyedHeads : Array = [preload("res://assets/models/pawn/male/headDestroyed1.tres"),preload("res://assets/models/pawn/male/headDestroyed2.tres"),preload("res://assets/models/pawn/male/headDestroyed3.tres")]
-	headshotsound.play()
 	deathSound.stop()
-	obliterateSound.play()
+	if sound:
+		headshotsound.play()
+		obliterateSound.play()
 	#print_rich("[color=red]BOOM HEADSHOT!!!!!!")
 	for x in randi_range(5,25):
-		gameManager.createDroplet(headBone.global_position,pawn.velocity*0.25)
+		if pawn:
+			gameManager.createDroplet(headBone.global_position,pawn.velocity*0.25)
+		else:
+			gameManager.createDroplet(headBone.global_position,Vector3(randf_range(2,5),randf_range(2,5),randf_range(2,5))*0.25)
 	head.mesh = destroyedHeads.pick_random()
 	var particle = globalParticles.createParticle("BloodSpurt",Vector3(headBone.global_position.x,headBone.global_position.y-1.4,headBone.global_position.z))
 	particle.rotation = headBone.global_rotation
@@ -348,7 +352,7 @@ func headshotCheck(impulse_bone:int,killer,pawn:BasePawn, shotVel:Vector3 = Vect
 		if is_instance_valid(killer):
 			if is_instance_valid(killer.currentItem):
 				if killer.currentItem.weaponResource.headDismember:
-					doRagdollHeadshot(pawn,dismemberchance,shotVel,hitPos)
+					doRagdollHeadshot(pawn,dismemberchance,shotVel,hitPos,true)
 			if is_instance_valid(killer.attachedCam):
 				killer.attachedCam.doHeadshotEffect()
 		pawn.headshottedPawn.emit()

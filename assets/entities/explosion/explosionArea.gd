@@ -69,8 +69,6 @@ func explosionRayCheck(object:Node3D):
 	return result
 
 func applyHit(object:Node3D):
-	if object is FakePhysicsEntity: return
-
 	if is_instance_valid(object) and object is not FakePhysicsEntity and object is not BloodDroplet and object is not Projectile:
 		var distance : float = global_position.distance_to(object.global_position)
 		var dmgAmnt: float = lerpf(2,explosionDamage,distance/explosionRadius*2)
@@ -86,6 +84,8 @@ func applyHit(object:Node3D):
 		if object.has_method("hit"):
 			if object is RagdollBone:
 				object.canBleed = false
+				if object.get_bone_id() == 42:
+					object.ragdoll.doRagdollHeadshot(null,true,Vector3.ONE,Vector3.ZERO,false)
 				#object.set_meta("exploded",true)
 			#print(dmgClamped)
 			object.hit(dmgClamped*randf_range(1.1,1.8),null,-(global_position-object.global_position).normalized() * explosionImpulse * randf_range(1.3,1.8),Vector3.ZERO)

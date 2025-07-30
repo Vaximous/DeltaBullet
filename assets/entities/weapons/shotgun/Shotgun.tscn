@@ -1,19 +1,12 @@
-[gd_scene load_steps=66 format=3 uid="uid://bporbvksq0guk"]
+[gd_scene load_steps=56 format=3 uid="uid://bporbvksq0guk"]
 
 [ext_resource type="PackedScene" uid="uid://cpd5r8bmx2885" path="res://assets/entities/weapons/weaponBase.tscn" id="1_0fsk8"]
-[ext_resource type="Script" uid="uid://bfvbiknnwdu6i" path="res://assets/resources/customResources/weaponDisplayData/weaponDisplayData.gd" id="2_itg47"]
-[ext_resource type="Curve" uid="uid://bofowgxnuih6c" path="res://assets/resources/weaponCurves/veryCloseRange.tres" id="2_kgmay"]
 [ext_resource type="PackedScene" uid="uid://dofw2d7ywfhuj" path="res://assets/models/weapons/shotgun/ShotgunModelRemake.gltf" id="2_knrn7"]
+[ext_resource type="Resource" uid="uid://dk5r5pieqny0u" path="res://assets/entities/weapons/shotgun/Shotgun.tres" id="2_wgu5u"]
 [ext_resource type="Animation" uid="uid://br570qqsgqjn2" path="res://assets/animations/pawn/shotgunAim.res" id="3_ktcep"]
-[ext_resource type="AudioStream" uid="uid://brxvjv4isdmvu" path="res://assets/sounds/weapons/m4/m4_draw_1.wav" id="3_u8p3u"]
-[ext_resource type="Script" uid="uid://b6r8ewrq3qb3y" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="3_ygwk7"]
 [ext_resource type="Animation" uid="uid://ddw580uybuefv" path="res://assets/animations/pawn/shotgunFire.res" id="4_den26"]
 [ext_resource type="PackedScene" uid="uid://bvvxnmgamquay" path="res://assets/entities/muzzleFlashes/muzzles/flash1.tscn" id="4_k1gaq"]
-[ext_resource type="AudioStream" uid="uid://cyxfip8hwv23f" path="res://assets/sounds/weapons/m4/m4_draw_2.wav" id="4_lwauh"]
-[ext_resource type="AudioStream" uid="uid://74p6gclkalsk" path="res://assets/sounds/weapons/m4/m4_draw_3.wav" id="5_kgmay"]
 [ext_resource type="Animation" uid="uid://be53w68fsr0ii" path="res://assets/animations/pawn/shotgunIdle.res" id="5_oa30s"]
-[ext_resource type="AudioStream" uid="uid://c85mepdrdblyy" path="res://assets/sounds/weapons/m4/m4_draw_4.wav" id="6_dihwv"]
-[ext_resource type="Texture2D" uid="uid://dreu5hrqw1l7u" path="res://assets/textures/crosshair/crosshair066.png" id="7_lwauh"]
 [ext_resource type="AudioStream" uid="uid://cqqb2fcen14sv" path="res://assets/sounds/weapons/aimSound/m4_lockin_1.wav" id="8_0s4ct"]
 [ext_resource type="Animation" uid="uid://c0a5ijqwnb6ca" path="res://assets/entities/weapons/shotgun/shotgunFire.res" id="9_k1gaq"]
 [ext_resource type="AudioStream" uid="uid://c1ha0spgsursu" path="res://assets/sounds/weapons/aimSound/m4_lockin_2.wav" id="9_rbujw"]
@@ -23,73 +16,28 @@
 [ext_resource type="AudioStream" uid="uid://bsdw6vyxe4u1o" path="res://assets/sounds/weapons/shotgun/shotgunFire2.wav" id="14_k1gaq"]
 [ext_resource type="AudioStream" uid="uid://buoo6bg3q0e7a" path="res://assets/sounds/weapons/shotgun/shotgunFire3.wav" id="15_0wivs"]
 
-[sub_resource type="Resource" id="Resource_0wivs"]
-script = ExtResource("2_itg47")
-saleCategory = 2
-gritPrice = 0
-itemDescriptionShort = "The mothafuckin' Breadstick.."
-itemDescriptionLong = "\"The Breadstick\" as we call it is a high powered shotgun that will obliterate anything that's in front of the muzzle, do NOT get close to the front of this thing unless you want a second asshole."
-damage = 0.56
-fireRate = 0.15
-penetration = 0.25
-metadata/_custom_type_script = "uid://bfvbiknnwdu6i"
-
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_16b2g"]
-random_pitch = 1.1
-streams_count = 4
-stream_0/stream = ExtResource("3_u8p3u")
-stream_1/stream = ExtResource("4_lwauh")
-stream_2/stream = ExtResource("5_kgmay")
-stream_3/stream = ExtResource("6_dihwv")
-
-[sub_resource type="Resource" id="Resource_vy7wp"]
-script = ExtResource("3_ygwk7")
-useBulletTrail = true
-displayData = SubResource("Resource_0wivs")
-canBeReloaded = true
-weaponMagSize = 128
-ammoSize = 8
-reloadTime = 0.8
-headDismember = true
-weaponDamage = 160.0
-weaponFireRate = 1.2
-bulletSpeed = 800.0
-bulletPenetration = 1.0
-weaponImpulse = 95.0
-weaponShots = 8
-ammoConsumption = 1
-damageFalloff = ExtResource("2_kgmay")
-scopedWeapon = false
-scopedFOV = 25
-useCustomCrosshairSize = true
-crosshairSizeOverride = 0.8
-forcedCrosshair = ExtResource("7_lwauh")
-useFOV = false
-fovShotAmount = 1.5
-weaponRecoil = Vector3(15, 15, 0)
-weaponRecoilStrength = 15.0
-weaponSpread = 0.09
-weaponRecoilStrengthAim = 10.0
-weaponSpreadAim = 0.045
-leftHandParent = false
-rightHandParent = true
-useWeaponSprintAnim = false
-useLeftHandCover = true
-useRightHandCover = true
-useLeftHandIdle = true
-useRightHandIdle = true
-useLeftHandAiming = true
-useRightHandAiming = true
-useLeftHandFreeAiming = true
-useRightHandFreeAiming = true
-weaponPositionOffset = Vector3(-0.065, -0.32, 0.025)
-weaponRotationOffset = Vector3(-0.287979, -1.71042, -1.39626)
-equipStream = SubResource("AudioStreamRandomizer_16b2g")
-bulletColor = Color(1, 1, 0, 1)
-metadata/_custom_type_script = "uid://b6r8ewrq3qb3y"
-
 [sub_resource type="BoxShape3D" id="BoxShape3D_itg47"]
 size = Vector3(1.14345, 0.201904, 0.0509796)
+
+[sub_resource type="Animation" id="Animation_j0w07"]
+resource_name = "new_animation"
+
+[sub_resource type="Animation" id="Animation_itg47"]
+
+[sub_resource type="Animation" id="Animation_ygwk7"]
+
+[sub_resource type="Animation" id="Animation_0s4ct"]
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rbujw"]
+_data = {
+&"aim": ExtResource("3_ktcep"),
+&"equip": SubResource("Animation_j0w07"),
+&"fire": ExtResource("4_den26"),
+&"idle": ExtResource("5_oa30s"),
+&"reload": SubResource("Animation_itg47"),
+&"sprint": SubResource("Animation_ygwk7"),
+&"unequip": SubResource("Animation_0s4ct")
+}
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ybwpt"]
 animation = &"weaponAnims/aim"
@@ -219,26 +167,6 @@ nodes/weaponStateSpeed/node = SubResource("AnimationNodeTimeScale_uy32p")
 nodes/weaponStateSpeed/position = Vector2(80, 100)
 node_connections = [&"output", 0, &"weaponStateSpeed", &"weaponStateSpeed", 0, &"weaponState"]
 
-[sub_resource type="Animation" id="Animation_j0w07"]
-resource_name = "new_animation"
-
-[sub_resource type="Animation" id="Animation_itg47"]
-
-[sub_resource type="Animation" id="Animation_ygwk7"]
-
-[sub_resource type="Animation" id="Animation_0s4ct"]
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_rbujw"]
-_data = {
-&"aim": ExtResource("3_ktcep"),
-&"equip": SubResource("Animation_j0w07"),
-&"fire": ExtResource("4_den26"),
-&"idle": ExtResource("5_oa30s"),
-&"reload": SubResource("Animation_itg47"),
-&"sprint": SubResource("Animation_ygwk7"),
-&"unequip": SubResource("Animation_0s4ct")
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_0wivs"]
 _data = {
 &"fire": ExtResource("9_k1gaq")
@@ -261,7 +189,7 @@ stream_2/stream = ExtResource("15_0wivs")
 
 [node name="Shotgun" node_paths=PackedStringArray("weaponMesh", "ejectionPoint", "muzzlePoint") instance=ExtResource("1_0fsk8")]
 weaponMesh = NodePath("ShotgunModelRemake")
-weaponResource = SubResource("Resource_vy7wp")
+weaponResource = ExtResource("2_wgu5u")
 ejectionPoint = NodePath("ShotgunModelRemake/shotgunSkel/Skeleton3D/eject")
 muzzlePoint = NodePath("ShotgunModelRemake/shotgunSkel/Skeleton3D/muzzle")
 muzzleFlashes = Array[PackedScene]([ExtResource("4_k1gaq")])
@@ -284,6 +212,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00215911, -0.00476074, -0.
 shape = SubResource("BoxShape3D_itg47")
 
 [node name="AnimationTree" parent="." index="2"]
+libraries = {
+&"weaponAnims": SubResource("AnimationLibrary_rbujw")
+}
 tree_root = SubResource("AnimationNodeBlendTree_0fsk8")
 parameters/weaponStateSpeed/scale = 1.0
 

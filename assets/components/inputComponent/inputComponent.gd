@@ -17,7 +17,7 @@ func _ready()->void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta:float)->void:
-		if is_instance_valid(controllingPawn) and gameManager.isMouseHidden():
+		if is_instance_valid(controllingPawn) and gameManager.isMouseHidden() and !controllingPawn.isPawnDead:
 			if Input.is_action_pressed("gThrowThrowable"):
 				if is_instance_valid(controllingPawn) and controllingPawn.throwableAmount > 0:
 					if !controllingPawn.freeAim:
@@ -123,7 +123,7 @@ func getInputDir()->Vector3:
 		return Vector3.ZERO
 
 func _input(event: InputEvent) -> void:
-	if gameManager.isMouseHidden() and is_instance_valid(controllingPawn):
+	if gameManager.isMouseHidden() and is_instance_valid(controllingPawn) and !controllingPawn.isPawnDead:
 		if mouseActionsEnabled:
 			if event.is_action_pressed("gMwheelUp"):
 				#emit_signal("mouseButtonPressed", event.button_index)
@@ -162,7 +162,7 @@ func _input(event: InputEvent) -> void:
 
 		if event.is_action_pressed("gToggleCamera"):
 			#emit_signal("actionPressed", str(event.keycode))
-			if controllingPawn:
+			if controllingPawn and !controllingPawn.isPawnDead:
 				if !controllingPawn.attachedCam.mirroredCamera:
 					controllingPawn.attachedCam.mirroredCamera = true
 				else:

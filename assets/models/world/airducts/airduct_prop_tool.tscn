@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dordrugxhoy8t"]
+
+[ext_resource type="Script" uid="uid://obclq72xe01j" path="res://assets/models/world/airducts/airduct_prop_tool.gd" id="1_b7rcu"]
+
+[node name="AirductProp" type="Node3D"]
+script = ExtResource("1_b7rcu")

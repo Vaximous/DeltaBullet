@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://guuwxb1s6c86"]
+[gd_scene load_steps=45 format=3 uid="uid://guuwxb1s6c86"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_kfgfw"]
 [ext_resource type="PackedScene" uid="uid://boicvk4qeqmbd" path="res://assets/entities/pawnSpawn/pawnSpawn.tscn" id="2_b53fi"]
@@ -18,6 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://d10o2e44ltrnl" path="res://assets/entities/clothing/ArmoredShirt/armor_shirt.tscn" id="12_8gaxs"]
 [ext_resource type="Script" uid="uid://b6r8ewrq3qb3y" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="12_8umm3"]
 [ext_resource type="PackedScene" uid="uid://bb5qvdslt6004" path="res://assets/entities/clothing/Pants/armored_pants.tscn" id="13_kogde"]
+[ext_resource type="PackedScene" uid="uid://bgk584lddf4aa" path="res://assets/entities/weapons/BattlecadeAssaultRifle/BattlecadeAssaultRifle.tscn" id="17_8lt0s"]
 [ext_resource type="Curve" uid="uid://cex2ggwxevnuj" path="res://assets/entities/projectiles/linear_falloff_curve.tres" id="17_81g3a"]
 [ext_resource type="PackedScene" uid="uid://dvmmlj4mvj88r" path="res://assets/entities/aiMarker/aiMarker.tscn" id="18_kogde"]
 
@@ -104,16 +105,19 @@ metadata/_custom_type_script = ExtResource("5_nk0i3")
 [sub_resource type="Resource" id="Resource_8lt0s"]
 script = ExtResource("6_hs6fo")
 spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn")
+weapons = Array[PackedScene]([ExtResource("3_6fcsa")])
 metadata/_custom_type_script = ExtResource("6_hs6fo")
 
 [sub_resource type="Resource" id="Resource_pu1nq"]
 script = ExtResource("6_hs6fo")
 spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn2")
+weapons = Array[PackedScene]([ExtResource("10_8umm3")])
 metadata/_custom_type_script = ExtResource("6_hs6fo")
 
 [sub_resource type="Resource" id="Resource_juc33"]
 script = ExtResource("6_hs6fo")
 spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn")
+weapons = Array[PackedScene]([ExtResource("17_8lt0s")])
 metadata/_custom_type_script = ExtResource("6_hs6fo")
 
 [sub_resource type="Resource" id="Resource_qt2cm"]
@@ -124,16 +128,19 @@ metadata/_custom_type_script = ExtResource("6_hs6fo")
 [sub_resource type="Resource" id="Resource_akbhf"]
 script = ExtResource("6_hs6fo")
 spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn2")
+weapons = Array[PackedScene]([ExtResource("11_qxayr")])
 metadata/_custom_type_script = ExtResource("6_hs6fo")
 
 [sub_resource type="Resource" id="Resource_wko7f"]
 script = ExtResource("6_hs6fo")
 spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn3")
+weapons = Array[PackedScene]([ExtResource("11_qxayr")])
 metadata/_custom_type_script = ExtResource("6_hs6fo")
 
 [sub_resource type="Resource" id="Resource_tq1sb"]
 script = ExtResource("6_hs6fo")
 spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn3")
+weapons = Array[PackedScene]([ExtResource("3_6fcsa")])
 metadata/_custom_type_script = ExtResource("6_hs6fo")
 
 [sub_resource type="Resource" id="Resource_iytwq"]
@@ -215,13 +222,41 @@ use_collision = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.15692, -1, -0.0108032)
 size = Vector3(25.7789, 1, 31.8798)
 
-[node name="csgBox3d2" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgCombiner3d" index="1"]
+[node name="csgBox3d4" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgCombiner3d" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.647299, 0.46264648, -0.0108032)
+size = Vector3(0.7981415, 3.925293, 31.8798)
+
+[node name="csgBox3d5" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgCombiner3d" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.0122147, 0.46264648, -15.617472)
+size = Vector3(26.06831, 3.925293, 0.6664629)
+
+[node name="csgBox3d6" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgCombiner3d" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.604862, 0.46264648, 0.19046688)
+size = Vector3(0.8341551, 3.925293, 32.282337)
+
+[node name="csgBox3d7" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgCombiner3d" index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.938796, 0.46264648, 16.331135)
+size = Vector3(25.921473, 3.925293, 0.001)
+
+[node name="csgBox3d2" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgCombiner3d" index="5"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, -0.151112, -3)
 size = Vector3(3, 2, 3)
 
-[node name="csgBox3d3" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgCombiner3d" index="2"]
+[node name="csgBox3d3" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgCombiner3d" index="6"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0.155125, -3)
 size = Vector3(3, 2, 3)
+
+[node name="csgBox3d8" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgCombiner3d" index="7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.541769, 0.15512502, 7.032154)
+size = Vector3(3, 2, 3)
+
+[node name="csgBox3d9" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgCombiner3d" index="8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.0645866, 0.15512502, 7.703882)
+size = Vector3(3.4453125, 2, 1.2960205)
+
+[node name="csgBox3d10" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgCombiner3d" index="9"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.4776726, -0.2362324, 8.054682)
+size = Vector3(4.6191406, 1.2172852, 0.5944214)
 
 [node name="aiMarker" parent="Misc/WaypointNodes" index="0" instance=ExtResource("18_kogde")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.6203, -0.289057, -15.0053)

@@ -1,0 +1,90 @@
+[gd_scene load_steps=4 format=3 uid="uid://1mi1xcrie3lr"]
+
+[ext_resource type="Script" uid="uid://cmd6i4lkbbwuk" path="res://assets/scenes/ui/customization/customization_color_options.gd" id="1_cpj25"]
+
+[sub_resource type="Environment" id="Environment_cpj25"]
+
+[sub_resource type="World3D" id="World3D_aoweo"]
+environment = SubResource("Environment_cpj25")
+
+[node name="colorOptions" type="Control"]
+clip_contents = true
+layout_mode = 3
+offset_right = 649.0
+offset_bottom = 638.0
+script = ExtResource("1_cpj25")
+
+[node name="customizationColorOptions" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+offset_right = 652.0
+offset_bottom = 638.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="panel" type="Panel" parent="customizationColorOptions"]
+layout_mode = 2
+
+[node name="vBoxContainer" type="VBoxContainer" parent="customizationColorOptions/panel"]
+layout_mode = 0
+offset_right = 652.0
+offset_bottom = 641.0
+
+[node name="itemPreviewVP" type="SubViewportContainer" parent="customizationColorOptions/panel/vBoxContainer"]
+layout_mode = 2
+
+[node name="subViewport" type="SubViewport" parent="customizationColorOptions/panel/vBoxContainer/itemPreviewVP"]
+own_world_3d = true
+world_3d = SubResource("World3D_aoweo")
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(652, 252)
+render_target_update_mode = 4
+
+[node name="node3d" type="Node3D" parent="customizationColorOptions/panel/vBoxContainer/itemPreviewVP/subViewport"]
+
+[node name="camera3d" type="Camera3D" parent="customizationColorOptions/panel/vBoxContainer/itemPreviewVP/subViewport/node3d"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.202929)
+
+[node name="clothingItem" type="Node3D" parent="customizationColorOptions/panel/vBoxContainer/itemPreviewVP/subViewport"]
+
+[node name="materialSelector" type="Control" parent="customizationColorOptions/panel/vBoxContainer"]
+custom_minimum_size = Vector2(0, 86.96)
+layout_mode = 2
+
+[node name="hSeparator" type="HSeparator" parent="customizationColorOptions/panel/vBoxContainer/materialSelector"]
+layout_mode = 0
+offset_top = -8.0
+offset_right = 652.0
+offset_bottom = -4.0
+
+[node name="label2" type="Label" parent="customizationColorOptions/panel/vBoxContainer/materialSelector"]
+layout_mode = 0
+offset_top = 4.0
+offset_right = 652.0
+offset_bottom = 27.0
+text = "MATERIALS"
+horizontal_alignment = 1
+
+[node name="materialContainer" type="HBoxContainer" parent="customizationColorOptions/panel/vBoxContainer/materialSelector"]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 0
+offset_top = 31.0
+offset_right = 652.0
+offset_bottom = 76.0
+alignment = 1
+
+[node name="hSeparator2" type="HSeparator" parent="customizationColorOptions/panel/vBoxContainer"]
+layout_mode = 2
+
+[node name="label" type="Label" parent="customizationColorOptions/panel/vBoxContainer"]
+layout_mode = 2
+text = "COLOR PICKER"
+horizontal_alignment = 1
+
+[node name="colorPicker" type="ColorPicker" parent="customizationColorOptions/panel/vBoxContainer"]
+layout_mode = 2
+edit_alpha = false
+edit_intensity = false
+picker_shape = 4
+sampler_visible = false

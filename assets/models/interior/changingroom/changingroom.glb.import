@@ -15,9 +15,11 @@ dest_files=["res://.godot/imported/changingroom.glb-fab11c1b8ba08910f598be2b941a
 
 nodes/root_type=""
 nodes/root_name=""
+nodes/root_script=null
 nodes/apply_root_scale=true
 nodes/root_scale=1.0
 nodes/import_as_skeleton_bones=false
+nodes/use_name_suffixes=true
 nodes/use_node_type_suffixes=true
 meshes/ensure_tangents=true
 meshes/generate_lods=true
@@ -32,43 +34,55 @@ animation/trimming=false
 animation/remove_immutable_tracks=true
 animation/import_rest_as_RESET=false
 import_script/path=""
+materials/extract=0
+materials/extract_format=0
+materials/extract_path=""
 _subresources={
 "materials": {
 "Floor": {
 "use_external/enabled": true,
-"use_external/path": "res://assets/models/interior/changingroom/Floor.tres"
+"use_external/fallback_path": "res://assets/models/interior/changingroom/Floor.tres",
+"use_external/path": "uid://bb0mg8bye2y67"
 },
 "Glass": {
 "use_external/enabled": true,
-"use_external/path": "res://assets/models/interior/changingroom/Glass.tres"
+"use_external/fallback_path": "res://assets/models/interior/changingroom/Glass.tres",
+"use_external/path": "uid://dw1k2ug5l7xor"
 },
 "MALE": {
 "use_external/enabled": true,
-"use_external/path": "res://assets/models/interior/changingroom/MALE.tres"
+"use_external/fallback_path": "res://assets/models/interior/changingroom/MALE.tres",
+"use_external/path": "uid://rhrkdfhowrs7"
 },
 "Material_0": {
 "use_external/enabled": true,
-"use_external/path": "res://assets/models/interior/changingroom/Material_0.tres"
+"use_external/fallback_path": "res://assets/models/interior/changingroom/Material_0.tres",
+"use_external/path": "uid://bhu77o7bohk1m"
 },
 "Walls": {
 "use_external/enabled": true,
-"use_external/path": "res://assets/models/interior/changingroom/Walls.tres"
+"use_external/fallback_path": "res://assets/models/interior/changingroom/Walls.tres",
+"use_external/path": "uid://cgk05frhhaq8e"
 },
 "WardrobeSteel": {
 "use_external/enabled": true,
-"use_external/path": "res://assets/models/interior/changingroom/WardrobeSteel.tres"
+"use_external/fallback_path": "res://assets/models/interior/changingroom/WardrobeSteel.tres",
+"use_external/path": "uid://doi2tqqimhggh"
 },
 "WardrobeWood": {
 "use_external/enabled": true,
-"use_external/path": "res://assets/models/interior/changingroom/WardrobeWood.tres"
+"use_external/fallback_path": "res://assets/models/interior/changingroom/WardrobeWood.tres",
+"use_external/path": "uid://bynwskuck5r36"
 },
 "Wood": {
 "use_external/enabled": true,
-"use_external/path": "res://assets/models/interior/changingroom/Wood.tres"
+"use_external/fallback_path": "res://assets/models/interior/changingroom/Wood.tres",
+"use_external/path": "uid://hs45cy5lurrd"
 },
 "goreInside": {
 "use_external/enabled": true,
-"use_external/path": "res://assets/models/interior/changingroom/goreInside.tres"
+"use_external/fallback_path": "res://assets/models/interior/changingroom/goreInside.tres",
+"use_external/path": "uid://dw2ns7ljtnqd5"
 }
 },
 "meshes": {
@@ -78,7 +92,8 @@ _subresources={
 "generate/shadow_meshes": 0,
 "lods/normal_merge_angle": 60.0,
 "save_to_file/enabled": true,
-"save_to_file/path": "res://assets/models/interior/changingroom/changingroom_Cube_001.res"
+"save_to_file/fallback_path": "res://assets/models/interior/changingroom/changingroom_Cube_001.res",
+"save_to_file/path": "uid://cdqacx3jpfyfa"
 },
 "changingroom_Cube_002": {
 "generate/lightmap_uv": 0,
@@ -86,7 +101,8 @@ _subresources={
 "generate/shadow_meshes": 0,
 "lods/normal_merge_angle": 60.0,
 "save_to_file/enabled": true,
-"save_to_file/path": "res://assets/models/interior/changingroom/changingroom_Cube_002.res"
+"save_to_file/fallback_path": "res://assets/models/interior/changingroom/changingroom_Cube_002.res",
+"save_to_file/path": "uid://fye5nm3sk4mo"
 },
 "changingroom_Cube_004": {
 "generate/lightmap_uv": 0,
@@ -94,7 +110,8 @@ _subresources={
 "generate/shadow_meshes": 0,
 "lods/normal_merge_angle": 60.0,
 "save_to_file/enabled": true,
-"save_to_file/path": "res://assets/models/interior/changingroom/changingroom_Cube_004.res"
+"save_to_file/fallback_path": "res://assets/models/interior/changingroom/changingroom_Cube_004.res",
+"save_to_file/path": "uid://b54vrmcdxsmic"
 },
 "changingroom_Mesh_0": {
 "generate/lightmap_uv": 0,
@@ -102,7 +119,8 @@ _subresources={
 "generate/shadow_meshes": 0,
 "lods/normal_merge_angle": 60.0,
 "save_to_file/enabled": true,
-"save_to_file/path": "res://assets/models/interior/changingroom/changingroom_Mesh_0.res"
+"save_to_file/fallback_path": "res://assets/models/interior/changingroom/changingroom_Mesh_0.res",
+"save_to_file/path": "uid://bpwo184vnypx1"
 },
 "changingroom_Mesh_1": {
 "generate/lightmap_uv": 0,
@@ -110,7 +128,8 @@ _subresources={
 "generate/shadow_meshes": 0,
 "lods/normal_merge_angle": 60.0,
 "save_to_file/enabled": true,
-"save_to_file/path": "res://assets/models/interior/changingroom/changingroom_Mesh_1.res"
+"save_to_file/fallback_path": "res://assets/models/interior/changingroom/changingroom_Mesh_1.res",
+"save_to_file/path": "uid://b6hpn3f6cswph"
 },
 "changingroom_Mesh_10": {
 "generate/lightmap_uv": 0,
@@ -118,7 +137,8 @@ _subresources={
 "generate/shadow_meshes": 0,
 "lods/normal_merge_angle": 60.0,
 "save_to_file/enabled": true,
-"save_to_file/path": "res://assets/models/interior/changingroom/changingroom_Mesh_10.res"
+"save_to_file/fallback_path": "res://assets/models/interior/changingroom/changingroom_Mesh_10.res",
+"save_to_file/path": "uid://c8sn7fngrex0r"
 },
 "changingroom_Mesh_11": {
 "generate/lightmap_uv": 0,
@@ -126,7 +146,8 @@ _subresources={
 "generate/shadow_meshes": 0,
 "lods/normal_merge_angle": 60.0,
 "save_to_file/enabled": true,
-"save_to_file/path": "res://assets/models/interior/changingroom/changingroom_Mesh_11.res"
+"save_to_file/fallback_path": "res://assets/models/interior/changingroom/changingroom_Mesh_11.res",
+"save_to_file/path": "uid://chcrx2vecmdf0"
 },
 "changingroom_Mesh_12": {
 "generate/lightmap_uv": 0,
@@ -134,7 +155,8 @@ _subresources={
 "generate/shadow_meshes": 0,
 "lods/normal_merge_angle": 60.0,
 "save_to_file/enabled": true,
-"save_to_file/path": "res://assets/models/interior/changingroom/changingroom_Mesh_12.res"
+"save_to_file/fallback_path": "res://assets/models/interior/changingroom/changingroom_Mesh_12.res",
+"save_to_file/path": "uid://cnt0kbi6sajxn"
 },
 "changingroom_Mesh_13": {
 "generate/lightmap_uv": 0,
@@ -142,7 +164,8 @@ _subresources={
 "generate/shadow_meshes": 0,
 "lods/normal_merge_angle": 60.0,
 "save_to_file/enabled": true,
-"save_to_file/path": "res://assets/models/interior/changingroom/changingroom_Mesh_13.res"
+"save_to_file/fallback_path": "res://assets/models/interior/changingroom/changingroom_Mesh_13.res",
+"save_to_file/path": "uid://ckiluol8w6ygw"
 },
 "changingroom_Mesh_14": {
 "generate/lightmap_uv": 0,
@@ -150,7 +173,8 @@ _subresources={
 "generate/shadow_meshes": 0,
 "lods/normal_merge_angle": 60.0,
 "save_to_file/enabled": true,
-"save_to_file/path": "res://assets/models/interior/changingroom/changingroom_Mesh_14.res"
+"save_to_file/fallback_path": "res://assets/models/interior/changingroom/changingroom_Mesh_14.res",
+"save_to_file/path": "uid://dgq3kaoasnllx"
 },
 "changingroom_Mesh_15": {
 "generate/lightmap_uv": 0,
@@ -158,7 +182,8 @@ _subresources={
 "generate/shadow_meshes": 0,
 "lods/normal_merge_angle": 60.0,
 "save_to_file/enabled": true,
-"save_to_file/path": "res://assets/models/interior/changingroom/changingroom_Mesh_15.res"
+"save_to_file/fallback_path": "res://assets/models/interior/changingroom/changingroom_Mesh_15.res",
+"save_to_file/path": "uid://belu1vkp7glht"
 },
 "changingroom_Mesh_16": {
 "generate/lightmap_uv": 0,
@@ -166,7 +191,8 @@ _subresources={
 "generate/shadow_meshes": 0,
 "lods/normal_merge_angle": 60.0,
 "save_to_file/enabled": true,
-"save_to_file/path": "res://assets/models/interior/changingroom/changingroom_Mesh_16.res"
+"save_to_file/fallback_path": "res://assets/models/interior/changingroom/changingroom_Mesh_16.res",
+"save_to_file/path": "uid://rkjqpsdrnbvk"
 },
 "changingroom_Mesh_2": {
 "generate/lightmap_uv": 0,
@@ -174,7 +200,8 @@ _subresources={
 "generate/shadow_meshes": 0,
 "lods/normal_merge_angle": 60.0,
 "save_to_file/enabled": true,
-"save_to_file/path": "res://assets/models/interior/changingroom/changingroom_Mesh_2.res"
+"save_to_file/fallback_path": "res://assets/models/interior/changingroom/changingroom_Mesh_2.res",
+"save_to_file/path": "uid://bgive3scgommx"
 },
 "changingroom_Mesh_3": {
 "generate/lightmap_uv": 0,
@@ -182,7 +209,8 @@ _subresources={
 "generate/shadow_meshes": 0,
 "lods/normal_merge_angle": 60.0,
 "save_to_file/enabled": true,
-"save_to_file/path": "res://assets/models/interior/changingroom/changingroom_Mesh_3.res"
+"save_to_file/fallback_path": "res://assets/models/interior/changingroom/changingroom_Mesh_3.res",
+"save_to_file/path": "uid://kd2dw2pbxdi4"
 },
 "changingroom_Mesh_4": {
 "generate/lightmap_uv": 0,
@@ -190,7 +218,8 @@ _subresources={
 "generate/shadow_meshes": 0,
 "lods/normal_merge_angle": 60.0,
 "save_to_file/enabled": true,
-"save_to_file/path": "res://assets/models/interior/changingroom/changingroom_Mesh_4.res"
+"save_to_file/fallback_path": "res://assets/models/interior/changingroom/changingroom_Mesh_4.res",
+"save_to_file/path": "uid://8532r0353dcd"
 },
 "changingroom_Mesh_5": {
 "generate/lightmap_uv": 0,
@@ -198,7 +227,8 @@ _subresources={
 "generate/shadow_meshes": 0,
 "lods/normal_merge_angle": 60.0,
 "save_to_file/enabled": true,
-"save_to_file/path": "res://assets/models/interior/changingroom/changingroom_Mesh_5.res"
+"save_to_file/fallback_path": "res://assets/models/interior/changingroom/changingroom_Mesh_5.res",
+"save_to_file/path": "uid://d2r80d2q66dnm"
 },
 "changingroom_Mesh_6": {
 "generate/lightmap_uv": 0,
@@ -206,7 +236,8 @@ _subresources={
 "generate/shadow_meshes": 0,
 "lods/normal_merge_angle": 60.0,
 "save_to_file/enabled": true,
-"save_to_file/path": "res://assets/models/interior/changingroom/changingroom_Mesh_6.res"
+"save_to_file/fallback_path": "res://assets/models/interior/changingroom/changingroom_Mesh_6.res",
+"save_to_file/path": "uid://ce3fjas1hwtem"
 },
 "changingroom_Mesh_7": {
 "generate/lightmap_uv": 0,
@@ -214,7 +245,8 @@ _subresources={
 "generate/shadow_meshes": 0,
 "lods/normal_merge_angle": 60.0,
 "save_to_file/enabled": true,
-"save_to_file/path": "res://assets/models/interior/changingroom/changingroom_Mesh_7.res"
+"save_to_file/fallback_path": "res://assets/models/interior/changingroom/changingroom_Mesh_7.res",
+"save_to_file/path": "uid://bpcuj2vofchho"
 },
 "changingroom_Mesh_8": {
 "generate/lightmap_uv": 0,
@@ -222,7 +254,8 @@ _subresources={
 "generate/shadow_meshes": 0,
 "lods/normal_merge_angle": 60.0,
 "save_to_file/enabled": true,
-"save_to_file/path": "res://assets/models/interior/changingroom/changingroom_Mesh_8.res"
+"save_to_file/fallback_path": "res://assets/models/interior/changingroom/changingroom_Mesh_8.res",
+"save_to_file/path": "uid://c2tgpl3qqsthn"
 },
 "changingroom_Mesh_9": {
 "generate/lightmap_uv": 0,
@@ -230,7 +263,8 @@ _subresources={
 "generate/shadow_meshes": 0,
 "lods/normal_merge_angle": 60.0,
 "save_to_file/enabled": true,
-"save_to_file/path": "res://assets/models/interior/changingroom/changingroom_Mesh_9.res"
+"save_to_file/fallback_path": "res://assets/models/interior/changingroom/changingroom_Mesh_9.res",
+"save_to_file/path": "uid://c32tr2qxh1v3f"
 }
 }
 }

@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://br1i3eo1fvc1y"]
+
+[ext_resource type="Script" uid="uid://dr3bsd51du7dg" path="res://assets/scenes/ui/customization/material_button.gd" id="1_8euk3"]
+
+[node name="materialButton" type="ColorRect"]
+custom_minimum_size = Vector2(45, 45)
+anchors_preset = -1
+offset_right = 45.0
+offset_bottom = 45.0
+script = ExtResource("1_8euk3")
+metadata/materialID = 0
+
+[node name="button" type="Button" parent="."]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = -1
+offset_right = 45.0
+offset_bottom = 45.0

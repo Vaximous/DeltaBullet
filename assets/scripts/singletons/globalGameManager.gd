@@ -424,9 +424,25 @@ func enablePlayer()->void:
 			activeCamera.followingEntity.inputComponent.movementEnabled = true
 			activeCamera.followingEntity.inputComponent.mouseActionsEnabled = true
 
+func getMeshSurfaces(mesh:Mesh)->Array:
+	var arr:Array = []
+	for i in mesh.get_surface_count():
+		arr.append(mesh.surface_get_material(i))
+	return arr
+
+func createOverrideFromSurfaceMaterial(meshInstance:MeshInstance3D,mesh:Mesh,id:int):
+	var surface = getMeshSurfaces(mesh)[id].duplicate()
+	meshInstance.set_surface_override_material(id,surface)
+	return surface
 
 func clearTemporaryPawnInfo()->void:
 	temporaryPawnInfo.clear()
+
+func getMeshSurfaceOverrides(mesh:MeshInstance3D)->Array:
+	var arr:Array = []
+	for i in mesh.get_surface_override_material_count():
+		arr.append(mesh.get_surface_override_material(i))
+	return arr
 
 func saveTemporaryPawnInfo()->void:
 	for p in playerPawns.size():

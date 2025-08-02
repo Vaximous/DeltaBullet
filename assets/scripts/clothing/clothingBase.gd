@@ -1,7 +1,12 @@
 extends Node3D
 class_name ClothingItem
 
-@onready var clothingMesh : MeshInstance3D = $clothingMesh
+@onready var clothingMesh : MeshInstance3D = $clothingMesh:
+	set(value):
+		clothingMesh = value
+		for i in gameManager.getMeshSurfaceOverrides(clothingMesh):
+			if !is_instance_valid(i):
+				gameManager.createOverrideFromSurfaceMaterial(clothingMesh,clothingMesh.mesh,i)
 
 @export_category("Clothing Item")
 @export_subgroup("Item")

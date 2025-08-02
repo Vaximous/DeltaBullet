@@ -4,7 +4,6 @@
 [ext_resource type="ArrayMesh" uid="uid://c5y3h3lhmpk5o" path="res://assets/models/pawn/clothing/pants/pants.res" id="2_pf7co"]
 
 [node name="Pants" instance=ExtResource("1_fwjk5")]
-physics_interpolation_mode = 1
 clothingCategory = 4
 clothingType = 5
 itemName = "Pants"

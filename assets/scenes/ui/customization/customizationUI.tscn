@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://iftsfle430nr"]
+[gd_scene load_steps=53 format=3 uid="uid://iftsfle430nr"]
 
 [ext_resource type="Script" uid="uid://dmkj1xkkt0fwp" path="res://assets/scenes/ui/customization/customizationUI.gd" id="1_2bhr7"]
 [ext_resource type="PackedScene" uid="uid://ctrswootky6q7" path="res://assets/scenes/ui/customization/customizationWorld.tscn" id="1_sgpgn"]
@@ -7,6 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://bv1yawyrs6hwq" path="res://assets/sounds/ui/customizationui/Cabinet_click_1.wav" id="7_b24yg"]
 [ext_resource type="FontFile" uid="uid://xmwjvmqspojb" path="res://assets/fonts/Grand_Aventure_Text.otf" id="8_1ugh4"]
 [ext_resource type="AudioStream" uid="uid://cfd6i74gh5ej8" path="res://assets/sounds/ui/customizationui/Cabinet_click_3.wav" id="8_8vuu3"]
+[ext_resource type="PackedScene" uid="uid://bjk14iy4pg0q6" path="res://assets/scenes/ui/customization/equippedIndexEntry.tscn" id="8_tuxjq"]
 [ext_resource type="AudioStream" uid="uid://cymgepscpblsn" path="res://assets/sounds/ui/customizationui/Cabinet_click_4.wav" id="9_tuxjq"]
 [ext_resource type="AudioStream" uid="uid://c20qx4vf2yvyx" path="res://assets/sounds/ui/customizationui/Hover_cabinet_1.wav" id="10_b24yg"]
 [ext_resource type="AudioStream" uid="uid://d2d4k2w8ysi1f" path="res://assets/sounds/ui/customizationui/Hover_cabinet_2.wav" id="11_8vuu3"]
@@ -329,13 +330,12 @@ world_3d = SubResource("World3D_eb65e")
 transparent_bg = true
 handle_input_locally = false
 msaa_3d = 1
-size = Vector2i(2, 2)
+size = Vector2i(661, 794)
 render_target_update_mode = 4
 
 [node name="customizationWorld" parent="customizationUi/characterPreviewContainer/subViewportContainer/subViewport" instance=ExtResource("1_sgpgn")]
 
 [node name="catalogControl" type="Control" parent="customizationUi"]
-layout_mode = 2
 anchors_preset = 0
 anchor_left = 1.0
 anchor_right = 1.0
@@ -444,6 +444,11 @@ layout_mode = 2
 layout_mode = 2
 columns = 3
 
+[node name="vBoxContainer2" type="VBoxContainer" parent="customizationUi/catalogControl"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
 [node name="customizationLabel" type="Control" parent="customizationUi"]
 anchors_preset = 0
 offset_right = 505.0
@@ -471,6 +476,39 @@ theme_override_constants/outline_size = 1
 theme_override_constants/shadow_outline_size = 5
 theme_override_font_sizes/font_size = 66
 text = "Customization"
+
+[node name="equippedIndex" type="VBoxContainer" parent="customizationUi"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 1.0
+offset_top = 81.0
+offset_right = 445.0
+offset_bottom = 894.0
+
+[node name="topBar" type="Control" parent="customizationUi/equippedIndex"]
+custom_minimum_size = Vector2(0, 47.63)
+layout_mode = 2
+
+[node name="panelContainer" type="ColorRect" parent="customizationUi/equippedIndex/topBar"]
+layout_mode = 0
+offset_right = 445.0
+offset_bottom = 48.0
+color = Color(0, 0, 0, 1)
+
+[node name="label" type="Label" parent="customizationUi/equippedIndex/topBar/panelContainer"]
+layout_mode = 0
+offset_top = 3.0
+offset_right = 445.0
+offset_bottom = 50.0
+text = "EQUIPPED"
+label_settings = SubResource("LabelSettings_xf102")
+horizontal_alignment = 1
+
+[node name="hSeparator" type="HSeparator" parent="customizationUi/equippedIndex"]
+layout_mode = 2
+
+[node name="equippedIndexEntry" parent="customizationUi/equippedIndex" instance=ExtResource("8_tuxjq")]
+layout_mode = 2
 
 [node name="equipSounds" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamRandomizer_k1rsh")

@@ -1360,6 +1360,7 @@ func savePawnInformation()->String:
 	var saveWeaponMags : Array
 	var saveClothes : Array
 	var purchasedClothes : Array
+	var clothesColors : Array
 	saveWeapons.clear()
 	for weapons in itemInventory.size():
 		if itemInventory[weapons] != null:
@@ -1378,8 +1379,22 @@ func savePawnInformation()->String:
 			saveClothes.append(clothingInventory[clothes].get_scene_file_path())
 			if !purchasedClothes.has(clothingInventory[clothes].get_scene_file_path()):
 				purchasedClothes.append(clothingInventory[clothes].get_scene_file_path())
+
+	for clothes in clothingInventory.size():
+		if clothingInventory[clothes] != null:
+			var overrides = gameManager.getMeshSurfaceOverrides(clothingInventory[clothes].clothingMesh)
+			var colors = []
+			for i in overrides:
+				if is_instance_valid(i):
+					var clr = Color(i.albedo_color.r,i.albedo_color.g,i.albedo_color.b)
+					colors.append(clr)
+					#print(colors)
+					if !clothesColors.has(clr):
+						clothesColors.append(clr)
+
 	var pwnDict = {
 		"clothes" : saveClothes,
+		"clothesColors": clothesColors,
 		"purchasedClothes" : purchasedClothes,
 		"items" : saveWeapons,
 		"itemAmmo" : saveWeaponAmmo,
@@ -1449,8 +1464,19 @@ func loadPawnInfo(pawnInfo:String)->void:
 		purchasedClothing = nodeData["purchasedClothes"]
 
 	for clothing in nodeData["clothes"]:
-			var clothingItem = load(clothing).instantiate()
+			var colors = nodeData["clothesColors"]
+			var clothingItem : ClothingItem = load(clothing).instantiate()
 			clothingHolder.add_child(clothingItem)
+			if !colors.is_empty():
+				for i in gameManager.getMeshSurfaceOverrides(clothingItem.clothingMesh).size()-1:
+					var mat = clothingItem.clothingMesh.get_surface_override_material(i)
+					if is_instance_valid(colors[i]) and !colors.is_empty():
+						var clr = Color(colors[i].r,colors[i].g,colors[i].b)
+						clothingItem.clothingMesh.set_surface_override_material(i,mat)
+						mat.albedo_color.r = clr.r
+						mat.albedo_color.g = clr.g
+						mat.albedo_color.b = clr.b
+
 
 	checkClothes()
 	checkItems()

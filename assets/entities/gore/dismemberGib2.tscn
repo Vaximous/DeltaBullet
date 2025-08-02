@@ -228,7 +228,6 @@ shape = SubResource("SphereShape3D_xphrd")
 
 [node name="fleshBit" type="MeshInstance3D" parent="."]
 top_level = true
-visible = false
 layers = 8
 visibility_range_end = 10.0
 visibility_range_end_margin = 1.0

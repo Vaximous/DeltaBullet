@@ -42,27 +42,27 @@ outline_color = Color(0, 0, 0, 1)
 shadow_size = 6
 shadow_color = Color(0, 0, 0, 0.431373)
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_86cvr"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_421p7"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ct1ns"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wm1gk"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dwc62"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4h103"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_b1tsn"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_88p3t"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mfmp6"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_15qff"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fuvv5"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_15qff"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mfmp6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_88p3t"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_b1tsn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4h103"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dwc62"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wm1gk"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ct1ns"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_421p7"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_86cvr"]
 
 [sub_resource type="Animation" id="Animation_h1xa5"]
 length = 0.001
@@ -198,7 +198,7 @@ pawnEnabled = false
 transform = Transform3D(-0.766711, 0.211272, -0.606233, 0.0237522, 0.952988, 0.302077, 0.641553, 0.217206, -0.735685, -0.500804, 1.62699, -0.529846)
 
 [node name="bottomArea" type="TextureRect" parent="backgroundPanel"]
-layout_mode = 2
+layout_mode = 0
 anchor_top = 0.787
 anchor_right = 0.993
 anchor_bottom = 1.005
@@ -210,7 +210,7 @@ expand_mode = 1
 
 [node name="ItemText" type="Label" parent="backgroundPanel/bottomArea"]
 layout_mode = 1
-anchors_preset = 9
+anchors_preset = -1
 anchor_bottom = 1.0
 offset_right = 144.0
 grow_vertical = 2
@@ -221,31 +221,31 @@ autowrap_mode = 2
 justification_flags = 162
 
 [node name="topBar" type="Panel" parent="backgroundPanel"]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.974
 anchor_bottom = 1.025
-offset_right = 147.0
+offset_right = 146.99998
 offset_bottom = 207.0
 
 [node name="button" type="Button" parent="backgroundPanel"]
-layout_mode = 2
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme_override_styles/focus = SubResource("StyleBoxEmpty_86cvr")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_421p7")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_ct1ns")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_wm1gk")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_dwc62")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_4h103")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_b1tsn")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_88p3t")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_mfmp6")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxTexture_fuvv5")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_15qff")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxTexture_fuvv5")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_mfmp6")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_88p3t")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_b1tsn")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_4h103")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_dwc62")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_wm1gk")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_ct1ns")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_421p7")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_86cvr")
 
 [node name="equippedIcon" type="TextureRect" parent="backgroundPanel"]
-visible = false
 layout_mode = 0
 offset_right = 24.0
 offset_bottom = 24.0

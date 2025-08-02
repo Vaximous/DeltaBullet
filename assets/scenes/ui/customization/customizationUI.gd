@@ -1,7 +1,9 @@
 extends CanvasLayer
+@onready var equippedIndex : VBoxContainer = $customizationUi/equippedIndex
 @onready var blur = $blur
 @onready var customizationUI : Control = $customizationUi
 @onready var equipSound : AudioStreamPlayer = $equipSounds
+@onready var colorChanger : Control = $customizationUi/colorChanger
 var customizeTween : Tween
 @export_enum("Hair","Headgear","Bling","Body","Pants")var selectedSection : int = 1:
 	set(value):
@@ -12,6 +14,7 @@ var clothingPawn : BasePawn:
 		clothingPawn = value
 		setPreviewAppearance()
 		setupButtons()
+		refreshEquippedIndex()
 @onready var animationTitlebar : AnimationPlayer = $customizationUi/animationPlayer
 @onready var characterPreviewWorld = $customizationUi/characterPreviewContainer/subViewportContainer/subViewport/customizationWorld
 @export var buttonHolder : HBoxContainer
@@ -20,6 +23,7 @@ var clothingPawn : BasePawn:
 const defaultTweenSpeed : float = 0.25
 const defaultTransitionType = Tween.TRANS_QUART
 const defaultEaseType = Tween.EASE_OUT
+var colorInst : Array = []
 
 func _ready() -> void:
 	#setupButtons()
@@ -27,6 +31,7 @@ func _ready() -> void:
 	animationTitlebar.play("titlebarIn")
 	gameManager.showMouse()
 	fadeCustomizationUIIn()
+	#refreshEquippedIndex()
 
 
 func enlargeControlScale(control:Control,size:float=1.5)->void:
@@ -63,6 +68,23 @@ func setupButtons()->void:
 			buttons.pressed.connect(generateClothingOptions.bind(clothingPawn))
 			#buttons.pressed.connect(playClickSound)
 
+func toggleColorChanger(item)->void:
+	var itm = item.instantiate()
+	colorInst.append(itm)
+	colorChanger.visible = !colorChanger.visible
+	colorChanger.selectItem(itm)
+	colorChanger.selectedID = 0
+
+func clearEquippedIndex()->void:
+	for i in equippedIndex.get_children():
+		if i is PanelContainer:
+			i.queue_free()
+
+func createEquippedIndexEntry(item:ClothingItem)->void:
+	var entry = load("res://assets/scenes/ui/customization/equippedIndexEntry.tscn").instantiate()
+	entry.clothingItem = item
+	equippedIndex.add_child(entry)
+
 
 func playHoverSound()->void:
 	#if !%hoverSound.playing:
@@ -92,6 +114,8 @@ func getSelectedSectionID(button:TextureButton)->int:
 
 func _exit_tree() -> void:
 	gameManager.hideMouse()
+	for i in colorInst:
+		i.queue_free()
 	gameManager.pauseMenu.canPause = true
 	clothingPawn.checkClothes()
 	gameManager.saveTemporaryPawnInfo()
@@ -104,6 +128,7 @@ func _input(event: InputEvent) -> void:
 func setPreviewAppearance()->void:
 	if clothingPawn:
 		characterPreviewWorld.customCharacter.loadPawnInfo(clothingPawn.savePawnInformation())
+
 
 
 
@@ -154,7 +179,13 @@ func equipClothingToPawn(item:PackedScene)->void:
 		clothingPawn.clothingHolder.add_child(itemInstance)
 		clothingPawn.checkClothes()
 		setPreviewAppearance()
+		refreshEquippedIndex()
 		gameManager.saveTemporaryPawnInfo()
+
+func refreshEquippedIndex()->void:
+	clearEquippedIndex()
+	for i in clothingPawn.clothingInventory:
+		createEquippedIndexEntry(i)
 
 func unequipClothingFromPawn(item:PackedScene)->void:
 	if clothingPawn and item:
@@ -172,6 +203,7 @@ func unequipClothingFromPawn(item:PackedScene)->void:
 		clothingPawn.checkClothes()
 		itemInstance.queue_free()
 		setPreviewAppearance()
+		refreshEquippedIndex()
 		gameManager.saveTemporaryPawnInfo()
 
 

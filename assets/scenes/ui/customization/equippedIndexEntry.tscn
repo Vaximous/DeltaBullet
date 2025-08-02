@@ -1,0 +1,63 @@
+[gd_scene load_steps=4 format=3 uid="uid://bjk14iy4pg0q6"]
+
+[ext_resource type="Script" uid="uid://b461t8j7g8sya" path="res://assets/scenes/ui/customization/equipped_index_entry.gd" id="1_56vrr"]
+
+[sub_resource type="Environment" id="Environment_56vrr"]
+
+[sub_resource type="World3D" id="World3D_py13h"]
+environment = SubResource("Environment_56vrr")
+
+[node name="equippedIndexEntry" type="PanelContainer"]
+custom_minimum_size = Vector2(0, 75)
+anchors_preset = -1
+offset_top = -1.0
+offset_right = 219.0
+offset_bottom = 79.0
+script = ExtResource("1_56vrr")
+
+[node name="panel" type="Panel" parent="."]
+layout_mode = 2
+
+[node name="hBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="control" type="Control" parent="hBoxContainer"]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+
+[node name="subViewportContainer" type="SubViewportContainer" parent="hBoxContainer/control"]
+custom_minimum_size = Vector2(70, 50)
+layout_mode = 0
+offset_left = 4.0
+offset_top = 1.0
+offset_right = 74.0
+offset_bottom = 79.0
+
+[node name="subViewport" type="SubViewport" parent="hBoxContainer/control/subViewportContainer"]
+own_world_3d = true
+world_3d = SubResource("World3D_py13h")
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(70, 50)
+render_target_update_mode = 4
+
+[node name="camhold" type="Node3D" parent="hBoxContainer/control/subViewportContainer/subViewport"]
+unique_name_in_owner = true
+
+[node name="camera3d" type="Camera3D" parent="hBoxContainer/control/subViewportContainer/subViewport/camhold"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.0005546)
+
+[node name="item" type="Node3D" parent="hBoxContainer/control/subViewportContainer/subViewport"]
+unique_name_in_owner = true
+
+[node name="vSeparator" type="VSeparator" parent="hBoxContainer"]
+layout_mode = 2
+
+[node name="materials" type="HBoxContainer" parent="hBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+alignment = 1
+
+[node name="colorPickerButton" type="ColorPickerButton" parent="hBoxContainer/materials"]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2

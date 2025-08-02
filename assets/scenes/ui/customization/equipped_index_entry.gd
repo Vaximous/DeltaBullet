@@ -13,7 +13,7 @@ func _process(delta: float) -> void:
 			getMeshSurfaceOverrides(clothingItem.clothingMesh)[override].albedo_color = getMaterialPickers()[override].color
 
 
-	%camhold.rotation.x += 10*delta
+	%camhold.rotation.y += 2*delta
 
 
 func clearPreview()->void:
@@ -55,6 +55,12 @@ func createOverrideFromSurfaceMaterial(meshInstance:MeshInstance3D,mesh:Mesh,id:
 	meshInstance.set_surface_override_material(id,surface)
 	return surface
 
+func setPreviewMesh(mesh:MeshInstance3D)->void:
+	for i in %item.get_children():
+		i.queue_free()
+
+	var mi = mesh.duplicate()
+	%item.add_child(mi)
 
 func generateMaterialList()->void:
 	#Each material that makes up a mesh will have a button generated for it, the button holds the ID of the surface which is used to identify which material it is
@@ -72,3 +78,4 @@ func generateMaterialList()->void:
 			picker.custom_minimum_size.x = 70
 			picker.color = materials.albedo_color
 			picker.set_meta(&"materialID",mats.find(materials))
+		setPreviewMesh(clothingItem.clothingMesh)

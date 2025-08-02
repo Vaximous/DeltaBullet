@@ -510,6 +510,16 @@ layout_mode = 2
 [node name="equippedIndexEntry" parent="customizationUi/equippedIndex" instance=ExtResource("8_tuxjq")]
 layout_mode = 2
 
+[node name="characterColor" type="ColorPickerButton" parent="customizationUi"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 1036.0
+offset_top = 97.0
+offset_right = 1102.0
+offset_bottom = 164.0
+edit_alpha = false
+edit_intensity = false
+
 [node name="equipSounds" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamRandomizer_k1rsh")
 max_polyphony = 2

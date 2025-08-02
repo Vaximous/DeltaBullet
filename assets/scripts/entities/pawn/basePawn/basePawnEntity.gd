@@ -769,8 +769,8 @@ func checkItems()->void:
 			itemNames.append(items.objectName)
 
 func checkClothes()->void:
-	setBodyVisibility(true)
 	clothingInventory.clear()
+	setBodyVisibility(true)
 	for clothes in clothingHolder.get_children():
 		if !clothingInventory.has(clothes):
 			clothingInventory.append(clothes)
@@ -1375,7 +1375,7 @@ func savePawnInformation()->String:
 			purchasedClothes.append(purchasedClothing[clothes])
 
 	for clothes in clothingInventory.size():
-		if clothingInventory[clothes] != null:
+		if is_instance_valid(clothingInventory[clothes]):
 			saveClothes.append(clothingInventory[clothes].get_scene_file_path())
 			if !purchasedClothes.has(clothingInventory[clothes].get_scene_file_path()):
 				purchasedClothes.append(clothingInventory[clothes].get_scene_file_path())
@@ -1385,12 +1385,10 @@ func savePawnInformation()->String:
 			var overrides = gameManager.getMeshSurfaceOverrides(clothingInventory[clothes].clothingMesh)
 			var colors = []
 			for i in overrides:
-				if is_instance_valid(i):
-					var clr = Color(i.albedo_color.r,i.albedo_color.g,i.albedo_color.b)
+				if i:
+					var clr = i.albedo_color.to_html()
 					colors.append(clr)
-					#print(colors)
-					if !clothesColors.has(clr):
-						clothesColors.append(clr)
+			clothesColors.append(colors)
 
 	var pwnDict = {
 		"clothes" : saveClothes,
@@ -1467,15 +1465,16 @@ func loadPawnInfo(pawnInfo:String)->void:
 			var colors = nodeData["clothesColors"]
 			var clothingItem : ClothingItem = load(clothing).instantiate()
 			clothingHolder.add_child(clothingItem)
-			if !colors.is_empty():
-				for i in gameManager.getMeshSurfaceOverrides(clothingItem.clothingMesh).size()-1:
-					var mat = clothingItem.clothingMesh.get_surface_override_material(i)
-					if is_instance_valid(colors[i]) and !colors.is_empty():
-						var clr = Color(colors[i].r,colors[i].g,colors[i].b)
-						clothingItem.clothingMesh.set_surface_override_material(i,mat)
-						mat.albedo_color.r = clr.r
-						mat.albedo_color.g = clr.g
-						mat.albedo_color.b = clr.b
+			for i in clothingItem.clothingMesh.get_surface_override_material_count():
+				if !clothingItem.clothingMesh.get_surface_override_material(i):
+					gameManager.createOverrideFromSurfaceMaterial(clothingItem.clothingMesh,clothingItem.clothingMesh.mesh,i)
+				var mat = clothingItem.clothingMesh.get_surface_override_material(i)
+				var clr = Color.html(nodeData["clothesColors"][nodeData["clothes"].find(clothing)][i])
+				print("Item: %s | Color : %s | Surface ID: %s"%[clothingItem,clr,i])
+				mat.albedo_color = clr
+				#clothingItem.clothingMesh.set_surface_override_material(i,mat)
+
+
 
 
 	checkClothes()

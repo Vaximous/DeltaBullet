@@ -65,7 +65,7 @@ func add_rich_console_message(message : String) -> void:
 	msgbox.add_child(new_label)
 	if msgbox.get_child_count() > 300:
 		msgbox.get_child(0).queue_free()
-	await get_tree().process_frame
+#	await get_tree().process_frame
 	scroll.scroll_vertical = 50000
 
 func setInput()->void:

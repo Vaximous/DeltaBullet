@@ -1,6 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://bjk14iy4pg0q6"]
+[gd_scene load_steps=6 format=3 uid="uid://bjk14iy4pg0q6"]
 
 [ext_resource type="Script" uid="uid://b461t8j7g8sya" path="res://assets/scenes/ui/customization/equipped_index_entry.gd" id="1_56vrr"]
+[ext_resource type="ArrayMesh" uid="uid://b0vdpourdwtah" path="res://assets/models/pawn/clothing/armorPants/armorPants.res" id="2_py13h"]
+[ext_resource type="Skin" uid="uid://dni81a81m0edc" path="res://assets/models/pawn/male/pawnSkin.tres" id="3_qkc1s"]
 
 [sub_resource type="Environment" id="Environment_56vrr"]
 
@@ -38,17 +40,28 @@ own_world_3d = true
 world_3d = SubResource("World3D_py13h")
 transparent_bg = true
 handle_input_locally = false
-size = Vector2i(70, 50)
+size = Vector2i(70, 70)
 render_target_update_mode = 4
 
 [node name="camhold" type="Node3D" parent="hBoxContainer/control/subViewportContainer/subViewport"]
 unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.46030247, 0)
 
 [node name="camera3d" type="Camera3D" parent="hBoxContainer/control/subViewportContainer/subViewport/camhold"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.0005546)
 
 [node name="item" type="Node3D" parent="hBoxContainer/control/subViewportContainer/subViewport"]
 unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.58135295, 0.35349596)
+
+[node name="meshInstance3d" type="MeshInstance3D" parent="hBoxContainer/control/subViewportContainer/subViewport/item"]
+unique_name_in_owner = true
+
+[node name="clothingMesh" type="MeshInstance3D" parent="hBoxContainer/control/subViewportContainer/subViewport/item"]
+physics_interpolation_mode = 1
+layers = 8
+mesh = ExtResource("2_py13h")
+skin = ExtResource("3_qkc1s")
 
 [node name="vSeparator" type="VSeparator" parent="hBoxContainer"]
 layout_mode = 2

@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://bxog5iq8771kh"]
+[gd_scene load_steps=27 format=3 uid="uid://bxog5iq8771kh"]
 
 [ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="1_iee3r"]
 [ext_resource type="PackedScene" uid="uid://c63b0ewnfkf4n" path="res://assets/scenes/ui/mapOverview/map/map.tscn" id="1_lplem"]
@@ -9,6 +9,22 @@
 [ext_resource type="AudioStream" uid="uid://b17pk0i3nawqv" path="res://assets/sounds/ui/map/Map_transition_2.wav" id="7_60wph"]
 [ext_resource type="AudioStream" uid="uid://rileq1nck1o0" path="res://assets/sounds/ui/map/Map_transition_3.wav" id="8_p8ko3"]
 [ext_resource type="AudioStream" uid="uid://dci1eyvaxauee" path="res://assets/sounds/ui/map/Map_transition_4.wav" id="9_od2qg"]
+[ext_resource type="AudioStream" uid="uid://d1lgsqudso57r" path="res://assets/music/menu/maptheme.wav" id="10_60wph"]
+
+[sub_resource type="GDScript" id="GDScript_60wph"]
+resource_name = "mapVPI"
+script/source = "extends SubViewportContainer
+
+func _ready():
+	set_process_unhandled_input(true)
+
+func _input(event):
+	# fix by ArdaE https://github.com/godotengine/godot/issues/17326#issuecomment-431186323
+	if event is InputEventMouse:
+		var mouseEvent = event.duplicate()
+		mouseEvent.position = get_global_transform_with_canvas().affine_inverse() * event.position
+		%map._unhandled_input(mouseEvent)
+"
 
 [sub_resource type="Gradient" id="Gradient_6voip"]
 colors = PackedColorArray(0, 0, 0, 1, 0.996078, 0.941176, 0.811765, 1)
@@ -22,14 +38,16 @@ panorama = ExtResource("3_jqm1r")
 [sub_resource type="Sky" id="Sky_nj1fe"]
 sky_material = SubResource("PanoramaSkyMaterial_tipwx")
 
-[sub_resource type="Environment" id="Environment_n3oiv"]
+[sub_resource type="Environment" id="Environment_60wph"]
 background_mode = 1
-background_color = Color(0.74978, 0.74978, 0.74978, 1)
+background_color = Color(0.5019608, 0.09803922, 0, 1)
 sky = SubResource("Sky_nj1fe")
+ambient_light_source = 1
+reflected_light_source = 1
+tonemap_mode = 4
 ssil_intensity = 0.75
 sdfgi_use_occlusion = true
 sdfgi_cascades = 8
-sdfgi_max_distance = 3276.8
 glow_normalized = true
 glow_bloom = 0.15
 glow_blend_mode = 1
@@ -45,8 +63,26 @@ adjustment_brightness = 0.9
 adjustment_saturation = 1.15
 adjustment_color_correction = SubResource("GradientTexture1D_iun5n")
 
-[sub_resource type="World3D" id="World3D_kc4o1"]
-environment = SubResource("Environment_n3oiv")
+[sub_resource type="World3D" id="World3D_p8ko3"]
+environment = SubResource("Environment_60wph")
+
+[sub_resource type="Shader" id="Shader_1wy2d"]
+code = "shader_type canvas_item;
+uniform vec4 color: source_color;
+uniform float multiplier = 0.2;
+uniform float softness = 3.0;
+
+void fragment() {
+	float value = distance(UV,vec2(0.5));
+	COLOR = vec4(color.rgb,smoothstep(multiplier,softness,value));
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_60wph"]
+shader = SubResource("Shader_1wy2d")
+shader_parameter/color = Color(0, 0, 0, 1)
+shader_parameter/multiplier = 0.43
+shader_parameter/softness = 0.9
 
 [sub_resource type="Gradient" id="Gradient_jqm1r"]
 offsets = PackedFloat32Array(0, 0.0714286, 1)
@@ -139,6 +175,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme = ExtResource("1_iee3r")
 
 [node name="subViewportContainer" type="SubViewportContainer" parent="mapScreen"]
@@ -149,16 +186,31 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 stretch = true
+mouse_target = true
+script = SubResource("GDScript_60wph")
 
 [node name="subViewport" type="SubViewport" parent="mapScreen/subViewportContainer"]
 own_world_3d = true
-world_3d = SubResource("World3D_kc4o1")
+world_3d = SubResource("World3D_p8ko3")
 handle_input_locally = false
+physics_object_picking = true
+physics_object_picking_sort = true
 size = Vector2i(1600, 900)
 render_target_update_mode = 4
 
 [node name="map" parent="mapScreen/subViewportContainer/subViewport" node_paths=PackedStringArray("mapScreen") instance=ExtResource("1_lplem")]
+unique_name_in_owner = true
 mapScreen = NodePath("../../../..")
+
+[node name="vignette" type="ColorRect" parent="mapScreen"]
+material = SubResource("ShaderMaterial_60wph")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
 
 [node name="topBar" type="MarginContainer" parent="mapScreen"]
 clip_contents = true
@@ -166,8 +218,8 @@ layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.494
 anchor_bottom = 0.079
-offset_right = 790.0
-offset_bottom = 71.0
+offset_right = -0.39996338
+offset_bottom = -0.1000061
 
 [node name="textureRect" type="TextureRect" parent="mapScreen/topBar"]
 layout_mode = 2
@@ -185,8 +237,9 @@ libraries = {
 }
 
 [node name="forward" type="Button" parent="mapScreen"]
+visible = false
 layout_mode = 1
-anchors_preset = 6
+anchors_preset = -1
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
@@ -199,8 +252,9 @@ grow_vertical = 2
 text = ">"
 
 [node name="backward" type="Button" parent="mapScreen"]
+visible = false
 layout_mode = 1
-anchors_preset = 4
+anchors_preset = -1
 anchor_top = 0.5
 anchor_bottom = 0.5
 offset_top = 245.0
@@ -212,7 +266,7 @@ text = "<"
 [node name="AreaInformation" parent="mapScreen" node_paths=PackedStringArray("map") instance=ExtResource("5_n3oiv")]
 unique_name_in_owner = true
 visible = false
-layout_mode = 2
+layout_mode = 0
 anchors_preset = 0
 anchor_left = 1.0
 anchor_right = 1.0
@@ -221,10 +275,20 @@ offset_left = -525.0
 offset_top = 8.0
 offset_right = -14.0
 offset_bottom = 637.0
+grow_horizontal = 1
+grow_vertical = 1
 map = NodePath("../..")
 
 [node name="mapOpen" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamRandomizer_s27yt")
+volume_db = -19.5
+
+[node name="mapTheme" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("10_60wph")
+volume_db = -5.65
+autoplay = true
+bus = &"Music"
 
 [connection signal="ready" from="." to="mapOpen" method="play"]
 [connection signal="pressed" from="mapScreen/forward" to="." method="addIndex"]

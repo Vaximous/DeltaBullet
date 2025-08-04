@@ -216,19 +216,19 @@ _data = {
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_v8iie"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_568f0"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_aptmj"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_t3e1d"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v8iie"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_svgid"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sbnov"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4dj13"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sbnov"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_svgid"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v8iie"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_t3e1d"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_aptmj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_568f0"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_i54d4"]
 streams_count = 4
@@ -251,12 +251,14 @@ travelScene = null
 travelStatus = 1
 travelGroupID = 0
 travelID = 0
+clamp_to_edge = false
 
 [node name="Icon" type="Control" parent="." index="0"]
 layout_mode = 3
 anchor_right = 0.02
 anchor_bottom = 0.033
 offset_bottom = 0.299999
+mouse_filter = 1
 
 [node name="marginContainer" type="MarginContainer" parent="Icon" index="0"]
 layout_mode = 1
@@ -264,7 +266,7 @@ anchors_preset = -1
 anchor_bottom = 0.092
 offset_left = 8.0
 offset_right = 264.0
-offset_bottom = 40.0
+offset_bottom = 37.24
 
 [node name="hBoxContainer" type="HBoxContainer" parent="Icon/marginContainer" index="0"]
 layout_mode = 2
@@ -293,28 +295,27 @@ anchor_top = 0.017
 anchor_right = 1.0
 anchor_bottom = 1.15
 offset_left = -3.6
-offset_top = 0.5
-offset_right = 32.4
-offset_bottom = 34.5
+offset_top = -0.01000005
+offset_right = 0.40000153
 pivot_offset = Vector2(18, 34)
 texture = ExtResource("3_aptmj")
 expand_mode = 1
 
 [node name="button" type="Button" parent="Icon/icon" index="0"]
-layout_mode = 2
+layout_mode = 0
 anchor_right = 2.739
 anchor_bottom = 1.162
 offset_left = 4.6
 offset_top = -0.500004
 offset_right = -0.00437164
 offset_bottom = -0.00816727
-theme_override_styles/focus = SubResource("StyleBoxEmpty_568f0")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_aptmj")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_t3e1d")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_v8iie")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_svgid")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_4dj13")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_sbnov")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_4dj13")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_svgid")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_v8iie")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_t3e1d")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_aptmj")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_568f0")
 
 [node name="hoverSound" type="AudioStreamPlayer" parent="." index="1"]
 stream = SubResource("AudioStreamRandomizer_i54d4")

@@ -24,8 +24,6 @@ var selectedMarker : Node3D = null:
 @export var selectedIndex : int = 0:
 	set(value):
 		selectedIndex = value
-		index_changed.emit(value)
-		setIndex(value)
 
 func addIndex()->void:
 	if !selectedIndex >= map.mapRotations.size()-1:
@@ -34,6 +32,7 @@ func addIndex()->void:
 func subtractIndex()->void:
 	if !selectedIndex <= 0:
 		selectedIndex -= 1
+
 
 func _ready() -> void:
 	%mapScreen.modulate = Color.TRANSPARENT
@@ -58,6 +57,7 @@ func setVisible(value:bool)->void:
 		show()
 		visibleTween.parallel().tween_property(%mapScreen,"modulate",Color.WHITE,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
 	else:
+		visibleTween.parallel().tween_property(%mapTheme,"volume_db",linear_to_db(-100.0),1)
 		await visibleTween.parallel().tween_property(%mapScreen,"modulate",Color.TRANSPARENT,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType).finished
 		gameManager.hideMouse()
 		gameManager.pauseMenu.canPause = true

@@ -44,6 +44,7 @@ inputComponent = NodePath("inputComponent")
 [node name="vertical" type="Node3D" parent="camPivot/horizonal/vertholder"]
 
 [node name="springArm3d" type="SpringArm3D" parent="camPivot/horizonal/vertholder/vertical"]
+unique_name_in_owner = true
 collision_mask = 3
 
 [node name="Camera" type="Camera3D" parent="camPivot/horizonal/vertholder/vertical/springArm3d"]

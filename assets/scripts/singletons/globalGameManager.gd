@@ -654,6 +654,20 @@ func removeSafehouseEditor()->void:
 	gameManager.activeCamera.hud.enableHud()
 
 
+func get_from_mouse(length:float=1000,worldObject:Node3D=gameManager.world.worldMisc,camera:Camera3D=gameManager.activeCamera.camera,exclude:Array[RID]=[])->Dictionary:
+	var RAY_LENGTH = length
+	var space_state = worldObject.get_world_3d().direct_space_state
+	var mousepos = get_viewport().get_mouse_position()
+
+	var origin = camera.project_ray_origin(mousepos)
+	var end = origin + camera.project_ray_normal(mousepos) * RAY_LENGTH
+	var query = PhysicsRayQueryParameters3D.create(origin, end)
+	query.exclude = exclude
+	query.collide_with_areas = false
+
+	var result = space_state.intersect_ray(query)
+	return result
+
 func setMotionBlur(camera:Camera3D)->void:
 	if !UserConfig.configs_updated.is_connected(setMotionBlur.bind(camera)):
 		UserConfig.configs_updated.connect(setMotionBlur.bind(camera))

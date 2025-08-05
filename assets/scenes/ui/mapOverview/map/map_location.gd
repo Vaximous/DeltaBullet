@@ -3,10 +3,13 @@ var visibilityTween : Tween
 const defaultTransitionType = Tween.TRANS_QUINT
 const defaultEaseType = Tween.EASE_OUT
 const defaultTweenSpeed : float = 1
+@onready var clickSound : AudioStreamPlayer = $clickSound
+@onready var hoverSound : AudioStreamPlayer = $hoverSound
 @onready var animPlayer : AnimationPlayer = $Icon/marginContainer/animationPlayer
 @onready var markerLabel : Label = $Icon/marginContainer/hBoxContainer/label
 @onready var container : MarginContainer = $Icon/marginContainer
 @onready var icon : Control = $Icon
+@onready var area3d : Area3D = $area3d
 @export var map : Node3D:
 	set(value):
 		map = value

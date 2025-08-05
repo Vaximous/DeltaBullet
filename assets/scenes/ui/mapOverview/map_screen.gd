@@ -58,6 +58,7 @@ func setVisible(value:bool)->void:
 		visibleTween.parallel().tween_property(%mapScreen,"modulate",Color.WHITE,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
 	else:
 		visibleTween.parallel().tween_property(%mapTheme,"volume_db",linear_to_db(-100.0),1)
+		map.tweenModelPosition(map.modelHolder,Vector3(0,-5,0),0.7)
 		await visibleTween.parallel().tween_property(%mapScreen,"modulate",Color.TRANSPARENT,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType).finished
 		gameManager.hideMouse()
 		gameManager.pauseMenu.canPause = true

@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://dmw2yr31pg8dq"]
+
+[ext_resource type="ArrayMesh" uid="uid://dg4ck5cgy4bcb" path="res://assets/models/world/airducts/meshes/AirDucts_DuctSingleHoleRight.res" id="1_dd3rn"]
+[ext_resource type="ArrayMesh" uid="uid://f5lsns4e7hvb" path="res://assets/models/world/airducts/meshes/AirDucts_DuctSingleHoleRightVentCover.res" id="2_cd4wd"]
+[ext_resource type="Script" uid="uid://bnhisqq4if7la" path="res://assets/models/world/airducts/segments/airduct_segment_script.gd" id="2_nj1uj"]
+
+[node name="AirDuct-SingleHoleRight" type="MeshInstance3D"]
+mesh = ExtResource("1_dd3rn")
+skeleton = NodePath("")
+script = ExtResource("2_nj1uj")
+segment_name = "VentRight"
+segment_index = 10
+
+[node name="AirDuct-SingleHoleRightVentCover" type="MeshInstance3D" parent="."]
+mesh = ExtResource("2_cd4wd")
+skeleton = NodePath("")
+blend_shapes/close = 0.0
+
+[node name="Empty_012" type="Node3D" parent="."]
+transform = Transform3D(-1, 0, -3.8941437e-07, 0, 1, 0, 3.8941437e-07, 0, -1, -0.4857334, 0, 0)

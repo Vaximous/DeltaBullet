@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://6a1fipdokr54"]
+
+[ext_resource type="ArrayMesh" uid="uid://cvktg8a7bql3i" path="res://assets/models/world/airducts/meshes/AirDucts_Duct45BendRight.res" id="1_r0dd8"]
+[ext_resource type="Script" uid="uid://bnhisqq4if7la" path="res://assets/models/world/airducts/segments/airduct_segment_script.gd" id="2_vj2sl"]
+
+[node name="AirDuct-45-BendRight" type="MeshInstance3D"]
+mesh = ExtResource("1_r0dd8")
+skeleton = NodePath("")
+script = ExtResource("2_vj2sl")
+segment_name = "Right45"
+segment_index = 2
+
+[node name="port" type="Node3D" parent="."]
+transform = Transform3D(-0.7071067, 0, 0.7071067, 0, 1, 0, -0.7071067, 0, -0.7071067, -1.1322646, 0, -0.46899948)

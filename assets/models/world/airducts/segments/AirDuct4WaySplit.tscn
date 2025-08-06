@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://drmdlwujt5jf7"]
+
+[ext_resource type="ArrayMesh" uid="uid://biljmnecag4dl" path="res://assets/models/world/airducts/meshes/AirDucts_Duct4Split.res" id="1_ou0k3"]
+[ext_resource type="Script" uid="uid://bnhisqq4if7la" path="res://assets/models/world/airducts/segments/airduct_segment_script.gd" id="2_63blt"]
+
+[node name="AirDuct-4WaySplit" type="MeshInstance3D"]
+mesh = ExtResource("1_ou0k3")
+skeleton = NodePath("")
+script = ExtResource("2_63blt")
+segment_name = "OmniSplit"
+
+[node name="Empty" type="Node3D" parent="."]
+
+[node name="Empty_001" type="Node3D" parent="."]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -0.2786, 0, -0.2786)
+
+[node name="Empty_002" type="Node3D" parent="."]
+transform = Transform3D(-1, 0, -3.2584137e-07, 0, 1, 0, 3.2584137e-07, 0, -1, -0.5572, 0, 0)
+
+[node name="Empty_003" type="Node3D" parent="."]
+transform = Transform3D(5.364418e-07, 0, -0.99999994, 0, 1, 0, 0.99999994, 0, 5.364418e-07, -0.2786, 0, 0.2786)

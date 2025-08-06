@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://cj8n072ap06q6"]
+
+[ext_resource type="ArrayMesh" uid="uid://0irl5jhbhhhy" path="res://assets/models/world/airducts/meshes/AirDucts_DuctLong.res" id="1_wm3vk"]
+[ext_resource type="Script" uid="uid://bnhisqq4if7la" path="res://assets/models/world/airducts/segments/airduct_segment_script.gd" id="2_lofxd"]
+
+[node name="AirDuct-Long" type="MeshInstance3D"]
+mesh = ExtResource("1_wm3vk")
+skeleton = NodePath("")
+script = ExtResource("2_lofxd")
+segment_name = "LongAirduct"
+segment_index = 4
+
+[node name="Empty_013" type="Node3D" parent="."]
+transform = Transform3D(-1, 0, -3.8941437e-07, 0, 1, 0, 3.8941437e-07, 0, -1, -1.4571998, 0, 0)
+
+[node name="port_001" type="Node3D" parent="."]
+transform = Transform3D(-1, 0, -3.8941437e-07, 0, 1, 0, 3.8941437e-07, 0, -1, -1.4571998, 0, 0)

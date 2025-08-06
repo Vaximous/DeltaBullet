@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://sbdndngaybk1"]
+
+[ext_resource type="ArrayMesh" uid="uid://bkks2kqt4isw4" path="res://assets/models/world/airducts/meshes/AirDucts_DuctSingle.res" id="1_dc2i6"]
+[ext_resource type="Script" uid="uid://bnhisqq4if7la" path="res://assets/models/world/airducts/segments/airduct_segment_script.gd" id="2_qgyw2"]
+
+[node name="AirDuct-Single" type="MeshInstance3D"]
+mesh = ExtResource("1_dc2i6")
+skeleton = NodePath("")
+script = ExtResource("2_qgyw2")
+segment_name = "Single"
+segment_index = 7
+
+[node name="Empty_009" type="Node3D" parent="."]
+transform = Transform3D(-1, 0, -3.8941437e-07, 0, 1, 0, 3.8941437e-07, 0, -1, -0.4857334, 0, 0)

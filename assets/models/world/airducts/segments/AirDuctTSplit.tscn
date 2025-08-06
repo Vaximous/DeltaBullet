@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://cf8cdkh0qgk0a"]
+
+[ext_resource type="ArrayMesh" uid="uid://bf5frdqrpllbt" path="res://assets/models/world/airducts/meshes/AirDucts_DuctTSplit.res" id="1_xtk6t"]
+[ext_resource type="Script" uid="uid://bnhisqq4if7la" path="res://assets/models/world/airducts/segments/airduct_segment_script.gd" id="2_oskf7"]
+
+[node name="AirDuct-T-Split" type="MeshInstance3D"]
+mesh = ExtResource("1_xtk6t")
+skeleton = NodePath("")
+script = ExtResource("2_oskf7")
+segment_name = "TSplit"
+segment_index = 11
+
+[node name="Empty_004" type="Node3D" parent="."]
+
+[node name="Empty_005" type="Node3D" parent="."]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -0.27859995, 0, 0.2786)
+
+[node name="Empty_006" type="Node3D" parent="."]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -0.2786, 0, -0.2786)

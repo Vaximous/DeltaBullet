@@ -9,6 +9,8 @@ skeleton = NodePath("")
 script = ExtResource("2_oskf7")
 segment_name = "TSplit"
 segment_index = 11
+parent_connection_port = 0
+connections = [null, null, null]
 
 [node name="Empty_004" type="Node3D" parent="."]
 

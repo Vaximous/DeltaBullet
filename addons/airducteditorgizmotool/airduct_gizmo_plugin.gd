@@ -54,11 +54,6 @@ func _get_handle_value(gizmo: EditorNode3DGizmo, handle_id: int, secondary: bool
 
 
 func _commit_handle(gizmo: EditorNode3DGizmo, handle_id: int, secondary: bool, restore: Variant, cancel: bool) -> void:
-	print(gizmo)
-	print(handle_id)
-	print(secondary)
-	print(restore)
-	print(cancel)
 	var duct = gizmo.get_node_3d()
 	duct.attach_part([0, 1, 2, 4, 5, 6, 7, 8, 9, 10, 11].pick_random(), handle_id)
 

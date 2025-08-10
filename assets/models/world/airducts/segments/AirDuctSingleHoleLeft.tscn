@@ -10,6 +10,7 @@ skeleton = NodePath("")
 script = ExtResource("2_iwa1o")
 segment_name = "VentLeft"
 segment_index = 9
+connections = [null, null]
 
 [node name="AirDuct-SingleHoleLeftVentCover" type="MeshInstance3D" parent="."]
 mesh = ExtResource("2_2hdjr")

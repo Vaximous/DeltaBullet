@@ -9,9 +9,7 @@ skeleton = NodePath("")
 script = ExtResource("2_lofxd")
 segment_name = "LongAirduct"
 segment_index = 4
-
-[node name="Empty_013" type="Node3D" parent="."]
-transform = Transform3D(-1, 0, -3.8941437e-07, 0, 1, 0, 3.8941437e-07, 0, -1, -1.4571998, 0, 0)
+connections = [null, null]
 
 [node name="port_001" type="Node3D" parent="."]
 transform = Transform3D(-1, 0, -3.8941437e-07, 0, 1, 0, 3.8941437e-07, 0, -1, -1.4571998, 0, 0)

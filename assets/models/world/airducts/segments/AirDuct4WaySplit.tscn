@@ -8,6 +8,8 @@ mesh = ExtResource("1_ou0k3")
 skeleton = NodePath("")
 script = ExtResource("2_63blt")
 segment_name = "OmniSplit"
+parent_connection_port = 0
+connections = [null, null, null, null]
 
 [node name="Empty" type="Node3D" parent="."]
 

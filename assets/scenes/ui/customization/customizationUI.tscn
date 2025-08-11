@@ -512,11 +512,16 @@ layout_mode = 2
 
 [node name="characterColor" type="ColorPickerButton" parent="customizationUi"]
 unique_name_in_owner = true
-layout_mode = 0
-offset_left = 1036.0
-offset_top = 97.0
-offset_right = 1102.0
-offset_bottom = 164.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.689
+anchor_top = 0.108
+anchor_right = 0.689
+anchor_bottom = 0.108
+offset_left = -66.400024
+offset_top = -0.20000458
+offset_right = -0.4000244
+offset_bottom = 66.799995
 edit_alpha = false
 edit_intensity = false
 

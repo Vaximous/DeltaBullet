@@ -4,6 +4,7 @@ signal interactionFound
 @export_category("Hud")
 var vignetteTween : Tween
 var reloadTween : Tween
+var blurTween : Tween
 const defaultTransitionType = Tween.TRANS_QUART
 const defaultEaseType = Tween.EASE_OUT
 var camOwner : PlayerCamera
@@ -37,6 +38,7 @@ var slidingCrosshairPos : Vector2 = Vector2.ZERO
 @onready var fpsLabel = $FPSCounter/label
 @onready var interactAnim = $Interact/interactAnimPlayer
 @onready var stableCrosshair : TextureRect = $stableCrosshair
+@onready var radialBlur : ColorRect = $radialBlur
 var ray = PhysicsRayQueryParameters3D.new()
 var flashTween : Tween
 var interactTween : Tween
@@ -252,6 +254,14 @@ func fadeHudOut()->void:
 func setInteractionText(text : String)->void:
 	interactText.text = text
 
+func triggerRadialBlur(blurPosition:Vector2 = Vector2(0.5,0.5),blurPower:float=0.3,blurSpeed = 0.5)->void:
+	if blurTween:
+		blurTween.kill()
+	blurTween = create_tween()
+	radialBlur.material.set_shader_parameter("power",blurPower)
+	radialBlur.material.set_shader_parameter("center",blurPosition)
+
+	blurTween.tween_property(radialBlur.material,"shader_parameter/power",0,blurSpeed)
 
 func get_hit_target(raycast : RayCast3D) -> Vector3:
 	var ray_target_point : Vector3 = raycast.global_position + (-raycast.global_transform.basis.z * 5000)

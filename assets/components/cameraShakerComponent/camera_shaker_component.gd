@@ -28,3 +28,5 @@ func shakeCam(mult : float, camera : Node3D, direction : Vector3 = Vector3.ZERO)
 		shaken.z *= camtransform.basis.x.dot(direction)
 	if camera.has_method(&"shakeCam"):
 			camera.shakeCam(shaken * mult, shakeFreq * mult, shakeDuration)
+			if !gameManager.bulletTime:
+				camera.hud.triggerRadialBlur(Vector2(0.5,0.5),shaken.length() * randf_range(0.05,0.07),randf_range(0.3,0.7))

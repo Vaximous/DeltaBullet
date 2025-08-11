@@ -1,6 +1,7 @@
-[gd_scene load_steps=32 format=3 uid="uid://1d1rfqprpnrb"]
+[gd_scene load_steps=34 format=3 uid="uid://1d1rfqprpnrb"]
 
 [ext_resource type="Script" uid="uid://bqcb21u5nterd" path="res://assets/entities/camera/HUD.gd" id="1_on6xd"]
+[ext_resource type="Shader" uid="uid://c75blutw6w8na" path="res://assets/scenes/ui/radialBlur.gdshader" id="2_4y830"]
 [ext_resource type="FontFile" uid="uid://xmwjvmqspojb" path="res://assets/fonts/Grand_Aventure_Text.otf" id="2_tf7jg"]
 [ext_resource type="Texture2D" uid="uid://dc3fkfugwvtla" path="res://assets/textures/misc/company-logo (1).png" id="3_4nkiw"]
 [ext_resource type="Texture2D" uid="uid://birbjoai58xb7" path="res://assets/textures/crosshair/crosshair001.png" id="4_uhc5s"]
@@ -15,6 +16,12 @@
 [ext_resource type="AudioStream" uid="uid://d0dglkiwj36a3" path="res://assets/sounds/misc/bullettimeon.wav" id="13_paei5"]
 [ext_resource type="AudioStream" uid="uid://d3dmtb1tyo4ct" path="res://assets/sounds/misc/bullettimeoff.wav" id="14_i7djv"]
 [ext_resource type="Texture2D" uid="uid://t12ascuq76yu" path="res://assets/textures/ui/sniperscope.png" id="15_dux2x"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kfu1x"]
+shader = ExtResource("2_4y830")
+shader_parameter/center = Vector2(0.5, 0.5)
+shader_parameter/power = -2.235199989542025e-07
+shader_parameter/iterations = 15.0
 
 [sub_resource type="Theme" id="Theme_wcn1k"]
 default_font = ExtResource("2_tf7jg")
@@ -204,11 +211,22 @@ script = ExtResource("1_on6xd")
 interactionOffset = Vector2(65.58, 0)
 crosshair = NodePath("Crosshair")
 
+[node name="radialBlur" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_kfu1x")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+metadata/_edit_use_anchors_ = true
+
 [node name="WIP" type="Label" parent="."]
 visible = false
 self_modulate = Color(1, 1, 1, 0.611765)
 layout_mode = 1
-anchors_preset = 5
+anchors_preset = -1
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -350.5
@@ -222,7 +240,7 @@ text = "WORK IN PROGRESS - DOES NOT REPRESENT THE FINAL LOOK OF THE GAME"
 [node name="Logo" type="TextureRect" parent="."]
 self_modulate = Color(1, 1, 1, 0.372549)
 layout_mode = 1
-anchors_preset = 3
+anchors_preset = -1
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -238,7 +256,7 @@ expand_mode = 1
 [node name="stableCrosshair" type="TextureRect" parent="."]
 visible = false
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = -1
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -285,7 +303,7 @@ metadata/_edit_use_anchors_ = true
 [node name="healthTexture" type="TextureRect" parent="."]
 modulate = Color(1, 1, 1, 0.639216)
 layout_mode = 1
-anchors_preset = 2
+anchors_preset = -1
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_top = -77.0
@@ -299,7 +317,7 @@ expand_mode = 2
 [node name="hpBG" type="TextureProgressBar" parent="."]
 modulate = Color(0.207843, 0.054902, 0, 1)
 layout_mode = 1
-anchors_preset = 2
+anchors_preset = -1
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 3.0
@@ -318,7 +336,7 @@ texture_progress = ExtResource("7_mtxcq")
 [node name="hpBar" type="TextureProgressBar" parent="."]
 modulate = Color(0.639216, 0.054902, 0, 1)
 layout_mode = 1
-anchors_preset = 2
+anchors_preset = -1
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 3.0
@@ -336,7 +354,7 @@ texture_progress = ExtResource("7_mtxcq")
 
 [node name="weaponBar" type="TextureRect" parent="."]
 layout_mode = 1
-anchors_preset = 3
+anchors_preset = -1
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -350,7 +368,7 @@ expand_mode = 2
 
 [node name="currentAmmoCount" type="Label" parent="weaponBar"]
 layout_mode = 1
-anchors_preset = 9
+anchors_preset = -1
 anchor_bottom = 1.0
 offset_left = 225.0
 offset_top = 30.0
@@ -364,7 +382,7 @@ text = "30"
 
 [node name="currentMagCount" type="Label" parent="weaponBar"]
 layout_mode = 1
-anchors_preset = 9
+anchors_preset = -1
 anchor_bottom = 1.0
 offset_left = 199.0
 offset_top = 56.0
@@ -379,7 +397,7 @@ text = "128"
 
 [node name="weaponName" type="Label" parent="weaponBar"]
 layout_mode = 1
-anchors_preset = 9
+anchors_preset = -1
 anchor_bottom = 1.0
 offset_left = 31.0
 offset_top = -12.0
@@ -402,7 +420,6 @@ offset_bottom = 87.0
 
 [node name="FPSCounter" type="Control" parent="."]
 layout_mode = 1
-anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -62.0
@@ -418,7 +435,7 @@ color = Color(0.133333, 0.133333, 0.133333, 0.788235)
 
 [node name="label" type="Label" parent="FPSCounter"]
 layout_mode = 1
-anchors_preset = 1
+anchors_preset = -1
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -61.0
@@ -432,7 +449,6 @@ vertical_alignment = 1
 [node name="Interact" type="Control" parent="."]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 1
-anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -465,9 +481,9 @@ offset_right = 209.5
 mouse_filter = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.513726)
-theme_override_constants/shadow_offset_y = 2
-theme_override_constants/shadow_offset_x = 3
 theme_override_constants/shadow_outline_size = 4
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 2
 theme_override_fonts/normal_font = ExtResource("10_siy77")
 bbcode_enabled = true
 text = "Use \"Item\""
@@ -575,7 +591,7 @@ horizontal_alignment = 1
 [node name="Crosshair" type="TextureRect" parent="."]
 physics_interpolation_mode = 1
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = -1
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -594,7 +610,7 @@ script = SubResource("GDScript_quas3")
 visible = false
 z_index = 1
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = -1
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -617,7 +633,7 @@ texture_progress = SubResource("CompressedTexture2D_dux2x")
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0)
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = -1
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5

@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://vwacetrutvng"]
+[gd_scene load_steps=15 format=3 uid="uid://vwacetrutvng"]
 
 [ext_resource type="PackedScene" uid="uid://cbmy8aewv7g1w" path="res://assets/components/3Dto2Dcomponent/3Dto2DComponent.tscn" id="1_568f0"]
 [ext_resource type="Script" uid="uid://dpnbcwkkk6au2" path="res://assets/scenes/ui/mapOverview/map/map_location.gd" id="2_aptmj"]
@@ -11,224 +11,7 @@
 [ext_resource type="AudioStream" uid="uid://cvcago0pt1fnc" path="res://assets/sounds/ui/map/map_click_2.wav" id="9_3ol1w"]
 [ext_resource type="AudioStream" uid="uid://dduxbmpvf0dq" path="res://assets/sounds/ui/map/map_click_3.wav" id="10_x17kg"]
 [ext_resource type="AudioStream" uid="uid://crx1srwif2i8c" path="res://assets/sounds/ui/map/map_click_4.wav" id="11_5x2qw"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_t3e1d"]
-outline_size = 5
-outline_color = Color(0, 0, 0, 1)
-shadow_size = 5
-shadow_color = Color(0, 0, 0, 0.32549)
-
-[sub_resource type="Animation" id="Animation_mp7cn"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:size")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(256, 40)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(8, 0)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("../icon:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(-3.6, 0.5)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("../icon:size")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(36, 34)]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath(".:modulate")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_aptmj"]
-resource_name = "close"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:size")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0.0666667, 0.433333),
-"transitions": PackedFloat32Array(0.183011, 0.15932),
-"update": 0,
-"values": [Vector2(189.345, 40), Vector2(93, 40)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0.0666667, 0.433333),
-"transitions": PackedFloat32Array(0.183011, 0.153893),
-"update": 0,
-"values": [Vector2(45.84, 0), Vector2(1, 0)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("../icon:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0.1, 0.5),
-"transitions": PackedFloat32Array(0.241484, 0.108819),
-"update": 0,
-"values": [Vector2(-4, 1), Vector2(-3.6, 0.5)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("../icon:size")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0.1, 0.5),
-"transitions": PackedFloat32Array(0.241484, 0.108819),
-"update": 0,
-"values": [Vector2(41, 39), Vector2(36, 34)]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath(".:modulate")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0.0333333, 0.433333),
-"transitions": PackedFloat32Array(0.129408, 0.353553),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_clmnj"]
-resource_name = "open"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:size")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.533333),
-"transitions": PackedFloat32Array(0.15932, 1),
-"update": 0,
-"values": [Vector2(93, 40), Vector2(189.345, 40)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.7),
-"transitions": PackedFloat32Array(0.153893, 1),
-"update": 0,
-"values": [Vector2(1, 0), Vector2(45.84, 0)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("../icon:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.53),
-"transitions": PackedFloat32Array(0.108819, 1),
-"update": 0,
-"values": [Vector2(-3.6, 0.5), Vector2(-4, 1)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("../icon:size")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.53),
-"transitions": PackedFloat32Array(0.108819, 1),
-"update": 0,
-"values": [Vector2(36, 34), Vector2(41, 39)]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath(".:modulate")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(0.353553, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_lmyb2"]
-_data = {
-&"RESET": SubResource("Animation_mp7cn"),
-&"close": SubResource("Animation_aptmj"),
-&"open": SubResource("Animation_clmnj")
-}
-
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_v8iie"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sbnov"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4dj13"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_svgid"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v8iie"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_t3e1d"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_aptmj"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_568f0"]
+[ext_resource type="PackedScene" uid="uid://dalnlm78l67yh" path="res://assets/scenes/ui/mapOverview/map/mapVisual.tscn" id="12_c10ua"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_i54d4"]
 streams_count = 4
@@ -244,11 +27,9 @@ stream_1/stream = ExtResource("9_3ol1w")
 stream_2/stream = ExtResource("10_x17kg")
 stream_3/stream = ExtResource("11_5x2qw")
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_kmnqu"]
-radius = 0.5611004
-
 [node name="mapLocation" instance=ExtResource("1_568f0")]
 script = ExtResource("2_aptmj")
+iconColor = null
 locationName = ""
 travelScene = null
 travelStatus = 1
@@ -256,92 +37,74 @@ travelGroupID = 0
 travelID = 0
 clamp_to_edge = false
 
-[node name="Icon" type="Control" parent="." index="0"]
-layout_mode = 3
-anchor_right = 0.02
-anchor_bottom = 0.033
-offset_bottom = 0.299999
-mouse_filter = 1
-
-[node name="marginContainer" type="MarginContainer" parent="Icon" index="0"]
-layout_mode = 1
-anchors_preset = -1
-anchor_bottom = 0.092
-offset_left = 8.0
-offset_right = 264.0
-offset_bottom = 37.24
-
-[node name="hBoxContainer" type="HBoxContainer" parent="Icon/marginContainer" index="0"]
-layout_mode = 2
-
-[node name="textureRect" type="ColorRect" parent="Icon/marginContainer/hBoxContainer" index="0"]
-custom_minimum_size = Vector2(2.48, 0)
-layout_mode = 2
-color = Color(0.435294, 0, 0, 1)
-
-[node name="label" type="Label" parent="Icon/marginContainer/hBoxContainer" index="1"]
-layout_mode = 2
-text = "AREANAME"
-label_settings = SubResource("LabelSettings_t3e1d")
-
-[node name="animationPlayer" type="AnimationPlayer" parent="Icon/marginContainer" index="1"]
-libraries = {
-&"": SubResource("AnimationLibrary_lmyb2")
-}
-
-[node name="icon" type="TextureRect" parent="Icon" index="1"]
-modulate = Color(0.72549, 0, 0.0941176, 1)
-material = SubResource("CanvasItemMaterial_v8iie")
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.017
-anchor_right = 1.0
-anchor_bottom = 1.15
-offset_left = -3.6
-offset_top = -0.01000005
-offset_right = 0.40000153
-pivot_offset = Vector2(18, 34)
-texture = ExtResource("3_aptmj")
-expand_mode = 1
-
-[node name="button" type="Button" parent="Icon/icon" index="0"]
-layout_mode = 0
-anchor_right = 2.739
-anchor_bottom = 1.162
-offset_left = 4.6
-offset_top = -0.500004
-offset_right = -0.00437164
-offset_bottom = -0.00816727
-theme_override_styles/normal = SubResource("StyleBoxEmpty_sbnov")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_4dj13")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_svgid")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_v8iie")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_t3e1d")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_aptmj")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_568f0")
-
-[node name="hoverSound" type="AudioStreamPlayer" parent="." index="1"]
+[node name="hoverSound" type="AudioStreamPlayer" parent="." index="0"]
 stream = SubResource("AudioStreamRandomizer_i54d4")
 volume_db = -15.0
 bus = &"UI"
 
-[node name="clickSound" type="AudioStreamPlayer" parent="." index="2"]
+[node name="clickSound" type="AudioStreamPlayer" parent="." index="1"]
 stream = SubResource("AudioStreamRandomizer_21gnk")
 bus = &"UI"
 
-[node name="area3d" type="Area3D" parent="." index="3"]
+[node name="area3d" type="Area3D" parent="." index="2"]
 collision_layer = 4
 collision_mask = 4
 monitoring = false
 
 [node name="collisionShape3d" type="CollisionShape3D" parent="area3d" index="0"]
-shape = SubResource("SphereShape3D_kmnqu")
 
-[connection signal="focus_entered" from="Icon/icon/button" to="." method="playOpenAnimation"]
-[connection signal="focus_entered" from="Icon/icon/button" to="hoverSound" method="play"]
-[connection signal="focus_exited" from="Icon/icon/button" to="." method="playCloseAnimation"]
-[connection signal="mouse_entered" from="Icon/icon/button" to="." method="playOpenAnimation"]
-[connection signal="mouse_entered" from="Icon/icon/button" to="hoverSound" method="play"]
-[connection signal="mouse_exited" from="Icon/icon/button" to="." method="playCloseAnimation"]
-[connection signal="pressed" from="Icon/icon/button" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="Icon/icon/button" to="clickSound" method="play"]
+[node name="positionReference" type="Marker3D" parent="." index="3"]
+unique_name_in_owner = true
+visible = false
+
+[node name="topRight" type="Marker3D" parent="positionReference" index="0"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0.5)
+
+[node name="topLeft" type="Marker3D" parent="positionReference" index="1"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, -0.5)
+
+[node name="bottomLeft" type="Marker3D" parent="positionReference" index="2"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, -0.5)
+
+[node name="bottomRight" type="Marker3D" parent="positionReference" index="3"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0.5)
+
+[node name="visualHolder" type="Marker3D" parent="." index="4"]
+unique_name_in_owner = true
+
+[node name="cornerUpLeft" parent="visualHolder" index="0" instance=ExtResource("12_c10ua")]
+unique_name_in_owner = true
+transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, 0.5, 0, -0.5)
+
+[node name="cornerUpRight" parent="visualHolder" index="1" instance=ExtResource("12_c10ua")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0.5)
+
+[node name="cornerBottomRight" parent="visualHolder" index="2" instance=ExtResource("12_c10ua")]
+unique_name_in_owner = true
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.5, 0, 0.5)
+
+[node name="cornerBottomLeft" parent="visualHolder" index="3" instance=ExtResource("12_c10ua")]
+unique_name_in_owner = true
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -0.5, 0, -0.5)
+
+[node name="icon" type="Sprite3D" parent="." index="5"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1444585, 0)
+modulate = Color(0.5764706, 0, 0, 1)
+pixel_size = 0.0008
+billboard = 1
+fixed_size = true
+texture = ExtResource("3_aptmj")
+
+[node name="mapLabel" type="Label3D" parent="icon" index="0"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00977084, -0.83575153, 0)
+pixel_size = 0.0005
+billboard = 1
+fixed_size = true
+text = "MapName"

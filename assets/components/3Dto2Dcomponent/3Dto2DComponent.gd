@@ -8,7 +8,7 @@ static var control_nodes : Array[Control]
 @export var clamp_to_edge : bool = true
 
 
-func _physics_process(delta: float) -> void:
+func _process(delta: float) -> void:
 	var cam = get_viewport().get_camera_3d()
 	if cam is Camera3D:
 		var unprojected_position = cam.unproject_position(global_position)

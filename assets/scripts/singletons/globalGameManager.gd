@@ -768,6 +768,7 @@ func getShortTweenAngle(currentAngle:float,targetAngle:float)->float:
 
 func disableBulletTime()->void:
 	if activeCamera:
+		activeCamera.hud.triggerRadialBlur(Vector2(0.5,0.5),0.5,0.5)
 		activeCamera.hud.flashColor(Color.WHITE)
 		activeCamera.hud.bulletTimeOff.play()
 	const defaultTransitionType = Tween.TRANS_QUART
@@ -780,6 +781,7 @@ func disableBulletTime()->void:
 
 func enableBulletTime()->void:
 	if activeCamera:
+		activeCamera.hud.triggerRadialBlur(Vector2(0.5,0.5),0.5,60)
 		activeCamera.hud.flashColor(Color.WHITE)
 		activeCamera.hud.bulletTimeOn.play()
 	const defaultTransitionType = Tween.TRANS_QUART

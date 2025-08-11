@@ -1,5 +1,6 @@
 extends Node3D
 
+const markerColors = ["res://assets/scenes/ui/mapOverview/map/defaultMarker.tres","res://assets/scenes/ui/mapOverview/map/atLocationMarker.tres","res://assets/scenes/ui/mapOverview/map/selectedMarker.tres"]
 var camTween : Tween
 @onready var modelHolder : Node3D = $model
 @onready var cameraController : CharacterBody3D = $cameraController

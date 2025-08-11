@@ -53,6 +53,8 @@ func hit(dmg, dealer=null, hitImpulse:Vector3 = Vector3.ZERO, hitPoint:Vector3 =
 				healthComponent.componentOwner.attachedCam.camera.fov -= randf_range(1.8,4.8)
 				healthComponent.componentOwner.attachedCam.fireRecoil(randf_range(0,1),randf_range(0,1),randf_range(2,5),true)
 				healthComponent.componentOwner.attachedCam.fireVignette(1.2,Color.RED)
+				if !gameManager.bulletTime:
+					healthComponent.componentOwner.attachedCam.hud.triggerRadialBlur(Vector2(0.5,0.5),randf_range(0.1,0.3),randf_range(0.3,0.4))
 
 		if is_in_group("Flesh") and crosshairHitEffect:
 			if dealer:

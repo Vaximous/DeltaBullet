@@ -15,10 +15,9 @@ shadow_color = Color(0, 0, 0, 0.576471)
 
 [node name="AreaInformation" type="MarginContainer"]
 anchors_preset = -1
-anchor_right = 0.265
-anchor_bottom = 0.606
-offset_right = 3.05176e-05
-offset_bottom = -0.400024
+anchor_right = 0.26500002
+anchor_bottom = 1.0
+offset_right = -3.0517578e-05
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_7mwi3")
@@ -47,7 +46,7 @@ expand_mode = 5
 layout_mode = 2
 
 [node name="descriptionZone" type="PanelContainer" parent="panelContainer/vBoxContainer"]
-custom_minimum_size = Vector2(0, 147.785)
+custom_minimum_size = Vector2(0, 391.105)
 layout_mode = 2
 
 [node name="label" type="Label" parent="panelContainer/vBoxContainer/descriptionZone"]

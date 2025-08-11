@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://c63b0ewnfkf4n"]
+[gd_scene load_steps=27 format=3 uid="uid://c63b0ewnfkf4n"]
 
 [ext_resource type="Script" uid="uid://t733jevi3esu" path="res://assets/scenes/ui/mapOverview/map/map.gd" id="1_rkk0n"]
 [ext_resource type="Texture2D" uid="uid://d0f0crtwpmoka" path="res://assets/textures/panoramas/panoramatest1.png" id="2_1xklm"]
@@ -60,6 +60,24 @@ alpha_antialiasing_mode = 0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_htbkg"]
 size = Vector3(3.7597656, 0.4901123, 5.830078)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_l5ph3"]
+size = Vector3(11.477417, 13.358917, 4.3310547)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4t545"]
+size = Vector3(5.474121, 12.661255, 7.525879)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ab8qf"]
+size = Vector3(7.819458, 6.5369873, 5.663452)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_uyve1"]
+size = Vector3(8.700745, 6.6835938, 12.893433)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_m7rdm"]
+size = Vector3(7.597534, 14.486816, 7.7128143)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_82d5o"]
+size = Vector3(3.6797485, 7.1469727, 4.617676)
 
 [node name="map" type="Node3D"]
 script = ExtResource("1_rkk0n")
@@ -135,40 +153,160 @@ light_data = ExtResource("4_e1lil")
 unique_name_in_owner = true
 
 [node name="mapLocation" parent="areaNodes" instance=ExtResource("4_fvi35")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.58376, 6.0131, -59.5239)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5013993, 6.0131, -60.071514)
+iconColor = Color(0.54509807, 0, 0, 1)
 locationName = "Test Place!"
 travelScene = ExtResource("5_tej77")
 travelGroupID = 2
 
+[node name="collisionShape3d" parent="areaNodes/mapLocation/area3d" index="0"]
+shape = SubResource("BoxShape3D_l5ph3")
+
+[node name="positionReference" parent="areaNodes/mapLocation" index="3"]
+transform = Transform3D(11.477417, 0, 0, 0, 13.358917, 0, 0, 0, 4.3310547, 0, 0, 0)
+
+[node name="cornerUpLeft" parent="areaNodes/mapLocation/visualHolder" index="0"]
+transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, 5.7387085, 0, -2.1655273)
+
+[node name="cornerUpRight" parent="areaNodes/mapLocation/visualHolder" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.7387085, 0, 2.1655273)
+
+[node name="cornerBottomRight" parent="areaNodes/mapLocation/visualHolder" index="2"]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -5.7387085, 0, 2.1655273)
+
+[node name="cornerBottomLeft" parent="areaNodes/mapLocation/visualHolder" index="3"]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -5.7387085, 0, -2.1655273)
+
 [node name="mapLocation2" parent="areaNodes" instance=ExtResource("4_fvi35")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.4784, 6.0131, 46.9237)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.311678, 6.0131, 51.298866)
+iconColor = Color(0.54509807, 0, 0, 1)
 locationName = "Home"
 travelScene = ExtResource("6_tej77")
 
+[node name="collisionShape3d" parent="areaNodes/mapLocation2/area3d" index="0"]
+shape = SubResource("BoxShape3D_4t545")
+
+[node name="positionReference" parent="areaNodes/mapLocation2" index="3"]
+transform = Transform3D(5.474121, 0, 0, 0, 12.661255, 0, 0, 0, 7.525879, 0, 0, 0)
+
+[node name="cornerUpLeft" parent="areaNodes/mapLocation2/visualHolder" index="0"]
+transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, 2.7370605, 0, -3.7629395)
+
+[node name="cornerUpRight" parent="areaNodes/mapLocation2/visualHolder" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.7370605, 0, 3.7629395)
+
+[node name="cornerBottomRight" parent="areaNodes/mapLocation2/visualHolder" index="2"]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -2.7370586, 0, 3.7629395)
+
+[node name="cornerBottomLeft" parent="areaNodes/mapLocation2/visualHolder" index="3"]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -2.7370586, 0, -3.7629395)
+
 [node name="mapLocation5" parent="areaNodes" instance=ExtResource("4_fvi35")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -52.6802, 7.05717, 26.0663)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -56.637424, 5.9831886, 24.882553)
+iconColor = Color(0.54509807, 0, 0, 1)
 locationName = "Lanton Warehouse"
 travelScene = ExtResource("7_dvqh0")
 
+[node name="collisionShape3d" parent="areaNodes/mapLocation5/area3d" index="0"]
+shape = SubResource("BoxShape3D_ab8qf")
+
+[node name="positionReference" parent="areaNodes/mapLocation5" index="3"]
+transform = Transform3D(7.819458, 0, 0, 0, 6.5369873, 0, 0, 0, 5.663452, 0, 0, 0)
+
+[node name="cornerUpLeft" parent="areaNodes/mapLocation5/visualHolder" index="0"]
+transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, 3.909729, 0, -2.831726)
+
+[node name="cornerUpRight" parent="areaNodes/mapLocation5/visualHolder" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.909729, 0, 2.831726)
+
+[node name="cornerBottomRight" parent="areaNodes/mapLocation5/visualHolder" index="2"]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -3.909729, 0, 2.831726)
+
+[node name="cornerBottomLeft" parent="areaNodes/mapLocation5/visualHolder" index="3"]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -3.909729, 0, -2.831726)
+
 [node name="mapLocation3" parent="areaNodes" instance=ExtResource("4_fvi35")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.904, 6.0131, 29.7552)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.280127, 6.0173182, 28.689754)
+iconColor = Color(0.54509807, 0, 0, 1)
 locationName = "Uncle Tsimk's Shop"
 travelScene = ExtResource("7_46huw")
 
+[node name="collisionShape3d" parent="areaNodes/mapLocation3/area3d" index="0"]
+shape = SubResource("BoxShape3D_uyve1")
+
+[node name="positionReference" parent="areaNodes/mapLocation3" index="3"]
+transform = Transform3D(8.700745, 0, 0, 0, 6.6835938, 0, 0, 0, 12.893433, 0, 0, 0)
+
+[node name="cornerUpLeft" parent="areaNodes/mapLocation3/visualHolder" index="0"]
+transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, 4.3503723, 0, -6.4467163)
+
+[node name="cornerUpRight" parent="areaNodes/mapLocation3/visualHolder" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.3503723, 0, 6.4467163)
+
+[node name="cornerBottomRight" parent="areaNodes/mapLocation3/visualHolder" index="2"]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -4.3503723, 0, 6.4467163)
+
+[node name="cornerBottomLeft" parent="areaNodes/mapLocation3/visualHolder" index="3"]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -4.3503723, 0, -6.4467163)
+
 [node name="mapLocation4" parent="areaNodes" instance=ExtResource("4_fvi35")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.0693, 7.15974, -20.5189)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.828157, 5.977043, -23.81974)
+iconColor = Color(0.54509807, 0, 0, 1)
 locationName = "Havelona Hospital"
 travelScene = ExtResource("8_d0eii")
 travelGroupID = 1
 
+[node name="collisionShape3d" parent="areaNodes/mapLocation4/area3d" index="0"]
+shape = SubResource("BoxShape3D_m7rdm")
+
+[node name="positionReference" parent="areaNodes/mapLocation4" index="3"]
+transform = Transform3D(7.597534, 0, 0, 0, 14.486816, 0, 0, 0, 7.7128143, 0, 0, 0)
+
+[node name="cornerUpLeft" parent="areaNodes/mapLocation4/visualHolder" index="0"]
+transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, 3.798767, 0, -3.8564072)
+
+[node name="cornerUpRight" parent="areaNodes/mapLocation4/visualHolder" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.798767, 0, 3.8564072)
+
+[node name="cornerBottomRight" parent="areaNodes/mapLocation4/visualHolder" index="2"]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -3.798767, 0, 3.8564072)
+
+[node name="cornerBottomLeft" parent="areaNodes/mapLocation4/visualHolder" index="3"]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -3.798767, 0, -3.8564072)
+
 [node name="mapLocation6" parent="areaNodes" instance=ExtResource("4_fvi35")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.77963, 7.15974, -24.9772)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.251675, 5.9782143, -25.340658)
+iconColor = Color(0.54509807, 0, 0, 1)
 locationName = "Survival Street"
 travelScene = ExtResource("10_mlvph")
 travelGroupID = 1
+
+[node name="collisionShape3d" parent="areaNodes/mapLocation6/area3d" index="0"]
+shape = SubResource("BoxShape3D_82d5o")
+
+[node name="positionReference" parent="areaNodes/mapLocation6" index="3"]
+transform = Transform3D(3.6797485, 0, 0, 0, 7.1469727, 0, 0, 0, 4.617676, 0, 0, 0)
+
+[node name="cornerUpLeft" parent="areaNodes/mapLocation6/visualHolder" index="0"]
+transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, 1.8398743, 0, -2.308838)
+
+[node name="cornerUpRight" parent="areaNodes/mapLocation6/visualHolder" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8398743, 0, 2.308838)
+
+[node name="cornerBottomRight" parent="areaNodes/mapLocation6/visualHolder" index="2"]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -1.8398743, 0, 2.308838)
+
+[node name="cornerBottomLeft" parent="areaNodes/mapLocation6/visualHolder" index="3"]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -1.8398743, 0, -2.308838)
 
 [node name="directionalLight3d" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.92211926, -0.058615506, 0.38243997, 0.23590562, 0.69828504, 0.6758305, -0.3066661, 0.7134167, -0.63007337, 0, 33.6165, 0)
 directional_shadow_mode = 0
 
 [editable path="model/mapoverview"]
+[editable path="areaNodes/mapLocation"]
+[editable path="areaNodes/mapLocation2"]
+[editable path="areaNodes/mapLocation5"]
+[editable path="areaNodes/mapLocation3"]
+[editable path="areaNodes/mapLocation4"]
+[editable path="areaNodes/mapLocation6"]

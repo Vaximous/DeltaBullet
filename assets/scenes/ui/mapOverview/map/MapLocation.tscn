@@ -166,3 +166,6 @@ pixel_size = 0.0005
 billboard = 1
 fixed_size = true
 text = "MapName"
+
+[node name="navPoint" type="Marker3D" parent="." index="7"]
+gizmo_extents = 2.0

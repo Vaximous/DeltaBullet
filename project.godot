@@ -65,6 +65,7 @@ FmodManager="*res://addons/fmod/FmodManager.gd"
 settings/physics_interpolation/enable_warnings=false
 file_logging/enable_file_logging=true
 file_logging/max_log_files=10
+gdscript/warnings/int_as_enum_without_cast=0
 
 [dialogic]
 

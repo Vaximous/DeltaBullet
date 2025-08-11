@@ -120,12 +120,29 @@ func _unhandled_input(event: InputEvent) -> void:
 			if !springArm.spring_length > 6:
 				springArm.spring_length += 0.5
 
+
 func scanMarkers()->void:
-	for markers in %areaNodes.get_children():
+	for markers in getMarkers():
 		if !markers.map:
 			markers.playCloseAnimation()
 			markers.map = self
 			markers.setupMap()
+		if markers.isLocationCurrent():
+			markers.setMarkerMaterial(load(markerColors[1]))
+
+
+func getMarkers() -> Array[Marker3D]:
+	var m : Array[Marker3D]
+	m.assign(%areaNodes.get_children())
+	return m
+
+
+func getCurrentLocationMarker() -> Marker3D:
+	for marker in getMarkers():
+		if marker.isLocationCurrent():
+			return marker
+	return null
+
 
 func setCameraPositionAndRotation(pos:Vector3,rot:Vector3)->void:
 	if camTween:
@@ -134,3 +151,35 @@ func setCameraPositionAndRotation(pos:Vector3,rot:Vector3)->void:
 	camTween.parallel().tween_property(cameraHolder,"global_position",pos,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
 	camTween.parallel().tween_property(horizontal,"rotation_degrees:y",rot.y,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
 	camTween.parallel().tween_property(vertical,"rotation_degrees:x",rot.x,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+
+
+##Clear the current navigation visualization path
+func clearNaviPath() -> void:
+	return
+
+
+func createNaviPath(start : Vector3, end : Vector3) -> void:
+	clearNaviPath()
+	var navAgent : NavigationAgent3D = $pathVisualizerStartPosition/pathVisualizerNavAgent
+	$pathVisualizerStartPosition.global_position = start
+	navAgent.target_position = end
+	var new_curve := Curve3D.new()
+	$pathVisualizerStartPosition/path3d.curve = new_curve
+	navAgent.get_next_path_position()
+	var navPath = navAgent.get_current_navigation_path()
+	for idx in navPath.size():
+		##TODO : add smoothing?
+		var point = navPath.get(idx)
+		new_curve.add_point(point, Vector3.ZERO, Vector3.ZERO)
+
+
+##Marker selected callback
+func _on_map_selection_marker_selected_marker(node: Node3D) -> void:
+	var current = getCurrentLocationMarker()
+	if node == current:
+		clearNaviPath()
+		return
+	var destination = node.getNavPoint()
+	var start_closest = NavigationServer3D.region_get_closest_point($model/mapoverview/MapNavigation.get_rid(), current.getNavPoint())
+
+	createNaviPath(start_closest, destination)

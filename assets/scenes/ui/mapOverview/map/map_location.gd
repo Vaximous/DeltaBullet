@@ -54,6 +54,7 @@ func setVisualMarkers()->void:
 		$%cornerUpLeft.global_position.x = %topLeft.global_position.x
 		$%cornerUpLeft.global_position.z = %topLeft.global_position.z
 
+
 func setupMap()->void:
 	if !Engine.is_editor_hint():
 		playCloseAnimation()
@@ -62,23 +63,27 @@ func setupMap()->void:
 				map.mapScreen.index_changed.connect(updateVisibility.unbind(1))
 				%mapLabel.text = locationName
 
+
 func updateVisibility()->void:
 	if map.mapScreen.selectedIndex == travelGroupID:
 		setVisible(true)
 	else:
 		setVisible(false)
 
-func _process(delta: float) -> void:
+
+func _process(_delta: float) -> void:
 	#super(delta)
 	setVisualMarkers()
+
 
 func _ready() -> void:
 	%icon.position.y = collisionShape.shape.size.y - 4.0
 	setupMap()
 
+
 func playOpenAnimation()->void:
 	if map:
-		if map.mapScreen.selectedMarker != self:
+		if map.mapScreen.selectedMarker != self or isLocationCurrent():
 			enlargeVisual()
 			fadeIconIn()
 
@@ -128,10 +133,17 @@ func reduceVisual()->void:
 
 func playCloseAnimation()->void:
 	if map:
-		if map.mapScreen.selectedMarker != self:
+		if map.mapScreen.selectedMarker != self and !isLocationCurrent():
 			reduceVisual()
 			fadeIconOut()
 			#setMarkerMaterial(load(map.markerColors[0]))
+
+
+##Checks if this is the current location.
+func isLocationCurrent() -> bool:
+	if gameManager.world.scene_file_path == travelScene.resource_path:
+		return true
+	return false
 
 
 func gotoLocation()->void:
@@ -163,6 +175,10 @@ func setMarkerMaterial(material:StandardMaterial3D):
 			ppppm.color = material.albedo_color
 			marker.set_surface_override_material(0,material)
 
+
+##Used for Navigation visualization on the map
+func getNavPoint() -> Vector3:
+	return $navPoint.global_position
 
 
 func _on_button_pressed() -> void:

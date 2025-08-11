@@ -2,12 +2,26 @@ extends Node3D
 @onready var area3d : Area3D = $area3d
 signal selectedMarker(node:Node3D)
 @export var map : Node3D
+
+
 func selectMarker(marker:Area3D):
 	if map.mapScreen.selectedMarker:
-		map.mapScreen.selectedMarker.setMarkerMaterial(load(marker.owner.map.markerColors[0]))
+		#Deselected
+		if map.mapScreen.selectedMarker.isLocationCurrent():
+			map.mapScreen.selectedMarker.setMarkerMaterial(load(marker.owner.map.markerColors[1]))
+			map.mapScreen.selectedMarker.fadeIconIn()
+		else:
+			map.mapScreen.selectedMarker.setMarkerMaterial(load(marker.owner.map.markerColors[0]))
 	map.mapScreen.selectedMarker = marker.owner
 	marker.owner.clickSound.play()
-	marker.owner.setMarkerMaterial(load(marker.owner.map.markerColors[2]))
+	#Selected
+	if marker.owner.isLocationCurrent():
+		marker.owner.setMarkerMaterial(load(marker.owner.map.markerColors[1]))
+		marker.owner.fadeIconIn()
+	else:
+		marker.owner.setMarkerMaterial(load(marker.owner.map.markerColors[2]))
+	selectedMarker.emit(marker.owner)
+
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("gLeftClick"):

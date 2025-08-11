@@ -1,4 +1,4 @@
-[gd_scene load_steps=149 format=3 uid="uid://cm5mhbhroqded"]
+[gd_scene load_steps=148 format=3 uid="uid://cm5mhbhroqded"]
 
 [ext_resource type="Texture2D" uid="uid://dc5f1olwhqsha" path="res://assets/textures/world/concrete/gouged1.png" id="1_6e65t"]
 [ext_resource type="PackedScene" uid="uid://bg8aarggcxwa8" path="res://assets/entities/pawnEntity/pawnEntity.tscn" id="1_6tkvv"]
@@ -31,7 +31,6 @@
 [ext_resource type="AudioStream" uid="uid://74p6gclkalsk" path="res://assets/sounds/weapons/m4/m4_draw_3.wav" id="20_iq480"]
 [ext_resource type="AudioStream" uid="uid://c85mepdrdblyy" path="res://assets/sounds/weapons/m4/m4_draw_4.wav" id="21_7qpxq"]
 [ext_resource type="Texture2D" uid="uid://c7b38t83ckisx" path="res://assets/textures/crosshair/crosshair161.png" id="22_hvob1"]
-[ext_resource type="Compositor" uid="uid://0e0nh5rmqeuj" path="res://assets/entities/camera/testComp.tres" id="24_f1ndr"]
 
 [sub_resource type="GDScript" id="GDScript_svckf"]
 script/source = "extends Node3D
@@ -89,47 +88,26 @@ stream_3/stream = ExtResource("14_4665v")
 [sub_resource type="Resource" id="Resource_cc615"]
 resource_local_to_scene = true
 script = ExtResource("18_vjrhr")
-useBulletTrail = true
 displayData = ExtResource("10_q3msa")
-canBeReloaded = true
 weaponMagSize = 64
 ammoSize = 12
 reloadTime = 1.86
-headDismember = false
 weaponDamage = 7.0
 weaponFireRate = 0.21
-bulletSpeed = 800.0
 bulletPenetration = 0.0
 weaponImpulse = 25.0
-weaponShots = 1
-ammoConsumption = 1
 damageFalloff = ExtResource("11_q5xy8")
-scopedWeapon = false
 scopedFOV = 10
 useCustomCrosshairSize = true
-crosshairSizeOverride = 0.8
-useFOV = false
 fovShotAmount = 0.7
 weaponRecoil = Vector3(5, 8, 0.25)
-weaponRecoilStrength = 8.0
 weaponSpread = 0.055
-weaponRecoilStrengthAim = 4.0
 weaponSpreadAim = 0.05
-leftHandParent = false
-rightHandParent = true
-useWeaponSprintAnim = false
-useLeftHandCover = true
-useRightHandCover = true
 useLeftHandIdle = false
-useRightHandIdle = true
-useLeftHandAiming = true
-useRightHandAiming = true
 useLeftHandFreeAiming = false
-useRightHandFreeAiming = true
 weaponPositionOffset = Vector3(0, -0.185, 0.055)
 weaponRotationOffset = Vector3(0, -1.63, -1.505)
 equipStream = SubResource("AudioStreamRandomizer_4urcc")
-bulletColor = Color(1, 1, 0, 1)
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_uefm2"]
 streams_count = 4
@@ -141,48 +119,24 @@ stream_3/stream = ExtResource("21_7qpxq")
 [sub_resource type="Resource" id="Resource_klpqo"]
 resource_local_to_scene = true
 script = ExtResource("18_vjrhr")
-useBulletTrail = true
 displayData = ExtResource("17_km2fj")
-canBeReloaded = true
-weaponMagSize = 128
-ammoSize = 30
 reloadTime = 1.9
-headDismember = false
 weaponDamage = 7.9
 weaponFireRate = 0.1
-bulletSpeed = 800.0
-bulletPenetration = 1.0
 weaponImpulse = 27.0
-weaponShots = 1
-ammoConsumption = 1
 damageFalloff = ExtResource("11_q5xy8")
-scopedWeapon = false
-scopedFOV = 25
 useCustomCrosshairSize = true
-crosshairSizeOverride = 0.8
 forcedCrosshair = ExtResource("22_hvob1")
 useFOV = true
 fovShotAmount = 0.8
 weaponRecoil = Vector3(5, 9, 3)
 weaponRecoilStrength = 7.0
 weaponSpread = 0.09
-weaponRecoilStrengthAim = 4.0
 weaponSpreadAim = 0.04
-leftHandParent = false
-rightHandParent = true
 useWeaponSprintAnim = true
-useLeftHandCover = true
-useRightHandCover = true
-useLeftHandIdle = true
-useRightHandIdle = true
-useLeftHandAiming = true
-useRightHandAiming = true
-useLeftHandFreeAiming = true
-useRightHandFreeAiming = true
 weaponPositionOffset = Vector3(-0.015, 0.13, 0.075)
 weaponRotationOffset = Vector3(0, -1.74, -1.48)
 equipStream = SubResource("AudioStreamRandomizer_uefm2")
-bulletColor = Color(1, 1, 0, 1)
 
 [sub_resource type="Environment" id="Environment_qa24r"]
 background_mode = 2
@@ -768,48 +722,27 @@ stream_3/stream = ExtResource("16_ih5j6")
 [sub_resource type="Resource" id="Resource_nnvlt"]
 resource_local_to_scene = true
 script = ExtResource("18_vjrhr")
-useBulletTrail = true
 displayData = ExtResource("12_7711w")
-canBeReloaded = true
 weaponMagSize = 511
 ammoSize = 64
 reloadTime = 1.5
-headDismember = false
-weaponDamage = 5.0
 weaponFireRate = 0.065
-bulletSpeed = 800.0
-bulletPenetration = 1.0
 weaponImpulse = 14.0
-weaponShots = 1
-ammoConsumption = 1
 damageFalloff = ExtResource("11_q5xy8")
-scopedWeapon = false
-scopedFOV = 25
 useCustomCrosshairSize = true
-crosshairSizeOverride = 0.8
 forcedCrosshair = ExtResource("17_4lj73")
 useFOV = true
 fovShotAmount = 0.2
 weaponRecoil = Vector3(3, 7, 5)
 weaponRecoilStrength = 4.0
 weaponSpread = 0.08
-weaponRecoilStrengthAim = 4.0
 weaponSpreadAim = 0.05
-leftHandParent = false
-rightHandParent = true
-useWeaponSprintAnim = false
-useLeftHandCover = true
-useRightHandCover = true
 useLeftHandIdle = false
-useRightHandIdle = true
 useLeftHandAiming = false
-useRightHandAiming = true
 useLeftHandFreeAiming = false
-useRightHandFreeAiming = true
 weaponPositionOffset = Vector3(-0.02, -0.08, 0.105)
 weaponRotationOffset = Vector3(-0.02, -1.7, -1.605)
 equipStream = SubResource("AudioStreamRandomizer_q5v7x")
-bulletColor = Color(1, 1, 0, 1)
 
 [sub_resource type="Animation" id="Animation_gp1cm"]
 length = 0.001
@@ -1000,10 +933,9 @@ freeze = true
 weaponResource = SubResource("Resource_klpqo")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.957986, 0.124405, 0.25843, 0.0100838, 0.885868, -0.463827, -0.286637, 0.446946, 0.847395, -0.233828, 0.861693, 0.695114)
+transform = Transform3D(0.9579859, 0.12440509, 0.25842988, 0.010083831, 0.8858682, -0.46382686, -0.2866373, 0.44694555, 0.8473951, -0.233828, 0.861693, 0.695114)
 environment = SubResource("Environment_qa24r")
 attributes = SubResource("CameraAttributesPractical_ttsfu")
-compositor = ExtResource("24_f1ndr")
 current = true
 fov = 90.5
 
@@ -1017,34 +949,31 @@ animationToForce = "PawnAnim/MenuIdle"
 pawnEnabled = false
 
 [node name="Skeleton3D" parent="playerCharacter/Mesh/MaleSkeleton" index="0"]
-bones/1/position = Vector3(5.75604e-05, 0.19914, -0.000347737)
-bones/1/rotation = Quaternion(-0.135675, -0.0650221, -0.00502292, 0.988605)
-bones/2/rotation = Quaternion(0.162706, 0.0137391, 0.0142421, 0.986476)
-bones/3/rotation = Quaternion(-0.012193, 0.0125708, -0.0159701, 0.999719)
-bones/4/rotation = Quaternion(0.562954, 0.345995, 0.557922, -0.502088)
-bones/5/rotation = Quaternion(-0.450269, 0.325697, -0.322231, 0.766386)
-bones/6/rotation = Quaternion(0.0840283, 0.0130399, -0.0962255, 0.991721)
-bones/7/rotation = Quaternion(-0.0283827, -0.250054, 0.0017671, 0.967814)
-bones/23/rotation = Quaternion(0.569748, -0.326757, -0.551615, -0.514138)
-bones/24/rotation = Quaternion(-0.500635, -0.318935, 0.269213, 0.758399)
-bones/25/rotation = Quaternion(0.136855, -0.0128597, 0.156721, 0.978031)
-bones/26/rotation = Quaternion(0.0428149, 0.202703, -0.0254758, 0.977972)
-bones/42/rotation = Quaternion(0.0232393, -0.00223438, 0.00269391, 0.999724)
-bones/43/rotation = Quaternion(0.00647727, 0.709225, 0.0539253, 0.702887)
-bones/44/rotation = Quaternion(0.992352, 0.0755364, -0.0614714, -0.0758496)
-bones/45/rotation = Quaternion(0.212383, 0.00204987, 0.0283962, 0.976772)
-bones/46/rotation = Quaternion(0.0369483, 0.867422, -0.493096, 0.0554131)
-bones/47/rotation = Quaternion(0.419364, -0.0150753, -0.0229234, 0.907403)
-bones/48/rotation = Quaternion(0.995268, -0.08744, 0.0147544, 0.0397379)
-bones/49/rotation = Quaternion(0.212698, -0.00204838, -0.0283982, 0.976703)
-bones/50/rotation = Quaternion(-0.0165454, 0.894091, -0.441306, -0.0746784)
-bones/51/rotation = Quaternion(0.311213, 0.0108901, 0.00012688, 0.950278)
+bones/1/rotation = Quaternion(-0.13979526, -0.06995418, -0.003972815, 0.9876984)
+bones/2/rotation = Quaternion(0.18608029, 0.013251057, 0.013080585, 0.98235816)
+bones/3/rotation = Quaternion(-0.050212614, 0.009707538, -0.011381421, 0.9986266)
+bones/4/rotation = Quaternion(0.5563216, 0.33491457, 0.5664151, -0.50745696)
+bones/5/rotation = Quaternion(-0.45497432, 0.3115495, -0.34532452, 0.7593987)
+bones/6/rotation = Quaternion(0.07095792, 0.0130746085, -0.08123569, 0.99407995)
+bones/7/rotation = Quaternion(-0.01820864, -0.24388532, -0.015512509, 0.96950907)
+bones/23/rotation = Quaternion(-0.56008136, 0.3202278, 0.55656624, 0.5234474)
+bones/24/rotation = Quaternion(-0.50467885, -0.33755475, 0.25374374, 0.7529742)
+bones/25/rotation = Quaternion(0.13406642, -0.012875873, 0.15350437, 0.9789264)
+bones/26/rotation = Quaternion(0.0073842173, 0.18679512, -0.056474328, 0.98074657)
+bones/42/rotation = Quaternion(0.03644521, 0.0013986046, -0.004073817, 0.9993264)
+bones/43/rotation = Quaternion(0.00618384, 0.70850766, 0.05730523, 0.7033454)
+bones/44/rotation = Quaternion(0.99003756, 0.078695476, -0.068885, -0.09427391)
+bones/45/rotation = Quaternion(0.20437695, 0.0020546135, 0.028383784, 0.97847855)
+bones/46/rotation = Quaternion(0.039348807, 0.86561817, -0.4947705, 0.06602345)
+bones/48/rotation = Quaternion(0.99447054, -0.0916567, 0.01405035, 0.049294915)
+bones/49/rotation = Quaternion(0.17223525, -0.0020698316, -0.02830551, 0.984647)
+bones/50/rotation = Quaternion(-0.016314084, 0.89852905, -0.43132117, -0.079633676)
 
 [node name="AnimationTree" parent="playerCharacter" index="4"]
 tree_root = SubResource("AnimationNodeBlendTree_q3msa")
 
 [node name="rightHand" parent="playerCharacter/BoneAttatchments" index="0"]
-transform = Transform3D(-0.519001, -0.966776, -4.21528, -0.738658, -4.16322, 1.04582, -4.26116, 0.839328, 0.332108, -0.201845, 1.12088, -0.122005)
+transform = Transform3D(-0.13449636, -0.15678667, -0.9784292, -0.045440137, -0.98535794, 0.16414942, -0.9898612, 0.06651285, 0.12539916, -0.19245891, 1.1075736, -0.14693789)
 
 [node name="Uzi" parent="playerCharacter/BoneAttatchments/rightHand" index="0" instance=ExtResource("10_d5ym2")]
 transform = Transform3D(0.206439, -0.0302025, 0.0238864, 0.0229978, -0.00777725, -0.208592, 0.0308845, 0.207671, -0.00433768, -0.00103119, 0.00557894, 0.0148477)
@@ -1052,49 +981,49 @@ freeze = true
 weaponResource = SubResource("Resource_nnvlt")
 
 [node name="UpperChest" parent="playerCharacter/BoneAttatchments" index="1"]
-transform = Transform3D(4.25719, -0.0529886, -0.91973, 0.000534395, 4.34866, -0.248083, 0.921253, 0.242359, 4.25029, -0.0314488, 1.38505, -0.0824225)
+transform = Transform3D(0.97347593, -0.015159983, -0.22824726, 0.010848491, 0.99972963, -0.020134717, 0.2284928, 0.017125119, 0.973386, -0.034216635, 1.3701379, -0.07459517)
 
 [node name="LeftThigh" parent="playerCharacter/BoneAttatchments" index="2"]
-transform = Transform3D(4.28545, 0.51227, 0.587478, 0.573821, -4.29519, -0.440259, 0.527536, 0.510532, -4.29344, 0.0173134, 1.04429, -0.0514462)
+transform = Transform3D(0.98323, 0.1305411, 0.12733766, 0.1406936, -0.9872393, -0.07421526, 0.116026565, 0.09088345, -0.98907506, 0.016159063, 1.0350217, -0.049961906)
 
 [node name="LeftFoot" parent="playerCharacter/BoneAttatchments" index="3"]
-transform = Transform3D(-4.32114, 0.422031, -0.349291, -0.547627, -3.24724, 2.85072, 0.015824, 2.87199, 3.27465, 0.108816, 0.264892, -0.128567)
+transform = Transform3D(-0.99017274, 0.123260476, -0.06592324, -0.13626806, -0.7459279, 0.6518687, 0.03117998, 0.6544501, 0.7554337, 0.114645444, 0.26678538, -0.14045012)
 
 [node name="LeftKnee" parent="playerCharacter/BoneAttatchments" index="4"]
-transform = Transform3D(4.31207, 0.475047, 0.390845, 0.327333, -4.11483, 1.39025, 0.520849, -1.347, -4.10936, 0.0648943, 0.64534, -0.00402677)
+transform = Transform3D(0.9899577, 0.1165815, 0.07986402, 0.08423643, -0.9405655, 0.32892135, 0.11346413, -0.3189063, -0.94096583, 0.06829651, 0.64072317, -0.013663508)
 
 [node name="RightThigh" parent="playerCharacter/BoneAttatchments" index="5"]
-transform = Transform3D(4.04485, -1.08211, 1.20029, -0.674763, -4.07037, -1.39593, 1.46848, 1.11032, -3.94757, -0.0797585, 1.04388, -0.0783242)
+transform = Transform3D(0.92345136, -0.26265395, 0.27971438, -0.15822332, -0.9247534, -0.34604234, 0.34956753, 0.27529007, -0.89554876, -0.07940934, 1.034244, -0.07741127)
 
 [node name="RightFoot" parent="playerCharacter/BoneAttatchments" index="6"]
-transform = Transform3D(-3.83258, -1.71201, -1.16308, 0.335312, -2.92885, 3.20642, -2.0424, 2.7318, 2.70895, -0.204561, 0.267086, -0.0262649)
+transform = Transform3D(-0.8734699, -0.41717628, -0.2509945, 0.061727773, -0.60623777, 0.7928511, -0.48293868, 0.6770499, 0.55530185, -0.22443713, 0.26951075, 0.022159055)
 
 [node name="RightKnee" parent="playerCharacter/BoneAttatchments" index="7"]
-transform = Transform3D(4.08954, -0.262754, 1.4761, -0.433045, -4.31251, 0.431944, 1.43542, -0.552365, -4.07517, -0.180267, 0.66581, 0.0248054)
+transform = Transform3D(0.93519896, -0.10092684, 0.33940506, -0.10379742, -0.9945275, -0.009769857, 0.33854252, -0.026106568, -0.9405826, -0.18431197, 0.66490203, 0.03253816)
 
 [node name="Stomach" parent="playerCharacter/BoneAttatchments" index="8"]
-transform = Transform3D(4.22852, -0.21224, -1.02319, 0.131725, 4.33914, -0.355704, 1.03664, 0.314373, 4.21884, -0.0214066, 1.17974, -0.0972972)
+transform = Transform3D(0.96802413, -0.060996767, -0.2432889, 0.032180846, 0.9921476, -0.12070723, 0.24874786, 0.10901962, 0.9623947, -0.021806385, 1.1682785, -0.096775964)
 
 [node name="Hips" parent="playerCharacter/BoneAttatchments" index="9"]
-transform = Transform3D(4.19774, 0.264862, -1.13188, 0.0178045, 4.22604, 1.05493, 1.16231, -1.0213, 4.07168, -0.029907, 1.04411, -0.0645201)
+transform = Transform3D(0.9611013, 0.061761256, -0.26916987, 0.007822968, 0.9681883, 0.250085, 0.27605218, -0.24246474, 0.9300527, -0.03032957, 1.0346665, -0.06331538)
 
 [node name="Neck" parent="playerCharacter/BoneAttatchments" index="10"]
-transform = Transform3D(4.25258, -0.119028, -0.934749, 0.0223667, 4.33237, -0.449931, 0.942031, 0.434477, 4.23039, -0.0346593, 1.64852, -0.0677387)
+transform = Transform3D(0.9742677, -0.023716994, -0.22410321, 0.0028723248, 0.99566275, -0.09288694, 0.2253367, 0.089854315, 0.9701185, -0.03816616, 1.6305915, -0.070133656)
 
 [node name="leftHand" parent="playerCharacter/BoneAttatchments" index="11"]
-transform = Transform3D(-2.3989, 0.114095, 3.63379, 0.605132, -4.2803, 0.533876, 3.58481, 0.798838, 2.34152, 0.155936, 1.11785, -0.0114263)
+transform = Transform3D(-0.5733072, -0.019993238, 0.81907797, 0.19585036, -0.9740541, 0.11330657, 0.7955567, 0.22537428, 0.5623538, 0.1303888, 1.1052538, 0.00085193664)
 
 [node name="leftArm" parent="playerCharacter/BoneAttatchments" index="12"]
-transform = Transform3D(-3.71288, 0.647563, 2.1834, -0.587018, -4.30687, 0.279121, 2.20038, -0.0563576, 3.75854, 0.102999, 1.61364, -0.0660726)
+transform = Transform3D(-0.8694291, 0.10468269, 0.48280692, -0.07575751, -0.9939537, 0.079084516, 0.4881652, 0.032175392, 0.8721201, 0.09763407, 1.5960228, -0.0656829)
 
 [node name="leftForearm" parent="playerCharacter/BoneAttatchments" index="13"]
-transform = Transform3D(-3.85685, 0.268077, 2.00631, 0.224882, -4.23381, 0.99802, 2.01155, 0.987253, 3.73509, 0.140218, 1.36609, -0.0693118)
+transform = Transform3D(-0.8924917, 0.027299512, 0.45021725, 0.080989994, -0.9722208, 0.21950167, 0.4436965, 0.23235998, 0.8655031, 0.12350599, 1.3503711, -0.05773087)
 
 [node name="rightArm" parent="playerCharacter/BoneAttatchments" index="14"]
-transform = Transform3D(-1.98959, -0.158456, -3.87151, 0.806942, -4.27362, -0.239783, -3.78975, -0.826806, 1.98136, -0.160573, 1.61377, -0.129732)
+transform = Transform3D(-0.45736688, -0.017021148, -0.8890991, 0.21130402, -0.9732521, -0.09006846, -0.8637812, -0.22907689, 0.44871557, -0.16141963, 1.5951633, -0.13281433)
 
 [node name="rightForearm" parent="playerCharacter/BoneAttatchments" index="15"]
-transform = Transform3D(-2.20268, -0.548589, -3.71749, -0.544344, -4.21696, 0.944864, -3.71807, 0.942287, 2.06394, -0.16968, 1.36814, -0.177254)
+transform = Transform3D(-0.49972832, -0.106427565, -0.8596125, -0.09384245, -0.97989964, 0.1758801, -0.8610664, 0.16853839, 0.47969794, -0.1656264, 1.354627, -0.1894299)
 
 [node name="Marker3D" type="Marker3D" parent="."]
 transform = Transform3D(-0.0491924, 0.839506, -0.541119, -0.866504, 0.233576, 0.441149, 0.49674, 0.490583, 0.715945, -0.0128218, 0.926147, 0.0520496)

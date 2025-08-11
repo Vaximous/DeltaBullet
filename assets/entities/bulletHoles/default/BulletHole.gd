@@ -94,6 +94,7 @@ func initializeBulletHole()->void:
 	for particles in particleArray:
 		#Forces the position of the particles to be set to the collision point (Wont be used much, is an old thing)
 		if forceGlobalPosition:
+			await get_tree().process_frame
 			particles.global_position = colPoint
 
 		#Reparent to particles in world

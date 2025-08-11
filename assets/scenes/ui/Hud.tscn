@@ -33,7 +33,7 @@ signal crosshairSet(crosshair)
 const  defaultCrosshair = preload(\"res://assets/textures/crosshair/crosshair001.png\")
 @export var dynamicCrosshair : bool = true
 @export var overridePosition : bool = true
-var positionOverride = get_viewport_rect().size/2 - pivot_offset
+var positionOverride
 const defaultCrosshairSize : float = 0.8
 var crosshairSize : float = 0.8
 var crosshairSizeSpeed = 0.07

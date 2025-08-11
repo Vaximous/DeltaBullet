@@ -42,6 +42,7 @@ func unpauseGame()->void:
 func refreshBG()->void:
 	var tween = create_tween()
 	var bg : CompressedTexture2D = load(["res://assets/misc/db7.png","res://assets/scenes/ui/saveloadmenu/save1.png","res://assets/scenes/ui/saveloadmenu/save2.png","res://assets/scenes/ui/saveloadmenu/save3.png","res://assets/scenes/ui/saveloadmenu/save4.png"].pick_random())
+	await get_tree().process_frame
 	background.texture = bg
 	background.position += Vector2(randf_range(-150,-100),randf_range(-20,20))
 	tween.set_ease(Tween.EASE_OUT)

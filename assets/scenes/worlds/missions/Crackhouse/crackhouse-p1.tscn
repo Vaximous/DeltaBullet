@@ -48,14 +48,9 @@ energy_multiplier = 0.85
 
 [sub_resource type="Resource" id="Resource_cwdvh"]
 script = ExtResource("2_xbw1q")
-worldEditable = false
 skyTexture = SubResource("PanoramaSkyMaterial_wf1is")
 worldName = "Shootout"
 worldDescription = "Fuck up the operation"
-worldType = 0
-spawnPawnsOnLoad = true
-playOnStart = false
-spawnType = 0
 
 [sub_resource type="CompositorEffect" id="CompositorEffect_pmh78"]
 resource_local_to_scene = false
@@ -154,86 +149,40 @@ uv1_triplanar = true
 [sub_resource type="Resource" id="Resource_6dmke"]
 resource_local_to_scene = true
 script = ExtResource("36_usxi5")
-useBulletTrail = true
-canBeReloaded = true
-weaponMagSize = 128
-ammoSize = 30
 reloadTime = 1.9
-headDismember = false
 weaponDamage = 7.9
 weaponFireRate = 0.1
-bulletSpeed = 800.0
-bulletPenetration = 1.0
 weaponImpulse = 27.0
-weaponShots = 1
-ammoConsumption = 1
-damageFalloff = ExtResource("28_yrnvq")
-scopedWeapon = false
-scopedFOV = 25
 useCustomCrosshairSize = true
-crosshairSizeOverride = 0.8
 forcedCrosshair = ExtResource("35_yjgqk")
 useFOV = true
 fovShotAmount = 0.8
 weaponRecoil = Vector3(5, 9, 3)
 weaponRecoilStrength = 7.0
 weaponSpread = 0.09
-weaponRecoilStrengthAim = 4.0
 weaponSpreadAim = 0.07
-leftHandParent = false
-rightHandParent = true
 useWeaponSprintAnim = true
-useLeftHandIdle = true
-useRightHandIdle = true
-useLeftHandAiming = true
-useRightHandAiming = true
-useLeftHandFreeAiming = true
-useRightHandFreeAiming = true
 weaponPositionOffset = Vector3(-0.015, 0.13, 0.075)
 weaponRotationOffset = Vector3(0, -1.74, -1.48)
-bulletColor = Color(1, 1, 0, 1)
 
 [sub_resource type="Resource" id="Resource_tobrt"]
 resource_local_to_scene = true
 script = ExtResource("36_usxi5")
-useBulletTrail = true
-canBeReloaded = true
-weaponMagSize = 128
-ammoSize = 30
 reloadTime = 1.9
-headDismember = false
 weaponDamage = 7.9
 weaponFireRate = 0.1
-bulletSpeed = 800.0
-bulletPenetration = 1.0
 weaponImpulse = 27.0
-weaponShots = 1
-ammoConsumption = 1
-damageFalloff = ExtResource("28_yrnvq")
-scopedWeapon = false
-scopedFOV = 25
 useCustomCrosshairSize = true
-crosshairSizeOverride = 0.8
 forcedCrosshair = ExtResource("35_yjgqk")
 useFOV = true
 fovShotAmount = 0.8
 weaponRecoil = Vector3(5, 9, 3)
 weaponRecoilStrength = 7.0
 weaponSpread = 0.09
-weaponRecoilStrengthAim = 4.0
 weaponSpreadAim = 0.07
-leftHandParent = false
-rightHandParent = true
 useWeaponSprintAnim = true
-useLeftHandIdle = true
-useRightHandIdle = true
-useLeftHandAiming = true
-useRightHandAiming = true
-useLeftHandFreeAiming = true
-useRightHandFreeAiming = true
 weaponPositionOffset = Vector3(-0.015, 0.13, 0.075)
 weaponRotationOffset = Vector3(0, -1.74, -1.48)
-bulletColor = Color(1, 1, 0, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_k3ea3"]
 size = Vector3(1, 5.8136, 8.51245)
@@ -244,7 +193,7 @@ script/source = "extends Node
 @onready var beginningTrigger = $\"../pawnTrigger\"
 @onready var cam1marker = $\"../../marker3d\"
 # Called when the node enters the scene tree for the first time.
-func startBeginning()->void:
+func startBeginning(body)->void:
 	gameManager.disablePlayer()
 	gameManager.activeCamera.hud.hudEnabled = false
 	var cutsceneCam : CutsceneCamera = gameManager.create_dialogue_camera()
@@ -272,6 +221,7 @@ worldData = SubResource("Resource_cwdvh")
 transform = Transform3D(0.258819, 0, -0.965926, 0, 1, 0, 0.965926, 0, 0.258819, -19, 0.0428658, 35)
 pawnType = 0
 pawnWeapons = Array[PackedScene]([ExtResource("3_k4wxf")])
+randomAnimationSpeed = false
 pawnColor = Color(0.52, 0.8, 0.92, 1)
 
 [node name="pawnSpawn2" parent="Spawns/pawnSpawns" index="0" instance=ExtResource("3_fqriv")]
@@ -282,7 +232,7 @@ pawnClothing = Array[PackedScene]([ExtResource("5_qh7ex"), ExtResource("6_vxxsr"
 aiSkill = 0
 equipWeaponOnSpawn = true
 weaponToEquip = 1
-hatedGroups = Array[StringName]([&"Player"])
+randomAnimationSpeed = false
 pawnColor = Color(0.768627, 0.74902, 0.752941, 1)
 
 [node name="pawnSpawn3" parent="Spawns/pawnSpawns" index="1" instance=ExtResource("3_fqriv")]
@@ -293,7 +243,7 @@ pawnClothing = Array[PackedScene]([ExtResource("5_qh7ex"), ExtResource("6_vxxsr"
 aiSkill = 2
 equipWeaponOnSpawn = true
 weaponToEquip = 1
-hatedGroups = Array[StringName]([&"Player"])
+randomAnimationSpeed = false
 pawnColor = Color(0.858824, 0.666667, 0.968627, 1)
 
 [node name="pawnSpawn4" parent="Spawns/pawnSpawns" index="2" instance=ExtResource("3_fqriv")]
@@ -304,7 +254,7 @@ pawnClothing = Array[PackedScene]([ExtResource("5_qh7ex"), ExtResource("6_vxxsr"
 equipWeaponOnSpawn = true
 weaponToEquip = 1
 aiType = 1
-hatedGroups = Array[StringName]([&"Player"])
+randomAnimationSpeed = false
 pawnColor = Color(0.52, 0.8, 0.92, 1)
 
 [node name="pawnSpawn5" parent="Spawns/pawnSpawns" index="3" instance=ExtResource("3_fqriv")]
@@ -315,7 +265,7 @@ pawnClothing = Array[PackedScene]([ExtResource("5_qh7ex"), ExtResource("6_vxxsr"
 equipWeaponOnSpawn = true
 weaponToEquip = 1
 aiType = 1
-hatedGroups = Array[StringName]([&"Player"])
+randomAnimationSpeed = false
 pawnColor = Color(0.52, 0.8, 0.92, 1)
 
 [node name="pawnSpawn6" parent="Spawns/pawnSpawns" index="4" instance=ExtResource("3_fqriv")]
@@ -326,7 +276,7 @@ pawnClothing = Array[PackedScene]([ExtResource("5_qh7ex"), ExtResource("6_vxxsr"
 equipWeaponOnSpawn = true
 weaponToEquip = 1
 aiType = 1
-hatedGroups = Array[StringName]([&"Player"])
+randomAnimationSpeed = false
 pawnColor = Color(0.52, 0.8, 0.92, 1)
 
 [node name="pawnSpawn7" parent="Spawns/pawnSpawns" index="5" instance=ExtResource("3_fqriv")]
@@ -337,7 +287,7 @@ pawnClothing = Array[PackedScene]([ExtResource("5_qh7ex"), ExtResource("6_vxxsr"
 equipWeaponOnSpawn = true
 weaponToEquip = 1
 aiType = 1
-hatedGroups = Array[StringName]([&"Player"])
+randomAnimationSpeed = false
 pawnColor = Color(0.79699, 0.754618, 0.618458, 1)
 
 [node name="pawnSpawn8" parent="Spawns/pawnSpawns" index="6" instance=ExtResource("3_fqriv")]
@@ -348,7 +298,7 @@ pawnClothing = Array[PackedScene]([ExtResource("5_qh7ex"), ExtResource("6_vxxsr"
 equipWeaponOnSpawn = true
 weaponToEquip = 1
 aiType = 1
-hatedGroups = Array[StringName]([&"Player"])
+randomAnimationSpeed = false
 pawnColor = Color(0.461046, 0.472259, 0.74288, 1)
 
 [node name="pawnSpawn9" parent="Spawns/pawnSpawns" index="7" instance=ExtResource("3_fqriv")]
@@ -359,7 +309,7 @@ pawnClothing = Array[PackedScene]([ExtResource("5_qh7ex"), ExtResource("6_vxxsr"
 equipWeaponOnSpawn = true
 weaponToEquip = 1
 aiType = 1
-hatedGroups = Array[StringName]([&"Player"])
+randomAnimationSpeed = false
 pawnColor = Color(0.838614, 0.274787, 0.345935, 1)
 
 [node name="pawnSpawn10" parent="Spawns/pawnSpawns" index="8" instance=ExtResource("3_fqriv")]
@@ -370,7 +320,7 @@ pawnClothing = Array[PackedScene]([ExtResource("5_qh7ex"), ExtResource("6_vxxsr"
 equipWeaponOnSpawn = true
 weaponToEquip = 1
 aiType = 1
-hatedGroups = Array[StringName]([&"Player"])
+randomAnimationSpeed = false
 pawnColor = Color(0.378026, 0.546633, 0.473067, 1)
 
 [node name="pawnSpawn11" parent="Spawns/pawnSpawns" index="9" instance=ExtResource("3_fqriv")]
@@ -381,7 +331,7 @@ pawnClothing = Array[PackedScene]([ExtResource("5_qh7ex"), ExtResource("6_vxxsr"
 equipWeaponOnSpawn = true
 weaponToEquip = 1
 aiType = 1
-hatedGroups = Array[StringName]([&"Player"])
+randomAnimationSpeed = false
 pawnColor = Color(0.345862, 0.551672, 0.494064, 1)
 
 [node name="pawnSpawn13" parent="Spawns/pawnSpawns" index="10" instance=ExtResource("3_fqriv")]
@@ -392,7 +342,7 @@ pawnClothing = Array[PackedScene]([ExtResource("5_qh7ex"), ExtResource("6_vxxsr"
 equipWeaponOnSpawn = true
 weaponToEquip = 1
 aiType = 1
-hatedGroups = Array[StringName]([&"Player"])
+randomAnimationSpeed = false
 pawnColor = Color(0.549256, 0.440747, 0.713118, 1)
 
 [node name="pawnSpawn12" parent="Spawns/pawnSpawns" index="11" instance=ExtResource("3_fqriv")]
@@ -403,7 +353,7 @@ pawnClothing = Array[PackedScene]([ExtResource("5_qh7ex"), ExtResource("6_vxxsr"
 equipWeaponOnSpawn = true
 weaponToEquip = 1
 aiType = 1
-hatedGroups = Array[StringName]([&"Player"])
+randomAnimationSpeed = false
 pawnColor = Color(0.341176, 0.207843, 0.639216, 1)
 
 [node name="worldEnvironment" parent="Environment" index="0"]
@@ -1419,7 +1369,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 54.7333, 3.90889, 6.27109)
 
 [node name="pawnTrigger" parent="Misc/Triggers" index="0" instance=ExtResource("13_gmp2x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.81834, 0.600162, 35.9415)
-visible = false
 
 [node name="collisionShape3d" type="CollisionShape3D" parent="Misc/Triggers/pawnTrigger" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4068, -0.213013)
@@ -1439,6 +1388,7 @@ pawnWeapons = Array[PackedScene]([ExtResource("3_k4wxf")])
 pawnClothing = Array[PackedScene]([ExtResource("31_y7wyo"), ExtResource("32_vs2v5")])
 equipWeaponOnSpawn = true
 weaponToEquip = 1
+randomAnimationSpeed = false
 
 [node name="collisionShape3d" type="CollisionShape3D" parent="Misc/Triggers/SpawnTriggerArea3D" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.350159, -0.494385, 2.6607)

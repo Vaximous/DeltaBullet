@@ -29,10 +29,7 @@ signal headshottedPawn
 
 ##IK
 @onready var bodyIK : SkeletonIK3D= $Mesh/MaleSkeleton/Skeleton3D/bodyIK
-@onready var bodyIKMarker : Marker3D = $Mesh/bodyIKMarker:
-	set(value):
-		bodyIKMarker = value
-		defaultBodyIKMarkerPosition = bodyIKMarker.position
+@onready var bodyIKMarker : Marker3D = $Mesh/bodyIKMarker
 @onready var rightHandBone : BoneAttachment3D = $BoneAttatchments/rightHand
 @onready var leftHandBone : BoneAttachment3D = $BoneAttatchments/leftHand
 @onready var neckBone : BoneAttachment3D = $BoneAttatchments/Neck
@@ -467,7 +464,6 @@ var isFirstperson : bool = false:
 		meshLookAt = value
 		freeAim = value
 var hitboxes : Array[Hitbox]
-var defaultBodyIKMarkerPosition : Vector3
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity : float = ProjectSettings.get_setting("physics/3d/default_gravity")
 

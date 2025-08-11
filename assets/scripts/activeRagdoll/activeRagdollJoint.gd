@@ -70,9 +70,10 @@ func trace_skeleton( value : bool ) -> void:
 """
 func _physics_process(delta: float) -> void:
 	if !Engine.is_editor_hint():
-		var target_rotation : Basis = targetSkeleton.get_bone_global_pose(boneBIndex).basis.inverse() * ragdollSkeleton.get_bone_global_pose(boneBIndex).basis
-		var target_velocity : Vector3 = target_rotation.get_euler() * matchingVelocityMult
-		get_parent().get_parent().get_parent().get_parent().get_parent().get_parent().targetRot = target_velocity
+		pass
+		#var target_rotation : Basis = targetSkeleton.get_bone_global_pose(boneBIndex).basis.inverse() * ragdollSkeleton.get_bone_global_pose(boneBIndex).basis
+		#var target_velocity : Vector3 = target_rotation.get_euler() * matchingVelocityMult
+		#get_parent().get_parent().get_parent().get_parent().get_parent().get_parent().targetRot = target_velocity
 		#set_angular_motor_x_target_velocity(target_velocity.x)
 		#set_angular_motor_y_target_velocity(target_velocity.y)
 		#set_angular_motor_z_target_velocity(target_velocity.z)

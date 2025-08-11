@@ -258,7 +258,8 @@ func triggerRadialBlur(blurPosition:Vector2 = Vector2(0.5,0.5),blurPower:float=0
 	if blurTween:
 		blurTween.kill()
 	blurTween = create_tween()
-	radialBlur.material.set_shader_parameter("power",blurPower)
+	var currentPower = radialBlur.material.get_shader_parameter("power")
+	radialBlur.material.set_shader_parameter("power", currentPower + blurPower)
 	radialBlur.material.set_shader_parameter("center",blurPosition)
 
 	blurTween.tween_property(radialBlur.material,"shader_parameter/power",0,blurSpeed)

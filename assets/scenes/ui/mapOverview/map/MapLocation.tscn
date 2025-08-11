@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://vwacetrutvng"]
+[gd_scene load_steps=25 format=3 uid="uid://vwacetrutvng"]
 
 [ext_resource type="PackedScene" uid="uid://cbmy8aewv7g1w" path="res://assets/components/3Dto2Dcomponent/3Dto2DComponent.tscn" id="1_568f0"]
 [ext_resource type="Script" uid="uid://dpnbcwkkk6au2" path="res://assets/scenes/ui/mapOverview/map/map_location.gd" id="2_aptmj"]
@@ -27,15 +27,62 @@ stream_1/stream = ExtResource("9_3ol1w")
 stream_2/stream = ExtResource("10_x17kg")
 stream_3/stream = ExtResource("11_5x2qw")
 
+[sub_resource type="Gradient" id="Gradient_c10ua"]
+offsets = PackedFloat32Array(0.25968993, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_eds7j"]
+gradient = SubResource("Gradient_c10ua")
+
+[sub_resource type="Curve" id="Curve_6py30"]
+_data = [Vector2(0, 0), 0.0, 2.8112292, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_uhde6"]
+curve = SubResource("Curve_6py30")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_3ol1w"]
+resource_local_to_scene = true
+gravity = Vector3(0, 0, 0)
+scale_min = 1.1999999
+scale_max = 1.1999999
+scale_curve = SubResource("CurveTexture_uhde6")
+color = Color(1, 0, 0, 1)
+color_ramp = SubResource("GradientTexture1D_eds7j")
+
+[sub_resource type="Gradient" id="Gradient_x17kg"]
+offsets = PackedFloat32Array(0.5114504, 0.8854962, 1)
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_5x2qw"]
+gradient = SubResource("Gradient_x17kg")
+fill = 2
+fill_from = Vector2(0.5, 0.5)
+metadata/_snap_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i54d4"]
+transparency = 1
+shading_mode = 0
+disable_ambient_light = true
+disable_fog = true
+disable_specular_occlusion = true
+vertex_color_use_as_albedo = true
+albedo_texture = SubResource("GradientTexture2D_5x2qw")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_21gnk"]
+material = SubResource("StandardMaterial3D_i54d4")
+size = Vector2(1, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vpdmg"]
+
 [node name="mapLocation" instance=ExtResource("1_568f0")]
 script = ExtResource("2_aptmj")
-iconColor = null
+iconColor = Color(0.54509807, 0, 0, 1)
 locationName = ""
 travelScene = null
 travelStatus = 1
 travelGroupID = 0
 travelID = 0
-clamp_to_edge = false
 
 [node name="hoverSound" type="AudioStreamPlayer" parent="." index="0"]
 stream = SubResource("AudioStreamRandomizer_i54d4")
@@ -46,14 +93,23 @@ bus = &"UI"
 stream = SubResource("AudioStreamRandomizer_21gnk")
 bus = &"UI"
 
-[node name="area3d" type="Area3D" parent="." index="2"]
+[node name="pingParticle" type="GPUParticles3D" parent="." index="2"]
+emitting = false
+amount = 1
+lifetime = 0.6
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_3ol1w")
+draw_pass_1 = SubResource("PlaneMesh_21gnk")
+
+[node name="area3d" type="Area3D" parent="." index="3"]
 collision_layer = 4
 collision_mask = 4
 monitoring = false
 
 [node name="collisionShape3d" type="CollisionShape3D" parent="area3d" index="0"]
+shape = SubResource("BoxShape3D_vpdmg")
 
-[node name="positionReference" type="Marker3D" parent="." index="3"]
+[node name="positionReference" type="Marker3D" parent="." index="4"]
 unique_name_in_owner = true
 visible = false
 
@@ -73,7 +129,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, -0.5)
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0.5)
 
-[node name="visualHolder" type="Marker3D" parent="." index="4"]
+[node name="visualHolder" type="Marker3D" parent="." index="5"]
 unique_name_in_owner = true
 
 [node name="cornerUpLeft" parent="visualHolder" index="0" instance=ExtResource("12_c10ua")]
@@ -92,18 +148,20 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.5
 unique_name_in_owner = true
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -0.5, 0, -0.5)
 
-[node name="icon" type="Sprite3D" parent="." index="5"]
+[node name="icon" type="Sprite3D" parent="." index="6"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1444585, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 0)
+offset = Vector2(0, 32)
 modulate = Color(0.5764706, 0, 0, 1)
 pixel_size = 0.0008
 billboard = 1
+no_depth_test = true
 fixed_size = true
 texture = ExtResource("3_aptmj")
 
 [node name="mapLabel" type="Label3D" parent="icon" index="0"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00977084, -0.83575153, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00977084, -0.63163614, 0)
 pixel_size = 0.0005
 billboard = 1
 fixed_size = true

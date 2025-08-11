@@ -471,6 +471,7 @@ var defaultBodyIKMarkerPosition : Vector3
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity : float = ProjectSettings.get_setting("physics/3d/default_gravity")
 
+
 func _ready() -> void:
 	setupAnimationTree()
 	itemInventory.append(null)
@@ -488,6 +489,7 @@ func _ready() -> void:
 	setupPawnColor()
 	for i in getAllHitboxes():
 		i.connect(&"damaged",flinch.bind(2,i.boneId))
+
 
 func _physics_process(delta:float) -> void:
 	if pawnEnabled:

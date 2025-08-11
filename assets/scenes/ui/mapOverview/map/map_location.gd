@@ -1,6 +1,5 @@
 @tool
-
-extends "res://assets/components/3Dto2Dcomponent/3Dto2DComponent.gd"
+extends Marker3D
 var visibilityTween : Tween
 var sizeTween : Tween
 var iconTween : Tween
@@ -13,6 +12,7 @@ const defaultTweenSpeed : float = 1
 @onready var clickSound : AudioStreamPlayer = $clickSound
 @onready var hoverSound : AudioStreamPlayer = $hoverSound
 @onready var area3d : Area3D = $area3d
+@onready var ping_particles := $pingParticle
 @export var map : Node3D:
 	set(value):
 		map = value
@@ -28,13 +28,18 @@ const defaultTweenSpeed : float = 1
 ##This is the ID of the location itself.
 @export var travelID = 0
 
+
+
+
 func setVisualMarkers()->void:
 	if is_instance_valid(collisionShape.shape) and collisionShape.shape is BoxShape3D:
-		var shape = collisionShape.shape
+		var boxShape : BoxShape3D = collisionShape.shape
+		ping_particles.scale = collisionShape.shape.size
+		ping_particles.scale.y = 1.0
 		collisionShape.global_position = global_position
 		%visualHolder.global_position.x = collisionShape.global_position.x
 		%visualHolder.global_position.z = collisionShape.global_position.z
-		%positionReference.scale = shape.size
+		%positionReference.scale = boxShape.size
 		##Bottom
 		$%cornerBottomRight.global_position.x = %bottomRight.global_position.x
 		$%cornerBottomRight.global_position.z = %bottomRight.global_position.z
@@ -63,10 +68,12 @@ func updateVisibility()->void:
 	else:
 		setVisible(false)
 
-func _physics_process(delta: float) -> void:
+func _process(delta: float) -> void:
+	#super(delta)
 	setVisualMarkers()
 
 func _ready() -> void:
+	%icon.position.y = collisionShape.shape.size.y - 4.0
 	setupMap()
 
 func playOpenAnimation()->void:
@@ -76,31 +83,41 @@ func playOpenAnimation()->void:
 			fadeIconIn()
 
 
+
 func enlargeVisual(size:float=1.2)->void:
 	if sizeTween:
 		sizeTween.kill()
 	sizeTween = create_tween()
 	sizeTween.tween_property(self,"scale",Vector3(size,size,size),0.5).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
 
+
 func fadeIconIn()->void:
 	if iconTween:
 		iconTween.kill()
+	ping_particles.emitting = true
+	%mapLabel.no_depth_test = true
 	iconTween = create_tween()
 	iconTween.parallel().tween_property(%icon,"position:y",collisionShape.shape.size.y - 2.5,0.5).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
 	iconTween.parallel().tween_property(%icon,"scale",Vector3.ONE,0.5).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
-	iconTween.parallel().tween_property(%icon,"modulate",iconColor,0.5).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
 	iconTween.parallel().tween_property(%mapLabel,"modulate",Color.WHITE,0.5).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
-	iconTween.parallel().tween_property(%mapLabel,"scale",Vector3.ONE,0.5).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
+	iconTween.parallel().tween_property(%mapLabel,"scale",Vector3.ONE*1.5,0.5).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
+	#Don't fade out the icon
+	#iconTween.parallel().tween_property(%icon,"modulate",iconColor,0.5).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
+
 
 func fadeIconOut()->void:
 	if iconTween:
 		iconTween.kill()
+	ping_particles.emitting = false
+	%mapLabel.no_depth_test = false
 	iconTween = create_tween()
-	iconTween.parallel().tween_property(%icon,"position:y",-collisionShape.shape.size.y,1).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
-	iconTween.parallel().tween_property(%icon,"scale",Vector3.ZERO,1).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
-	iconTween.parallel().tween_property(%icon,"modulate",Color.TRANSPARENT,1).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
+	iconTween.parallel().tween_property(%icon,"position:y",collisionShape.shape.size.y - 4.0,1).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
+	iconTween.parallel().tween_property(%icon,"scale",Vector3.ONE*0.5,1).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
 	iconTween.parallel().tween_property(%mapLabel,"modulate",Color.TRANSPARENT,1).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
 	iconTween.parallel().tween_property(%mapLabel,"scale",Vector3.ZERO,1).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
+	#Don't fade out the icon
+	#iconTween.parallel().tween_property(%icon,"modulate",Color.TRANSPARENT,1).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
+
 
 func reduceVisual()->void:
 	if sizeTween:
@@ -108,12 +125,14 @@ func reduceVisual()->void:
 	sizeTween = create_tween()
 	sizeTween.tween_property(self,"scale",Vector3.ONE,0.5).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
 
+
 func playCloseAnimation()->void:
 	if map:
 		if map.mapScreen.selectedMarker != self:
 			reduceVisual()
 			fadeIconOut()
 			#setMarkerMaterial(load(map.markerColors[0]))
+
 
 func gotoLocation()->void:
 	if travelScene and get_tree().current_scene.scene_file_path != travelScene.resource_path:
@@ -123,6 +142,7 @@ func gotoLocation()->void:
 		gameManager.loadWorld(travelScene.resource_path)
 	else:
 		gameManager.notify_warn("You're already at this location.", 4, 5)
+
 
 func setVisible(value:bool)->void:
 	if visibilityTween:
@@ -135,10 +155,15 @@ func setVisible(value:bool)->void:
 		#await visibilityTween.parallel().tween_property(icon,"modulate",Color.TRANSPARENT,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType).finished
 		hide()
 
+
 func setMarkerMaterial(material:StandardMaterial3D):
 	for i in $visualHolder.get_children():
 		for marker in i.get_children():
+			var ppppm : ParticleProcessMaterial = ping_particles.process_material
+			ppppm.color = material.albedo_color
 			marker.set_surface_override_material(0,material)
+
+
 
 func _on_button_pressed() -> void:
 	if map:

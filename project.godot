@@ -30,6 +30,7 @@ DSP/dsp_buffer_count=4
 
 warnings/check_invalid_track_paths=false
 warnings/check_angle_interpolation_type_conflicting=false
+warnings/physics_interpolation/enable_warnings=true
 
 [application]
 
@@ -61,6 +62,7 @@ FmodManager="*res://addons/fmod/FmodManager.gd"
 
 [debug]
 
+settings/physics_interpolation/enable_warnings=false
 file_logging/enable_file_logging=true
 file_logging/max_log_files=10
 

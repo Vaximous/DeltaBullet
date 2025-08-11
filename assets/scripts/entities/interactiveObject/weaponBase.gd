@@ -344,7 +344,7 @@ func spawnProjectile(raycaster : RayCast3D) -> void:
 
 
 func get_hit_target(raycast : RayCast3D) -> Vector3:
-	var ray_target_point : Vector3 = raycast.global_position + (-raycast.global_transform.basis.z * 50)
+	var ray_target_point : Vector3 = raycast.global_position + (-raycast.global_transform.basis.z * 500)
 
 	var state : PhysicsDirectSpaceState3D = get_world_3d().direct_space_state
 	var rayq : PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.create(raycast.global_position, ray_target_point, 0b10000, [])

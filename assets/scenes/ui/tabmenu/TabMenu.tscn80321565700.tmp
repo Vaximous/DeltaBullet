@@ -111,5 +111,5 @@ stream = ExtResource("2_3qfkf")
 [node name="notifSound2" type="AudioStreamPlayer" parent="sounds"]
 stream = ExtResource("3_odpon")
 
-[connection signal="tab_button_pressed" from="gradientBG/tabContainer" to="." method="refreshBG" unbinds=1]
-[connection signal="tab_changed" from="gradientBG/tabContainer" to="." method="refreshBG" unbinds=1]
+[connection signal="tab_button_pressed" from="gradientBG/tabContainer" to="." method="refreshBG"]
+[connection signal="tab_changed" from="gradientBG/tabContainer" to="." method="refreshBG"]

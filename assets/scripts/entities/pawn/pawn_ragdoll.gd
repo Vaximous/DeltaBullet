@@ -151,21 +151,21 @@ func _physics_process(delta: float) -> void:
 		var total_ang_vel := Vector3.ZERO
 		angularVelocity = total_ang_vel / totalMass
 
-		for b in physicsBones:
-			if is_instance_valid(b) and is_instance_valid(targetSkeleton):
-				total_ang_vel += b.angular_velocity * b.mass
-				#b.angular_velocity = angularVelocity
-				if is_instance_valid(findPhysicsBone(ragdollSkeleton.get_bone_parent(b.get_bone_id()))):
-					var target_rotation : Basis = targetSkeleton.get_bone_global_pose(b.get_bone_id()).basis.inverse() * ragdollSkeleton.get_bone_global_pose(b.get_bone_id()).basis
-					var target_velocity : Vector3 = target_rotation.get_euler() * 1
-
-					setAngularMotor(b,true)
-					setAngularMotorForceLimit(b,100)
-					setAngularMotorTargetVelocity(b,target_velocity)
-				else:
-					setAngularMotorTargetVelocity(b,Vector3.ZERO)
-			else:
-				activeRagdollEnabled = false
+		#for b in physicsBones:
+			#if is_instance_valid(b) and is_instance_valid(targetSkeleton):
+				#total_ang_vel += b.angular_velocity * b.mass
+				##b.angular_velocity = angularVelocity
+				#if is_instance_valid(findPhysicsBone(ragdollSkeleton.get_bone_parent(b.get_bone_id()))):
+					#var target_rotation : Basis = targetSkeleton.get_bone_global_pose(b.get_bone_id()).basis.inverse() * ragdollSkeleton.get_bone_global_pose(b.get_bone_id()).basis
+					#var target_velocity : Vector3 = target_rotation.get_euler() * 1
+#
+					#setAngularMotor(b,true)
+					#setAngularMotorForceLimit(b,100)
+					#setAngularMotorTargetVelocity(b,target_velocity)
+				#else:
+					#setAngularMotorTargetVelocity(b,Vector3.ZERO)
+			#else:
+				#activeRagdollEnabled = false
 
 func setAngularMotorTargetVelocity(b:PhysicalBone3D,value:Vector3 = Vector3.ZERO):
 	b.set("joint_constraints/x/target_velocity",value.x)

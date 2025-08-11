@@ -62,7 +62,8 @@ func disableQuest()->bool:
 func enableQuest()->bool:
 	if !questStatus == 1 || 2 || 3:
 		questStatus = 1
-		questManager.add_child(self)
+		if !get_parent() == questManager:
+			questManager.add_child(self)
 		if subcontract != null:
 			subcontract.onQuestEntered()
 	return true

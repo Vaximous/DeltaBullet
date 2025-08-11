@@ -24,6 +24,7 @@ func _ready() -> void:
 """
 func _physics_process(_delta: float) -> void:
 	if doActive:
-		var bone_global_rotation : Basis = get_parent().global_transform.basis * get_parent().get_bone_global_pose(get_parent().get_bone_id()).basis
-		var b2t_rotation : Basis = bone_global_rotation.inverse() * self.transform.basis
+		pass
+		#var bone_global_rotation : Basis = get_parent().global_transform.basis * get_parent().get_bone_global_pose(get_parent().get_bone_id()).basis
+		#var b2t_rotation : Basis = bone_global_rotation.inverse() * self.transform.basis
 		#get_parent().set_bone_pose_rotation(get_bone_id(), (get_parent().get_bone_pose_rotation(get_bone_id()) * b2t_rotation.get_rotation_quaternion()))

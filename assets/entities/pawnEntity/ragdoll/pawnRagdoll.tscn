@@ -956,11 +956,6 @@ skin = SubResource("Skin_ds5ii")
 
 [node name="Clothing" type="Node3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D"]
 
-[node name="bodyIK" type="SkeletonIK3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D"]
-transform = Transform3D(1, 0, -1.74846e-07, 0, 1, 0, 1.74846e-07, 0, 1, -0.765382, 0, -0.0214908)
-root_bone = &"Spine_1"
-tip_bone = &"Spine_2"
-target_node = NodePath("../../../bodyIKMarker")
 
 [node name="PhysicalBoneSimulator3D" type="PhysicalBoneSimulator3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D"]
 physics_interpolation_mode = 1

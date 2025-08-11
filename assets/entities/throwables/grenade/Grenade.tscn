@@ -10,7 +10,7 @@
 script = ExtResource("3_xdnty")
 itemName = "Grenade"
 canCook = true
-cookTime = 4.0
+cookTime = 3.0
 throwableDamage = 150.0
 countdownVisual = true
 metadata/_custom_type_script = ExtResource("3_xdnty")
@@ -66,5 +66,6 @@ visible = true
 [node name="textureProgressBar" parent="countdown" index="0"]
 visible = true
 z_index = 1
+anchors_preset = -1
 
 [connection signal="healthDepleted" from="healthComponent" to="." method="_on_health_component_health_depleted"]

@@ -15,7 +15,8 @@ class_name ClothingItem
 @export var itemOffset : Vector3 = Vector3.ZERO:
 	set(value):
 		itemOffset = value
-		clothingMesh.position = value
+		if is_instance_valid(clothingMesh):
+			clothingMesh.position = value
 @export var itemName : String = ""
 @export var equippedPawn : BasePawn
 @export_subgroup("Hidden Parts")
@@ -33,6 +34,9 @@ class_name ClothingItem
 @export var rightLowerLeg : bool = false
 @export_category("Skeleton")
 @export var itemSkeleton : NodePath
+@export_category("Cloth Physics")
+@export var clothPhysicsSkeleton : Skeleton3D
+@export var clothPhysics : SkeletonModifier3D
 
 func _ready()->void:
 	remapSkeleton()

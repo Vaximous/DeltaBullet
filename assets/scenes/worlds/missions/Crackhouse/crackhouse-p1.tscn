@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=3 uid="uid://7idw8rtae15o"]
+[gd_scene load_steps=65 format=3 uid="uid://7idw8rtae15o"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_dmxbb"]
 [ext_resource type="PackedScene" uid="uid://n500uprpwbbk" path="res://assets/models/csgmodels/csgtruck.tscn" id="2_cg4ns"]
@@ -17,14 +17,13 @@
 [ext_resource type="Material" uid="uid://cet4363l3i6lx" path="res://assets/materials/fence/fence_material.tres" id="10_1sm5o"]
 [ext_resource type="PackedScene" uid="uid://btfs5d0jboy58" path="res://assets/models/csgmodels/CsgBigtruck.tscn" id="10_uvhd4"]
 [ext_resource type="Texture2D" uid="uid://e2ua6iexncex" path="res://assets/textures/urban/cem_Concrete01.tga" id="11_ebwed"]
-[ext_resource type="Texture2D" uid="uid://cd07ppooqojsp" path="res://assets/textures/urban/Floor-07-Color.tga" id="11_l2exv"]
 [ext_resource type="Texture2D" uid="uid://bc1parbnkgewl" path="res://assets/textures/urban/cem_Concrete_04.tga" id="11_mqfpj"]
 [ext_resource type="Texture2D" uid="uid://ksqovy04h5gl" path="res://assets/textures/urban/brick002.tga" id="12_f68rh"]
-[ext_resource type="Texture2D" uid="uid://djqo5emhckfhg" path="res://assets/textures/urban/Floor-06-Specular.tga" id="12_jyv1n"]
 [ext_resource type="Texture2D" uid="uid://po4r5jjexlh8" path="res://assets/textures/urban/Floor-07-Normal.tga" id="13_aefe7"]
 [ext_resource type="PackedScene" uid="uid://7ueyays7enj5" path="res://assets/entities/trigger/pawnTrigger.tscn" id="13_gmp2x"]
 [ext_resource type="Texture2D" uid="uid://bewp8jfa355xl" path="res://assets/textures/brick/bricks_warehouse_mid.png" id="13_k05ql"]
 [ext_resource type="Texture2D" uid="uid://bl3fv7drqrjo1" path="res://assets/textures/brick/bricks_warehouse_mid-normal.png" id="14_yrnvq"]
+[ext_resource type="Texture2D" uid="uid://g8rye4s2sdto" path="res://assets/textures/world/concrete/concrete.jpg" id="15_wf1is"]
 [ext_resource type="Texture2D" uid="uid://dcfyy0ki1vf30" path="res://assets/textures/world/warehouse/warehousewindow_unemissive.png" id="16_oyptp"]
 [ext_resource type="Texture2D" uid="uid://b0823spcsksum" path="res://assets/textures/world/warehouse/warehousewindow_emissive_dirty.png" id="17_edjsf"]
 [ext_resource type="Texture2D" uid="uid://pk5r7m05ahsl" path="res://assets/textures/brick/bricks_warehouse_top.png" id="18_6iqu2"]
@@ -32,12 +31,14 @@
 [ext_resource type="Texture2D" uid="uid://bdr0dg1yooaw4" path="res://assets/textures/brick/bricks_warehouse_bottom.png" id="21_advv2"]
 [ext_resource type="Texture2D" uid="uid://kfnafl1hs7bm" path="res://assets/textures/brick/bricks_warehouse_bottom-normal.png" id="23_4fs2e"]
 [ext_resource type="PackedScene" uid="uid://dnr0cbfhyguux" path="res://assets/particles/rain/rain_particles.tscn" id="23_s82mf"]
-[ext_resource type="Curve" uid="uid://cex2ggwxevnuj" path="res://assets/entities/projectiles/linear_falloff_curve.tres" id="28_yrnvq"]
+[ext_resource type="Texture2D" uid="uid://csktb1p5x0f6v" path="res://assets/textures/world/granite/pebbles.jpg" id="24_yiehp"]
+[ext_resource type="Texture2D" uid="uid://dtku0rv4efpmt" path="res://assets/textures/world/asphalt/asphalt.jpg" id="27_12hni"]
 [ext_resource type="PackedScene" uid="uid://bsdhbnw1p72ie" path="res://assets/components/spawnTriggerArea/SpawnTriggerArea3D.tscn" id="30_adwgk"]
 [ext_resource type="PackedScene" uid="uid://4seyitfkc6wn" path="res://assets/entities/clothing/Pants/pants.tscn" id="31_y7wyo"]
 [ext_resource type="PackedScene" uid="uid://b8ttgknyh8e3m" path="res://assets/entities/clothing/Tuxedo/Tuxedo.tscn" id="32_vs2v5"]
 [ext_resource type="Script" uid="uid://b7vowqimfqppv" path="res://addons/proto_shape/proto_ramp/proto_ramp.gd" id="33_edjsf"]
 [ext_resource type="PackedScene" uid="uid://bidurnqgd1c74" path="res://assets/entities/weapons/m4/m4.tscn" id="34_np7sb"]
+[ext_resource type="Curve" uid="uid://cex2ggwxevnuj" path="res://assets/entities/projectiles/linear_falloff_curve.tres" id="35_m36k2"]
 [ext_resource type="Texture2D" uid="uid://c7b38t83ckisx" path="res://assets/textures/crosshair/crosshair161.png" id="35_yjgqk"]
 [ext_resource type="Script" uid="uid://b6r8ewrq3qb3y" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="36_usxi5"]
 [ext_resource type="PackedScene" uid="uid://dvmmlj4mvj88r" path="res://assets/entities/aiMarker/aiMarker.tscn" id="39_41ndd"]
@@ -89,6 +90,10 @@ albedo_texture = ExtResource("13_k05ql")
 uv1_offset = Vector3(0, 0.5, 0)
 uv1_triplanar = true
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pqi85"]
+albedo_texture = ExtResource("15_wf1is")
+uv1_triplanar = true
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wf1is"]
 albedo_texture = ExtResource("16_oyptp")
 metallic_specular = 0.2
@@ -127,13 +132,10 @@ uv1_offset = Vector3(0, -0.705, 0)
 uv1_triplanar = true
 uv1_world_triplanar = true
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xnp05"]
-albedo_texture = ExtResource("11_l2exv")
-metallic = 1.0
-metallic_texture = ExtResource("12_jyv1n")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wmf8t"]
+albedo_texture = ExtResource("24_yiehp")
 normal_enabled = true
-normal_texture = ExtResource("13_aefe7")
-uv1_scale = Vector3(0.5, 0.5, 0.5)
+uv1_scale = Vector3(0.335, 0.335, 0.335)
 uv1_offset = Vector3(0, 0, -3.335)
 uv1_triplanar = true
 
@@ -144,6 +146,13 @@ normal_enabled = true
 normal_scale = 0.5
 normal_texture = ExtResource("23_4fs2e")
 uv1_offset = Vector3(0, 0.5, 0)
+uv1_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xnp05"]
+albedo_texture = ExtResource("27_12hni")
+normal_texture = ExtResource("13_aefe7")
+uv1_scale = Vector3(0.5, 0.5, 0.5)
+uv1_offset = Vector3(0, 0, -3.335)
 uv1_triplanar = true
 
 [sub_resource type="Resource" id="Resource_6dmke"]
@@ -407,6 +416,7 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 16.135
 use_collision = true
 collision_mask = 0
 size = Vector3(6.5, 0.7, 47)
+material = SubResource("StandardMaterial3D_pqi85")
 
 [node name="csgBox3d41" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgBox3d38" index="0"]
 transform = Transform3D(1, 0, 0, 0, 0.984808, 0.173648, 0, -0.173648, 0.984808, 2.3, 0.556115, -23.2263)
@@ -414,6 +424,7 @@ operation = 2
 use_collision = true
 collision_mask = 0
 size = Vector3(3, 1, 11)
+material = SubResource("StandardMaterial3D_pqi85")
 
 [node name="csgBox3d43" type="CSGBox3D" parent="Geometry/navigationRegion3d" index="4"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 36.3858, -0.0887699, -12.6115)
@@ -444,30 +455,36 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.5858, 0.21123, 16.3885)
 use_collision = true
 collision_mask = 0
 size = Vector3(2, 0.7, 4)
+material = SubResource("StandardMaterial3D_pqi85")
 
 [node name="csgBox3d39" type="CSGBox3D" parent="Geometry/navigationRegion3d" index="9"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.5858, 0.0612301, 30.3885)
 use_collision = true
 collision_mask = 0
 size = Vector3(42, 1, 54)
+material = SubResource("StandardMaterial3D_pqi85")
 
 [node name="rampmaker1" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgBox3d39" index="0"]
 transform = Transform3D(0.999758, -0.0219733, -0.000591332, 0.0219737, 0.999758, 0.000583721, 0.000578359, -0.000596577, 1, -15.0074, 1.55378, 8.00001)
 operation = 2
 size = Vector3(13, 3, 8)
+material = SubResource("StandardMaterial3D_pqi85")
 
 [node name="rampmaker3" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgBox3d39/rampmaker1" index="0"]
 transform = Transform3D(0.99977, 0.021974, 0.000578368, -0.0219736, 0.99977, -0.000596582, -0.000591338, 0.00058373, 1.00001, 0.102552, 0.11462, 1.71661e-05)
 size = Vector3(13, 2.96631, 8)
+material = SubResource("StandardMaterial3D_pqi85")
 
 [node name="rampmaker2" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgBox3d39" index="1"]
 transform = Transform3D(0.999758, -0.0219733, -0.000591332, 0.0219737, 0.999758, 0.000583721, 0.000578359, -0.000596577, 1, -15.0009, 1.54736, -2.99998)
 operation = 2
 size = Vector3(13, 3, 8)
+material = SubResource("StandardMaterial3D_pqi85")
 
 [node name="rampmaker3" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgBox3d39/rampmaker2" index="0"]
 transform = Transform3D(0.99977, 0.0219739, 0.000578369, -0.0219736, 0.99977, -0.000596581, -0.000591338, 0.00058373, 1.00001, 0.102552, 0.11462, 1.71661e-05)
 size = Vector3(13, 2.96631, 8)
+material = SubResource("StandardMaterial3D_pqi85")
 
 [node name="csgBox3d14" type="CSGBox3D" parent="Geometry/navigationRegion3d" index="10"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.5858, 5.77031, 32.3885)
@@ -481,6 +498,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.6978, 0.895019, -14.0933)
 use_collision = true
 collision_mask = 0
 size = Vector3(18, 3.26758, 15)
+material = SubResource("StandardMaterial3D_pqi85")
 
 [node name="csgBox3d82" type="CSGBox3D" parent="Geometry/navigationRegion3d" index="12"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.2829, 2.93872, -14.9108)
@@ -1126,7 +1144,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.602, -0.977539, 35.5483)
 use_collision = true
 collision_mask = 0
 size = Vector3(47, 2, 7)
-material = SubResource("StandardMaterial3D_xnp05")
+material = SubResource("StandardMaterial3D_wmf8t")
 
 [node name="csgBox3d5" type="CSGBox3D" parent="Geometry/navigationRegion3d" index="72"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.5858, 0.739056, 20.3909)
@@ -1143,10 +1161,10 @@ size = Vector3(2, 6, 4.0058)
 material = SubResource("StandardMaterial3D_m36k2")
 
 [node name="csgBox3d37" type="CSGBox3D" parent="Geometry/navigationRegion3d" index="74"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.5858, 3.36123, 21.3885)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.5858, 3.804101, 21.3885)
 use_collision = true
 collision_mask = 0
-size = Vector3(2, 8, 2)
+size = Vector3(2, 7.114258, 2)
 
 [node name="csgBox3d16" type="CSGBox3D" parent="Geometry/navigationRegion3d" index="75"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.1358, 6.76123, 0.888491)
@@ -1196,10 +1214,10 @@ collision_mask = 0
 size = Vector3(0.1, 0.284081, 8)
 
 [node name="csgBox3d" type="CSGBox3D" parent="Geometry/navigationRegion3d" index="82"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.398, -0.977539, 20.5483)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.398, -0.92797846, 20.5483)
 use_collision = true
 collision_mask = 0
-size = Vector3(53, 2, 131)
+size = Vector3(53, 2.099121, 131)
 material = SubResource("StandardMaterial3D_xnp05")
 
 [node name="gpuParticlesCollisionBox3d" type="GPUParticlesCollisionBox3D" parent="Geometry/navigationRegion3d/csgBox3d" index="0"]

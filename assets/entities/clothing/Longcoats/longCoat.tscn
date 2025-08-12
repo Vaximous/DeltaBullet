@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://cdqtbg28cxotd" path="res://assets/entities/clothing/clothingBase.tscn" id="1_lrm3o"]
 [ext_resource type="ArrayMesh" uid="uid://ckjykxfmouq24" path="res://assets/models/pawn/clothing/longcoat/longcoat.res" id="2_5u5ny"]
 
-[node name="longCoat" instance=ExtResource("1_lrm3o")]
+[node name="longCoat" node_paths=PackedStringArray("clothPhysicsSkeleton", "clothPhysics") instance=ExtResource("1_lrm3o")]
 clothingCategory = 3
 clothingType = 3
 itemName = "Longcoat"
@@ -14,6 +14,8 @@ rightForearm = true
 leftForearm = true
 upperChest = true
 lowerBody = true
+clothPhysicsSkeleton = NodePath("")
+clothPhysics = NodePath("")
 
 [node name="clothingMesh" parent="." index="0"]
 mesh = ExtResource("2_5u5ny")

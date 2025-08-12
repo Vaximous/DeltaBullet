@@ -234,9 +234,10 @@ func setPawnMaterial(material)-> void:
 func moveClothesToRagdoll(pawn:BasePawn) -> void:
 	if is_instance_valid(pawn):
 		for clothes in pawn.clothingHolder.get_children():
-			clothes.itemSkeleton = ragdollSkeleton.get_path()
-			clothes.reparent(self)
-			clothes.remapSkeleton()
+			if !clothes is PhysicalBoneSimulator3D:
+				clothes.itemSkeleton = ragdollSkeleton.get_path()
+				clothes.reparent(self)
+				clothes.remapSkeleton()
 		return
 
 func animate_bone_by_joint_motor(bone: PhysicalBone3D, joint: Generic6DOFJoint3D, delta: float, stiffness: float, damping: float) -> void:

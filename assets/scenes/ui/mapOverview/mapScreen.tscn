@@ -212,15 +212,17 @@ color = Color(0.41960785, 0, 0, 1)
 
 [node name="cityName" type="Label" parent="mapScreen"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 36.0
+offset_left = 35.88688
 offset_top = -66.0
-offset_right = 249.0
+offset_right = 248.88687
 offset_bottom = 1.0
-grow_vertical = 0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 0
 text = "World Map"
 label_settings = SubResource("LabelSettings_kc4o1")

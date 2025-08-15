@@ -29,6 +29,7 @@ radius = 0.151687
 radius = 0.27223
 
 [node name="Grenade" node_paths=PackedStringArray("healthComponent") instance=ExtResource("1_c1g2t")]
+continuous_cd = true
 linear_damp = 1.2
 angular_damp = 3.0
 script = ExtResource("2_xwxxe")

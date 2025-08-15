@@ -24,10 +24,9 @@ explosionFalloff = ExtResource("3_4360k")
 [node name="cameraShakerComponent" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("4_o15xk")
-shakeAmp = Vector3(2, 5.605, 6.135)
-shakeFreq = Vector3(20, 20, 2)
+shakeAmp = Vector3(2, 2.1, 3)
+shakeFreq = Vector3(15, 15, 2)
 shakeDuration = 0.8
-randoms = Vector3(1, 2, 4)
 metadata/_custom_type_script = "uid://bu7qd08rxrnbf"
 
 [node name="collisionShape3d" type="CollisionShape3D" parent="."]

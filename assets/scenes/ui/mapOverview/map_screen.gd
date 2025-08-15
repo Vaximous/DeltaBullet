@@ -4,7 +4,8 @@ var visibleTween : Tween
 const defaultTransitionType = Tween.TRANS_QUINT
 const defaultEaseType = Tween.EASE_OUT
 const defaultTweenSpeed : float = 0.25
-@onready var topBarAnimPlayer : AnimationPlayer = $mapScreen/topBarAnimPlayer
+@onready var uiAnimPlayer : AnimationPlayer = $mapScreen/uiAnimPlayer
+@onready var areaInfo := %AreaInformation
 ##This is the marker that is selected
 var selectedMarker : Node3D = null:
 	set(value):
@@ -13,13 +14,18 @@ var selectedMarker : Node3D = null:
 				var previousMarker = selectedMarker
 				selectedMarker = value
 				previousMarker.playCloseAnimation()
+				%AreaInformation.show()
 			else:
 				selectedMarker = value
+				#%AreaInformation.hide()
 				#selectedMarker.playCloseAnimation()
-			%AreaInformation.show()
+		if !%AreaInformation.isTravelHovered:
 			%AreaInformation.marker = value
 ##The map object
-@export var map : Node3D
+@export var map : Node3D:
+	set(value):
+		map = value
+		%cityName.text = map.mapName
 ##Currently selected map index, controls the rotation and position of where the camera is looking
 @export var selectedIndex : int = 0:
 	set(value):
@@ -39,8 +45,9 @@ func _ready() -> void:
 	setVisible(true)
 	gameManager.showMouse()
 	add_to_group(&"worldMap")
-	topBarAnimPlayer.play("open")
+	uiAnimPlayer.play("open")
 	selectedIndex = 0
+
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("gEscape"):
@@ -48,6 +55,7 @@ func _input(event: InputEvent) -> void:
 
 func setSelectedMarker(value)->void:
 	selectedMarker = value
+
 
 func setVisible(value:bool)->void:
 	if visibleTween:

@@ -83,6 +83,10 @@ travelScene = null
 travelStatus = 1
 travelGroupID = 0
 travelID = 0
+hasCollectibleItems = null
+hasExploration = null
+hasCollectibleNotes = null
+useDescription = null
 
 [node name="hoverSound" type="AudioStreamPlayer" parent="." index="0"]
 stream = SubResource("AudioStreamRandomizer_i54d4")

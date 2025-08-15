@@ -100,7 +100,7 @@ func explode()->void:
 	explosionRadius = 0.1
 	explosionTween.tween_property(self,"explosionRadius",explosionRadiusTo,explosionSpeed)
 
-	explosionEffect.doRipple(explosionRadiusTo*3,0.15,15.5).finished.connect(collisionShape.queue_free)
+	explosionEffect.doRipple(explosionRadiusTo*4,0.25,0.5).finished.connect(collisionShape.queue_free)
 	if is_instance_valid(explosionEffect):
 		explosionEffect.explosionEffectPlay()
 

@@ -19,17 +19,17 @@ fractal_type = 0
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_y3ykw"]
 width = 64
 height = 64
+noise = SubResource("FastNoiseLite_aa8lc")
+color_ramp = SubResource("Gradient_aa8lc")
 seamless = true
 seamless_blend_skirt = 1.0
-color_ramp = SubResource("Gradient_aa8lc")
-noise = SubResource("FastNoiseLite_aa8lc")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_y3ykw"]
 render_priority = 0
 shader = ExtResource("5_aa8lc")
-shader_parameter/innerRange = 0.93
+shader_parameter/innerRange = 0.5500000000029104
 shader_parameter/distortFactor = 133.605
-shader_parameter/distortSpeed = 2.015
+shader_parameter/distortSpeed = 10.525000000008731
 shader_parameter/noiseTexture = SubResource("NoiseTexture2D_y3ykw")
 
 [sub_resource type="SphereMesh" id="SphereMesh_42obw"]

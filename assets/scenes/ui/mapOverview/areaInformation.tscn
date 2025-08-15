@@ -1,86 +1,458 @@
-[gd_scene load_steps=7 format=3 uid="uid://2mlt2r4jpb1c"]
+[gd_scene load_steps=33 format=3 uid="uid://2mlt2r4jpb1c"]
 
-[ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="1_7mwi3"]
-[ext_resource type="Texture2D" uid="uid://dwy1ieh8lo0m0" path="res://assets/scenes/worlds/areas/playerHome/previewscreenTest.png" id="2_bhotf"]
+[ext_resource type="FontFile" uid="uid://com86cy2htbbq" path="res://assets/fonts/CreatoDisplay-Regular.otf" id="2_6ux0t"]
 [ext_resource type="Script" uid="uid://bl3u61qcau7of" path="res://assets/scenes/ui/mapOverview/area_information.gd" id="2_ghdy3"]
-[ext_resource type="FontFile" uid="uid://b3s7umd01feyu" path="res://assets/fonts/Carthage Pro Regular.ttf" id="3_ghdy3"]
-[ext_resource type="AudioStream" uid="uid://dnxn6d7ofwex2" path="res://assets/sounds/ui/map/travelRandomizer.tres" id="5_ghdy3"]
+[ext_resource type="Shader" uid="uid://dhylkvfkpaysc" path="res://assets/scripts/shaders/ui_blur.gdshader" id="3_fkrv7"]
+[ext_resource type="FontFile" uid="uid://c2khimo5ruet0" path="res://assets/fonts/Orbitron/static/Orbitron-Regular.ttf" id="4_6u8km"]
+[ext_resource type="Texture2D" uid="uid://b4lmvlm0y6lp4" path="res://assets/textures/icons/fatcow/attribution.png" id="5_5bmur"]
+[ext_resource type="Texture2D" uid="uid://c77aw127i2eue" path="res://assets/textures/icons/fatcow/backpack.png" id="6_vr1jc"]
+[ext_resource type="Texture2D" uid="uid://c3cx1br7rs813" path="res://assets/textures/icons/fatcow/document_green.png" id="7_h7duu"]
+[ext_resource type="FontFile" uid="uid://wog50w8o74ru" path="res://addons/ez_dialogue/main_screen/ProggyVector Regular.ttf" id="8_mougi"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_okjsk"]
-font = ExtResource("3_ghdy3")
-outline_size = 4
-outline_color = Color(0, 0, 0, 1)
+[sub_resource type="Gradient" id="Gradient_t2t4q"]
+offsets = PackedFloat32Array(0, 0.5185185, 1)
+colors = PackedColorArray(0.3529412, 0, 0, 1, 0.4352941, 0, 0, 1, 0.3529412, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_vvktn"]
+gradient = SubResource("Gradient_t2t4q")
+fill_from = Vector2(1, 0)
+fill_to = Vector2(1, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fol5q"]
+texture = SubResource("GradientTexture2D_vvktn")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xw2h4"]
+texture = SubResource("GradientTexture2D_vvktn")
+
+[sub_resource type="Gradient" id="Gradient_l84tp"]
+offsets = PackedFloat32Array(0, 0.5185185, 1)
+colors = PackedColorArray(0.3529412, 0, 0, 1, 0.61960787, 0, 0, 1, 0.3529412, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_eieqx"]
+gradient = SubResource("Gradient_l84tp")
+fill_from = Vector2(1, 0)
+fill_to = Vector2(1, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_d4jw0"]
+texture = SubResource("GradientTexture2D_eieqx")
+
+[sub_resource type="Gradient" id="Gradient_6ru1n"]
+offsets = PackedFloat32Array(0, 0.5185185, 1)
+colors = PackedColorArray(0.3529412, 0, 0, 1, 0.4352941, 0, 0, 1, 0.3529412, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_4povm"]
+gradient = SubResource("Gradient_6ru1n")
+fill_from = Vector2(1, 0)
+fill_to = Vector2(1, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wiyv7"]
+texture = SubResource("GradientTexture2D_4povm")
+
+[sub_resource type="Gradient" id="Gradient_3a83f"]
+offsets = PackedFloat32Array(0, 0.5185185, 1)
+colors = PackedColorArray(0.3529412, 0, 0, 1, 0.61960787, 0, 0, 1, 0.3529412, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_33svc"]
+gradient = SubResource("Gradient_3a83f")
+fill_from = Vector2(1, 0)
+fill_to = Vector2(1, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_o3kal"]
+texture = SubResource("GradientTexture2D_33svc")
+
+[sub_resource type="Animation" id="Animation_02cn6"]
+resource_name = "open"
+step = 0.0333333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("markerInfo/blur:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.5176323, 1.4142127),
+"update": 0,
+"values": [Vector2(514, 0), Vector2(514, 245)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("markerInfo/vBoxContainer:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.62),
+"transitions": PackedFloat32Array(0.3077863, 1),
+"update": 0,
+"values": [Vector2(72, 12), Vector2(72, 49)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("markerInfo/vBoxContainer:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.46666667),
+"transitions": PackedFloat32Array(0.36602148, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("markerInfo/seperator:size")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.51),
+"transitions": PackedFloat32Array(0.21022417, 0.28717482),
+"update": 0,
+"values": [Vector2(4, 11.305496), Vector2(550, 11.305)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("markerInfo/markerIcon:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.22531268, 1),
+"update": 0,
+"values": [Vector2(-23.000002, 22.999996), Vector2(19, 22.999996)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("markerInfo/areaName:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.49),
+"transitions": PackedFloat32Array(0.27739263, 1),
+"update": 0,
+"values": [Vector2(100, -6), Vector2(40, -6)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("markerInfo/areaName:self_modulate")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0.033333335, 0.36666667),
+"transitions": PackedFloat32Array(0.18946461, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_tk110"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("markerInfo/blur:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(514, 220)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("markerInfo/vBoxContainer:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(72, 49)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("markerInfo/vBoxContainer:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("markerInfo/seperator:size")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(514, 11.305496)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("markerInfo/markerIcon:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(19, 22.999996)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("markerInfo/areaName:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(40, -6)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("markerInfo/areaName:self_modulate")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8ueps"]
+_data = {
+&"RESET": SubResource("Animation_tk110"),
+&"open": SubResource("Animation_02cn6")
+}
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_s8occ"]
+load_path = "res://.godot/imported/mapMarkerNone.png-c6c80e73c5c2a16940ec3b4f04942443.s3tc.ctex"
+
+[sub_resource type="Gradient" id="Gradient_e6kde"]
+offsets = PackedFloat32Array(0, 0.58064514, 1)
+colors = PackedColorArray(0.3529412, 0, 0, 1, 0.3529412, 0, 0, 1, 0.3529412, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_y3uw6"]
+gradient = SubResource("Gradient_e6kde")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h2svp"]
+shader = ExtResource("3_fkrv7")
+shader_parameter/blur_amount = 2.9411765933036804
+shader_parameter/tint = Color(1, 1, 1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_f67ay"]
+font = ExtResource("4_6u8km")
+shadow_size = 2
+shadow_color = Color(0, 0, 0, 0.8)
+
+[sub_resource type="LabelSettings" id="LabelSettings_c7trc"]
+font = ExtResource("4_6u8km")
+shadow_size = 2
+shadow_color = Color(0, 0, 0, 0.8)
+
+[sub_resource type="LabelSettings" id="LabelSettings_m4wry"]
+font = ExtResource("4_6u8km")
+shadow_size = 2
+shadow_color = Color(0, 0, 0, 0.8)
+
+[sub_resource type="LabelSettings" id="LabelSettings_xymkt"]
+font = ExtResource("8_mougi")
+font_size = 40
+font_color = Color(0.9999846, 0.88225174, 0.8622058, 1)
 shadow_size = 5
-shadow_color = Color(0, 0, 0, 0.576471)
+shadow_color = Color(0, 0, 0, 0.80784315)
 
-[node name="AreaInformation" type="MarginContainer"]
-anchors_preset = -1
-anchor_right = 0.26500002
+[node name="AreaInfo" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -3.0517578e-05
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_7mwi3")
+mouse_filter = 1
 script = ExtResource("2_ghdy3")
 
-[node name="panelContainer" type="PanelContainer" parent="."]
-layout_mode = 2
-
-[node name="vBoxContainer" type="VBoxContainer" parent="panelContainer"]
-layout_mode = 2
-
-[node name="hideButton" type="Button" parent="panelContainer/vBoxContainer"]
-layout_mode = 2
-text = "X"
-
-[node name="hSeparator3" type="HSeparator" parent="panelContainer/vBoxContainer"]
-layout_mode = 2
-
-[node name="textureRect" type="TextureRect" parent="panelContainer/vBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-texture = ExtResource("2_bhotf")
-expand_mode = 5
-
-[node name="hSeparator" type="HSeparator" parent="panelContainer/vBoxContainer"]
-layout_mode = 2
-
-[node name="descriptionZone" type="PanelContainer" parent="panelContainer/vBoxContainer"]
-custom_minimum_size = Vector2(0, 391.105)
-layout_mode = 2
-
-[node name="label" type="Label" parent="panelContainer/vBoxContainer/descriptionZone"]
-layout_mode = 2
-text = "Map description here.."
-label_settings = SubResource("LabelSettings_okjsk")
-horizontal_alignment = 1
-autowrap_mode = 3
-
-[node name="hSeparator2" type="HSeparator" parent="panelContainer/vBoxContainer"]
-layout_mode = 2
-
-[node name="completionStats" type="PanelContainer" parent="panelContainer/vBoxContainer"]
-visible = false
-custom_minimum_size = Vector2(0, 73.53)
-layout_mode = 2
-
-[node name="label" type="Label" parent="panelContainer/vBoxContainer/completionStats"]
-layout_mode = 2
-text = "Put completion stats here"
-label_settings = SubResource("LabelSettings_okjsk")
-horizontal_alignment = 1
-
-[node name="hSeparator4" type="HSeparator" parent="panelContainer/vBoxContainer"]
-layout_mode = 2
-
-[node name="travelButton" type="Button" parent="panelContainer/vBoxContainer"]
-layout_mode = 2
+[node name="travelButton" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -315.0
+offset_top = -63.0
+offset_right = -7.0
+offset_bottom = -7.0
+grow_horizontal = 0
+mouse_filter = 1
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.5411765)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("2_6ux0t")
+theme_override_font_sizes/font_size = 31
+theme_override_styles/normal = SubResource("StyleBoxTexture_fol5q")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_xw2h4")
+theme_override_styles/hover = SubResource("StyleBoxTexture_d4jw0")
+theme_override_styles/hover_pressed = SubResource("StyleBoxTexture_wiyv7")
+theme_override_styles/focus = SubResource("StyleBoxTexture_o3kal")
 text = "TRAVEL"
 
-[node name="travelSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("5_ghdy3")
-bus = &"UI"
+[node name="markerInfo" type="Control" parent="."]
+layout_mode = 1
+anchor_left = 0.001
+anchor_right = 0.001
+offset_left = 0.39999998
+offset_top = 18.0
+offset_right = 554.4
+offset_bottom = 159.0
 
-[connection signal="pressed" from="panelContainer/vBoxContainer/hideButton" to="." method="hide"]
-[connection signal="pressed" from="panelContainer/vBoxContainer/travelButton" to="." method="_on_travel_button_pressed"]
-[connection signal="pressed" from="panelContainer/vBoxContainer/travelButton" to="." method="playTravelSound"]
+[node name="markerinfoPlayer" type="AnimationPlayer" parent="markerInfo"]
+unique_name_in_owner = true
+root_node = NodePath("../..")
+libraries = {
+&"": SubResource("AnimationLibrary_8ueps")
+}
+
+[node name="markerIcon" type="ColorRect" parent="markerInfo"]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 22.999996
+offset_right = 44.828407
+offset_bottom = 47.30549
+rotation = 0.7853982
+color = Color(0.42352942, 0, 0, 1)
+
+[node name="textureIcon" type="TextureRect" parent="markerInfo/markerIcon"]
+modulate = Color(0.6901961, 0.03529412, 0, 1)
+layout_mode = 0
+offset_left = 0.70710754
+offset_top = 13.435028
+offset_right = 17.707111
+offset_bottom = 30.435032
+rotation = -0.7853982
+texture = SubResource("CompressedTexture2D_s8occ")
+expand_mode = 1
+
+[node name="seperator" type="TextureRect" parent="markerInfo"]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 36.0
+offset_right = 554.0
+offset_bottom = 47.305496
+texture = SubResource("GradientTexture1D_y3uw6")
+expand_mode = 1
+
+[node name="blur" type="ColorRect" parent="markerInfo"]
+material = SubResource("ShaderMaterial_h2svp")
+layout_mode = 0
+offset_left = 40.0
+offset_top = 48.0
+offset_right = 554.0
+offset_bottom = 268.0
+color = Color(1, 1, 1, 0.6)
+
+[node name="vBoxContainer" type="VBoxContainer" parent="markerInfo"]
+layout_mode = 0
+offset_left = 72.0
+offset_top = 49.0
+offset_right = 582.0
+offset_bottom = 179.0
+
+[node name="itemsLabel" type="Label" parent="markerInfo/vBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Items Found - 0%"
+label_settings = SubResource("LabelSettings_f67ay")
+
+[node name="textureRect" type="TextureRect" parent="markerInfo/vBoxContainer/itemsLabel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.067
+anchor_top = 0.043
+anchor_right = -0.067
+anchor_bottom = 0.043
+offset_left = 1.9020004
+offset_top = 0.010999978
+offset_right = 24.902
+offset_bottom = 23.011
+texture = ExtResource("5_5bmur")
+expand_mode = 1
+
+[node name="explorationLabel" type="Label" parent="markerInfo/vBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Overall Exploration - 0%"
+label_settings = SubResource("LabelSettings_c7trc")
+
+[node name="textureRect2" type="TextureRect" parent="markerInfo/vBoxContainer/explorationLabel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.067
+anchor_top = 0.043
+anchor_right = -0.067
+anchor_bottom = 0.043
+offset_left = 1.9020004
+offset_top = -0.989
+offset_right = 24.902
+offset_bottom = 22.011
+texture = ExtResource("6_vr1jc")
+expand_mode = 1
+
+[node name="notesLabel" type="Label" parent="markerInfo/vBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Notes Found - 0%"
+label_settings = SubResource("LabelSettings_c7trc")
+
+[node name="textureRect2" type="TextureRect" parent="markerInfo/vBoxContainer/notesLabel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.067
+anchor_top = 0.043
+anchor_right = -0.067
+anchor_bottom = 0.043
+offset_left = 1.9020004
+offset_top = -0.989
+offset_right = 24.902
+offset_bottom = 22.011
+texture = ExtResource("7_h7duu")
+expand_mode = 1
+
+[node name="descriptionLabel" type="Label" parent="markerInfo/vBoxContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+text = "This is your home."
+label_settings = SubResource("LabelSettings_m4wry")
+
+[node name="areaName" type="Label" parent="markerInfo"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 40.0
+offset_top = -6.0
+offset_right = 395.0
+offset_bottom = 48.0
+text = "AREANAME"
+label_settings = SubResource("LabelSettings_xymkt")
+vertical_alignment = 1
+
+[node name="animationPlayer" type="AnimationPlayer" parent="."]
+
+[connection signal="pressed" from="travelButton" to="." method="playTravelSound"]
+[connection signal="pressed" from="travelButton" to="." method="goToSelectedMarker"]

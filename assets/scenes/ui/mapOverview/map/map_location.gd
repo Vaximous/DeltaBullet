@@ -27,6 +27,11 @@ const defaultTweenSpeed : float = 1
 @export var travelGroupID = 0
 ##This is the ID of the location itself.
 @export var travelID = 0
+@export_category("Info")
+@export var hasCollectibleItems : bool = false
+@export var hasExploration : bool = false
+@export var hasCollectibleNotes : bool = false
+@export var useDescription : bool = false
 
 
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://bxog5iq8771kh"]
+[gd_scene load_steps=25 format=3 uid="uid://bxog5iq8771kh"]
 
 [ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="1_iee3r"]
 [ext_resource type="PackedScene" uid="uid://c63b0ewnfkf4n" path="res://assets/scenes/ui/mapOverview/map/map.tscn" id="1_lplem"]
@@ -24,7 +24,7 @@ func _input(event):
 		var mouseEvent = event.duplicate()
 		mouseEvent.position = get_global_transform_with_canvas().affine_inverse() * event.position
 		%map._unhandled_input(mouseEvent)
-		%map.mapCursor._unhandled_input(mouseEvent)
+		%map.mapCursor._input(mouseEvent)
 "
 
 [sub_resource type="Gradient" id="Gradient_6voip"]
@@ -67,6 +67,11 @@ adjustment_color_correction = SubResource("GradientTexture1D_iun5n")
 [sub_resource type="World3D" id="World3D_p8ko3"]
 environment = SubResource("Environment_60wph")
 
+[sub_resource type="LabelSettings" id="LabelSettings_kc4o1"]
+font_size = 66
+shadow_size = 7
+shadow_color = Color(0, 0, 0, 1)
+
 [sub_resource type="Shader" id="Shader_1wy2d"]
 code = "shader_type canvas_item;
 uniform vec4 color: source_color;
@@ -85,24 +90,12 @@ shader_parameter/color = Color(0, 0, 0, 1)
 shader_parameter/multiplier = 0.43
 shader_parameter/softness = 0.9
 
-[sub_resource type="Gradient" id="Gradient_jqm1r"]
-offsets = PackedFloat32Array(0, 0.0714286, 1)
-colors = PackedColorArray(0, 0, 0, 1, 0.439216, 0, 0, 1, 0.556863, 0, 0, 0)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_n3oiv"]
-gradient = SubResource("Gradient_jqm1r")
-
-[sub_resource type="LabelSettings" id="LabelSettings_kc4o1"]
-font_size = 66
-shadow_size = 7
-shadow_color = Color(0, 0, 0, 1)
-
 [sub_resource type="Animation" id="Animation_udaj1"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("topBar:size")
+tracks/0/path = NodePath("mapAreaLocation:size")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -114,7 +107,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("topBar/label:self_modulate")
+tracks/1/path = NodePath("cityName:self_modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -123,32 +116,56 @@ tracks/1/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 1)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("cityName:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(14, 834)]
+}
 
 [sub_resource type="Animation" id="Animation_206y2"]
 resource_name = "open"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("topBar:size")
+tracks/0/path = NodePath("mapAreaLocation:size")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(0.183013, 1),
+"transitions": PackedFloat32Array(0.183013, 3.8637452),
 "update": 0,
 "values": [Vector2(0, 71), Vector2(790, 71)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("topBar/label:self_modulate")
+tracks/1/path = NodePath("cityName:self_modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0.29, 0.8),
+"times": PackedFloat32Array(0.26666668, 0.6666667),
 "transitions": PackedFloat32Array(0.0824697, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+"values": [Color(0.7670248, 1.4920532e-06, 3.85046e-07, 0), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("cityName:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.23333333, 1),
+"transitions": PackedFloat32Array(0.29730174, 1),
+"update": 0,
+"values": [Vector2(14, 834), Vector2(36, 834)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_avv0b"]
@@ -199,6 +216,38 @@ render_target_update_mode = 4
 unique_name_in_owner = true
 mapScreen = NodePath("../../../..")
 
+[node name="mapAreaLocation" type="MarginContainer" parent="mapScreen"]
+clip_contents = true
+layout_direction = 2
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -68.0
+offset_right = 790.0
+offset_bottom = 3.0
+
+[node name="colorRect" type="ColorRect" parent="mapScreen/mapAreaLocation"]
+clip_contents = true
+custom_minimum_size = Vector2(12.805, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+color = Color(0.41960785, 0, 0, 1)
+
+[node name="cityName" type="Label" parent="mapScreen"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 14.0
+offset_top = -66.0
+offset_right = 227.00229
+offset_bottom = 1.0
+size_flags_horizontal = 0
+text = "World Map"
+label_settings = SubResource("LabelSettings_kc4o1")
+
 [node name="vignette" type="ColorRect" parent="mapScreen"]
 material = SubResource("ShaderMaterial_60wph")
 layout_mode = 1
@@ -209,72 +258,16 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="topBar" type="MarginContainer" parent="mapScreen"]
-clip_contents = true
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 0.494
-anchor_bottom = 0.079
-offset_right = -0.39996338
-offset_bottom = -0.1000061
-
-[node name="textureRect" type="TextureRect" parent="mapScreen/topBar"]
-layout_mode = 2
-texture = SubResource("GradientTexture1D_n3oiv")
-expand_mode = 1
-
-[node name="label" type="Label" parent="mapScreen/topBar"]
-layout_mode = 2
-text = "World Map"
-label_settings = SubResource("LabelSettings_kc4o1")
-
-[node name="topBarAnimPlayer" type="AnimationPlayer" parent="mapScreen"]
-libraries = {
-&"": SubResource("AnimationLibrary_avv0b")
-}
-
-[node name="forward" type="Button" parent="mapScreen"]
-visible = false
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -151.0
-offset_top = 211.0
-offset_bottom = 455.0
-grow_horizontal = 0
-grow_vertical = 2
-text = ">"
-
-[node name="backward" type="Button" parent="mapScreen"]
-visible = false
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_top = 245.0
-offset_right = 151.0
-offset_bottom = 451.0
-grow_vertical = 2
-text = "<"
-
 [node name="AreaInformation" parent="mapScreen" node_paths=PackedStringArray("map") instance=ExtResource("5_n3oiv")]
 unique_name_in_owner = true
 visible = false
-layout_mode = 0
-anchors_preset = 0
-anchor_left = 1.0
-anchor_right = 1.0
-anchor_bottom = 0.0
-offset_left = -525.0
-offset_top = 8.0
-offset_right = -14.0
-offset_bottom = 637.0
-grow_horizontal = 1
-grow_vertical = 1
+layout_mode = 1
 map = NodePath("../..")
+
+[node name="uiAnimPlayer" type="AnimationPlayer" parent="mapScreen"]
+libraries = {
+&"": SubResource("AnimationLibrary_avv0b")
+}
 
 [node name="mapOpen" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamRandomizer_s27yt")
@@ -288,5 +281,3 @@ autoplay = true
 bus = &"Music"
 
 [connection signal="ready" from="." to="mapOpen" method="play"]
-[connection signal="pressed" from="mapScreen/forward" to="." method="addIndex"]
-[connection signal="pressed" from="mapScreen/backward" to="." method="subtractIndex"]

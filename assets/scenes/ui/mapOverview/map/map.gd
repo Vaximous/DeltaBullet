@@ -1,12 +1,13 @@
 extends Node3D
 
+@export var mapName : StringName = &""
 const markerColors = ["res://assets/scenes/ui/mapOverview/map/defaultMarker.tres","res://assets/scenes/ui/mapOverview/map/atLocationMarker.tres","res://assets/scenes/ui/mapOverview/map/selectedMarker.tres"]
 var camTween : Tween
 @onready var modelHolder : Node3D = $model
 @onready var cameraController : CharacterBody3D = $cameraController
 @export var mapScreen : CanvasLayer
-@onready var horizontal = $Camera/camHoriz
-@onready var vertical = $Camera/camHoriz/camVert
+@onready var horizontal = %camHoriz
+@onready var vertical = %camVert
 @onready var camera : Camera3D = %camera3d
 @onready var springArm : SpringArm3D = $cameraController/Camera/camHoriz/camVert/springArm3d
 @onready var cameraHolder = $Camera
@@ -20,7 +21,7 @@ const defaultEaseType = Tween.EASE_OUT
 const defaultTweenSpeed : float = 1
 
 var direction : Vector3
-var speed : float = 15
+var speed : float = 25
 var acceleration : float = 5
 var cursorSpeed : float = 25
 
@@ -144,13 +145,15 @@ func getCurrentLocationMarker() -> Marker3D:
 	return null
 
 
-func setCameraPositionAndRotation(pos:Vector3,rot:Vector3)->void:
+func setCameraPositionAndRotation(pos:Vector3,rot:Vector3 , posSpeed : float = 3, rotSpeed : float = 3)->void:
 	if camTween:
 		camTween.kill()
 	camTween = create_tween()
-	camTween.parallel().tween_property(cameraHolder,"global_position",pos,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
-	camTween.parallel().tween_property(horizontal,"rotation_degrees:y",rot.y,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
-	camTween.parallel().tween_property(vertical,"rotation_degrees:x",rot.x,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+	if pos != Vector3.ZERO:
+		camTween.parallel().tween_property(cameraController,"global_position",pos,posSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+	if rot != Vector3.ZERO:
+		camTween.parallel().tween_property(horizontal,"rotation_degrees:y",rot.y,rotSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+		camTween.parallel().tween_property(vertical,"rotation_degrees:x",rot.x,rotSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
 
 
 ##Clear the current navigation visualization path
@@ -175,11 +178,15 @@ func createNaviPath(start : Vector3, end : Vector3) -> void:
 
 ##Marker selected callback
 func _on_map_selection_marker_selected_marker(node: Node3D) -> void:
-	var current = getCurrentLocationMarker()
-	if node == current:
-		clearNaviPath()
-		return
-	var destination = node.getNavPoint()
-	var start_closest = NavigationServer3D.region_get_closest_point($model/mapoverview/MapNavigation.get_rid(), current.getNavPoint())
+	if is_instance_valid(node):
+		$pathVisualizerStartPosition/path3d.show()
+		var current = getCurrentLocationMarker()
+		if node == current:
+			clearNaviPath()
+			return
+		var destination = node.getNavPoint()
+		var start_closest = NavigationServer3D.region_get_closest_point($model/mapoverview/MapNavigation.get_rid(), current.getNavPoint())
 
-	createNaviPath(start_closest, destination)
+		createNaviPath(start_closest, destination)
+	else:
+		$pathVisualizerStartPosition/path3d.hide()

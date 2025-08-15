@@ -1,6 +1,6 @@
 shader_type spatial;
 render_mode unshaded, cull_front;
-
+#include "res://assets/scripts/shaders/normals.gdshaderinc"
 uniform float innerRange = 0.9;
 uniform float distortFactor = 0;
 uniform float distortSpeed = 0;
@@ -13,6 +13,7 @@ void fragment(){
 	float dotp = dot(vec3(0.0, 0.0, 1.0), NORMAL);
 	float fresnel = smoothstep(0.5, 1.0, dotp) * smoothstep(0., 0.7, dotp) + smoothstep(innerRange, 1.0, dotp) * 0.25 * distortFactor;
 	vec3 uv_off = NORMAL * fresnel * 0.9;
+	//vec3 n = heightToNormal(noiseTexture,distortFactor,VERTEX,NORMAL); 
 	ALBEDO = textureLod(screen_tex,SCREEN_UV + uv_off.xy, 1.0).rgb;
 	//ALBEDO += texture(noiseTexture, UV + vec2(TIME * distortSpeed)).rgb * distortFactor;
 	//ALBEDO = vec3(fresnel);

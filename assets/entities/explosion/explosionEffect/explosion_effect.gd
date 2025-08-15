@@ -20,12 +20,12 @@ func doRipple(rippleAmount:float=10.0, rippleSpeed : float = 0.25, rippleFadeSpe
 		rippleTween.kill()
 	rippleTween = create_tween()
 	var ripple := rippleTween.tween_property(rippleMesh,"scale",Vector3(rippleAmount,rippleAmount,rippleAmount)*2,rippleSpeed)
-	rippleTween.parallel().tween_property(rippleMesh,"transparency",1.0,explosionFadeSpeed).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
+	rippleTween.parallel().tween_property(rippleMesh,"transparency",1.0,rippleFadeSpeed).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
 	return ripple
 
 func explosionEffectPlay()->void:
 	if Engine.is_editor_hint():
-		doRipple(10)
+		doRipple(15,0.55,0.5)
 	explosionLight.light_energy = 5.0
 	if lightTween:
 		lightTween.kill()

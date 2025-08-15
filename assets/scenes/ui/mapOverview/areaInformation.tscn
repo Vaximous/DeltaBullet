@@ -60,94 +60,6 @@ fill_to = Vector2(1, 1)
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_o3kal"]
 texture = SubResource("GradientTexture2D_33svc")
 
-[sub_resource type="Animation" id="Animation_02cn6"]
-resource_name = "open"
-step = 0.0333333
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("markerInfo/blur:size")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(0.5176323, 1.4142127),
-"update": 0,
-"values": [Vector2(514, 0), Vector2(514, 245)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("markerInfo/vBoxContainer:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.62),
-"transitions": PackedFloat32Array(0.3077863, 1),
-"update": 0,
-"values": [Vector2(72, 12), Vector2(72, 49)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("markerInfo/vBoxContainer:modulate")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.46666667),
-"transitions": PackedFloat32Array(0.36602148, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("markerInfo/seperator:size")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.51),
-"transitions": PackedFloat32Array(0.21022417, 0.28717482),
-"update": 0,
-"values": [Vector2(4, 11.305496), Vector2(550, 11.305)]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("markerInfo/markerIcon:position")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(0.22531268, 1),
-"update": 0,
-"values": [Vector2(-23.000002, 22.999996), Vector2(19, 22.999996)]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("markerInfo/areaName:position")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.49),
-"transitions": PackedFloat32Array(0.27739263, 1),
-"update": 0,
-"values": [Vector2(100, -6), Vector2(40, -6)]
-}
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("markerInfo/areaName:self_modulate")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"times": PackedFloat32Array(0.033333335, 0.36666667),
-"transitions": PackedFloat32Array(0.18946461, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
-}
-
 [sub_resource type="Animation" id="Animation_tk110"]
 length = 0.001
 tracks/0/type = "value"
@@ -235,6 +147,94 @@ tracks/6/keys = {
 "values": [Color(1, 1, 1, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_02cn6"]
+resource_name = "open"
+step = 0.0333333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("markerInfo/blur:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.5176323, 1.4142127),
+"update": 0,
+"values": [Vector2(514, 0), Vector2(514, 245)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("markerInfo/vBoxContainer:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.62),
+"transitions": PackedFloat32Array(0.3077863, 1),
+"update": 0,
+"values": [Vector2(72, 12), Vector2(72, 49)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("markerInfo/vBoxContainer:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.46666667),
+"transitions": PackedFloat32Array(0.36602148, 1),
+"update": 0,
+"values": [Color(1, 0, 0, 0), Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("markerInfo/seperator:size")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.51),
+"transitions": PackedFloat32Array(0.21022417, 0.28717482),
+"update": 0,
+"values": [Vector2(4, 11.305496), Vector2(550, 11.305)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("markerInfo/markerIcon:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.22531268, 1),
+"update": 0,
+"values": [Vector2(-23.000002, 22.999996), Vector2(19, 22.999996)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("markerInfo/areaName:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.49),
+"transitions": PackedFloat32Array(0.27739263, 1),
+"update": 0,
+"values": [Vector2(100, -6), Vector2(40, -6)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("markerInfo/areaName:self_modulate")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0.033333335, 0.36666667),
+"transitions": PackedFloat32Array(0.18946461, 1.035265),
+"update": 0,
+"values": [Color(1, 0, 0.04313725, 0), Color(1, 1, 1, 1)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8ueps"]
 _data = {
 &"RESET": SubResource("Animation_tk110"),
@@ -274,7 +274,6 @@ shadow_color = Color(0, 0, 0, 0.8)
 [sub_resource type="LabelSettings" id="LabelSettings_xymkt"]
 font = ExtResource("8_mougi")
 font_size = 40
-font_color = Color(0.9999846, 0.88225174, 0.8622058, 1)
 shadow_size = 5
 shadow_color = Color(0, 0, 0, 0.80784315)
 
@@ -318,9 +317,9 @@ layout_mode = 1
 anchor_left = 0.001
 anchor_right = 0.001
 offset_left = 0.39999998
-offset_top = 18.0
+offset_top = 236.0
 offset_right = 554.4
-offset_bottom = 159.0
+offset_bottom = 377.0
 
 [node name="markerinfoPlayer" type="AnimationPlayer" parent="markerInfo"]
 unique_name_in_owner = true
@@ -451,8 +450,9 @@ offset_bottom = 48.0
 text = "AREANAME"
 label_settings = SubResource("LabelSettings_xymkt")
 vertical_alignment = 1
+uppercase = true
 
 [node name="animationPlayer" type="AnimationPlayer" parent="."]
 
-[connection signal="pressed" from="travelButton" to="." method="playTravelSound"]
 [connection signal="pressed" from="travelButton" to="." method="goToSelectedMarker"]
+[connection signal="pressed" from="travelButton" to="." method="playTravelSound"]

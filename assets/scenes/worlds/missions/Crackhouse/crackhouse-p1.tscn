@@ -1,4 +1,4 @@
-[gd_scene load_steps=71 format=3 uid="uid://7idw8rtae15o"]
+[gd_scene load_steps=65 format=3 uid="uid://7idw8rtae15o"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_dmxbb"]
 [ext_resource type="PackedScene" uid="uid://n500uprpwbbk" path="res://assets/models/csgmodels/csgtruck.tscn" id="2_cg4ns"]
@@ -38,11 +38,10 @@
 [ext_resource type="PackedScene" uid="uid://b8ttgknyh8e3m" path="res://assets/entities/clothing/Tuxedo/Tuxedo.tscn" id="32_vs2v5"]
 [ext_resource type="Script" uid="uid://b7vowqimfqppv" path="res://addons/proto_shape/proto_ramp/proto_ramp.gd" id="33_edjsf"]
 [ext_resource type="PackedScene" uid="uid://bidurnqgd1c74" path="res://assets/entities/weapons/m4/m4.tscn" id="34_np7sb"]
-[ext_resource type="Curve" uid="uid://cex2ggwxevnuj" path="res://assets/entities/projectiles/linear_falloff_curve.tres" id="35_yiehp"]
+[ext_resource type="Curve" uid="uid://cex2ggwxevnuj" path="res://assets/entities/projectiles/linear_falloff_curve.tres" id="35_wf1is"]
 [ext_resource type="Texture2D" uid="uid://c7b38t83ckisx" path="res://assets/textures/crosshair/crosshair161.png" id="35_yjgqk"]
 [ext_resource type="Script" uid="uid://b6r8ewrq3qb3y" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="36_usxi5"]
 [ext_resource type="PackedScene" uid="uid://dvmmlj4mvj88r" path="res://assets/entities/aiMarker/aiMarker.tscn" id="39_41ndd"]
-[ext_resource type="Shader" uid="uid://d3vyl7dcth2k2" path="res://assets/entities/explosion/explosionEffect/explosionRipple.gdshader" id="39_yiehp"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_wf1is"]
 panorama = ExtResource("3_yrnvq")
@@ -193,33 +192,6 @@ weaponSpreadAim = 0.07
 useWeaponSprintAnim = true
 weaponPositionOffset = Vector3(-0.015, 0.13, 0.075)
 weaponRotationOffset = Vector3(0, -1.74, -1.48)
-
-[sub_resource type="Gradient" id="Gradient_yiehp"]
-offsets = PackedFloat32Array(0.557562, 1)
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_12hni"]
-noise_type = 2
-seed = 26
-frequency = 0.0475
-fractal_type = 0
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_y3ykw"]
-width = 64
-height = 64
-noise = SubResource("FastNoiseLite_12hni")
-color_ramp = SubResource("Gradient_yiehp")
-seamless = true
-seamless_blend_skirt = 1.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_12hni"]
-render_priority = 0
-shader = ExtResource("39_yiehp")
-shader_parameter/innerRange = 0.5899999999965075
-shader_parameter/distortFactor = 15.0
-shader_parameter/distortSpeed = 1.0
-shader_parameter/noiseTexture = SubResource("NoiseTexture2D_y3ykw")
-
-[sub_resource type="SphereMesh" id="SphereMesh_m36k2"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_k3ea3"]
 size = Vector3(1, 5.8136, 8.51245)
@@ -1397,11 +1369,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.8833, 0.561231, 33.1288)
 
 [node name="aiMarker8" parent="Misc/WaypointNodes" index="7" instance=ExtResource("39_41ndd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43.8833, 0.561231, 33.1288)
-
-[node name="rippleMesh" type="MeshInstance3D" parent="Misc/WaypointNodes/aiMarker8" index="1"]
-transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 4.012125, -3.4391804)
-material_override = SubResource("ShaderMaterial_12hni")
-mesh = SubResource("SphereMesh_m36k2")
 
 [node name="aiMarker9" parent="Misc/WaypointNodes" index="8" instance=ExtResource("39_41ndd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 53.7009, 0.561231, 33.1288)

@@ -95,34 +95,22 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("mapAreaLocation:size")
+tracks/0/path = NodePath("cityName:self_modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(790, 71)]
+"values": [Color(1, 1, 1, 1)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("cityName:self_modulate")
+tracks/1/enabled = false
+tracks/1/path = NodePath("cityName:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("cityName:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
@@ -134,36 +122,24 @@ resource_name = "open"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("mapAreaLocation:size")
+tracks/0/path = NodePath("cityName:self_modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(0.183013, 3.8637452),
-"update": 0,
-"values": [Vector2(0, 71), Vector2(790, 71)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("cityName:self_modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
 "times": PackedFloat32Array(0.26666668, 0.6666667),
 "transitions": PackedFloat32Array(0.0824697, 1),
 "update": 0,
 "values": [Color(0.7670248, 1.4920532e-06, 3.85046e-07, 0), Color(1, 1, 1, 1)]
 }
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("cityName:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("cityName:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
 "times": PackedFloat32Array(0.23333333, 1),
-"transitions": PackedFloat32Array(0.29730174, 1),
+"transitions": PackedFloat32Array(0.29730174, 0.6155722),
 "update": 0,
 "values": [Vector2(14, 834), Vector2(36, 834)]
 }
@@ -224,7 +200,7 @@ anchors_preset = -1
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_top = -68.0
-offset_right = 790.0
+offset_right = 12.805
 offset_bottom = 3.0
 
 [node name="colorRect" type="ColorRect" parent="mapScreen/mapAreaLocation"]
@@ -240,10 +216,11 @@ layout_mode = 1
 anchors_preset = -1
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 14.0
+offset_left = 36.0
 offset_top = -66.0
-offset_right = 227.00229
+offset_right = 249.0
 offset_bottom = 1.0
+grow_vertical = 0
 size_flags_horizontal = 0
 text = "World Map"
 label_settings = SubResource("LabelSettings_kc4o1")

@@ -269,7 +269,8 @@ func fire()->void:
 			if !weaponOwner.isPlayerPawn():
 				weaponOwner.inputComponent.fireRecoil(0,0,0,false)
 
-		currentAmmo -= weaponResource.ammoConsumption
+		if !weaponOwner.get_meta(&"infiniteAmmo") or !weaponOwner.has_meta(&"infiniteAmmo"):
+			currentAmmo -= weaponResource.ammoConsumption
 
 		if weaponCast != null:
 			for b in weaponResource.weaponShots:

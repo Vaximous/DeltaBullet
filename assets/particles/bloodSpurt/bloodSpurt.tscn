@@ -53,8 +53,8 @@ func _ready()->void:
 	material_override = gameManager.bloodSpurts.pick_random()
 	amount = randi_range(minParticles,maxParticles)
 	await get_tree()
-	emitting = true
-	%bloodSmoke.emitting = true
+	restart()
+	%bloodSmoke.restart()
 	if !finished.is_connected(queue_free):
 		finished.connect(queue_free)
 

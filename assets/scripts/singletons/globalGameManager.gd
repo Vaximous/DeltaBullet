@@ -346,7 +346,7 @@ func castRay(cam : Camera3D, range : float = 50000, mask := 0b10111, exceptions 
 	return state.intersect_ray(params)
 
 
-func createDroplet(position:Vector3, velocity : Vector3 = Vector3.ZERO, amount : int = 1):
+func createDroplet(position:Vector3, velocity : Vector3 = Vector3.ONE, amount : int = 1,angle:float = 0):
 	if is_instance_valid(world):
 		for i in amount:
 			var flipVel = [true,false].pick_random()
@@ -354,9 +354,9 @@ func createDroplet(position:Vector3, velocity : Vector3 = Vector3.ZERO, amount :
 			world.worldParticles.add_child(droplet)
 			droplet.global_position = position
 			if !flipVel:
-				droplet.velocity += Vector3(velocity.x + randf_range(-1,2),velocity.y + randf_range(-1,2),velocity.z + randf_range(-1,2))
+				droplet.velocity += Vector3(velocity.x * randf_range(-1,2),velocity.y * randf_range(-1,2),velocity.z * randf_range(-1,2))
 			else:
-				droplet.velocity += -Vector3(velocity.x + randf_range(-1,2),velocity.y + randf_range(-1,2),velocity.z + randf_range(-1,2))
+				droplet.velocity += -Vector3(velocity.x * randf_range(-1,2),velocity.y * randf_range(-1,2),velocity.z * randf_range(-1,2))
 
 
 
@@ -919,6 +919,18 @@ func godPawn(pawn:BasePawn)->void:
 	else:
 		pawn.healthComponent.set_meta(&"god", true)
 		notify_warn("God Mode is %s for %s"%[pawn.healthComponent.get_meta(&"god"),pawn.name],2,1)
+
+func infiniteAmmo()->void:
+	for i in playerPawns:
+		if i.has_meta(&"infiniteAmmo"):
+			if i.get_meta(&"infiniteAmmo"):
+				i.set_meta(&"infiniteAmmo", false)
+			else:
+				i.set_meta(&"infiniteAmmo", true)
+			notify_warn("Infinite Ammo is %s"%i.get_meta(&"infiniteAmmo"),2,1)
+		else:
+			i.set_meta(&"infiniteAmmo", true)
+			notify_warn("Infinite Ammo is %s"%i.get_meta(&"infiniteAmmo"),2,1)
 
 
 func godmode()->void:

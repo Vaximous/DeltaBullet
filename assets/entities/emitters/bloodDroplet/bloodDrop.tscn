@@ -1,26 +1,23 @@
-[gd_scene load_steps=7 format=3 uid="uid://bm8ylk1xdojch"]
+[gd_scene load_steps=5 format=3 uid="uid://bm8ylk1xdojch"]
 
 [ext_resource type="Script" uid="uid://cmkwdvxjfsb4l" path="res://assets/entities/emitters/bloodDroplet/bloodDroplets.gd" id="1_250ge"]
-[ext_resource type="Texture2D" uid="uid://by33d8untal6r" path="res://assets/textures/blood/bloodparticles/blood_shader_jet_alpha.png" id="2_qjtha"]
-[ext_resource type="Texture2D" uid="uid://hp4k71fpb3mm" path="res://assets/textures/blood/bloodparticles/blood_shader_jet_normal.png" id="3_ikh2l"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_mq2q0"]
 radius = 0.08
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_250ge"]
-transparency = 1
 cull_mode = 2
-albedo_color = Color(0.470588, 0, 0, 1)
-albedo_texture = ExtResource("2_qjtha")
-normal_enabled = true
-normal_texture = ExtResource("3_ikh2l")
+albedo_color = Color(0.5568628, 0.054901954, 0, 1)
+metallic = 0.53
+roughness = 0.47
+billboard_keep_scale = true
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_0x8w3"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_mq2q0"]
 material = SubResource("StandardMaterial3D_250ge")
-radius = 0.03
-height = 0.155
+size = Vector2(0.025, 0.19)
 
 [node name="bloodDrop" type="CharacterBody3D"]
+physics_interpolation_mode = 1
 collision_layer = 0
 script = ExtResource("1_250ge")
 metadata/_custom_type_script = "uid://cmkwdvxjfsb4l"
@@ -31,5 +28,6 @@ shape = SubResource("SphereShape3D_mq2q0")
 [node name="bloodMesh" type="MeshInstance3D" parent="."]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0130171, 0, 0)
-visible = false
-mesh = SubResource("CapsuleMesh_0x8w3")
+top_level = true
+layers = 8
+mesh = SubResource("PlaneMesh_mq2q0")

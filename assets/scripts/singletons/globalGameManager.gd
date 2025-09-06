@@ -128,17 +128,6 @@ func doKillEffect(pawn:BasePawn,deathDealer:BasePawn)->void:
 		if deathDealer.healthComponent.health < deathDealer.healthComponent.defaultHP and !deathDealer.healthComponent.isDead and deathDealer.isPlayerPawn():
 			deathDealer.healthComponent.setHealth(deathDealer.healthComponent.health+35)
 
-func get_persistent_data() -> Dictionary:
-	if !userDir.file_exists("persistence"):
-		var fa = FileAccess.open(userDir.get_current_dir() + "persistence", FileAccess.WRITE)
-		fa.flush()
-	var file = FileAccess.open_compressed(userDir.get_current_dir() + "persistence", FileAccess.READ, FileAccess.COMPRESSION_GZIP)
-	if file == null:
-		return {}
-	var data = file.get_var(true)
-	if data is Dictionary:
-		return data
-	return {}
 
 
 func onPlayerDeath()->void:
@@ -147,16 +136,11 @@ func onPlayerDeath()->void:
 	await get_tree().create_timer(0.7).timeout
 	add_child(deathScreen.instantiate())
 
-func modify_persistent_data(key : String, value : Variant) -> void:
-	var data = get_persistent_data()
-	data[key] = value
-	write_persistent_data(data)
 
 
-func write_persistent_data(data : Dictionary) -> void:
-	var file = FileAccess.open_compressed(userDir.get_current_dir() + "persistence", FileAccess.WRITE, FileAccess.COMPRESSION_GZIP)
-	file.store_var(data)
-	file.flush()
+
+
+
 
 
 func create_dialogue_camera() -> CutsceneCamera:
@@ -836,19 +820,6 @@ func showAllPlayers()->void:
 			players.currentItem.show()
 
 
-func pick_weighted(weightedArray:Array) -> int:
-	#Sum all of the odds
-	var sum := get_weight_sum(weightedArray)
-	var random_selector = randf_range(0, sum)
-	#Subtract each element until random_selector is 0
-	var chosen_index : int = 0
-	for idx in weightedArray.size():
-		random_selector -= weightedArray[idx]
-		if random_selector <= 0.0:
-			chosen_index = idx
-			break
-	return chosen_index
-
 func createSoundAtPosition(stream:AudioStream,position:Vector3):
 	var aud = AudioStreamPlayer3D.new()
 	if world:
@@ -857,12 +828,6 @@ func createSoundAtPosition(stream:AudioStream,position:Vector3):
 		aud.stream = stream
 		aud.finished.connect(aud.queue_free)
 		aud.play()
-
-func get_weight_sum(weightedArray) -> float:
-	var sum : float
-	for i in weightedArray:
-		sum += i
-	return sum
 
 
 func decalAmountCheck()->void:
@@ -900,6 +865,7 @@ func createPulverizeSound(pPosition:Vector3 = Vector3.ZERO)->void:
 	pulverizeSound.finished.connect(pulverizeSound.queue_free)
 	pulverizeSound.play()
 
+
 func physEntityCheck()->void:
 	var physEntities : Array = Engine.get_main_loop().get_nodes_in_group(&"physicsEntity")
 	#print(physEntities)
@@ -908,6 +874,7 @@ func physEntityCheck()->void:
 			physEntities[0].queue_free()
 			physEntities.remove_at(0)
 	return
+
 
 func godPawn(pawn:BasePawn)->void:
 	if pawn.healthComponent.has_meta(&"god"):
@@ -932,3 +899,34 @@ func godmode()->void:
 		else:
 			i.healthComponent.set_meta(&"god", true)
 			notify_warn("God Mode is %s"%i.healthComponent.get_meta(&"god"),2,1)
+
+
+#region Persistent Data
+#Persistent data- To do with stuff that isn't specific to any save.
+##Gets the persistent data file
+func get_persistent_data() -> Dictionary:
+	if !userDir.file_exists("persistence"):
+		var fa = FileAccess.open(userDir.get_current_dir() + "persistence", FileAccess.WRITE)
+		fa.flush()
+	var file = FileAccess.open_compressed(userDir.get_current_dir() + "persistence", FileAccess.READ, FileAccess.COMPRESSION_GZIP)
+	if file == null:
+		return {}
+	var data = file.get_var(true)
+	if data is Dictionary:
+		return data
+	return {}
+
+
+##Writes to the persistent data file
+func write_persistent_data(data : Dictionary) -> void:
+	var file = FileAccess.open_compressed(userDir.get_current_dir() + "persistence", FileAccess.WRITE, FileAccess.COMPRESSION_GZIP)
+	file.store_var(data)
+	file.flush()
+
+
+##Changes a key/value in the persistent data file, and writes it
+func modify_persistent_data(key : String, value : Variant) -> void:
+	var data = get_persistent_data()
+	data[key] = value
+	write_persistent_data(data)
+#endregion

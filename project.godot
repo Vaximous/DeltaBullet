@@ -60,6 +60,7 @@ questManager="*res://assets/scripts/singletons/questManager.gd"
 AiManager="*res://assets/scripts/singletons/AIManager.gd"
 FmodManager="*res://addons/fmod/FmodManager.gd"
 gameState="*res://assets/scripts/singletons/gameState.gd"
+Util="*res://assets/scripts/singletons/Util.gd"
 
 [debug]
 

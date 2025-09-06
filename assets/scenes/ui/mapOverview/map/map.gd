@@ -21,7 +21,7 @@ const defaultEaseType = Tween.EASE_OUT
 const defaultTweenSpeed : float = 1
 
 var direction : Vector3
-var speed : float = 25
+@export var speed : float = 30
 var acceleration : float = 5
 var cursorSpeed : float = 25
 

@@ -30,7 +30,7 @@ default_font = ExtResource("2_tf7jg")
 resource_name = "crosshair"
 script/source = "extends TextureRect
 signal crosshairSet(crosshair)
-const  defaultCrosshair = preload(\"res://assets/textures/crosshair/crosshair001.png\")
+const  defaultCrosshair = preload(\"res://assets/textures/crosshair/crosshair012.png\")
 @export var dynamicCrosshair : bool = true
 @export var overridePosition : bool = true
 var positionOverride

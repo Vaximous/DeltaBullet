@@ -80,6 +80,8 @@ func applyHit(object:Node3D):
 
 		if object.has_method("velocity"):
 			object.velocity += -(global_position-object.global_position).normalized() * explosionImpulse
+		elif object.has_method("apply_central_impulse"):
+			object.apply_central_impulse(-(global_position-object.global_position).normalized() * explosionImpulse)
 
 		if object.has_method("hit"):
 			if object is RagdollBone:

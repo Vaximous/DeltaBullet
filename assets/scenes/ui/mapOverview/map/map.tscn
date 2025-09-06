@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://c63b0ewnfkf4n"]
+[gd_scene load_steps=51 format=3 uid="uid://c63b0ewnfkf4n"]
 
 [ext_resource type="Script" uid="uid://t733jevi3esu" path="res://assets/scenes/ui/mapOverview/map/map.gd" id="1_rkk0n"]
 [ext_resource type="Texture2D" uid="uid://d0f0crtwpmoka" path="res://assets/textures/panoramas/panoramatest1.png" id="2_1xklm"]
@@ -12,6 +12,10 @@
 [ext_resource type="PackedScene" uid="uid://7idw8rtae15o" path="res://assets/scenes/worlds/missions/Crackhouse/crackhouse-p1.tscn" id="7_dvqh0"]
 [ext_resource type="PackedScene" uid="uid://c8sr5dinhonjs" path="res://assets/scenes/worlds/missions/AbandonedHospital/HospitalMission.tscn" id="8_d0eii"]
 [ext_resource type="PackedScene" uid="uid://ddgk7ndlf2mqo" path="res://assets/scenes/worlds/missions/survivalStreet/survivalStreet.tscn" id="10_mlvph"]
+[ext_resource type="PackedScene" uid="uid://guuwxb1s6c86" path="res://assets/scenes/worlds/debug/waveSpawnerTest.tscn" id="13_4t545"]
+[ext_resource type="PackedScene" uid="uid://dpeqrnidy6scn" path="res://assets/scenes/worlds/debug/debugWorld.tscn" id="14_ab8qf"]
+[ext_resource type="PackedScene" uid="uid://1uuvtqrmyqus" path="res://assets/scenes/worlds/activeragdolltest/activeragdolltest.tscn" id="15_ab8qf"]
+[ext_resource type="PackedScene" uid="uid://b883b6dhrfe8q" path="res://assets/scenes/worlds/testscene2/testscene2.tscn" id="16_uyve1"]
 
 [sub_resource type="Gradient" id="Gradient_6voip"]
 colors = PackedColorArray(0, 0, 0, 1, 0.996078, 0.941176, 0.811765, 1)
@@ -158,7 +162,19 @@ color = Color(1, 0, 0, 1)
 color_ramp = SubResource("GradientTexture1D_eds7j")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_82d5o"]
-size = Vector3(3.6797485, 7.1469727, 4.617676)
+size = Vector3(3.2025223, 7.598175, 4.883911)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_clmnj"]
+size = Vector3(8.8421955, 14.30909, 4.173462)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mp7cn"]
+size = Vector3(1.8140297, 8.254776, 2.4875488)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lmyb2"]
+size = Vector3(1.8140297, 8.254776, 5.6881104)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_riqnu"]
+size = Vector3(8.765902, 15.891914, 5.6881104)
 
 [sub_resource type="Curve3D" id="Curve3D_l5ph3"]
 _data = {
@@ -285,10 +301,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5013993, 6.0131, -60.071514
 locationName = "Test Place!"
 travelScene = ExtResource("5_tej77")
 travelGroupID = 2
-hasCollectibleItems = false
-hasExploration = false
-hasCollectibleNotes = false
-useDescription = false
+useDescription = true
 
 [node name="pingParticle" parent="areaNodes/mapLocation" index="2"]
 transform = Transform3D(11.477417, 0, 0, 0, 1, 0, 0, 0, 4.3310547, 0, 0, 0)
@@ -322,9 +335,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.119544506, 0, 2.6530495)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.311678, 6.0131, 51.298866)
 locationName = "Home"
 travelScene = ExtResource("6_tej77")
-hasCollectibleItems = false
-hasExploration = false
-hasCollectibleNotes = false
 useDescription = true
 
 [node name="pingParticle" parent="areaNodes/homeLocation" index="2"]
@@ -362,7 +372,6 @@ travelScene = ExtResource("7_dvqh0")
 hasCollectibleItems = true
 hasExploration = true
 hasCollectibleNotes = true
-useDescription = false
 
 [node name="pingParticle" parent="areaNodes/mapLocation5" index="2"]
 transform = Transform3D(7.819458, 0, 0, 0, 1, 0, 0, 0, 5.663452, 0, 0, 0)
@@ -396,9 +405,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.756363, 0, 0.72745514)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.280127, 6.0173182, 28.689754)
 locationName = "Uncle Tsimk's Shop"
 travelScene = ExtResource("7_46huw")
-hasCollectibleItems = false
-hasExploration = false
-hasCollectibleNotes = false
 useDescription = true
 
 [node name="pingParticle" parent="areaNodes/mapLocation3" index="2"]
@@ -434,10 +440,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.828157, 5.977043, -23.819
 locationName = "Havelona Hospital"
 travelScene = ExtResource("8_d0eii")
 travelGroupID = 1
-hasCollectibleItems = false
 hasExploration = true
 hasCollectibleNotes = true
-useDescription = false
 
 [node name="pingParticle" parent="areaNodes/mapLocation4" index="2"]
 transform = Transform3D(7.597534, 0, 0, 0, 1, 0, 0, 0, 7.7128143, 0, 0, 0)
@@ -468,41 +472,183 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.486816, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5934925, 0, 3.1526308)
 
 [node name="mapLocation6" parent="areaNodes" instance=ExtResource("4_fvi35")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.251675, 5.9782143, -25.340658)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.8317385, 5.9782143, -25.340658)
 locationName = "Survival Street"
 travelScene = ExtResource("10_mlvph")
 travelGroupID = 1
-hasCollectibleItems = false
 hasExploration = true
 hasCollectibleNotes = true
-useDescription = false
 
 [node name="pingParticle" parent="areaNodes/mapLocation6" index="2"]
-transform = Transform3D(3.6797485, 0, 0, 0, 1, 0, 0, 0, 4.617676, 0, 0, 0)
+transform = Transform3D(3.2025223, 0, 0, 0, 1, 0, 0, 0, 4.883911, 0, 0, 0)
 process_material = SubResource("ParticleProcessMaterial_m7rdm")
 
 [node name="collisionShape3d" parent="areaNodes/mapLocation6/area3d" index="0"]
 shape = SubResource("BoxShape3D_82d5o")
 
 [node name="positionReference" parent="areaNodes/mapLocation6" index="4"]
-transform = Transform3D(3.6797485, 0, 0, 0, 7.1469727, 0, 0, 0, 4.617676, 0, 0, 0)
+transform = Transform3D(3.2025223, 0, 0, 0, 7.598175, 0, 0, 0, 4.883911, 0, 0, 0)
 
 [node name="cornerUpLeft" parent="areaNodes/mapLocation6/visualHolder" index="0"]
-transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, 1.8398743, 0, -2.308838)
+transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, 1.6012611, 0, -2.4419556)
 
 [node name="cornerUpRight" parent="areaNodes/mapLocation6/visualHolder" index="1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8398743, 0, 2.308838)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6012611, 0, 2.4419556)
 
 [node name="cornerBottomRight" parent="areaNodes/mapLocation6/visualHolder" index="2"]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -1.8398743, 0, 2.308838)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -1.6012611, 0, 2.4419556)
 
 [node name="cornerBottomLeft" parent="areaNodes/mapLocation6/visualHolder" index="3"]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -1.8398743, 0, -2.308838)
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -1.6012611, 0, -2.4419556)
 
 [node name="icon" parent="areaNodes/mapLocation6" index="6"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.1469727, 0)
 
 [node name="navPoint" parent="areaNodes/mapLocation6" index="7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3738346, 0, 0)
+
+[node name="wave" parent="areaNodes" instance=ExtResource("4_fvi35")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.978813, 5.9782143, -51.625618)
+iconColor = Color(0.53977627, 0, 0.12294883, 1)
+locationName = "Wave Test"
+travelScene = ExtResource("13_4t545")
+travelGroupID = 5
+useDescription = true
+
+[node name="pingParticle" parent="areaNodes/wave" index="2"]
+transform = Transform3D(8.8421955, 0, 0, 0, 1, 0, 0, 0, 4.173462, 0, 0, 0)
+process_material = SubResource("ParticleProcessMaterial_m7rdm")
+
+[node name="collisionShape3d" parent="areaNodes/wave/area3d" index="0"]
+shape = SubResource("BoxShape3D_clmnj")
+
+[node name="positionReference" parent="areaNodes/wave" index="4"]
+transform = Transform3D(8.8421955, 0, 0, 0, 14.30909, 0, 0, 0, 4.173462, 0, 0, 0)
+
+[node name="cornerUpLeft" parent="areaNodes/wave/visualHolder" index="0"]
+transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, 4.421097, 0, -2.086731)
+
+[node name="cornerUpRight" parent="areaNodes/wave/visualHolder" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.421097, 0, 2.086731)
+
+[node name="cornerBottomRight" parent="areaNodes/wave/visualHolder" index="2"]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -4.421097, 0, 2.086731)
+
+[node name="cornerBottomLeft" parent="areaNodes/wave/visualHolder" index="3"]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -4.421097, 0, -2.086731)
+
+[node name="icon" parent="areaNodes/wave" index="6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.1469727, 0)
+
+[node name="navPoint" parent="areaNodes/wave" index="7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3738346, 0, 0)
+
+[node name="interiortest" parent="areaNodes" instance=ExtResource("4_fvi35")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.48132, 5.9782143, -1.8299696)
+iconColor = Color(0.53977627, 0, 0.12294883, 1)
+locationName = "Interior Test"
+travelScene = ExtResource("14_ab8qf")
+travelGroupID = 5
+useDescription = true
+
+[node name="pingParticle" parent="areaNodes/interiortest" index="2"]
+transform = Transform3D(1.8140297, 0, 0, 0, 1, 0, 0, 0, 2.4875488, 0, 0, 0)
+process_material = SubResource("ParticleProcessMaterial_m7rdm")
+
+[node name="collisionShape3d" parent="areaNodes/interiortest/area3d" index="0"]
+shape = SubResource("BoxShape3D_mp7cn")
+
+[node name="positionReference" parent="areaNodes/interiortest" index="4"]
+transform = Transform3D(1.8140297, 0, 0, 0, 8.254776, 0, 0, 0, 2.4875488, 0, 0, 0)
+
+[node name="cornerUpLeft" parent="areaNodes/interiortest/visualHolder" index="0"]
+transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, 0.90701485, 0, -1.2437744)
+
+[node name="cornerUpRight" parent="areaNodes/interiortest/visualHolder" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.90701485, 0, 1.2437744)
+
+[node name="cornerBottomRight" parent="areaNodes/interiortest/visualHolder" index="2"]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.90701485, 0, 1.2437744)
+
+[node name="cornerBottomLeft" parent="areaNodes/interiortest/visualHolder" index="3"]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -0.90701485, 0, -1.2437744)
+
+[node name="icon" parent="areaNodes/interiortest" index="6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 29.45221, 0)
+
+[node name="navPoint" parent="areaNodes/interiortest" index="7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3738346, 0, 0)
+
+[node name="activeragdolltest" parent="areaNodes" instance=ExtResource("4_fvi35")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.093021, 5.9782143, 24.942457)
+iconColor = Color(0.53977627, 0, 0.12294883, 1)
+locationName = "Active Ragdoll Test"
+travelScene = ExtResource("15_ab8qf")
+travelGroupID = 5
+useDescription = true
+
+[node name="pingParticle" parent="areaNodes/activeragdolltest" index="2"]
+transform = Transform3D(1.8140297, 0, 0, 0, 1, 0, 0, 0, 5.6881104, 0, 0, 0)
+process_material = SubResource("ParticleProcessMaterial_m7rdm")
+
+[node name="collisionShape3d" parent="areaNodes/activeragdolltest/area3d" index="0"]
+shape = SubResource("BoxShape3D_lmyb2")
+
+[node name="positionReference" parent="areaNodes/activeragdolltest" index="4"]
+transform = Transform3D(1.8140297, 0, 0, 0, 8.254776, 0, 0, 0, 5.6881104, 0, 0, 0)
+
+[node name="cornerUpLeft" parent="areaNodes/activeragdolltest/visualHolder" index="0"]
+transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, 0.90701485, 0, -2.8440552)
+
+[node name="cornerUpRight" parent="areaNodes/activeragdolltest/visualHolder" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.90701485, 0, 2.8440552)
+
+[node name="cornerBottomRight" parent="areaNodes/activeragdolltest/visualHolder" index="2"]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.90701485, 0, 2.8440552)
+
+[node name="cornerBottomLeft" parent="areaNodes/activeragdolltest/visualHolder" index="3"]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -0.90701485, 0, -2.8440552)
+
+[node name="icon" parent="areaNodes/activeragdolltest" index="6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.254776, 0)
+
+[node name="navPoint" parent="areaNodes/activeragdolltest" index="7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3738346, 0, 0)
+
+[node name="debugstreet" parent="areaNodes" instance=ExtResource("4_fvi35")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.96567166, 5.9782143, 67.45194)
+iconColor = Color(0.53977627, 0, 0.12294883, 1)
+locationName = "Debug Street"
+travelScene = ExtResource("16_uyve1")
+travelGroupID = 5
+useDescription = true
+
+[node name="pingParticle" parent="areaNodes/debugstreet" index="2"]
+transform = Transform3D(8.765902, 0, 0, 0, 1, 0, 0, 0, 5.6881104, 0, 0, 0)
+process_material = SubResource("ParticleProcessMaterial_m7rdm")
+
+[node name="collisionShape3d" parent="areaNodes/debugstreet/area3d" index="0"]
+shape = SubResource("BoxShape3D_riqnu")
+
+[node name="positionReference" parent="areaNodes/debugstreet" index="4"]
+transform = Transform3D(8.765902, 0, 0, 0, 15.891914, 0, 0, 0, 5.6881104, 0, 0, 0)
+
+[node name="cornerUpLeft" parent="areaNodes/debugstreet/visualHolder" index="0"]
+transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, 4.382951, 0, -2.8440552)
+
+[node name="cornerUpRight" parent="areaNodes/debugstreet/visualHolder" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.382951, 0, 2.8440552)
+
+[node name="cornerBottomRight" parent="areaNodes/debugstreet/visualHolder" index="2"]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -4.382951, 0, 2.8440552)
+
+[node name="cornerBottomLeft" parent="areaNodes/debugstreet/visualHolder" index="3"]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -4.382951, 0, -2.8440552)
+
+[node name="icon" parent="areaNodes/debugstreet" index="6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.254776, 0)
+
+[node name="navPoint" parent="areaNodes/debugstreet" index="7"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3738346, 0, 0)
 
 [node name="directionalLight3d" type="DirectionalLight3D" parent="."]
@@ -549,3 +695,7 @@ smooth_faces = true
 [editable path="areaNodes/mapLocation3"]
 [editable path="areaNodes/mapLocation4"]
 [editable path="areaNodes/mapLocation6"]
+[editable path="areaNodes/wave"]
+[editable path="areaNodes/interiortest"]
+[editable path="areaNodes/activeragdolltest"]
+[editable path="areaNodes/debugstreet"]

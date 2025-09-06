@@ -19,19 +19,21 @@ class_name ClothingItem
 			clothingMesh.position = value
 @export var itemName : String = ""
 @export var equippedPawn : BasePawn
-@export_subgroup("Hidden Parts")
-@export var head : bool = false
-@export var shoulders : bool = false
-@export var leftUpperarm : bool = false
-@export var rightUpperarm  : bool= false
-@export var rightForearm : bool = false
-@export var leftForearm  : bool= false
-@export var upperChest : bool = false
-@export var lowerBody : bool = false
-@export var leftUpperLeg : bool = false
-@export var rightUpperLeg  : bool= false
-@export var leftLowerLeg : bool = false
-@export var rightLowerLeg : bool = false
+@export_subgroup("Blendshapes")
+@export_range(0,1) var leftShoulder : float = 0.0
+@export_range(0,1) var lowerPelvis : float = 0.0
+@export_range(0,1) var lowerStomach : float = 0.0
+@export_range(0,1) var middleStomach : float = 0.0
+@export_range(0,1) var upperChest : float = 0.0
+@export_range(0,1) var rightShoulder : float = 0.0
+@export_range(0,1) var leftUpperarm : float = 0.0
+@export_range(0,1) var rightUpperarm  : float= 0.0
+@export_range(0,1) var rightForearm : float = 0.0
+@export_range(0,1) var leftForearm  : float= 0.0
+@export_range(0,1) var leftUpperLeg : float = 0.0
+@export_range(0,1) var rightUpperLeg  : float= 0.0
+@export_range(0,1) var leftKnee : float = 0.0
+@export_range(0,1) var rightKnee : float = 0.0
 @export_category("Skeleton")
 @export var itemSkeleton : NodePath
 @export_category("Cloth Physics")

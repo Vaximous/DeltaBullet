@@ -21,6 +21,7 @@ const defaultTweenSpeed : float = 1
 @export var locationName : String = ""
 ##What scene will this location load?
 @export var travelScene : PackedScene
+var locationDescription : String = ""
 ##Controls whether or not this area is locked or unlocked. If its locked then the player will be unable to travel to this location. Otherwise, they will be able to
 @export_enum("Locked","Unlocked") var travelStatus : int = 1
 ## This ID will correspong with whichever area value the selection index is currently on. If it equals the selection index of the map, it will be visible. Otherwise it won't be
@@ -32,8 +33,6 @@ const defaultTweenSpeed : float = 1
 @export var hasExploration : bool = false
 @export var hasCollectibleNotes : bool = false
 @export var useDescription : bool = false
-
-
 
 
 func setVisualMarkers()->void:
@@ -67,6 +66,10 @@ func setupMap()->void:
 			if !map.mapScreen.index_changed.is_connected(updateVisibility.unbind(1)):
 				map.mapScreen.index_changed.connect(updateVisibility.unbind(1))
 				%mapLabel.text = locationName
+			if travelScene:
+				var scene = travelScene.instantiate()
+				locationDescription = scene.worldData.worldDescription
+				scene.free()
 
 
 func updateVisibility()->void:

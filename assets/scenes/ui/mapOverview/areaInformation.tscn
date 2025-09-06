@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://2mlt2r4jpb1c"]
+[gd_scene load_steps=39 format=3 uid="uid://2mlt2r4jpb1c"]
 
 [ext_resource type="FontFile" uid="uid://com86cy2htbbq" path="res://assets/fonts/CreatoDisplay-Regular.otf" id="2_6ux0t"]
 [ext_resource type="Script" uid="uid://bl3u61qcau7of" path="res://assets/scenes/ui/mapOverview/area_information.gd" id="2_ghdy3"]
@@ -266,16 +266,274 @@ font = ExtResource("4_6u8km")
 shadow_size = 2
 shadow_color = Color(0, 0, 0, 0.8)
 
-[sub_resource type="LabelSettings" id="LabelSettings_m4wry"]
-font = ExtResource("4_6u8km")
-shadow_size = 2
-shadow_color = Color(0, 0, 0, 0.8)
-
 [sub_resource type="LabelSettings" id="LabelSettings_xymkt"]
 font = ExtResource("8_mougi")
 font_size = 40
 shadow_size = 5
 shadow_color = Color(0, 0, 0, 0.80784315)
+
+[sub_resource type="Animation" id="Animation_fkrv7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("control:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1600, 900)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("control:size")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("control:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("control:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("control/travelButton:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-314.00003, -62)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("control/travelButton:rotation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("control/travelButton:size")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(308.00006, 55.99997)]
+}
+
+[sub_resource type="Animation" id="Animation_vr1jc"]
+resource_name = "travelButtonDown"
+length = 0.5
+step = 0.0333333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("control:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.16493855, 1),
+"update": 0,
+"values": [Vector2(1600, 900), Vector2(1600, 906.99994)]
+}
+
+[sub_resource type="Animation" id="Animation_6u8km"]
+resource_name = "travelButtonHover"
+step = 0.0333333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/path = NodePath("control:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = false
+tracks/1/path = NodePath("control:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.22531264, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.1, 1.1)]
+}
+
+[sub_resource type="Animation" id="Animation_6ux0t"]
+resource_name = "travelButtonIn"
+step = 0.0333333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/path = NodePath("control:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.53333336),
+"transitions": PackedFloat32Array(0.20306318, 1),
+"update": 0,
+"values": [Vector2(1600, 822), Vector2(1600, 900)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = false
+tracks/1/path = NodePath("control:size")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.53333336),
+"transitions": PackedFloat32Array(0.20306318, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("control:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.26666668),
+"transitions": PackedFloat32Array(0.25000006, 0.43527538),
+"update": 0,
+"values": [Color(2.9654071, 0, 0, 0.07058824), Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("control/travelButton:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.33333334),
+"transitions": PackedFloat32Array(0.34151018, 1),
+"update": 0,
+"values": [Vector2(-314.00003, -109), Vector2(-314.00003, -62)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("control/travelButton:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.33333334),
+"transitions": PackedFloat32Array(0.34151018, 1),
+"update": 0,
+"values": [0.0, 0.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("control/travelButton:size")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.33333334),
+"transitions": PackedFloat32Array(0.34151018, 1),
+"update": 0,
+"values": [Vector2(308.00006, 55.99997), Vector2(308.00006, 55.99997)]
+}
+
+[sub_resource type="Animation" id="Animation_h7duu"]
+resource_name = "travelButtonUp"
+length = 0.5
+step = 0.0333333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("control/travelButton:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.3186403, 0.16493855),
+"update": 0,
+"values": [Vector2(-314.00003, -62), Vector2(-314, -74.98)]
+}
+
+[sub_resource type="Animation" id="Animation_5bmur"]
+resource_name = "travelButtonunHover"
+step = 0.0333333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/path = NodePath("control:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = false
+tracks/1/path = NodePath("control:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.22531264, 1),
+"update": 0,
+"values": [Vector2(1.1, 1.1), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mougi"]
+_data = {
+&"RESET": SubResource("Animation_fkrv7"),
+&"travelButtonDown": SubResource("Animation_vr1jc"),
+&"travelButtonHover": SubResource("Animation_6u8km"),
+&"travelButtonIn": SubResource("Animation_6ux0t"),
+&"travelButtonUp": SubResource("Animation_h7duu"),
+&"travelButtonunHover": SubResource("Animation_5bmur")
+}
 
 [node name="AreaInfo" type="Control"]
 layout_mode = 3
@@ -287,7 +545,17 @@ grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("2_ghdy3")
 
-[node name="travelButton" type="Button" parent="."]
+[node name="control" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="travelButton" type="Button" parent="control"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
@@ -295,10 +563,10 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -315.0
-offset_top = -63.0
-offset_right = -7.0
-offset_bottom = -7.0
+offset_left = -314.00003
+offset_top = -62.0
+offset_right = -5.9999695
+offset_bottom = -6.0000305
 grow_horizontal = 0
 mouse_filter = 1
 theme_override_colors/font_outline_color = Color(0, 0, 0, 0.5411765)
@@ -433,12 +701,16 @@ offset_bottom = 22.011
 texture = ExtResource("7_h7duu")
 expand_mode = 1
 
-[node name="descriptionLabel" type="Label" parent="markerInfo/vBoxContainer"]
+[node name="descriptionLabel" type="RichTextLabel" parent="markerInfo/vBoxContainer"]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.8)
+theme_override_constants/shadow_outline_size = 2
+theme_override_fonts/normal_font = ExtResource("4_6u8km")
+bbcode_enabled = true
 text = "This is your home."
-label_settings = SubResource("LabelSettings_m4wry")
+fit_content = true
 
 [node name="areaName" type="Label" parent="markerInfo"]
 unique_name_in_owner = true
@@ -453,6 +725,10 @@ vertical_alignment = 1
 uppercase = true
 
 [node name="animationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+&"": SubResource("AnimationLibrary_mougi")
+}
 
-[connection signal="pressed" from="travelButton" to="." method="goToSelectedMarker"]
-[connection signal="pressed" from="travelButton" to="." method="playTravelSound"]
+[connection signal="pressed" from="control/travelButton" to="." method="playTravelSound"]
+[connection signal="pressed" from="control/travelButton" to="." method="goToSelectedMarker"]

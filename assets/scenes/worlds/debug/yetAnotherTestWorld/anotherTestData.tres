@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="WorldData" load_steps=4 format=3 uid="uid://cm1dad74uaa1i"]
+
+[ext_resource type="Script" uid="uid://b31u24at18p5t" path="res://assets/resources/customResources/worldData/worldData.gd" id="1_pch81"]
+[ext_resource type="Texture2D" uid="uid://d0f0crtwpmoka" path="res://assets/textures/panoramas/panoramatest1.png" id="2_500pg"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_882n8"]
+panorama = ExtResource("2_500pg")
+
+[resource]
+script = ExtResource("1_pch81")
+skyTexture = SubResource("PanoramaSkyMaterial_882n8")
+worldName = "Another Test Palace"
+worldDescription = "A nice little tasty test spot. Nothing in specific.
+
+[color=green]
+This place tends to lag on Steam Deck and whatnot. Try the interior test if your frames are fucked.
+[/color]"

@@ -1,6 +1,6 @@
 [gd_resource type="Environment" load_steps=6 format=3 uid="uid://dnig6jq4e6pjs"]
 
-[ext_resource type="Texture2D" uid="uid://d0f0crtwpmoka" path="res://assets/textures/panoramas/panoramatest1.png" id="1_tipwx"]
+[ext_resource type="Texture2D" uid="uid://b74rxor67cbxk" path="res://assets/textures/world/filth/trak_floor_yellow.jpg" id="1_tipwx"]
 
 [sub_resource type="Gradient" id="Gradient_6voip"]
 colors = PackedColorArray(0.0156863, 0, 0, 1, 0.996078, 0.941176, 0.811765, 1)
@@ -10,7 +10,6 @@ gradient = SubResource("Gradient_6voip")
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_tipwx"]
 panorama = ExtResource("1_tipwx")
-energy_multiplier = 0.85
 
 [sub_resource type="Sky" id="Sky_nj1fe"]
 sky_material = SubResource("PanoramaSkyMaterial_tipwx")

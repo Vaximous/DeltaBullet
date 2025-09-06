@@ -5,7 +5,12 @@ signal isAwake
 signal onHit(impulse,vector)
 @export_category("Ragdoll Bone")
 var boneCooldownTimer : Timer
-var ownerSkeleton : Skeleton3D
+var ownerSkeleton : Skeleton3D:
+	set(value):
+		ownerSkeleton = value
+		await get_tree().process_frame
+		boneParent = ownerSkeleton.get_bone_parent(get_bone_id())
+		physicsBoneParent = findPhysicsBone(boneParent)
 var ragdoll : PawnRagdoll
 var bloodSpurt = preload("res://assets/particles/bloodSpurt/bloodSpurt.tscn")
 @export var healthComponent : HealthComponent:
@@ -63,6 +68,9 @@ var bonePhysics : PhysicsDirectBodyState3D
 var audioStreamPlayer : AudioStreamPlayer3D
 var inAirStreamPlayer : AudioStreamPlayer3D
 
+var boneParent
+var physicsBoneParent
+
 var audioCooldown : float = 0.0:
 	set(value):
 		audioCooldown = value
@@ -72,6 +80,10 @@ var activeRagdollJoint : Generic6DOFJoint3D
 func _ready()-> void:
 	boneSetup()
 
+func _physics_process(delta: float) -> void:
+	if ragdoll.activeRagdollEnabled:
+		pass
+		#ragdoll.animate_bone_by_physics_motor(self,delta,5,10)
 
 func boneSetup()->void:
 	excludeAllAI()
@@ -93,6 +105,7 @@ func boneSetup()->void:
 	if is_instance_valid(ragdoll):
 		if !ragdoll.ragdollSkeleton.skeleton_updated.is_connected(updateRagdollScale):
 				ragdoll.ragdollSkeleton.skeleton_updated.connect(updateRagdollScale)
+
 
 func createInAirAudio()->void:
 	if inAirSound != null:
@@ -200,7 +213,7 @@ func hit(dmg, dealer=null, hitImpulse:Vector3 = Vector3.ZERO, hitPoint:Vector3 =
 		canBleed = true
 	onHit.emit(hitImpulse,hitPoint)
 	apply_impulse(hitImpulse,hitPoint)
-	if get_bone_id() == 41:
+	if get_bone_id() == 42:
 		if get_owner().activeRagdollEnabled:
 			get_owner().activeRagdollEnabled = false
 	if is_instance_valid(healthComponent):

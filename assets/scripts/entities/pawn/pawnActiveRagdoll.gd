@@ -53,42 +53,43 @@ func _ready()->void:
 	setSkeleton(targetSkeleton)
 	$remove_timer.start()
 
-	checkClothingHider()
+	#checkClothingHider()
 
 
 func startRagdoll()->void:
-	checkClothingHider()
+	#checkClothingHider()
+	pass
 
 func ragTwitch(convulsionAmount : float = 10.0, bodyPartIDX : int = 0)->void:
 	pass
 
-func checkClothingHider()->void:
-	for clothes in self.get_children():
-		if clothes is ClothingItem:
-			if clothes.head:
-				head.hide()
-			if clothes.rightUpperarm:
-				rightUpperArm.hide()
-			if clothes.leftUpperarm:
-				leftUpperArm.hide()
-			if clothes.shoulders:
-				shoulders.hide()
-			if clothes.leftForearm:
-				leftForearm.hide()
-			if clothes.rightForearm:
-				rightForearm.hide()
-			if clothes.upperChest:
-				upperChest.hide()
-			if clothes.lowerBody:
-				lowerBody.hide()
-			if clothes.leftUpperLeg:
-				leftUpperLeg.hide()
-			if clothes.rightUpperLeg:
-				rightUpperLeg.hide()
-			if clothes.rightLowerLeg:
-				rightLowerLeg.hide()
-			if clothes.leftLowerLeg:
-				leftLowerLeg.hide()
+#func checkClothingHider()->void:
+	#for clothes in self.get_children():
+		#if clothes is ClothingItem:
+			#if clothes.head:
+				#head.hide()
+			#if clothes.rightUpperarm:
+				#rightUpperArm.hide()
+			#if clothes.leftUpperarm:
+				#leftUpperArm.hide()
+			#if clothes.shoulders:
+				#shoulders.hide()
+			#if clothes.leftForearm:
+				#leftForearm.hide()
+			#if clothes.rightForearm:
+				#rightForearm.hide()
+			#if clothes.upperChest:
+				#upperChest.hide()
+			#if clothes.lowerBody:
+				#lowerBody.hide()
+			#if clothes.leftUpperLeg:
+				#leftUpperLeg.hide()
+			#if clothes.rightUpperLeg:
+				#rightUpperLeg.hide()
+			#if clothes.rightLowerLeg:
+				#rightLowerLeg.hide()
+			#if clothes.leftLowerLeg:
+				#leftLowerLeg.hide()
 
 func hookes_law(displacement: Vector3, current_velocity: Vector3, stiffness: float, damping: float) -> Vector3:
 	return (stiffness * displacement) - (damping * current_velocity)

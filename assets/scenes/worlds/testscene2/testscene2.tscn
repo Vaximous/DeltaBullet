@@ -1,4 +1,4 @@
-[gd_scene load_steps=206 format=4 uid="uid://b883b6dhrfe8q"]
+[gd_scene load_steps=212 format=4 uid="uid://b883b6dhrfe8q"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_5asdl"]
 [ext_resource type="Script" uid="uid://b31u24at18p5t" path="res://assets/resources/customResources/worldData/worldData.gd" id="2_7yxuj"]
@@ -31,13 +31,18 @@
 [ext_resource type="Texture2D" uid="uid://ccpqmgscnrixk" path="res://assets/textures/Developer_Textures/Orange/texture_09.png" id="22_hh7jt"]
 [ext_resource type="Texture2D" uid="uid://rnjqykyxts43" path="res://assets/textures/crosshair/crosshair037.png" id="23_etgh2"]
 [ext_resource type="Texture2D" uid="uid://dqfy2hl2ng731" path="res://assets/textures/Developer_Textures/Dark/texture_05.png" id="23_umns3"]
-[ext_resource type="AudioStream" uid="uid://c4nv2utpail5c" path="res://assets/sounds/weapons/uzi/uziFire.wav" id="24_c1tf6"]
 [ext_resource type="Texture2D" uid="uid://cn3y4mrmgjrn2" path="res://assets/textures/Developer_Textures/Orange/texture_05.png" id="26_sbvtr"]
 [ext_resource type="Texture2D" uid="uid://ccyo0f1cbnmfm" path="res://assets/textures/Developer_Textures/Purple/texture_08.png" id="27_stcx7"]
 [ext_resource type="Texture2D" uid="uid://bjk1fbnhq4x2x" path="res://assets/textures/Developer_Textures/Red/texture_09.png" id="28_hr8t2"]
 [ext_resource type="PackedScene" uid="uid://cn7cu77jr8mqg" path="res://assets/entities/props/radio.tscn" id="31_i7vfc"]
 [ext_resource type="PackedScene" uid="uid://n500uprpwbbk" path="res://assets/models/csgmodels/csgtruck.tscn" id="32_vqcav"]
+[ext_resource type="Curve" uid="uid://cex2ggwxevnuj" path="res://assets/entities/projectiles/linear_falloff_curve.tres" id="33_xsagk"]
+[ext_resource type="AnimationLibrary" uid="uid://lmpviksxdik2" path="res://assets/entities/weapons/Revolver/RevolverAnims.res" id="36_s6ctc"]
 [ext_resource type="Texture2D" uid="uid://sr64p1aykopo" path="res://assets/textures/crosshair/crosshair004.png" id="37_xi52y"]
+[ext_resource type="Animation" uid="uid://bc2d5fksn26jf" path="res://assets/animations/pawn/UziAimCorrect.res" id="38_ektyl"]
+[ext_resource type="Animation" uid="uid://cyi6wwvfld3gp" path="res://assets/animations/pawn/UziFire.res" id="39_4k4gm"]
+[ext_resource type="Animation" uid="uid://cn104bd4royk3" path="res://assets/animations/pawn/UziIdle.res" id="40_j2bio"]
+[ext_resource type="Animation" uid="uid://dem03w0ueepai" path="res://assets/animations/pawn/PistolReload.res" id="41_xhlf3"]
 [ext_resource type="Script" uid="uid://tiffkbp5ry74" path="res://assets/scripts/entities/interactiveObject/interactiveObject.gd" id="52_tsgpd"]
 [ext_resource type="PackedScene" uid="uid://bb78dx0yknjep" path="res://assets/entities/door/keypadDoor.tscn" id="53_gn8tv"]
 [ext_resource type="PackedScene" uid="uid://dvmmlj4mvj88r" path="res://assets/entities/aiMarker/aiMarker.tscn" id="54_gk0ih"]
@@ -57,10 +62,6 @@ script = ExtResource("2_7yxuj")
 worldName = "Tiggly Toomber Bop."
 worldDescription = "Fuck you."
 worldLoadingTexture = ExtResource("3_ag7s8")
-worldType = 0
-spawnPawnsOnLoad = true
-playOnStart = false
-spawnType = 0
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_8760s"]
 panorama = ExtResource("19_01kv4")
@@ -647,21 +648,12 @@ size = Vector3(267.3, 108.116, 191.661)
 
 [sub_resource type="Resource" id="Resource_jqsg3"]
 script = ExtResource("22_28ln3")
-useBulletTrail = true
-canBeReloaded = true
-weaponMagSize = 128
-ammoSize = 30
-reloadTime = 0.5
 headDismember = true
 weaponDamage = 1115.0
 weaponFireRate = 0.2
-bulletSpeed = 800.0
 bulletPenetration = 10000.0
 weaponImpulse = 856.0
 weaponShots = 3
-ammoConsumption = 1
-useCustomCrosshairSize = false
-crosshairSizeOverride = Vector2(0.8, 0.8)
 forcedCrosshair = ExtResource("21_e0q05")
 useFOV = true
 fovShotAmount = 5.5
@@ -669,16 +661,10 @@ weaponRecoil = Vector3(45, 45, 9)
 weaponRecoilStrength = 6.0
 weaponSpread = 0.9
 weaponRecoilStrengthAim = 7.0
-weaponSpreadAim = 0.25
-leftHandParent = false
-rightHandParent = true
 useWeaponSprintAnim = true
 useLeftHandIdle = false
-useRightHandIdle = true
 useLeftHandAiming = false
-useRightHandAiming = true
 useLeftHandFreeAiming = false
-useRightHandFreeAiming = true
 weaponPositionOffset = Vector3(-0.005, -0.285, 0.075)
 weaponRotationOffset = Vector3(3.125, -1.58, 0.125)
 bulletColor = Color(0, 11.1137, 0, 255)
@@ -953,38 +939,24 @@ node_connections = [&"output", 0, &"weaponStateSpeed", &"weaponStateSpeed", 0, &
 [sub_resource type="Resource" id="Resource_pl82l"]
 resource_local_to_scene = true
 script = ExtResource("22_28ln3")
-useBulletTrail = true
-canBeReloaded = true
-weaponMagSize = 128
-ammoSize = 30
 reloadTime = 1.8
 headDismember = true
 weaponDamage = 12.0
 weaponFireRate = 0.03
 bulletSpeed = 200.0
-bulletPenetration = 1.0
 weaponImpulse = 24.0
 weaponShots = 2
-ammoConsumption = 1
 useCustomCrosshairSize = true
-crosshairSizeOverride = Vector2(0.5, 0.5)
 forcedCrosshair = ExtResource("23_etgh2")
 useFOV = true
 fovShotAmount = 0.2
 weaponRecoil = Vector3(3, 7, 5)
 weaponRecoilStrength = 4.0
 weaponSpread = 0.08
-weaponRecoilStrengthAim = 4.0
 weaponSpreadAim = 0.05
-leftHandParent = false
-rightHandParent = true
-useWeaponSprintAnim = false
 useLeftHandIdle = false
-useRightHandIdle = true
 useLeftHandAiming = false
-useRightHandAiming = true
 useLeftHandFreeAiming = false
-useRightHandFreeAiming = true
 weaponPositionOffset = Vector3(0, -0.09, 0.05)
 weaponRotationOffset = Vector3(1.555, 0, 0)
 bulletColor = Color(0, 0, 1, 1)
@@ -992,46 +964,33 @@ bulletColor = Color(0, 0, 1, 1)
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ej6dr"]
 random_pitch = 2.8
 streams_count = 1
-stream_0/stream = ExtResource("24_c1tf6")
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_oep0y"]
+_data = {
+&"aim": ExtResource("38_ektyl"),
+&"fire": ExtResource("39_4k4gm"),
+&"idle": ExtResource("40_j2bio"),
+&"reload": ExtResource("41_xhlf3")
+}
 
 [sub_resource type="Resource" id="Resource_6sa46"]
 resource_local_to_scene = true
 script = ExtResource("22_28ln3")
-useBulletTrail = true
-canBeReloaded = true
-weaponMagSize = 128
 ammoSize = 24
 reloadTime = 1.9
-headDismember = false
 weaponDamage = 9.0
 weaponFireRate = 0.09
-bulletSpeed = 800.0
-bulletPenetration = 1.0
 weaponImpulse = 20.0
-weaponShots = 1
-ammoConsumption = 1
-useCustomCrosshairSize = false
-crosshairSizeOverride = Vector2(0.8, 0.8)
 forcedCrosshair = ExtResource("37_xi52y")
 useFOV = true
 fovShotAmount = 0.8
 weaponRecoil = Vector3(5, 7, 3)
 weaponRecoilStrength = 7.0
 weaponSpread = 0.05
-weaponRecoilStrengthAim = 4.0
 weaponSpreadAim = 0.04
-leftHandParent = false
-rightHandParent = true
 useWeaponSprintAnim = true
-useLeftHandIdle = true
-useRightHandIdle = true
-useLeftHandAiming = true
-useRightHandAiming = true
-useLeftHandFreeAiming = true
-useRightHandFreeAiming = true
 weaponPositionOffset = Vector3(-0.015, -0.335, 0.12)
 weaponRotationOffset = Vector3(-0.015, 0, -0.05)
-bulletColor = Color(1, 1, 0, 1)
 
 [sub_resource type="GDScript" id="GDScript_o0evo"]
 resource_name = "gotoTest"
@@ -1069,7 +1028,7 @@ pawnType = 0
 pawnWeapons = Array[PackedScene]([ExtResource("3_glhev"), ExtResource("4_obu2t")])
 pawnClothing = Array[PackedScene]([ExtResource("9_80ovt"), ExtResource("9_msab0"), ExtResource("6_qqxlv"), ExtResource("13_pdeob")])
 aiType = null
-hatedGroups = Array[StringName]([&"Player"])
+randomAnimationSpeed = false
 pawnColor = Color(0.52, 0.8, 0.92, 1)
 
 [node name="pawnSpawn2" parent="Spawns/playerSpawns" index="1" instance=ExtResource("2_26w0h")]
@@ -1078,7 +1037,7 @@ pawnType = 0
 pawnWeapons = Array[PackedScene]([ExtResource("3_glhev"), ExtResource("4_obu2t")])
 pawnClothing = Array[PackedScene]([ExtResource("9_msab0"), ExtResource("6_qqxlv"), ExtResource("13_pdeob")])
 aiType = null
-hatedGroups = Array[StringName]([&"Player"])
+randomAnimationSpeed = false
 pawnColor = Color(0.52, 0.8, 0.92, 1)
 
 [node name="pawnSpawn" parent="Spawns/pawnSpawns" index="0" instance=ExtResource("2_26w0h")]
@@ -1088,6 +1047,7 @@ equipWeaponOnSpawn = true
 weaponToEquip = 2
 aiType = 1
 hatedGroups = Array[StringName]([&"Booger", &"Player", &"Hostile"])
+randomAnimationSpeed = false
 pawnColor = Color(1, 0.741176, 0.439216, 1)
 
 [node name="pawnSpawn11" parent="Spawns/pawnSpawns" index="1" instance=ExtResource("2_26w0h")]
@@ -1098,6 +1058,7 @@ equipWeaponOnSpawn = true
 weaponToEquip = 1
 aiType = 1
 hatedGroups = Array[StringName]([&"Booger", &"Player", &"Hostile"])
+randomAnimationSpeed = false
 pawnColor = Color(1, 0.74, 0.44, 1)
 
 [node name="pawnSpawn17" parent="Spawns/pawnSpawns" index="2" instance=ExtResource("2_26w0h")]
@@ -1107,6 +1068,7 @@ equipWeaponOnSpawn = true
 weaponToEquip = 1
 aiType = 1
 hatedGroups = Array[StringName]([&"Booger", &"Player", &"Hostile"])
+randomAnimationSpeed = false
 pawnColor = Color(1, 0.74, 0.44, 1)
 
 [node name="pawnSpawn14" parent="Spawns/pawnSpawns" index="3" instance=ExtResource("2_26w0h")]
@@ -1117,6 +1079,7 @@ equipWeaponOnSpawn = true
 weaponToEquip = 1
 aiType = 1
 hatedGroups = Array[StringName]([&"Booger", &"Player", &"Hostile"])
+randomAnimationSpeed = false
 pawnColor = Color(0.898039, 0.772549, 0.662745, 1)
 
 [node name="boogerSpawn" parent="Spawns/pawnSpawns" index="4" groups=["cloakedupcontract"] instance=ExtResource("2_26w0h")]
@@ -1131,7 +1094,7 @@ weaponToEquip = 1
 isInteractable = true
 aiType = 1
 hatedGroups = Array[StringName]([&"Hostile"])
-spawnGroup = &"Booger"
+randomAnimationSpeed = false
 pawnColor = Color(0.345098, 0.356863, 0.345098, 1)
 
 [node name="booger2Spawn" parent="Spawns/pawnSpawns" index="5" groups=["cloakedupcontract"] instance=ExtResource("2_26w0h")]
@@ -1146,7 +1109,7 @@ weaponToEquip = 3
 isInteractable = true
 aiType = 1
 hatedGroups = Array[StringName]([&"Hostile"])
-spawnGroup = &"Booger"
+randomAnimationSpeed = false
 pawnColor = Color(0.380392, 0, 0, 1)
 
 [node name="pawnSpawn16" parent="Spawns/pawnSpawns" index="6" instance=ExtResource("2_26w0h")]
@@ -1157,6 +1120,7 @@ equipWeaponOnSpawn = true
 weaponToEquip = 1
 aiType = 1
 hatedGroups = Array[StringName]([&"Booger", &"Player", &"Hostile"])
+randomAnimationSpeed = false
 pawnColor = Color(1, 0.74, 0.44, 1)
 
 [node name="pawnSpawn5" parent="Spawns/pawnSpawns" index="7" instance=ExtResource("2_26w0h")]
@@ -1166,6 +1130,7 @@ equipWeaponOnSpawn = true
 weaponToEquip = 1
 aiType = 1
 hatedGroups = Array[StringName]([&"Booger", &"Player", &"Hostile"])
+randomAnimationSpeed = false
 pawnColor = Color(1, 0.74, 0.44, 1)
 
 [node name="pawnSpawn6" parent="Spawns/pawnSpawns" index="8" instance=ExtResource("2_26w0h")]
@@ -1178,6 +1143,7 @@ equipWeaponOnSpawn = true
 weaponToEquip = 2
 aiType = 1
 hatedGroups = Array[StringName]([&"Booger", &"Player", &"Hostile"])
+randomAnimationSpeed = false
 pawnColor = Color(1, 0.74, 0.44, 1)
 
 [node name="pawnSpawn7" parent="Spawns/pawnSpawns" index="9" instance=ExtResource("2_26w0h")]
@@ -1187,8 +1153,8 @@ pawnWeapons = Array[PackedScene]([ExtResource("6_ni6f6")])
 pawnClothing = Array[PackedScene]([ExtResource("15_ivnks"), ExtResource("9_kyyf3")])
 weaponToEquip = 1
 hatedGroups = Array[StringName]([])
-spawnGroup = &"Civilian"
 animationToForce = &"PawnAnim/shopIdle1"
+randomAnimationSpeed = false
 pawnColor = Color(0.989497, 0.714754, 0.728352, 1)
 
 [node name="pawnSpawn9" parent="Spawns/pawnSpawns" index="10" instance=ExtResource("2_26w0h")]
@@ -1198,8 +1164,8 @@ pawnWeapons = Array[PackedScene]([ExtResource("6_ni6f6")])
 pawnClothing = Array[PackedScene]([ExtResource("16_bxgbc"), ExtResource("9_kyyf3")])
 weaponToEquip = 1
 hatedGroups = Array[StringName]([])
-spawnGroup = &"Civilian"
 animationToForce = &"PawnAnim/shopIdle1"
+randomAnimationSpeed = false
 pawnColor = Color(0.29987, 0.370373, 0.383806, 1)
 
 [node name="pawnSpawn8" parent="Spawns/pawnSpawns" index="11" instance=ExtResource("2_26w0h")]
@@ -1212,6 +1178,7 @@ equipWeaponOnSpawn = true
 weaponToEquip = 1
 aiType = 1
 hatedGroups = Array[StringName]([&"Booger", &"Player", &"Hostile"])
+randomAnimationSpeed = false
 pawnColor = Color(1, 0.74, 0.44, 1)
 
 [node name="worldEnvironment" parent="Environment" index="0"]
@@ -1590,6 +1557,9 @@ mesh = SubResource("ArrayMesh_o3xf6")
 surface_material_override/0 = SubResource("StandardMaterial3D_6er6t")
 
 [node name="AnimationTree" parent="Props/Revolver" index="3"]
+libraries = {
+&"weaponAnims": ExtResource("36_s6ctc")
+}
 tree_root = SubResource("AnimationNodeBlendTree_chsc2")
 
 [node name="FX" parent="Props/Revolver" index="5"]
@@ -1622,12 +1592,13 @@ surface_material_override/0 = null
 [node name="Group006" parent="Props/Uzi/Mesh" index="6"]
 surface_material_override/0 = null
 
-[node name="OmniLight3D" parent="Props/Uzi/Mesh/Marker3D" index="2"]
-shadow_enabled = true
-omni_attenuation = 0.732043
-
 [node name="audioStreamPlayer3d" parent="Props/Uzi" index="1"]
 stream = SubResource("AudioStreamRandomizer_ej6dr")
+
+[node name="AnimationTree" parent="Props/Uzi" index="3"]
+libraries = {
+&"weaponAnims": SubResource("AnimationLibrary_oep0y")
+}
 
 [node name="FX" parent="Props/Uzi" index="5"]
 process_thread_group = 0

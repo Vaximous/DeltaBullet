@@ -7,13 +7,15 @@
 clothingCategory = 3
 clothingType = 3
 itemName = "Armored Shirt"
-shoulders = true
-leftUpperarm = true
-rightUpperarm = true
-rightForearm = true
-leftForearm = true
-upperChest = true
-lowerBody = true
+leftShoulder = 1.0
+lowerStomach = 1.0
+middleStomach = 1.0
+upperChest = 0.33
+rightShoulder = 1.0
+leftUpperarm = 1.0
+rightUpperarm = 1.0
+rightForearm = 1.0
+leftForearm = 1.0
 
 [node name="clothingMesh" parent="." index="0"]
 mesh = ExtResource("2_7cdnu")

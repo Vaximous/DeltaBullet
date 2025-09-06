@@ -249,7 +249,7 @@ func unequipClothingFromPawn(item:PackedScene)->void:
 					clothingPawn.clothingInventory.erase(clothing)
 					clothing.queue_free()
 					#clothingPawn.clothingInventory.remove_at(clothingInt)
-		clothingPawn.setBodyVisibility(true)
+		clothingPawn.resetBodyShape()
 		clothingPawn.clothingInventory.clear()
 		await get_tree().process_frame
 		await get_tree().process_frame

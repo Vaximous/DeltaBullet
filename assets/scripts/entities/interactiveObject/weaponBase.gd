@@ -511,11 +511,13 @@ func resetToDefault()->void:
 	isFiring = false
 	isAiming = false
 	isEquipped = false
+	continuous_cd = true
 	collisionEnabled = false
 
 func equipToPawn(pawn:BasePawn):
 	if pawn:
 		freeze = true
+		continuous_cd = false
 		if !pawn.itemNames.has(objectName):
 			collisionEnabled = false
 			collisionObject.disabled = true

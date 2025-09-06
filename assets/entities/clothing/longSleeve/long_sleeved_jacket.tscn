@@ -7,9 +7,11 @@
 clothingCategory = 3
 clothingType = 3
 itemName = "Long Sleeve Jacket"
-shoulders = true
-leftUpperarm = true
-rightUpperarm = true
+leftShoulder = 1.0
+rightShoulder = 1.0
+leftUpperarm = 1.0
+rightUpperarm = 1.0
+rightForearm = 1.0
 
 [node name="clothingMesh" parent="." index="0"]
 mesh = ExtResource("2_elf14")

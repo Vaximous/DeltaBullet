@@ -1,7 +1,7 @@
-[gd_scene load_steps=69 format=4 uid="uid://ccnq3cc8k6nt5"]
+[gd_scene load_steps=67 format=4 uid="uid://ccnq3cc8k6nt5"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_iq3s1"]
-[ext_resource type="Script" uid="uid://b31u24at18p5t" path="res://assets/resources/customResources/worldData/worldData.gd" id="2_gqs4i"]
+[ext_resource type="Resource" uid="uid://cm1dad74uaa1i" path="res://assets/scenes/worlds/debug/yetAnotherTestWorld/anotherTestData.tres" id="2_givre"]
 [ext_resource type="Material" uid="uid://6hc0pjapu32g" path="res://assets/materials/devMaterials/developer/checkerboard_material.tres" id="3_sg61b"]
 [ext_resource type="PackedScene" uid="uid://boicvk4qeqmbd" path="res://assets/entities/pawnSpawn/pawnSpawn.tscn" id="4_0r0wx"]
 [ext_resource type="Texture2D" uid="uid://d0f0crtwpmoka" path="res://assets/textures/panoramas/panoramatest1.png" id="4_7ph80"]
@@ -42,20 +42,6 @@
 [ext_resource type="Texture2D" uid="uid://cidn1m1w25dph" path="res://assets/textures/world/warehouse/warehousewindow_emisslayer.png" id="24_iw4gj"]
 [ext_resource type="AudioStream" uid="uid://c1mk4s30dq3nc" path="res://assets/music/menu/Idlehoodtune.wav" id="24_qkxav"]
 [ext_resource type="PackedScene" uid="uid://xtveejtd5yy8" path="res://assets/entities/props/ExplosiveBarrel/ExplosiveBarrel.tscn" id="31_snp5j"]
-
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_882n8"]
-panorama = ExtResource("4_7ph80")
-
-[sub_resource type="Resource" id="Resource_6vxwt"]
-script = ExtResource("2_gqs4i")
-worldEditable = false
-skyTexture = SubResource("PanoramaSkyMaterial_882n8")
-worldName = "Another Test Palace"
-worldDescription = ""
-worldType = 0
-spawnPawnsOnLoad = true
-playOnStart = false
-spawnType = 0
 
 [sub_resource type="Gradient" id="Gradient_6voip"]
 colors = PackedColorArray(0, 0, 0, 1, 0.996078, 0.941176, 0.811765, 1)
@@ -145,47 +131,25 @@ size = Vector3(5.03028, 2.14716, 2.36203)
 [sub_resource type="Resource" id="Resource_eich3"]
 resource_local_to_scene = true
 script = ExtResource("8_hfkws")
-useBulletTrail = true
 displayData = ExtResource("6_k77gc")
-canBeReloaded = true
 weaponMagSize = 511
 ammoSize = 64
 reloadTime = 1.5
-headDismember = false
-weaponDamage = 5.0
 weaponFireRate = 0.065
-bulletSpeed = 800.0
-bulletPenetration = 1.0
 weaponImpulse = 14.0
-weaponShots = 1
-ammoConsumption = 1
-damageFalloff = ExtResource("19_qkxav")
-scopedWeapon = false
-scopedFOV = 25
 useCustomCrosshairSize = true
-crosshairSizeOverride = 0.8
 forcedCrosshair = ExtResource("7_1sogm")
 useFOV = true
 fovShotAmount = 0.2
 weaponRecoil = Vector3(3, 7, 5)
 weaponRecoilStrength = 4.0
 weaponSpread = 0.08
-weaponRecoilStrengthAim = 4.0
 weaponSpreadAim = 0.05
-leftHandParent = false
-rightHandParent = true
-useWeaponSprintAnim = false
-useLeftHandCover = true
-useRightHandCover = true
 useLeftHandIdle = false
-useRightHandIdle = true
 useLeftHandAiming = false
-useRightHandAiming = true
 useLeftHandFreeAiming = false
-useRightHandFreeAiming = true
 weaponPositionOffset = Vector3(-0.02, -0.08, 0.105)
 weaponRotationOffset = Vector3(-0.02, -1.7, -1.605)
-bulletColor = Color(1, 1, 0, 1)
 
 [sub_resource type="GDScript" id="GDScript_r7ihw"]
 resource_name = "death"
@@ -284,7 +248,7 @@ albedo_color = Color(1, 0, 0, 1)
 data = PackedVector3Array(-0.120483, -0.5, 0.117188, 0.120483, -0.5, 0.117188, 0.120483, -0.5, -0.117188, 0.0939331, 0.5, 0.102539, 0.120483, 0.5, -0.117188, 0.120483, 0.5, 0.117188, 0.0939331, 0.5, 0.102539, 0.120483, 0.5, 0.117188, -0.104492, 0.5, 0.102539, 0.0939331, 0.5, -0.0957031, 0.120483, 0.5, -0.117188, 0.0939331, 0.5, 0.102539, 0.120483, 0.5, 0.117188, 0.120483, 0.5, -0.117188, 0.120483, -0.5, -0.117188, 0.120483, 0.5, -0.117188, 0.0939331, 0.5, -0.0957031, -0.120483, 0.5, -0.117188, 0.120483, -0.5, -0.117188, 0.120483, 0.5, -0.117188, -0.120483, 0.5, -0.117188, 0.120483, -0.5, 0.117188, 0.120483, 0.5, 0.117188, 0.120483, -0.5, -0.117188, 0.120483, 0.5, 0.117188, 0.120483, -0.5, 0.117188, -0.120483, -0.5, 0.117188, -0.120483, -0.5, 0.117188, -0.120483, -0.5, -0.117188, -0.120483, 0.5, -0.117188, -0.104492, 0.5, 0.102539, 0.120483, 0.5, 0.117188, -0.120483, 0.5, 0.117188, -0.104492, 0.5, -0.0957031, -0.120483, 0.5, -0.117188, 0.0939331, 0.5, -0.0957031, -0.120483, -0.5, 0.117188, 0.120483, -0.5, -0.117188, -0.120483, -0.5, -0.117188, 0.120483, -0.5, -0.117188, -0.120483, 0.5, -0.117188, -0.120483, -0.5, -0.117188, -0.104492, 0.5, -0.0957031, -0.120483, 0.5, 0.117188, -0.120483, 0.5, -0.117188, -0.120483, 0.5, -0.117188, -0.120483, 0.5, 0.117188, -0.120483, -0.5, 0.117188, -0.104492, 0.5, 0.102539, -0.120483, 0.5, 0.117188, -0.104492, 0.5, -0.0957031, -0.120483, 0.5, 0.117188, 0.120483, 0.5, 0.117188, -0.120483, -0.5, 0.117188, 0.0939331, 0.5, -0.0957031, -0.104492, 0.548211, -0.0957031, -0.104492, 0.5, -0.0957031, 0.0939331, 0.5, -0.0957031, 0.0939331, 0.548211, -0.0957031, -0.104492, 0.548211, -0.0957031, -0.104492, 0.548211, -0.0957031, 0.0939331, 0.548211, 0.102539, -0.104492, 0.548211, 0.102539, 0.0939331, 0.548211, -0.0957031, 0.0939331, 0.548211, 0.102539, -0.104492, 0.548211, -0.0957031, -0.104492, 0.548211, -0.0957031, -0.104492, 0.548211, 0.102539, -0.104492, 0.5, -0.0957031, 0.0939331, 0.5, -0.0957031, 0.0939331, 0.5, 0.102539, 0.0939331, 0.548211, -0.0957031, -0.104492, 0.5, 0.102539, -0.104492, 0.5, -0.0957031, -0.104492, 0.548211, 0.102539, 0.0939331, 0.548211, 0.102539, 0.0939331, 0.5, 0.102539, -0.104492, 0.5, 0.102539, 0.0939331, 0.548211, 0.102539, 0.0939331, 0.548211, -0.0957031, 0.0939331, 0.5, 0.102539, -0.104492, 0.5, 0.102539, -0.104492, 0.548211, 0.102539, 0.0939331, 0.548211, 0.102539)
 
 [node name="worldBase" instance=ExtResource("1_iq3s1")]
-worldData = SubResource("Resource_6vxwt")
+worldData = ExtResource("2_givre")
 
 [node name="pawnSpawn" parent="Spawns/playerSpawns" index="0" instance=ExtResource("4_0r0wx")]
 transform = Transform3D(-0.9394, 0, -0.342824, 0, 1, 0, 0.342824, 0, -0.9394, -4.5511, 7.41036, -7.90682)
@@ -997,6 +961,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.3854, 1.66502, 3.90188)
 [connection signal="objectUsed" from="Geometry/navigationRegion3d/PlayerCloset/closetInteraction" to="Geometry/navigationRegion3d/PlayerCloset" method="_onClosetUsed"]
 [connection signal="objectUsed" from="Geometry/navigationRegion3d/csgtruck/worldMapInteract" to="Geometry/navigationRegion3d/csgtruck/worldMapInteract" method="_on_object_used"]
 [connection signal="triggerActivated" from="Props/node3d/pawnTrigger" to="Props/node3d" method="_on_pawn_trigger_trigger_activated"]
-[connection signal="objectUsed" from="Props/interactiveObject" to="Props/interactiveObject" method="spawnSomeEnemies"]
 [connection signal="objectUsed" from="Props/interactiveObject" to="Props/interactiveObject" method="_on_object_used"]
+[connection signal="objectUsed" from="Props/interactiveObject" to="Props/interactiveObject" method="spawnSomeEnemies"]
 [connection signal="timeout" from="Props/interactiveObject/timer" to="Props/interactiveObject" method="spawnSomeEnemies"]

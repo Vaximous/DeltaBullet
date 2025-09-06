@@ -70,6 +70,6 @@ func playFlash()->void:
 				meshes.rotation.y = randf_range(-PI, PI)
 			if randomRotZ:
 				meshes.rotation.z = randf_range(-PI, PI)
-			meshTween.parallel().tween_property(meshes,"scale",Vector3.ZERO,meshTime).set_trans(defaultTransitionType).set_ease(defaultEaseType)
+			meshTween.parallel().tween_property(meshes,"scale",Vector3(0.01,0.01,0.01),meshTime).set_trans(defaultTransitionType).set_ease(defaultEaseType)
 			meshTween.parallel().tween_property(meshes,"transparency",1,meshTime).set_trans(defaultTransitionType).set_ease(defaultEaseType)
 	get_tree().create_timer(3).timeout.connect(queue_free)

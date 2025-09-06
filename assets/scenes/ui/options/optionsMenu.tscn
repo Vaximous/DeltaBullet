@@ -37,6 +37,8 @@ const setting_remap : Dictionary = {
 	\"game_decal_remove_time\" = ^'panelHolder/panel/optionsPanel/Performance/marginContainer/vBoxContainer/decalRemoveTimeSlider:value',
 	\"game_max_decals\" = ^'panelHolder/panel/optionsPanel/Performance/marginContainer/vBoxContainer/maxDecalSlider:value',
 	\"game_max_physics_entities\" = ^'panelHolder/panel/optionsPanel/Performance/marginContainer/vBoxContainer/maxPhysicsObjectsSlider:value',
+	\"game_control_mouseSens\" = ^'panelHolder/panel/optionsPanel/Controls/vBoxContainer/mousesens/mousesensSlider:value',
+	\"game_control_ScopedMouseSens\" = ^'panelHolder/panel/optionsPanel/Controls/vBoxContainer/mousesensscope/scopeSensSlider:value',
 	\"game_slow_motion_death\" = ^'panelHolder/panel/optionsPanel/Game/marginContainer/vBoxContainer/slowMotionDeath:button_pressed',
 	\"audio_ambience_volume\" = ^'panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer5/hBoxContainer/AmbienceSlider:value'
 }
@@ -51,6 +53,8 @@ func _ready() -> void:
 func setText()->void:
 	%maxDecalAmount.text = str(UserConfig.game_max_decals)
 	%maxPhysicsObjectsAmount.text = str(UserConfig.game_max_physics_entities)
+	%mousesensSlider.value = UserConfig.game_control_mouseSens
+	%mouseSensAmount.value = %mousesensSlider.value
 	$panelHolder/panel/optionsPanel/Performance/marginContainer/vBoxContainer/maxRagdolls/maxRagdollsAmount.text = str(UserConfig.game_ragdoll_remove_time)
 	$panelHolder/panel/optionsPanel/Performance/marginContainer/vBoxContainer/decalRemoveTime/decalRemoveTimeAmt.text = str(UserConfig.game_decal_remove_time)
 
@@ -190,6 +194,15 @@ func _on_max_decal_slider_value_changed(value: float) -> void:
 
 func _on_max_physics_objects_slider_value_changed(value: float) -> void:
 	%maxPhysicsObjectsAmount.text = str(value)
+
+
+func _on_mouse_sens_amount_value_changed(value: float) -> void:
+	UserConfig.game_control_mouseSens = value
+	%mousesensSlider.value = value
+
+
+func _on_mousesens_slider_value_changed(value: float) -> void:
+	%mouseSensAmount.value = %mousesensSlider.value
 "
 
 [sub_resource type="Gradient" id="Gradient_txbf0"]
@@ -207,15 +220,15 @@ metadata/_snap_enabled = true
 [sub_resource type="LabelSettings" id="LabelSettings_pfmxh"]
 font_size = 32
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bxvi1"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_t3v2y"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r5gou"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sfs43"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8tfve"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sfs43"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r5gou"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_t3v2y"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bxvi1"]
 
 [sub_resource type="InputEventKey" id="InputEventKey_60klc"]
 device = -1
@@ -256,7 +269,7 @@ script = SubResource("GDScript_i2vi2")
 
 [node name="panelHolder" type="PanelContainer" parent="."]
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = -1
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -276,7 +289,7 @@ layout_mode = 2
 [node name="textureRect" type="TextureRect" parent="panelHolder/panel"]
 clip_children = 1
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = 30.0
@@ -304,7 +317,7 @@ render_target_update_mode = 4
 
 [node name="optionsPanel" type="TabContainer" parent="panelHolder/panel"]
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 2.0
@@ -313,7 +326,7 @@ offset_bottom = -63.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_j35o7")
-current_tab = 4
+current_tab = 3
 
 [node name="Game" type="Control" parent="panelHolder/panel/optionsPanel"]
 visible = false
@@ -649,11 +662,88 @@ text = "50"
 label_settings = SubResource("LabelSettings_pfmxh")
 
 [node name="Controls" type="Control" parent="panelHolder/panel/optionsPanel"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 3
 
+[node name="vBoxContainer" type="VBoxContainer" parent="panelHolder/panel/optionsPanel/Controls"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="mousesens" type="Control" parent="panelHolder/panel/optionsPanel/Controls/vBoxContainer"]
+custom_minimum_size = Vector2(0, 93.06)
+layout_mode = 2
+
+[node name="mouseSens" type="Label" parent="panelHolder/panel/optionsPanel/Controls/vBoxContainer/mousesens"]
+layout_mode = 0
+offset_right = 959.0
+offset_bottom = 32.0
+text = "Mouse Sensitivity"
+label_settings = SubResource("LabelSettings_pfmxh")
+
+[node name="mousesensSlider" type="HSlider" parent="panelHolder/panel/optionsPanel/Controls/vBoxContainer/mousesens"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_top = 27.0
+offset_right = 959.0
+offset_bottom = 43.0
+size_flags_horizontal = 3
+min_value = 0.0010000000038417056
+max_value = 5.0
+step = 0.0
+value = 0.020000000004074536
+
+[node name="mouseSensAmount" type="SpinBox" parent="panelHolder/panel/optionsPanel/Controls/vBoxContainer/mousesens"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_top = 46.0
+offset_right = 959.0
+offset_bottom = 78.0
+min_value = 0.0010000000038417056
+max_value = 0.25
+step = 0.0
+value = 0.0010000000038417056
+alignment = 2
+
+[node name="mousesensscope" type="Control" parent="panelHolder/panel/optionsPanel/Controls/vBoxContainer"]
+custom_minimum_size = Vector2(0, 30.145)
+layout_mode = 2
+
+[node name="mouseSens" type="Label" parent="panelHolder/panel/optionsPanel/Controls/vBoxContainer/mousesensscope"]
+layout_mode = 0
+offset_right = 959.0
+offset_bottom = 32.0
+text = "Mouse Sensitivity (Scoped)"
+label_settings = SubResource("LabelSettings_pfmxh")
+
+[node name="scopeSensSlider" type="HSlider" parent="panelHolder/panel/optionsPanel/Controls/vBoxContainer/mousesensscope"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_top = 27.0
+offset_right = 959.0
+offset_bottom = 43.0
+size_flags_horizontal = 3
+min_value = 0.0010000000038417056
+max_value = 0.25
+step = 0.0
+value = 0.020000000004074536
+
+[node name="mouseSensScopedAmount" type="SpinBox" parent="panelHolder/panel/optionsPanel/Controls/vBoxContainer/mousesensscope"]
+layout_mode = 0
+offset_top = 46.0
+offset_right = 959.0
+offset_bottom = 78.0
+min_value = 0.0010000000038417056
+max_value = 0.25
+step = 0.0
+value = 0.0010000000038417056
+alignment = 2
+
 [node name="Performance" type="Control" parent="panelHolder/panel/optionsPanel"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 4
 
@@ -789,7 +879,7 @@ text = "Revert"
 
 [node name="closeButton" type="Button" parent="."]
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = -1
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -801,11 +891,11 @@ offset_bottom = -258.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
-theme_override_styles/focus = SubResource("StyleBoxEmpty_bxvi1")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_t3v2y")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_r5gou")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_8tfve")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_sfs43")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_8tfve")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_r5gou")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_t3v2y")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_bxvi1")
 shortcut = SubResource("Shortcut_v2vor")
 icon = SubResource("ImageTexture_lrq7s")
 icon_alignment = 1
@@ -825,6 +915,8 @@ bus = &"UI"
 [connection signal="value_changed" from="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer3/hBoxContainer/soundsSlider" to="." method="refreshAudioLabels" unbinds=1]
 [connection signal="value_changed" from="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer4/hBoxContainer/uiSlider" to="." method="refreshAudioLabels" unbinds=1]
 [connection signal="value_changed" from="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer5/hBoxContainer/AmbienceSlider" to="." method="refreshAudioLabels" unbinds=1]
+[connection signal="value_changed" from="panelHolder/panel/optionsPanel/Controls/vBoxContainer/mousesens/mousesensSlider" to="." method="_on_mousesens_slider_value_changed"]
+[connection signal="value_changed" from="panelHolder/panel/optionsPanel/Controls/vBoxContainer/mousesens/mouseSensAmount" to="." method="_on_mouse_sens_amount_value_changed"]
 [connection signal="value_changed" from="panelHolder/panel/optionsPanel/Performance/marginContainer/vBoxContainer/maxPhysicsObjectsSlider" to="." method="_on_max_physics_objects_slider_value_changed"]
 [connection signal="value_changed" from="panelHolder/panel/optionsPanel/Performance/marginContainer/vBoxContainer/maxDecalSlider" to="." method="_on_max_decal_slider_value_changed"]
 [connection signal="value_changed" from="panelHolder/panel/optionsPanel/Performance/marginContainer/vBoxContainer/ragdollDeleteTime" to="." method="_on_ragdoll_delete_time_value_changed"]

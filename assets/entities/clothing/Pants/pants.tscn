@@ -7,10 +7,11 @@
 clothingCategory = 4
 clothingType = 5
 itemName = "Pants"
-leftUpperLeg = true
-rightUpperLeg = true
-leftLowerLeg = true
-rightLowerLeg = true
+lowerPelvis = 1.0
+leftUpperLeg = 1.0
+rightUpperLeg = 1.0
+leftKnee = 1.0
+rightKnee = 1.0
 
 [node name="clothingMesh" parent="." index="0"]
 mesh = ExtResource("2_pf7co")

@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://wkxn0uldc80v"]
+
+[ext_resource type="PackedScene" uid="uid://cdqtbg28cxotd" path="res://assets/entities/clothing/clothingBase.tscn" id="1_0dpm7"]
+[ext_resource type="ArrayMesh" uid="uid://2le1ywnu5i77" path="res://assets/models/pawn/clothing/gloves/maleLeftGloveFull.res" id="2_0dpm7"]
+
+[node name="LeftGloveFull" instance=ExtResource("1_0dpm7")]
+clothingType = 4
+itemName = "Full Glove (Left)"
+
+[node name="clothingMesh" parent="." index="0"]
+extra_cull_margin = 5.0
+lod_bias = 128.0
+ignore_occlusion_culling = true
+mesh = ExtResource("2_0dpm7")

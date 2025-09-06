@@ -39,6 +39,8 @@ signal headshottedPawn
 @onready var stomachBone : BoneAttachment3D = $BoneAttatchments/Stomach
 @onready var rightThighBone : BoneAttachment3D = $BoneAttatchments/RightThigh
 @onready var leftThighBone : BoneAttachment3D = $BoneAttatchments/LeftThigh
+@onready var flinchModifier : SkeletonModifier3D = $Mesh/MaleSkeleton/Skeleton3D/flinchMod
+@onready var flinchMarker : Marker3D = %flinchmarker
 
 ##Pawn Parts
 @onready var headHitbox : Hitbox = $BoneAttatchments/Neck/Hitbox
@@ -54,6 +56,7 @@ signal headshottedPawn
 @onready var rightUpperLeg  : MeshInstance3D= $Mesh/MaleSkeleton/Skeleton3D/Male_RightThigh
 @onready var leftLowerLeg : MeshInstance3D = $Mesh/MaleSkeleton/Skeleton3D/Male_LeftKnee
 @onready var rightLowerLeg : MeshInstance3D = $Mesh/MaleSkeleton/Skeleton3D/Male_RightKnee
+@onready var maleBody : MeshInstance3D = $Mesh/MaleSkeleton/Skeleton3D/maleBody
 @onready var aimBlockRaycast : RayCast3D = $Mesh/aimDetect
 @onready var floorcheck : RayCast3D = $floorCast
 @onready var freeAimTimer : Timer = $freeAimTimer
@@ -484,7 +487,7 @@ func _ready() -> void:
 	fixRot()
 	setupPawnColor()
 	for i in getAllHitboxes():
-		i.connect(&"damaged",flinch.bind(2,i.boneId))
+		i.connect(&"damaged",flinch.bind(2))
 
 
 func _physics_process(delta:float) -> void:
@@ -768,13 +771,14 @@ func checkItems()->void:
 
 func checkClothes()->void:
 	clothingInventory.clear()
-	setBodyVisibility(true)
+	#resetBodyShape()
 	for clothes in clothingHolder.get_children():
 		if !clothingInventory.has(clothes):
 			clothingInventory.append(clothes)
 			clothes.itemSkeleton = pawnSkeleton.get_path()
 			clothes.remapSkeleton()
-	checkClothingHider()
+			setBodyShape(clothes)
+#	checkClothingHider()
 
 func moveClothesToRagdoll(moveto:Node3D) -> void:
 	for clothes in clothingHolder.get_children():
@@ -783,62 +787,40 @@ func moveClothesToRagdoll(moveto:Node3D) -> void:
 		clothes.remapSkeleton()
 	return
 
-func setBodyVisibility(value:bool):
-	if value:
-		head.show()
-		rightUpperArm.show()
-		leftUpperArm.show()
-		shoulders.show()
-		leftForearm.show()
-		rightForearm.show()
-		upperChest.show()
-		lowerBody.show()
-		leftUpperLeg.show()
-		rightUpperLeg.show()
-		rightLowerLeg.show()
-		leftLowerLeg.show()
-	else:
-		head.hide()
-		rightUpperArm.hide()
-		leftUpperArm.hide()
-		shoulders.hide()
-		leftForearm.hide()
-		rightForearm.hide()
-		upperChest.hide()
-		lowerBody.hide()
-		leftUpperLeg.hide()
-		rightUpperLeg.hide()
-		rightLowerLeg.hide()
-		leftLowerLeg.hide()
+func setBodyShape(clothingItem:ClothingItem):
+	if clothingItem.leftUpperarm > 0:
+		maleBody.set_blend_shape_value(0,clothingItem.leftUpperarm)
+	if clothingItem.leftShoulder > 0:
+		maleBody.set_blend_shape_value(1,clothingItem.leftShoulder)
+	if clothingItem.leftUpperLeg > 0:
+		maleBody.set_blend_shape_value(2,clothingItem.leftUpperLeg)
+	if clothingItem.rightUpperLeg > 0:
+		maleBody.set_blend_shape_value(3,clothingItem.rightUpperLeg)
+	if clothingItem.lowerPelvis > 0:
+		maleBody.set_blend_shape_value(4,clothingItem.lowerPelvis)
+	if clothingItem.lowerStomach > 0:
+		maleBody.set_blend_shape_value(5,clothingItem.lowerStomach)
+	if clothingItem.middleStomach > 0:
+		maleBody.set_blend_shape_value(6,clothingItem.middleStomach)
+	if clothingItem.leftKnee > 0:
+		maleBody.set_blend_shape_value(7,clothingItem.leftKnee)
+	if clothingItem.rightKnee > 0:
+		maleBody.set_blend_shape_value(8,clothingItem.rightKnee)
+	if clothingItem.leftForearm > 0:
+		maleBody.set_blend_shape_value(9,clothingItem.leftForearm)
+	if clothingItem.rightForearm > 0:
+		maleBody.set_blend_shape_value(10,clothingItem.rightForearm)
+	if clothingItem.rightUpperarm > 0:
+		maleBody.set_blend_shape_value(11,clothingItem.rightUpperarm)
+	if clothingItem.rightShoulder > 0:
+		maleBody.set_blend_shape_value(12,clothingItem.rightShoulder)
+	if clothingItem.upperChest > 0:
+		maleBody.set_blend_shape_value(13,clothingItem.upperChest)
+
 
 func checkClothingHider() -> void:
-	setBodyVisibility(true)
-	for clothes in clothingHolder.get_children():
-		if clothes is ClothingItem:
-			if clothes.head:
-				head.hide()
-			if clothes.rightUpperarm:
-				rightUpperArm.hide()
-			if clothes.leftUpperarm:
-				leftUpperArm.hide()
-			if clothes.shoulders:
-				shoulders.hide()
-			if clothes.leftForearm:
-				leftForearm.hide()
-			if clothes.rightForearm:
-				rightForearm.hide()
-			if clothes.upperChest:
-				upperChest.hide()
-			if clothes.lowerBody:
-				lowerBody.hide()
-			if clothes.leftUpperLeg:
-				leftUpperLeg.hide()
-			if clothes.rightUpperLeg:
-				rightUpperLeg.hide()
-			if clothes.rightLowerLeg:
-				rightLowerLeg.hide()
-			if clothes.leftLowerLeg:
-				leftLowerLeg.hide()
+	#setBodyVisibility(true)
+	pass
 
 func moveDecalsToRagdoll(ragdoll:PawnRagdoll)->bool:
 	#Decal reparent..
@@ -1071,6 +1053,11 @@ func unequipWeapon() -> void:
 func _on_free_aim_timer_timeout() -> void:
 	freeAim = false
 
+func resetBodyShape()->void:
+	if maleBody:
+		for i in maleBody.get_blend_shape_count():
+			maleBody.set_blend_shape_value(i,0)
+
 func removeComponents() -> void:
 	if is_instance_valid(healthComponent):
 		healthComponent.queue_free()
@@ -1107,7 +1094,13 @@ func _on_footsteps_finished() -> void:
 func dropWeapon() -> void:
 	if !isPawnDead:
 		animationTree.set("parameters/weaponBlend/blend_amount", 0)
+		animationTree.set("parameters/weaponBlend_left/blend_amount", 0)
 	if is_instance_valid(currentItem):
+		var pos = currentItem.global_position
+		for i in itemInventory:
+			if i == currentItem:
+				itemInventory.erase(i)
+
 		currentItem.weaponOwner = null
 		currentItem.resetToDefault()
 		currentItem.collisionEnabled = true
@@ -1116,6 +1109,9 @@ func dropWeapon() -> void:
 		currentItem.show()
 		currentItem.setInteractable()
 		currentItem.apply_impulse(velocity)
+		currentItem.reparent(gameManager.world.worldMisc)
+		currentItem.global_position = pos
+		currentItem.resetWeaponMesh()
 		currentItem = null
 
 func setFirstperson() -> void:
@@ -1124,7 +1120,7 @@ func setFirstperson() -> void:
 	pawnCameraData = load("res://assets/resources/pawnRelated/pawnFPSCam.tres")
 	attachedCam.posessObject(self,rootCameraNode)
 	head.hide()
-	upperChest.hide()
+	#upperChest.hide()
 
 func setThirdperson() -> void:
 	if freeAim and isFirstperson:
@@ -1135,7 +1131,7 @@ func setThirdperson() -> void:
 	pawnCameraData = load("res://assets/resources/pawnRelated/pawnDefaultCamData.tres")
 	attachedCam.posessObject(self,rootCameraNode)
 	head.show()
-	upperChest.show()
+	#upperChest.show()
 	checkClothes()
 
 func fixRot() -> void:
@@ -1265,20 +1261,22 @@ func getPawnSkeleton()->Skeleton3D:
 	return $Mesh/MaleSkeleton/Skeleton3D
 
 
-func flinch(flinchDirection : Vector3,bone:int = 0) -> void:
+func flinch(flinchDirection : Vector3) -> void:
 	##New Flinch
-	var flinchQuat = Quaternion(flinchDirection,Vector3.ONE)
-	var oldRot = getPawnSkeleton().get_bone_pose_rotation(bone)
-	getPawnSkeleton().set_bone_pose_rotation(bone,flinchQuat)
-
+	#print(flinchDirection)
+	if flinchTween:
+		flinchTween.kill()
+	flinchTween = create_tween()
+	flinchModifier.influence = 1
+	flinchModifier.active = true
+	flinchMarker.position = flinchMarker.position.move_toward(-(flinchDirection-flinchMarker.position).rotated(Vector3.UP,pawnMesh.global_transform.basis.get_euler().y) * randf_range(0.3,0.7),0.25)
+	await flinchTween.tween_property(flinchModifier,"influence",0,randf_range(0.2,0.6)).set_ease(defaultEaseType).set_trans(defaultTransitionType).finished
+	flinchModifier.active = false
 
 	#animationTree.set("parameters/flinchSpace/blend_position",Vector2(randf_range(-1,1),randf_range(-0.25,1)))
 	#animationTree.set("parameters/flinchShot/request",AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 
 	##Old flinch
-	#if flinchTween:
-		#flinchTween.kill()
-	#flinchTween = create_tween()
 	#if !healthComponent.health <= 10 or !lastHitPart == 41:
 		#if !meshLookAt:
 			#bodyIK.start()
@@ -1293,8 +1291,8 @@ func flinch(flinchDirection : Vector3,bone:int = 0) -> void:
 
 func _on_health_component_on_damaged(dealer:Node3D, hitDirection:Vector3)->void:
 	if is_instance_valid(self) and !isPawnDead:
-		#flinch()
-		pass
+		flinch(hitDirection)
+
 
 func armThrowable()->void:
 	if canThrowThrowable and !isArmingThrowable and throwableAmount>0 and !is_instance_valid(heldThrowable) and !isUsingPhone:
@@ -1424,7 +1422,7 @@ func loadPawnInfo(pawnInfo:String)->void:
 		clothes.queue_free()
 	for weapons in itemHolder.get_children():
 		weapons.queue_free()
-	setBodyVisibility(true)
+	resetBodyShape()
 	itemInventory.append(null)
 
 	var json = JSON.new()
@@ -1874,7 +1872,6 @@ func doStagger(stagger, speed:float = 1.0,randomChance:bool=false)->void:
 	if randomChance:
 		if [true,false].pick_random() == false:
 			return
-	print(stagger)
 	isStaggered = true
 	#Upon Calling the stagger, it should trigger the animation and play it. Freezing the pawn
 	#until it ends.

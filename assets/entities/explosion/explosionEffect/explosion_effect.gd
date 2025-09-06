@@ -14,7 +14,7 @@ func is_emitting() -> bool:
 
 
 func doRipple(rippleAmount:float=10.0, rippleSpeed : float = 0.25, rippleFadeSpeed : float = 0.25)->Tweener:
-	rippleMesh.scale = Vector3.ZERO
+	rippleMesh.scale = Vector3(0.01,0.01,0.01)
 	rippleMesh.transparency = 0
 	if rippleTween:
 		rippleTween.kill()

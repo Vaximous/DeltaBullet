@@ -1,11 +1,18 @@
 extends Control
+var tween : Tween
 var marker:
 	set(value):
 		marker = value
 		#print(value)
 		setInfo(marker)
 @export var map : CanvasLayer
-var isTravelHovered : bool = false
+var isTravelHovered : bool = false:
+	set(value):
+		isTravelHovered = value
+		if value:
+			%animationPlayer.play("travelButtonHover")
+		else:
+			%animationPlayer.play("travelButtonunHover")
 
 func goToSelectedMarker()->void:
 	if marker:
@@ -27,7 +34,8 @@ func setInfo(marker):
 	if is_instance_valid(marker):
 		playOpen()
 		%areaName.text = marker.locationName
-
+		if marker.locationDescription != "":
+			%descriptionLabel.text = marker.locationDescription
 		if marker.hasCollectibleItems:
 			%itemsLabel.show()
 		else:
@@ -52,12 +60,29 @@ func setInfo(marker):
 			%descriptionLabel.hide()
 	else:
 		if !isTravelHovered:
-			hide()
+			fadeOut()
+
+func fadeOut()->void:
+	if tween:
+		tween.kill()
+	tween = create_tween()
+	await tween.tween_property(self,"modulate",Color.TRANSPARENT,0.25).set_trans(gameManager.defaultTransitionType).set_ease(gameManager.defaultEaseType).finished
+	hide()
+
+func fadeIn()->void:
+	show()
+	if tween:
+		tween.kill()
+	tween = create_tween()
+	tween.tween_property(self,"modulate",Color.WHITE,0.5).set_trans(gameManager.defaultTransitionType).set_ease(gameManager.defaultEaseType)
 
 func playOpen()->void:
-	if !visible:
-		show()
+	fadeIn()
 
 	if %markerinfoPlayer.is_playing():
 		%markerinfoPlayer.stop()
 	%markerinfoPlayer.play("open")
+
+	if %animationPlayer.is_playing():
+		%animationPlayer.stop()
+	%animationPlayer.play("travelButtonIn")

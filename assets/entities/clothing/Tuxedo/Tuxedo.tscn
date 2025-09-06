@@ -1,18 +1,20 @@
 [gd_scene load_steps=3 format=3 uid="uid://b8ttgknyh8e3m"]
 
 [ext_resource type="PackedScene" uid="uid://cdqtbg28cxotd" path="res://assets/entities/clothing/clothingBase.tscn" id="1_hrm4a"]
-[ext_resource type="ArrayMesh" uid="uid://c2tstmsi43cb3" path="res://assets/models/pawn/clothing/tuxJacket/tuxjacket.res" id="2_jm5ge"]
+[ext_resource type="ArrayMesh" uid="uid://cwxotfjlbkuu2" path="res://assets/models/pawn/clothing/tuxJacket/tuxjacket.res" id="2_jm5ge"]
 
 [node name="Tuxedo" instance=ExtResource("1_hrm4a")]
 clothingCategory = 3
 clothingType = 3
 itemName = "Tuxedo Jacket"
-shoulders = true
-leftUpperarm = true
-rightUpperarm = true
-rightForearm = true
-leftForearm = true
-lowerBody = true
+leftShoulder = 1.0
+lowerStomach = 1.0
+middleStomach = 1.0
+rightShoulder = 1.0
+leftUpperarm = 1.0
+rightUpperarm = 1.0
+rightForearm = 1.0
+leftForearm = 1.0
 
 [node name="clothingMesh" parent="." index="0"]
 mesh = ExtResource("2_jm5ge")

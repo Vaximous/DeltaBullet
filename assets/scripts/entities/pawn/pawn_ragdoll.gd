@@ -21,6 +21,7 @@ var visibleOnScreen : bool = true
 @onready var rightLowerLeg:MeshInstance3D = $Mesh/Male/MaleSkeleton/Skeleton3D/Male_RightKnee
 @onready var deathSound:AudioStreamPlayer3D = $"Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone Neck/deathSound"
 @onready var obliterateSound : AudioStreamPlayer3D = $"Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone Neck/obliterateSound"
+@onready var maleBody : MeshInstance3D = $Mesh/Male/MaleSkeleton/Skeleton3D/maleBody
 
 @onready var clothingHolder:Node3D = $Mesh/Male/MaleSkeleton/Skeleton3D/Clothing
 @onready var ragdollSkeleton : Skeleton3D = $Mesh/Male/MaleSkeleton/Skeleton3D
@@ -100,44 +101,40 @@ func startRagdoll()-> void:
 func ragTwitch(convulsionAmount : float = 10.0, bodyPartIDX : int = 0)-> void:
 	pass
 
+func setBodyShape(clothingItem:ClothingItem):
+	if clothingItem.leftUpperarm > 0:
+		maleBody.set_blend_shape_value(0,clothingItem.leftUpperarm)
+	if clothingItem.leftShoulder > 0:
+		maleBody.set_blend_shape_value(1,clothingItem.leftShoulder)
+	if clothingItem.leftUpperLeg > 0:
+		maleBody.set_blend_shape_value(2,clothingItem.leftUpperLeg)
+	if clothingItem.rightUpperLeg > 0:
+		maleBody.set_blend_shape_value(3,clothingItem.rightUpperLeg)
+	if clothingItem.lowerPelvis > 0:
+		maleBody.set_blend_shape_value(4,clothingItem.lowerPelvis)
+	if clothingItem.lowerStomach > 0:
+		maleBody.set_blend_shape_value(5,clothingItem.lowerStomach)
+	if clothingItem.middleStomach > 0:
+		maleBody.set_blend_shape_value(6,clothingItem.middleStomach)
+	if clothingItem.leftKnee > 0:
+		maleBody.set_blend_shape_value(7,clothingItem.leftKnee)
+	if clothingItem.rightKnee > 0:
+		maleBody.set_blend_shape_value(8,clothingItem.rightKnee)
+	if clothingItem.leftForearm > 0:
+		maleBody.set_blend_shape_value(9,clothingItem.leftForearm)
+	if clothingItem.rightForearm > 0:
+		maleBody.set_blend_shape_value(10,clothingItem.rightForearm)
+	if clothingItem.rightUpperarm > 0:
+		maleBody.set_blend_shape_value(11,clothingItem.rightUpperarm)
+	if clothingItem.rightShoulder > 0:
+		maleBody.set_blend_shape_value(12,clothingItem.rightShoulder)
+	if clothingItem.upperChest > 0:
+		maleBody.set_blend_shape_value(13,clothingItem.upperChest)
+
 func checkClothingHider()-> void:
 	for clothes in self.get_children():
 		if clothes is ClothingItem:
-			match clothes.head:
-				true: head.hide()
-			match clothes.rightUpperarm:
-				true:
-					rightUpperArm.hide()
-			match clothes.leftUpperarm:
-				true:
-					leftUpperArm.hide()
-			match clothes.shoulders:
-				true:
-					shoulders.hide()
-			match clothes.leftForearm:
-				true:
-					leftForearm.hide()
-			match clothes.rightForearm:
-				true:
-					rightForearm.hide()
-			match clothes.upperChest:
-				true:
-					upperChest.hide()
-			match clothes.lowerBody:
-				true:
-					lowerBody.hide()
-			match clothes.leftUpperLeg:
-				true:
-					leftUpperLeg.hide()
-			match clothes.rightUpperLeg:
-				true:
-					rightUpperLeg.hide()
-			match clothes.rightLowerLeg:
-				true:
-					rightLowerLeg.hide()
-			match clothes.leftLowerLeg:
-				true:
-					leftLowerLeg.hide()
+			setBodyShape(clothes)
 
 func hookes_law(displacement: Vector3, velocity: Vector3, stiffness: float, damping: float) -> Vector3:
 # See: "https://en.wikipedia.org/wiki/Hooke's_law"
@@ -151,21 +148,17 @@ func _physics_process(delta: float) -> void:
 		var total_ang_vel := Vector3.ZERO
 		angularVelocity = total_ang_vel / totalMass
 
-		#for b in physicsBones:
-			#if is_instance_valid(b) and is_instance_valid(targetSkeleton):
-				#total_ang_vel += b.angular_velocity * b.mass
-				##b.angular_velocity = angularVelocity
+		for b in physicsBones:
+			if is_instance_valid(b) and is_instance_valid(targetSkeleton):
+				total_ang_vel += b.angular_velocity * b.mass
+				b.angular_velocity = angularVelocity
+				#var target_rotation : Basis = TARGET_SKELETON.get_bone_global_pose(BONE_B_INDEX).basis.inverse() * self.get_parent().get_bone_global_pose(BONE_B_INDEX).basis
+				#var target_velocity : Vector3 = target_rotation.get_euler() * matching_velocity_multiplier
 				#if is_instance_valid(findPhysicsBone(ragdollSkeleton.get_bone_parent(b.get_bone_id()))):
-					#var target_rotation : Basis = targetSkeleton.get_bone_global_pose(b.get_bone_id()).basis.inverse() * ragdollSkeleton.get_bone_global_pose(b.get_bone_id()).basis
-					#var target_velocity : Vector3 = target_rotation.get_euler() * 1
-#
 					#setAngularMotor(b,true)
-					#setAngularMotorForceLimit(b,100)
-					#setAngularMotorTargetVelocity(b,target_velocity)
-				#else:
-					#setAngularMotorTargetVelocity(b,Vector3.ZERO)
-			#else:
-				#activeRagdollEnabled = false
+					#animate_bone_by_physics_motor(b,delta,5,10)
+			else:
+				activeRagdollEnabled = false
 
 func setAngularMotorTargetVelocity(b:PhysicalBone3D,value:Vector3 = Vector3.ZERO):
 	b.set("joint_constraints/x/target_velocity",value.x)
@@ -239,6 +232,31 @@ func moveClothesToRagdoll(pawn:BasePawn) -> void:
 				clothes.reparent(self)
 				clothes.remapSkeleton()
 		return
+
+func animate_bone_by_physics_motor(bone: RagdollBone,delta: float, stiffness: float, damping: float) -> void:
+	# Get local-space quaternion rotations of bone to it's "joint parent" bone.
+	# NOTE: Here we assume that `bone` is the same as `joint.node_b`, with `node_a` being the 'parent' bone.
+	var joint_parent_bone: RagdollBone = bone.physicsBoneParent
+	var joint_parent_quat: = joint_parent_bone.global_basis.get_rotation_quaternion()
+	var bone_current_global_quat: = bone.global_basis.get_rotation_quaternion()
+	var bone_current_local_quat: = joint_parent_quat.inverse() * bone_current_global_quat
+	var bone_target_local_quat: = targetSkeleton.get_bone_pose_rotation(bone.get_bone_id())
+
+	# Get rotational difference between current and animated poses (relative to bone).
+	# NOTE: We assume that the `joint` is at bone's origin and has no relative rotation.
+	var diff: = bone_target_local_quat.inverse() * bone_current_local_quat
+	var axis: = diff.get_axis()
+	var angle: = diff.get_angle()
+	if angle > PI: angle -= TAU
+	if axis.is_finite():
+		var target_vel: = axis.normalized() * (angle / delta)
+		var current_vel: = bone_current_global_quat.inverse() * bone.angular_velocity
+		target_vel = hookes_law(target_vel, current_vel, stiffness, damping)
+		setAngularMotorTargetVelocity(bone,target_vel)
+		setAngularMotorForceLimit(bone,9999999)
+	else:
+		setAngularMotorTargetVelocity(bone,Vector3.ZERO)
+		setAngularMotorForceLimit(bone,0)
 
 func animate_bone_by_joint_motor(bone: PhysicalBone3D, joint: Generic6DOFJoint3D, delta: float, stiffness: float, damping: float) -> void:
 	# Get local-space quaternion rotations of bone to it's "joint parent" bone.

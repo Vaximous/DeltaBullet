@@ -44,6 +44,7 @@ const setting_remap : Dictionary = {
 }
 
 func _ready() -> void:
+	getSettingsFromConfig()
 	applyAudio()
 	setupMenuPopups()
 	UserConfig.configs_updated.connect(getSettingsFromConfig)
@@ -51,6 +52,7 @@ func _ready() -> void:
 
 
 func setText()->void:
+	getSettingsFromConfig()
 	%maxDecalAmount.text = str(UserConfig.game_max_decals)
 	%maxPhysicsObjectsAmount.text = str(UserConfig.game_max_physics_entities)
 	%mousesensSlider.value = UserConfig.game_control_mouseSens
@@ -691,7 +693,7 @@ offset_top = 27.0
 offset_right = 959.0
 offset_bottom = 43.0
 size_flags_horizontal = 3
-min_value = 0.0010000000038417056
+min_value = 0.010000000009313226
 max_value = 5.0
 step = 0.0
 value = 0.020000000004074536
@@ -703,8 +705,8 @@ offset_top = 46.0
 offset_right = 959.0
 offset_bottom = 78.0
 min_value = 0.0010000000038417056
-max_value = 0.25
-step = 0.0
+max_value = 5.0
+step = 0.010000000009313226
 value = 0.0010000000038417056
 alignment = 2
 

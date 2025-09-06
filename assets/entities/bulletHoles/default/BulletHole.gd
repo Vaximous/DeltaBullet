@@ -95,8 +95,10 @@ func initializeBulletHole()->void:
 		#Forces the position of the particles to be set to the collision point (Wont be used much, is an old thing)
 		if forceGlobalPosition:
 			await get_tree().process_frame
-			particles.global_position = colPoint
-
+			if colPoint != Vector3.ZERO:
+				particles.global_position = colPoint
+			else:
+				particles.queue_free()
 		#Reparent to particles in world
 		particles.reparent(gameManager.world.worldParticles)
 

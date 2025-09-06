@@ -17,15 +17,17 @@ class_name AIComponent
 @onready var pawnDebugLabel : Label3D = $debugPawnStats
 @onready var stateMachine : FiniteStateMachine = $pawnFSM
 @export var aimSpeed : float = 8
-@export var aimTargetRecoil : Vector3 = Vector3.ZERO
+@export var aimTargetRecoil : Vector3 = Vector3(0.1,0.1,0.1)
 @export var aimRecoilStrength : float = 0.15
 @export var recoilReturnSpeed : float = 5.5
 @export var aimRecoil : Vector3 = Vector3.ZERO
 var pawnOwner : BasePawn = null:
 	set(value):
 		pawnOwner = value
+		aimCast.add_exception(pawnOwner)
 		for i in pawnOwner.getAllHitboxes():
 			i.damaged.connect(setToAttackState)
+			aimCast.add_exception(i)
 @export_subgroup("Pawn")
 ## What team(s) the pawn is apart of, if the enemy is on the same team it will refrain from adding it to lists beyond "pawnCanSee"
 @export var pawnTeam : Array[StringName] = [&"Default"]:
@@ -142,9 +144,9 @@ func _physics_process(delta: float) -> void:
 	if pawnOwner.forceAnimation: return
 
 	#Pawn Recoil Work
-	aimTargetRecoil.x = lerp(aimTargetRecoil.x, 0.0, recoilReturnSpeed * delta)
-	aimTargetRecoil.y = lerp(aimTargetRecoil.y, 0.0, recoilReturnSpeed * delta)
-	aimTargetRecoil.z = lerp(aimTargetRecoil.z, 0.0, recoilReturnSpeed * delta)
+	aimTargetRecoil.x = lerp(aimTargetRecoil.x, 0.01, recoilReturnSpeed * delta)
+	aimTargetRecoil.y = lerp(aimTargetRecoil.y, 0.01, recoilReturnSpeed * delta)
+	aimTargetRecoil.z = lerp(aimTargetRecoil.z, 0.01, recoilReturnSpeed * delta)
 
 	##Add the pawns that the pawn currently has in their view
 	for i in gameManager.allPawns:
@@ -194,7 +196,17 @@ func setToAttackState(amount,impulse,vector, dealer:BasePawn)->void:
 		lookAtPosition(dealer.global_position)
 
 func lookAtPosition(pos:Vector3,snap:bool = false)->void:
-	aimCast.look_at(pos + aimTargetRecoil * aimRecoilStrength)
+	if pos == Vector3.ZERO:
+		print("AI is looking zero, abort.")
+		return
+	var lookModifier = aimTargetRecoil * aimRecoilStrength
+	var completePosition = pos + aimTargetRecoil * aimRecoilStrength
+
+	if completePosition == Vector3.ZERO:
+		print("AI is looking zero, abort.")
+		return
+
+	aimCast.look_at(completePosition)
 	var dir = (aimCast.global_position - pos) + aimTargetRecoil * aimRecoilStrength
 	if lookTween:
 		lookTween.kill()

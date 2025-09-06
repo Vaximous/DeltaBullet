@@ -354,9 +354,9 @@ func createDroplet(position:Vector3, velocity : Vector3 = Vector3.ZERO, amount :
 			world.worldParticles.add_child(droplet)
 			droplet.global_position = position
 			if !flipVel:
-				droplet.velocity += velocity
+				droplet.velocity += Vector3(velocity.x + randf_range(-1,2),velocity.y + randf_range(-1,2),velocity.z + randf_range(-1,2))
 			else:
-				droplet.velocity += -velocity
+				droplet.velocity += -Vector3(velocity.x + randf_range(-1,2),velocity.y + randf_range(-1,2),velocity.z + randf_range(-1,2))
 
 
 
@@ -908,3 +908,27 @@ func physEntityCheck()->void:
 			physEntities[0].queue_free()
 			physEntities.remove_at(0)
 	return
+
+func godPawn(pawn:BasePawn)->void:
+	if pawn.healthComponent.has_meta(&"god"):
+		if pawn.healthComponent.get_meta(&"god"):
+			pawn.healthComponent.set_meta(&"god", false)
+		else:
+			pawn.healthComponent.set_meta(&"god", true)
+		notify_warn("God Mode is %s for %s"%[pawn.healthComponent.get_meta(&"god"),pawn.name],2,1)
+	else:
+		pawn.healthComponent.set_meta(&"god", true)
+		notify_warn("God Mode is %s for %s"%[pawn.healthComponent.get_meta(&"god"),pawn.name],2,1)
+
+
+func godmode()->void:
+	for i in playerPawns:
+		if i.healthComponent.has_meta(&"god"):
+			if i.healthComponent.get_meta(&"god"):
+				i.healthComponent.set_meta(&"god", false)
+			else:
+				i.healthComponent.set_meta(&"god", true)
+			notify_warn("God Mode is %s"%i.healthComponent.get_meta(&"god"),2,1)
+		else:
+			i.healthComponent.set_meta(&"god", true)
+			notify_warn("God Mode is %s"%i.healthComponent.get_meta(&"god"),2,1)

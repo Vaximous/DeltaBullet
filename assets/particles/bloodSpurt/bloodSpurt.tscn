@@ -50,11 +50,16 @@ script/source = "extends GPUParticles3D
 @export var maxParticles : int = 8
 
 func _ready()->void:
-	%bloodSmoke.emitting = true
 	material_override = gameManager.bloodSpurts.pick_random()
 	amount = randi_range(minParticles,maxParticles)
+	await get_tree()
+	emitting = true
+	%bloodSmoke.emitting = true
 	if !finished.is_connected(queue_free):
 		finished.connect(queue_free)
+
+func  _destroy()->void:
+	queue_free()
 "
 
 [sub_resource type="Curve" id="Curve_ksiwr"]
@@ -132,3 +137,5 @@ fixed_fps = 0
 visibility_aabb = AABB(-0.309371, -0.3, -0.342307, 0.609581, 0.866252, 0.642307)
 process_material = SubResource("ParticleProcessMaterial_fkxrd")
 draw_pass_1 = SubResource("QuadMesh_c6fs4")
+
+[connection signal="finished" from="." to="." method="_destroy"]

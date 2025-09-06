@@ -34,6 +34,10 @@ func setHealth(value:float)->float:
 
 func healthCheck()->void:
 	if health <= 0 and is_instance_valid(self):
+		if has_meta(&"god"):
+			if get_meta(&"god") == true:
+				return
+
 		isDead = true
 		HPisDead.emit()
 		if lastDealer!=null and is_instance_valid(self) and is_instance_valid(lastDealer):
@@ -44,6 +48,10 @@ func healthCheck()->void:
 
 func damage(amount:float, dealer:Node3D = null,hitDirection:Vector3 = Vector3.ZERO)->void:
 	if is_instance_valid(self) and is_instance_valid(componentOwner):
+		if has_meta(&"god"):
+			if get_meta(&"god") == true:
+				return
+
 		lastDealer = dealer
 		onDamaged.emit(dealer, hitDirection)
 		setHealth(health - amount)

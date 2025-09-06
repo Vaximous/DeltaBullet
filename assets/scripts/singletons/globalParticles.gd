@@ -26,7 +26,7 @@ func createParticle(particle:String, pos:Vector3 = Vector3.ZERO, rot:Vector3 = V
 				return particleToCreate
 
 
-func spawnBulletHolePackedScene(scene : PackedScene, parent : Node, pos : Vector3 = Vector3.ZERO, rot : float = 0.0, normal : Vector3 = Vector3.ONE,bulletVel : Vector3 = Vector3.ZERO):
+func spawnBulletHolePackedScene(scene : PackedScene, parent : Node, pos : Vector3 = Vector3.ONE, rot : float = 0.0, normal : Vector3 = Vector3.ONE,bulletVel : Vector3 = Vector3.ONE):
 	if gameManager.world and parent != null:
 		if scene != null:
 			var bHole : BulletHole = scene.instantiate()
@@ -44,7 +44,7 @@ func spawnBulletHolePackedScene(scene : PackedScene, parent : Node, pos : Vector
 			return bHole
 
 
-func spawnBulletHole(hole:String,parent,pos:Vector3 = Vector3.ZERO, rot:float = 0.0, normal:Vector3=Vector3.ZERO ):
+func spawnBulletHole(hole:String,parent,pos:Vector3 = Vector3.ONE, rot:float = 0.0, normal:Vector3=Vector3.ONE ):
 	if gameManager.world:
 		var bHole = bulletHoles[str(hole)].instantiate()
 		parent.add_child(bHole)

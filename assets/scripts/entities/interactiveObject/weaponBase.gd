@@ -161,6 +161,7 @@ func checkWeaponBlend()->void:
 			if !isFiring and !isAiming and !weaponOwner.freeAim and !isReloading:
 				if weaponRemoteState != null and weaponRemoteStateLeft != null:
 					weaponRemoteState.travel("idle")
+					setWeaponBlendScale(1)
 					weaponRemoteStateLeft.travel("idle")
 					if weaponResource.useLeftHandIdle and !weaponOwner.isArmingThrowable:
 						weaponOwner.enableLeftHand()
@@ -234,9 +235,12 @@ func checkWeaponBlend()->void:
 			weaponOwner.disableLeftHand()
 
 func fire()->void:
+	animationPlayer.speed_scale = 1
+	animationTree.set("parameters/weaponStateSpeed/scale",1)
 	if !isFireReady():
 		return
 	setWeaponRecoil()
+	setWeaponBlendScale(1)
 	if currentAmmo < weaponResource.ammoConsumption and !isBusy:
 		#The weapon is dry. Do the dry fire and wait a bit.
 		isBusy = true
@@ -317,7 +321,10 @@ func spawnProjectile(raycaster : RayCast3D) -> void:
 	if weaponResource.useBulletTrail:
 		bulletTrail = weaponResource.defaultBulletTrail.instantiate()
 	var p : Projectile = projectile.instantiate() as Projectile
-
+	if is_instance_valid(weaponOwner):
+		p.max_damage = weaponResource.weaponDamage * weaponOwner.damageModifier
+	else:
+		p.max_damage = weaponResource.weaponDamage
 
 	var ray_target_point := get_hit_target(raycaster)
 
@@ -493,6 +500,7 @@ func getRayColPoint(raycaster : RayCast3D = null):
 		return hitPoint
 
 func resetWeaponMesh()->void:
+	animationPlayer.speed_scale = 1
 	if weaponMesh:
 		weaponMesh.position = Vector3.ZERO
 		weaponMesh.rotation = Vector3.ZERO
@@ -501,6 +509,7 @@ func resetWeaponMesh()->void:
 func resetToDefault()->void:
 	#resetWeaponMesh()
 	if weaponOwner:
+		setWeaponBlendScale(1)
 		if weaponOwner.weaponFireChanged.is_connected(checkWeaponBlend):
 			weaponOwner.weaponFireChanged.disconnect(checkWeaponBlend)
 	if weaponRemoteState != null:
@@ -509,14 +518,18 @@ func resetToDefault()->void:
 		weaponRemoteStateLeft.stop()
 	weaponAnimSet = false
 	weaponOwner = null
+	animationTree.set("parameters/weaponStateSpeed/scale",1)
 	isFiring = false
 	isAiming = false
 	isEquipped = false
 	continuous_cd = true
+	animationPlayer.speed_scale = 1
 	collisionEnabled = false
 
 func equipToPawn(pawn:BasePawn):
 	if pawn:
+		animationTree.set("parameters/weaponStateSpeed/scale",1)
+		animationPlayer.speed_scale = 1
 		freeze = true
 		continuous_cd = false
 		if !pawn.itemNames.has(objectName):
@@ -582,6 +595,9 @@ func setEquipVariables()->void:
 		weaponOwner.attachedCam.hud.hideReloadProgress()
 	setWeaponRecoil()
 	freeze = true
+	animationPlayer.speed_scale = 1
+	animationTree.set("parameters/weaponStateSpeed/scale",1)
+
 
 func setWeaponRecoil()->void:
 	if weaponOwner != null:
@@ -598,7 +614,7 @@ func reloadWeapon()->void:
 		if canReloadWeapon and !isReloading and weaponResource.canBeReloaded and isEquipped and !weaponOwner.isArmingThrowable and is_instance_valid(weaponResource):
 			reloadingStart.emit()
 			if weaponOwner.isPlayerPawn():
-				weaponOwner.attachedCam.hud.reloadProgressActivate(weaponResource.reloadTime)
+				weaponOwner.attachedCam.hud.reloadProgressActivate(weaponResource.reloadTime / weaponOwner.reloadSpeedModifier)
 			var reloadTime = weaponResource.reloadTime
 			var firedShots = weaponResource.ammoSize - currentAmmo
 			weaponRemoteState.travel("reload")
@@ -607,10 +623,16 @@ func reloadWeapon()->void:
 			weaponRemoteStateLeft.next()
 			isReloading = true
 			canReloadWeapon = false
-			await get_tree().create_timer(reloadTime,false).timeout
+			animationPlayer.speed_scale = 1 * weaponOwner.reloadSpeedModifier
+			animationTree.set("parameters/weaponStateSpeed/scale",1 * weaponOwner.reloadSpeedModifier)
+			setWeaponBlendScale(animationPlayer.speed_scale)
+			await get_tree().create_timer(reloadTime / weaponOwner.reloadSpeedModifier,false).timeout
+			animationTree.set("parameters/weaponStateSpeed/scale",1)
+			setWeaponBlendScale(1)
 			isReloading = false
 			currentMagSize -= firedShots
 			currentAmmo += firedShots
+			animationPlayer.speed_scale = 1
 			if weaponOwner != null:
 				if isAiming:
 					if weaponOwner != null:
@@ -628,9 +650,19 @@ func checkFreeAim()->void:
 	if weaponOwner:
 		isFreeAiming = weaponOwner.freeAim
 
-func playWeaponAnimation(animatorNode:String,animationName:StringName)->void:
+func setWeaponBlendScale(value:float=1):
+	if is_instance_valid(weaponOwner):
+		weaponOwner.animationTree.set("parameters/weaponBlendLeft_Scale/scale",value)
+		weaponOwner.animationTree.set("parameters/weaponBlend_Scale/scale",value)
+
+func playWeaponAnimation(animatorNode:String,animationName:StringName,useReloadTime:bool = false)->void:
 	var wepAnimator : AnimationPlayer = animationPlayer.get_node(animatorNode)
 	wepAnimator.play(animationName)
+	if useReloadTime:
+		wepAnimator.speed_scale = 1 * weaponOwner.reloadSpeedModifier
+	else:
+		wepAnimator.speed_scale = 1
+
 	if wepAnimator.is_playing():
 		wepAnimator.stop()
 		wepAnimator.seek(0.0,true)

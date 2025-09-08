@@ -336,6 +336,9 @@ var isArmingThrowable : bool = false:
 			disableThrowableAnim()
 var canThrowThrowable : bool = true
 var isThrowing : bool = false
+@export_subgroup("Modifiers")
+@export var reloadSpeedModifier : float = 1.0
+@export var damageModifier : float = 1.0
 @export_subgroup("Inventory")
 var pawnCash : int = 0
 var itemNames : Array
@@ -897,17 +900,17 @@ func setupWeaponAnimations() -> void:
 
 
 			#Add the weapons stateMachine to the pawn
-			(animationTree.tree_root as AnimationNodeBlendTree).disconnect_node("weaponBlend", 1)
+			(animationTree.tree_root as AnimationNodeBlendTree).disconnect_node("weaponBlend_Scale", 0)
 			animationTree.tree_root.remove_node(&"weaponState")
 			animationTree.tree_root.add_node(&"weaponState", blendSet.duplicate())
-			(animationTree.tree_root as AnimationNodeBlendTree).connect_node(&"weaponBlend", 1, &"weaponState")
+			(animationTree.tree_root as AnimationNodeBlendTree).connect_node(&"weaponBlend_Scale", 0, &"weaponState")
 			currentItem.weaponRemoteState = animationTree.get("parameters/weaponState/weaponState/playback")
 			animationTree.set("parameters/weaponState/weaponState/playback",currentItem.weaponRemoteState)
 			##Left Hand
-			(animationTree.tree_root as AnimationNodeBlendTree).disconnect_node("weaponBlend_Left_blend", 1)
+			(animationTree.tree_root as AnimationNodeBlendTree).disconnect_node("weaponBlendLeft_Scale", 0)
 			animationTree.tree_root.remove_node("weaponBlend_left")
 			animationTree.tree_root.add_node("weaponBlend_left", blendSet.duplicate())
-			(animationTree.tree_root as AnimationNodeBlendTree).connect_node("weaponBlend_Left_blend", 1, "weaponBlend_left")
+			(animationTree.tree_root as AnimationNodeBlendTree).connect_node("weaponBlendLeft_Scale", 0, "weaponBlend_left")
 			currentItem.weaponRemoteStateLeft = animationTree.get("parameters/weaponBlend_left/weaponState/playback")
 			lastLeftBlend = currentItem.weaponRemoteStateLeft
 

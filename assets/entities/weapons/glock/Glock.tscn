@@ -30,8 +30,6 @@
 
 [sub_resource type="Resource" id="Resource_d7y4w"]
 script = ExtResource("2_ay6mx")
-saleCategory = 1
-gritPrice = 0
 itemDescriptionShort = "A good 'ol Glack, classic hood staple."
 itemDescriptionLong = "What can I say about this? It's gotta be one of the most well-known pistols especially in these parts."
 damage = 0.416
@@ -49,47 +47,25 @@ stream_3/stream = ExtResource("6_3pvmk")
 
 [sub_resource type="Resource" id="Resource_vb4b6"]
 script = ExtResource("3_5pyd6")
-useBulletTrail = true
 displayData = SubResource("Resource_d7y4w")
-canBeReloaded = true
-weaponMagSize = 128
 ammoSize = 16
 reloadTime = 1.86
-headDismember = false
 weaponDamage = 7.9
 weaponFireRate = 0.22
-bulletSpeed = 800.0
 bulletPenetration = 0.0
 weaponImpulse = 17.0
-weaponShots = 1
-ammoConsumption = 1
 damageFalloff = ExtResource("2_mqj12")
-scopedWeapon = false
-scopedFOV = 25
-useCustomCrosshairSize = false
-crosshairSizeOverride = 0.8
-useFOV = false
-fovShotAmount = 1.5
 weaponRecoil = Vector3(3.64, 1, 0.25)
 weaponRecoilStrength = 3.0
 weaponSpread = 0.15
 weaponRecoilStrengthAim = 3.0
 weaponSpreadAim = 0.08
-leftHandParent = false
-rightHandParent = true
-useWeaponSprintAnim = false
 useLeftHandCover = false
-useRightHandCover = true
 useLeftHandIdle = false
-useRightHandIdle = true
-useLeftHandAiming = true
-useRightHandAiming = true
 useLeftHandFreeAiming = false
-useRightHandFreeAiming = true
 weaponPositionOffset = Vector3(-0.002, -0.188, 0.03)
 weaponRotationOffset = Vector3(-1.49749, 3.14159, 0)
 equipStream = SubResource("AudioStreamRandomizer_qfu12")
-bulletColor = Color(1, 1, 0, 1)
 metadata/_custom_type_script = ExtResource("3_5pyd6")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_n332a"]
@@ -2101,6 +2077,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00431539, 0.00136896)
 shape = SubResource("BoxShape3D_n332a")
 
 [node name="AnimationTree" parent="." index="1"]
+libraries = {
+&"": SubResource("AnimationLibrary_ay6mx"),
+&"weaponAnims": SubResource("AnimationLibrary_dxord")
+}
 tree_root = ExtResource("9_2aw7i")
 parameters/weaponStateSpeed/scale = 1.0
 
@@ -2147,7 +2127,7 @@ attenuation_filter_db = 0.0
 stream = SubResource("AudioStreamRandomizer_yxixb")
 pitch_scale = 1.2
 
-[connection signal="reloadingStart" from="." to="." method="playWeaponAnimation" binds= [&"weaponAnim", &"reload"]]
+[connection signal="reloadingStart" from="." to="." method="playWeaponAnimation" binds= [&"weaponAnim", &"reload", true]]
 [connection signal="shot_fired" from="." to="AudioStreamPlayer3D" method="play"]
 [connection signal="shot_fired" from="." to="." method="playWeaponAnimation" binds= [&"weaponAnim", &"shotFired"]]
 

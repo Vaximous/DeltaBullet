@@ -115,6 +115,14 @@ func freeOrphanNodes():
 	#orphanedData = keep
 	freeOrphans.emit()
 
+func setPlayerReloadSpeed(value:float = 1):
+	if getCurrentPawn():
+		getCurrentPawn().reloadSpeedModifier = value
+
+func setPlayerDamageMod(value:float = 1):
+	if getCurrentPawn():
+		getCurrentPawn().damageModifier = value
+
 func removePhoneMenu()->void:
 	for i in get_children():
 		if i.is_in_group(&"phone"):

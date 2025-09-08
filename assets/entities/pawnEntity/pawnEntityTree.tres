@@ -1,4 +1,4 @@
-[gd_resource type="AnimationNodeBlendTree" load_steps=109 format=3 uid="uid://b5cxrwjhabvc1"]
+[gd_resource type="AnimationNodeBlendTree" load_steps=111 format=3 uid="uid://b5cxrwjhabvc1"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fd8cb"]
 animation = &"PawnFlinches/StaggerRightLeg"
@@ -488,10 +488,14 @@ resource_local_to_scene = true
 filter_enabled = true
 filters = ["..", "MaleSkeleton/Skeleton3D:Head", "MaleSkeleton/Skeleton3D:Neck", "MaleSkeleton/Skeleton3D:R_Forearm", "MaleSkeleton/Skeleton3D:R_Hand", "MaleSkeleton/Skeleton3D:R_Index0", "MaleSkeleton/Skeleton3D:R_Index1", "MaleSkeleton/Skeleton3D:R_Index2", "MaleSkeleton/Skeleton3D:R_Middle0", "MaleSkeleton/Skeleton3D:R_Middle1", "MaleSkeleton/Skeleton3D:R_Middle2", "MaleSkeleton/Skeleton3D:R_Pinkie0", "MaleSkeleton/Skeleton3D:R_Pinkie1", "MaleSkeleton/Skeleton3D:R_Pinkie2", "MaleSkeleton/Skeleton3D:R_Ring0", "MaleSkeleton/Skeleton3D:R_Ring1", "MaleSkeleton/Skeleton3D:R_Ring2", "MaleSkeleton/Skeleton3D:R_Shoulder", "MaleSkeleton/Skeleton3D:R_Thumb0", "MaleSkeleton/Skeleton3D:R_Thumb1", "MaleSkeleton/Skeleton3D:R_Thumb2", "MaleSkeleton/Skeleton3D:R_UpperArm"]
 
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_fd8cb"]
+
 [sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_ay0qa"]
 resource_local_to_scene = true
 filter_enabled = true
 filters = ["..", "MaleSkeleton/Skeleton3D:L_Forearm", "MaleSkeleton/Skeleton3D:L_Hand", "MaleSkeleton/Skeleton3D:L_Index0", "MaleSkeleton/Skeleton3D:L_Index1", "MaleSkeleton/Skeleton3D:L_Index2", "MaleSkeleton/Skeleton3D:L_Middle0", "MaleSkeleton/Skeleton3D:L_Middle1", "MaleSkeleton/Skeleton3D:L_Middle2", "MaleSkeleton/Skeleton3D:L_Pinkie0", "MaleSkeleton/Skeleton3D:L_Pinkie1", "MaleSkeleton/Skeleton3D:L_Pinkie2", "MaleSkeleton/Skeleton3D:L_Ring0", "MaleSkeleton/Skeleton3D:L_Ring1", "MaleSkeleton/Skeleton3D:L_Ring2", "MaleSkeleton/Skeleton3D:L_Shoulder", "MaleSkeleton/Skeleton3D:L_Thumb0", "MaleSkeleton/Skeleton3D:L_Thumb1", "MaleSkeleton/Skeleton3D:L_Thumb2", "MaleSkeleton/Skeleton3D:L_UpperArm"]
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_wbrh6"]
 
 [sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_xiwyx"]
 
@@ -511,7 +515,7 @@ node_connections = [&"output", 0, &"BlendSpace1D"]
 
 [resource]
 resource_local_to_scene = true
-graph_offset = Vector2(338.29376, -134.54492)
+graph_offset = Vector2(-269.9931, -71.626526)
 nodes/output/position = Vector2(3120, -320)
 nodes/coverMoveL/node = SubResource("AnimationNodeBlendSpace1D_ybj6p")
 nodes/coverMoveL/position = Vector2(2320, 380)
@@ -586,17 +590,17 @@ nodes/useShot/position = Vector2(1620, -380)
 nodes/useType/node = SubResource("AnimationNodeTransition_u7xl1")
 nodes/useType/position = Vector2(1300, -100)
 nodes/weaponBlend/node = SubResource("AnimationNodeBlend2_0lac3")
-nodes/weaponBlend/position = Vector2(780, -420)
+nodes/weaponBlend/position = Vector2(660, -420)
 nodes/weaponBlend_Left_blend/node = SubResource("AnimationNodeBlend2_ay0qa")
-nodes/weaponBlend_Left_blend/position = Vector2(980, -400)
+nodes/weaponBlend_Left_blend/position = Vector2(880, -420)
 nodes/weaponBlend_left/node = SubResource("AnimationNodeBlendTree_u1tbr")
-nodes/weaponBlend_left/position = Vector2(620, 0)
+nodes/weaponBlend_left/position = Vector2(180, 120)
 nodes/phoneOpened/node = SubResource("AnimationNodeBlend2_j0l1j")
 nodes/phoneOpened/position = Vector2(1880, -360)
 nodes/phoneOpen/node = SubResource("AnimationNodeAnimation_iy32p")
 nodes/phoneOpen/position = Vector2(1340, 200)
 nodes/weaponState/node = SubResource("AnimationNodeBlendTree_iy32p")
-nodes/weaponState/position = Vector2(-80, -40)
+nodes/weaponState/position = Vector2(-80, 0)
 nodes/phoneSeek/node = SubResource("AnimationNodeTimeSeek_fd8cb")
 nodes/phoneSeek/position = Vector2(1560, 20)
 nodes/staggerShot/node = SubResource("AnimationNodeOneShot_fd8cb")
@@ -617,4 +621,8 @@ nodes/Animation/position = Vector2(400, -1600)
 "nodes/Animation 5/position" = Vector2(320, -980)
 "nodes/Animation 6/node" = SubResource("AnimationNodeAnimation_ifork")
 "nodes/Animation 6/position" = Vector2(380, -820)
-node_connections = [&"output", 0, &"coverBlend", &"coverBlend", 0, &"leftThrowableBlend", &"coverBlend", 1, &"coverTransition", &"aimSprintScale", 0, &"aimSprintStrafe", &"aimTransition", 0, &"crouchBlend", &"aimTransition", 1, &"strafeType", &"crouchBlend", 0, &"idleSpaceSpeed", &"crouchBlend", 1, &"crouchScale", &"crouchScale", 0, &"crouchSpace", &"crouchStrafeBlend", 0, &"strafeSpace", &"crouchStrafeBlend", 1, &"crouchStrafeScale", &"crouchStrafeScale", 0, &"crouchStrafe", &"fallBlend", 0, &"jumpshot", &"fallBlend", 1, &"fallAnim", &"flinchShot", 0, &"phoneOpened", &"flinchShot", 1, &"flinchSpace", &"grabScale", 0, &"grabLeft", &"idleSpaceSpeed", 0, &"idleSpace", &"interactScale", 0, &"interactL", &"jumpshot", 0, &"aimTransition", &"jumpshot", 1, &"Jump", &"leftArmed_Throw", 0, &"armed", &"leftArmed_Throw", 1, &"throwTimeScale", &"leftThrowableBlend", 0, &"flinchShot", &"leftThrowableBlend", 1, &"leftArmed_Throw", &"coverTransition", 0, &"coverMoveL", &"coverTransition", 1, &"coverMoveR", &"strafeType", 0, &"crouchStrafeBlend", &"strafeType", 1, &"aimSprintScale", &"throwTimeScale", 0, &"throw", &"useScale", 0, &"useLeft", &"useShot", 0, &"staggerShot", &"useShot", 1, &"useType", &"useType", 0, &"useScale", &"useType", 1, &"grabScale", &"useType", 2, &"interactScale", &"weaponBlend", 0, &"fallBlend", &"weaponBlend", 1, &"weaponState", &"weaponBlend_Left_blend", 0, &"weaponBlend", &"weaponBlend_Left_blend", 1, &"weaponBlend_left", &"phoneOpened", 0, &"useShot", &"phoneOpened", 1, &"phoneSeek", &"phoneSeek", 0, &"phoneOpen", &"staggerShot", 0, &"weaponBlend_Left_blend", &"staggerShot", 1, &"staggerScale", &"staggerScale", 0, &"staggerTransition", &"staggerTransition", 0, &"Animation", &"staggerTransition", 1, &"Animation 2", &"staggerTransition", 2, &"Animation 3", &"staggerTransition", 3, &"Animation 4", &"staggerTransition", 4, &"Animation 5", &"staggerTransition", 5, &"Animation 6"]
+nodes/weaponBlend_Scale/node = SubResource("AnimationNodeTimeScale_wbrh6")
+nodes/weaponBlend_Scale/position = Vector2(180, -80)
+nodes/weaponBlendLeft_Scale/node = SubResource("AnimationNodeTimeScale_fd8cb")
+nodes/weaponBlendLeft_Scale/position = Vector2(511.74048, 78.666885)
+node_connections = [&"output", 0, &"coverBlend", &"coverBlend", 0, &"leftThrowableBlend", &"coverBlend", 1, &"coverTransition", &"aimSprintScale", 0, &"aimSprintStrafe", &"aimTransition", 0, &"crouchBlend", &"aimTransition", 1, &"strafeType", &"crouchBlend", 0, &"idleSpaceSpeed", &"crouchBlend", 1, &"crouchScale", &"crouchScale", 0, &"crouchSpace", &"crouchStrafeBlend", 0, &"strafeSpace", &"crouchStrafeBlend", 1, &"crouchStrafeScale", &"crouchStrafeScale", 0, &"crouchStrafe", &"fallBlend", 0, &"jumpshot", &"fallBlend", 1, &"fallAnim", &"flinchShot", 0, &"phoneOpened", &"flinchShot", 1, &"flinchSpace", &"grabScale", 0, &"grabLeft", &"idleSpaceSpeed", 0, &"idleSpace", &"interactScale", 0, &"interactL", &"jumpshot", 0, &"aimTransition", &"jumpshot", 1, &"Jump", &"leftArmed_Throw", 0, &"armed", &"leftArmed_Throw", 1, &"throwTimeScale", &"leftThrowableBlend", 0, &"flinchShot", &"leftThrowableBlend", 1, &"leftArmed_Throw", &"coverTransition", 0, &"coverMoveL", &"coverTransition", 1, &"coverMoveR", &"strafeType", 0, &"crouchStrafeBlend", &"strafeType", 1, &"aimSprintScale", &"throwTimeScale", 0, &"throw", &"useScale", 0, &"useLeft", &"useShot", 0, &"staggerShot", &"useShot", 1, &"useType", &"useType", 0, &"useScale", &"useType", 1, &"grabScale", &"useType", 2, &"interactScale", &"weaponBlend", 0, &"fallBlend", &"weaponBlend", 1, &"weaponBlend_Scale", &"weaponBlend_Left_blend", 0, &"weaponBlend", &"weaponBlend_Left_blend", 1, &"weaponBlendLeft_Scale", &"phoneOpened", 0, &"useShot", &"phoneOpened", 1, &"phoneSeek", &"phoneSeek", 0, &"phoneOpen", &"staggerShot", 0, &"weaponBlend_Left_blend", &"staggerShot", 1, &"staggerScale", &"staggerScale", 0, &"staggerTransition", &"staggerTransition", 0, &"Animation", &"staggerTransition", 1, &"Animation 2", &"staggerTransition", 2, &"Animation 3", &"staggerTransition", 3, &"Animation 4", &"staggerTransition", 4, &"Animation 5", &"staggerTransition", 5, &"Animation 6", &"weaponBlend_Scale", 0, &"weaponState", &"weaponBlendLeft_Scale", 0, &"weaponBlend_left"]

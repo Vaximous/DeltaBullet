@@ -1,6 +1,6 @@
 extends Projectile
 
-var max_damage : float
+
 @export var falloff : Curve = preload("res://assets/entities/projectiles/linear_falloff_curve.tres")
 @export var penetration_power : float = 1.0:
 	set(value):
@@ -10,7 +10,7 @@ var last_hit_data : Dictionary
 
 func set_projectile_owner(value : Node) -> void:
 	if value is Weapon:
-		max_damage = value.weaponResource.weaponDamage
+		#max_damage = value.weaponResource.weaponDamage
 		#penetration_power = value.weaponResource.bulletPenetration
 		falloff = value.weaponResource.damageFalloff
 	projectile_owner = value

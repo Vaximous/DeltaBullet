@@ -8,25 +8,23 @@ var tween : Tween
 var norm : Vector3 = Vector3.UP
 
 func _ready() -> void:
-	%bloodMesh.hide()
-	get_tree().create_timer(2.5).timeout.connect(queue_free)
-	%bloodMesh.global_position = self.global_position
-	await get_tree().create_timer(0.05).timeout
-	%bloodMesh.show()
+	if mesh:
+		var dup = mesh.mesh.duplicate()
+		mesh.mesh = mesh.mesh.duplicate()
 
 func _process(delta: float) -> void:
-	if tween:
-		tween.kill()
-	tween = create_tween()
-	tween.parallel().tween_method(meshInterpPos,mesh.global_position,global_position,0.05).set_trans(Tween.TRANS_LINEAR)
-	mesh.look_at(velocity,norm,true)
+	pass
 
 
 func _physics_process(delta: float) -> void:
 	var col
-	if framesSinceRecalc >= framesRecalculation:
-		col = move_and_collide(velocity * delta)
+	if Engine.get_physics_frames() % 2 == 0:
+		col = move_and_collide((velocity * randf_range(0.25,0.35)) * delta)
 		velocity += get_gravity() * delta * 16
+		if mesh:
+			mesh.position = global_position
+			mesh.mesh.size.x = velocity.length() * 0.004
+			mesh.look_at(velocity,norm,true)
 		#var tgt = mesh.transform.looking_at(mesh.transform.origin - velocity, Vector3.MODEL_TOP)
 		#tween.parallel().tween_method(meshInterpRot,mesh.rotation,velocity * Vector3.DOWN,0.05).set_trans(Tween.TRANS_LINEAR)
 		#updateLine(delta)
@@ -48,9 +46,13 @@ func _physics_process(delta: float) -> void:
 			%bloodSpurt.restart()
 			%bloodSpurt.reparent(gameManager.world.worldParticles)
 			queue_free()
-		framesSinceRecalc = 0
-	else:
-		framesSinceRecalc += 1
+
+
+		if tween:
+			tween.kill()
+		tween = create_tween()
+		tween.parallel().tween_method(meshInterpPos,mesh.position,global_position,0.05).set_trans(Tween.TRANS_LINEAR)
+
 
 func meshInterpRot(rot:Vector3)->void:
 	if mesh:

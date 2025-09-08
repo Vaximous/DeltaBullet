@@ -1,25 +1,23 @@
-[gd_scene load_steps=14 format=3 uid="uid://bm8ylk1xdojch"]
+[gd_scene load_steps=15 format=3 uid="uid://bm8ylk1xdojch"]
 
 [ext_resource type="Script" uid="uid://cmkwdvxjfsb4l" path="res://assets/entities/emitters/bloodDroplet/bloodDroplets.gd" id="1_250ge"]
 [ext_resource type="Material" uid="uid://co86jd67xrcl" path="res://assets/materials/blood/spurts/bloodSpurt3.tres" id="2_mq2q0"]
+[ext_resource type="Texture2D" uid="uid://cj0kfcr0vsi8l" path="res://assets/textures/blood/blood_spurt/bspurt1.png" id="2_qjtha"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_mq2q0"]
 radius = 0.08
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_250ge"]
+transparency = 1
 cull_mode = 2
-diffuse_mode = 3
-specular_mode = 1
-disable_ambient_light = true
-albedo_color = Color(0.5568628, 0.054901954, 0, 1)
-metallic = 0.53
-roughness = 0.47
+albedo_texture = ExtResource("2_qjtha")
 disable_receive_shadows = true
 billboard_keep_scale = true
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_mq2q0"]
 material = SubResource("StandardMaterial3D_250ge")
-size = Vector2(0.025, 0.145)
+size = Vector2(0.015, 0.02)
+orientation = 0
 
 [sub_resource type="Curve" id="Curve_qjtha"]
 _data = [Vector2(0, 1), 0.0, -0.470953, 0, 0, Vector2(1, 0), -1.15979, 0.0, 0, 0]
@@ -73,9 +71,9 @@ shape = SubResource("SphereShape3D_mq2q0")
 
 [node name="bloodMesh" type="MeshInstance3D" parent="."]
 unique_name_in_owner = true
+physics_interpolation_mode = 1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0130171, 0, 0)
 top_level = true
-visible = false
 layers = 8
 mesh = SubResource("PlaneMesh_mq2q0")
 

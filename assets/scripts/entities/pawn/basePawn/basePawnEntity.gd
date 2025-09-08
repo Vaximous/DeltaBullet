@@ -706,6 +706,8 @@ func die(killer) -> void:
 		playKillSound()
 		isPawnDead = true
 		var ragdoll = createRagdoll(lastHitPart, killer)
+		if isPlayerPawn():
+			gameManager.removePhoneMenu()
 		#moveHitboxDecals()
 		moveDecalsToRagdoll(ragdoll)
 		endPawn()
@@ -1731,7 +1733,7 @@ func playPhoneOpenAnimation()->void:
 		if phoneTween:
 			phoneTween.kill()
 		phoneTween = create_tween()
-		#animationTree.set("parameters/phoneSeek/seek_request",0)
+		animationTree.set("parameters/phoneSeek/seek_request",0)
 		%flipphone.visible = true
 		phoneTween.tween_method(setPhoneBlend,animationTree.get("parameters/phoneOpened/blend_amount"),1,0.15).set_ease(defaultEaseType).set_trans(defaultTransitionType)
 
@@ -1752,12 +1754,20 @@ func togglePhone()->void:
 
 		openPhone()
 
+func showPhone()->void:
+	gameManager.initializePhoneMenu(self)
+
+func deletePhone()->void:
+	gameManager.removePhoneMenu()
+
 func openPhone()->void:
 	if isPlayerPawn() and !isPawnDead:
 		currentItemIndex = 0
 		currentItem = null
 		playPhoneOpenAnimation()
 		isUsingPhone = true
+		#direction = Vector3.ZERO
+		#velocity = Vector3.ZERO
 
 func closePhone()->void:
 	if isPlayerPawn() and !isPawnDead:

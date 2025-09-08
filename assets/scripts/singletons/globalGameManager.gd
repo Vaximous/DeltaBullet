@@ -1,5 +1,6 @@
 extends Node
 ## Global Game Manager Start
+var phoneUI : PackedScene = preload("res://assets/scenes/ui/phoneUI/phoneUI.tscn")
 var bloodSpurts : Array[StandardMaterial3D] = [preload("res://assets/materials/blood/spurts/bloodSpurt.tres"),preload("res://assets/materials/blood/spurts/bloodSpurt2.tres"),preload("res://assets/materials/blood/spurts/bloodSpurt3.tres"),preload("res://assets/materials/blood/spurts/bloodSpurt4.tres"),preload("res://assets/materials/blood/spurts/bloodSpurt5.tres"),preload("res://assets/materials/blood/spurts/bloodSpurt6.tres"),preload("res://assets/materials/blood/spurts/bloodSpurt7.tres")]
 var pawnScene = preload("res://assets/entities/pawnEntity/pawnEntity.tscn").duplicate()
 var menuScenes = [preload("res://assets/scenes/menu/menuScenes/menuscene1.tscn"),preload("res://assets/scenes/menu/menuScenes/menuScene2.tscn"),preload("res://assets/scenes/menu/menuScenes/menuScene3.tscn")]
@@ -113,6 +114,24 @@ func freeOrphanNodes():
 	#print("Kept : %s"%keep)
 	#orphanedData = keep
 	freeOrphans.emit()
+
+func removePhoneMenu()->void:
+	for i in get_children():
+		if i.is_in_group(&"phone"):
+			i.queue_free()
+			#hideMouse()
+
+
+func initializePhoneMenu(pawn:BasePawn)->void:
+	gameManager.pauseMenu.canPause = false
+	var phoneInst = phoneUI.instantiate()
+	var phoneHolder = CanvasLayer.new()
+	add_child(phoneHolder)
+	phoneHolder.layer = 2
+	phoneHolder.add_to_group(&"phone")
+	phoneHolder.add_child(phoneInst)
+	phoneInst.init(pawn)
+	showMouse()
 
 
 func doKillEffect(pawn:BasePawn,deathDealer:BasePawn)->void:
@@ -346,11 +365,12 @@ func castRay(cam : Camera3D, range : float = 50000, mask := 0b10111, exceptions 
 	return state.intersect_ray(params)
 
 
-func createDroplet(position:Vector3, velocity : Vector3 = Vector3.ONE, amount : int = 1,angle:float = 0):
+func createDroplet(position:Vector3, velocity : Vector3 = Vector3.ONE, amount : int = 1,normal:Vector3 = Vector3.UP):
 	if is_instance_valid(world):
 		for i in amount:
 			var flipVel = [true,false].pick_random()
 			var droplet : BloodDroplet = bloodDrop.instantiate()
+			droplet.norm = normal
 			world.worldParticles.add_child(droplet)
 			droplet.global_position = position
 			if !flipVel:
@@ -849,6 +869,7 @@ func pick_weighted(weightedArray:Array) -> int:
 			break
 	return chosen_index
 
+
 func createSoundAtPosition(stream:AudioStream,position:Vector3):
 	var aud = AudioStreamPlayer3D.new()
 	if world:
@@ -879,6 +900,7 @@ func decalAmountCheck()->void:
 			decals.remove_at(0)
 	return
 
+
 func createBloodPuff(bPosition:Vector3 = Vector3.ZERO,minAmount:int=2,maxAmount:int=10)->void:
 		var bloodSpurt : GPUParticles3D = load("res://assets/particles/bloodSpurt/bloodSpurt.tscn").instantiate()
 		gameManager.world.worldMisc.add_child(bloodSpurt)
@@ -886,6 +908,7 @@ func createBloodPuff(bPosition:Vector3 = Vector3.ZERO,minAmount:int=2,maxAmount:
 		bloodSpurt.minParticles = minAmount
 		bloodSpurt.maxParticles = maxAmount
 		bloodSpurt.emitting = true
+
 
 func createPulverizeSound(pPosition:Vector3 = Vector3.ZERO)->void:
 	var pulverizeSound : AudioStreamPlayer3D = AudioStreamPlayer3D.new()
@@ -900,6 +923,7 @@ func createPulverizeSound(pPosition:Vector3 = Vector3.ZERO)->void:
 	pulverizeSound.finished.connect(pulverizeSound.queue_free)
 	pulverizeSound.play()
 
+
 func physEntityCheck()->void:
 	var physEntities : Array = Engine.get_main_loop().get_nodes_in_group(&"physicsEntity")
 	#print(physEntities)
@@ -908,6 +932,7 @@ func physEntityCheck()->void:
 			physEntities[0].queue_free()
 			physEntities.remove_at(0)
 	return
+
 
 func godPawn(pawn:BasePawn)->void:
 	if pawn.healthComponent.has_meta(&"god"):
@@ -919,6 +944,7 @@ func godPawn(pawn:BasePawn)->void:
 	else:
 		pawn.healthComponent.set_meta(&"god", true)
 		notify_warn("God Mode is %s for %s"%[pawn.healthComponent.get_meta(&"god"),pawn.name],2,1)
+
 
 func infiniteAmmo()->void:
 	for i in playerPawns:

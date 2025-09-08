@@ -12,8 +12,6 @@
 
 [sub_resource type="Resource" id="Resource_j36xa"]
 script = ExtResource("2_bykjx")
-shopName = &" "
-saleCategories = 0
 itemsToSell = Array[PackedScene]([null, null, null, null, null])
 
 [sub_resource type="Gradient" id="Gradient_523ba"]
@@ -432,6 +430,7 @@ streams_count = 1
 stream_0/stream = ExtResource("6_s2d3s")
 
 [node name="Shop" type="CanvasLayer"]
+layer = 2
 script = ExtResource("2_w7wba")
 shopResource = SubResource("Resource_j36xa")
 
@@ -442,7 +441,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
+mouse_filter = 1
 theme = ExtResource("1_n1s24")
 
 [node name="topBar" type="Control" parent="shopUi"]
@@ -463,8 +462,8 @@ texture = SubResource("GradientTexture2D_36g7h")
 [node name="shopName" type="Label" parent="shopUi/topBar/topBarimage"]
 modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(724.89, 0)
-layout_mode = 2
-offset_left = 23.9999
+layout_mode = 0
+offset_left = 24.0
 offset_top = 10.0
 offset_right = 748.89
 offset_bottom = 62.0
@@ -504,7 +503,7 @@ mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_2o57p")
 
 [node name="panel" type="Panel" parent="shopUi/previewHolder/previewBG"]
-layout_mode = 2
+layout_mode = 0
 anchor_left = 0.038
 anchor_top = 0.034
 anchor_right = 0.958
@@ -516,7 +515,7 @@ offset_bottom = -0.300018
 theme_override_styles/panel = SubResource("StyleBoxTexture_h7f8e")
 
 [node name="subViewportContainer" type="SubViewportContainer" parent="shopUi/previewHolder/previewBG/panel"]
-layout_mode = 2
+layout_mode = 0
 anchor_left = 0.033
 anchor_top = 0.033
 anchor_right = 0.975
@@ -733,7 +732,7 @@ libraries = {
 
 [node name="closePreview" type="Button" parent="shopUi/previewHolder/previewBG"]
 layout_mode = 1
-anchors_preset = 1
+anchors_preset = -1
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -48.0

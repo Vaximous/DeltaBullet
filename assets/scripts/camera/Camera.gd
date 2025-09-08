@@ -97,7 +97,7 @@ var controllerVector = Vector2.ZERO:
 			camPivot.rotation_degrees.y += motionX
 			vertical.rotation_degrees.x += motionY
 			#Lock Cam
-			vertical.rotation.x = clamp(vertical.rotation.x, deg_to_rad(-88), deg_to_rad(88))
+			vertical.rotation.x = clamp(vertical.rotation.x, deg_to_rad(-85), deg_to_rad(85))
 var defaultZoomAmount : float = 25.0
 var defaultZoomSpeed : float = 16.0
 @export var zoomSpeed : float = 11.0:
@@ -340,7 +340,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		camPivot.rotate_y(motionX)
 		vertical.rotate_x(motionY)
 		#Lock Cam
-		vertical.rotation.x = clamp(vertical.rotation.x, deg_to_rad(-88), deg_to_rad(88))
+		vertical.rotation.x = clamp(vertical.rotation.x, deg_to_rad(-85), deg_to_rad(85))
 
 func posessObject(object, posessPart:Node3D = object)->void:
 	if object.is_in_group("Posessable") and !object == null:

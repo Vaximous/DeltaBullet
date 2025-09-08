@@ -148,6 +148,7 @@ func applyAudio()->void:
 	AudioServer.set_bus_volume_db(1,linear_to_db(UserConfig.audio_UiVolume))
 	AudioServer.set_bus_volume_db(2,linear_to_db(UserConfig.audio_GameVolume))
 	AudioServer.set_bus_volume_db(3,linear_to_db(UserConfig.audio_MusicVolume))
+	AudioServer.set_bus_volume_db(4,linear_to_db(UserConfig.audio_ambience_volume))
 
 
 func _on_ragdoll_delete_time_value_changed(value)->void:

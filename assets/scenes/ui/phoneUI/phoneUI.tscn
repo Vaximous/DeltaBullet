@@ -1,4 +1,27 @@
-[gd_scene format=3 uid="uid://bgjq1tua1qj7g"]
+[gd_scene load_steps=5 format=3 uid="uid://bgjq1tua1qj7g"]
+
+[ext_resource type="Texture2D" uid="uid://bag0nbin3udvs" path="res://assets/textures/misc/bootlogo.png" id="1_cavcd"]
+[ext_resource type="Script" uid="uid://drlec1sueg0nt" path="res://assets/scenes/ui/phoneUI/phone_ui.gd" id="1_tn2ty"]
+
+[sub_resource type="Shader" id="Shader_tn2ty"]
+code = "shader_type canvas_item;
+
+
+uniform sampler2D screen : hint_screen_texture, filter_linear_mipmap;
+uniform lowp float blur_amount : hint_range(0.0, 5.0, 0.0);
+uniform vec3 tint : source_color;
+
+
+void fragment() {
+	// Place fragment code here.
+	COLOR.rgb = textureLod(screen, SCREEN_UV, blur_amount).rgb * tint;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e8vmq"]
+shader = SubResource("Shader_tn2ty")
+shader_parameter/blur_amount = 1.0147060453891754
+shader_parameter/tint = Color(1, 1, 1, 1)
 
 [node name="phoneUi" type="Panel"]
 anchors_preset = -1
@@ -12,25 +35,113 @@ offset_right = 0.599976
 offset_bottom = 0.199951
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_tn2ty")
 
 [node name="panelContainer" type="PanelContainer" parent="."]
-layout_mode = 0
-offset_left = 14.0
-offset_top = 19.0
-offset_right = 640.0
-offset_bottom = 808.0
-
-[node name="panel" type="Panel" parent="panelContainer"]
-layout_mode = 2
-
-[node name="gridContainer" type="GridContainer" parent="panelContainer/panel"]
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_left = 14.0
+offset_top = 19.0
+offset_right = -18.000061
+offset_bottom = -15.999939
+mouse_filter = 1
+
+[node name="phoneBG" type="TextureRect" parent="panelContainer"]
+clip_contents = true
+layout_mode = 2
+texture = ExtResource("1_cavcd")
+stretch_mode = 3
+
+[node name="blur" type="ColorRect" parent="panelContainer"]
+material = SubResource("ShaderMaterial_e8vmq")
+layout_mode = 2
+color = Color(1, 1, 1, 0.6)
+
+[node name="vBoxContainer" type="VBoxContainer" parent="panelContainer"]
+layout_mode = 2
+
+[node name="hBoxContainer" type="HBoxContainer" parent="panelContainer/vBoxContainer"]
+layout_mode = 2
+
+[node name="label" type="Label" parent="panelContainer/vBoxContainer/hBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Roaming"
+
+[node name="label2" type="Label" parent="panelContainer/vBoxContainer/hBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Phone"
+horizontal_alignment = 1
+
+[node name="welcomeLabel" type="Label" parent="panelContainer/vBoxContainer/hBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Weclome, Player"
+horizontal_alignment = 2
+
+[node name="gritAmount" type="Label" parent="panelContainer/vBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Grit: 100G"
+horizontal_alignment = 2
+
+[node name="pawnInfo" type="Label" parent="panelContainer/vBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Rank: Pipsqueak| Level: 0"
+horizontal_alignment = 2
+
+[node name="hSeparator" type="HSeparator" parent="panelContainer/vBoxContainer"]
+layout_mode = 2
+
+[node name="centerContainer" type="CenterContainer" parent="panelContainer/vBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="gridContainer" type="GridContainer" parent="panelContainer/vBoxContainer/centerContainer"]
+layout_mode = 2
 columns = 3
 
-[node name="textureButton" type="TextureButton" parent="panelContainer/panel/gridContainer"]
+[node name="stats" type="Button" parent="panelContainer/vBoxContainer/centerContainer/gridContainer"]
+custom_minimum_size = Vector2(128, 128)
 layout_mode = 2
+text = "Stats"
+
+[node name="Skills" type="Button" parent="panelContainer/vBoxContainer/centerContainer/gridContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+text = "Skills"
+
+[node name="intel" type="Button" parent="panelContainer/vBoxContainer/centerContainer/gridContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+text = "Notes
+"
+
+[node name="cheats" type="Button" parent="panelContainer/vBoxContainer/centerContainer/gridContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+text = "Cheats"
+
+[node name="map" type="Button" parent="panelContainer/vBoxContainer/centerContainer/gridContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+text = "Map"
+
+[node name="phone" type="Button" parent="panelContainer/vBoxContainer/centerContainer/gridContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+text = "Phone Settings
+"
+
+[node name="hSeparator2" type="HSeparator" parent="panelContainer/vBoxContainer"]
+layout_mode = 2
+
+[node name="label2" type="Label" parent="panelContainer/vBoxContainer"]
+layout_mode = 2
+text = "CrapOS V.01"
+horizontal_alignment = 2

@@ -5,19 +5,25 @@ const framesRecalculation : int = 5
 var framesSinceRecalc : int = 0
 var meshDraw = ImmediateMesh.new()
 var tween : Tween
+var norm : Vector3 = Vector3.UP
 
 func _ready() -> void:
+	%bloodMesh.hide()
 	get_tree().create_timer(2.5).timeout.connect(queue_free)
 	%bloodMesh.global_position = self.global_position
+	await get_tree().create_timer(0.05).timeout
+	%bloodMesh.show()
+
+func _process(delta: float) -> void:
+	if tween:
+		tween.kill()
+	tween = create_tween()
+	tween.parallel().tween_method(meshInterpPos,mesh.global_position,global_position,0.05).set_trans(Tween.TRANS_LINEAR)
+	mesh.look_at(velocity,norm,true)
 
 
 func _physics_process(delta: float) -> void:
 	var col
-	if tween:
-		tween.kill()
-	tween = create_tween()
-	tween.parallel().tween_method(meshInterpPos,mesh.global_position,global_position,0.02).set_trans(Tween.TRANS_LINEAR)
-	mesh.look_at(velocity,Vector3.UP,true)
 	if framesSinceRecalc >= framesRecalculation:
 		col = move_and_collide(velocity * delta)
 		velocity += get_gravity() * delta * 16
@@ -38,6 +44,9 @@ func _physics_process(delta: float) -> void:
 			audio.max_distance = 0.5
 			audio.bus = &"Sounds"
 			audio.play()
+			%bloodSpurt.finished.connect(%bloodSpurt.queue_free)
+			%bloodSpurt.restart()
+			%bloodSpurt.reparent(gameManager.world.worldParticles)
 			queue_free()
 		framesSinceRecalc = 0
 	else:

@@ -339,6 +339,7 @@ var isThrowing : bool = false
 @export_subgroup("Modifiers")
 @export var reloadSpeedModifier : float = 1.0
 @export var damageModifier : float = 1.0
+@export var fireRateModifier : float = 1.0
 @export_subgroup("Inventory")
 var pawnCash : int = 0
 var itemNames : Array

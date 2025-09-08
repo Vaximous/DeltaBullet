@@ -123,6 +123,10 @@ func setPlayerDamageMod(value:float = 1):
 	if getCurrentPawn():
 		getCurrentPawn().damageModifier = value
 
+func setPlayerFireRateMod(value:float = 1):
+	if getCurrentPawn():
+		getCurrentPawn().fireRateModifier = value
+
 func removePhoneMenu()->void:
 	for i in get_children():
 		if i.is_in_group(&"phone"):

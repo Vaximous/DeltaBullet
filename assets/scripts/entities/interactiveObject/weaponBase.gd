@@ -235,17 +235,25 @@ func checkWeaponBlend()->void:
 			weaponOwner.disableLeftHand()
 
 func fire()->void:
+	var weaponSpeed
+
+	if is_instance_valid(weaponOwner):
+		weaponSpeed = weaponResource.weaponFireRate / weaponOwner.fireRateModifier
+	else:
+		weaponSpeed = weaponResource.weaponFireRate
+
 	animationPlayer.speed_scale = 1
 	animationTree.set("parameters/weaponStateSpeed/scale",1)
+	setWeaponBlendScale(1)
 	if !isFireReady():
 		return
 	setWeaponRecoil()
-	setWeaponBlendScale(1)
+	#setWeaponBlendScale(1)
 	if currentAmmo < weaponResource.ammoConsumption and !isBusy:
 		#The weapon is dry. Do the dry fire and wait a bit.
 		isBusy = true
 		dry_fired.emit()
-		await get_tree().create_timer(weaponResource.weaponFireRate,false).timeout
+		await get_tree().create_timer(weaponSpeed,false).timeout
 		isBusy = false
 		return
 
@@ -295,7 +303,8 @@ func fire()->void:
 				smokeInstance.global_rotation = muzzlePoint.global_rotation
 
 
-		await get_tree().create_timer(weaponResource.weaponFireRate,false).timeout
+
+		await get_tree().create_timer(weaponSpeed,false).timeout
 		isFiring = false
 	return
 

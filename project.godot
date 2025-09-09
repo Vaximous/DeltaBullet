@@ -30,7 +30,7 @@ DSP/dsp_buffer_count=4
 
 warnings/check_invalid_track_paths=false
 warnings/check_angle_interpolation_type_conflicting=false
-warnings/physics_interpolation/enable_warnings=true
+warnings/physics_interpolation/enable_warnings=false
 
 [application]
 

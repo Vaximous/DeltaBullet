@@ -15,6 +15,7 @@ var followEntity : Node3D:
 			if !followEntity.healthComponent.healthChanged.is_connected(hpCheck):
 				followEntity.healthComponent.healthChanged.connect(hpCheck.unbind(1))
 @onready var vignette : ColorRect = $vignette
+@onready var closeCrosshair : TextureRect = $closeCrosshair
 @onready var reloadProgress : TextureProgressBar = $Crosshair/reloadProgress
 @onready var gameNotifications : VBoxContainer = $marginContainer/control/gameNotifications
 @onready var questNotifHolder : MarginContainer = $questNotification

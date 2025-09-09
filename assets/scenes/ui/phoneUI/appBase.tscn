@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bqja4fa2wfcko"]
+
+[ext_resource type="Script" uid="uid://lsrxc1tbntne" path="res://assets/scenes/ui/phoneUI/app_base.gd" id="1_uf5ao"]
+
+[node name="appBase" type="Button"]
+custom_minimum_size = Vector2(128, 128)
+text = "Base"
+script = ExtResource("1_uf5ao")

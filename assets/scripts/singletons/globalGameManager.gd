@@ -4,6 +4,7 @@ var phoneUI : PackedScene = preload("res://assets/scenes/ui/phoneUI/phoneUI.tscn
 var bloodSpurts : Array[StandardMaterial3D] = [preload("res://assets/materials/blood/spurts/bloodSpurt.tres"),preload("res://assets/materials/blood/spurts/bloodSpurt2.tres"),preload("res://assets/materials/blood/spurts/bloodSpurt3.tres"),preload("res://assets/materials/blood/spurts/bloodSpurt4.tres"),preload("res://assets/materials/blood/spurts/bloodSpurt5.tres"),preload("res://assets/materials/blood/spurts/bloodSpurt6.tres"),preload("res://assets/materials/blood/spurts/bloodSpurt7.tres")]
 var pawnScene = preload("res://assets/entities/pawnEntity/pawnEntity.tscn").duplicate()
 var menuScenes = [preload("res://assets/scenes/menu/menuScenes/menuscene1.tscn"),preload("res://assets/scenes/menu/menuScenes/menuScene2.tscn"),preload("res://assets/scenes/menu/menuScenes/menuScene3.tscn")]
+var defaultPawnTreeRoot = load("res://assets/entities/pawnEntity/pawnEntity.tres")
 
 signal freeOrphans
 #Global Sound Player
@@ -115,6 +116,21 @@ func freeOrphanNodes():
 	#orphanedData = keep
 	freeOrphans.emit()
 
+func get_modified_stat(node : Node, stat : StringName) -> float:
+	var base = node.get(stat)
+	if base == null:
+		return 0.0
+	var stack = get_modifier_stack(node)
+	return stack.get_modified_stat(stat, base)
+
+
+func get_modifier_stack(node : Node) -> StatModifierStack:
+	if node.has_node(^"StatModifierStack"):
+		return node.get_node(^"StatModifierStack")
+	var new = StatModifierStack.new()
+	node.add_child(new)
+	return new
+
 func setPlayerReloadSpeed(value:float = 1):
 	if getCurrentPawn():
 		getCurrentPawn().reloadSpeedModifier = value
@@ -122,6 +138,14 @@ func setPlayerReloadSpeed(value:float = 1):
 func setPlayerDamageMod(value:float = 1):
 	if getCurrentPawn():
 		getCurrentPawn().damageModifier = value
+
+func setPlayerSpreadMod(value:float = 1):
+	if getCurrentPawn():
+		getCurrentPawn().spreadModifier = value
+
+func setPlayerRecoilMod(value:float = 1):
+	if getCurrentPawn():
+		getCurrentPawn().recoilModifier = value
 
 func setPlayerFireRateMod(value:float = 1):
 	if getCurrentPawn():
@@ -377,19 +401,22 @@ func castRay(cam : Camera3D, range : float = 50000, mask := 0b10111, exceptions 
 	return state.intersect_ray(params)
 
 
-func createDroplet(position:Vector3, velocity : Vector3 = Vector3.ONE, amount : int = 1,normal:Vector3 = Vector3.UP):
+func createDroplet(position:Vector3, velocity : Vector3 = Vector3.ONE, amount : int = 1,normal:Vector3 = Vector3.UP, allowRandomFlip:bool = true):
 	if is_instance_valid(world):
 		for i in amount:
-			var flipVel = [true,false].pick_random()
+			#var flipVel = [true,false].pick_random()
 			var droplet : BloodDroplet = bloodDrop.instantiate()
 			droplet.norm = normal
 			world.worldParticles.add_child(droplet)
 			droplet.global_position = position
-			if !flipVel:
-				droplet.velocity += Vector3(velocity.x * randf_range(-1,2),velocity.y * randf_range(-1,2),velocity.z * randf_range(-1,2))
+			if allowRandomFlip:
+				var flipVel = [true,false].pick_random()
+				if !flipVel:
+					droplet.velocity += Vector3(velocity.x * randf_range(-1,2),velocity.y * randf_range(-1,2),velocity.z * randf_range(-1,2))
+				else:
+					droplet.velocity += -Vector3(velocity.x * randf_range(-1,2),velocity.y * randf_range(-1,2),velocity.z * randf_range(-1,2))
 			else:
-				droplet.velocity += -Vector3(velocity.x * randf_range(-1,2),velocity.y * randf_range(-1,2),velocity.z * randf_range(-1,2))
-
+				droplet.velocity += Vector3(velocity.x * randf_range(1,3),velocity.y * randf_range(1,3),velocity.z * randf_range(1,3))
 
 
 func getEventSignal(event : StringName) -> Signal:

@@ -1,8 +1,31 @@
 extends Panel
+@onready var phoneBackground : TextureRect = $panelContainer/phoneBG
+@onready var phoneContainer : PanelContainer = $panelContainer
+@onready var appContainer : GridContainer = $panelContainer/homeContainer/centerContainer/appContainer
+@onready var homeContainer : VBoxContainer = $panelContainer/homeContainer
 var usingPawn : BasePawn
 @export var currentApp : Control = null
 var isInApp : bool = false
 
+func setupApps()->void:
+	for i in appContainer.get_children():
+		if i is AppButton and is_instance_valid(i.app):
+			i.pressed.connect(setCurrentApp.bind(i.app))
+
+func removeCurrentApp()->void:
+	currentApp = null
+	isInApp = false
+	homeContainer.show()
+	phoneBackground.show()
+
+func setCurrentApp(app:PackedScene)->void:
+	var instancedApp = app.instantiate()
+	phoneContainer.add_child(instancedApp)
+	isInApp = true
+	currentApp = instancedApp
+	currentApp.tree_exited.connect(removeCurrentApp)
+	homeContainer.hide()
+	phoneBackground.hide()
 
 func init(pawn:BasePawn)->void:
 	modulate = Color.TRANSPARENT
@@ -12,7 +35,7 @@ func init(pawn:BasePawn)->void:
 
 	tween = create_tween()
 	tween.tween_property(self,"modulate",Color.WHITE,0.5).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
-
+	setupApps()
 	if pawn:
 		usingPawn = pawn
 		pawn.direction = Vector3.ZERO

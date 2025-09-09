@@ -1,5 +1,6 @@
 extends Node
 ##Gamestate
+var notes : Dictionary
 var gameState : Dictionary = {
 	"saveVersion" : 1.0,
 	"stateSave" : "",

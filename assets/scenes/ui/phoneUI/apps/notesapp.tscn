@@ -1,0 +1,70 @@
+[gd_scene load_steps=5 format=3 uid="uid://dbokbcmuyyg1u"]
+
+[ext_resource type="Script" uid="uid://o43mycwhrpgq" path="res://assets/scenes/ui/phoneUI/apps/notesapp.gd" id="1_56amw"]
+[ext_resource type="Texture2D" uid="uid://cfjdmsk5cnn2b" path="res://assets/textures/misc/gameIcon.png" id="1_evpp7"]
+[ext_resource type="Script" uid="uid://bh5imlad1rnkk" path="res://assets/scenes/ui/phoneUI/apps/notes/note.gd" id="2_3vqto"]
+[ext_resource type="Resource" uid="uid://qed8pgrqbfb6" path="res://assets/scenes/ui/phoneUI/apps/notes/testNote.tres" id="3_t41r4"]
+
+[node name="notesapp" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("1_56amw")
+notes = Array[ExtResource("2_3vqto")]([ExtResource("3_t41r4")])
+
+[node name="textureRect" type="TextureRect" parent="."]
+layout_mode = 2
+texture = ExtResource("1_evpp7")
+stretch_mode = 3
+
+[node name="noteSelection" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="hBoxContainer" type="HBoxContainer" parent="noteSelection"]
+layout_mode = 2
+
+[node name="back" type="Button" parent="noteSelection/hBoxContainer"]
+layout_mode = 2
+text = "<"
+
+[node name="label" type="Label" parent="noteSelection/hBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Notes"
+horizontal_alignment = 1
+
+[node name="hSeparator" type="HSeparator" parent="noteSelection"]
+layout_mode = 2
+
+[node name="noteReader" type="VBoxContainer" parent="."]
+visible = false
+layout_mode = 2
+
+[node name="hBoxContainer" type="HBoxContainer" parent="noteReader"]
+layout_mode = 2
+
+[node name="back" type="Button" parent="noteReader/hBoxContainer"]
+layout_mode = 2
+text = "<"
+
+[node name="label" type="Label" parent="noteReader/hBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Notes"
+horizontal_alignment = 1
+
+[node name="hSeparator" type="HSeparator" parent="noteReader"]
+layout_mode = 2
+
+[node name="richTextLabel" type="RichTextLabel" parent="noteReader"]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "Test"
+horizontal_alignment = 1
+
+[connection signal="pressed" from="noteSelection/hBoxContainer/back" to="." method="queue_free"]
+[connection signal="pressed" from="noteReader/hBoxContainer/back" to="." method="back"]

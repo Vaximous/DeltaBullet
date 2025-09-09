@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://1d1rfqprpnrb"]
+[gd_scene load_steps=35 format=3 uid="uid://1d1rfqprpnrb"]
 
 [ext_resource type="Script" uid="uid://bqcb21u5nterd" path="res://assets/entities/camera/HUD.gd" id="1_on6xd"]
 [ext_resource type="Shader" uid="uid://c75blutw6w8na" path="res://assets/scenes/ui/radialBlur.gdshader" id="2_4y830"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://birbjoai58xb7" path="res://assets/textures/crosshair/crosshair001.png" id="4_uhc5s"]
 [ext_resource type="AudioStream" uid="uid://d3eqn61hfgwuf" path="res://assets/sounds/playerhurt/playerhurtambience.wav" id="5_dhgxm"]
 [ext_resource type="Texture2D" uid="uid://bkhy36pmg4nfi" path="res://assets/textures/ui/hpBar.png" id="6_0pnxc"]
+[ext_resource type="Texture2D" uid="uid://bado0y6x8is5j" path="res://assets/textures/crosshair/crosshair008.png" id="6_kfu1x"]
 [ext_resource type="Texture2D" uid="uid://btlv87lcgekb7" path="res://assets/textures/ui/healthbar.png" id="7_mtxcq"]
 [ext_resource type="Texture2D" uid="uid://btse3nqgw3085" path="res://assets/textures/ui/ammoBar.png" id="8_x878b"]
 [ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="9_bxaeg"]
@@ -271,6 +272,21 @@ pivot_offset = Vector2(36.255, 36.145)
 texture = ExtResource("4_uhc5s")
 script = SubResource("GDScript_quas3")
 dynamicCrosshair = false
+
+[node name="closeCrosshair" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -36.0
+offset_top = -36.0
+offset_right = 36.0
+offset_bottom = 36.0
+pivot_offset = Vector2(36.255, 36.145)
+texture = ExtResource("6_kfu1x")
 
 [node name="vignette" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_5giah")

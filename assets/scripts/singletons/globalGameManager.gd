@@ -4,7 +4,7 @@ var phoneUI : PackedScene = preload("res://assets/scenes/ui/phoneUI/phoneUI.tscn
 var bloodSpurts : Array[StandardMaterial3D] = [preload("res://assets/materials/blood/spurts/bloodSpurt.tres"),preload("res://assets/materials/blood/spurts/bloodSpurt2.tres"),preload("res://assets/materials/blood/spurts/bloodSpurt3.tres"),preload("res://assets/materials/blood/spurts/bloodSpurt4.tres"),preload("res://assets/materials/blood/spurts/bloodSpurt5.tres"),preload("res://assets/materials/blood/spurts/bloodSpurt6.tres"),preload("res://assets/materials/blood/spurts/bloodSpurt7.tres")]
 var pawnScene = preload("res://assets/entities/pawnEntity/pawnEntity.tscn").duplicate()
 var menuScenes = [preload("res://assets/scenes/menu/menuScenes/menuscene1.tscn"),preload("res://assets/scenes/menu/menuScenes/menuScene2.tscn"),preload("res://assets/scenes/menu/menuScenes/menuScene3.tscn")]
-var defaultPawnTreeRoot = load("res://assets/entities/pawnEntity/pawnEntity.tres")
+var defaultPawnTreeRoot = load("res://assets/entities/pawnEntity/pawnEntityTree.tres")
 
 signal freeOrphans
 #Global Sound Player
@@ -116,6 +116,25 @@ func freeOrphanNodes():
 	#orphanedData = keep
 	freeOrphans.emit()
 
+func getModifierFromName(modName:String):
+	for i in DirAccess.get_files_at("res://assets/entities/modifiers/"):
+		if i == modName+".tscn":
+			return "res://assets/entities/modifiers/%s"%i
+
+func give_stat_modifier(parent:Node, mod:String):
+	if parent.has_node(^"statModifierStack"):
+		var stack = parent.get_node(^"statModifierStack")
+		var modifier = load(getModifierFromName(mod))
+		if modifier:
+			if !stack.has_node(mod):
+				stack.add_child(modifier.instantiate())
+				if debugEnabled:
+					notify_warn("Added stat modifier '%s' to '%s'"%[mod,parent.name],2,2)
+			else:
+				if debugEnabled:
+					notify_warn("Stat modifier '%s' already exists on '%s'"%[mod,parent.name],2,2)
+
+
 func get_modified_stat(node : Node, stat : StringName) -> float:
 	var base = node.get(stat)
 	if base == null:
@@ -125,29 +144,37 @@ func get_modified_stat(node : Node, stat : StringName) -> float:
 
 
 func get_modifier_stack(node : Node) -> StatModifierStack:
-	if node.has_node(^"StatModifierStack"):
-		return node.get_node(^"StatModifierStack")
+	if node.has_node(^"statModifierStack"):
+		return node.get_node(^"statModifierStack")
 	var new = StatModifierStack.new()
 	node.add_child(new)
 	return new
 
-func setPlayerReloadSpeed(value:float = 1):
+func setBasePlayerBulletResistMod(value:float = 1):
+	if getCurrentPawn():
+		getCurrentPawn().bulletResistanceModifier = value
+
+func setBasePlayerBlastResistMod(value:float = 1):
+	if getCurrentPawn():
+		getCurrentPawn().blastResistanceModifier = value
+
+func setBasePlayerReloadSpeed(value:float = 1):
 	if getCurrentPawn():
 		getCurrentPawn().reloadSpeedModifier = value
 
-func setPlayerDamageMod(value:float = 1):
+func setBasePlayerDamageMod(value:float = 1):
 	if getCurrentPawn():
 		getCurrentPawn().damageModifier = value
 
-func setPlayerSpreadMod(value:float = 1):
+func setBasePlayerSpreadMod(value:float = 1):
 	if getCurrentPawn():
 		getCurrentPawn().spreadModifier = value
 
-func setPlayerRecoilMod(value:float = 1):
+func setBasePlayerRecoilMod(value:float = 1):
 	if getCurrentPawn():
 		getCurrentPawn().recoilModifier = value
 
-func setPlayerFireRateMod(value:float = 1):
+func setBasePlayerFireRateMod(value:float = 1):
 	if getCurrentPawn():
 		getCurrentPawn().fireRateModifier = value
 
@@ -521,6 +548,11 @@ func hideHUD()->void:
 		if player.attachedCam:
 			player.attachedCam.hud.fadeHudOut()
 
+func getPauseMenu()->Control:
+	var menu
+	if world:
+		menu = world.pauseControl
+	return menu
 
 func loadWorld(worldscene:String, fadein:bool = false)->void:
 	saveTemporaryPawnInfo()
@@ -545,6 +577,8 @@ func saveGame(saveName:String = "Save1"):
 		saveDir.make_dir(saveName)
 		var saveFile = FileAccess.open("user://saves/%s/%s.pwnSave"%[saveName,saveName],FileAccess.WRITE)
 		currentSave = "user://saves/%s/%s.pwnSave"%[saveName,saveName]
+		activeCamera.hud.hide()
+		getPauseMenu().hide()
 		var screenshot = get_viewport().get_texture().get_image()
 		screenshot.save_png("user://saves/%s/%s.png"%[saveName,saveName])
 		print("user://saves/%s/%s.png"%[saveName,saveName])
@@ -560,6 +594,8 @@ func saveGame(saveName:String = "Save1"):
 			"saveScreenie" : "user://saves/%s/%s.png"%[saveName,saveName],
 			"playerPosition": playerPawns[0].global_position
 		}
+		activeCamera.hud.show()
+		getPauseMenu().show()
 		var stringy = JSON.stringify(saveDict)
 		saveFile.store_line(stringy)
 		Console.add_rich_console_message("[color=green] Saved game '%s' sucessfully!"%saveName)

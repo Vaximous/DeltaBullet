@@ -325,7 +325,7 @@ animation = &"PawnAnim/phoneOpen"
 
 [sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_j0l1j"]
 filter_enabled = true
-filters = ["%BoneAttatchments/rightHand/flipphone/phone/Skeleton3D:top_2", "%BoneAttatchments/rightHand/flipphone:visible", "%flipphone/phone/Skeleton3D/boneAttachment3d/meshInstance3d/omniLight3d:light_energy", "%flipphone/phone/Skeleton3D/boneAttachment3d/meshInstance3d:mesh:material:emission_energy_multiplier", "..", "MaleSkeleton", "MaleSkeleton/Skeleton3D:Head", "MaleSkeleton/Skeleton3D:Neck", "MaleSkeleton/Skeleton3D:R_Forearm", "MaleSkeleton/Skeleton3D:R_Hand", "MaleSkeleton/Skeleton3D:R_Index0", "MaleSkeleton/Skeleton3D:R_Index1", "MaleSkeleton/Skeleton3D:R_Index2", "MaleSkeleton/Skeleton3D:R_Middle0", "MaleSkeleton/Skeleton3D:R_Middle1", "MaleSkeleton/Skeleton3D:R_Middle2", "MaleSkeleton/Skeleton3D:R_Pinkie0", "MaleSkeleton/Skeleton3D:R_Pinkie1", "MaleSkeleton/Skeleton3D:R_Pinkie2", "MaleSkeleton/Skeleton3D:R_Ring0", "MaleSkeleton/Skeleton3D:R_Ring1", "MaleSkeleton/Skeleton3D:R_Ring2", "MaleSkeleton/Skeleton3D:R_Shoulder", "MaleSkeleton/Skeleton3D:R_Thumb0", "MaleSkeleton/Skeleton3D:R_Thumb1", "MaleSkeleton/Skeleton3D:R_Thumb2", "MaleSkeleton/Skeleton3D:R_UpperArm", "MaleSkeleton/Skeleton3D:middle", "MaleSkeleton/Skeleton3D:phone", "MaleSkeleton/Skeleton3D:top_2", "MaleSkeleton:rotation"]
+filters = ["%BoneAttatchments/rightHand/flipphone/phone/Skeleton3D:top_2", "%BoneAttatchments/rightHand/flipphone:visible", "%flipphone/phone/Skeleton3D/boneAttachment3d/meshInstance3d/omniLight3d:light_energy", "%flipphone/phone/Skeleton3D/boneAttachment3d/meshInstance3d:mesh:material:emission_energy_multiplier", "%flipphone/phone/Skeleton3D:bottom_2", "%flipphone/phone/Skeleton3D:top_2", "%flipphone/phone/Skeleton3D:top_end", "..", "MaleSkeleton", "MaleSkeleton/Skeleton3D:Head", "MaleSkeleton/Skeleton3D:Neck", "MaleSkeleton/Skeleton3D:R_Forearm", "MaleSkeleton/Skeleton3D:R_Hand", "MaleSkeleton/Skeleton3D:R_Index0", "MaleSkeleton/Skeleton3D:R_Index1", "MaleSkeleton/Skeleton3D:R_Index2", "MaleSkeleton/Skeleton3D:R_Middle0", "MaleSkeleton/Skeleton3D:R_Middle1", "MaleSkeleton/Skeleton3D:R_Middle2", "MaleSkeleton/Skeleton3D:R_Pinkie0", "MaleSkeleton/Skeleton3D:R_Pinkie1", "MaleSkeleton/Skeleton3D:R_Pinkie2", "MaleSkeleton/Skeleton3D:R_Ring0", "MaleSkeleton/Skeleton3D:R_Ring1", "MaleSkeleton/Skeleton3D:R_Ring2", "MaleSkeleton/Skeleton3D:R_Shoulder", "MaleSkeleton/Skeleton3D:R_Thumb0", "MaleSkeleton/Skeleton3D:R_Thumb1", "MaleSkeleton/Skeleton3D:R_Thumb2", "MaleSkeleton/Skeleton3D:R_UpperArm", "MaleSkeleton/Skeleton3D:middle", "MaleSkeleton/Skeleton3D:phone", "MaleSkeleton/Skeleton3D:top_2", "MaleSkeleton:rotation"]
 
 [sub_resource type="AnimationNodeTimeSeek" id="AnimationNodeTimeSeek_fd8cb"]
 explicit_elapse = false
@@ -511,7 +511,7 @@ node_connections = [&"output", 0, &"BlendSpace1D"]
 
 [resource]
 resource_local_to_scene = true
-graph_offset = Vector2(-303.76373, -199.71362)
+graph_offset = Vector2(504.43262, -199.98102)
 nodes/output/position = Vector2(3120, -320)
 nodes/coverMoveL/node = SubResource("AnimationNodeBlendSpace1D_ybj6p")
 nodes/coverMoveL/position = Vector2(2320, 380)

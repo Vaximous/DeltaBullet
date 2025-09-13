@@ -28,10 +28,10 @@ class_name bloodSplatHandler
 const defaultTweenSpeed : float = 0.25
 const defaultTransitionType = Tween.TRANS_QUART
 const defaultEaseType = Tween.EASE_OUT
-var growSpeedMin : float = 0.15
-var growSpeedMax : float = 0.50
+@export_range(0.15,100.0) var growSpeedMin : float = 0.15
+@export_range(0.50,100.0) var growSpeedMax : float = 0.50
 var growSpeed : float = 0.0
-var maxSize : float = 0.4
+@export_range(0.4,100.0) var maxSize : float = 0.4
 var defaultBloodSize : Vector3 = Vector3(0.3,0.3,0.3)
 @export var bloodTextures : Array[Texture2D] = []
 var splatTween : Tween
@@ -100,6 +100,8 @@ stream_4/stream = ExtResource("18_gjub7")
 [node name="decal" type="Node3D" groups=["decal"]]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
 script = SubResource("GDScript_xai0k")
+growSpeedMax = 0.95
+maxSize = 1.17
 bloodTextures = Array[Texture2D]([ExtResource("1_3l6hn"), ExtResource("2_t3m5m"), ExtResource("3_01s3m"), ExtResource("4_6tdj2"), ExtResource("5_2rcag"), ExtResource("6_6ytpf"), ExtResource("7_81e7q"), ExtResource("8_5bt3b"), ExtResource("9_tiryh"), ExtResource("10_mrbtf"), ExtResource("11_ej6ce"), ExtResource("12_80ser"), ExtResource("13_mjrd1")])
 
 [node name="bloodSplat1" type="Decal" parent="." groups=["bloodDecal"]]

@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://55ppdqy758wx"]
+
+[ext_resource type="Script" uid="uid://ckbbv85gotwds" path="res://assets/scenes/ui/hudPainDirection/pain_direction.gd" id="1_ywus5"]
+[ext_resource type="Texture2D" uid="uid://d01hiab247eia" path="res://assets/scenes/ui/hudPainDirection/tempPainDir.png" id="2_tgjjx"]
+
+[node name="painDirection" type="Control"]
+layout_mode = 3
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_ywus5")
+
+[node name="textureRect" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0.62352943)
+layout_mode = 1
+anchors_preset = -1
+offset_left = -127.0
+offset_top = -130.0
+offset_right = 129.0
+offset_bottom = -2.0
+texture = ExtResource("2_tgjjx")

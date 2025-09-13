@@ -121,6 +121,7 @@ var raycaster : RayCast3D
 @export var movementController : MovementController
 @export var healthComponent : HealthComponent
 @export_subgroup("Sub-Components")
+@export var statModifierStack : StatModifierStack
 @export var inputComponent : Node:
 	set(value):
 		inputComponent = value
@@ -341,6 +342,8 @@ var isThrowing : bool = false
 @export var damageModifier : float = 1.0
 @export var fireRateModifier : float = 1.0
 @export var recoilModifier : float = 1.0
+@export var blastResistanceModifier : float = 1.0
+@export var bulletResistanceModifier : float = 1.0
 @export var spreadModifier : float = 1.0
 @export_subgroup("Inventory")
 var pawnCash : int = 0
@@ -1324,6 +1327,12 @@ func disarmThrowable()->void:
 		isThrowing = false
 		isArmingThrowable = false
 
+func resetThrowables()->void:
+	disableThrowableAnim()
+	await get_tree().create_timer(0.5).timeout
+	canThrowThrowable = true
+	isThrowing = false
+	isArmingThrowable = false
 
 func throwThrowable()->void:
 	if is_instance_valid(heldThrowable):
@@ -1337,6 +1346,7 @@ func throwThrowable()->void:
 		heldThrowable.freeze = false
 		heldThrowable.thrown.emit()
 		heldThrowable.isThrown = true
+		heldThrowable.dealer = self
 		if is_instance_valid(attachedCam):
 			attachedCam.fireRecoil(0.0,0.0,0.8,true)
 			heldThrowable.global_position = neckBone.global_position
@@ -1743,7 +1753,7 @@ func playPhoneOpenAnimation()->void:
 			phoneTween.kill()
 		phoneTween = create_tween()
 		%flipphone.visible = true
-		phoneTween.tween_method(setPhoneBlend,animationTree.get("parameters/phoneOpened/blend_amount"),1,0.15).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+		phoneTween.tween_method(setPhoneBlend,animationTree.get("parameters/phoneOpened/blend_amount"),1,0.05).set_ease(defaultEaseType).set_trans(defaultTransitionType)
 		animationTree.set("parameters/phoneSeek/seek_request",0.1)
 
 func playPhoneCloseAnimation()->void:

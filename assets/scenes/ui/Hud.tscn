@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://birbjoai58xb7" path="res://assets/textures/crosshair/crosshair001.png" id="4_uhc5s"]
 [ext_resource type="AudioStream" uid="uid://d3eqn61hfgwuf" path="res://assets/sounds/playerhurt/playerhurtambience.wav" id="5_dhgxm"]
 [ext_resource type="Texture2D" uid="uid://bkhy36pmg4nfi" path="res://assets/textures/ui/hpBar.png" id="6_0pnxc"]
-[ext_resource type="Texture2D" uid="uid://bado0y6x8is5j" path="res://assets/textures/crosshair/crosshair008.png" id="6_kfu1x"]
+[ext_resource type="Texture2D" uid="uid://dnujlo6y6vcq4" path="res://assets/textures/crosshair/crosshair006.png" id="6_kfu1x"]
 [ext_resource type="Texture2D" uid="uid://btlv87lcgekb7" path="res://assets/textures/ui/healthbar.png" id="7_mtxcq"]
 [ext_resource type="Texture2D" uid="uid://btse3nqgw3085" path="res://assets/textures/ui/ammoBar.png" id="8_x878b"]
 [ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="9_bxaeg"]
@@ -274,6 +274,7 @@ script = SubResource("GDScript_quas3")
 dynamicCrosshair = false
 
 [node name="closeCrosshair" type="TextureRect" parent="."]
+physics_interpolation_mode = 1
 modulate = Color(1, 1, 1, 0)
 layout_mode = 1
 anchors_preset = -1
@@ -720,6 +721,21 @@ grow_horizontal = 0
 grow_vertical = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 1)
+
+[node name="centerContainer" type="CenterContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [connection signal="interactionFound" from="." to="Interact/interactAnimPlayer" method="play"]
 [connection signal="interactionFound" from="." to="Interact/audioStreamPlayer" method="play"]

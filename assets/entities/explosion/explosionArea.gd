@@ -78,8 +78,9 @@ func applyHit(object:Node3D):
 			randomize()
 			gameManager.burnTarget(object,randf_range(3,30),0.8)
 
-		if object.has_method("velocity"):
-			object.velocity += -(global_position-object.global_position).normalized() * explosionImpulse
+		if "velocity" in object:
+			if !object is FakePhysicsEntity or !object is BloodDroplet:
+				object.velocity += -(global_position-object.global_position).normalized() * explosionImpulse
 		elif object.has_method("apply_central_impulse"):
 			object.apply_central_impulse(-(global_position-object.global_position).normalized() * explosionImpulse)
 
@@ -90,7 +91,10 @@ func applyHit(object:Node3D):
 					object.ragdoll.doRagdollHeadshot(null,true,Vector3.ONE,Vector3.ZERO,false)
 				#object.set_meta("exploded",true)
 			#print(dmgClamped)
-			object.hit(dmgClamped*randf_range(1.1,1.8),null,-(global_position-object.global_position).normalized() * explosionImpulse * randf_range(1.3,1.8),Vector3.ZERO)
+			if object is Hitbox and "blastResistanceModifier" in object.healthComponent.componentOwner:
+				object.hit(dmgClamped*randf_range(1.1,1.8) / gameManager.get_modified_stat(object.healthComponent.componentOwner,&"blastResistanceModifier"),null,-(global_position-object.global_position).normalized() * explosionImpulse * randf_range(1.3,1.8),Vector3.ZERO)
+			else:
+				object.hit(dmgClamped*randf_range(1.1,1.8),null,-(global_position-object.global_position).normalized() * explosionImpulse * randf_range(1.3,1.8),Vector3.ZERO)
 
 func explode()->void:
 	var explosionRadiusTo = explosionRadius

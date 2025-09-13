@@ -23,6 +23,7 @@ const HELP_DICT := {
 }
 
 var config = UserConfig
+var GameState = gameState
 var _gameManager = gameManager
 var _questManager = questManager
 var userDir = ProjectSettings.globalize_path("user://")
@@ -88,6 +89,8 @@ func createExplosion(radius:float=10.0,los:bool = true):
 		explo.explosionRadius = radius
 		explo.explode()
 
+func test()->void:
+	gameState.addToGamestate()
 
 func posess()->void:
 	var cast : RayCast3D = gameManager.activeCamera.debugCast

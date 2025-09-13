@@ -143,12 +143,19 @@ func _ready()->void:
 func _physics_process(delta)->void:
 	if is_instance_valid(weaponOwner):
 		if weaponOwner.isPlayerPawn() and is_instance_valid(weaponCast):
-			if isAiming:
+			if isAiming or weaponOwner.freeAim:
+				var dist
 				var offset : Vector2 = Vector2(-30,-40)
-				var ray_target_point = weaponCast.global_position + (-weaponCast.global_transform.basis.z * 500)
+				var ray_target_point
+				if gameManager.activeCamera.camCast.is_colliding():
+					ray_target_point = gameManager.activeCamera.camCast.get_collision_point()
+
+				else:
+					ray_target_point = -gameManager.activeCamera.camCast.global_transform.basis.z * 6000
+
 				var ray = PhysicsRayQueryParameters3D.new()
 				ray.from = muzzlePoint.global_position
-				ray.to = -gameManager.activeCamera.camCast.global_transform.basis.z * 6000
+				ray.to = ray_target_point
 
 				#ray.collision_mask = raycaster.collision_mask
 				ray.collide_with_areas = true
@@ -161,15 +168,17 @@ func _physics_process(delta)->void:
 						ray.exclude.append(RID(hitbox))
 				var result = get_world_3d().direct_space_state.intersect_ray(ray)
 				if result:
-					var dist = result["position"].distance_to(muzzlePoint.global_position)
-					gameManager.activeCamera.hud.closeCrosshair.position = lerp(gameManager.activeCamera.hud.closeCrosshair.position,gameManager.activeCamera.camera.unproject_position(result["position"]) + offset,20*delta)
-					if dist < 1:
-						gameManager.activeCamera.hud.closeCrosshair.modulate = lerp(gameManager.activeCamera.hud.closeCrosshair.modulate,Color.WHITE,16*delta)
-						print(dist)
+					dist = result["position"].distance_to(muzzlePoint.global_position)
+					if !gameManager.activeCamera.camCast.get_collision_point().is_equal_approx(result["position"]) or !gameManager.activeCamera.hud.crosshair.position.distance_to(gameManager.activeCamera.hud.closeCrosshair.position):
+						if dist < 1.5:
+							gameManager.activeCamera.hud.closeCrosshair.modulate = lerp(gameManager.activeCamera.hud.closeCrosshair.modulate,Color.YELLOW,16*delta)
+						else:
+							gameManager.activeCamera.hud.closeCrosshair.modulate = lerp(gameManager.activeCamera.hud.closeCrosshair.modulate,Color.TRANSPARENT,16*delta)
 					else:
 						gameManager.activeCamera.hud.closeCrosshair.modulate = lerp(gameManager.activeCamera.hud.closeCrosshair.modulate,Color.TRANSPARENT,16*delta)
+					gameManager.activeCamera.hud.closeCrosshair.position = lerp(gameManager.activeCamera.hud.closeCrosshair.position,gameManager.activeCamera.camera.unproject_position(result["position"]) + offset,20*delta)
 				else:
-						gameManager.activeCamera.hud.closeCrosshair.modulate = lerp(gameManager.activeCamera.hud.closeCrosshair.modulate,Color.TRANSPARENT,16*delta)
+					gameManager.activeCamera.hud.closeCrosshair.modulate = lerp(gameManager.activeCamera.hud.closeCrosshair.modulate,Color.TRANSPARENT,16*delta)
 			else:
 				gameManager.activeCamera.hud.closeCrosshair.modulate = lerp(gameManager.activeCamera.hud.closeCrosshair.modulate,Color.TRANSPARENT,16*delta)
 func checkWeaponBlend()->void:
@@ -260,13 +269,13 @@ func fire()->void:
 	var weaponSpeed
 
 	if is_instance_valid(weaponOwner):
-		weaponSpeed = weaponResource.weaponFireRate / weaponOwner.fireRateModifier
+		weaponSpeed = weaponResource.weaponFireRate / gameManager.get_modified_stat(weaponOwner,&"fireRateModifier")
 	else:
 		weaponSpeed = weaponResource.weaponFireRate
 
-	animationPlayer.speed_scale = 1
-	animationTree.set("parameters/weaponStateSpeed/scale",1)
-	setWeaponBlendScale(1)
+	animationPlayer.speed_scale = weaponOwner.reloadSpeedModifier
+	animationTree.set("parameters/weaponStateSpeed/scale",weaponOwner.reloadSpeedModifier)
+	setWeaponBlendScale(weaponOwner.reloadSpeedModifier)
 	if !isFireReady():
 		return
 	setWeaponRecoil()
@@ -353,7 +362,7 @@ func spawnProjectile(raycaster : RayCast3D) -> void:
 		bulletTrail = weaponResource.defaultBulletTrail.instantiate()
 	var p : Projectile = projectile.instantiate() as Projectile
 	if is_instance_valid(weaponOwner):
-		p.max_damage = weaponResource.weaponDamage * weaponOwner.damageModifier
+		p.max_damage = weaponResource.weaponDamage * gameManager.get_modified_stat(weaponOwner,&"damageModifier")
 	else:
 		p.max_damage = weaponResource.weaponDamage
 
@@ -423,7 +432,7 @@ func isFireReady() -> bool:
 func applyWeaponSpread(spread,raycaster:RayCast3D)->void:
 	var appliedSpread : float
 	if is_instance_valid(weaponOwner):
-		appliedSpread = spread / weaponOwner.spreadModifier
+		appliedSpread = spread / gameManager.get_modified_stat(weaponOwner,&"spreadModifier")
 	else:
 		appliedSpread = spread
 	raycaster.rotation += Vector3(randf_range(0.0, appliedSpread),randf_range(-appliedSpread, appliedSpread),0)
@@ -545,7 +554,7 @@ func resetWeaponMesh()->void:
 func resetToDefault()->void:
 	#resetWeaponMesh()
 	if weaponOwner:
-		setWeaponBlendScale(1)
+		setWeaponBlendScale(weaponOwner.reloadSpeedModifier)
 		if weaponOwner.weaponFireChanged.is_connected(checkWeaponBlend):
 			weaponOwner.weaponFireChanged.disconnect(checkWeaponBlend)
 	if weaponRemoteState != null:
@@ -565,7 +574,7 @@ func resetToDefault()->void:
 func equipToPawn(pawn:BasePawn):
 	if pawn:
 		animationTree.set("parameters/weaponStateSpeed/scale",1.0)
-		animationPlayer.speed_scale = 1
+		animationPlayer.speed_scale = 1.0
 		freeze = true
 		continuous_cd = false
 		if !pawn.itemNames.has(objectName):
@@ -631,16 +640,16 @@ func setEquipVariables()->void:
 		weaponOwner.attachedCam.hud.hideReloadProgress()
 	setWeaponRecoil()
 	freeze = true
-	animationPlayer.speed_scale = 1
-	animationTree.set("parameters/weaponStateSpeed/scale",1.0)
+	animationPlayer.speed_scale = weaponOwner.reloadSpeedModifier
+	animationTree.set("parameters/weaponStateSpeed/scale",weaponOwner.reloadSpeedModifier)
 
 
 func setWeaponRecoil()->void:
 	if weaponOwner != null:
 		if weaponOwner.attachedCam != null:
-			weaponOwner.attachedCam.camRecoil = weaponResource.weaponRecoil / weaponOwner.recoilModifier
+			weaponOwner.attachedCam.camRecoil = weaponResource.weaponRecoil / gameManager.get_modified_stat(weaponOwner,&"recoilModifier")
 		if !weaponOwner.isPlayerPawn():
-			weaponOwner.inputComponent.aimRecoil = weaponResource.weaponRecoil / weaponOwner.recoilModifier
+			weaponOwner.inputComponent.aimRecoil = weaponResource.weaponRecoil / gameManager.get_modified_stat(weaponOwner,&"recoilModifier")
 
 func reloadWeapon()->void:
 	#await get_tree().process_frame
@@ -650,7 +659,7 @@ func reloadWeapon()->void:
 		if canReloadWeapon and !isReloading and weaponResource.canBeReloaded and isEquipped and !weaponOwner.isArmingThrowable and is_instance_valid(weaponResource):
 			reloadingStart.emit()
 			if weaponOwner.isPlayerPawn():
-				weaponOwner.attachedCam.hud.reloadProgressActivate(weaponResource.reloadTime / weaponOwner.reloadSpeedModifier)
+				weaponOwner.attachedCam.hud.reloadProgressActivate(weaponResource.reloadTime / gameManager.get_modified_stat(weaponOwner,&"reloadSpeedModifier"))
 			var reloadTime = weaponResource.reloadTime
 			var firedShots = weaponResource.ammoSize - currentAmmo
 			weaponRemoteState.travel("reload")
@@ -659,16 +668,19 @@ func reloadWeapon()->void:
 			weaponRemoteStateLeft.next()
 			isReloading = true
 			canReloadWeapon = false
-			animationPlayer.speed_scale = 1 * weaponOwner.reloadSpeedModifier
-			animationTree.set("parameters/weaponStateSpeed/scale",1 * weaponOwner.reloadSpeedModifier)
+			animationPlayer.speed_scale = gameManager.get_modified_stat(weaponOwner,&"reloadSpeedModifier")
+			#print(gameManager.get_modified_stat(weaponOwner,&"reloadSpeedModifier"))
+			animationTree.set("parameters/weaponStateSpeed/scale",gameManager.get_modified_stat(weaponOwner,&"reloadSpeedModifier"))
 			setWeaponBlendScale(animationPlayer.speed_scale)
-			await get_tree().create_timer(reloadTime / weaponOwner.reloadSpeedModifier,false).timeout
-			animationTree.set("parameters/weaponStateSpeed/scale",1.0)
-			setWeaponBlendScale(1.0)
+			await get_tree().create_timer(reloadTime / gameManager.get_modified_stat(weaponOwner,&"reloadSpeedModifier"),false).timeout
+			if is_instance_valid(weaponOwner):
+				animationTree.set("parameters/weaponStateSpeed/scale",weaponOwner.reloadSpeedModifier)
+				setWeaponBlendScale(weaponOwner.reloadSpeedModifier)
 			isReloading = false
 			currentMagSize -= firedShots
 			currentAmmo += firedShots
-			animationPlayer.speed_scale = 1
+			if is_instance_valid(weaponOwner):
+				animationPlayer.speed_scale = weaponOwner.reloadSpeedModifier
 			if weaponOwner != null:
 				if isAiming:
 					if weaponOwner != null:
@@ -695,9 +707,9 @@ func playWeaponAnimation(animatorNode:String,animationName:StringName,useReloadT
 	var wepAnimator : AnimationPlayer = animationPlayer.get_node(animatorNode)
 	wepAnimator.play(animationName)
 	if useReloadTime:
-		wepAnimator.speed_scale = 1 * weaponOwner.reloadSpeedModifier
+		wepAnimator.speed_scale = gameManager.get_modified_stat(weaponOwner,&"reloadSpeedModifier")
 	else:
-		wepAnimator.speed_scale = 1
+		wepAnimator.speed_scale = weaponOwner.reloadSpeedModifier
 
 	if wepAnimator.is_playing():
 		wepAnimator.stop()

@@ -3,7 +3,7 @@ extends PanelContainer
 @onready var noteReader = $noteReader
 @onready var noteText : RichTextLabel = $noteReader/richTextLabel
 
-var noteButton : PackedScene = preload("res://assets/scenes/ui/phoneUI/apps/noteButton.tscn")
+var noteButton : PackedScene = preload("res://assets/scenes/ui/phoneUI/apps/notes/noteButton.tscn")
 @export_category("Notes App")
 @export var notes : Array[NoteResource]
 @export var currentNote : NoteResource

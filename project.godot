@@ -58,7 +58,6 @@ Notifications="*res://assets/scripts/singletons/Notifications.tscn"
 cutsceneManager="*res://assets/scripts/singletons/cutsceneManager.gd"
 questManager="*res://assets/scripts/singletons/questManager.gd"
 AiManager="*res://assets/scripts/singletons/AIManager.gd"
-FmodManager="*res://addons/fmod/FmodManager.gd"
 gameState="*res://assets/scripts/singletons/gameState.gd"
 
 [debug]

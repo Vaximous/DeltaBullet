@@ -1,0 +1,41 @@
+[gd_scene load_steps=2 format=3 uid="uid://c3ybj1r2jib40"]
+
+[ext_resource type="Script" uid="uid://d2frtmvtl3l5w" path="res://assets/scenes/ui/phoneUI/apps/stats/player_stats.gd" id="1_qk0b7"]
+
+[node name="playerStats" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qk0b7")
+
+[node name="vBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="hBoxContainer" type="HBoxContainer" parent="vBoxContainer"]
+custom_minimum_size = Vector2(0, 29.66)
+layout_mode = 2
+
+[node name="button" type="Button" parent="vBoxContainer/hBoxContainer"]
+layout_mode = 2
+text = "<"
+
+[node name="richTextLabel" type="RichTextLabel" parent="vBoxContainer/hBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "Stats"
+horizontal_alignment = 1
+
+[node name="hSeparator" type="HSeparator" parent="vBoxContainer"]
+layout_mode = 2
+
+[node name="richTextLabel" type="RichTextLabel" parent="vBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "Display player stats here.."
+horizontal_alignment = 1
+
+[connection signal="pressed" from="vBoxContainer/hBoxContainer/button" to="." method="queue_free"]

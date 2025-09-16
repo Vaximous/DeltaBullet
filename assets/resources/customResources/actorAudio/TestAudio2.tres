@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ActorAudio" load_steps=3 format=3 uid="uid://cuvndce4p5pi1"]
+
+[ext_resource type="AudioStream" uid="uid://dltxyb0606cfu" path="res://assets/sounds/vo/test/pawnCall/testCall2.wav" id="1_p45jq"]
+[ext_resource type="Script" uid="uid://brywjp4oyim4q" path="res://assets/resources/actorAudio/actorAudio.gd" id="1_wfvf3"]
+
+[resource]
+script = ExtResource("1_wfvf3")
+audioStream = ExtResource("1_p45jq")
+subtitleText = "If you're getting this, then uhm.. Subtitles hopefully should be working below. If not, I guess you fucked up. Anyway, thanks for tryin'!"
+actorName = "DudeGuy"
+metadata/_custom_type_script = "uid://brywjp4oyim4q"

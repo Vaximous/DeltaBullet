@@ -326,6 +326,26 @@ func _physics_process(delta)->void:
 
 		move_and_slide()
 
+func createSubtitle(actorAudio:ActorAudio,timeout:float = 1)->Label:
+	var label = Label.new()
+	label.label_settings = load("res://assets/resources/subtitleSettings.tres")
+	%subtitleContainer.add_child(label)
+	if actorAudio.showActorNames:
+		label.text = "%s: %s"%[actorAudio.actorName,actorAudio.subtitleText]
+	else:
+		label.text = actorAudio.subtitleText
+	return label
+
+func fadePhoneCallNotificationIn()->void:
+	%phoneCallNotification.modulate = Color.TRANSPARENT
+	if !%phoneCallNotification.visible:
+		%phoneCallNotification.show()
+	var tween = create_tween()
+	tween.tween_property(%phoneCallNotification,"modulate",Color.WHITE,0.35)
+
+func fadePhoneCallNotificationOut()->void:
+	var tween = create_tween()
+	tween.tween_property(%phoneCallNotification,"modulate",Color.TRANSPARENT,0.25)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MouseMode.MOUSE_MODE_CAPTURED:

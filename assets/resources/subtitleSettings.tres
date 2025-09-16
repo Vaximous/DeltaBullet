@@ -1,0 +1,9 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://kemewwnaa84h"]
+
+[ext_resource type="FontFile" uid="uid://ctehrcej4t80k" path="res://assets/fonts/Orbitron/static/Orbitron-SemiBold.ttf" id="1_8s87j"]
+
+[resource]
+font = ExtResource("1_8s87j")
+font_size = 22
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)

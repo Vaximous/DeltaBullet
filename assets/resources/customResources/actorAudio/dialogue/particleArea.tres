@@ -1,0 +1,52 @@
+[gd_resource type="Resource" script_class="ActorDialogue" load_steps=13 format=3 uid="uid://dp0r6os7kysf7"]
+
+[ext_resource type="Script" uid="uid://bubcqmglkld6n" path="res://assets/resources/actorAudioDefinition/actorAudioDefinition.gd" id="1_a4qkr"]
+[ext_resource type="Script" uid="uid://51as33mlf4p5" path="res://assets/resources/actorDialogue/actorDialogue.gd" id="2_dmgxh"]
+[ext_resource type="AudioStream" uid="uid://cbpuko2qvdo6i" path="res://assets/sounds/vo/test/pawnCall/test1/particlearea1-2.wav" id="2_g75ww"]
+[ext_resource type="Script" uid="uid://brywjp4oyim4q" path="res://assets/resources/actorAudio/actorAudio.gd" id="3_bybjv"]
+[ext_resource type="AudioStream" uid="uid://4uwfd7lmio41" path="res://assets/sounds/vo/test/pawnCall/test1/particlearea2-2.wav" id="4_u01sc"]
+[ext_resource type="AudioStream" uid="uid://dm84rttv5umlv" path="res://assets/sounds/vo/test/pawnCall/test1/particlearea3-2.wav" id="5_m7pvb"]
+
+[sub_resource type="Resource" id="Resource_lf6pw"]
+script = ExtResource("3_bybjv")
+audioStream = ExtResource("2_g75ww")
+subtitleText = "[Laughter] Oh man.. This is the particle testing area!"
+actorName = "Debugger"
+showActorNames = true
+metadata/_custom_type_script = "uid://brywjp4oyim4q"
+
+[sub_resource type="Resource" id="Resource_xgg21"]
+script = ExtResource("1_a4qkr")
+audioResource = SubResource("Resource_lf6pw")
+metadata/_custom_type_script = "uid://bubcqmglkld6n"
+
+[sub_resource type="Resource" id="Resource_6v8fw"]
+script = ExtResource("3_bybjv")
+audioStream = ExtResource("4_u01sc")
+subtitleText = "Well.. at least it kinda was, you shouldn't really be here!"
+actorName = "Debugger"
+showActorNames = true
+metadata/_custom_type_script = "uid://brywjp4oyim4q"
+
+[sub_resource type="Resource" id="Resource_x2yd0"]
+script = ExtResource("1_a4qkr")
+audioResource = SubResource("Resource_6v8fw")
+metadata/_custom_type_script = "uid://bubcqmglkld6n"
+
+[sub_resource type="Resource" id="Resource_u7do4"]
+script = ExtResource("3_bybjv")
+audioStream = ExtResource("5_m7pvb")
+subtitleText = "It doesn't do much of anything anymore, Get your ass back to the map and do something worth a damn."
+actorName = "Debugger"
+showActorNames = true
+metadata/_custom_type_script = "uid://brywjp4oyim4q"
+
+[sub_resource type="Resource" id="Resource_cpv4m"]
+script = ExtResource("1_a4qkr")
+audioResource = SubResource("Resource_u7do4")
+metadata/_custom_type_script = "uid://bubcqmglkld6n"
+
+[resource]
+script = ExtResource("2_dmgxh")
+actorAudios = Array[ExtResource("1_a4qkr")]([SubResource("Resource_xgg21"), SubResource("Resource_x2yd0"), SubResource("Resource_cpv4m")])
+metadata/_custom_type_script = "uid://51as33mlf4p5"

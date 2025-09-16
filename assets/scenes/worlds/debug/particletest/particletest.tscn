@@ -1,8 +1,8 @@
-[gd_scene load_steps=60 format=3 uid="uid://bgy0ycoxec6p6"]
+[gd_scene load_steps=63 format=3 uid="uid://bgy0ycoxec6p6"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_rrsmc"]
 [ext_resource type="PackedScene" uid="uid://boicvk4qeqmbd" path="res://assets/entities/pawnSpawn/pawnSpawn.tscn" id="2_d45q2"]
-[ext_resource type="Script" path="res://assets/resources/customResources/worldData/worldData.gd" id="2_yse5r"]
+[ext_resource type="Script" uid="uid://b31u24at18p5t" path="res://assets/resources/customResources/worldData/worldData.gd" id="2_yse5r"]
 [ext_resource type="Texture2D" uid="uid://mbsy6cv3jimj" path="res://assets/scenes/worlds/debug/particletest/loading.png" id="3_vbqlr"]
 [ext_resource type="PackedScene" uid="uid://wtqya32cwdbk" path="res://assets/entities/weapons/Beretta/Beretta.tscn" id="4_c40k5"]
 [ext_resource type="PackedScene" uid="uid://dsxt078giobel" path="res://assets/entities/weapons/Uzi/Uzi.tscn" id="6_tgu38"]
@@ -25,29 +25,26 @@
 [ext_resource type="PackedScene" uid="uid://dend7ate7mq6e" path="res://assets/entities/bulletHoles/default/BulletHoleBase.tscn" id="17_5q6o5"]
 [ext_resource type="Resource" uid="uid://rp3mpjmisoyh" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/default_object_movement_component.tres" id="17_ssj5l"]
 [ext_resource type="Resource" uid="uid://c8ulad7utgrg7" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/pre_blur_processing_stage.tres" id="18_50ig5"]
-[ext_resource type="Script" path="res://assets/resources/PhysicsMaterials/DB_PhysicsMaterial.gd" id="18_y1uao"]
-[ext_resource type="Script" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/pre_blur_processor.gd" id="19_xalbh"]
+[ext_resource type="Script" uid="uid://dr0phe3qewla0" path="res://assets/resources/PhysicsMaterials/DB_PhysicsMaterial.gd" id="18_y1uao"]
+[ext_resource type="Script" uid="uid://cksg4cwolmrs7" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/pre_blur_processor.gd" id="19_xalbh"]
 [ext_resource type="Resource" uid="uid://bk5yd5plopwi2" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/simple_jf_blur_stage.tres" id="20_hjowy"]
 [ext_resource type="Resource" uid="uid://bj3exhmsfcx4w" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jf_simple_stage.tres" id="21_mvrfl"]
 [ext_resource type="Resource" uid="uid://co5k7plgmxepi" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jump_flood_neighbor_max_stage.tres" id="22_ylhhp"]
 [ext_resource type="Resource" uid="uid://dc5fr84ue3dn5" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jump_flood_overlay_stage.tres" id="23_83yta"]
 [ext_resource type="PackedScene" uid="uid://bidurnqgd1c74" path="res://assets/entities/weapons/m4/m4.tscn" id="24_n7adl"]
-[ext_resource type="Script" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/simple_jf_motion_blur.gd" id="24_np43x"]
+[ext_resource type="Script" uid="uid://v1cr7lhvqrjt" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/simple_jf_motion_blur.gd" id="24_np43x"]
 [ext_resource type="Resource" uid="uid://c10aboaly701b" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jump_flood_tile_max_x_stage.tres" id="25_llogv"]
 [ext_resource type="Texture2D" uid="uid://c7b38t83ckisx" path="res://assets/textures/crosshair/crosshair161.png" id="25_uauqw"]
 [ext_resource type="Resource" uid="uid://cymk87e4nyxva" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jump_flood_tile_max_y_stage.tres" id="26_8jgms"]
-[ext_resource type="Script" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="26_ev0fr"]
+[ext_resource type="Script" uid="uid://b6r8ewrq3qb3y" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="26_ev0fr"]
+[ext_resource type="Curve" uid="uid://cex2ggwxevnuj" path="res://assets/entities/projectiles/linear_falloff_curve.tres" id="36_38wki"]
+[ext_resource type="PackedScene" uid="uid://7ueyays7enj5" path="res://assets/entities/trigger/pawnTrigger.tscn" id="39_uiuv0"]
 
 [sub_resource type="Resource" id="Resource_ko4a2"]
 script = ExtResource("2_yse5r")
-enableTimeCycle = false
 worldName = "Particle Test"
 worldDescription = "Blood n shit.."
 worldLoadingTexture = ExtResource("3_vbqlr")
-worldType = 0
-spawnPawnsOnLoad = true
-playOnStart = false
-spawnType = 0
 
 [sub_resource type="Curve" id="Curve_07aw7"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
@@ -105,11 +102,6 @@ effect_callback_type = 4
 needs_motion_vectors = false
 needs_normal_roughness = false
 script = ExtResource("19_xalbh")
-pre_blur_processor_stage = ExtResource("18_50ig5")
-camera_rotation_component = ExtResource("16_pscay")
-camera_movement_component = ExtResource("15_sdv7v")
-object_movement_component = ExtResource("17_ssj5l")
-debug = false
 
 [sub_resource type="CompositorEffect" id="CompositorEffect_uxybo"]
 resource_local_to_scene = false
@@ -119,23 +111,6 @@ effect_callback_type = 4
 needs_motion_vectors = false
 needs_normal_roughness = false
 script = ExtResource("24_np43x")
-tile_max_x_stage = ExtResource("25_llogv")
-tile_max_y_stage = ExtResource("26_8jgms")
-construct_stage = ExtResource("21_mvrfl")
-neighbor_max_stage = ExtResource("22_ylhhp")
-blur_stage = ExtResource("20_hjowy")
-overlay_stage = ExtResource("23_83yta")
-perpen_error_threshold = 0.5
-sample_step_multiplier = 16
-step_exponent_modifier = 1.0
-JFA_pass_count = 3
-samples = 16
-intensity = 1.0
-center_fade = 0.0
-framerate_independent = true
-uncapped_independence = false
-target_constant_framerate = 60.0
-debug = false
 
 [sub_resource type="Compositor" id="Compositor_x1wgh"]
 compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_pmh78"), SubResource("CompositorEffect_uxybo")])
@@ -226,45 +201,21 @@ func _physics_process(delta)->void:
 [sub_resource type="Resource" id="Resource_gua43"]
 resource_local_to_scene = true
 script = ExtResource("26_ev0fr")
-useBulletTrail = true
-saleCategory = 1
-gritPrice = 0
-itemDescriptionShort = ""
-itemDescriptionLong = ""
-canBeReloaded = true
-weaponMagSize = 128
-ammoSize = 30
 reloadTime = 1.9
-headDismember = false
 weaponDamage = 7.9
 weaponFireRate = 0.1
-bulletSpeed = 800.0
-bulletPenetration = 1.0
 weaponImpulse = 27.0
-weaponShots = 1
-ammoConsumption = 1
 useCustomCrosshairSize = true
-crosshairSizeOverride = Vector2(0.6, 0.6)
 forcedCrosshair = ExtResource("25_uauqw")
 useFOV = true
 fovShotAmount = 0.8
 weaponRecoil = Vector3(5, 9, 3)
 weaponRecoilStrength = 7.0
 weaponSpread = 0.09
-weaponRecoilStrengthAim = 4.0
 weaponSpreadAim = 0.07
-leftHandParent = false
-rightHandParent = true
 useWeaponSprintAnim = true
-useLeftHandIdle = true
-useRightHandIdle = true
-useLeftHandAiming = true
-useRightHandAiming = true
-useLeftHandFreeAiming = true
-useRightHandFreeAiming = true
 weaponPositionOffset = Vector3(-0.015, 0.13, 0.075)
 weaponRotationOffset = Vector3(0, -1.74, -1.48)
-bulletColor = Color(1, 1, 0, 1)
 
 [sub_resource type="GDScript" id="GDScript_vmtxr"]
 resource_name = "particletestlogic"
@@ -279,7 +230,14 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
+
+
+func _on_pawn_trigger_trigger_activated(body: Variant) -> void:
+	gameManager.queuePhoneCall(load(\"res://assets/resources/customResources/actorAudio/dialogue/particleArea.tres\"))
 "
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ge1q8"]
+radius = 7.031086
 
 [node name="worldBase" instance=ExtResource("1_rrsmc")]
 worldData = SubResource("Resource_ko4a2")
@@ -289,15 +247,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.71872, 0.5, 5.91885)
 pawnType = 0
 pawnWeapons = Array[PackedScene]([ExtResource("4_c40k5"), ExtResource("6_tgu38"), ExtResource("7_q40r8"), ExtResource("8_uwo5p")])
 pawnClothing = Array[PackedScene]([ExtResource("9_3ne02"), ExtResource("10_8dx3e"), ExtResource("11_peoen"), ExtResource("12_wpjvl"), ExtResource("13_jub1n")])
+randomAnimationSpeed = false
 pawnColor = Color(0, 0, 0.733333, 1)
 
 [node name="pawnSpawn" parent="Spawns/pawnSpawns" index="0" instance=ExtResource("2_d45q2")]
 transform = Transform3D(-0.34687, 0, 0.937913, 0, 1, 0, -0.937913, 0, -0.34687, 2.90905, 0.5, 3.25139)
 pawnName = "Barf"
+randomAnimationSpeed = false
 
 [node name="pawnSpawn2" parent="Spawns/pawnSpawns" index="1" instance=ExtResource("2_d45q2")]
 transform = Transform3D(-0.870691, 0, -0.491831, 0, 1, 0, 0.491831, 0, -0.870691, 1.94332, 37.658, -9.37791)
 pawnName = "Barf 2"
+randomAnimationSpeed = false
 
 [node name="worldEnvironment" parent="Environment" index="0"]
 environment = SubResource("Environment_4ygah")
@@ -368,5 +329,12 @@ script = SubResource("GDScript_vmtxr")
 
 [node name="rayCast3d" type="RayCast3D" parent="mapLogic" index="0"]
 
+[node name="pawnTrigger" parent="." index="8" instance=ExtResource("39_uiuv0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5849733, 0.5, 5.0113473)
+
+[node name="collisionShape3d" type="CollisionShape3D" parent="pawnTrigger" index="0"]
+shape = SubResource("SphereShape3D_ge1q8")
+
 [connection signal="timeout" from="Props/csgBox3d/timer" to="Props/csgBox3d" method="_on_timer_timeout"]
 [connection signal="timeout" from="Props/csgBox3d2/timer" to="Props/csgBox3d2" method="_on_timer_timeout"]
+[connection signal="triggerActivated" from="pawnTrigger" to="mapLogic" method="_on_pawn_trigger_trigger_activated"]

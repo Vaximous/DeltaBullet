@@ -164,6 +164,19 @@ var isStaggered : bool = false:
 			direction = Vector3.ZERO
 		else:
 			movementController.enabled = true
+var queuedPhoneCall : ActorDialogue = null:
+	set(value):
+		queuedPhoneCall = value
+		if is_instance_valid(queuedPhoneCall):
+			if is_instance_valid(attachedCam):
+				attachedCam.fadePhoneCallNotificationIn()
+				gameManager.hideHUD()
+				playRingtone()
+		else:
+			if is_instance_valid(attachedCam):
+				attachedCam.fadePhoneCallNotificationOut()
+				gameManager.hideHUD()
+
 var isUsingPhone : bool = false:
 	set(value):
 		isUsingPhone = value
@@ -708,6 +721,7 @@ func playKillSound()->void:
 func die(killer) -> void:
 	if is_instance_valid(self) and !isPawnDead:
 		%flipphone.queue_free()
+		stopRingtone()
 		gameManager.allPawns.erase(self)
 		gameManager.doKillEffect(self,killer)
 		dropWeapon()
@@ -1747,6 +1761,44 @@ func playGrabAnimation()->void:
 		animationTree.set("parameters/useType/transition_request", "grabL")
 		animationTree.set("parameters/useShot/request",AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 
+func stopRingtone()->void:
+	%ringtone.stop()
+
+func playRingtone()->void:
+	if !%ringtone.playing:
+		%ringtone.play()
+
+	%ringtone.finished.connect(%ringtone.play)
+
+func playPhoneCall()->void:
+	if !isUsingPhone and queuedPhoneCall and isPlayerPawn() and !isPawnDead:
+		gameManager.hideHUD()
+		attachedCam.fadePhoneCallNotificationOut()
+		isUsingPhone = true
+		currentItemIndex = 0
+		currentItem = null
+		playPhoneAnswerAnimation()
+		isUsingPhone = true
+		await get_tree().create_timer(2.1,false).timeout
+		var pcall = await gameManager.playDialogue2D(queuedPhoneCall)
+		await pcall.tree_exited
+		isUsingPhone = false
+		gameManager.showHUD()
+		queuedPhoneCall = null
+		if attachedCam:
+			attachedCam.hud.fadeHudIn()
+		playPhoneCloseAnimation()
+
+func playPhoneAnswerAnimation()->void:
+	if !isPawnDead and is_instance_valid(self):
+		if phoneTween:
+			phoneTween.kill()
+		phoneTween = create_tween()
+		%flipphone.visible = true
+		phoneTween.tween_method(setPhoneBlend,animationTree.get("parameters/phoneOpened/blend_amount"),1,0.05).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+		animationTree.set("parameters/phoneAnimation/transition_request","phoneAnswer")
+		animationTree.set("parameters/phoneSeek/seek_request",0.1)
+
 func playPhoneOpenAnimation()->void:
 	if !isPawnDead and is_instance_valid(self):
 		if phoneTween:
@@ -1754,6 +1806,7 @@ func playPhoneOpenAnimation()->void:
 		phoneTween = create_tween()
 		%flipphone.visible = true
 		phoneTween.tween_method(setPhoneBlend,animationTree.get("parameters/phoneOpened/blend_amount"),1,0.05).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+		animationTree.set("parameters/phoneAnimation/transition_request","phoneOpen")
 		animationTree.set("parameters/phoneSeek/seek_request",0.1)
 
 func playPhoneCloseAnimation()->void:
@@ -1892,6 +1945,12 @@ func disableStaggerBlend()->void:
 	staggerTween = create_tween()
 	staggerTween.tween_method(setStaggerBlend,animationTree.get("parameters/staggerBlend/blend_amount"),0,0.25).set_ease(defaultEaseType).set_trans(defaultTransitionType)
 
+func playPhoneOpenSound()->void:
+	if !%phoneOpen.playing:
+		%phoneOpen.play()
+
+func playPhoneBeepSound()->void:
+	%phoneBeep.play()
 
 func staggerEnd()->void:
 	isStaggered = false

@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="ActorDialogue" load_steps=7 format=3 uid="uid://os45se8pr4j4"]
+
+[ext_resource type="Script" uid="uid://bubcqmglkld6n" path="res://assets/resources/actorAudioDefinition/actorAudioDefinition.gd" id="1_8g2h5"]
+[ext_resource type="Resource" uid="uid://bhkjb6tcv4bhp" path="res://assets/resources/customResources/actorAudio/TestAudio.tres" id="2_2wt6f"]
+[ext_resource type="Script" uid="uid://51as33mlf4p5" path="res://assets/resources/actorDialogue/actorDialogue.gd" id="2_54e5h"]
+[ext_resource type="Resource" uid="uid://cuvndce4p5pi1" path="res://assets/resources/customResources/actorAudio/TestAudio2.tres" id="3_vfbli"]
+
+[sub_resource type="Resource" id="Resource_84p4n"]
+script = ExtResource("1_8g2h5")
+timeBetweenAudio = 0.5
+audioResource = ExtResource("2_2wt6f")
+metadata/_custom_type_script = "uid://bubcqmglkld6n"
+
+[sub_resource type="Resource" id="Resource_mrd0a"]
+script = ExtResource("1_8g2h5")
+audioResource = ExtResource("3_vfbli")
+metadata/_custom_type_script = "uid://bubcqmglkld6n"
+
+[resource]
+script = ExtResource("2_54e5h")
+actorAudios = Array[ExtResource("1_8g2h5")]([SubResource("Resource_84p4n"), SubResource("Resource_mrd0a")])
+metadata/_custom_type_script = "uid://51as33mlf4p5"

@@ -205,8 +205,10 @@ func _input(event: InputEvent) -> void:
 					gameManager.notifyFade("You've died! Press F6 to restart!", 4, 5)
 
 		if event.is_action_pressed("gTabMenu"):
-			controllingPawn.togglePhone()
-
+			if !controllingPawn.queuedPhoneCall:
+				controllingPawn.togglePhone()
+			else:
+				controllingPawn.playPhoneCall()
 		##Movement Code
 		if gameManager.isMouseHidden():
 			if !event is InputEventMouseMotion and !event is InputEventMouseButton:

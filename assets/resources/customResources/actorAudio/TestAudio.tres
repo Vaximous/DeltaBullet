@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ActorAudio" load_steps=3 format=3 uid="uid://bhkjb6tcv4bhp"]
+
+[ext_resource type="Script" uid="uid://brywjp4oyim4q" path="res://assets/resources/actorAudio/actorAudio.gd" id="1_8k2ep"]
+[ext_resource type="AudioStream" uid="uid://1vm27qxmdo1c" path="res://assets/sounds/vo/test/pawnCall/testCall1.wav" id="1_t30ye"]
+
+[resource]
+script = ExtResource("1_8k2ep")
+audioStream = ExtResource("1_t30ye")
+subtitleText = "Hey, Bullet! Nice to see you figured out how to use your phone. Uhh, this is a test phone call!"
+actorName = "DudeGuy"
+metadata/_custom_type_script = "uid://brywjp4oyim4q"

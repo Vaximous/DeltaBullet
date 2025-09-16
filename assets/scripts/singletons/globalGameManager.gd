@@ -116,6 +116,45 @@ func freeOrphanNodes():
 	#orphanedData = keep
 	freeOrphans.emit()
 
+func queuePhoneCall(dialogue:ActorDialogue)->void:
+	if getCurrentPawn():
+		getCurrentPawn().queuedPhoneCall = dialogue
+		#getCurrentPawn().playPhoneCall()
+
+func queueAndPlayPhoneCall(dialogue:ActorDialogue)->void:
+	if getCurrentPawn():
+		getCurrentPawn().queuedPhoneCall = dialogue
+		getCurrentPawn().playPhoneCall()
+
+func stopPhoneCall()->void:
+	if world:
+		for i in get_tree().get_nodes_in_group(&"phonecall"):
+			i.queue_free()
+
+func playDialogue2D(dialogue:ActorDialogue)->AudioStreamPlayer:
+	if world:
+		var audioPlayer = AudioStreamPlayer.new()
+		audioPlayer.add_to_group(&"phonecall")
+		audioPlayer.bus = &"Sounds"
+		world.worldMisc.add_child(audioPlayer)
+		#print(dialogue.actorAudios.size())
+		if audioPlayer:
+			for i in dialogue.actorAudios.size():
+				var subtitle
+				#print(i)
+				if i == dialogue.actorAudios.size()-1:
+					audioPlayer.finished.connect(audioPlayer.queue_free)
+				if getCurrentPawn():
+					subtitle = getCurrentPawn().attachedCam.createSubtitle(dialogue.actorAudios[i].audioResource)
+				audioPlayer.stream = dialogue.actorAudios[i].audioResource.audioStream
+				audioPlayer.play()
+				await audioPlayer.finished
+				if subtitle:
+					subtitle.queue_free()
+				await get_tree().create_timer(dialogue.actorAudios[i].timeBetweenAudio,false)
+		return audioPlayer
+	else:
+		return null
 func getModifierFromName(modName:String):
 	for i in DirAccess.get_files_at("res://assets/entities/modifiers/"):
 		if i == modName+".tscn":
@@ -556,6 +595,7 @@ func getPauseMenu()->Control:
 
 func loadWorld(worldscene:String, fadein:bool = false)->void:
 	saveTemporaryPawnInfo()
+	stopPhoneCall()
 	targetedEnemies.clear()
 	playerPawns.clear()
 	get_tree().change_scene_to_file("res://assets/scenes/menu/loadingscreen/emptyLoaderScene.tscn")

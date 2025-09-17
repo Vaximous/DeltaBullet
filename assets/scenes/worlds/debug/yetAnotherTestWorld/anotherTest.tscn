@@ -1,4 +1,4 @@
-[gd_scene load_steps=67 format=4 uid="uid://ccnq3cc8k6nt5"]
+[gd_scene load_steps=69 format=4 uid="uid://ccnq3cc8k6nt5"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_iq3s1"]
 [ext_resource type="Resource" uid="uid://cm1dad74uaa1i" path="res://assets/scenes/worlds/debug/yetAnotherTestWorld/anotherTestData.tres" id="2_givre"]
@@ -246,6 +246,18 @@ albedo_color = Color(1, 0, 0, 1)
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_cuq5u"]
 data = PackedVector3Array(-0.120483, -0.5, 0.117188, 0.120483, -0.5, 0.117188, 0.120483, -0.5, -0.117188, 0.0939331, 0.5, 0.102539, 0.120483, 0.5, -0.117188, 0.120483, 0.5, 0.117188, 0.0939331, 0.5, 0.102539, 0.120483, 0.5, 0.117188, -0.104492, 0.5, 0.102539, 0.0939331, 0.5, -0.0957031, 0.120483, 0.5, -0.117188, 0.0939331, 0.5, 0.102539, 0.120483, 0.5, 0.117188, 0.120483, 0.5, -0.117188, 0.120483, -0.5, -0.117188, 0.120483, 0.5, -0.117188, 0.0939331, 0.5, -0.0957031, -0.120483, 0.5, -0.117188, 0.120483, -0.5, -0.117188, 0.120483, 0.5, -0.117188, -0.120483, 0.5, -0.117188, 0.120483, -0.5, 0.117188, 0.120483, 0.5, 0.117188, 0.120483, -0.5, -0.117188, 0.120483, 0.5, 0.117188, 0.120483, -0.5, 0.117188, -0.120483, -0.5, 0.117188, -0.120483, -0.5, 0.117188, -0.120483, -0.5, -0.117188, -0.120483, 0.5, -0.117188, -0.104492, 0.5, 0.102539, 0.120483, 0.5, 0.117188, -0.120483, 0.5, 0.117188, -0.104492, 0.5, -0.0957031, -0.120483, 0.5, -0.117188, 0.0939331, 0.5, -0.0957031, -0.120483, -0.5, 0.117188, 0.120483, -0.5, -0.117188, -0.120483, -0.5, -0.117188, 0.120483, -0.5, -0.117188, -0.120483, 0.5, -0.117188, -0.120483, -0.5, -0.117188, -0.104492, 0.5, -0.0957031, -0.120483, 0.5, 0.117188, -0.120483, 0.5, -0.117188, -0.120483, 0.5, -0.117188, -0.120483, 0.5, 0.117188, -0.120483, -0.5, 0.117188, -0.104492, 0.5, 0.102539, -0.120483, 0.5, 0.117188, -0.104492, 0.5, -0.0957031, -0.120483, 0.5, 0.117188, 0.120483, 0.5, 0.117188, -0.120483, -0.5, 0.117188, 0.0939331, 0.5, -0.0957031, -0.104492, 0.548211, -0.0957031, -0.104492, 0.5, -0.0957031, 0.0939331, 0.5, -0.0957031, 0.0939331, 0.548211, -0.0957031, -0.104492, 0.548211, -0.0957031, -0.104492, 0.548211, -0.0957031, 0.0939331, 0.548211, 0.102539, -0.104492, 0.548211, 0.102539, 0.0939331, 0.548211, -0.0957031, 0.0939331, 0.548211, 0.102539, -0.104492, 0.548211, -0.0957031, -0.104492, 0.548211, -0.0957031, -0.104492, 0.548211, 0.102539, -0.104492, 0.5, -0.0957031, 0.0939331, 0.5, -0.0957031, 0.0939331, 0.5, 0.102539, 0.0939331, 0.548211, -0.0957031, -0.104492, 0.5, 0.102539, -0.104492, 0.5, -0.0957031, -0.104492, 0.548211, 0.102539, 0.0939331, 0.548211, 0.102539, 0.0939331, 0.5, 0.102539, -0.104492, 0.5, 0.102539, 0.0939331, 0.548211, 0.102539, 0.0939331, 0.548211, -0.0957031, 0.0939331, 0.5, 0.102539, -0.104492, 0.5, 0.102539, -0.104492, 0.548211, 0.102539, 0.0939331, 0.548211, 0.102539)
+
+[sub_resource type="GDScript" id="GDScript_jltsg"]
+resource_name = "anotherlogic"
+script/source = "extends Node
+
+
+func _on_pawn_trigger_trigger_activated(body: Variant) -> void:
+	gameManager.queuePhoneCall(load(\"res://assets/resources/customResources/actorAudio/dialogue/warrantyTest.tres\"))
+"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0op2q"]
+size = Vector3(4.3269043, 3.527832, 0.47509766)
 
 [node name="worldBase" instance=ExtResource("1_iq3s1")]
 worldData = ExtResource("2_givre")
@@ -972,9 +984,20 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.3733, 1.66502, 3.90188)
 [node name="aiMarker11" parent="Misc/WaypointNodes" index="18" instance=ExtResource("5_bh8tr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.3854, 1.66502, 3.90188)
 
+[node name="mapLogic" parent="." index="7"]
+script = SubResource("GDScript_jltsg")
+
+[node name="pawnTrigger" parent="." index="8" instance=ExtResource("14_sl7fe")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.272095, 1.6091977, 21.61826)
+
+[node name="collisionShape3d" type="CollisionShape3D" parent="pawnTrigger" index="0"]
+transform = Transform3D(0.79714155, 0, 0.6037925, 0, 1, 0, -0.6037925, 0, 0.79714155, -0.05862713, 1.2639159, 0.37364578)
+shape = SubResource("BoxShape3D_0op2q")
+
 [connection signal="objectUsed" from="Geometry/navigationRegion3d/PlayerCloset/closetInteraction" to="Geometry/navigationRegion3d/PlayerCloset" method="_onClosetUsed"]
 [connection signal="objectUsed" from="Geometry/navigationRegion3d/csgtruck/worldMapInteract" to="Geometry/navigationRegion3d/csgtruck/worldMapInteract" method="_on_object_used"]
 [connection signal="triggerActivated" from="Props/node3d/pawnTrigger" to="Props/node3d" method="_on_pawn_trigger_trigger_activated"]
 [connection signal="objectUsed" from="Props/interactiveObject" to="Props/interactiveObject" method="spawnSomeEnemies"]
 [connection signal="objectUsed" from="Props/interactiveObject" to="Props/interactiveObject" method="_on_object_used"]
 [connection signal="timeout" from="Props/interactiveObject/timer" to="Props/interactiveObject" method="spawnSomeEnemies"]
+[connection signal="triggerActivated" from="pawnTrigger" to="mapLogic" method="_on_pawn_trigger_trigger_activated"]

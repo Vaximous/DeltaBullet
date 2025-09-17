@@ -15,6 +15,7 @@ audioStream = ExtResource("2_5uj6o")
 subtitleText = "Hello Mr. Bullet, we're here to call you about your cars extended warranty.. And uh.."
 actorName = "Car Guy"
 showActorNames = true
+actorColor = Color(0.91742706, 0.8126201, 0.6331836, 1)
 metadata/_custom_type_script = "uid://brywjp4oyim4q"
 
 [sub_resource type="Resource" id="Resource_ag7hp"]
@@ -28,6 +29,7 @@ audioStream = ExtResource("4_vgv3v")
 subtitleText = "Well, just say nothing if you would like to go forward with the extended warranty plan."
 actorName = "Car Guy"
 showActorNames = true
+actorColor = Color(0.91742706, 0.8126201, 0.6331836, 1)
 metadata/_custom_type_script = "uid://brywjp4oyim4q"
 
 [sub_resource type="Resource" id="Resource_72tri"]
@@ -41,6 +43,7 @@ audioStream = ExtResource("5_wirte")
 subtitleText = "And uh, that'll include ten months.. of extended warranty.. For your car."
 actorName = "Car Guy"
 showActorNames = true
+actorColor = Color(0.91742706, 0.8126201, 0.6331836, 1)
 metadata/_custom_type_script = "uid://brywjp4oyim4q"
 
 [sub_resource type="Resource" id="Resource_3jdyo"]
@@ -54,6 +57,7 @@ audioStream = ExtResource("6_3in1v")
 subtitleText = "And uh.. Just say nothing if you want that! Okay.. Alright?"
 actorName = "Car Guy"
 showActorNames = true
+actorColor = Color(0.91742706, 0.8126201, 0.6331836, 1)
 metadata/_custom_type_script = "uid://brywjp4oyim4q"
 
 [sub_resource type="Resource" id="Resource_2tmel"]
@@ -67,6 +71,7 @@ audioStream = ExtResource("7_rh2w8")
 subtitleText = "Alright. I'll take your silence as a-, Okay. Alright! Let's do this! Thank you, sir! Goodbye!"
 actorName = "Car Guy"
 showActorNames = true
+actorColor = Color(0.91742706, 0.8126201, 0.6331836, 1)
 metadata/_custom_type_script = "uid://brywjp4oyim4q"
 
 [sub_resource type="Resource" id="Resource_ev0yd"]

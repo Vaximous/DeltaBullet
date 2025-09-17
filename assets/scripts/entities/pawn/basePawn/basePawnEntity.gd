@@ -13,6 +13,7 @@ signal clothingChanged
 signal itemChanged
 signal forcingAnimation
 signal killedPawn
+signal callFinished
 signal onPawnKilled
 signal hitboxAssigned(hitbox:Hitbox)
 signal headshottedPawn
@@ -701,12 +702,12 @@ func endAttachedCam()->void:
 		attachedCam.resetCamCast()
 		#Dialogic.end_timeline()
 
-
 func isPlayerPawn()->bool:
 	if has_meta(&"isPlayer"):
 		return get_meta(&"isPlayer")
 	else:
 		return false
+
 func moveHitboxDecals(parent:Node3D = gameManager.world.worldParticles) ->void:
 	if is_instance_valid(gameManager.world):
 		for boxes in getAllHitboxes():
@@ -1288,7 +1289,6 @@ func getPawnSkeleton()->Skeleton3D:
 	#When the female skeleton gets added we will use this to get the skeleton of the character, but for now just return the male one
 	return $Mesh/MaleSkeleton/Skeleton3D
 
-
 func flinch(flinchDirection : Vector3) -> void:
 	##New Flinch
 	#print(flinchDirection)
@@ -1788,6 +1788,8 @@ func playPhoneCall()->void:
 		if attachedCam:
 			attachedCam.hud.fadeHudIn()
 		playPhoneCloseAnimation()
+		playPhoneBeepSound()
+		callFinished.emit()
 
 func playPhoneAnswerAnimation()->void:
 	if !isPawnDead and is_instance_valid(self):

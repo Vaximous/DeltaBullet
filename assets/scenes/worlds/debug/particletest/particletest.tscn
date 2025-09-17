@@ -1,4 +1,4 @@
-[gd_scene load_steps=63 format=3 uid="uid://bgy0ycoxec6p6"]
+[gd_scene load_steps=48 format=3 uid="uid://bgy0ycoxec6p6"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_rrsmc"]
 [ext_resource type="PackedScene" uid="uid://boicvk4qeqmbd" path="res://assets/entities/pawnSpawn/pawnSpawn.tscn" id="2_d45q2"]
@@ -20,22 +20,10 @@
 [ext_resource type="PackedScene" uid="uid://jwq6tye7ok4r" path="res://assets/entities/clothing/Glasses/SiftinShades/SiftinShades.tscn" id="13_jub1n"]
 [ext_resource type="Texture2D" uid="uid://dqqed6ax6wm71" path="res://assets/textures/urban/Floor-02-Normal.tga" id="13_tjvye"]
 [ext_resource type="Texture2D" uid="uid://budtgret7s7vx" path="res://assets/textures/urban/Brick-Wall-05-Normal.tga" id="14_54g3l"]
-[ext_resource type="Resource" uid="uid://cslvcweyejh3c" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/default_camera_movement_component.tres" id="15_sdv7v"]
-[ext_resource type="Resource" uid="uid://iru8ynu04i00" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/default_camera_rotation_component.tres" id="16_pscay"]
 [ext_resource type="PackedScene" uid="uid://dend7ate7mq6e" path="res://assets/entities/bulletHoles/default/BulletHoleBase.tscn" id="17_5q6o5"]
-[ext_resource type="Resource" uid="uid://rp3mpjmisoyh" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/default_object_movement_component.tres" id="17_ssj5l"]
-[ext_resource type="Resource" uid="uid://c8ulad7utgrg7" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/pre_blur_processing_stage.tres" id="18_50ig5"]
 [ext_resource type="Script" uid="uid://dr0phe3qewla0" path="res://assets/resources/PhysicsMaterials/DB_PhysicsMaterial.gd" id="18_y1uao"]
-[ext_resource type="Script" uid="uid://cksg4cwolmrs7" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/pre_blur_processor.gd" id="19_xalbh"]
-[ext_resource type="Resource" uid="uid://bk5yd5plopwi2" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/simple_jf_blur_stage.tres" id="20_hjowy"]
-[ext_resource type="Resource" uid="uid://bj3exhmsfcx4w" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jf_simple_stage.tres" id="21_mvrfl"]
-[ext_resource type="Resource" uid="uid://co5k7plgmxepi" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jump_flood_neighbor_max_stage.tres" id="22_ylhhp"]
-[ext_resource type="Resource" uid="uid://dc5fr84ue3dn5" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jump_flood_overlay_stage.tres" id="23_83yta"]
 [ext_resource type="PackedScene" uid="uid://bidurnqgd1c74" path="res://assets/entities/weapons/m4/m4.tscn" id="24_n7adl"]
-[ext_resource type="Script" uid="uid://v1cr7lhvqrjt" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/simple_jf_motion_blur.gd" id="24_np43x"]
-[ext_resource type="Resource" uid="uid://c10aboaly701b" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jump_flood_tile_max_x_stage.tres" id="25_llogv"]
 [ext_resource type="Texture2D" uid="uid://c7b38t83ckisx" path="res://assets/textures/crosshair/crosshair161.png" id="25_uauqw"]
-[ext_resource type="Resource" uid="uid://cymk87e4nyxva" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jump_flood_tile_max_y_stage.tres" id="26_8jgms"]
 [ext_resource type="Script" uid="uid://b6r8ewrq3qb3y" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="26_ev0fr"]
 [ext_resource type="Curve" uid="uid://cex2ggwxevnuj" path="res://assets/entities/projectiles/linear_falloff_curve.tres" id="36_38wki"]
 [ext_resource type="PackedScene" uid="uid://7ueyays7enj5" path="res://assets/entities/trigger/pawnTrigger.tscn" id="39_uiuv0"]
@@ -93,27 +81,6 @@ volumetric_fog_density = 0.0112
 adjustment_enabled = true
 adjustment_saturation = 1.15
 adjustment_color_correction = SubResource("CurveXYZTexture_bfvmr")
-
-[sub_resource type="CompositorEffect" id="CompositorEffect_pmh78"]
-resource_local_to_scene = false
-resource_name = ""
-enabled = true
-effect_callback_type = 4
-needs_motion_vectors = false
-needs_normal_roughness = false
-script = ExtResource("19_xalbh")
-
-[sub_resource type="CompositorEffect" id="CompositorEffect_uxybo"]
-resource_local_to_scene = false
-resource_name = ""
-enabled = true
-effect_callback_type = 4
-needs_motion_vectors = false
-needs_normal_roughness = false
-script = ExtResource("24_np43x")
-
-[sub_resource type="Compositor" id="Compositor_x1wgh"]
-compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_pmh78"), SubResource("CompositorEffect_uxybo")])
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_21tre"]
 vertices = PackedVector3Array(-3, 0.965229, 7, -1, 0.965229, 7, -1, 0.965229, -69, -3.25, 0.965229, 8, -3, 0.965229, 7, -1, 0.965229, -69, -141, 0.965229, -69, -141, 0.965229, 8, -1, 0.965229, 7, 5, 0.965229, 7, 5, 0.965229, -69, -1, 0.965229, -69, 5, 0.965229, -69, 5, 0.965229, 7, 7, 0.965229, 7, 5, 0.965229, -69, 7, 0.965229, 7, 7.25, 0.965229, 8, 116, 0.965229, 8, 116, 0.965229, -69, -1, 0.965229, 129, -1, 0.965229, 9, -3, 0.965229, 9, -1, 0.965229, 129, -3, 0.965229, 9, -3.25, 0.965229, 8, -141, 0.965229, 8, -141, 0.965229, 129, 116, 0.965229, 8, 7.25, 0.965229, 8, 7, 0.965229, 9, 5, 0.965229, 129, 116, 0.965229, 129, 7, 0.965229, 9, 5, 0.965229, 9, 5, 0.965229, 129, -1, 0.965229, 129, 5, 0.965229, 129, 5, 0.965229, 9, -1, 0.965229, 9)
@@ -262,7 +229,6 @@ randomAnimationSpeed = false
 
 [node name="worldEnvironment" parent="Environment" index="0"]
 environment = SubResource("Environment_4ygah")
-compositor = SubResource("Compositor_x1wgh")
 
 [node name="reflectionProbe" parent="Environment" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.2557, 0, 29.8013)

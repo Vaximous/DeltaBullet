@@ -326,15 +326,18 @@ func _physics_process(delta)->void:
 
 		move_and_slide()
 
-func createSubtitle(actorAudio:ActorAudio,timeout:float = 1)->Label:
-	var label = Label.new()
-	label.label_settings = load("res://assets/resources/subtitleSettings.tres")
-	%subtitleContainer.add_child(label)
+func createSubtitle(actorAudio:ActorAudio,timeout:float = 1)->MarginContainer:
+	var label = load("res://assets/scenes/ui/captionSubtitle.tscn")
+	var subtitle = label.instantiate()
+	%subtitleContainer.add_child(subtitle)
 	if actorAudio.showActorNames:
-		label.text = "%s: %s"%[actorAudio.actorName,actorAudio.subtitleText]
+		subtitle.setSpeaker(actorAudio.actorName)
+		subtitle.setSubtitle(actorAudio.subtitleText)
+		subtitle.setSpeakerColor(actorAudio.actorColor)
 	else:
-		label.text = actorAudio.subtitleText
-	return label
+		subtitle.setSpeaker("")
+		subtitle.setSubtitle(actorAudio.subtitleText)
+	return subtitle
 
 func fadePhoneCallNotificationIn()->void:
 	%phoneCallNotification.modulate = Color.TRANSPARENT

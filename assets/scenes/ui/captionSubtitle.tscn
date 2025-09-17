@@ -1,0 +1,45 @@
+[gd_scene load_steps=3 format=3 uid="uid://cxn5warae4ehj"]
+
+[ext_resource type="LabelSettings" uid="uid://kemewwnaa84h" path="res://assets/resources/subtitleSettings.tres" id="1_8gem0"]
+
+[sub_resource type="GDScript" id="GDScript_71nkq"]
+resource_name = "captionSubtitle"
+script/source = "extends MarginContainer
+@onready var speakerLabel : Label = $hBoxContainer/speakerName
+@onready var subtitle : Label = $hBoxContainer/subtitle
+
+func setSpeakerColor(value:Color)->void:
+	speakerLabel.modulate = value
+
+func setSubtitleColor(value:Color)->void:
+	subtitle.modulate = value
+
+func setSpeaker(value:String)->void:
+	speakerLabel.text = \"%s: \"%value
+
+func setSubtitle(value:String)->void:
+	subtitle.text = value
+"
+
+[node name="subtitle" type="MarginContainer"]
+offset_right = 88.0
+offset_bottom = 40.0
+script = SubResource("GDScript_71nkq")
+
+[node name="colorRect" type="ColorRect" parent="."]
+layout_mode = 2
+color = Color(0, 0, 0, 0.5137255)
+
+[node name="hBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="speakerName" type="Label" parent="hBoxContainer"]
+layout_mode = 2
+text = "Fucker: "
+label_settings = ExtResource("1_8gem0")
+
+[node name="subtitle" type="Label" parent="hBoxContainer"]
+layout_mode = 2
+text = "Fuck you!"
+label_settings = ExtResource("1_8gem0")
+horizontal_alignment = 1

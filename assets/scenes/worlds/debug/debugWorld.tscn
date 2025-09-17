@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=3 uid="uid://dpeqrnidy6scn"]
+[gd_scene load_steps=62 format=3 uid="uid://dpeqrnidy6scn"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_ffcsn"]
 [ext_resource type="Script" uid="uid://b31u24at18p5t" path="res://assets/resources/customResources/worldData/worldData.gd" id="2_pwn6q"]
@@ -34,6 +34,7 @@
 [ext_resource type="Resource" uid="uid://c10aboaly701b" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jump_flood_tile_max_x_stage.tres" id="18_cn3w7"]
 [ext_resource type="Resource" uid="uid://cymk87e4nyxva" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jump_flood_tile_max_y_stage.tres" id="19_7u332"]
 [ext_resource type="PackedScene" uid="uid://dvmmlj4mvj88r" path="res://assets/entities/aiMarker/aiMarker.tscn" id="37_na5a6"]
+[ext_resource type="PackedScene" uid="uid://7ueyays7enj5" path="res://assets/entities/trigger/pawnTrigger.tscn" id="38_k78gc"]
 [ext_resource type="PackedScene" uid="uid://fbfo4av0cb8r" path="res://assets/entities/wallMountedMedkit/WallMountedMedkit.tscn" id="42_t76hv"]
 [ext_resource type="AudioStream" uid="uid://c8f4j3xitvvuk" path="res://assets/sounds/ui/uialert.wav" id="43_bqukx"]
 [ext_resource type="PackedScene" uid="uid://boh343kalvj5i" path="res://assets/entities/weapons/Revolver/Revolver.tscn" id="46_83wuo"]
@@ -47,11 +48,11 @@ skyTexture = SubResource("PanoramaSkyMaterial_c0bh1")
 worldName = "Interior Area"
 worldDescription = "[b]VERY[/b] old. The first test area."
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_31k0b"]
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_xjy20"]
 panorama = ExtResource("7_1qqyn")
 
 [sub_resource type="Sky" id="Sky_bhcr0"]
-sky_material = SubResource("PanoramaSkyMaterial_31k0b")
+sky_material = SubResource("PanoramaSkyMaterial_xjy20")
 
 [sub_resource type="Environment" id="Environment_uqgj2"]
 background_mode = 2
@@ -184,6 +185,18 @@ size = Vector3(0.16, 0.15, 0.085)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ae5er"]
 size = Vector3(0.18425, 0.199585, 0.119446)
+
+[sub_resource type="GDScript" id="GDScript_k78gc"]
+resource_name = "debugworldlogic"
+script/source = "extends Node
+
+
+func _on_pawn_trigger_trigger_activated(body: Variant) -> void:
+	gameManager.queuePhoneCall(load(\"res://assets/resources/customResources/actorAudio/dialogue/dialogueNPC.tres\"))
+"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xjy20"]
+size = Vector3(3.5839844, 5.4595947, 0.42529297)
 
 [node name="worldBase" instance=ExtResource("1_ffcsn")]
 worldData = SubResource("Resource_2joim")
@@ -1189,3 +1202,15 @@ top_level = true
 [node name="BobbyDialoguePosition" type="Marker3D" parent="Misc" index="4"]
 transform = Transform3D(-0.735436, 0, 0.677596, 0, 1, 0, -0.677596, 0, -0.735436, -27.0544, 2.070756, 56.766914)
 top_level = true
+
+[node name="mapLogic" parent="." index="7"]
+script = SubResource("GDScript_k78gc")
+
+[node name="pawnTrigger" parent="mapLogic" index="0" instance=ExtResource("38_k78gc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.456608, 0.67006516, 63.86088)
+
+[node name="collisionShape3d" type="CollisionShape3D" parent="mapLogic/pawnTrigger" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.080078125, 2.2297974, -0.28735352)
+shape = SubResource("BoxShape3D_xjy20")
+
+[connection signal="triggerActivated" from="mapLogic/pawnTrigger" to="mapLogic" method="_on_pawn_trigger_trigger_activated"]

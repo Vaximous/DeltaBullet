@@ -1,0 +1,70 @@
+[gd_resource type="Resource" script_class="ActorDialogue" load_steps=16 format=3 uid="uid://b27ji0l1bg60g"]
+
+[ext_resource type="Script" uid="uid://bubcqmglkld6n" path="res://assets/resources/actorAudioDefinition/actorAudioDefinition.gd" id="1_244pa"]
+[ext_resource type="AudioStream" uid="uid://bwbi83pt8vwe2" path="res://assets/sounds/vo/test/pawnCall/test3/dialogue1.wav" id="2_gcksd"]
+[ext_resource type="Script" uid="uid://brywjp4oyim4q" path="res://assets/resources/actorAudio/actorAudio.gd" id="3_aln6g"]
+[ext_resource type="AudioStream" uid="uid://vko1lx74js3a" path="res://assets/sounds/vo/test/pawnCall/test3/dialogue2.wav" id="4_aln6g"]
+[ext_resource type="AudioStream" uid="uid://1c6ai8bdq5oq" path="res://assets/sounds/vo/test/pawnCall/test3/dialogue3.wav" id="5_sffqf"]
+[ext_resource type="Script" uid="uid://51as33mlf4p5" path="res://assets/resources/actorDialogue/actorDialogue.gd" id="6_83r78"]
+[ext_resource type="AudioStream" uid="uid://217am37v1xgi" path="res://assets/sounds/vo/test/pawnCall/test3/dialogue4.wav" id="6_fr75x"]
+
+[sub_resource type="Resource" id="Resource_83r78"]
+script = ExtResource("3_aln6g")
+audioStream = ExtResource("2_gcksd")
+subtitleText = "If this room has an NPC, it should be able to activate dialogue."
+actorName = "Debugger"
+showActorNames = true
+actorColor = Color(0.20225835, 0.51079345, 0.8524584, 1)
+metadata/_custom_type_script = "uid://brywjp4oyim4q"
+
+[sub_resource type="Resource" id="Resource_24xj2"]
+script = ExtResource("1_244pa")
+audioResource = SubResource("Resource_83r78")
+metadata/_custom_type_script = "uid://bubcqmglkld6n"
+
+[sub_resource type="Resource" id="Resource_ochy4"]
+script = ExtResource("3_aln6g")
+audioStream = ExtResource("4_aln6g")
+subtitleText = "If there is an NPC in this room, interact with it"
+actorName = "Debugger"
+showActorNames = true
+actorColor = Color(0.20225835, 0.51079345, 0.8524584, 1)
+metadata/_custom_type_script = "uid://brywjp4oyim4q"
+
+[sub_resource type="Resource" id="Resource_4i40k"]
+script = ExtResource("1_244pa")
+audioResource = SubResource("Resource_ochy4")
+metadata/_custom_type_script = "uid://bubcqmglkld6n"
+
+[sub_resource type="Resource" id="Resource_luk2x"]
+script = ExtResource("3_aln6g")
+audioStream = ExtResource("5_sffqf")
+subtitleText = "And see if it functions, If it doesn't"
+actorName = "Debugger"
+showActorNames = true
+actorColor = Color(0.20225835, 0.51079345, 0.8524584, 1)
+metadata/_custom_type_script = "uid://brywjp4oyim4q"
+
+[sub_resource type="Resource" id="Resource_e304r"]
+script = ExtResource("1_244pa")
+audioResource = SubResource("Resource_luk2x")
+metadata/_custom_type_script = "uid://bubcqmglkld6n"
+
+[sub_resource type="Resource" id="Resource_6uku6"]
+script = ExtResource("3_aln6g")
+audioStream = ExtResource("6_fr75x")
+subtitleText = "Then I should.. probably fix that."
+actorName = "Debugger"
+showActorNames = true
+actorColor = Color(0.20225835, 0.51079345, 0.8524584, 1)
+metadata/_custom_type_script = "uid://brywjp4oyim4q"
+
+[sub_resource type="Resource" id="Resource_gfq8j"]
+script = ExtResource("1_244pa")
+audioResource = SubResource("Resource_6uku6")
+metadata/_custom_type_script = "uid://bubcqmglkld6n"
+
+[resource]
+script = ExtResource("6_83r78")
+actorAudios = Array[ExtResource("1_244pa")]([SubResource("Resource_24xj2"), SubResource("Resource_4i40k"), SubResource("Resource_e304r"), SubResource("Resource_gfq8j")])
+metadata/_custom_type_script = "uid://51as33mlf4p5"

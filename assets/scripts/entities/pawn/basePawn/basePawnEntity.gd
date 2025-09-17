@@ -1787,9 +1787,8 @@ func playPhoneCall()->void:
 		queuedPhoneCall = null
 		if attachedCam:
 			attachedCam.hud.fadeHudIn()
-		playPhoneCloseAnimation()
-		playPhoneBeepSound()
-		callFinished.emit()
+		playPhoneHangupAnimation()
+
 
 func playPhoneAnswerAnimation()->void:
 	if !isPawnDead and is_instance_valid(self):
@@ -1810,6 +1809,22 @@ func playPhoneOpenAnimation()->void:
 		phoneTween.tween_method(setPhoneBlend,animationTree.get("parameters/phoneOpened/blend_amount"),1,0.05).set_ease(defaultEaseType).set_trans(defaultTransitionType)
 		animationTree.set("parameters/phoneAnimation/transition_request","phoneOpen")
 		animationTree.set("parameters/phoneSeek/seek_request",0.1)
+
+func playPhoneHangupAnimation()->void:
+	if !isPawnDead and is_instance_valid(self):
+		%flipphone.visible = true
+		if phoneTween:
+			phoneTween.kill()
+		phoneTween = create_tween()
+		animationTree.set("parameters/phoneAnimation/transition_request","phoneHangup")
+		animationTree.set("parameters/phoneSeek/seek_request",0.1)
+		await get_tree().create_timer(1.3,false).timeout
+		%flipphone.visible = false
+		callFinished.emit()
+		if phoneTween:
+			phoneTween.kill()
+		phoneTween = create_tween()
+		phoneTween.tween_method(setPhoneBlend,animationTree.get("parameters/phoneOpened/blend_amount"),0,0.25).set_ease(defaultEaseType).set_trans(defaultTransitionType)
 
 func playPhoneCloseAnimation()->void:
 	if !isPawnDead and is_instance_valid(self):

@@ -1,4 +1,4 @@
-[gd_resource type="AnimationNodeBlendTree" load_steps=113 format=3 uid="uid://b5cxrwjhabvc1"]
+[gd_resource type="AnimationNodeBlendTree" load_steps=114 format=3 uid="uid://b5cxrwjhabvc1"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fd8cb"]
 animation = &"PawnFlinches/StaggerRightLeg"
@@ -329,9 +329,16 @@ input_1/name = "phoneAnswer"
 input_1/auto_advance = false
 input_1/break_loop_at_end = false
 input_1/reset = true
+input_2/name = "phoneHangup"
+input_2/auto_advance = false
+input_2/break_loop_at_end = false
+input_2/reset = true
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_xnm2x"]
 animation = &"PawnAnim/PhoneAnswer"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_qe2gj"]
+animation = &"PawnAnim/phoneHangup"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_iy32p"]
 animation = &"PawnAnim/phoneOpen"
@@ -524,7 +531,7 @@ node_connections = [&"output", 0, &"BlendSpace1D"]
 
 [resource]
 resource_local_to_scene = true
-graph_offset = Vector2(389.7271, -122.53311)
+graph_offset = Vector2(312.96866, -38.977753)
 nodes/output/position = Vector2(3120, -320)
 nodes/coverMoveL/node = SubResource("AnimationNodeBlendSpace1D_ybj6p")
 nodes/coverMoveL/position = Vector2(2320, 380)
@@ -638,4 +645,6 @@ nodes/phoneAnimation/node = SubResource("AnimationNodeTransition_fd8cb")
 nodes/phoneAnimation/position = Vector2(1440, 20)
 nodes/phoneAnswer/node = SubResource("AnimationNodeAnimation_xnm2x")
 nodes/phoneAnswer/position = Vector2(1120, 260)
-node_connections = [&"output", 0, &"leftThrowableBlend", &"coverBlend", 1, &"coverTransition", &"aimSprintScale", 0, &"aimSprintStrafe", &"aimTransition", 0, &"crouchBlend", &"aimTransition", 1, &"strafeType", &"crouchBlend", 0, &"idleSpaceSpeed", &"crouchBlend", 1, &"crouchScale", &"crouchScale", 0, &"crouchSpace", &"crouchStrafeBlend", 0, &"strafeSpace", &"crouchStrafeBlend", 1, &"crouchStrafeScale", &"crouchStrafeScale", 0, &"crouchStrafe", &"fallBlend", 0, &"jumpshot", &"fallBlend", 1, &"fallAnim", &"flinchShot", 0, &"phoneOpened", &"flinchShot", 1, &"flinchSpace", &"grabScale", 0, &"grabLeft", &"idleSpaceSpeed", 0, &"idleSpace", &"interactScale", 0, &"interactL", &"jumpshot", 0, &"aimTransition", &"jumpshot", 1, &"Jump", &"leftArmed_Throw", 0, &"armed", &"leftArmed_Throw", 1, &"throwTimeScale", &"leftThrowableBlend", 0, &"flinchShot", &"leftThrowableBlend", 1, &"leftArmed_Throw", &"coverTransition", 0, &"coverMoveL", &"coverTransition", 1, &"coverMoveR", &"strafeType", 0, &"crouchStrafeBlend", &"strafeType", 1, &"aimSprintScale", &"throwTimeScale", 0, &"throw", &"useScale", 0, &"useLeft", &"useShot", 0, &"staggerShot", &"useShot", 1, &"useType", &"useType", 0, &"useScale", &"useType", 1, &"grabScale", &"useType", 2, &"interactScale", &"weaponBlend", 0, &"fallBlend", &"weaponBlend", 1, &"weaponBlend_Scale", &"weaponBlend_Left_blend", 0, &"weaponBlend", &"weaponBlend_Left_blend", 1, &"weaponBlendLeft_Scale", &"phoneOpened", 0, &"useShot", &"phoneOpened", 1, &"phoneSeek", &"weaponBlendLeft_Scale", 0, &"weaponBlend_left", &"staggerShot", 0, &"weaponBlend_Left_blend", &"staggerShot", 1, &"staggerScale", &"staggerScale", 0, &"staggerTransition", &"staggerTransition", 0, &"Animation", &"staggerTransition", 1, &"Animation 2", &"staggerTransition", 2, &"Animation 3", &"staggerTransition", 3, &"Animation 4", &"staggerTransition", 4, &"Animation 5", &"staggerTransition", 5, &"Animation 6", &"weaponBlend_Scale", 0, &"weaponState", &"phoneSeek", 0, &"phoneAnimation", &"phoneAnimation", 0, &"phoneOpen", &"phoneAnimation", 1, &"phoneAnswer"]
+nodes/phoneHangup/node = SubResource("AnimationNodeAnimation_qe2gj")
+nodes/phoneHangup/position = Vector2(1120, 420)
+node_connections = [&"output", 0, &"leftThrowableBlend", &"coverBlend", 1, &"coverTransition", &"aimSprintScale", 0, &"aimSprintStrafe", &"aimTransition", 0, &"crouchBlend", &"aimTransition", 1, &"strafeType", &"crouchBlend", 0, &"idleSpaceSpeed", &"crouchBlend", 1, &"crouchScale", &"crouchScale", 0, &"crouchSpace", &"crouchStrafeBlend", 0, &"strafeSpace", &"crouchStrafeBlend", 1, &"crouchStrafeScale", &"crouchStrafeScale", 0, &"crouchStrafe", &"fallBlend", 0, &"jumpshot", &"fallBlend", 1, &"fallAnim", &"flinchShot", 0, &"phoneOpened", &"flinchShot", 1, &"flinchSpace", &"grabScale", 0, &"grabLeft", &"idleSpaceSpeed", 0, &"idleSpace", &"interactScale", 0, &"interactL", &"jumpshot", 0, &"aimTransition", &"jumpshot", 1, &"Jump", &"leftArmed_Throw", 0, &"armed", &"leftArmed_Throw", 1, &"throwTimeScale", &"leftThrowableBlend", 0, &"flinchShot", &"leftThrowableBlend", 1, &"leftArmed_Throw", &"coverTransition", 0, &"coverMoveL", &"coverTransition", 1, &"coverMoveR", &"strafeType", 0, &"crouchStrafeBlend", &"strafeType", 1, &"aimSprintScale", &"throwTimeScale", 0, &"throw", &"useScale", 0, &"useLeft", &"useShot", 0, &"staggerShot", &"useShot", 1, &"useType", &"useType", 0, &"useScale", &"useType", 1, &"grabScale", &"useType", 2, &"interactScale", &"weaponBlend", 0, &"fallBlend", &"weaponBlend", 1, &"weaponBlend_Scale", &"weaponBlend_Left_blend", 0, &"weaponBlend", &"weaponBlend_Left_blend", 1, &"weaponBlendLeft_Scale", &"phoneOpened", 0, &"useShot", &"phoneOpened", 1, &"phoneSeek", &"weaponBlendLeft_Scale", 0, &"weaponBlend_left", &"staggerShot", 0, &"weaponBlend_Left_blend", &"staggerShot", 1, &"staggerScale", &"staggerScale", 0, &"staggerTransition", &"staggerTransition", 0, &"Animation", &"staggerTransition", 1, &"Animation 2", &"staggerTransition", 2, &"Animation 3", &"staggerTransition", 3, &"Animation 4", &"staggerTransition", 4, &"Animation 5", &"staggerTransition", 5, &"Animation 6", &"weaponBlend_Scale", 0, &"weaponState", &"phoneSeek", 0, &"phoneAnimation", &"phoneAnimation", 0, &"phoneOpen", &"phoneAnimation", 1, &"phoneAnswer", &"phoneAnimation", 2, &"phoneHangup"]

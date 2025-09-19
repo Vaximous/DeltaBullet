@@ -1962,6 +1962,10 @@ func disableStaggerBlend()->void:
 	staggerTween = create_tween()
 	staggerTween.tween_method(setStaggerBlend,animationTree.get("parameters/staggerBlend/blend_amount"),0,0.25).set_ease(defaultEaseType).set_trans(defaultTransitionType)
 
+func playPhoneCloseSound()->void:
+	if !%phoneClose.playing:
+		%phoneClose.play()
+
 func playPhoneOpenSound()->void:
 	if !%phoneOpen.playing:
 		%phoneOpen.play()

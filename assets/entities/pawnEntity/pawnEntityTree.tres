@@ -531,7 +531,7 @@ node_connections = [&"output", 0, &"BlendSpace1D"]
 
 [resource]
 resource_local_to_scene = true
-graph_offset = Vector2(312.96866, -38.977753)
+graph_offset = Vector2(321.96866, -78.97775)
 nodes/output/position = Vector2(3120, -320)
 nodes/coverMoveL/node = SubResource("AnimationNodeBlendSpace1D_ybj6p")
 nodes/coverMoveL/position = Vector2(2320, 380)

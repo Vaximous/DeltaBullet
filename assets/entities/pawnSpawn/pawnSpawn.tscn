@@ -41,7 +41,6 @@ distance_fade_max_distance = 1991.94
 gizmo_extents = 0.0
 script = ExtResource("1_2jqm3")
 aiType = 0
-randomAnimationSpeed = null
 
 [node name="previewMesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)

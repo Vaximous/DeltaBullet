@@ -89,7 +89,6 @@ func initializeBulletHole()->void:
 		var chosenTexture = bulletTextures.pick_random()
 		decal.texture_albedo = chosenTexture
 
-
 	#Emit the particles
 
 	for particles in particleArray:

@@ -121,7 +121,6 @@ stream_2/stream = ExtResource("14_5v04f")
 stream_3/stream = ExtResource("15_0v70h")
 
 [node name="bulletHole_Generic" node_paths=PackedStringArray("particleArray", "soundArray") instance=ExtResource("1_nlopu")]
-physics_interpolation_mode = 1
 bulletTextures = Array[Texture2D]([ExtResource("2_voo5d"), ExtResource("3_8a72t"), ExtResource("4_6cm8d"), ExtResource("5_xyt5t")])
 particleArray = [NodePath("impactParticle"), NodePath("smokeParticle")]
 soundArray = [NodePath("dirtSounds")]
@@ -150,6 +149,11 @@ explosiveness = 1.0
 fixed_fps = 0
 process_material = SubResource("ParticleProcessMaterial_1p6ig")
 draw_pass_1 = SubResource("QuadMesh_70vys")
+
+[node name="decal" parent="." index="2"]
+normal_fade = 0.214
+upper_fade = 1.0
+lower_fade = 1.0
 
 [node name="concreteSounds" type="AudioStreamPlayer3D" parent="." index="3"]
 stream = SubResource("AudioStreamRandomizer_8eltn")

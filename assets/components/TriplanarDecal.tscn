@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=3 uid="uid://drcgl8skh3q26"]
+
+[ext_resource type="Texture2D" uid="uid://5x4plbirowo8" path="res://assets/textures/blood/bloodparticles/blood1.png" id="1_a2y8d"]
+
+[node name="TriplanarDecal" type="Decal"]
+texture_albedo = ExtResource("1_a2y8d")
+normal_fade = 0.2
+upper_fade = 1.0
+lower_fade = 1.0
+
+[node name="decal" type="Decal" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+texture_albedo = ExtResource("1_a2y8d")
+normal_fade = 0.2
+upper_fade = 1.0
+lower_fade = 1.0
+
+[node name="decal2" type="Decal" parent="."]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
+texture_albedo = ExtResource("1_a2y8d")
+normal_fade = 0.2
+upper_fade = 1.0
+lower_fade = 1.0

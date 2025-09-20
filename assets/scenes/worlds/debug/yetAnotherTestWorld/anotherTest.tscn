@@ -1,10 +1,9 @@
-[gd_scene load_steps=69 format=4 uid="uid://ccnq3cc8k6nt5"]
+[gd_scene load_steps=63 format=4 uid="uid://ccnq3cc8k6nt5"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_iq3s1"]
 [ext_resource type="Resource" uid="uid://cm1dad74uaa1i" path="res://assets/scenes/worlds/debug/yetAnotherTestWorld/anotherTestData.tres" id="2_givre"]
 [ext_resource type="Material" uid="uid://6hc0pjapu32g" path="res://assets/materials/devMaterials/developer/checkerboard_material.tres" id="3_sg61b"]
 [ext_resource type="PackedScene" uid="uid://boicvk4qeqmbd" path="res://assets/entities/pawnSpawn/pawnSpawn.tscn" id="4_0r0wx"]
-[ext_resource type="Texture2D" uid="uid://d0f0crtwpmoka" path="res://assets/textures/panoramas/panoramatest1.png" id="4_7ph80"]
 [ext_resource type="PackedScene" uid="uid://wtqya32cwdbk" path="res://assets/entities/weapons/Beretta/Beretta.tscn" id="4_rig7i"]
 [ext_resource type="PackedScene" uid="uid://bporbvksq0guk" path="res://assets/entities/weapons/shotgun/Shotgun.tscn" id="5_akr5q"]
 [ext_resource type="PackedScene" uid="uid://dvmmlj4mvj88r" path="res://assets/entities/aiMarker/aiMarker.tscn" id="5_bh8tr"]
@@ -42,46 +41,6 @@
 [ext_resource type="Texture2D" uid="uid://cidn1m1w25dph" path="res://assets/textures/world/warehouse/warehousewindow_emisslayer.png" id="24_iw4gj"]
 [ext_resource type="AudioStream" uid="uid://c1mk4s30dq3nc" path="res://assets/music/menu/Idlehoodtune.wav" id="24_qkxav"]
 [ext_resource type="PackedScene" uid="uid://xtveejtd5yy8" path="res://assets/entities/props/ExplosiveBarrel/ExplosiveBarrel.tscn" id="31_snp5j"]
-
-[sub_resource type="Gradient" id="Gradient_6voip"]
-colors = PackedColorArray(0, 0, 0, 1, 0.996078, 0.941176, 0.811765, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_iun5n"]
-gradient = SubResource("Gradient_6voip")
-
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_givre"]
-panorama = ExtResource("4_7ph80")
-
-[sub_resource type="Sky" id="Sky_nj1fe"]
-sky_material = SubResource("PanoramaSkyMaterial_givre")
-
-[sub_resource type="Environment" id="Environment_a8ts2"]
-background_mode = 2
-sky = SubResource("Sky_nj1fe")
-reflected_light_source = 1
-tonemap_mode = 4
-ssao_enabled = true
-ssil_intensity = 0.75
-sdfgi_use_occlusion = true
-sdfgi_y_scale = 2
-glow_normalized = true
-glow_bloom = 0.15
-glow_blend_mode = 1
-fog_light_energy = 0.0
-fog_sun_scatter = 0.17
-fog_density = 0.009
-fog_sky_affect = 0.765
-fog_height = 96.8
-fog_height_density = 0.089
-volumetric_fog_enabled = true
-volumetric_fog_density = 0.0
-volumetric_fog_albedo = Color(0.848227, 0.767118, 0.651965, 1)
-volumetric_fog_length = 89.05
-volumetric_fog_detail_spread = 1.66435
-adjustment_enabled = true
-adjustment_brightness = 0.9
-adjustment_saturation = 1.15
-adjustment_color_correction = SubResource("GradientTexture1D_iun5n")
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_jltsg"]
 vertices = PackedVector3Array(-95.0359, -79.6489, -31.5023, -26.0359, -79.6489, -31.5023, -26.0359, -79.6489, -33.5023, -23.7859, -79.6489, -33.7523, -23.7859, -79.6489, -104.752, -95.0359, -79.6489, -104.752, 32.7141, -79.6489, -33.7523, 32.7141, -79.6489, -104.752, 34.7141, -79.6489, -33.7523, 34.9641, -79.6489, -31.5023, 148.464, -79.6489, -31.5023, 148.464, -79.6489, -104.752, -17.7859, 1.85107, -25.5023, -16.5359, 1.85107, -25.5023, -16.7859, 1.85107, -32.7523, -25.0359, 1.85107, -32.7523, -25.0359, 1.85107, -25.7523, -9.2859, 1.85107, -26.5023, -9.5359, 1.85107, -32.7523, -4.0359, 1.85107, -27.0023, -3.7859, 1.85107, -26.5023, -3.5359, 1.85107, -32.7523, -5.2859, 1.85107, -27.0023, 10.2141, 1.85107, -7.7523, 9.9641, 1.85107, -6.5023, 14.4641, 2.10107, -5.5023, 9.7141, 1.85107, -8.2523, 15.9641, 1.85107, -9.2523, -1.7859, 1.85107, -10.5023, 4.4641, 1.85107, -5.7523, 6.2141, 1.85107, -9.2523, -3.0359, 1.85107, -18.5023, 16.7141, 1.85107, -9.7523, -1.5359, 1.85107, -6.5023, -4.2859, 1.85107, -18.2523, -3.7859, 1.85107, -10.5023, 16.7141, 1.85107, -32.7523, 20.2141, 1.85107, -8.5023, 20.2141, 2.10107, -6.7523, 23.9641, 1.85107, -6.7523, 24.2141, 1.85107, -5.0023, 33.9641, 1.85107, -5.2523, 33.9641, 1.85107, -32.7523, -24.7859, -79.6489, -32.5023, -24.7859, -79.6489, 40.7477, 33.7141, -79.6489, 40.7477, 33.7141, -79.6489, -32.5023, -95.0359, -79.6489, 39.7477, -26.0359, -79.6489, 39.7477, 34.9641, -79.6489, 41.7477, 32.7141, -79.6489, 41.9977, 32.7141, -79.6489, 91.9977, 148.464, -79.6489, 91.9977, -7.7859, 12.1011, -18.0023, -7.7859, 11.3511, -16.5023, -3.7859, 11.6011, -17.0023, -8.2859, 12.3511, -18.7523, -4.7859, 12.3511, -26.0023, -4.07162, 12.3511, -19.5737, -17.2859, 12.3511, -24.5023, -16.5359, 12.3511, -18.0023, -18.2859, 1.85107, -25.2523, -25.0359, 1.85107, -19.0023, -17.7859, 1.85107, -19.2523, -16.2859, 1.85107, -18.0023, -4.2859, 1.85107, -19.5023, -5.0359, 1.85107, -25.5023, -17.0359, 1.85107, -24.2523, -25.0359, 1.85107, -4.5023, -18.7859, 1.85107, -4.5023, -18.0359, 1.85107, -6.2523, -17.5359, 1.85107, -17.0023, -17.2859, 1.85107, -7.0023, -16.5359, 1.85107, -7.0023, -16.5359, 1.85107, -16.7523, -12.0359, 1.85107, -3.7523, -6.7859, 1.85107, -5.5023, -7.5359, 1.85107, -6.0023, -7.7859, 1.85107, -10.0023, -3.0359, 7.60107, -7.0023, -2.5359, 7.60107, -7.2523, -2.5359, 7.60107, -8.5023, -6.5359, 7.60107, -6.7523, -3.1609, 9.10107, -12.7523, -6.89304, 7.60107, -9.53801, -5.52589, 9.60107, -13.7663, -6.2859, 1.85107, -7.0023, -2.7859, 1.85107, -7.2523, -3.0359, 1.85107, -9.2523, -6.5359, 1.85107, -9.0023, 12.2141, 2.60107, 3.4977, 13.9641, 2.60107, 4.2477, 14.4641, 2.60107, 3.9977, 19.2141, 2.60107, -7.0023, 18.9641, 2.60107, -7.7523, 16.9641, 2.60107, -8.5023, 11.9641, 2.60107, 2.7477, 8.9641, 7.60107, -6.7523, 8.9641, 7.60107, -7.2523, 6.7141, 7.60107, -8.0023, 5.2141, 7.60107, -5.0023, 5.4641, 7.60107, -4.2523, 7.4641, 7.60107, -3.5023, 8.4641, 1.85107, -6.5023, 8.2141, 1.85107, -7.2523, 6.9641, 1.85107, -7.7523, 5.7141, 1.85107, -5.2523, 5.7141, 1.85107, -4.5023, 7.4641, 1.85107, -4.0023, 11.9641, 1.85107, 9.7477, 12.9641, 1.85107, 9.7477, 13.4641, 1.85107, 5.2477, 11.2141, 1.85107, 4.2477, -2.0359, 1.85107, 15.2477, -2.0359, 1.85107, 16.2477, 2.4641, 1.85107, 17.2477, 10.7141, 1.85107, 2.9977, 8.2141, 1.85107, -2.5023, 6.7141, 1.85107, -2.5023, 3.9641, 1.85107, -4.7523, -1.7859, 1.85107, -6.0023, -13.5359, 1.85107, -1.2523, -13.2859, 1.85107, 6.4977, -3.2859, 1.85107, 13.9977, 4.4641, 1.85107, -3.5023, 19.4641, 5.35107, 13.7477, 19.4641, 5.35107, 16.2477, 21.9641, 5.35107, 16.2477, 23.2141, 5.35107, -2.5023, 23.2141, 5.35107, -5.7523, 20.7141, 5.35107, -5.7523, -17.0359, 2.35107, -5.0023, -17.0359, 2.60107, -4.5023, -16.2859, 2.35107, -4.5023, -16.2859, 2.85107, -5.5023, 19.7141, 1.85107, 13.9977, 19.7141, 1.85107, 15.9977, 21.7141, 1.85107, 15.9977, 22.9641, 1.85107, -2.7523, 22.9641, 1.85107, -5.5023, 20.9641, 1.85107, -5.5023, 15.2141, 1.85107, 4.9977, 18.4641, 1.85107, 16.7477, 19.7141, 1.85107, -5.2523, 23.9641, 1.85107, -0.00229645, 33.9641, 1.85107, -0.00229645, -15.0359, 1.85107, -1.5023, -14.5359, 1.85107, 7.9977, -25.0359, 1.85107, 7.9977, -15.5359, 3.60107, -3.7523, -15.5359, 3.60107, -3.2523, -14.7859, 3.60107, -3.2523, -14.2859, 3.60107, -4.0023, -15.0359, 3.60107, -4.5023, 22.9641, 1.85107, 14.7477, 33.9641, 1.85107, 14.9977, -12.7859, 5.85107, 8.7477, -3.2859, 5.85107, 15.9977, -3.7859, 5.85107, 14.9977, -13.2859, 5.85107, 7.7477, -17.2859, 1.85107, 25.4977, -13.2859, 1.85107, 28.7477, -12.2859, 1.85107, 27.4977, -11.5359, 1.85107, 27.4977, -9.5359, 1.85107, 12.4977, -25.0359, 1.85107, 28.4977, -20.5359, 1.85107, 28.4977, -18.5359, 1.85107, 25.4977, -13.2859, 1.85107, 9.7477, 9.9641, 5.85107, 25.7477, 10.4641, 5.85107, 24.9977, 9.4641, 5.85107, 24.9977, 9.2141, 5.85107, 25.4977, 3.4641, 5.85107, 17.4977, 4.4641, 5.85107, 18.4977, 4.4641, 5.85107, 17.2477, 11.7141, 5.85107, 11.7477, 12.9641, 5.85107, 11.4977, 12.4641, 5.85107, 10.7477, 8.7141, 5.85107, 24.2477, 8.2141, 5.85107, 22.9977, 5.9641, 1.85107, 23.9977, 6.2141, 1.85107, 24.4977, 6.9641, 1.85107, 24.2477, -10.0359, 1.85107, 29.7477, -10.7859, 1.85107, 30.4977, -8.2859, 1.85107, 32.2477, -10.0359, 1.85107, 28.7477, 2.9641, 1.85107, 30.9977, 1.7141, 1.85107, 24.9977, 2.4641, 1.85107, 18.2477, -2.7859, 1.85107, 17.2477, -3.7859, 1.85107, 17.2477, 4.2141, 1.85107, 23.9977, 14.2141, 2.10107, 22.9977, 15.2141, 2.10107, 21.9977, 14.7141, 2.10107, 21.4977, 13.4641, 2.10107, 21.9977, 12.2141, 1.85107, 21.9977, 14.7141, 1.85107, 20.2477, 16.7141, 1.85107, 18.4977, 16.4641, 1.85107, 19.2477, 9.7141, 1.85107, 23.7477, 10.7141, 1.85107, 23.4977, 5.4641, 1.85107, 17.7477, 12.4641, 1.85107, 12.7477, 14.2141, 1.85107, 23.7477, 16.4641, 1.85107, 22.2477, 19.9641, 1.85107, 19.4977, 9.2141, 1.85107, 37.4977, 33.9641, 1.85107, 40.9977, 22.7141, 1.85107, 17.2477, 18.9641, 1.85107, 17.2477, 13.4641, 1.85107, 24.4977, 9.2141, 1.85107, 26.9977, 9.2141, 1.85107, 35.9977, 5.9641, 1.85107, 38.4977, 5.9641, 1.85107, 40.9977, 9.9641, 1.85107, 26.9977, 18.2141, 5.85107, 18.4977, 18.2141, 5.85107, 19.2477, 18.7141, 5.85107, 19.2477, 5.7141, 5.35107, 37.4977, 8.2141, 5.35107, 36.7477, 5.2141, 5.35107, 24.9977, 2.7141, 5.35107, 25.4977, 3.2141, 1.85107, 25.7477, 5.7141, 1.85107, 36.4977, 5.9641, 1.85107, 36.9977, 7.7141, 1.85107, 36.7477, 5.2141, 1.85107, 25.9977, 4.9641, 1.85107, 25.4977, -19.2859, 5.35107, 28.2477, -18.7859, 5.35107, 29.2477, -17.5359, 5.35107, 29.7477, -10.2859, 5.35107, 35.4977, -9.5359, 5.35107, 35.7477, -8.0359, 5.35107, 33.9977, -17.7859, 5.35107, 26.4977, -17.2859, 1.85107, 27.2477, -18.0359, 1.85107, 26.9977, -18.7859, 1.85107, 27.9977, -17.2859, 1.85107, 29.4977, -10.0359, 1.85107, 35.2477, -8.5359, 1.85107, 33.9977, -18.5359, 1.85107, 28.9977, -20.2859, 1.85107, 29.4977, -25.0359, 1.85107, 40.9977, -9.5359, 1.85107, 40.9977, -9.5359, 1.85107, 36.9977, 4.7141, 1.85107, 38.2477, -9.0359, 1.85107, 36.9977, -7.0359, 1.85107, 34.4977, -7.0359, 1.85107, 33.2477, -23.7859, -79.6489, 91.9977, -23.7859, -79.6489, 41.9977, -26.0359, -79.6489, 41.7477, -95.0359, -79.6489, 91.9977)
@@ -475,9 +434,6 @@ aiType = 1
 hatedGroups = Array[StringName]([&"\"Evil\""])
 spawnGroup = Array[StringName]([&"Hostile", &"Player"])
 randomAnimationSpeed = false
-
-[node name="worldEnvironment" parent="Environment" index="0"]
-environment = SubResource("Environment_a8ts2")
 
 [node name="reflectionProbe" parent="Environment" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09741, 11.4137, 5.65805)
@@ -997,7 +953,7 @@ shape = SubResource("BoxShape3D_0op2q")
 [connection signal="objectUsed" from="Geometry/navigationRegion3d/PlayerCloset/closetInteraction" to="Geometry/navigationRegion3d/PlayerCloset" method="_onClosetUsed"]
 [connection signal="objectUsed" from="Geometry/navigationRegion3d/csgtruck/worldMapInteract" to="Geometry/navigationRegion3d/csgtruck/worldMapInteract" method="_on_object_used"]
 [connection signal="triggerActivated" from="Props/node3d/pawnTrigger" to="Props/node3d" method="_on_pawn_trigger_trigger_activated"]
-[connection signal="objectUsed" from="Props/interactiveObject" to="Props/interactiveObject" method="spawnSomeEnemies"]
 [connection signal="objectUsed" from="Props/interactiveObject" to="Props/interactiveObject" method="_on_object_used"]
+[connection signal="objectUsed" from="Props/interactiveObject" to="Props/interactiveObject" method="spawnSomeEnemies"]
 [connection signal="timeout" from="Props/interactiveObject/timer" to="Props/interactiveObject" method="spawnSomeEnemies"]
 [connection signal="triggerActivated" from="pawnTrigger" to="mapLogic" method="_on_pawn_trigger_trigger_activated"]

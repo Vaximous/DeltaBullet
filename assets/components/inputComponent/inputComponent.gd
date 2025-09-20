@@ -207,8 +207,10 @@ func _input(event: InputEvent) -> void:
 		if event.is_action_pressed("gTabMenu"):
 			if !controllingPawn.queuedPhoneCall:
 				controllingPawn.togglePhone()
-			else:
+			elif !controllingPawn.playingCall:
 				controllingPawn.playPhoneCall()
+			else:
+				controllingPawn.endPhoneCall()
 		##Movement Code
 		if gameManager.isMouseHidden():
 			if !event is InputEventMouseMotion and !event is InputEventMouseButton:

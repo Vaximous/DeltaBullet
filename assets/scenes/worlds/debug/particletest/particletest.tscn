@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://bgy0ycoxec6p6"]
+[gd_scene load_steps=40 format=3 uid="uid://bgy0ycoxec6p6"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_rrsmc"]
 [ext_resource type="PackedScene" uid="uid://boicvk4qeqmbd" path="res://assets/entities/pawnSpawn/pawnSpawn.tscn" id="2_d45q2"]
@@ -9,7 +9,6 @@
 [ext_resource type="PackedScene" uid="uid://bn07wnk5k005c" path="res://assets/entities/weapons/HoneyBadger/honeybadger.tscn" id="7_q40r8"]
 [ext_resource type="PackedScene" uid="uid://boh343kalvj5i" path="res://assets/entities/weapons/Revolver/Revolver.tscn" id="8_uwo5p"]
 [ext_resource type="PackedScene" uid="uid://cgghffeqks1ac" path="res://assets/entities/clothing/Gloves/left_glove_fingerless.tscn" id="9_3ne02"]
-[ext_resource type="Texture2D" uid="uid://d0f0crtwpmoka" path="res://assets/textures/panoramas/panoramatest1.png" id="9_6to67"]
 [ext_resource type="PackedScene" uid="uid://bap501mpmqgb" path="res://assets/entities/clothing/Gloves/right_glove_fingerless.tscn" id="10_8dx3e"]
 [ext_resource type="Texture2D" uid="uid://c8sgb4evkx2ve" path="res://assets/textures/urban/Floor-02-Color.tga" id="11_h2hbs"]
 [ext_resource type="PackedScene" uid="uid://nyee136gj7vd" path="res://assets/entities/clothing/longSleeve/long_sleeved_jacket.tscn" id="11_peoen"]
@@ -33,54 +32,6 @@ script = ExtResource("2_yse5r")
 worldName = "Particle Test"
 worldDescription = "Blood n shit.."
 worldLoadingTexture = ExtResource("3_vbqlr")
-
-[sub_resource type="Curve" id="Curve_07aw7"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="Curve" id="Curve_kpisn"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="Curve" id="Curve_fc8cv"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 0.97041), 0.213839, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_bfvmr"]
-curve_x = SubResource("Curve_07aw7")
-curve_y = SubResource("Curve_kpisn")
-curve_z = SubResource("Curve_fc8cv")
-
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_0veox"]
-panorama = ExtResource("9_6to67")
-
-[sub_resource type="Sky" id="Sky_x4k37"]
-sky_material = SubResource("PanoramaSkyMaterial_0veox")
-
-[sub_resource type="Environment" id="Environment_4ygah"]
-background_mode = 2
-sky = SubResource("Sky_x4k37")
-reflected_light_source = 1
-tonemap_mode = 3
-tonemap_white = 1.85
-ssao_enabled = true
-ssil_intensity = 0.75
-sdfgi_use_occlusion = true
-sdfgi_y_scale = 2
-glow_enabled = true
-glow_normalized = true
-glow_bloom = 0.15
-glow_blend_mode = 1
-fog_light_energy = 0.0
-fog_sun_scatter = 0.17
-fog_density = 0.009
-fog_sky_affect = 0.765
-fog_height = 96.8
-fog_height_density = 0.089
-volumetric_fog_density = 0.0112
-adjustment_enabled = true
-adjustment_saturation = 1.15
-adjustment_color_correction = SubResource("CurveXYZTexture_bfvmr")
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_21tre"]
 vertices = PackedVector3Array(-3, 0.965229, 7, -1, 0.965229, 7, -1, 0.965229, -69, -3.25, 0.965229, 8, -3, 0.965229, 7, -1, 0.965229, -69, -141, 0.965229, -69, -141, 0.965229, 8, -1, 0.965229, 7, 5, 0.965229, 7, 5, 0.965229, -69, -1, 0.965229, -69, 5, 0.965229, -69, 5, 0.965229, 7, 7, 0.965229, 7, 5, 0.965229, -69, 7, 0.965229, 7, 7.25, 0.965229, 8, 116, 0.965229, 8, 116, 0.965229, -69, -1, 0.965229, 129, -1, 0.965229, 9, -3, 0.965229, 9, -1, 0.965229, 129, -3, 0.965229, 9, -3.25, 0.965229, 8, -141, 0.965229, 8, -141, 0.965229, 129, 116, 0.965229, 8, 7.25, 0.965229, 8, 7, 0.965229, 9, 5, 0.965229, 129, 116, 0.965229, 129, 7, 0.965229, 9, 5, 0.965229, 9, 5, 0.965229, 129, -1, 0.965229, 129, 5, 0.965229, 129, 5, 0.965229, 9, -1, 0.965229, 9)
@@ -226,9 +177,6 @@ randomAnimationSpeed = false
 transform = Transform3D(-0.870691, 0, -0.491831, 0, 1, 0, 0.491831, 0, -0.870691, 1.94332, 37.658, -9.37791)
 pawnName = "Barf 2"
 randomAnimationSpeed = false
-
-[node name="worldEnvironment" parent="Environment" index="0"]
-environment = SubResource("Environment_4ygah")
 
 [node name="reflectionProbe" parent="Environment" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.2557, 0, 29.8013)

@@ -326,6 +326,10 @@ func _physics_process(delta)->void:
 
 		move_and_slide()
 
+func clearSubtitles()->void:
+	for i in %subtitleContainer.get_children():
+		i.queue_free()
+
 func createSubtitle(actorAudio:ActorAudio,timeout:float = 1)->MarginContainer:
 	var label = load("res://assets/scenes/ui/captionSubtitle.tscn")
 	var subtitle = label.instantiate()

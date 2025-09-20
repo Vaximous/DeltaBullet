@@ -24,3 +24,18 @@ func pick_weighted(weight_array:Array[float]) -> int:
 			chosen_index = idx
 			break
 	return chosen_index
+
+
+##Gets health component of a given node
+func get_health_component(baseNode: Node) -> HealthComponent:
+	var healthNode = baseNode.find_child(^"HealthComponent")
+	if healthNode is HealthComponent:
+		return healthNode
+	return null
+
+
+##Damages a node using its HealthComponent
+func damage_node(baseNode : Node3D, amount : float, dealer : Node3D = null, hitDirection : Vector3 = Vector3.ZERO) -> void:
+	var hc := get_health_component(baseNode)
+	if hc != null:
+		hc.damage(amount, dealer, hitDirection)

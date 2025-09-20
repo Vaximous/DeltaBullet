@@ -955,20 +955,6 @@ func showAllPlayers()->void:
 			players.currentItem.show()
 
 
-func pick_weighted(weightedArray:Array) -> int:
-	#Sum all of the odds
-	var sum := get_weight_sum(weightedArray)
-	var random_selector = randf() * sum
-	#Subtract each element until random_selector is 0
-	var chosen_index : int = 0
-	for idx in weightedArray.size():
-		random_selector -= weightedArray[idx]
-		if random_selector <= 0.0:
-			chosen_index = idx
-			break
-	return chosen_index
-
-
 func createSoundAtPosition(stream:AudioStream,position:Vector3):
 	var aud = AudioStreamPlayer3D.new()
 	if world:

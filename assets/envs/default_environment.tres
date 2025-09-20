@@ -1,18 +1,20 @@
 [gd_resource type="Environment" load_steps=6 format=3 uid="uid://dnig6jq4e6pjs"]
 
-[ext_resource type="Texture2D" uid="uid://dvfkpbe83xcf4" path="res://assets/textures/panoramas/panoramatest3.png" id="1_tipwx"]
+[ext_resource type="Texture2D" uid="uid://d0f0crtwpmoka" path="res://assets/textures/panoramas/panoramatest1.png" id="1_tipwx"]
 
-[sub_resource type="Gradient" id="Gradient_6voip"]
-colors = PackedColorArray(0.0156863, 0, 0, 1, 0.996078, 0.941176, 0.811765, 1)
+[sub_resource type="Gradient" id="Gradient_tipwx"]
+interpolation_color_space = 2
+offsets = PackedFloat32Array(0, 0.08938547, 0.38547486, 1)
+colors = PackedColorArray(0, 0, 0, 1, 1.2032688e-08, 0.09584404, 0.17348906, 1, 0.19754747, 0.37664464, 0.43241158, 1, 1, 1, 1, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_iun5n"]
-gradient = SubResource("Gradient_6voip")
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_afll2"]
+gradient = SubResource("Gradient_tipwx")
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_tipwx"]
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_afll2"]
 panorama = ExtResource("1_tipwx")
 
 [sub_resource type="Sky" id="Sky_nj1fe"]
-sky_material = SubResource("PanoramaSkyMaterial_tipwx")
+sky_material = SubResource("PanoramaSkyMaterial_afll2")
 
 [resource]
 background_mode = 2
@@ -32,8 +34,9 @@ sdfgi_use_occlusion = true
 sdfgi_y_scale = 2
 glow_enabled = true
 glow_levels/5 = 0.0
+glow_levels/6 = 1.0
 glow_normalized = true
-glow_bloom = 0.25
+glow_bloom = 0.1
 glow_blend_mode = 1
 fog_light_energy = 0.0
 fog_sun_scatter = 0.17
@@ -44,5 +47,5 @@ fog_height_density = 0.089
 volumetric_fog_density = 0.2457
 volumetric_fog_albedo = Color(0.848227, 0.767118, 0.651965, 1)
 adjustment_enabled = true
-adjustment_brightness = 0.9
-adjustment_color_correction = SubResource("GradientTexture1D_iun5n")
+adjustment_saturation = 0.9
+adjustment_color_correction = SubResource("GradientTexture1D_afll2")

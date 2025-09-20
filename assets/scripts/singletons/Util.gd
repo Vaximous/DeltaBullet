@@ -30,7 +30,7 @@ func pick_weighted(weight_array:Array[float]) -> int:
 func get_children_recursive(of_node : Node) -> Array[Node]:
 	var children_array : Array[Node]
 	children_array.append_array(of_node.get_children())
-	for node in of_node:
+	for node in of_node.get_children():
 		children_array.append_array(get_children_recursive(node))
 	return children_array
 

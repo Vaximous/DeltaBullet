@@ -2,8 +2,7 @@ extends BulletHole
 
 
 func _on_bullet_hole_emitted() -> void:
-	%gush1.play("gush1")
-	%gush2.play("gush2")
-	%gush3.play("gush3")
+	var spurts = [$bloodSpurt, $bloodSpurtBigSpray]
+	spurts.pick_random().queue_free()
 	for i in randi_range(1,8):
 		gameManager.createDroplet(global_position,Vector3(bulletVelocity.x + randf_range(-5.5,5.5),bulletVelocity.y + randf_range(-5.5,5.5),bulletVelocity.y + randf_range(-5.5,5.5)) * randf_range(1.25,6.5),randi_range(0,2),Vector3.DOWN,false)

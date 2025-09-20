@@ -1,0 +1,109 @@
+[gd_scene load_steps=8 format=3 uid="uid://cyc3ex85moo1f"]
+
+[ext_resource type="PackedScene" uid="uid://bpp4s1vikjdv8" path="res://assets/particles/bloodSpurt/bloodSpurt.tscn" id="1_0fs5l"]
+[ext_resource type="Texture2D" uid="uid://dsvpxcm81txq6" path="res://assets/textures/effects/impact-sparks-spray.png" id="2_o4ebu"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l8046"]
+resource_local_to_scene = true
+transparency = 1
+cull_mode = 2
+albedo_color = Color(0.63, 0, 0, 1)
+albedo_texture = ExtResource("2_o4ebu")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_d3vlo"]
+
+[sub_resource type="Animation" id="Animation_fkxrd"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("meshInstance3d3:material_override:albedo_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.63, 0, 0, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 0.099999964)]
+}
+
+[sub_resource type="Animation" id="Animation_ak7gg"]
+resource_name = "splat"
+length = 0.15
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("meshInstance3d3:material_override:albedo_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.13333334),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.47, 0, 0, 1), Color(0.63, 0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.13333334),
+"transitions": PackedFloat32Array(0.5, 1),
+"update": 0,
+"values": [Vector3(1, 1, 0.046), Vector3(1, 1, 1.9379994)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ksiwr"]
+_data = {
+&"RESET": SubResource("Animation_fkxrd"),
+&"splat": SubResource("Animation_ak7gg")
+}
+
+[node name="bloodSpurtBigSpray" instance=ExtResource("1_0fs5l")]
+
+[node name="node3d" type="Node3D" parent="." index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.099999964, 0, 0, 0)
+
+[node name="meshInstance3d2" type="MeshInstance3D" parent="node3d" index="0"]
+transform = Transform3D(0.26547587, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.97936696)
+material_override = SubResource("StandardMaterial3D_l8046")
+mesh = SubResource("PlaneMesh_d3vlo")
+skeleton = NodePath("../..")
+
+[node name="meshInstance3d3" type="MeshInstance3D" parent="node3d/meshInstance3d2" index="0"]
+transform = Transform3D(-4.3711385e-08, -3.7668207, 0, 0.26547587, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_l8046")
+mesh = SubResource("PlaneMesh_d3vlo")
+skeleton = NodePath("../../..")
+
+[node name="meshInstance3d3" type="MeshInstance3D" parent="node3d" index="1"]
+transform = Transform3D(-0.2654759, 0, -2.6226834e-08, 0, 1, 0, 2.320864e-08, 0, -0.3, 0, 0, 0.29906023)
+material_override = SubResource("StandardMaterial3D_l8046")
+mesh = SubResource("PlaneMesh_d3vlo")
+skeleton = NodePath("../..")
+
+[node name="meshInstance3d3" type="MeshInstance3D" parent="node3d/meshInstance3d3" index="0"]
+transform = Transform3D(-4.3711385e-08, -3.7668207, 0, 0.26547587, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_l8046")
+mesh = SubResource("PlaneMesh_d3vlo")
+skeleton = NodePath("../../..")
+
+[node name="animationPlayer" type="AnimationPlayer" parent="node3d" index="2"]
+libraries = {
+&"": SubResource("AnimationLibrary_ksiwr")
+}
+autoplay = "splat"

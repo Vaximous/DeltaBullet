@@ -26,6 +26,15 @@ func pick_weighted(weight_array:Array[float]) -> int:
 	return chosen_index
 
 
+##Recursively gets all child nodes
+func get_children_recursive(of_node : Node) -> Array[Node]:
+	var children_array : Array[Node]
+	children_array.append_array(of_node.get_children())
+	for node in of_node:
+		children_array.append_array(get_children_recursive(node))
+	return children_array
+
+
 ##Gets health component of a given node
 func get_health_component(baseNode: Node) -> HealthComponent:
 	var healthNode = baseNode.find_child(^"HealthComponent")

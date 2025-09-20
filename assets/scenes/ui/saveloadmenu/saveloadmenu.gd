@@ -3,9 +3,9 @@ extends Control
 @onready var overridePanel : Panel = $panel/overwritePanel
 @onready var saveContainer : VBoxContainer = $panel/scrollContainer/saveContainer
 @onready var saveNamePanel : Panel = $panel/saveNamePanel
-@onready var saveName : TextEdit = $panel/saveNamePanel/textEdit
+@onready var saveName : LineEdit = %SaveNameInputField
 
-func _unhandled_input(event):
+func _unhandled_input(_event):
 	if Input.is_key_pressed(KEY_ENTER) and saveName.focus_mode == 1:
 		saveGame()
 

@@ -91,7 +91,12 @@ func initializeBulletHole()->void:
 
 
 	#Emit the particles
+
 	for particles in particleArray:
+		if not is_instance_valid(particles):
+			continue
+		if particles.is_queued_for_deletion():
+			continue
 		#Forces the position of the particles to be set to the collision point (Wont be used much, is an old thing)
 		if forceGlobalPosition:
 			await get_tree().process_frame

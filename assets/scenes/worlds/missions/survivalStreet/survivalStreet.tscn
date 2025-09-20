@@ -39,14 +39,9 @@ panorama = ExtResource("3_dsb3y")
 
 [sub_resource type="Resource" id="Resource_j802f"]
 script = ExtResource("2_yyaa6")
-worldEditable = false
 skyTexture = SubResource("PanoramaSkyMaterial_6tefn")
 worldName = "Street Shots"
 worldDescription = "Survival."
-worldType = 0
-spawnPawnsOnLoad = true
-playOnStart = false
-spawnType = 0
 metadata/_custom_type_script = ExtResource("2_yyaa6")
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_hqscl"]
@@ -700,10 +695,6 @@ data = PackedVector3Array(0.2008, 0.2008, 0.5412, 0.2008, -0.2008, 0.5412, -0.20
 script = ExtResource("19_i2f5p")
 spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn2")
 pawn_name = "GuySuperior"
-pawn_type = 1
-ai_skill = 1
-ai_type = 1
-weaponEquip = 1
 clothes = Array[PackedScene]([ExtResource("20_7otvn")])
 weapons = Array[PackedScene]([ExtResource("21_w4opb")])
 metadata/_custom_type_script = ExtResource("19_i2f5p")
@@ -712,72 +703,40 @@ metadata/_custom_type_script = ExtResource("19_i2f5p")
 script = ExtResource("18_ebr84")
 wave_time_limit = 6.0
 spawn_parameters = Array[ExtResource("19_i2f5p")]([SubResource("Resource_12yxv")])
-time_between_spawns = 1.0
 metadata/_custom_type_script = ExtResource("18_ebr84")
 
 [sub_resource type="Resource" id="Resource_uow02"]
 script = ExtResource("19_i2f5p")
 spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn4")
-pawn_name = "Guy"
-pawn_type = 1
-ai_skill = 1
-ai_type = 1
-weaponEquip = 1
-clothes = Array[PackedScene]([])
 weapons = Array[PackedScene]([ExtResource("22_p20f0")])
 metadata/_custom_type_script = ExtResource("19_i2f5p")
 
 [sub_resource type="Resource" id="Resource_mlyy0"]
 script = ExtResource("19_i2f5p")
 spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn2")
-pawn_name = "Guy"
-pawn_type = 1
-ai_skill = 1
-ai_type = 1
-weaponEquip = 1
-clothes = Array[PackedScene]([])
 weapons = Array[PackedScene]([ExtResource("22_p20f0")])
 metadata/_custom_type_script = ExtResource("19_i2f5p")
 
 [sub_resource type="Resource" id="Resource_npyfc"]
 script = ExtResource("19_i2f5p")
 spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn3")
-pawn_name = "Guy"
-pawn_type = 1
-ai_skill = 1
-ai_type = 1
-weaponEquip = 1
-clothes = Array[PackedScene]([])
 weapons = Array[PackedScene]([ExtResource("22_p20f0")])
 metadata/_custom_type_script = ExtResource("19_i2f5p")
 
 [sub_resource type="Resource" id="Resource_rx8j1"]
 script = ExtResource("19_i2f5p")
 spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn4")
-pawn_name = "Guy"
-pawn_type = 1
-ai_skill = 1
-ai_type = 1
-weaponEquip = 1
-clothes = Array[PackedScene]([])
 weapons = Array[PackedScene]([ExtResource("21_w4opb")])
 metadata/_custom_type_script = ExtResource("19_i2f5p")
 
 [sub_resource type="Resource" id="Resource_f85fs"]
 script = ExtResource("19_i2f5p")
 spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn3")
-pawn_name = "Guy"
-pawn_type = 1
-ai_skill = 1
-ai_type = 1
-weaponEquip = 1
-clothes = Array[PackedScene]([])
 weapons = Array[PackedScene]([ExtResource("23_gd8nn")])
 metadata/_custom_type_script = ExtResource("19_i2f5p")
 
 [sub_resource type="Resource" id="Resource_ui04g"]
 script = ExtResource("18_ebr84")
-wave_time_limit = 120.0
 spawn_parameters = Array[ExtResource("19_i2f5p")]([SubResource("Resource_uow02"), SubResource("Resource_mlyy0"), SubResource("Resource_npyfc"), SubResource("Resource_rx8j1"), SubResource("Resource_f85fs")])
 time_between_spawns = 3.0
 metadata/_custom_type_script = ExtResource("18_ebr84")
@@ -785,30 +744,18 @@ metadata/_custom_type_script = ExtResource("18_ebr84")
 [sub_resource type="Resource" id="Resource_7so1t"]
 script = ExtResource("19_i2f5p")
 spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn3")
-pawn_name = "Guy"
-pawn_type = 1
-ai_skill = 1
-ai_type = 1
-weaponEquip = 1
-clothes = Array[PackedScene]([])
 weapons = Array[PackedScene]([ExtResource("25_gd8nn")])
 metadata/_custom_type_script = ExtResource("19_i2f5p")
 
 [sub_resource type="Resource" id="Resource_nqsbi"]
 script = ExtResource("19_i2f5p")
 spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn2")
-pawn_name = "Guy"
-pawn_type = 1
-ai_skill = 1
-ai_type = 1
-weaponEquip = 1
 clothes = Array[PackedScene]([ExtResource("24_avx4k"), ExtResource("25_dsb3y")])
 weapons = Array[PackedScene]([ExtResource("21_w4opb")])
 metadata/_custom_type_script = ExtResource("19_i2f5p")
 
 [sub_resource type="Resource" id="Resource_lrxeo"]
 script = ExtResource("18_ebr84")
-wave_time_limit = 120.0
 spawn_parameters = Array[ExtResource("19_i2f5p")]([SubResource("Resource_7so1t"), SubResource("Resource_nqsbi")])
 time_between_spawns = 2.0
 metadata/_custom_type_script = ExtResource("18_ebr84")
@@ -816,11 +763,6 @@ metadata/_custom_type_script = ExtResource("18_ebr84")
 [sub_resource type="Resource" id="Resource_j554k"]
 script = ExtResource("19_i2f5p")
 spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn3")
-pawn_name = "Guy"
-pawn_type = 1
-ai_skill = 1
-ai_type = 1
-weaponEquip = 1
 clothes = Array[PackedScene]([ExtResource("20_7otvn"), ExtResource("24_avx4k"), ExtResource("25_dsb3y"), ExtResource("27_w4opb"), ExtResource("28_p20f0")])
 weapons = Array[PackedScene]([ExtResource("25_gd8nn")])
 metadata/_custom_type_script = ExtResource("19_i2f5p")
@@ -828,11 +770,6 @@ metadata/_custom_type_script = ExtResource("19_i2f5p")
 [sub_resource type="Resource" id="Resource_gd8nn"]
 script = ExtResource("19_i2f5p")
 spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn5")
-pawn_name = "Guy"
-pawn_type = 1
-ai_skill = 1
-ai_type = 1
-weaponEquip = 1
 clothes = Array[PackedScene]([ExtResource("20_7otvn"), ExtResource("24_avx4k"), ExtResource("25_dsb3y"), ExtResource("27_w4opb"), ExtResource("28_p20f0")])
 weapons = Array[PackedScene]([ExtResource("25_gd8nn")])
 metadata/_custom_type_script = ExtResource("19_i2f5p")
@@ -840,11 +777,6 @@ metadata/_custom_type_script = ExtResource("19_i2f5p")
 [sub_resource type="Resource" id="Resource_avx4k"]
 script = ExtResource("19_i2f5p")
 spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn4")
-pawn_name = "Guy"
-pawn_type = 1
-ai_skill = 1
-ai_type = 1
-weaponEquip = 1
 clothes = Array[PackedScene]([ExtResource("20_7otvn"), ExtResource("24_avx4k"), ExtResource("25_dsb3y"), ExtResource("27_w4opb"), ExtResource("28_p20f0")])
 weapons = Array[PackedScene]([ExtResource("23_gd8nn"), ExtResource("21_w4opb")])
 metadata/_custom_type_script = ExtResource("19_i2f5p")
@@ -852,10 +784,6 @@ metadata/_custom_type_script = ExtResource("19_i2f5p")
 [sub_resource type="Resource" id="Resource_dsb3y"]
 script = ExtResource("19_i2f5p")
 spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn3")
-pawn_name = "Guy"
-pawn_type = 1
-ai_skill = 1
-ai_type = 1
 weaponEquip = 2
 clothes = Array[PackedScene]([ExtResource("20_7otvn"), ExtResource("24_avx4k"), ExtResource("25_dsb3y"), ExtResource("27_w4opb"), ExtResource("28_p20f0")])
 weapons = Array[PackedScene]([ExtResource("23_gd8nn"), ExtResource("25_gd8nn")])
@@ -864,11 +792,6 @@ metadata/_custom_type_script = ExtResource("19_i2f5p")
 [sub_resource type="Resource" id="Resource_qrnrq"]
 script = ExtResource("19_i2f5p")
 spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn2")
-pawn_name = "Guy"
-pawn_type = 1
-ai_skill = 1
-ai_type = 1
-weaponEquip = 1
 clothes = Array[PackedScene]([ExtResource("20_7otvn"), ExtResource("24_avx4k"), ExtResource("25_dsb3y"), ExtResource("27_w4opb"), ExtResource("28_p20f0")])
 weapons = Array[PackedScene]([ExtResource("25_gd8nn")])
 metadata/_custom_type_script = ExtResource("19_i2f5p")
@@ -876,11 +799,6 @@ metadata/_custom_type_script = ExtResource("19_i2f5p")
 [sub_resource type="Resource" id="Resource_vhw4h"]
 script = ExtResource("19_i2f5p")
 spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn2")
-pawn_name = "Guy"
-pawn_type = 1
-ai_skill = 1
-ai_type = 1
-weaponEquip = 1
 clothes = Array[PackedScene]([ExtResource("20_7otvn"), ExtResource("24_avx4k"), ExtResource("25_dsb3y"), ExtResource("27_w4opb"), ExtResource("28_p20f0")])
 weapons = Array[PackedScene]([ExtResource("23_gd8nn")])
 metadata/_custom_type_script = ExtResource("19_i2f5p")
@@ -888,18 +806,12 @@ metadata/_custom_type_script = ExtResource("19_i2f5p")
 [sub_resource type="Resource" id="Resource_hmueh"]
 script = ExtResource("19_i2f5p")
 spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn3")
-pawn_name = "Guy"
-pawn_type = 1
-ai_skill = 1
-ai_type = 1
-weaponEquip = 1
 clothes = Array[PackedScene]([ExtResource("20_7otvn"), ExtResource("24_avx4k"), ExtResource("25_dsb3y"), ExtResource("27_w4opb"), ExtResource("28_p20f0")])
 weapons = Array[PackedScene]([ExtResource("25_gd8nn")])
 metadata/_custom_type_script = ExtResource("19_i2f5p")
 
 [sub_resource type="Resource" id="Resource_1lkkp"]
 script = ExtResource("18_ebr84")
-wave_time_limit = 120.0
 spawn_parameters = Array[ExtResource("19_i2f5p")]([SubResource("Resource_j554k"), SubResource("Resource_gd8nn"), SubResource("Resource_avx4k"), SubResource("Resource_dsb3y"), SubResource("Resource_qrnrq"), SubResource("Resource_vhw4h"), SubResource("Resource_hmueh")])
 time_between_spawns = 2.0
 metadata/_custom_type_script = ExtResource("18_ebr84")
@@ -907,10 +819,6 @@ metadata/_custom_type_script = ExtResource("18_ebr84")
 [sub_resource type="Resource" id="Resource_w4opb"]
 script = ExtResource("19_i2f5p")
 spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn4")
-pawn_name = "Guy"
-pawn_type = 1
-ai_skill = 1
-ai_type = 1
 weaponEquip = 2
 clothes = Array[PackedScene]([ExtResource("20_7otvn"), ExtResource("24_avx4k"), ExtResource("25_dsb3y"), ExtResource("27_w4opb"), ExtResource("28_p20f0")])
 weapons = Array[PackedScene]([ExtResource("23_gd8nn"), ExtResource("21_w4opb")])
@@ -919,10 +827,6 @@ metadata/_custom_type_script = ExtResource("19_i2f5p")
 [sub_resource type="Resource" id="Resource_p20f0"]
 script = ExtResource("19_i2f5p")
 spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn5")
-pawn_name = "Guy"
-pawn_type = 1
-ai_skill = 1
-ai_type = 1
 weaponEquip = 2
 clothes = Array[PackedScene]([ExtResource("20_7otvn"), ExtResource("24_avx4k"), ExtResource("25_dsb3y"), ExtResource("27_w4opb"), ExtResource("28_p20f0")])
 weapons = Array[PackedScene]([ExtResource("23_gd8nn"), ExtResource("21_w4opb")])
@@ -931,10 +835,6 @@ metadata/_custom_type_script = ExtResource("19_i2f5p")
 [sub_resource type="Resource" id="Resource_l8umy"]
 script = ExtResource("19_i2f5p")
 spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn2")
-pawn_name = "Guy"
-pawn_type = 1
-ai_skill = 1
-ai_type = 1
 weaponEquip = 2
 clothes = Array[PackedScene]([ExtResource("20_7otvn"), ExtResource("24_avx4k"), ExtResource("25_dsb3y"), ExtResource("27_w4opb"), ExtResource("28_p20f0")])
 weapons = Array[PackedScene]([ExtResource("23_gd8nn"), ExtResource("21_w4opb")])
@@ -943,10 +843,6 @@ metadata/_custom_type_script = ExtResource("19_i2f5p")
 [sub_resource type="Resource" id="Resource_s71xl"]
 script = ExtResource("19_i2f5p")
 spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn3")
-pawn_name = "Guy"
-pawn_type = 1
-ai_skill = 1
-ai_type = 1
 weaponEquip = 2
 clothes = Array[PackedScene]([ExtResource("20_7otvn"), ExtResource("24_avx4k"), ExtResource("25_dsb3y"), ExtResource("27_w4opb"), ExtResource("28_p20f0")])
 weapons = Array[PackedScene]([ExtResource("23_gd8nn"), ExtResource("21_w4opb")])
@@ -955,10 +851,6 @@ metadata/_custom_type_script = ExtResource("19_i2f5p")
 [sub_resource type="Resource" id="Resource_7bw5e"]
 script = ExtResource("19_i2f5p")
 spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn3")
-pawn_name = "Guy"
-pawn_type = 1
-ai_skill = 1
-ai_type = 1
 weaponEquip = 2
 clothes = Array[PackedScene]([ExtResource("20_7otvn"), ExtResource("24_avx4k"), ExtResource("25_dsb3y"), ExtResource("27_w4opb"), ExtResource("28_p20f0")])
 weapons = Array[PackedScene]([ExtResource("23_gd8nn"), ExtResource("21_w4opb")])
@@ -967,11 +859,6 @@ metadata/_custom_type_script = ExtResource("19_i2f5p")
 [sub_resource type="Resource" id="Resource_lkr2s"]
 script = ExtResource("19_i2f5p")
 spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn5")
-pawn_name = "Guy"
-pawn_type = 1
-ai_skill = 1
-ai_type = 1
-weaponEquip = 1
 clothes = Array[PackedScene]([ExtResource("20_7otvn"), ExtResource("24_avx4k"), ExtResource("25_dsb3y"), ExtResource("27_w4opb"), ExtResource("28_p20f0")])
 weapons = Array[PackedScene]([ExtResource("23_gd8nn"), ExtResource("21_w4opb")])
 metadata/_custom_type_script = ExtResource("19_i2f5p")
@@ -986,11 +873,6 @@ metadata/_custom_type_script = ExtResource("18_ebr84")
 [sub_resource type="Resource" id="Resource_f3fl0"]
 script = ExtResource("19_i2f5p")
 spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn2")
-pawn_name = "Guy"
-pawn_type = 1
-ai_skill = 1
-ai_type = 1
-weaponEquip = 1
 clothes = Array[PackedScene]([ExtResource("20_7otvn"), ExtResource("24_avx4k"), ExtResource("25_dsb3y"), ExtResource("27_w4opb"), ExtResource("28_p20f0")])
 weapons = Array[PackedScene]([ExtResource("29_p20f0")])
 metadata/_custom_type_script = ExtResource("19_i2f5p")
@@ -998,11 +880,6 @@ metadata/_custom_type_script = ExtResource("19_i2f5p")
 [sub_resource type="Resource" id="Resource_31yn4"]
 script = ExtResource("19_i2f5p")
 spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn3")
-pawn_name = "Guy"
-pawn_type = 1
-ai_skill = 1
-ai_type = 1
-weaponEquip = 1
 clothes = Array[PackedScene]([ExtResource("20_7otvn"), ExtResource("24_avx4k"), ExtResource("25_dsb3y"), ExtResource("27_w4opb"), ExtResource("28_p20f0")])
 weapons = Array[PackedScene]([ExtResource("29_p20f0")])
 metadata/_custom_type_script = ExtResource("19_i2f5p")
@@ -1033,22 +910,27 @@ worldData = SubResource("Resource_j802f")
 [node name="pawnSpawn" parent="Spawns/playerSpawns" index="0" instance=ExtResource("2_81ovr")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -6.34299, 7.46959, -0.576875)
 pawnType = 0
+randomAnimationSpeed = false
 
 [node name="pawnSpawn2" parent="Spawns/pawnSpawns" index="0" instance=ExtResource("2_81ovr")]
 transform = Transform3D(0.976439, 0, 0.215792, 0, 1, 0, -0.215792, 0, 0.976439, 8.05807, 0.447944, 30.8292)
 active = false
+randomAnimationSpeed = false
 
 [node name="pawnSpawn5" parent="Spawns/pawnSpawns" index="1" instance=ExtResource("2_81ovr")]
 transform = Transform3D(-0.380086, 0, -0.924951, 0, 1, 0, 0.924951, 0, -0.380086, -10.4698, 0.447943, -8.57733)
 active = false
+randomAnimationSpeed = false
 
 [node name="pawnSpawn3" parent="Spawns/pawnSpawns" index="2" instance=ExtResource("2_81ovr")]
 transform = Transform3D(0.999942, 0, 0.0107335, 0, 1, 0, -0.0107335, 0, 0.999942, 39.9208, 0.447941, 26.8414)
 active = false
+randomAnimationSpeed = false
 
 [node name="pawnSpawn4" parent="Spawns/pawnSpawns" index="3" instance=ExtResource("2_81ovr")]
 transform = Transform3D(-0.862884, 0, 0.505401, 0, 1, 0, -0.505401, 0, -0.862884, 41.957, 0.447943, 15.8904)
 active = false
+randomAnimationSpeed = false
 
 [node name="navigationRegion3d" type="NavigationRegion3D" parent="Geometry" index="0"]
 navigation_mesh = SubResource("NavigationMesh_hqscl")

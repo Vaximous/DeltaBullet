@@ -27,6 +27,11 @@ func spawn_next_pawn(wave_spawner : Timer) -> Array:
 	return [next_params, new_pawn]
 
 
+# Helper to check if there are unspawned pawns left in this wave.
+func has_unspawned_pawns() -> bool:
+	return wave_spawns.size() < spawn_parameters.size()
+
+
 #If everyone of this wave is dead, return true. Else, return false.
 func is_wave_complete() -> bool:
 	if wave_spawns.size() < spawn_parameters.size():

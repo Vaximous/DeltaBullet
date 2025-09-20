@@ -366,7 +366,7 @@ func takeScreenshot(path:String = "user://screenshots",screenshotName:String = "
 	return savedfilepath
 
 func restartScene()->void:
-	var curr = get_tree().current_scene.scene_file_path
+	#var curr = get_tree().current_scene.scene_file_path
 	playerPawns.clear()
 	targetedEnemies.clear()
 	allPawns.clear()

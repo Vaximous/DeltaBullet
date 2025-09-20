@@ -157,7 +157,8 @@ func _physics_process(delta)->void:
 				ray.from = muzzlePoint.global_position
 				ray.to = ray_target_point
 
-				#ray.collision_mask = raycaster.collision_mask
+				if weaponCast:
+					ray.collision_mask = weaponCast.collision_mask
 				ray.collide_with_areas = true
 				ray.hit_back_faces = true
 				ray.hit_from_inside = false

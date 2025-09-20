@@ -3,18 +3,17 @@
 [ext_resource type="Texture2D" uid="uid://d0f0crtwpmoka" path="res://assets/textures/panoramas/panoramatest1.png" id="1_tipwx"]
 
 [sub_resource type="Gradient" id="Gradient_tipwx"]
-interpolation_color_space = 2
-offsets = PackedFloat32Array(0, 0.08938547, 0.38547486, 1)
-colors = PackedColorArray(0, 0, 0, 1, 1.2032688e-08, 0.09584404, 0.17348906, 1, 0.19754747, 0.37664464, 0.43241158, 1, 1, 1, 1, 1)
+offsets = PackedFloat32Array(0, 0.07621247, 0.36720553, 1)
+colors = PackedColorArray(0.00593019, 1.2032687e-07, 0.09481714, 1, 0.052353777, 0.07570592, 0.124175064, 1, 0.34062108, 0.37052992, 0.41018295, 1, 1, 1, 1, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_afll2"]
 gradient = SubResource("Gradient_tipwx")
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_afll2"]
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_tipwx"]
 panorama = ExtResource("1_tipwx")
 
 [sub_resource type="Sky" id="Sky_nj1fe"]
-sky_material = SubResource("PanoramaSkyMaterial_afll2")
+sky_material = SubResource("PanoramaSkyMaterial_tipwx")
 
 [resource]
 background_mode = 2

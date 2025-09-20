@@ -9,6 +9,10 @@ class_name WaveSpawnerWaveParams
 @export var wave_spawns : Array = []
 
 
+func _init() -> void:
+	resource_local_to_scene = true
+
+
 #All waves done.
 func is_finished() -> bool:
 	return next_spawn_index > spawn_parameters.size()

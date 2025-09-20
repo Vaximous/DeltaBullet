@@ -1,72 +1,114 @@
 extends Node
 ## Global Game Manager Start
-var phoneUI : PackedScene = preload("res://assets/scenes/ui/phoneUI/phoneUI.tscn")
-var bloodSpurts : Array[StandardMaterial3D] = [preload("res://assets/materials/blood/spurts/bloodSpurt.tres"),preload("res://assets/materials/blood/spurts/bloodSpurt2.tres"),preload("res://assets/materials/blood/spurts/bloodSpurt3.tres"),preload("res://assets/materials/blood/spurts/bloodSpurt4.tres"),preload("res://assets/materials/blood/spurts/bloodSpurt5.tres"),preload("res://assets/materials/blood/spurts/bloodSpurt6.tres"),preload("res://assets/materials/blood/spurts/bloodSpurt7.tres")]
-var pawnScene = preload("res://assets/entities/pawnEntity/pawnEntity.tscn").duplicate()
-var menuScenes = [preload("res://assets/scenes/menu/menuScenes/menuscene1.tscn"),preload("res://assets/scenes/menu/menuScenes/menuScene2.tscn"),preload("res://assets/scenes/menu/menuScenes/menuScene3.tscn")]
-var defaultPawnTreeRoot = load("res://assets/entities/pawnEntity/pawnEntityTree.tres")
 
+#region Signals
+# Signals
 signal freeOrphans
-#Global Sound Player
-var soundPlayer = AudioStreamPlayer.new()
-var sounds : Dictionary = {"healSound" = preload("res://assets/sounds/ui/rareItemFound.wav"),
-			"alertSound" = preload("res://assets/sounds/ui/uialert.wav"),
-			"startGame" = preload("res://assets/sounds/ui/menu/Button start.wav")
-			}
+#endregion
 
-
-
-#Misc
-var lastConsolePosition : Vector2 = Vector2(25,62)
-const defaultTweenSpeed : float = 0.25
+#region Constants
+# Constants
+const defaultTweenSpeed: float = 0.25
 const defaultTransitionType = Tween.TRANS_QUART
 const defaultEaseType = Tween.EASE_OUT
-var worldMapUI : PackedScene = preload("res://assets/scenes/ui/mapOverview/mapScreen.tscn")
-var customizationUI : PackedScene = preload("res://assets/scenes/ui/customization/customizationUI.tscn")
-var orphanedData := []
-var richPresenceEnabled:bool = false
-var activeCamera : PlayerCamera = null
-var debugEnabled:bool = false
-var pawnDebug : bool = false
-
-#Settings
-var userDir = DirAccess.open("user://")
-
-#Ingame
-var purchasedPlacables : Array[PackedScene] = [load("res://assets/entities/props/radio.tscn"),load("res://assets/entities/props/hospitalCozyChair.tscn")]
-var deathTween : Tween
-var bulletTime : bool = false
-var canBulletTime : bool = true
-var temporaryPawnInfo : Array
-var playerPosition : Vector3 = Vector3.ZERO
-var playerPawns : Array[BasePawn] = []
-var controllerSens : float = 0.015
-var deadzone : float = 0.1
-var defaultFOV : int = 90
-
-#World
-var targetedEnemies : Array[AIComponent]
-var loadScene = null
-var allPawns : Array[BasePawn]
-const bloodPool : PackedScene = preload("res://assets/entities/bloodPool/bloodPool.tscn")
-const tempImages : Array = ["res://assets/scenes/ui/saveloadmenu/save1.png","res://assets/scenes/ui/saveloadmenu/save2.png","res://assets/scenes/ui/saveloadmenu/save3.png","res://assets/scenes/ui/saveloadmenu/save4.png","res://assets/misc/db7.png"]
-var saveOverwrite : String
-var currentSave : String
-var dialogueCamLerpSpeed:float = 5.0
-var world : WorldScene
-var pauseMenu : PauseMenu
+const bloodPool: PackedScene = preload("res://assets/entities/bloodPool/bloodPool.tscn")
 const bloodDecal = preload("res://assets/entities/bloodSplat/bloodSplat1.tscn")
 const bloodDrop = preload("res://assets/entities/emitters/bloodDroplet/bloodDrop.tscn")
+const tempImages: Array = [
+	"res://assets/scenes/ui/saveloadmenu/save1.png",
+	"res://assets/scenes/ui/saveloadmenu/save2.png",
+	"res://assets/scenes/ui/saveloadmenu/save3.png",
+	"res://assets/scenes/ui/saveloadmenu/save4.png",
+	"res://assets/misc/db7.png"
+]
+const dialogue_cam: PackedScene = preload("res://assets/entities/camera/DialogueCamera.tscn")
+#endregion
 
-#Multiplayer
-var isMultiplayerGame:bool = false
+#region Scenes and resources
+# Scenes and resources
+var phoneUI: PackedScene = preload("res://assets/scenes/ui/phoneUI/phoneUI.tscn")
+var bloodSpurts: Array[StandardMaterial3D] = [
+	preload("res://assets/materials/blood/spurts/bloodSpurt.tres"),
+	preload("res://assets/materials/blood/spurts/bloodSpurt2.tres"),
+	preload("res://assets/materials/blood/spurts/bloodSpurt3.tres"),
+	preload("res://assets/materials/blood/spurts/bloodSpurt4.tres"),
+	preload("res://assets/materials/blood/spurts/bloodSpurt5.tres"),
+	preload("res://assets/materials/blood/spurts/bloodSpurt6.tres"),
+	preload("res://assets/materials/blood/spurts/bloodSpurt7.tres")
+]
+var pawnScene = preload("res://assets/entities/pawnEntity/pawnEntity.tscn").duplicate()
+var menuScenes = [
+	preload("res://assets/scenes/menu/menuScenes/menuscene1.tscn"),
+	preload("res://assets/scenes/menu/menuScenes/menuScene2.tscn"),
+	preload("res://assets/scenes/menu/menuScenes/menuScene3.tscn")
+]
+var defaultPawnTreeRoot = load("res://assets/entities/pawnEntity/pawnEntityTree.tres")
+var worldMapUI: PackedScene = preload("res://assets/scenes/ui/mapOverview/mapScreen.tscn")
+var customizationUI: PackedScene = preload("res://assets/scenes/ui/customization/customizationUI.tscn")
+#endregion
 
-const dialogue_cam : PackedScene = preload("res://assets/entities/camera/DialogueCamera.tscn")
+#region Global Sound Player
+# Global Sound Player
+var soundPlayer = AudioStreamPlayer.new()
+var sounds: Dictionary = {
+	"healSound" = preload("res://assets/sounds/ui/rareItemFound.wav"),
+	"alertSound" = preload("res://assets/sounds/ui/uialert.wav"),
+	"startGame" = preload("res://assets/sounds/ui/menu/Button start.wav")
+}
+#endregion
 
+#region Misc
+# Misc
+var lastConsolePosition: Vector2 = Vector2(25, 62)
+var orphanedData := []
+var richPresenceEnabled: bool = false
+var activeCamera: PlayerCamera = null
+var debugEnabled: bool = false
+var pawnDebug: bool = false
+#endregion
 
+#region Settings
+# Settings
+var userDir = DirAccess.open("user://")
+#endregion
 
+#region Ingame
+# Ingame
+var purchasedPlacables: Array[PackedScene] = [
+	load("res://assets/entities/props/radio.tscn"),
+	load("res://assets/entities/props/hospitalCozyChair.tscn")
+]
+var deathTween: Tween
+var bulletTime: bool = false
+var canBulletTime: bool = true
+var temporaryPawnInfo: Array
+var playerPosition: Vector3 = Vector3.ZERO
+var playerPawns: Array[BasePawn] = []
+var controllerSens: float = 0.015
+var deadzone: float = 0.1
+var defaultFOV: int = 90
+#endregion
+
+#region World
+# World
+var targetedEnemies: Array[AIComponent]
+var loadScene = null
+var allPawns: Array[BasePawn]
+var saveOverwrite: String
+var currentSave: String
+var dialogueCamLerpSpeed: float = 5.0
+var world: WorldScene
+var pauseMenu: PauseMenu
+#endregion
+
+#region Multiplayer
+# Multiplayer
+var isMultiplayerGame: bool = false
+#endregion
+
+#region Lifecycle
 # Called when the node enters the scene tree for the first time.
-func _ready()->void:
+func _ready() -> void:
 	add_child(soundPlayer)
 	initializeSteam()
 	DisplayServer.window_set_title(ProjectSettings.get_setting("application/config/name"))
@@ -78,11 +120,10 @@ func _ready()->void:
 	if richPresenceEnabled:
 		pass
 
-func cleanupWorld()->void:
+func cleanupWorld() -> void:
 	physEntityCheck()
 	await decalAmountCheck()
 	#worldCleanup.emit()
-
 
 
 func _process(delta: float) -> void:
@@ -90,8 +131,10 @@ func _process(delta: float) -> void:
 	AudioServer.playback_speed_scale = Engine.time_scale
 	#physEntityCheck()
 	#DisplayServer.window_set_title(ProjectSettings.get_setting("application/config/name"))
+#endregion
 
-func burnTarget(node:Node3D,burnTime:float=10,burnDamage:float=3.5):
+#region Gameplay Effects
+func burnTarget(node: Node3D, burnTime: float = 10, burnDamage: float = 3.5):
 	if node.has_method("hit") or node.has_meta("isFlammable") and node.get_meta("isFlammable") == true and !node.get_meta("isBurning"):
 		node.set_meta("isBurning", true)
 		var burner = preload("res://assets/entities/emitters/burnEffect/burnEffect.tscn").instantiate()
@@ -115,23 +158,25 @@ func freeOrphanNodes():
 	#print("Kept : %s"%keep)
 	#orphanedData = keep
 	freeOrphans.emit()
+#endregion
 
-func queuePhoneCall(dialogue:ActorDialogue)->void:
+#region Phone Calls
+func queuePhoneCall(dialogue: ActorDialogue) -> void:
 	if getCurrentPawn():
 		getCurrentPawn().queuedPhoneCall = dialogue
 		#getCurrentPawn().playPhoneCall()
 
-func queueAndPlayPhoneCall(dialogue:ActorDialogue)->void:
+func queueAndPlayPhoneCall(dialogue: ActorDialogue) -> void:
 	if getCurrentPawn():
 		getCurrentPawn().queuedPhoneCall = dialogue
 		getCurrentPawn().playPhoneCall()
 
-func stopPhoneCall()->void:
+func stopPhoneCall() -> void:
 	if world:
 		for i in get_tree().get_nodes_in_group(&"phonecall"):
 			i.queue_free()
 
-func playDialogue2D(dialogue:ActorDialogue)->AudioStreamPlayer:
+func playDialogue2D(dialogue: ActorDialogue) -> AudioStreamPlayer:
 	if world:
 		var audioPlayer = AudioStreamPlayer.new()
 		audioPlayer.add_to_group(&"phonecall")
@@ -142,7 +187,7 @@ func playDialogue2D(dialogue:ActorDialogue)->AudioStreamPlayer:
 			for i in dialogue.actorAudios.size():
 				var subtitle
 				#print(i)
-				if i == dialogue.actorAudios.size()-1:
+				if i == dialogue.actorAudios.size() - 1:
 					audioPlayer.finished.connect(audioPlayer.queue_free)
 				if getCurrentPawn():
 					subtitle = getCurrentPawn().attachedCam.createSubtitle(dialogue.actorAudios[i].audioResource)
@@ -151,16 +196,19 @@ func playDialogue2D(dialogue:ActorDialogue)->AudioStreamPlayer:
 				await audioPlayer.finished
 				if subtitle:
 					subtitle.queue_free()
-				await get_tree().create_timer(dialogue.actorAudios[i].timeBetweenAudio,false)
+				await get_tree().create_timer(dialogue.actorAudios[i].timeBetweenAudio, false)
 		return audioPlayer
 	else:
 		return null
-func getModifierFromName(modName:String):
+#endregion
+
+#region Modifiers
+func getModifierFromName(modName: String):
 	for i in DirAccess.get_files_at("res://assets/entities/modifiers/"):
-		if i == modName+".tscn":
+		if i == modName + ".tscn":
 			return "res://assets/entities/modifiers/%s"%i
 
-func give_stat_modifier(parent:Node, mod:String):
+func give_stat_modifier(parent: Node, mod: String):
 	if parent.has_node(^"statModifierStack"):
 		var stack = parent.get_node(^"statModifierStack")
 		var modifier = load(getModifierFromName(mod))
@@ -168,13 +216,13 @@ func give_stat_modifier(parent:Node, mod:String):
 			if !stack.has_node(mod):
 				stack.add_child(modifier.instantiate())
 				if debugEnabled:
-					notify_warn("Added stat modifier '%s' to '%s'"%[mod,parent.name],2,2)
+					notify_warn("Added stat modifier '%s' to '%s'" % [mod, parent.name], 2, 2)
 			else:
 				if debugEnabled:
-					notify_warn("Stat modifier '%s' already exists on '%s'"%[mod,parent.name],2,2)
+					notify_warn("Stat modifier '%s' already exists on '%s'" % [mod, parent.name], 2, 2)
 
 
-func get_modified_stat(node : Node, stat : StringName) -> float:
+func get_modified_stat(node: Node, stat: StringName) -> float:
 	var base = node.get(stat)
 	if base == null:
 		return 0.0
@@ -182,49 +230,53 @@ func get_modified_stat(node : Node, stat : StringName) -> float:
 	return stack.get_modified_stat(stat, base)
 
 
-func get_modifier_stack(node : Node) -> StatModifierStack:
+func get_modifier_stack(node: Node) -> StatModifierStack:
 	if node.has_node(^"statModifierStack"):
 		return node.get_node(^"statModifierStack")
 	var new = StatModifierStack.new()
 	node.add_child(new)
 	return new
+#endregion
 
-func setBasePlayerBulletResistMod(value:float = 1):
+#region Player Stat Setters
+func setBasePlayerBulletResistMod(value: float = 1):
 	if getCurrentPawn():
 		getCurrentPawn().bulletResistanceModifier = value
 
-func setBasePlayerBlastResistMod(value:float = 1):
+func setBasePlayerBlastResistMod(value: float = 1):
 	if getCurrentPawn():
 		getCurrentPawn().blastResistanceModifier = value
 
-func setBasePlayerReloadSpeed(value:float = 1):
+func setBasePlayerReloadSpeed(value: float = 1):
 	if getCurrentPawn():
 		getCurrentPawn().reloadSpeedModifier = value
 
-func setBasePlayerDamageMod(value:float = 1):
+func setBasePlayerDamageMod(value: float = 1):
 	if getCurrentPawn():
 		getCurrentPawn().damageModifier = value
 
-func setBasePlayerSpreadMod(value:float = 1):
+func setBasePlayerSpreadMod(value: float = 1):
 	if getCurrentPawn():
 		getCurrentPawn().spreadModifier = value
 
-func setBasePlayerRecoilMod(value:float = 1):
+func setBasePlayerRecoilMod(value: float = 1):
 	if getCurrentPawn():
 		getCurrentPawn().recoilModifier = value
 
-func setBasePlayerFireRateMod(value:float = 1):
+func setBasePlayerFireRateMod(value: float = 1):
 	if getCurrentPawn():
 		getCurrentPawn().fireRateModifier = value
+#endregion
 
-func removePhoneMenu()->void:
+#region Phone Menu
+func removePhoneMenu() -> void:
 	for i in get_children():
 		if i.is_in_group(&"phone"):
 			i.queue_free()
 			#hideMouse()
 
 
-func initializePhoneMenu(pawn:BasePawn)->void:
+func initializePhoneMenu(pawn: BasePawn) -> void:
 	gameManager.pauseMenu.canPause = false
 	var phoneInst = phoneUI.instantiate()
 	var phoneHolder = CanvasLayer.new()
@@ -234,9 +286,10 @@ func initializePhoneMenu(pawn:BasePawn)->void:
 	phoneHolder.add_child(phoneInst)
 	phoneInst.init(pawn)
 	showMouse()
+#endregion
 
-
-func doKillEffect(pawn:BasePawn,deathDealer:BasePawn)->void:
+#region Death Effects
+func doKillEffect(pawn: BasePawn, deathDealer: BasePawn) -> void:
 	if deathDealer != null and !deathDealer.isPawnDead and is_instance_valid(deathDealer) and is_instance_valid(pawn):
 		if deathDealer.currentItem != null:
 			if deathDealer.currentItem.weaponResource.headDismember:
@@ -247,30 +300,25 @@ func doKillEffect(pawn:BasePawn,deathDealer:BasePawn)->void:
 				pawn.healthComponent.killerSignalEmitted = true
 
 		if deathDealer.healthComponent.health < deathDealer.healthComponent.defaultHP and !deathDealer.healthComponent.isDead and deathDealer.isPlayerPawn():
-			deathDealer.healthComponent.setHealth(deathDealer.healthComponent.health+35)
+			deathDealer.healthComponent.setHealth(deathDealer.healthComponent.health + 35)
 
 
-
-func onPlayerDeath()->void:
+func onPlayerDeath() -> void:
 	var deathScreen = load("res://assets/scenes/ui/deathScreen/deathScreen.tscn")
 	gameManager.activeCamera.hud.disableHud()
 	await get_tree().create_timer(0.7).timeout
 	add_child(deathScreen.instantiate())
+#endregion
 
-
-
-
-
-
-
-
+#region Camera
 func create_dialogue_camera() -> CutsceneCamera:
 	var new_cam = dialogue_cam.instantiate()
 	return new_cam
+#endregion
 
-
-func getColliderPhysicsMaterial(collider : Object) -> DB_PhysicsMaterial:
-	var phys_mat : DB_PhysicsMaterial = collider.get(&"physics_material_override")
+#region Physics Materials
+func getColliderPhysicsMaterial(collider: Object) -> DB_PhysicsMaterial:
+	var phys_mat: DB_PhysicsMaterial = collider.get(&"physics_material_override")
 	if collider.has_meta(&"physics_material_override"):
 		#print("Using meta for physics mat")
 		phys_mat = collider.get_meta(&"physics_material_override")
@@ -278,14 +326,17 @@ func getColliderPhysicsMaterial(collider : Object) -> DB_PhysicsMaterial:
 		#print("No physics mat found, using generic...")
 		phys_mat = preload("res://assets/resources/PhysicsMaterials/generic_physics_material.tres")
 	return phys_mat
+#endregion
 
-func removeAllDeathScreens()->void:
+#region Death Screen
+func removeAllDeathScreens() -> void:
 	for i in get_children():
 		if i.is_in_group(&"DeathScreen"):
 			i.fadeOut()
+#endregion
 
-
-func _input(_event)->void:
+#region Input
+func _input(_event) -> void:
 	if Input.is_action_just_pressed("aFullscreen"):
 		pass
 
@@ -303,23 +354,27 @@ func _input(_event)->void:
 			gameManager.activeCamera.unposessObject(true)
 
 		if Input.is_action_pressed("dPosess"):
-			var cast : RayCast3D = gameManager.activeCamera.debugCast
+			var cast: RayCast3D = gameManager.activeCamera.debugCast
 			if cast:
 				if cast.is_colliding():
 					if cast.get_collider().is_in_group("Posessable"):
 						gameManager.activeCamera.unposessObject(true)
-						gameManager.activeCamera.posessObject(cast.get_collider(),cast.get_collider().followNode)
+						gameManager.activeCamera.posessObject(cast.get_collider(), cast.get_collider().followNode)
 					else:
-						Console.add_console_message("Cannot posess %s, Its not possessable" %cast.get_collider())
+						Console.add_console_message("Cannot posess %s, Its not possessable"%cast.get_collider())
 			else:
 				Console.add_console_message("You can't posess nothing dipshit. Look at a pawn.")
+#endregion
 
-func getCurrentPawn()->BasePawn:
+#region Pawn/Player
+func getCurrentPawn() -> BasePawn:
 	if activeCamera.followingEntity is BasePawn:
 		return activeCamera.followingEntity
 	else: return null
+#endregion
 
-func takeScreenshot(path:String = "user://screenshots",screenshotName:String = "") -> String:
+#region Screenshot
+func takeScreenshot(path: String = "user://screenshots", screenshotName: String = "") -> String:
 	print("Initializing screenshot!")
 	var screenshot_count = 0
 	var screenshot = get_viewport().get_texture().get_image()
@@ -334,8 +389,8 @@ func takeScreenshot(path:String = "user://screenshots",screenshotName:String = "
 			savedfilepath = "%s/screenshot_" + str(screenshot_count) + ".png"
 			screenshot_count = screenshot_count + 1
 		else:
-			screenshot.save_png("%s/%s.png"%[path,screenshotName])
-			savedfilepath = "%s/%s.png"%[path,screenshotName]
+			screenshot.save_png("%s/%s.png" % [path, screenshotName])
+			savedfilepath = "%s/%s.png" % [path, screenshotName]
 	else:
 		userDir.make_dir(path)
 		var _screenshot_dir = DirAccess.open(path)
@@ -344,33 +399,38 @@ func takeScreenshot(path:String = "user://screenshots",screenshotName:String = "
 			savedfilepath = "%s/screenshot_" + str(screenshot_count) + ".png"
 			screenshot_count = screenshot_count + 1
 		else:
-			screenshot.save_png("%s/%s.png"%[path,screenshotName])
-			savedfilepath = "%s/%s.png"%[path,screenshotName]
-	print("Saved screenshot at %s/%s.png"%[path,screenshotName])
+			screenshot.save_png("%s/%s.png" % [path, screenshotName])
+			savedfilepath = "%s/%s.png" % [path, screenshotName]
+	print("Saved screenshot at %s/%s.png" % [path, screenshotName])
 	return savedfilepath
+#endregion
 
-func restartScene()->void:
+#region Scene Management
+func restartScene() -> void:
 	#var curr = get_tree().current_scene.scene_file_path
 	playerPawns.clear()
 	targetedEnemies.clear()
 	allPawns.clear()
 	musicManager.fade_all_audioplayers_out(0.5)
-	await Fade.fade_out(0.3, Color(0,0,0,1),"GradientVertical",false,true).finished
+	await Fade.fade_out(0.3, Color(0, 0, 0, 1), "GradientVertical", false, true).finished
 	get_tree().reload_current_scene()
 
-func restartGame()->void:
+func restartGame() -> void:
 	get_tree().unload_current_scene()
 	await get_tree().process_frame
 	get_tree().change_scene_to_file("res://assets/scenes/menu/logo.tscn")
+#endregion
 
-
-func strip_bbcode(bbcode_text : String) -> String:
+#region BBCode
+func strip_bbcode(bbcode_text: String) -> String:
 	var regex := RegEx.new()
 	regex.compile("\\[(.+?)\\]")
 	return regex.sub(bbcode_text, "", true)
+#endregion
 
-enum NOTIF_POSITION{topleft, topcenter, topright, bottomleft, bottomcenter, bottomright}
-func notifyFade(text : String, position : NOTIF_POSITION = 2, fade_time : float = 3.0):
+#region Notifications
+enum NOTIF_POSITION {topleft, topcenter, topright, bottomleft, bottomcenter, bottomright}
+func notifyFade(text: String, position: NOTIF_POSITION = 2, fade_time: float = 3.0):
 	var new_notif
 	var container = Notifications.hudPositions[position]
 
@@ -383,7 +443,7 @@ func notifyFade(text : String, position : NOTIF_POSITION = 2, fade_time : float 
 		new_notif.timer.start(fade_time)
 	return new_notif
 
-func notifyCheck(text : String, position : NOTIF_POSITION = 2, fade_time : float = -1, texture : Texture = Notifications.checkmarkTexture,sound:bool = true):
+func notifyCheck(text: String, position: NOTIF_POSITION = 2, fade_time: float = -1, texture: Texture = Notifications.checkmarkTexture, sound: bool = true):
 	var new_notif
 	var container = Notifications.hudPositions[position]
 
@@ -397,7 +457,7 @@ func notifyCheck(text : String, position : NOTIF_POSITION = 2, fade_time : float
 		new_notif.timer.start(fade_time)
 	return new_notif
 
-func notify_warn(text : String, position : NOTIF_POSITION = 2, fade_time : float = -1, texture : Texture = Notifications.warning_texture):
+func notify_warn(text: String, position: NOTIF_POSITION = 2, fade_time: float = -1, texture: Texture = Notifications.warning_texture):
 	var new_notif
 	var container = Notifications.hudPositions[position]
 
@@ -412,8 +472,8 @@ func notify_warn(text : String, position : NOTIF_POSITION = 2, fade_time : float
 	return new_notif
 
 
-func notify_click(text : String, call_on_click : Callable, position : NOTIF_POSITION = 2, fade_time : float = -1, binds : Array = []):
-	var new_notif : Control
+func notify_click(text: String, call_on_click: Callable, position: NOTIF_POSITION = 2, fade_time: float = -1, binds: Array = []):
+	var new_notif: Control
 	var container = Notifications.hudPositions[position]
 
 	new_notif = Notifications.notif_click.instantiate()
@@ -437,81 +497,87 @@ func set_notif_flags(new_notif, position) -> void:
 			new_notif.size_flags_horizontal = Control.SIZE_SHRINK_END
 
 
-func notify_custom(node : Control, position : NOTIF_POSITION) -> Control:
+func notify_custom(node: Control, position: NOTIF_POSITION) -> Control:
 	var container = Notifications.hudPositions[position]
 	container.add_child(node)
 	set_notif_flags(node, position)
 	return node
+#endregion
 
-func castRay(cam : Camera3D, range : float = 50000, mask := 0b10111, exceptions : Array[RID] = [], hit_areas : bool = false) -> Dictionary:
+#region Raycasting
+func castRay(cam: Camera3D, range: float = 50000, mask := 0b10111, exceptions: Array[RID] = [], hit_areas: bool = false) -> Dictionary:
 	var state = cam.get_world_3d().direct_space_state
 	var transform = cam.global_transform
 	var params := PhysicsRayQueryParameters3D.create(transform.origin, transform.origin - (transform.basis.z * range), 23, exceptions)
 	params.collide_with_areas = hit_areas
 	return state.intersect_ray(params)
+#endregion
 
-
-func createDroplet(position:Vector3, velocity : Vector3 = Vector3.ONE, amount : int = 1,normal:Vector3 = Vector3.UP, allowRandomFlip:bool = true):
+#region Blood Effects
+func createDroplet(position: Vector3, velocity: Vector3 = Vector3.ONE, amount: int = 1, normal: Vector3 = Vector3.UP, allowRandomFlip: bool = true):
 	if is_instance_valid(world):
 		for i in amount:
 			#var flipVel = [true,false].pick_random()
-			var droplet : BloodDroplet = bloodDrop.instantiate()
+			var droplet: BloodDroplet = bloodDrop.instantiate()
 			droplet.norm = normal
 			world.worldParticles.add_child(droplet)
 			droplet.global_position = position
 			if allowRandomFlip:
-				var flipVel = [true,false].pick_random()
+				var flipVel = [true, false].pick_random()
 				if !flipVel:
-					droplet.velocity += Vector3(velocity.x * randf_range(-1,2),velocity.y * randf_range(-1,2),velocity.z * randf_range(-1,2))
+					droplet.velocity += Vector3(velocity.x * randf_range(-1, 2), velocity.y * randf_range(-1, 2), velocity.z * randf_range(-1, 2))
 				else:
-					droplet.velocity += -Vector3(velocity.x * randf_range(-1,2),velocity.y * randf_range(-1,2),velocity.z * randf_range(-1,2))
+					droplet.velocity += -Vector3(velocity.x * randf_range(-1, 2), velocity.y * randf_range(-1, 2), velocity.z * randf_range(-1, 2))
 			else:
-				droplet.velocity += Vector3(velocity.x * randf_range(1,3),velocity.y * randf_range(1,3),velocity.z * randf_range(1,3))
+				droplet.velocity += Vector3(velocity.x * randf_range(1, 3), velocity.y * randf_range(1, 3), velocity.z * randf_range(1, 3))
+#endregion
 
-
-func getEventSignal(event : StringName) -> Signal:
-	event = &"__gameEventSignals__" + str(event)
+#region Event Signals
+func getEventSignal(event: StringName) -> Signal:
+	event = StringName("__gameEventSignals__" + str(event))
 	if !has_user_signal(event):
 		add_user_signal(event)
 	return Signal(self, event)
+#endregion
 
-func showMouse()->void:
+#region Mouse
+func showMouse() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
-func hideMouse()->void:
+
+func hideMouse() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 
-func isMouseHidden()->bool:
-	if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED or Input.get_mouse_mode() == Input.MOUSE_MODE_HIDDEN:
-		return true
-	else:
-		return false
+func isMouseHidden() -> bool:
+	return Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED or Input.get_mouse_mode() == Input.MOUSE_MODE_HIDDEN
+#endregion
 
-func playSound(stream,volume:float = 2.0,bus:StringName = &"UI")->void:
+#region Sound
+func playSound(stream, volume: float = 2.0, bus: StringName = &"UI") -> void:
 	soundPlayer.stream = stream
-	#print(soundPlayer.stream)
 	soundPlayer.bus = bus
 	soundPlayer.volume_db = volume
 	soundPlayer.playing = true
 	soundPlayer.play()
-
 	if soundPlayer.playing:
-		var dupePlayer : AudioStreamPlayer = soundPlayer.duplicate()
+		var dupePlayer: AudioStreamPlayer = soundPlayer.duplicate()
 		add_child(dupePlayer)
 		dupePlayer.finished.connect(dupePlayer.queue_free)
 		dupePlayer.stream = stream
-		#print(soundPlayer.stream)
 		dupePlayer.bus = bus
 		dupePlayer.volume_db = volume
 		dupePlayer.playing = true
 		dupePlayer.play()
 
+
 func getGlobalSound(soundname: String):
 	if sounds.get(soundname) != null:
 		return sounds.get(soundname)
+#endregion
 
-func initializeSteam()->void:
+#region Steam
+func initializeSteam() -> void:
 	return
 	#var initialize_response: Dictionary = Steam.steamInitEx()
 	#print("Did Steam initialize?: %s " % initialize_response)
@@ -519,65 +585,75 @@ func initializeSteam()->void:
 	#if initialize_response['status'] > 0:
 		#print("Failed to initialize Steam, shutting down: %s" % initialize_response)
 		#get_tree().quit()
+#endregion
 
-func disablePlayer()->void:
+#region Player Enable/Disable
+func disablePlayer() -> void:
 	if activeCamera != null:
 		if activeCamera.followingEntity.inputComponent != null:
 			activeCamera.followingEntity.direction = Vector3.ZERO
 			activeCamera.followingEntity.inputComponent.movementEnabled = false
 			activeCamera.followingEntity.inputComponent.mouseActionsEnabled = false
 
-func enablePlayer()->void:
+func enablePlayer() -> void:
 	if activeCamera != null:
 		if activeCamera.followingEntity.inputComponent != null:
 			activeCamera.followingEntity.inputComponent.movementEnabled = true
 			activeCamera.followingEntity.inputComponent.mouseActionsEnabled = true
+#endregion
 
-func getMeshSurfaces(mesh:Mesh)->Array:
-	var arr:Array = []
+#region Mesh Surfaces
+func getMeshSurfaces(mesh: Mesh) -> Array:
+	var arr: Array = []
 	for i in mesh.get_surface_count():
 		arr.append(mesh.surface_get_material(i))
 	return arr
 
-func createOverrideFromSurfaceMaterial(meshInstance:MeshInstance3D,mesh:Mesh,id:int):
+func createOverrideFromSurfaceMaterial(meshInstance: MeshInstance3D, mesh: Mesh, id: int):
 	var surface = getMeshSurfaces(mesh)[id].duplicate()
-	meshInstance.set_surface_override_material(id,surface)
+	meshInstance.set_surface_override_material(id, surface)
 	return surface
 
-func clearTemporaryPawnInfo()->void:
+func clearTemporaryPawnInfo() -> void:
 	temporaryPawnInfo.clear()
 
-func getMeshSurfaceOverrides(mesh:MeshInstance3D)->Array:
-	var arr:Array = []
+func getMeshSurfaceOverrides(mesh: MeshInstance3D) -> Array:
+	var arr: Array = []
 	for i in mesh.get_surface_override_material_count():
 		arr.append(mesh.get_surface_override_material(i))
 	return arr
 
-func saveTemporaryPawnInfo()->void:
+func saveTemporaryPawnInfo() -> void:
 	for p in playerPawns.size():
-		if playerPawns[p] !=null:
+		if playerPawns[p] != null:
 			clearTemporaryPawnInfo()
 			var info = playerPawns[p].savePawnInformation()
-			temporaryPawnInfo.insert(p,info)
+			temporaryPawnInfo.insert(p, info)
 			#temporaryPawnInfo.append(info)
+#endregion
 
-func showHUD()->void:
+#region HUD
+func showHUD() -> void:
 	for player in playerPawns:
 		if player.attachedCam:
 			player.attachedCam.hud.fadeHudIn()
 
-func hideHUD()->void:
+func hideHUD() -> void:
 	for player in playerPawns:
 		if player.attachedCam:
 			player.attachedCam.hud.fadeHudOut()
+#endregion
 
-func getPauseMenu()->Control:
+#region Pause Menu
+func getPauseMenu() -> Control:
 	var menu
 	if world:
 		menu = world.pauseControl
 	return menu
+#endregion
 
-func loadWorld(worldscene:String, fadein:bool = false)->void:
+#region World Loading
+func loadWorld(worldscene: String, fadein: bool = false) -> void:
 	saveTemporaryPawnInfo()
 	stopPhoneCall()
 	targetedEnemies.clear()
@@ -594,28 +670,56 @@ func loadWorld(worldscene:String, fadein:bool = false)->void:
 	#freeOrphanNodes()
 	get_tree().current_scene.add_child(inst)
 	inst.sceneToLoad = worldscene
+#endregion
 
-func saveGame(saveName:String = "Save1"):
+#region Save/Load
+# Saves the current game state to a file.
+#
+# This function creates a new save directory (if it doesn't exist) and writes the current game state,
+# including player data, screenshot, and metadata, to a save file. It also updates persistent data
+# with information about the last save.
+#
+# @param saveName: The name of the save slot (default is "Save1").
+# @return The FileAccess object for the saved file.
+#
+# The saved data includes:
+# - saveName: The name of the save slot.
+# - prologueComplete: Whether the prologue has been completed.
+# - saveLocation: The name of the current world.
+# - scene: The file path of the current scene.
+# - timestamp: The current Unix timestamp.
+# - dateDict: The current date as a dictionary.
+# - pawnToLoad: The file path to the saved player pawn data.
+# - saveScreenie: The file path to the saved screenshot.
+# - playerPosition: The global position of the player.
+func saveGame(saveName: String = "Save1"):
 	if world != null:
+		# Ensure the saves directory exists
+		if not DirAccess.dir_exists_absolute("user://saves"):
+			DirAccess.make_dir_absolute("user://saves")
 		var saveDir = DirAccess.open("user://saves")
-		saveDir.make_dir(saveName)
-		var saveFile = FileAccess.open("user://saves/%s/%s.pwnSave"%[saveName,saveName],FileAccess.WRITE)
-		currentSave = "user://saves/%s/%s.pwnSave"%[saveName,saveName]
+		if saveDir == null:
+			push_error("Failed to open user://saves directory.")
+			return
+		if not saveDir.dir_exists(saveName):
+			saveDir.make_dir(saveName)
+		var saveFile = FileAccess.open("user://saves/%s/%s.pwnSave" % [saveName, saveName], FileAccess.WRITE)
+		currentSave = "user://saves/%s/%s.pwnSave" % [saveName, saveName]
 		activeCamera.hud.hide()
 		getPauseMenu().hide()
 		var screenshot = get_viewport().get_texture().get_image()
-		screenshot.save_png("user://saves/%s/%s.png"%[saveName,saveName])
-		print("user://saves/%s/%s.png"%[saveName,saveName])
-		var pawnFile = playerPawns[0].savePawnFile(playerPawns[0].savePawnInformation(),"user://saves/%s/%s"%[saveName,saveName])
-		var saveDict : Dictionary = {
-			"saveName" : saveName,
-			"prologueComplete" : get_persistent_data()["seen_prologue"],
-			"saveLocation" : gameManager.world.worldData.worldName,
-			"scene" : get_tree().current_scene.get_scene_file_path(),
-			"timestamp" : Time.get_unix_time_from_system(),
-			"dateDict" : Time.get_date_dict_from_system(),
-			"pawnToLoad" : pawnFile,
-			"saveScreenie" : "user://saves/%s/%s.png"%[saveName,saveName],
+		screenshot.save_png("user://saves/%s/%s.png" % [saveName, saveName])
+		print("user://saves/%s/%s.png" % [saveName, saveName])
+		var pawnFile = playerPawns[0].savePawnFile(playerPawns[0].savePawnInformation(), "user://saves/%s/%s" % [saveName, saveName])
+		var saveDict: Dictionary = {
+			"saveName": saveName,
+			"prologueComplete": get_persistent_data().get("seen_prologue", false),
+			"saveLocation": gameManager.world.worldData.worldName,
+			"scene": get_tree().current_scene.get_scene_file_path(),
+			"timestamp": Time.get_unix_time_from_system(),
+			"dateDict": Time.get_date_dict_from_system(),
+			"pawnToLoad": pawnFile,
+			"saveScreenie": "user://saves/%s/%s.png" % [saveName, saveName],
 			"playerPosition": playerPawns[0].global_position
 		}
 		activeCamera.hud.show()
@@ -628,9 +732,10 @@ func saveGame(saveName:String = "Save1"):
 		#print(get_persistent_data()["lastSaveData"])
 		return saveFile
 
-func loadGame(save:String)->void:
+
+func loadGame(save: String) -> void:
 	if save != "" or save != null:
-		var saveFile = FileAccess.open(save,FileAccess.READ)
+		var saveFile = FileAccess.open(save, FileAccess.READ)
 		if saveFile != null:
 			Engine.time_scale = 1.0
 			get_tree().paused = false
@@ -651,8 +756,10 @@ func loadGame(save:String)->void:
 				#temporaryPawnInfo.clear()
 		else:
 			Console.add_rich_console_message("[color=red]Unable to find that save![/color]")
+#endregion
 
-func scan_for_scenes(dirpath : String, max_depth : int = -1, _depth = 0) -> PackedStringArray:
+#region Scene Scanning
+func scan_for_scenes(dirpath: String, max_depth: int = -1, _depth = 0) -> PackedStringArray:
 	if _depth == 0:
 		Console.add_rich_console_message("[color=orange]Scanning scenes at %s...[/color]" % dirpath)
 	if max_depth >= 0:
@@ -660,16 +767,16 @@ func scan_for_scenes(dirpath : String, max_depth : int = -1, _depth = 0) -> Pack
 			return []
 
 	var dir = DirAccess.open(dirpath)
-	var found_scenes : PackedStringArray = []
+	var found_scenes: PackedStringArray = []
 	if dir:
 		dir.list_dir_begin()
 		var file_name = dir.get_next()
 		while file_name != "":
 			if !dir.current_is_dir():
 				if file_name.ends_with(".tscn") or file_name.ends_with(".scn"):
-					found_scenes.append((dirpath +"/"+ file_name).simplify_path())
+					found_scenes.append((dirpath + "/" + file_name).simplify_path())
 				elif file_name.ends_with(".tscn.remap") or file_name.ends_with(".scn.remap"):
-					var remapfile = "%s/%s"%[dirpath,file_name]
+					var remapfile = "%s/%s" % [dirpath, file_name]
 					var cfg = ConfigFile.new()
 					cfg.load(remapfile)
 					#Console.add_rich_console_message("[color=purple]%s[/color]"%cfg.get_value("remap", "path"))
@@ -678,7 +785,7 @@ func scan_for_scenes(dirpath : String, max_depth : int = -1, _depth = 0) -> Pack
 					continue
 			else:
 				#is a directory
-				found_scenes.append_array(scan_for_scenes((dirpath +"/"+ file_name +"/").simplify_path(), max_depth, _depth + 1))
+				found_scenes.append_array(scan_for_scenes((dirpath + "/" + file_name + "/").simplify_path(), max_depth, _depth + 1))
 			file_name = dir.get_next()
 	else:
 		Console.add_rich_console_message("[color=red]An error occurred when trying to access the path.[/color]")
@@ -686,7 +793,7 @@ func scan_for_scenes(dirpath : String, max_depth : int = -1, _depth = 0) -> Pack
 
 	return found_scenes
 
-func scanForSaves(dirpath : String, max_depth : int = -1, _depth = 0) -> PackedStringArray:
+func scanForSaves(dirpath: String, max_depth: int = -1, _depth = 0) -> PackedStringArray:
 	if _depth == 0:
 		print("Scanning saves at %s..." % dirpath)
 	if max_depth >= 0:
@@ -694,7 +801,7 @@ func scanForSaves(dirpath : String, max_depth : int = -1, _depth = 0) -> PackedS
 			return []
 
 	var dir = DirAccess.open(dirpath)
-	var foundSaves : PackedStringArray = []
+	var foundSaves: PackedStringArray = []
 	if dir:
 		dir.list_dir_begin()
 		var file_name = dir.get_next()
@@ -702,16 +809,18 @@ func scanForSaves(dirpath : String, max_depth : int = -1, _depth = 0) -> PackedS
 			if !dir.current_is_dir():
 				if file_name.ends_with("pwnSave"):
 					print(file_name)
-					foundSaves.append((dirpath +"/"+ file_name).simplify_path())
+					foundSaves.append((dirpath + "/" + file_name).simplify_path())
 			else:
 				#is a directory
-				foundSaves.append_array(scanForSaves((dirpath +"/"+ file_name +"/").simplify_path(), max_depth, _depth + 1))
+				foundSaves.append_array(scanForSaves((dirpath + "/" + file_name + "/").simplify_path(), max_depth, _depth + 1))
 			file_name = dir.get_next()
 	else:
 		print("An error occurred when trying to access the path.")
 	return foundSaves
+#endregion
 
-func initWorldMap()->void:
+#region UI Initialization
+func initWorldMap() -> void:
 	removeShop()
 	removeCustomization()
 	gameManager.pauseMenu.canPause = false
@@ -720,7 +829,7 @@ func initWorldMap()->void:
 	add_child(_WorldMapUI)
 
 
-func initCustomization(pawn:BasePawn)->void:
+func initCustomization(pawn: BasePawn) -> void:
 	removeShop()
 	removeCustomization()
 	removeWorldMap()
@@ -732,23 +841,23 @@ func initCustomization(pawn:BasePawn)->void:
 	_customizationUI.clothingPawn = pawn
 	_customizationUI.generateClothingOptions(pawn)
 
-func removeWorldMap()->void:
+func removeWorldMap() -> void:
 	for i in get_children():
 		if i.is_in_group(&"worldMap"):
 			i.queue_free()
 
 
-func removeCustomization()->void:
+func removeCustomization() -> void:
 	for i in get_children():
 		if i.is_in_group(&"customizationUI"):
 			i.queue_free()
 	#gameManager.pauseMenu.canPause = true
 
 
-func initShop(pawn:BasePawn,shopData:ShopData)->void:
+func initShop(pawn: BasePawn, shopData: ShopData) -> void:
 	removeShop()
 	removeCustomization()
-	var shopUI : PackedScene = load("res://assets/scenes/ui/shopui/shopUI.tscn")
+	var shopUI: PackedScene = load("res://assets/scenes/ui/shopui/shopUI.tscn")
 	var _shop = shopUI.instantiate()
 	_shop.add_to_group(&"shop")
 	_shop.shopResource = shopData
@@ -756,24 +865,25 @@ func initShop(pawn:BasePawn,shopData:ShopData)->void:
 	hideAllPlayers()
 	_shop.initializeShop()
 
-func removeShop()->void:
+func removeShop() -> void:
 	for i in get_children():
 		if i.is_in_group(&"shop"):
 			i.queue_free()
 	#gameManager.pauseMenu.canPause = true
 
-func removeSafehouseEditor()->void:
+func removeSafehouseEditor() -> void:
 	await Fade.fade_out(0.5).finished
 	for i in get_children():
 		if i.is_in_group(&"safehouseEditor"):
 			i.queue_free()
 	showAllPlayers()
-	gameManager.activeCamera.posessObject(playerPawns[0],playerPawns[0].followNode)
+	gameManager.activeCamera.posessObject(playerPawns[0], playerPawns[0].followNode)
 	Fade.fade_in(0.5)
 	gameManager.activeCamera.hud.enableHud()
+#endregion
 
-
-func get_from_mouse(length:float=1000,worldObject:Node3D=gameManager.world.worldMisc,camera:Camera3D=gameManager.activeCamera.camera,exclude:Array[RID]=[])->Dictionary:
+#region Mouse Ray
+func get_from_mouse(length: float = 1000, worldObject: Node3D = gameManager.world.worldMisc, camera: Camera3D = gameManager.activeCamera.camera, exclude: Array[RID] = []) -> Dictionary:
 	var RAY_LENGTH = length
 	var space_state = worldObject.get_world_3d().direct_space_state
 	var mousepos = get_viewport().get_mouse_position()
@@ -786,8 +896,10 @@ func get_from_mouse(length:float=1000,worldObject:Node3D=gameManager.world.world
 
 	var result = space_state.intersect_ray(query)
 	return result
+#endregion
 
-func setMotionBlur(camera:Camera3D)->void:
+#region Motion Blur
+func setMotionBlur(camera: Camera3D) -> void:
 	if !UserConfig.configs_updated.is_connected(setMotionBlur.bind(camera)):
 		UserConfig.configs_updated.connect(setMotionBlur.bind(camera))
 	if UserConfig.graphics_motion_blur:
@@ -795,16 +907,16 @@ func setMotionBlur(camera:Camera3D)->void:
 			var comp = load("res://assets/envs/mBlurCompositor.tres")
 			camera.compositor = comp
 		else:
-			camera.compositor.compositor_effects[0].set("enabled",true)
-			camera.compositor.compositor_effects[1].set("enabled",true)
+			camera.compositor.compositor_effects[0].set("enabled", true)
+			camera.compositor.compositor_effects[1].set("enabled", true)
 	else:
 		if camera.compositor:
-			camera.compositor.compositor_effects[0].set("enabled",false)
-			camera.compositor.compositor_effects[1].set("enabled",false)
+			camera.compositor.compositor_effects[0].set("enabled", false)
+			camera.compositor.compositor_effects[1].set("enabled", false)
+#endregion
 
-
-
-func doDeathEffect()->void:
+#region Death Effect
+func doDeathEffect() -> void:
 	const defaultTransitionType = Tween.TRANS_QUART
 	const defaultEaseType = Tween.EASE_OUT
 	if deathTween:
@@ -812,10 +924,11 @@ func doDeathEffect()->void:
 	deathTween = create_tween()
 	if UserConfig.game_slow_motion_death:
 		Engine.time_scale = 0.25
-	deathTween.tween_property(Engine,"time_scale",1,1.5).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+	deathTween.tween_property(Engine, "time_scale", 1, 1.5).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+#endregion
 
-
-func createSplat(gposition:Vector3 = Vector3.ONE,normal:Vector3 = Vector3.ONE,parent : Node3D = world.worldMisc)->Node3D:
+#region Blood Splat
+func createSplat(gposition: Vector3 = Vector3.ONE, normal: Vector3 = Vector3.ONE, parent: Node3D = world.worldMisc) -> Node3D:
 	if is_instance_valid(parent):
 		var _b = bloodDecal.instantiate()
 		parent.add_child(_b)
@@ -828,20 +941,20 @@ func createSplat(gposition:Vector3 = Vector3.ONE,normal:Vector3 = Vector3.ONE,pa
 			return null
 	return null
 
-func sprayBlood(position:Vector3,amount:int,_maxDistance:int,distanceMultiplier:float = 1)->void:
+func sprayBlood(position: Vector3, amount: int, _maxDistance: int, distanceMultiplier: float = 1) -> void:
 	if is_instance_valid(world):
 		for rays in amount:
-			var directSpace : PhysicsDirectSpaceState3D = world.worldMisc.get_world_3d().direct_space_state
+			var directSpace: PhysicsDirectSpaceState3D = world.worldMisc.get_world_3d().direct_space_state
 			var ray = PhysicsRayQueryParameters3D.new()
-			var result : Dictionary
-			ray = ray.create(position,position + Vector3(randi_range(-_maxDistance,_maxDistance),randi_range(-_maxDistance,_maxDistance),randi_range(-_maxDistance,_maxDistance)*distanceMultiplier),1)
+			var result: Dictionary
+			ray = ray.create(position, position + Vector3(randi_range(-_maxDistance, _maxDistance), randi_range(-_maxDistance, _maxDistance), randi_range(-_maxDistance, _maxDistance) * distanceMultiplier), 1)
 			result = directSpace.intersect_ray(ray)
 			if result:
-				createSplat(result.position,result.normal)
+				createSplat(result.position, result.normal)
 				if debugEnabled:
-					var meshInstance : MeshInstance3D = MeshInstance3D.new()
+					var meshInstance: MeshInstance3D = MeshInstance3D.new()
 					var mesh = ImmediateMesh.new()
-					var meshMat : StandardMaterial3D = StandardMaterial3D.new()
+					var meshMat: StandardMaterial3D = StandardMaterial3D.new()
 					meshMat.albedo_color = Color.BLUE
 					world.worldMisc.add_child(meshInstance)
 					meshInstance.mesh = mesh
@@ -850,43 +963,48 @@ func sprayBlood(position:Vector3,amount:int,_maxDistance:int,distanceMultiplier:
 					mesh.surface_add_vertex(result.position)
 					mesh.surface_end()
 					meshInstance.material_override = meshMat
+#endregion
 
-func initializeSafehouseEditor()->void:
+#region Safehouse Editor
+func initializeSafehouseEditor() -> void:
 	gameManager.pauseMenu.canPause = false
 	removeWorldMap()
 	removeShop()
 	removeCustomization()
 	await Fade.fade_out(0.3).finished
-	var editorUI : PackedScene = load("res://assets/scenes/ui/safehouseEditor/safehouseEditor.tscn")
+	var editorUI: PackedScene = load("res://assets/scenes/ui/safehouseEditor/safehouseEditor.tscn")
 	var safehouseEditor = editorUI.instantiate()
 	safehouseEditor.add_to_group(&"safehouseEditor")
 	add_child(safehouseEditor)
 	hideAllPlayers()
 	safehouseEditor.initEditor()
 	Fade.fade_in(0.5)
+#endregion
 
-
-func createBloodPool(position:Vector3,size:float=0.5)->void:
+#region Blood Pool
+func createBloodPool(position: Vector3, size: float = 0.5) -> void:
 	if world != null:
-		var directSpace : PhysicsDirectSpaceState3D = world.worldMisc.get_world_3d().direct_space_state
+		var directSpace: PhysicsDirectSpaceState3D = world.worldMisc.get_world_3d().direct_space_state
 		var ray = PhysicsRayQueryParameters3D.new()
-		var result : Dictionary
-		ray = ray.create(position,position + Vector3.DOWN,1)
+		var result: Dictionary
+		ray = ray.create(position, position + Vector3.DOWN, 1)
 		result = directSpace.intersect_ray(ray)
 		if result:
 			var _bloodPool = bloodPool.instantiate()
 			world.worldMisc.add_child(_bloodPool)
 			_bloodPool.global_position = result.position
 			_bloodPool.startPool(size)
+#endregion
 
+#region Tween Angle
+func getShortTweenAngle(currentAngle: float, targetAngle: float) -> float:
+	return currentAngle + wrapf(targetAngle - currentAngle, -PI, PI)
+#endregion
 
-func getShortTweenAngle(currentAngle:float,targetAngle:float)->float:
-	return currentAngle + wrapf(targetAngle-currentAngle,-PI,PI)
-
-
-func disableBulletTime()->void:
+#region Bullet Time
+func disableBulletTime() -> void:
 	if activeCamera:
-		activeCamera.hud.triggerRadialBlur(Vector2(0.5,0.5),0.5,0.5)
+		activeCamera.hud.triggerRadialBlur(Vector2(0.5, 0.5), 0.5, 0.5)
 		activeCamera.hud.flashColor(Color.WHITE)
 		activeCamera.hud.bulletTimeOff.play()
 	const defaultTransitionType = Tween.TRANS_QUART
@@ -894,12 +1012,12 @@ func disableBulletTime()->void:
 	if deathTween:
 		deathTween.kill()
 	deathTween = create_tween()
-	deathTween.parallel().tween_property(Engine,"time_scale",1,2).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+	deathTween.parallel().tween_property(Engine, "time_scale", 1, 2).set_ease(defaultEaseType).set_trans(defaultTransitionType)
 	bulletTime = false
 
-func enableBulletTime()->void:
+func enableBulletTime() -> void:
 	if activeCamera:
-		activeCamera.hud.triggerRadialBlur(Vector2(0.5,0.5),0.5,60)
+		activeCamera.hud.triggerRadialBlur(Vector2(0.5, 0.5), 0.5, 60)
 		activeCamera.hud.flashColor(Color.WHITE)
 		activeCamera.hud.bulletTimeOn.play()
 	const defaultTransitionType = Tween.TRANS_QUART
@@ -907,11 +1025,12 @@ func enableBulletTime()->void:
 	if deathTween:
 		deathTween.kill()
 	deathTween = create_tween()
-	deathTween.parallel().tween_property(Engine,"time_scale",0.55,1.5).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+	deathTween.parallel().tween_property(Engine, "time_scale", 0.55, 1.5).set_ease(defaultEaseType).set_trans(defaultTransitionType)
 	bulletTime = true
+#endregion
 
-
-func setSoundVariables(sound:AudioStreamPlayer3D,bus:StringName = &"Sounds")->void:
+#region Sound Variables
+func setSoundVariables(sound: AudioStreamPlayer3D, bus: StringName = &"Sounds") -> void:
 	#Set the sound's variables to sound correctly and not muffled as well as assigning it to a bus if its not already.
 	sound.max_polyphony = 2
 	sound.attenuation_model = AudioStreamPlayer3D.ATTENUATION_DISABLED
@@ -921,17 +1040,20 @@ func setSoundVariables(sound:AudioStreamPlayer3D,bus:StringName = &"Sounds")->vo
 	sound.bus = bus
 	sound.attenuation_filter_db = 0
 	sound.attenuation_filter_cutoff_hz = 3000
+#endregion
 
-func create_surface_transform(origin : Vector3, incoming_vector : Vector3, surface_normal : Vector3) -> Transform3D:
+#region Surface Transform
+func create_surface_transform(origin: Vector3, incoming_vector: Vector3, surface_normal: Vector3) -> Transform3D:
 	var y = surface_normal
 	var z = incoming_vector.cross(surface_normal)
 	var x = surface_normal.cross(z)
-	var tf := Transform3D(x.normalized(), y.normalized(), z.normalized(), origin).rotated_local(Vector3.UP, PI/2)
+	var tf := Transform3D(x.normalized(), y.normalized(), z.normalized(), origin).rotated_local(Vector3.UP, PI / 2)
 	return tf
+#endregion
 
-
-func createGib(position:Vector3, velocity : Vector3 = Vector3.ONE)->FakePhysicsEntity:
-	var gib = [preload("res://assets/entities/gore/dismemberGib.tscn"),preload("res://assets/entities/gore/dismemberGib2.tscn")].pick_random()
+#region Gibs
+func createGib(position: Vector3, velocity: Vector3 = Vector3.ONE) -> FakePhysicsEntity:
+	var gib = [preload("res://assets/entities/gore/dismemberGib.tscn"), preload("res://assets/entities/gore/dismemberGib2.tscn")].pick_random()
 	var inst = gib.instantiate()
 	inst.velocity.y = velocity.y * randf_range(5, 16)
 	inst.velocity.x = velocity.x * randf_range(-2, 2)
@@ -939,23 +1061,25 @@ func createGib(position:Vector3, velocity : Vector3 = Vector3.ONE)->FakePhysicsE
 	gameManager.world.add_child(inst)
 	inst.global_position = position
 	return inst
+#endregion
 
-
-func hideAllPlayers()->void:
+#region Player Visibility
+func hideAllPlayers() -> void:
 	for players in playerPawns:
 		players.hide()
 		if players.currentItem:
 			players.currentItem.hide()
 
 
-func showAllPlayers()->void:
+func showAllPlayers() -> void:
 	for players in playerPawns:
 		players.show()
 		if players.currentItem:
 			players.currentItem.show()
+#endregion
 
-
-func createSoundAtPosition(stream:AudioStream,position:Vector3):
+#region Sound At Position
+func createSoundAtPosition(stream: AudioStream, position: Vector3):
 	var aud = AudioStreamPlayer3D.new()
 	if world:
 		world.worldMisc.add_child(aud)
@@ -963,9 +1087,10 @@ func createSoundAtPosition(stream:AudioStream,position:Vector3):
 		aud.stream = stream
 		aud.finished.connect(aud.queue_free)
 		aud.play()
+#endregion
 
-
-func decalAmountCheck()->void:
+#region Decal Amount
+func decalAmountCheck() -> void:
 	var decals = Engine.get_main_loop().get_nodes_in_group(&"decal")
 	#print(decals)
 	while decals.size() > UserConfig.game_max_decals:
@@ -978,19 +1103,21 @@ func decalAmountCheck()->void:
 				decals[0].deleteHole()
 			decals.remove_at(0)
 	return
+#endregion
 
-
-func createBloodPuff(bPosition:Vector3 = Vector3.ZERO,minAmount:int=2,maxAmount:int=10)->void:
-		var bloodSpurt : GPUParticles3D = load("res://assets/particles/bloodSpurt/bloodSpurt.tscn").instantiate()
+#region Blood Puff
+func createBloodPuff(bPosition: Vector3 = Vector3.ZERO, minAmount: int = 2, maxAmount: int = 10) -> void:
+		var bloodSpurt: GPUParticles3D = load("res://assets/particles/bloodSpurt/bloodSpurt.tscn").instantiate()
 		gameManager.world.worldMisc.add_child(bloodSpurt)
 		bloodSpurt.global_position = bPosition
 		bloodSpurt.minParticles = minAmount
 		bloodSpurt.maxParticles = maxAmount
 		bloodSpurt.emitting = true
+#endregion
 
-
-func createPulverizeSound(pPosition:Vector3 = Vector3.ZERO)->void:
-	var pulverizeSound : AudioStreamPlayer3D = AudioStreamPlayer3D.new()
+#region Pulverize Sound
+func createPulverizeSound(pPosition: Vector3 = Vector3.ZERO) -> void:
+	var pulverizeSound: AudioStreamPlayer3D = AudioStreamPlayer3D.new()
 	pulverizeSound.stream = load("res://assets/misc/obliterateStream.tres")
 	pulverizeSound.bus = &"Sounds"
 	#pulverizeSound.attenuation_filter_db = 0
@@ -1001,55 +1128,57 @@ func createPulverizeSound(pPosition:Vector3 = Vector3.ZERO)->void:
 	pulverizeSound.global_position = pPosition
 	pulverizeSound.finished.connect(pulverizeSound.queue_free)
 	pulverizeSound.play()
+#endregion
 
-
-func physEntityCheck()->void:
-	var physEntities : Array = Engine.get_main_loop().get_nodes_in_group(&"physicsEntity")
+#region Physics Entity Check
+func physEntityCheck() -> void:
+	var physEntities: Array = Engine.get_main_loop().get_nodes_in_group(&"physicsEntity")
 	#print(physEntities)
 	while physEntities.size() > UserConfig.game_max_physics_entities:
 		if is_instance_valid(physEntities[0]):
 			physEntities[0].queue_free()
 			physEntities.remove_at(0)
 	return
+#endregion
 
-
-func godPawn(pawn:BasePawn)->void:
+#region God Mode
+func godPawn(pawn: BasePawn) -> void:
 	if pawn.healthComponent.has_meta(&"god"):
 		if pawn.healthComponent.get_meta(&"god"):
 			pawn.healthComponent.set_meta(&"god", false)
 		else:
 			pawn.healthComponent.set_meta(&"god", true)
-		notify_warn("God Mode is %s for %s"%[pawn.healthComponent.get_meta(&"god"),pawn.name],2,1)
+		notify_warn("God Mode is %s for %s" % [pawn.healthComponent.get_meta(&"god"), pawn.name], 2, 1)
 	else:
 		pawn.healthComponent.set_meta(&"god", true)
-		notify_warn("God Mode is %s for %s"%[pawn.healthComponent.get_meta(&"god"),pawn.name],2,1)
+		notify_warn("God Mode is %s for %s" % [pawn.healthComponent.get_meta(&"god"), pawn.name], 2, 1)
 
 
-func infiniteAmmo()->void:
+func infiniteAmmo() -> void:
 	for i in playerPawns:
 		if i.has_meta(&"infiniteAmmo"):
 			if i.get_meta(&"infiniteAmmo"):
 				i.set_meta(&"infiniteAmmo", false)
 			else:
 				i.set_meta(&"infiniteAmmo", true)
-			notify_warn("Infinite Ammo is %s"%i.get_meta(&"infiniteAmmo"),2,1)
+			notify_warn("Infinite Ammo is %s"%i.get_meta(&"infiniteAmmo"), 2, 1)
 		else:
 			i.set_meta(&"infiniteAmmo", true)
-			notify_warn("Infinite Ammo is %s"%i.get_meta(&"infiniteAmmo"),2,1)
+			notify_warn("Infinite Ammo is %s"%i.get_meta(&"infiniteAmmo"), 2, 1)
 
 
-func godmode()->void:
+func godmode() -> void:
 	for i in playerPawns:
 		if i.healthComponent.has_meta(&"god"):
 			if i.healthComponent.get_meta(&"god"):
 				i.healthComponent.set_meta(&"god", false)
 			else:
 				i.healthComponent.set_meta(&"god", true)
-			notify_warn("God Mode is %s"%i.healthComponent.get_meta(&"god"),2,1)
+			notify_warn("God Mode is %s"%i.healthComponent.get_meta(&"god"), 2, 1)
 		else:
 			i.healthComponent.set_meta(&"god", true)
-			notify_warn("God Mode is %s"%i.healthComponent.get_meta(&"god"),2,1)
-
+			notify_warn("God Mode is %s"%i.healthComponent.get_meta(&"god"), 2, 1)
+#endregion
 
 #region Persistent Data
 #Persistent data- To do with stuff that isn't specific to any save.
@@ -1068,14 +1197,14 @@ func get_persistent_data() -> Dictionary:
 
 
 ##Writes to the persistent data file
-func write_persistent_data(data : Dictionary) -> void:
+func write_persistent_data(data: Dictionary) -> void:
 	var file = FileAccess.open_compressed(userDir.get_current_dir() + "persistence", FileAccess.WRITE, FileAccess.COMPRESSION_GZIP)
 	file.store_var(data)
 	file.flush()
 
 
 ##Changes a key/value in the persistent data file, and writes it
-func modify_persistent_data(key : String, value : Variant) -> void:
+func modify_persistent_data(key: String, value: Variant) -> void:
 	var data = get_persistent_data()
 	data[key] = value
 	write_persistent_data(data)

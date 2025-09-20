@@ -1,6 +1,6 @@
 extends Projectile
 
-var max_damage : float
+
 @export var falloff : Curve = preload("res://assets/entities/projectiles/linear_falloff_curve.tres")
 @export var penetration_power : float = 1.0:
 	set(value):
@@ -10,7 +10,7 @@ var last_hit_data : Dictionary
 
 func set_projectile_owner(value : Node) -> void:
 	if value is Weapon:
-		max_damage = value.weaponResource.weaponDamage
+		#max_damage = value.weaponResource.weaponDamage
 		#penetration_power = value.weaponResource.bulletPenetration
 		falloff = value.weaponResource.damageFalloff
 	projectile_owner = value
@@ -52,7 +52,10 @@ func enter_material(material : DB_PhysicsMaterial, hit_data : Dictionary) -> voi
 	if col.has_method(&"hit"):
 		if is_instance_valid(projectile_owner):
 			if projectile_owner is Weapon:
-				col.hit(get_damage(),projectile_owner.weaponOwner,velocity.normalized() * (falloff.sample(get_travel_progress()*3) * projectile_owner.weaponResource.weaponImpulse),to_global(to_local(collisionPoint))-position,self)
+				if col is Hitbox and "bulletResistanceModifier" in col.healthComponent.componentOwner:
+					col.hit(get_damage()/gameManager.get_modified_stat(col.healthComponent.componentOwner,&"bulletResistanceModifier"),projectile_owner.weaponOwner,velocity.normalized() * (falloff.sample(get_travel_progress()*3) * projectile_owner.weaponResource.weaponImpulse),to_global(to_local(collisionPoint))-position,self)
+				else:
+					col.hit(get_damage(),projectile_owner.weaponOwner,velocity.normalized() * (falloff.sample(get_travel_progress()*3) * projectile_owner.weaponResource.weaponImpulse),to_global(to_local(collisionPoint))-position,self)
 				queue_free()
 	#if penetration_power > 0:
 		#var hit = gather_collision_info()

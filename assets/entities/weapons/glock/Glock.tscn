@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=3 uid="uid://d0fe1gvul4uht"]
+[gd_scene load_steps=53 format=3 uid="uid://d0fe1gvul4uht"]
 
 [ext_resource type="PackedScene" uid="uid://cpd5r8bmx2885" path="res://assets/entities/weapons/weaponBase.tscn" id="1_dxord"]
 [ext_resource type="Script" uid="uid://bfvbiknnwdu6i" path="res://assets/resources/customResources/weaponDisplayData/weaponDisplayData.gd" id="2_ay6mx"]
@@ -27,11 +27,12 @@
 [ext_resource type="AudioStream" uid="uid://bqs20cgm8g6qd" path="res://assets/sounds/weapons/baretta/Beretta_shot_6.wav" id="15_2aw7i"]
 [ext_resource type="AudioStream" uid="uid://c0o5k75xpehgo" path="res://assets/sounds/weapons/baretta/Beretta_shot_7.wav" id="16_mqj12"]
 [ext_resource type="AudioStream" uid="uid://bd2rha5jy0g6" path="res://assets/sounds/weapons/baretta/Beretta_shot_8.wav" id="17_3pvmk"]
+[ext_resource type="AudioStream" uid="uid://bhx555igdw7nn" path="res://assets/sounds/weapons/glock/hammerSlide.wav" id="28_qfu12"]
+[ext_resource type="AudioStream" uid="uid://dnawb8oayyov0" path="res://assets/sounds/weapons/glock/magInsert.wav" id="29_h1pkb"]
+[ext_resource type="AudioStream" uid="uid://pr5qica5hrtp" path="res://assets/sounds/weapons/glock/magEject.wav" id="30_0wjwk"]
 
 [sub_resource type="Resource" id="Resource_d7y4w"]
 script = ExtResource("2_ay6mx")
-saleCategory = 1
-gritPrice = 0
 itemDescriptionShort = "A good 'ol Glack, classic hood staple."
 itemDescriptionLong = "What can I say about this? It's gotta be one of the most well-known pistols especially in these parts."
 damage = 0.416
@@ -49,47 +50,25 @@ stream_3/stream = ExtResource("6_3pvmk")
 
 [sub_resource type="Resource" id="Resource_vb4b6"]
 script = ExtResource("3_5pyd6")
-useBulletTrail = true
 displayData = SubResource("Resource_d7y4w")
-canBeReloaded = true
-weaponMagSize = 128
 ammoSize = 16
 reloadTime = 1.86
-headDismember = false
 weaponDamage = 7.9
 weaponFireRate = 0.22
-bulletSpeed = 800.0
 bulletPenetration = 0.0
 weaponImpulse = 17.0
-weaponShots = 1
-ammoConsumption = 1
 damageFalloff = ExtResource("2_mqj12")
-scopedWeapon = false
-scopedFOV = 25
-useCustomCrosshairSize = false
-crosshairSizeOverride = 0.8
-useFOV = false
-fovShotAmount = 1.5
 weaponRecoil = Vector3(3.64, 1, 0.25)
 weaponRecoilStrength = 3.0
 weaponSpread = 0.15
 weaponRecoilStrengthAim = 3.0
 weaponSpreadAim = 0.08
-leftHandParent = false
-rightHandParent = true
-useWeaponSprintAnim = false
 useLeftHandCover = false
-useRightHandCover = true
 useLeftHandIdle = false
-useRightHandIdle = true
-useLeftHandAiming = true
-useRightHandAiming = true
 useLeftHandFreeAiming = false
-useRightHandFreeAiming = true
 weaponPositionOffset = Vector3(-0.002, -0.188, 0.03)
 weaponRotationOffset = Vector3(-1.49749, 3.14159, 0)
 equipStream = SubResource("AudioStreamRandomizer_qfu12")
-bulletColor = Color(1, 1, 0, 1)
 metadata/_custom_type_script = ExtResource("3_5pyd6")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_n332a"]
@@ -2035,6 +2014,42 @@ tracks/1/keys = {
 "update": 0,
 "values": [1.0, 0.0]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../magEject:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.4),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../magInject:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(1.0333333),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../hammerSound:playing")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(1.5),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_ay6mx"]
 resource_name = "shotFired"
@@ -2101,6 +2116,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00431539, 0.00136896)
 shape = SubResource("BoxShape3D_n332a")
 
 [node name="AnimationTree" parent="." index="1"]
+libraries = {
+&"": SubResource("AnimationLibrary_ay6mx"),
+&"weaponAnims": SubResource("AnimationLibrary_dxord")
+}
 tree_root = ExtResource("9_2aw7i")
 parameters/weaponStateSpeed/scale = 1.0
 
@@ -2122,7 +2141,6 @@ playback_default_blend_time = 0.1
 transform = Transform3D(0.065, 0, 0, 0, 0.065, 0, 0, 0, 0.065, 0, 0, 0)
 
 [node name="Glock" parent="glockModel" index="0"]
-blend_shapes/MagDissapear = 1.0
 surface_material_override/0 = ExtResource("7_5pyd6")
 surface_material_override/1 = ExtResource("8_vefcy")
 surface_material_override/2 = SubResource("StandardMaterial3D_vefcy")
@@ -2147,7 +2165,19 @@ attenuation_filter_db = 0.0
 stream = SubResource("AudioStreamRandomizer_yxixb")
 pitch_scale = 1.2
 
-[connection signal="reloadingStart" from="." to="." method="playWeaponAnimation" binds= [&"weaponAnim", &"reload"]]
+[node name="hammerSound" type="AudioStreamPlayer3D" parent="." index="8"]
+stream = ExtResource("28_qfu12")
+attenuation_filter_cutoff_hz = 20500.0
+
+[node name="magInject" type="AudioStreamPlayer3D" parent="." index="9"]
+stream = ExtResource("29_h1pkb")
+attenuation_filter_cutoff_hz = 20500.0
+
+[node name="magEject" type="AudioStreamPlayer3D" parent="." index="10"]
+stream = ExtResource("30_0wjwk")
+attenuation_filter_cutoff_hz = 20500.0
+
+[connection signal="reloadingStart" from="." to="." method="playWeaponAnimation" binds= [&"weaponAnim", &"reload", true]]
 [connection signal="shot_fired" from="." to="AudioStreamPlayer3D" method="play"]
 [connection signal="shot_fired" from="." to="." method="playWeaponAnimation" binds= [&"weaponAnim", &"shotFired"]]
 

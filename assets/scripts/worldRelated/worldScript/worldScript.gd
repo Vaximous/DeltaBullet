@@ -104,6 +104,8 @@ func playSoundscape()->void:
 		audioStreamPlayer.bus = &'Ambience'
 		audioStreamPlayer.stream = worldData.soundScape
 		audioStreamPlayer.play()
+		audioStreamPlayer.finished.connect(playSoundscape)
+		audioStreamPlayer.finished.connect(audioStreamPlayer.queue_free)
 
 
 func setupWorld()-> void:

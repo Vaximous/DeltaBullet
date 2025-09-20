@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=3 uid="uid://dpeqrnidy6scn"]
+[gd_scene load_steps=47 format=3 uid="uid://dpeqrnidy6scn"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_ffcsn"]
 [ext_resource type="Script" uid="uid://b31u24at18p5t" path="res://assets/resources/customResources/worldData/worldData.gd" id="2_pwn6q"]
@@ -13,27 +13,16 @@
 [ext_resource type="Texture2D" uid="uid://dvfkpbe83xcf4" path="res://assets/textures/panoramas/panoramatest3.png" id="7_1qqyn"]
 [ext_resource type="AudioStream" uid="uid://c71fohsdhieck" path="res://assets/music/ambient/noise.mp3" id="7_6vq5s"]
 [ext_resource type="PackedScene" uid="uid://bporbvksq0guk" path="res://assets/entities/weapons/shotgun/Shotgun.tscn" id="7_hk4ok"]
-[ext_resource type="Resource" uid="uid://cslvcweyejh3c" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/default_camera_movement_component.tres" id="8_70it2"]
 [ext_resource type="PackedScene" uid="uid://bidurnqgd1c74" path="res://assets/entities/weapons/m4/m4.tscn" id="8_na5a6"]
 [ext_resource type="Material" uid="uid://cet4363l3i6lx" path="res://assets/materials/fence/fence_material.tres" id="9_8ltk3"]
-[ext_resource type="Resource" uid="uid://iru8ynu04i00" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/default_camera_rotation_component.tres" id="9_s1yem"]
-[ext_resource type="Resource" uid="uid://rp3mpjmisoyh" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/default_object_movement_component.tres" id="10_1b0wm"]
-[ext_resource type="Resource" uid="uid://c8ulad7utgrg7" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/pre_blur_processing_stage.tres" id="11_4l726"]
 [ext_resource type="AudioStream" uid="uid://2umgn4pkyxqr" path="res://assets/music/ambient/ponder.mp3" id="11_ab3ox"]
 [ext_resource type="AudioStream" uid="uid://4fr4v3mmy3oj" path="res://assets/music/menu/Frenzy.mp3" id="12_foj6n"]
-[ext_resource type="Script" uid="uid://cksg4cwolmrs7" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/pre_blur_processor.gd" id="12_ps2tg"]
 [ext_resource type="AudioStream" uid="uid://bbq1w5ubd4abv" path="res://assets/music/menu/HHb.mp3" id="13_2dnab"]
-[ext_resource type="Resource" uid="uid://bk5yd5plopwi2" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/simple_jf_blur_stage.tres" id="13_xickv"]
-[ext_resource type="Resource" uid="uid://bj3exhmsfcx4w" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jf_simple_stage.tres" id="14_plmxv"]
 [ext_resource type="AudioStream" uid="uid://d0ia5aorbij7e" path="res://assets/music/menu/ExternalActivity.mp3" id="14_qv7bh"]
 [ext_resource type="PackedScene" uid="uid://dsxt078giobel" path="res://assets/entities/weapons/Uzi/Uzi.tscn" id="14_s320q"]
-[ext_resource type="Resource" uid="uid://co5k7plgmxepi" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jump_flood_neighbor_max_stage.tres" id="15_cg7gh"]
-[ext_resource type="Resource" uid="uid://dc5fr84ue3dn5" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jump_flood_overlay_stage.tres" id="16_q2ava"]
 [ext_resource type="PackedScene" uid="uid://bn07wnk5k005c" path="res://assets/entities/weapons/HoneyBadger/honeybadger.tscn" id="16_wri4e"]
-[ext_resource type="Script" uid="uid://v1cr7lhvqrjt" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/simple_jf_motion_blur.gd" id="17_wgmac"]
-[ext_resource type="Resource" uid="uid://c10aboaly701b" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jump_flood_tile_max_x_stage.tres" id="18_cn3w7"]
-[ext_resource type="Resource" uid="uid://cymk87e4nyxva" path="res://addons/SphynxMotionBlurToolkit/JumpFlood/jump_flood_tile_max_y_stage.tres" id="19_7u332"]
 [ext_resource type="PackedScene" uid="uid://dvmmlj4mvj88r" path="res://assets/entities/aiMarker/aiMarker.tscn" id="37_na5a6"]
+[ext_resource type="PackedScene" uid="uid://7ueyays7enj5" path="res://assets/entities/trigger/pawnTrigger.tscn" id="38_k78gc"]
 [ext_resource type="PackedScene" uid="uid://fbfo4av0cb8r" path="res://assets/entities/wallMountedMedkit/WallMountedMedkit.tscn" id="42_t76hv"]
 [ext_resource type="AudioStream" uid="uid://c8f4j3xitvvuk" path="res://assets/sounds/ui/uialert.wav" id="43_bqukx"]
 [ext_resource type="PackedScene" uid="uid://boh343kalvj5i" path="res://assets/entities/weapons/Revolver/Revolver.tscn" id="46_83wuo"]
@@ -47,11 +36,11 @@ skyTexture = SubResource("PanoramaSkyMaterial_c0bh1")
 worldName = "Interior Area"
 worldDescription = "[b]VERY[/b] old. The first test area."
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_31k0b"]
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_rv4y0"]
 panorama = ExtResource("7_1qqyn")
 
 [sub_resource type="Sky" id="Sky_bhcr0"]
-sky_material = SubResource("PanoramaSkyMaterial_31k0b")
+sky_material = SubResource("PanoramaSkyMaterial_rv4y0")
 
 [sub_resource type="Environment" id="Environment_uqgj2"]
 background_mode = 2
@@ -77,27 +66,6 @@ volumetric_fog_density = 0.0112
 adjustment_enabled = true
 adjustment_saturation = 1.15
 adjustment_color_correction = ExtResource("6_id0ay")
-
-[sub_resource type="CompositorEffect" id="CompositorEffect_pmh78"]
-resource_local_to_scene = false
-resource_name = ""
-enabled = true
-effect_callback_type = 4
-needs_motion_vectors = false
-needs_normal_roughness = false
-script = ExtResource("12_ps2tg")
-
-[sub_resource type="CompositorEffect" id="CompositorEffect_uxybo"]
-resource_local_to_scene = false
-resource_name = ""
-enabled = true
-effect_callback_type = 4
-needs_motion_vectors = false
-needs_normal_roughness = false
-script = ExtResource("17_wgmac")
-
-[sub_resource type="Compositor" id="Compositor_7v8ep"]
-compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_pmh78"), SubResource("CompositorEffect_uxybo")])
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_j7t2x"]
 vertices = PackedVector3Array(-7.724777, 0.2655301, 37.292786, -7.474777, 0.2655301, 38.292786, -5.724777, 0.2655301, 38.292786, -5.474777, 0.2655301, 37.292786, -0.9747772, 0.2655301, 31.792786, -6.974777, 0.2655301, 20.042786, -7.974777, 0.2655301, 19.792786, -1.7247772, 0.2655301, 37.292786, -0.9747772, 0.2655301, 33.292786, -7.974777, 0.2655301, 18.792786, -11.224777, 0.36553, 14.042786, -12.724777, 0.36553, 14.292786, -6.974777, 0.36553, 18.542786, -1.9747772, 0.36553, 13.792786, -1.9747772, 0.2655301, 13.042786, -11.474777, 0.2655301, 12.792786, -197.97478, 0.2655301, 52.542786, -12.974777, 0.2655301, 13.042786, -1.7247772, 0.2655301, -0.20721436, -0.7247772, 0.2655301, -232.45721, -197.97478, 0.2655301, -232.45721, -0.9747772, 0.2655301, 12.792786, -0.9747772, 0.2655301, 3.7927856, -1.7247772, 0.2655301, 3.5427856, -33.474777, 0.2655301, 52.542786, -33.224777, 0.2655301, 50.292786, -9.724777, 0.2655301, 37.542786, -8.724777, 0.2655301, 50.292786, -8.724777, 0.2655301, 39.542786, -9.724777, 0.2655301, 39.292786, -0.7247772, 0.2655301, -0.45721436, 0.025222778, 0.46552992, 0.54278564, -0.7247772, 0.6655302, 0.54278564, -0.7247772, 0.6655302, 2.7927856, 0.025222778, 0.46552992, 2.7927856, 0.025222778, 0.2655301, 3.7927856, 9.275223, 0.2655301, 12.792786, 10.525223, 0.2655301, 12.792786, 10.775223, 0.2655301, 13.292786, 14.275223, 0.2655301, 13.042786, 14.525223, 0.2655301, 12.292786, 0.025222778, 0.2655301, -0.45721436, 15.275223, 0.2655301, 12.292786, 198.02522, 0.2655301, 12.042786, 198.02522, 0.2655301, -232.45721, 5.500229, 0.2655301, 5.5177917, -0.22477722, 0.36553, 13.792786, 2.7752228, 0.36553, 18.542786, 3.2752228, 0.36553, 18.542786, -0.22477722, 0.2655301, 13.042786, 9.025223, 0.36553, 13.792786, 15.775223, 0.36553, 12.542786, 15.775223, 0.36553, 13.292786, 16.775223, 0.36553, 18.542786, 17.025223, 0.2655301, 19.292786, 198.02522, 0.2655301, 19.292786, 12.525223, 0.36553, 18.542786, 12.775223, 0.2655301, 19.292786, 15.525223, 0.2655301, 19.292786, 15.775223, 0.36553, 18.542786, 10.275223, 0.36553, 14.292786, 11.275223, 0.2655301, 18.792786, 10.775223, 0.36553, 14.042786, 14.525223, 0.36553, 13.792786, 15.525223, 0.36553, 13.792786, 1.2752228, 0.2655301, 32.542786, 2.0252228, 0.2655301, 32.542786, 2.0252228, 0.2655301, 31.542786, 1.0252228, 0.2655301, 31.292786, 2.2752228, 0.2655301, 19.792786, -6.474777, 0.2655301, 19.792786, -0.7247772, 0.2655301, 31.292786, 3.0252228, 0.2655301, 20.042786, 3.0252228, 0.2655301, 31.292786, -0.47477722, 0.36553, 14.292786, 2.2752228, 0.2655301, 18.792786, -1.7247772, 0.36553, 14.292786, -6.474777, 0.2655301, 18.792786, 9.275223, 0.36553, 14.292786, 11.275223, 0.2655301, 19.292786, 3.7752228, 0.2655301, 19.292786, 4.025223, 0.2655301, 31.292786, 4.275223, 0.2655301, 32.542786, 4.525223, 0.2655301, 32.542786, 4.775223, 0.2655301, 31.292786, 3.5252228, 0.2655301, 20.042786, 6.525223, 0.2655301, 31.292786, 6.775223, 0.2655301, 31.792786, 11.775223, 0.2655301, 20.042786, 4.775223, 0.2655301, 33.542786, 4.025223, 0.2655301, 33.542786, -1.4747772, 0.2655301, 39.542786, -5.224777, 0.2655301, 39.542786, -7.224777, 0.2655301, 50.792786, 2.2752228, 0.2655301, 33.542786, 1.0252228, 0.2655301, 33.542786, 12.525223, 0.2655301, 20.042786, -7.224777, 0.2655301, 62.292786, -6.474777, 0.2655301, 62.292786, -6.224777, 0.2655301, 60.292786, 15.775223, 0.2655301, 20.042786, 5.025223, 0.2655301, 60.292786, -1.2247772, 0.2655301, 37.542786, 16.775223, 0.2655301, 20.042786, 10.275223, 0.2655301, 61.042786, 10.525223, 0.2655301, 63.292786, 198.02522, 0.2655301, 63.292786, 5.275223, 0.2655301, 61.042786, 6.525223, 0.2655301, 33.542786, -5.724777, 0.2655301, 39.292786, -7.724777, 0.2655301, 39.542786, -7.474777, 0.2655301, 50.292786, -4.974777, 7.66553, 70.542786, -5.474777, 7.66553, 70.542786, -5.724777, 7.66553, 72.542786, -4.974777, 7.66553, 73.292786, -31.974777, 7.66553, 63.292786, -32.474777, 7.66553, 63.542786, -17.724777, 7.66553, 63.542786, -8.474777, 7.66553, 63.042786, -4.974777, 7.66553, 61.292786, -5.474777, 7.66553, 61.292786, -5.724777, 7.66553, 63.292786, -5.724777, 7.66553, 63.542786, -5.474777, 7.66553, 67.292786, -4.974777, 7.66553, 67.292786, -17.474777, 7.66553, 72.792786, -17.224777, 7.66553, 72.292786, -16.974777, 7.66553, 63.542786, -32.474777, 7.66553, 51.292786, -32.224777, 7.66553, 51.792786, -8.724777, 7.66553, 51.542786, -8.224777, 7.66553, 51.292786, -8.224777, 7.66553, 63.042786, -197.97478, 0.2655301, 62.292786, -33.474777, 0.2655301, 62.292786, -13.224777, 0.86553, 63.292786, -11.474777, 0.86553, 63.292786, -11.224777, 0.86553, 62.292786, -9.474777, 0.86553, 52.542786, -13.474777, 0.86553, 62.292786, -31.224777, 0.86553, 52.542786, -31.224777, 0.86553, 62.292786, -9.474777, 0.86553, 62.292786, -31.224777, 6.86553, 52.542786, -31.224777, 6.86553, 62.292786, -9.474777, 6.86553, 62.292786, -9.474777, 6.86553, 52.542786, -5.724777, 0.2655301, 95.792786, -5.724777, 0.2655301, 94.542786, -6.224777, 0.2655301, 94.292786, -6.224777, 0.2655301, 90.542786, -13.724777, 0.2655301, 90.292786, -3.4747772, 0.2655301, 232.54279, -13.724777, 0.2655301, 74.042786, -17.724777, 0.2655301, 74.042786, -18.474777, 0.2655301, 73.542786, -18.474777, 0.2655301, 64.542786, -33.224777, 0.2655301, 64.542786, -197.97478, 0.2655301, 232.54279, -3.4747772, 0.2655301, 96.042786, -3.9747772, 7.9655304, 72.042786, 8.525223, 7.9655304, 72.042786, 8.525223, 7.9655304, 62.042786, -3.9747772, 7.9655304, 62.042786, 7.025223, 0.86553, 68.042786, 8.275223, 0.86553, 67.792786, 8.275223, 0.86553, 64.542786, 7.025223, 0.86553, 64.292786, 7.025223, 0.86553, 62.042786, 3.5252228, 0.86553, 62.542786, 3.2752228, 0.86553, 68.792786, 7.025223, 0.86553, 69.042786, 3.2752228, 0.86553, 67.542786, -2.9747772, 0.86553, 72.792786, -2.7247772, 0.86553, 73.292786, -1.7247772, 0.86553, 72.792786, -1.4747772, 0.86553, 70.792786, 0.27522278, 0.86553, 71.042786, 1.2752228, 0.86553, 69.792786, 0.7752228, 0.86553, 69.542786, -5.224777, 0.86553, 68.542786, -5.224777, 0.86553, 69.292786, -3.7247772, 0.86553, 69.542786, -3.7247772, 0.86553, 68.292786, 0.7752228, 0.86553, 67.542786, -2.4747772, 0.86553, 64.292786, -3.7247772, 0.86553, 64.542786, -2.4747772, 0.86553, 62.542786, -3.7247772, 0.86553, 72.792786, -6.474777, 0.86553, 68.292786, -6.474777, 0.86553, 69.542786, -13.474777, 0.86553, 64.542786, -16.224777, 0.86553, 64.542786, -16.224777, 0.86553, 71.542786, -11.224777, 0.86553, 64.542786, -6.474777, 0.86553, 71.542786, -6.474777, 0.86553, 64.542786, 10.525223, 0.2655301, 92.292786, 198.02522, 0.2655301, 92.292786, -16.224777, 6.86553, 64.542786, -16.224777, 6.86553, 71.542786, -6.474777, 6.86553, 71.542786, -6.474777, 6.86553, 64.542786, -5.474777, 8.46553, 68.292786, -5.474777, 8.46553, 69.542786, -4.724777, 8.46553, 69.542786, -4.724777, 8.46553, 68.292786, 0.27522278, 0.9655299, 71.792786, -0.7247772, 1.1655302, 71.792786, 0.27522278, 0.9655299, 72.042786, -2.7247772, 0.86553, 78.542786, -2.7247772, 0.86553, 79.542786, -1.2247772, 0.86553, 79.542786, -0.9747772, 0.86553, 78.292786, 0.27522278, 0.86553, 73.042786, 3.0252228, 0.86553, 69.792786, 1.0252228, 0.86553, 78.292786, 1.2752228, 0.86553, 79.542786, 2.7752228, 0.86553, 79.542786, 3.0252228, 0.86553, 78.292786, 8.275223, 0.86553, 77.792786, 8.275223, 0.86553, 70.542786, 5.025223, 0.86553, 78.292786, 5.275223, 0.86553, 79.542786, 7.025223, 0.86553, 79.292786, 7.025223, 0.86553, 78.042786, 7.025223, 0.86553, 70.292786, -2.7247772, 0.86553, 75.292786, -3.7247772, 0.86553, 78.292786, -3.7247772, 0.86553, 75.542786, -4.224777, 7.9655304, 74.292786, -4.224777, 7.9655304, 88.792786, -3.9747772, 7.9655304, 94.042786, 8.525223, 7.9655304, 94.042786, -11.974777, 7.9655304, 74.292786, -11.974777, 7.9655304, 88.792786, -3.9747772, 0.86553, 83.042786, -3.9747772, 0.86553, 80.792786, -5.224777, 0.86553, 80.542786, -5.224777, 0.86553, 83.292786, -11.474777, 0.86553, 87.292786, -10.474777, 0.86553, 87.292786, -10.474777, 0.86553, 75.542786, -11.474777, 0.86553, 75.542786, -5.224777, 0.86553, 74.542786, -10.224777, 0.86553, 74.542786, -10.224777, 0.86553, 88.292786, -5.224777, 0.86553, 88.292786, 7.025223, 0.86553, 80.292786, 5.025223, 0.86553, 80.792786, -2.7247772, 0.86553, 83.292786, -2.7247772, 0.86553, 84.542786, -1.2247772, 0.86553, 84.542786, -0.9747772, 0.86553, 83.292786, -2.9747772, 0.86553, 80.792786, -0.9747772, 0.86553, 80.792786, 3.0252228, 0.86553, 80.792786, 1.0252228, 0.86553, 80.792786, 1.0252228, 0.86553, 83.292786, 3.0252228, 0.86553, 83.292786, 8.275223, 0.86553, 80.542786, 5.025223, 0.86553, 83.292786, 5.275223, 0.86553, 84.792786, 8.275223, 0.86553, 84.792786, 1.2752228, 0.86553, 84.542786, 2.7752228, 0.86553, 84.542786, -2.7247772, 0.86553, 85.542786, -0.9747772, 0.86553, 85.792786, 5.025223, 0.86553, 85.792786, 7.025223, 0.86553, 88.042786, 8.275223, 0.86553, 87.792786, 3.0252228, 0.86553, 85.792786, 1.0252228, 0.86553, 85.792786, 7.025223, 0.86553, 90.292786, -3.7247772, 0.86553, 85.792786, -3.7247772, 0.86553, 87.792786, -2.7247772, 0.86553, 88.042786, -2.7247772, 0.86553, 90.292786, -3.4747772, 0.86553, 93.292786, 8.275223, 0.86553, 93.292786, -3.4747772, 0.86553, 90.542786, 8.275223, 0.86553, 90.542786, 10.525223, 0.2655301, 94.292786, 9.525223, 0.2655301, 94.542786, 9.525223, 0.2655301, 95.792786, 7.275223, 0.2655301, 96.042786, 7.275223, 0.2655301, 232.54279, 198.02522, 0.2655301, 232.54279)
@@ -184,6 +152,18 @@ size = Vector3(0.16, 0.15, 0.085)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ae5er"]
 size = Vector3(0.18425, 0.199585, 0.119446)
+
+[sub_resource type="GDScript" id="GDScript_k78gc"]
+resource_name = "debugworldlogic"
+script/source = "extends Node
+
+
+func _on_pawn_trigger_trigger_activated(body: Variant) -> void:
+	gameManager.queuePhoneCall(load(\"res://assets/resources/customResources/actorAudio/dialogue/dialogueNPC.tres\"))
+"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xjy20"]
+size = Vector3(3.5839844, 5.4595947, 0.42529297)
 
 [node name="worldBase" instance=ExtResource("1_ffcsn")]
 worldData = SubResource("Resource_2joim")
@@ -320,7 +300,6 @@ pawnColor = Color(0.546216, 0.857626, 0.929116, 1)
 
 [node name="worldEnvironment" parent="Environment" index="0"]
 environment = SubResource("Environment_uqgj2")
-compositor = SubResource("Compositor_7v8ep")
 
 [node name="navigationRegion3d" type="NavigationRegion3D" parent="Geometry" index="0"]
 navigation_mesh = SubResource("NavigationMesh_j7t2x")
@@ -1189,3 +1168,15 @@ top_level = true
 [node name="BobbyDialoguePosition" type="Marker3D" parent="Misc" index="4"]
 transform = Transform3D(-0.735436, 0, 0.677596, 0, 1, 0, -0.677596, 0, -0.735436, -27.0544, 2.070756, 56.766914)
 top_level = true
+
+[node name="mapLogic" parent="." index="7"]
+script = SubResource("GDScript_k78gc")
+
+[node name="pawnTrigger" parent="mapLogic" index="0" instance=ExtResource("38_k78gc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.456608, 0.67006516, 63.86088)
+
+[node name="collisionShape3d" type="CollisionShape3D" parent="mapLogic/pawnTrigger" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.080078125, 2.2297974, -0.28735352)
+shape = SubResource("BoxShape3D_xjy20")
+
+[connection signal="triggerActivated" from="mapLogic/pawnTrigger" to="mapLogic" method="_on_pawn_trigger_trigger_activated"]

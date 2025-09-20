@@ -1,0 +1,70 @@
+[gd_resource type="Resource" script_class="ActorDialogue" load_steps=16 format=3 uid="uid://4ayfn22jmgsi"]
+
+[ext_resource type="Script" uid="uid://bubcqmglkld6n" path="res://assets/resources/actorAudioDefinition/actorAudioDefinition.gd" id="1_nh7um"]
+[ext_resource type="AudioStream" uid="uid://bxu4xyv7ndpj3" path="res://assets/sounds/vo/test/pawnCall/cloakedup/success1.wav" id="2_ng22a"]
+[ext_resource type="Script" uid="uid://brywjp4oyim4q" path="res://assets/resources/actorAudio/actorAudio.gd" id="3_aa6bd"]
+[ext_resource type="AudioStream" uid="uid://clfl2j7rd2n6l" path="res://assets/sounds/vo/test/pawnCall/cloakedup/success2.wav" id="4_nh7um"]
+[ext_resource type="AudioStream" uid="uid://ca0f4n48fcio7" path="res://assets/sounds/vo/test/pawnCall/cloakedup/success3.wav" id="5_r34rw"]
+[ext_resource type="AudioStream" uid="uid://cwsmsbbrcqsb8" path="res://assets/sounds/vo/test/pawnCall/cloakedup/success4.wav" id="6_aa6bd"]
+[ext_resource type="Script" uid="uid://51as33mlf4p5" path="res://assets/resources/actorDialogue/actorDialogue.gd" id="8_3c1l8"]
+
+[sub_resource type="Resource" id="Resource_eovc5"]
+script = ExtResource("3_aa6bd")
+audioStream = ExtResource("2_ng22a")
+subtitleText = "Yo, Bullet! You actually took care of em both.."
+actorName = "Gyver"
+showActorNames = true
+actorColor = Color(0.82437295, 0.81116784, 0.933022, 1)
+metadata/_custom_type_script = "uid://brywjp4oyim4q"
+
+[sub_resource type="Resource" id="Resource_1dtaq"]
+script = ExtResource("1_nh7um")
+audioResource = SubResource("Resource_eovc5")
+metadata/_custom_type_script = "uid://bubcqmglkld6n"
+
+[sub_resource type="Resource" id="Resource_kiibs"]
+script = ExtResource("3_aa6bd")
+audioStream = ExtResource("4_nh7um")
+subtitleText = "Nice! Gonna give you about 50G for that one."
+actorName = "Gyver"
+showActorNames = true
+actorColor = Color(0.82437295, 0.81116784, 0.933022, 1)
+metadata/_custom_type_script = "uid://brywjp4oyim4q"
+
+[sub_resource type="Resource" id="Resource_awbc5"]
+script = ExtResource("1_nh7um")
+audioResource = SubResource("Resource_kiibs")
+metadata/_custom_type_script = "uid://bubcqmglkld6n"
+
+[sub_resource type="Resource" id="Resource_3c1l8"]
+script = ExtResource("3_aa6bd")
+audioStream = ExtResource("5_r34rw")
+subtitleText = "Hey, check your contract map for more stuff later on!"
+actorName = "Gyver"
+showActorNames = true
+actorColor = Color(0.82437295, 0.81116784, 0.933022, 1)
+metadata/_custom_type_script = "uid://brywjp4oyim4q"
+
+[sub_resource type="Resource" id="Resource_e6hn1"]
+script = ExtResource("1_nh7um")
+audioResource = SubResource("Resource_3c1l8")
+metadata/_custom_type_script = "uid://bubcqmglkld6n"
+
+[sub_resource type="Resource" id="Resource_jhkjt"]
+script = ExtResource("3_aa6bd")
+audioStream = ExtResource("6_aa6bd")
+subtitleText = "'Preciate it, Bullet."
+actorName = "Gyver"
+showActorNames = true
+actorColor = Color(0.82437295, 0.81116784, 0.933022, 1)
+metadata/_custom_type_script = "uid://brywjp4oyim4q"
+
+[sub_resource type="Resource" id="Resource_ncc35"]
+script = ExtResource("1_nh7um")
+audioResource = SubResource("Resource_jhkjt")
+metadata/_custom_type_script = "uid://bubcqmglkld6n"
+
+[resource]
+script = ExtResource("8_3c1l8")
+actorAudios = Array[ExtResource("1_nh7um")]([SubResource("Resource_1dtaq"), SubResource("Resource_awbc5"), SubResource("Resource_e6hn1"), SubResource("Resource_ncc35")])
+metadata/_custom_type_script = "uid://51as33mlf4p5"

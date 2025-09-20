@@ -1,0 +1,85 @@
+[gd_resource type="Resource" script_class="ActorDialogue" load_steps=19 format=3 uid="uid://dhe2rpfp30ne4"]
+
+[ext_resource type="Script" uid="uid://bubcqmglkld6n" path="res://assets/resources/actorAudioDefinition/actorAudioDefinition.gd" id="1_je54i"]
+[ext_resource type="AudioStream" uid="uid://dwtyi638itf6b" path="res://assets/sounds/vo/test/pawnCall/test2/warranty1.wav" id="2_5uj6o"]
+[ext_resource type="Script" uid="uid://51as33mlf4p5" path="res://assets/resources/actorDialogue/actorDialogue.gd" id="2_mdgne"]
+[ext_resource type="Script" uid="uid://brywjp4oyim4q" path="res://assets/resources/actorAudio/actorAudio.gd" id="3_087n2"]
+[ext_resource type="AudioStream" uid="uid://uv221s3p75qn" path="res://assets/sounds/vo/test/pawnCall/test2/warranty2.wav" id="4_vgv3v"]
+[ext_resource type="AudioStream" uid="uid://ctk2o1sblis71" path="res://assets/sounds/vo/test/pawnCall/test2/warranty3.wav" id="5_wirte"]
+[ext_resource type="AudioStream" uid="uid://twfpfxfk7esh" path="res://assets/sounds/vo/test/pawnCall/test2/warranty4.wav" id="6_3in1v"]
+[ext_resource type="AudioStream" uid="uid://pwrhor8xnm5t" path="res://assets/sounds/vo/test/pawnCall/test2/warranty5.wav" id="7_rh2w8"]
+
+[sub_resource type="Resource" id="Resource_awdxm"]
+script = ExtResource("3_087n2")
+audioStream = ExtResource("2_5uj6o")
+subtitleText = "Hello Mr. Bullet, we're here to call you about your cars extended warranty.. And uh.."
+actorName = "Car Guy"
+showActorNames = true
+actorColor = Color(0.91742706, 0.8126201, 0.6331836, 1)
+metadata/_custom_type_script = "uid://brywjp4oyim4q"
+
+[sub_resource type="Resource" id="Resource_ag7hp"]
+script = ExtResource("1_je54i")
+audioResource = SubResource("Resource_awdxm")
+metadata/_custom_type_script = "uid://bubcqmglkld6n"
+
+[sub_resource type="Resource" id="Resource_rv8nf"]
+script = ExtResource("3_087n2")
+audioStream = ExtResource("4_vgv3v")
+subtitleText = "Well, just say nothing if you would like to go forward with the extended warranty plan."
+actorName = "Car Guy"
+showActorNames = true
+actorColor = Color(0.91742706, 0.8126201, 0.6331836, 1)
+metadata/_custom_type_script = "uid://brywjp4oyim4q"
+
+[sub_resource type="Resource" id="Resource_72tri"]
+script = ExtResource("1_je54i")
+audioResource = SubResource("Resource_rv8nf")
+metadata/_custom_type_script = "uid://bubcqmglkld6n"
+
+[sub_resource type="Resource" id="Resource_6hjt8"]
+script = ExtResource("3_087n2")
+audioStream = ExtResource("5_wirte")
+subtitleText = "And uh, that'll include ten months.. of extended warranty.. For your car."
+actorName = "Car Guy"
+showActorNames = true
+actorColor = Color(0.91742706, 0.8126201, 0.6331836, 1)
+metadata/_custom_type_script = "uid://brywjp4oyim4q"
+
+[sub_resource type="Resource" id="Resource_3jdyo"]
+script = ExtResource("1_je54i")
+audioResource = SubResource("Resource_6hjt8")
+metadata/_custom_type_script = "uid://bubcqmglkld6n"
+
+[sub_resource type="Resource" id="Resource_1qr2n"]
+script = ExtResource("3_087n2")
+audioStream = ExtResource("6_3in1v")
+subtitleText = "And uh.. Just say nothing if you want that! Okay.. Alright?"
+actorName = "Car Guy"
+showActorNames = true
+actorColor = Color(0.91742706, 0.8126201, 0.6331836, 1)
+metadata/_custom_type_script = "uid://brywjp4oyim4q"
+
+[sub_resource type="Resource" id="Resource_2tmel"]
+script = ExtResource("1_je54i")
+audioResource = SubResource("Resource_1qr2n")
+metadata/_custom_type_script = "uid://bubcqmglkld6n"
+
+[sub_resource type="Resource" id="Resource_tfm7j"]
+script = ExtResource("3_087n2")
+audioStream = ExtResource("7_rh2w8")
+subtitleText = "Alright. I'll take your silence as a-, Okay. Alright! Let's do this! Thank you, sir! Goodbye!"
+actorName = "Car Guy"
+showActorNames = true
+actorColor = Color(0.91742706, 0.8126201, 0.6331836, 1)
+metadata/_custom_type_script = "uid://brywjp4oyim4q"
+
+[sub_resource type="Resource" id="Resource_ev0yd"]
+script = ExtResource("1_je54i")
+audioResource = SubResource("Resource_tfm7j")
+metadata/_custom_type_script = "uid://bubcqmglkld6n"
+
+[resource]
+script = ExtResource("2_mdgne")
+actorAudios = Array[ExtResource("1_je54i")]([SubResource("Resource_ag7hp"), SubResource("Resource_72tri"), SubResource("Resource_3jdyo"), SubResource("Resource_2tmel"), SubResource("Resource_ev0yd")])
+metadata/_custom_type_script = "uid://51as33mlf4p5"

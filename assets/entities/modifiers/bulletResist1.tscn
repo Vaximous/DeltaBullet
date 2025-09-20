@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://dpfu4pb5pa0ka"]
+
+[ext_resource type="Script" uid="uid://dfdbqsek7w5b2" path="res://assets/scripts/modifierstack/statmodifier.gd" id="1_xte4y"]
+
+[node name="bulletResist1" type="Node"]
+script = ExtResource("1_xte4y")
+stat_to_modify = &"bulletResistanceModifier"
+stat_mod_expression = "stat * 1.5"
+metadata/_custom_type_script = "uid://dfdbqsek7w5b2"

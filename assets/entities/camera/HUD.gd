@@ -5,6 +5,7 @@ signal interactionFound
 var vignetteTween : Tween
 var reloadTween : Tween
 var blurTween : Tween
+var painDir : PackedScene = load("res://assets/scenes/ui/hudPainDirection/painDirection.tscn")
 const defaultTransitionType = Tween.TRANS_QUART
 const defaultEaseType = Tween.EASE_OUT
 var camOwner : PlayerCamera
@@ -15,6 +16,7 @@ var followEntity : Node3D:
 			if !followEntity.healthComponent.healthChanged.is_connected(hpCheck):
 				followEntity.healthComponent.healthChanged.connect(hpCheck.unbind(1))
 @onready var vignette : ColorRect = $vignette
+@onready var closeCrosshair : TextureRect = $closeCrosshair
 @onready var reloadProgress : TextureProgressBar = $Crosshair/reloadProgress
 @onready var gameNotifications : VBoxContainer = $marginContainer/control/gameNotifications
 @onready var questNotifHolder : MarginContainer = $questNotification
@@ -85,6 +87,12 @@ func setVignetteSoftness(amount:float)->void:
 
 func setVignetteColor(color:Color)->void:
 	vignette.get_material().set_shader_parameter("color",color)
+
+func invokePainDirection(dir:Vector3)->void:
+	var pDir = painDir.instantiate()
+	pDir.pawn = camOwner.getAttachedOwner()
+	pDir.painDealerPosition = dir
+	%centerContainer.add_child(pDir)
 
 func disableVignette()->void:
 	if vignetteTween:

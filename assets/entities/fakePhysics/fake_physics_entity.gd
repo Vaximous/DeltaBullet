@@ -17,9 +17,9 @@ var colNormal : Vector3
 func _ready() -> void:
 	#gameManager.beginCleanup()
 	if mesh:
-		mesh.transparency = 1
+		mesh.transparency = 0
 		mesh.show()
-		fadeInMesh()
+		#fadeInMesh()
 		mesh.position = global_position
 		#mesh.global_transform = self.get_global_transform_interpolated()
 		mesh.top_level = true
@@ -32,6 +32,7 @@ func playAudios()->void:
 func _physics_process(delta: float) -> void:
 	if Engine.get_physics_frames() % 2 == 0:
 		if mesh:
+			mesh.position = global_position
 			mesh.rotation += rotational_velocity * delta
 		velocity += get_gravity() * delta * 3
 		#print(get_gravity())
@@ -52,11 +53,11 @@ func _physics_process(delta: float) -> void:
 				set_physics_process(false)
 				#print("Stap")
 
-	if tween:
-		tween.kill()
-	tween = create_tween()
-	tween.parallel().tween_method(meshInterpRot,mesh.rotation,rotational_velocity * delta,0.05).set_trans(Tween.TRANS_LINEAR)
-	tween.parallel().tween_method(meshInterpPos,mesh.position,global_position,0.05).set_trans(Tween.TRANS_LINEAR)
+		if tween:
+			tween.kill()
+		tween = create_tween()
+		tween.parallel().tween_method(meshInterpRot,mesh.rotation,rotational_velocity * delta,0.05).set_trans(Tween.TRANS_LINEAR)
+		tween.parallel().tween_method(meshInterpPos,mesh.position,global_position,0.05).set_trans(Tween.TRANS_LINEAR)
 
 func meshInterpRot(rot:Vector3)->void:
 	if mesh:

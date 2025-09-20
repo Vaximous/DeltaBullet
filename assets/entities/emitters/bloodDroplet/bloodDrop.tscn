@@ -1,8 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://bm8ylk1xdojch"]
+[gd_scene load_steps=15 format=3 uid="uid://bm8ylk1xdojch"]
 
 [ext_resource type="Script" uid="uid://cmkwdvxjfsb4l" path="res://assets/entities/emitters/bloodDroplet/bloodDroplets.gd" id="1_250ge"]
-[ext_resource type="Texture2D" uid="uid://by33d8untal6r" path="res://assets/textures/blood/bloodparticles/blood_shader_jet_alpha.png" id="2_qjtha"]
-[ext_resource type="Texture2D" uid="uid://hp4k71fpb3mm" path="res://assets/textures/blood/bloodparticles/blood_shader_jet_normal.png" id="3_ikh2l"]
+[ext_resource type="Material" uid="uid://co86jd67xrcl" path="res://assets/materials/blood/spurts/bloodSpurt3.tres" id="2_mq2q0"]
+[ext_resource type="Texture2D" uid="uid://cj0kfcr0vsi8l" path="res://assets/textures/blood/blood_spurt/bspurt1.png" id="2_qjtha"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_mq2q0"]
 radius = 0.08
@@ -10,17 +10,59 @@ radius = 0.08
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_250ge"]
 transparency = 1
 cull_mode = 2
-albedo_color = Color(0.470588, 0, 0, 1)
 albedo_texture = ExtResource("2_qjtha")
-normal_enabled = true
-normal_texture = ExtResource("3_ikh2l")
+disable_receive_shadows = true
+billboard_keep_scale = true
+stencil_flags = 2
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_0x8w3"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_mq2q0"]
 material = SubResource("StandardMaterial3D_250ge")
-radius = 0.03
-height = 0.155
+size = Vector2(0.015, 0.02)
+orientation = 0
+
+[sub_resource type="Curve" id="Curve_qjtha"]
+_data = [Vector2(0, 1), 0.0, -0.470953, 0, 0, Vector2(1, 0), -1.15979, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_fkxrd"]
+curve = SubResource("Curve_qjtha")
+
+[sub_resource type="Curve" id="Curve_ikh2l"]
+_limits = [-360.0, 360.0, 0.0, 1.0]
+_data = [Vector2(0, 360), 0.0, -70.9104, 0, 0, Vector2(1, -360), -1614.3, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_ksiwr"]
+curve = SubResource("Curve_ikh2l")
+
+[sub_resource type="Curve" id="Curve_0x8w3"]
+_data = [Vector2(0, 0), 0.0, 1.8595, 0, 0, Vector2(0.980582, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_addkl"]
+curve = SubResource("Curve_0x8w3")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_7b4vh"]
+lifetime_randomness = 0.45
+particle_flag_align_y = true
+particle_flag_rotate_y = true
+direction = Vector3(0, 0, -1)
+initial_velocity_min = 1.1
+initial_velocity_max = 1.2
+angular_velocity_max = 1.1
+angular_velocity_curve = SubResource("CurveTexture_ksiwr")
+gravity = Vector3(0, -5.78, 0)
+scale_min = 0.15
+scale_max = 1.4
+scale_curve = SubResource("CurveTexture_addkl")
+alpha_curve = SubResource("CurveTexture_fkxrd")
+anim_speed_min = 2.2
+anim_speed_max = 2.5
+
+[sub_resource type="QuadMesh" id="QuadMesh_iugd7"]
 
 [node name="bloodDrop" type="CharacterBody3D"]
+physics_interpolation_mode = 1
 collision_layer = 0
 script = ExtResource("1_250ge")
 metadata/_custom_type_script = "uid://cmkwdvxjfsb4l"
@@ -30,6 +72,22 @@ shape = SubResource("SphereShape3D_mq2q0")
 
 [node name="bloodMesh" type="MeshInstance3D" parent="."]
 unique_name_in_owner = true
+physics_interpolation_mode = 1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0130171, 0, 0)
-visible = false
-mesh = SubResource("CapsuleMesh_0x8w3")
+top_level = true
+layers = 8
+mesh = SubResource("PlaneMesh_mq2q0")
+
+[node name="bloodSpurt" type="GPUParticles3D" parent="."]
+unique_name_in_owner = true
+process_thread_group = 2
+process_thread_group_order = 0
+process_thread_messages = 2
+material_override = ExtResource("2_mq2q0")
+emitting = false
+one_shot = true
+explosiveness = 1.0
+randomness = 0.54
+fixed_fps = 0
+process_material = SubResource("ParticleProcessMaterial_7b4vh")
+draw_pass_1 = SubResource("QuadMesh_iugd7")

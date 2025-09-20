@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="NoteResource" load_steps=2 format=3 uid="uid://qed8pgrqbfb6"]
+
+[ext_resource type="Script" uid="uid://bh5imlad1rnkk" path="res://assets/scenes/ui/phoneUI/apps/notes/note.gd" id="1_qlrep"]
+
+[resource]
+script = ExtResource("1_qlrep")
+noteName = &"Test Note!"
+note = "[center]Hello.
+
+
+[color=red]This is the first test note! This serves as a collectible within Delta Bullet. Find more of this crap will ya?[/color]
+
+[color=green]PS. FUCKING HATE FAT BITCHES!!!![/color]
+
+Thank you for your attention to this matter!
+
+"
+metadata/_custom_type_script = "uid://bh5imlad1rnkk"

@@ -84,6 +84,10 @@ func showSaveNamePanel()->void:
 	tween.tween_property(saveNamePanel,"modulate",Color(1,1,1,1),0.3)
 
 func saveGame()->void:
+	hide()
+	gameManager.activeCamera.hud.hide()
+	gameManager.getPauseMenu().hide()
+	await get_tree().create_timer(0.1).timeout
 	if saveName.text != "" or saveName.text != " ":
 		gameManager.saveGame(saveName.text)
 		clearSaves()
@@ -91,10 +95,21 @@ func saveGame()->void:
 		scanSaves(2)
 		gameManager.notifyCheck("'%s' Sucessfully Saved."%saveName.text, 2, 1.5)
 		hideSaveNamePanel()
+	await get_tree().create_timer(0.1).timeout
+	gameManager.activeCamera.hud.show()
+	gameManager.getPauseMenu().show()
+	show()
 
 func _on_yes_button_pressed()->void:
+	hide()
+	gameManager.activeCamera.hud.hide()
+	gameManager.getPauseMenu().hide()
+	await get_tree().create_timer(0.1).timeout
 	gameManager.saveGame(gameManager.saveOverwrite)
 	gameManager.notifyCheck("'%s' Sucessfully Saved."%gameManager.saveOverwrite, 2, 1.5)
+	await get_tree().create_timer(0.1).timeout
+	gameManager.activeCamera.hud.show()
+	gameManager.getPauseMenu().show()
 	hideOverridePanel()
 
 func createSaveMaker()->void:

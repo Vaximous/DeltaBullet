@@ -30,7 +30,7 @@ DSP/dsp_buffer_count=4
 
 warnings/check_invalid_track_paths=false
 warnings/check_angle_interpolation_type_conflicting=false
-warnings/physics_interpolation/enable_warnings=true
+warnings/physics_interpolation/enable_warnings=false
 
 [application]
 
@@ -58,7 +58,6 @@ Notifications="*res://assets/scripts/singletons/Notifications.tscn"
 cutsceneManager="*res://assets/scripts/singletons/cutsceneManager.gd"
 questManager="*res://assets/scripts/singletons/questManager.gd"
 AiManager="*res://assets/scripts/singletons/AIManager.gd"
-FmodManager="*res://addons/fmod/FmodManager.gd"
 gameState="*res://assets/scripts/singletons/gameState.gd"
 Util="*res://assets/scripts/singletons/Util.gd"
 
@@ -387,7 +386,6 @@ common/physics_jitter_fix=0.0
 jolt_physics_3d/simulation/position_steps=4
 jolt_physics_3d/simulation/sleep_velocity_threshold=0.06
 3d/default_gravity=16.8
-3d/solver/solver_iterations=18
 common/physics_interpolation=true
 jolt_3d/sleep/time_threshold=0.2
 

@@ -212,6 +212,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0109177, -0.0438403, 0.017
 shape = SubResource("BoxShape3D_ojrgr")
 
 [node name="AnimationTree" parent="." index="3"]
+libraries = {
+&"weaponAnims": SubResource("AnimationLibrary_kytnd")
+}
 tree_root = ExtResource("8_k4rby")
 parameters/weaponStateSpeed/scale = 1.0
 

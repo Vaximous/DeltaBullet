@@ -1,38 +1,86 @@
-[gd_scene load_steps=45 format=3 uid="uid://guuwxb1s6c86"]
+[gd_scene load_steps=62 format=3 uid="uid://guuwxb1s6c86"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_kfgfw"]
 [ext_resource type="PackedScene" uid="uid://boicvk4qeqmbd" path="res://assets/entities/pawnSpawn/pawnSpawn.tscn" id="2_b53fi"]
 [ext_resource type="Script" uid="uid://b31u24at18p5t" path="res://assets/resources/customResources/worldData/worldData.gd" id="2_jhlmf"]
 [ext_resource type="PackedScene" uid="uid://bidurnqgd1c74" path="res://assets/entities/weapons/m4/m4.tscn" id="3_6fcsa"]
-[ext_resource type="Texture2D" uid="uid://b74rxor67cbxk" path="res://assets/textures/world/filth/trak_floor_yellow.jpg" id="3_f1p3k"]
 [ext_resource type="AudioStream" uid="uid://cwmpbbuastcma" path="res://assets/music/comeon.mp3" id="4_81g3a"]
+[ext_resource type="AudioStream" uid="uid://bqprf70yivsl7" path="res://assets/music/game/combat/testarena/buno.wav" id="4_qt2cm"]
 [ext_resource type="PackedScene" uid="uid://7kxdrnrmipu" path="res://assets/components/spawnTriggerArea/WaveSpawner.tscn" id="4_yom2c"]
+[ext_resource type="AudioStream" uid="uid://ecsubxunrlrr" path="res://assets/music/game/combat/testarena/merto.wav" id="5_akbhf"]
+[ext_resource type="Texture2D" uid="uid://dvfkpbe83xcf4" path="res://assets/textures/panoramas/panoramatest3.png" id="5_juc33"]
 [ext_resource type="Script" uid="uid://fcvxp6w8y4kk" path="res://assets/components/spawnTriggerArea/wavespawnerwave.gd" id="5_nk0i3"]
 [ext_resource type="Script" uid="uid://ksi7km8jp8p3" path="res://assets/entities/pawnSpawn/pawn_spawn_parameters.gd" id="6_hs6fo"]
+[ext_resource type="AudioStream" uid="uid://kowgl8e0a6nm" path="res://assets/music/game/combat/testarena/skiko.wav" id="6_wko7f"]
+[ext_resource type="AudioStream" uid="uid://2umgn4pkyxqr" path="res://assets/music/ambient/ponder.mp3" id="8_4qivi"]
+[ext_resource type="PackedScene" uid="uid://7ueyays7enj5" path="res://assets/entities/trigger/pawnTrigger.tscn" id="8_pu1nq"]
+[ext_resource type="AudioStream" uid="uid://4fr4v3mmy3oj" path="res://assets/music/menu/Frenzy.mp3" id="9_n36nk"]
 [ext_resource type="PackedScene" uid="uid://wtqya32cwdbk" path="res://assets/entities/weapons/Beretta/Beretta.tscn" id="10_8umm3"]
+[ext_resource type="Texture2D" uid="uid://bms1r5c312ys5" path="res://assets/textures/areas/carpet/carpet_ripped_albedo.png" id="10_dx34i"]
 [ext_resource type="NavigationMesh" uid="uid://lefkj0r5ljim" path="res://assets/resources/defaultnavMeshParams.tres" id="10_f1p3k"]
 [ext_resource type="PackedScene" uid="uid://cix8a7ilvw57" path="res://assets/entities/clothing/Hats/Balaclava/balaclava.tscn" id="10_ifu6l"]
 [ext_resource type="Resource" uid="uid://bxx56mrt1hj5e" path="res://assets/resources/customResources/weaponData/M4/M4Display.tres" id="10_katji"]
+[ext_resource type="Texture2D" uid="uid://cet1adpko0orx" path="res://assets/textures/areas/carpet/carpet_ripped_ao.png" id="11_6mjv1"]
 [ext_resource type="PackedScene" uid="uid://dsxt078giobel" path="res://assets/entities/weapons/Uzi/Uzi.tscn" id="11_qxayr"]
 [ext_resource type="Texture2D" uid="uid://c7b38t83ckisx" path="res://assets/textures/crosshair/crosshair161.png" id="11_rhokj"]
 [ext_resource type="PackedScene" uid="uid://d10o2e44ltrnl" path="res://assets/entities/clothing/ArmoredShirt/armor_shirt.tscn" id="12_8gaxs"]
 [ext_resource type="Script" uid="uid://b6r8ewrq3qb3y" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="12_8umm3"]
+[ext_resource type="Texture2D" uid="uid://b0c4d5uum4kpc" path="res://assets/textures/areas/carpet/carpet_ripped_height.png" id="12_evkhd"]
+[ext_resource type="Texture2D" uid="uid://ca8kl1gmt7u8d" path="res://assets/textures/areas/carpet/carpet_metallic.png" id="13_1jria"]
 [ext_resource type="PackedScene" uid="uid://bb5qvdslt6004" path="res://assets/entities/clothing/Pants/armored_pants.tscn" id="13_kogde"]
+[ext_resource type="Texture2D" uid="uid://dm8bfaw5upmtl" path="res://assets/textures/areas/carpet/carpet_ripped_normal.png" id="14_4qivi"]
+[ext_resource type="Texture2D" uid="uid://b2plpi1yyq4ev" path="res://assets/textures/areas/carpet/carpet_roughness.png" id="15_n36nk"]
 [ext_resource type="PackedScene" uid="uid://bgk584lddf4aa" path="res://assets/entities/weapons/BattlecadeAssaultRifle/BattlecadeAssaultRifle.tscn" id="17_8lt0s"]
-[ext_resource type="Curve" uid="uid://cex2ggwxevnuj" path="res://assets/entities/projectiles/linear_falloff_curve.tres" id="17_81g3a"]
 [ext_resource type="PackedScene" uid="uid://dvmmlj4mvj88r" path="res://assets/entities/aiMarker/aiMarker.tscn" id="18_kogde"]
+[ext_resource type="Curve" uid="uid://cex2ggwxevnuj" path="res://assets/entities/projectiles/linear_falloff_curve.tres" id="19_juc33"]
+[ext_resource type="Material" uid="uid://8pgvingf5jbw" path="res://assets/materials/world/brick/brickwallMiddle.tres" id="19_tff1h"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_h62op"]
-panorama = ExtResource("3_f1p3k")
+panorama = ExtResource("5_juc33")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_tq1sb"]
+streams_count = 6
+stream_0/stream = ExtResource("4_qt2cm")
+stream_1/stream = ExtResource("5_akbhf")
+stream_2/stream = ExtResource("6_wko7f")
+stream_3/stream = ExtResource("4_81g3a")
+stream_4/stream = ExtResource("8_4qivi")
+stream_5/stream = ExtResource("9_n36nk")
 
 [sub_resource type="Resource" id="Resource_rhokj"]
 script = ExtResource("2_jhlmf")
 skyTexture = SubResource("PanoramaSkyMaterial_h62op")
 worldName = "Wave Spawner Test"
 worldDescription = "Testing the Wave spawner for spawning a bunch of dudes."
-worldLoadingTexture = ExtResource("3_f1p3k")
-soundScape = ExtResource("4_81g3a")
+worldLoadingTexture = ExtResource("5_juc33")
+soundScape = SubResource("AudioStreamRandomizer_tq1sb")
 metadata/_custom_type_script = ExtResource("2_jhlmf")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tff1h"]
+albedo_texture = ExtResource("10_dx34i")
+metallic = 1.0
+metallic_texture = ExtResource("13_1jria")
+roughness_texture = ExtResource("15_n36nk")
+normal_enabled = true
+normal_texture = ExtResource("14_4qivi")
+ao_enabled = true
+ao_texture = ExtResource("11_6mjv1")
+heightmap_enabled = true
+heightmap_texture = ExtResource("12_evkhd")
+uv1_triplanar = true
+
+[sub_resource type="GDScript" id="GDScript_qt2cm"]
+resource_name = "death"
+script/source = "extends Node3D
+
+
+func _on_pawn_trigger_trigger_activated(body: Variant) -> void:
+	if body.has_method(\"die\"):
+		body.die(null)
+"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_akbhf"]
+size = Vector3(125.94, 80.2482, 128.95)
 
 [sub_resource type="Resource" id="Resource_y5s1r"]
 script = ExtResource("6_hs6fo")
@@ -211,7 +259,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.0481, -0.291638, -13.9659
 active = false
 randomAnimationSpeed = false
 
+[node name="directionalLight3d" parent="Environment" index="2"]
+transform = Transform3D(0.034413844, -0.99937075, 0.008599974, 0.50097394, 0.024695957, 0.86511004, -0.86477786, -0.025463402, 0.5015086, 0, 0, 0)
+
 [node name="navigationRegion3d" type="NavigationRegion3D" parent="Geometry" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.08687115, 0)
 navigation_mesh = ExtResource("10_f1p3k")
 
 [node name="csgCombiner3d" type="CSGCombiner3D" parent="Geometry/navigationRegion3d" index="0"]
@@ -221,22 +273,27 @@ use_collision = true
 [node name="csgBox3d" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgCombiner3d" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.15692, -1, -0.0108032)
 size = Vector3(25.7789, 1, 31.8798)
+material = SubResource("StandardMaterial3D_tff1h")
 
 [node name="csgBox3d4" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgCombiner3d" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.647299, 0.46264648, -0.0108032)
 size = Vector3(0.7981415, 3.925293, 31.8798)
+material = ExtResource("19_tff1h")
 
 [node name="csgBox3d5" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgCombiner3d" index="2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.0122147, 0.46264648, -15.617472)
 size = Vector3(26.06831, 3.925293, 0.6664629)
+material = ExtResource("19_tff1h")
 
 [node name="csgBox3d6" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgCombiner3d" index="3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.604862, 0.46264648, 0.19046688)
 size = Vector3(0.8341551, 3.925293, 32.282337)
+material = ExtResource("19_tff1h")
 
 [node name="csgBox3d7" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgCombiner3d" index="4"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.938796, 0.46264648, 16.331135)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.938796, 0.46264648, 15.655085)
 size = Vector3(25.921473, 3.925293, 0.001)
+material = ExtResource("19_tff1h")
 
 [node name="csgBox3d2" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgCombiner3d" index="5"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, -0.151112, -3)
@@ -257,6 +314,18 @@ size = Vector3(3.4453125, 2, 1.2960205)
 [node name="csgBox3d10" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgCombiner3d" index="9"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.4776726, -0.2362324, 8.054682)
 size = Vector3(4.6191406, 1.2172852, 0.5944214)
+
+[node name="node3d" type="Node3D" parent="Geometry" index="1"]
+script = SubResource("GDScript_qt2cm")
+
+[node name="pawnTrigger" parent="Geometry/node3d" index="0" instance=ExtResource("8_pu1nq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.368491, 0)
+triggerOnce = false
+triggerGroups = Array[String](["Player", "Pawn"])
+
+[node name="collisionShape3d" type="CollisionShape3D" parent="Geometry/node3d/pawnTrigger" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.06566, -36.6576, -7.02885)
+shape = SubResource("BoxShape3D_akbhf")
 
 [node name="aiMarker" parent="Misc/WaypointNodes" index="0" instance=ExtResource("18_kogde")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.6203, -0.289057, -15.0053)
@@ -300,4 +369,5 @@ weaponResource = SubResource("Resource_qxayr")
 [node name="audioStreamPlayer" type="AudioStreamPlayer" parent="." index="8"]
 stream = SubResource("AudioStreamInteractive_8lt0s")
 
+[connection signal="triggerActivated" from="Geometry/node3d/pawnTrigger" to="Geometry/node3d" method="_on_pawn_trigger_trigger_activated"]
 [connection signal="ready" from="Misc/WaveSpawner" to="Misc/WaveSpawner" method="countdown_next_wave"]

@@ -24,6 +24,7 @@ albedo_color = Color(1, 0, 0, 0.309804)
 
 [node name="aiComponent" type="Node3D"]
 script = ExtResource("4_gaqok")
+aimTargetRecoil = Vector3(0, 0, 0)
 pawnType = 1
 
 [node name="navigationAgent3d" type="NavigationAgent3D" parent="."]

@@ -23,7 +23,7 @@ var audio_UiVolume : float = 0.6
 var audio_custom_music_enabled : bool = false
 
 #graphics settings
-@export_enum("Hard"," Soft Very Low", "Soft Low", "Soft Medium", "Soft High", "Soft Very High") var graphics_shadow_filter_quality : int = 1
+@export_enum("Hard"," Soft Very Low", "Soft Low", "Soft Medium", "Soft High") var graphics_shadow_filter_quality : int = 1
 @export_enum("Very Low", "Low", "Medium", "High", "Very High") var graphics_shadow_quality : int = 3
 var graphics_motion_blur : bool = false
 var graphics_resolution : int = 0
@@ -169,11 +169,6 @@ func applyShadowFilterQuality() -> void:
 			RenderingServer.positional_soft_shadow_filter_set_quality(5)
 			ProjectSettings.set_setting("rendering/lights_and_shadows/directional_shadow/soft_shadow_filter_quality",5)
 			ProjectSettings.set_setting("rendering/lights_and_shadows/positional_shadow/soft_shadow_filter_quality",5)
-		6:
-			RenderingServer.directional_soft_shadow_filter_set_quality(6)
-			RenderingServer.positional_soft_shadow_filter_set_quality(6)
-			ProjectSettings.set_setting("rendering/lights_and_shadows/directional_shadow/soft_shadow_filter_quality",6)
-			ProjectSettings.set_setting("rendering/lights_and_shadows/positional_shadow/soft_shadow_filter_quality",6)
 
 func applyShadowQuality() -> void:
 	match graphics_shadow_quality:

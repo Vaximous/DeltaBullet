@@ -5,8 +5,8 @@ class_name WaveSpawnerWaveParams
 @export var wave_time_limit : float = 120.0
 @export var spawn_parameters : Array[PawnSpawnParameters]
 @export var time_between_spawns : float = 1.0
-var next_spawn_index : int = 0
-var wave_spawns : Array[BasePawn]
+@export var next_spawn_index : int = 0
+@export var wave_spawns : Array = []
 
 
 #All waves done.

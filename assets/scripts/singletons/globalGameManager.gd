@@ -1,8 +1,10 @@
 extends Node
 ## Global Game Manager Start
+var phoneUI : PackedScene = preload("res://assets/scenes/ui/phoneUI/phoneUI.tscn")
 var bloodSpurts : Array[StandardMaterial3D] = [preload("res://assets/materials/blood/spurts/bloodSpurt.tres"),preload("res://assets/materials/blood/spurts/bloodSpurt2.tres"),preload("res://assets/materials/blood/spurts/bloodSpurt3.tres"),preload("res://assets/materials/blood/spurts/bloodSpurt4.tres"),preload("res://assets/materials/blood/spurts/bloodSpurt5.tres"),preload("res://assets/materials/blood/spurts/bloodSpurt6.tres"),preload("res://assets/materials/blood/spurts/bloodSpurt7.tres")]
 var pawnScene = preload("res://assets/entities/pawnEntity/pawnEntity.tscn").duplicate()
 var menuScenes = [preload("res://assets/scenes/menu/menuScenes/menuscene1.tscn"),preload("res://assets/scenes/menu/menuScenes/menuScene2.tscn"),preload("res://assets/scenes/menu/menuScenes/menuScene3.tscn")]
+var defaultPawnTreeRoot = load("res://assets/entities/pawnEntity/pawnEntityTree.tres")
 
 signal freeOrphans
 #Global Sound Player
@@ -113,6 +115,125 @@ func freeOrphanNodes():
 	#print("Kept : %s"%keep)
 	#orphanedData = keep
 	freeOrphans.emit()
+
+func queuePhoneCall(dialogue:ActorDialogue)->void:
+	if getCurrentPawn():
+		getCurrentPawn().queuedPhoneCall = dialogue
+		#getCurrentPawn().playPhoneCall()
+
+func queueAndPlayPhoneCall(dialogue:ActorDialogue)->void:
+	if getCurrentPawn():
+		getCurrentPawn().queuedPhoneCall = dialogue
+		getCurrentPawn().playPhoneCall()
+
+func stopPhoneCall()->void:
+	if world:
+		for i in get_tree().get_nodes_in_group(&"phonecall"):
+			i.queue_free()
+
+func playDialogue2D(dialogue:ActorDialogue)->AudioStreamPlayer:
+	if world:
+		var audioPlayer = AudioStreamPlayer.new()
+		audioPlayer.add_to_group(&"phonecall")
+		audioPlayer.bus = &"Sounds"
+		world.worldMisc.add_child(audioPlayer)
+		#print(dialogue.actorAudios.size())
+		if audioPlayer:
+			for i in dialogue.actorAudios.size():
+				var subtitle
+				#print(i)
+				if i == dialogue.actorAudios.size()-1:
+					audioPlayer.finished.connect(audioPlayer.queue_free)
+				if getCurrentPawn():
+					subtitle = getCurrentPawn().attachedCam.createSubtitle(dialogue.actorAudios[i].audioResource)
+				audioPlayer.stream = dialogue.actorAudios[i].audioResource.audioStream
+				audioPlayer.play()
+				await audioPlayer.finished
+				if subtitle:
+					subtitle.queue_free()
+				await get_tree().create_timer(dialogue.actorAudios[i].timeBetweenAudio,false)
+		return audioPlayer
+	else:
+		return null
+func getModifierFromName(modName:String):
+	for i in DirAccess.get_files_at("res://assets/entities/modifiers/"):
+		if i == modName+".tscn":
+			return "res://assets/entities/modifiers/%s"%i
+
+func give_stat_modifier(parent:Node, mod:String):
+	if parent.has_node(^"statModifierStack"):
+		var stack = parent.get_node(^"statModifierStack")
+		var modifier = load(getModifierFromName(mod))
+		if modifier:
+			if !stack.has_node(mod):
+				stack.add_child(modifier.instantiate())
+				if debugEnabled:
+					notify_warn("Added stat modifier '%s' to '%s'"%[mod,parent.name],2,2)
+			else:
+				if debugEnabled:
+					notify_warn("Stat modifier '%s' already exists on '%s'"%[mod,parent.name],2,2)
+
+
+func get_modified_stat(node : Node, stat : StringName) -> float:
+	var base = node.get(stat)
+	if base == null:
+		return 0.0
+	var stack = get_modifier_stack(node)
+	return stack.get_modified_stat(stat, base)
+
+
+func get_modifier_stack(node : Node) -> StatModifierStack:
+	if node.has_node(^"statModifierStack"):
+		return node.get_node(^"statModifierStack")
+	var new = StatModifierStack.new()
+	node.add_child(new)
+	return new
+
+func setBasePlayerBulletResistMod(value:float = 1):
+	if getCurrentPawn():
+		getCurrentPawn().bulletResistanceModifier = value
+
+func setBasePlayerBlastResistMod(value:float = 1):
+	if getCurrentPawn():
+		getCurrentPawn().blastResistanceModifier = value
+
+func setBasePlayerReloadSpeed(value:float = 1):
+	if getCurrentPawn():
+		getCurrentPawn().reloadSpeedModifier = value
+
+func setBasePlayerDamageMod(value:float = 1):
+	if getCurrentPawn():
+		getCurrentPawn().damageModifier = value
+
+func setBasePlayerSpreadMod(value:float = 1):
+	if getCurrentPawn():
+		getCurrentPawn().spreadModifier = value
+
+func setBasePlayerRecoilMod(value:float = 1):
+	if getCurrentPawn():
+		getCurrentPawn().recoilModifier = value
+
+func setBasePlayerFireRateMod(value:float = 1):
+	if getCurrentPawn():
+		getCurrentPawn().fireRateModifier = value
+
+func removePhoneMenu()->void:
+	for i in get_children():
+		if i.is_in_group(&"phone"):
+			i.queue_free()
+			#hideMouse()
+
+
+func initializePhoneMenu(pawn:BasePawn)->void:
+	gameManager.pauseMenu.canPause = false
+	var phoneInst = phoneUI.instantiate()
+	var phoneHolder = CanvasLayer.new()
+	add_child(phoneHolder)
+	phoneHolder.layer = 2
+	phoneHolder.add_to_group(&"phone")
+	phoneHolder.add_child(phoneInst)
+	phoneInst.init(pawn)
+	showMouse()
 
 
 func doKillEffect(pawn:BasePawn,deathDealer:BasePawn)->void:
@@ -229,7 +350,7 @@ func takeScreenshot(path:String = "user://screenshots",screenshotName:String = "
 	return savedfilepath
 
 func restartScene()->void:
-	var curr = get_tree().current_scene.scene_file_path
+	#var curr = get_tree().current_scene.scene_file_path
 	playerPawns.clear()
 	targetedEnemies.clear()
 	allPawns.clear()
@@ -330,18 +451,22 @@ func castRay(cam : Camera3D, range : float = 50000, mask := 0b10111, exceptions 
 	return state.intersect_ray(params)
 
 
-func createDroplet(position:Vector3, velocity : Vector3 = Vector3.ZERO, amount : int = 1):
+func createDroplet(position:Vector3, velocity : Vector3 = Vector3.ONE, amount : int = 1,normal:Vector3 = Vector3.UP, allowRandomFlip:bool = true):
 	if is_instance_valid(world):
 		for i in amount:
-			var flipVel = [true,false].pick_random()
+			#var flipVel = [true,false].pick_random()
 			var droplet : BloodDroplet = bloodDrop.instantiate()
+			droplet.norm = normal
 			world.worldParticles.add_child(droplet)
 			droplet.global_position = position
-			if !flipVel:
-				droplet.velocity += Vector3(velocity.x + randf_range(-1,2),velocity.y + randf_range(-1,2),velocity.z + randf_range(-1,2))
+			if allowRandomFlip:
+				var flipVel = [true,false].pick_random()
+				if !flipVel:
+					droplet.velocity += Vector3(velocity.x * randf_range(-1,2),velocity.y * randf_range(-1,2),velocity.z * randf_range(-1,2))
+				else:
+					droplet.velocity += -Vector3(velocity.x * randf_range(-1,2),velocity.y * randf_range(-1,2),velocity.z * randf_range(-1,2))
 			else:
-				droplet.velocity += -Vector3(velocity.x + randf_range(-1,2),velocity.y + randf_range(-1,2),velocity.z + randf_range(-1,2))
-
+				droplet.velocity += Vector3(velocity.x * randf_range(1,3),velocity.y * randf_range(1,3),velocity.z * randf_range(1,3))
 
 
 func getEventSignal(event : StringName) -> Signal:
@@ -446,9 +571,15 @@ func hideHUD()->void:
 		if player.attachedCam:
 			player.attachedCam.hud.fadeHudOut()
 
+func getPauseMenu()->Control:
+	var menu
+	if world:
+		menu = world.pauseControl
+	return menu
 
 func loadWorld(worldscene:String, fadein:bool = false)->void:
 	saveTemporaryPawnInfo()
+	stopPhoneCall()
 	targetedEnemies.clear()
 	playerPawns.clear()
 	get_tree().change_scene_to_file("res://assets/scenes/menu/loadingscreen/emptyLoaderScene.tscn")
@@ -470,6 +601,8 @@ func saveGame(saveName:String = "Save1"):
 		saveDir.make_dir(saveName)
 		var saveFile = FileAccess.open("user://saves/%s/%s.pwnSave"%[saveName,saveName],FileAccess.WRITE)
 		currentSave = "user://saves/%s/%s.pwnSave"%[saveName,saveName]
+		activeCamera.hud.hide()
+		getPauseMenu().hide()
 		var screenshot = get_viewport().get_texture().get_image()
 		screenshot.save_png("user://saves/%s/%s.png"%[saveName,saveName])
 		print("user://saves/%s/%s.png"%[saveName,saveName])
@@ -485,6 +618,8 @@ func saveGame(saveName:String = "Save1"):
 			"saveScreenie" : "user://saves/%s/%s.png"%[saveName,saveName],
 			"playerPosition": playerPawns[0].global_position
 		}
+		activeCamera.hud.show()
+		getPauseMenu().show()
 		var stringy = JSON.stringify(saveDict)
 		saveFile.store_line(stringy)
 		Console.add_rich_console_message("[color=green] Saved game '%s' sucessfully!"%saveName)
@@ -820,6 +955,20 @@ func showAllPlayers()->void:
 			players.currentItem.show()
 
 
+func pick_weighted(weightedArray:Array) -> int:
+	#Sum all of the odds
+	var sum := get_weight_sum(weightedArray)
+	var random_selector = randf() * sum
+	#Subtract each element until random_selector is 0
+	var chosen_index : int = 0
+	for idx in weightedArray.size():
+		random_selector -= weightedArray[idx]
+		if random_selector <= 0.0:
+			chosen_index = idx
+			break
+	return chosen_index
+
+
 func createSoundAtPosition(stream:AudioStream,position:Vector3):
 	var aud = AudioStreamPlayer3D.new()
 	if world:
@@ -844,6 +993,7 @@ func decalAmountCheck()->void:
 			decals.remove_at(0)
 	return
 
+
 func createBloodPuff(bPosition:Vector3 = Vector3.ZERO,minAmount:int=2,maxAmount:int=10)->void:
 		var bloodSpurt : GPUParticles3D = load("res://assets/particles/bloodSpurt/bloodSpurt.tscn").instantiate()
 		gameManager.world.worldMisc.add_child(bloodSpurt)
@@ -851,6 +1001,7 @@ func createBloodPuff(bPosition:Vector3 = Vector3.ZERO,minAmount:int=2,maxAmount:
 		bloodSpurt.minParticles = minAmount
 		bloodSpurt.maxParticles = maxAmount
 		bloodSpurt.emitting = true
+
 
 func createPulverizeSound(pPosition:Vector3 = Vector3.ZERO)->void:
 	var pulverizeSound : AudioStreamPlayer3D = AudioStreamPlayer3D.new()
@@ -886,6 +1037,19 @@ func godPawn(pawn:BasePawn)->void:
 	else:
 		pawn.healthComponent.set_meta(&"god", true)
 		notify_warn("God Mode is %s for %s"%[pawn.healthComponent.get_meta(&"god"),pawn.name],2,1)
+
+
+func infiniteAmmo()->void:
+	for i in playerPawns:
+		if i.has_meta(&"infiniteAmmo"):
+			if i.get_meta(&"infiniteAmmo"):
+				i.set_meta(&"infiniteAmmo", false)
+			else:
+				i.set_meta(&"infiniteAmmo", true)
+			notify_warn("Infinite Ammo is %s"%i.get_meta(&"infiniteAmmo"),2,1)
+		else:
+			i.set_meta(&"infiniteAmmo", true)
+			notify_warn("Infinite Ammo is %s"%i.get_meta(&"infiniteAmmo"),2,1)
 
 
 func godmode()->void:

@@ -149,8 +149,9 @@ func playCloseAnimation()->void:
 
 ##Checks if this is the current location.
 func isLocationCurrent() -> bool:
-	if gameManager.world.scene_file_path == travelScene.resource_path:
-		return true
+	if gameManager.world:
+		if gameManager.world.scene_file_path == travelScene.resource_path:
+			return true
 	return false
 
 

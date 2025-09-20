@@ -13,6 +13,7 @@ signal clothingChanged
 signal itemChanged
 signal forcingAnimation
 signal killedPawn
+signal callFinished
 signal onPawnKilled
 signal hitboxAssigned(hitbox:Hitbox)
 signal headshottedPawn
@@ -64,7 +65,7 @@ signal headshottedPawn
 @onready var animationTree : AnimationTree = $AnimationTree:
 	set(value):
 		animationTree = value
-		setupAnimationTree()
+		#setupAnimationTree()
 @onready var collisionShape : CollisionShape3D = $Collider
 @onready var clothingHolder : Node3D = $Mesh/MaleSkeleton/Skeleton3D/Clothing
 @onready var pawnMesh : Node3D = $Mesh
@@ -121,6 +122,7 @@ var raycaster : RayCast3D
 @export var movementController : MovementController
 @export var healthComponent : HealthComponent
 @export_subgroup("Sub-Components")
+@export var statModifierStack : StatModifierStack
 @export var inputComponent : Node:
 	set(value):
 		inputComponent = value
@@ -163,6 +165,19 @@ var isStaggered : bool = false:
 			direction = Vector3.ZERO
 		else:
 			movementController.enabled = true
+var queuedPhoneCall : ActorDialogue = null:
+	set(value):
+		queuedPhoneCall = value
+		if is_instance_valid(queuedPhoneCall):
+			if is_instance_valid(attachedCam):
+				attachedCam.fadePhoneCallNotificationIn()
+				gameManager.hideHUD()
+				playRingtone()
+		else:
+			if is_instance_valid(attachedCam):
+				attachedCam.fadePhoneCallNotificationOut()
+				gameManager.hideHUD()
+
 var isUsingPhone : bool = false:
 	set(value):
 		isUsingPhone = value
@@ -336,6 +351,14 @@ var isArmingThrowable : bool = false:
 			disableThrowableAnim()
 var canThrowThrowable : bool = true
 var isThrowing : bool = false
+@export_subgroup("Modifiers")
+@export var reloadSpeedModifier : float = 1.0
+@export var damageModifier : float = 1.0
+@export var fireRateModifier : float = 1.0
+@export var recoilModifier : float = 1.0
+@export var blastResistanceModifier : float = 1.0
+@export var bulletResistanceModifier : float = 1.0
+@export var spreadModifier : float = 1.0
 @export_subgroup("Inventory")
 var pawnCash : int = 0
 var itemNames : Array
@@ -679,12 +702,12 @@ func endAttachedCam()->void:
 		attachedCam.resetCamCast()
 		#Dialogic.end_timeline()
 
-
 func isPlayerPawn()->bool:
 	if has_meta(&"isPlayer"):
 		return get_meta(&"isPlayer")
 	else:
 		return false
+
 func moveHitboxDecals(parent:Node3D = gameManager.world.worldParticles) ->void:
 	if is_instance_valid(gameManager.world):
 		for boxes in getAllHitboxes():
@@ -699,6 +722,7 @@ func playKillSound()->void:
 func die(killer) -> void:
 	if is_instance_valid(self) and !isPawnDead:
 		%flipphone.queue_free()
+		stopRingtone()
 		gameManager.allPawns.erase(self)
 		gameManager.doKillEffect(self,killer)
 		dropWeapon()
@@ -706,6 +730,8 @@ func die(killer) -> void:
 		playKillSound()
 		isPawnDead = true
 		var ragdoll = createRagdoll(lastHitPart, killer)
+		if isPlayerPawn():
+			gameManager.removePhoneMenu()
 		#moveHitboxDecals()
 		moveDecalsToRagdoll(ragdoll)
 		endPawn()
@@ -895,22 +921,20 @@ func setupWeaponAnimations() -> void:
 
 
 			#Add the weapons stateMachine to the pawn
-			(animationTree.tree_root as AnimationNodeBlendTree).disconnect_node("weaponBlend", 1)
-			animationTree.tree_root.remove_node(&"weaponState")
-			animationTree.tree_root.add_node(&"weaponState", blendSet.duplicate())
-			(animationTree.tree_root as AnimationNodeBlendTree).connect_node(&"weaponBlend", 1, &"weaponState")
+			(animationTree.tree_root as AnimationNodeBlendTree).disconnect_node("weaponBlend_Scale", 0)
+			animationTree.tree_root.remove_node("weaponState")
+			animationTree.tree_root.add_node("weaponState", blendSet.duplicate())
+			(animationTree.tree_root as AnimationNodeBlendTree).connect_node("weaponBlend_Scale", 0, "weaponState")
 			currentItem.weaponRemoteState = animationTree.get("parameters/weaponState/weaponState/playback")
 			animationTree.set("parameters/weaponState/weaponState/playback",currentItem.weaponRemoteState)
 			##Left Hand
-			(animationTree.tree_root as AnimationNodeBlendTree).disconnect_node("weaponBlend_Left_blend", 1)
+			(animationTree.tree_root as AnimationNodeBlendTree).disconnect_node("weaponBlendLeft_Scale", 0)
 			animationTree.tree_root.remove_node("weaponBlend_left")
 			animationTree.tree_root.add_node("weaponBlend_left", blendSet.duplicate())
-			(animationTree.tree_root as AnimationNodeBlendTree).connect_node("weaponBlend_Left_blend", 1, "weaponBlend_left")
+			(animationTree.tree_root as AnimationNodeBlendTree).connect_node("weaponBlendLeft_Scale", 0, "weaponBlend_left")
 			currentItem.weaponRemoteStateLeft = animationTree.get("parameters/weaponBlend_left/weaponState/playback")
 			lastLeftBlend = currentItem.weaponRemoteStateLeft
-
 			currentItem.weaponAnimSet = true
-			return
 	else:
 		print_rich("[color=red]You don't have a weapon![/color]")
 		return
@@ -1176,8 +1200,13 @@ func setupPawnColor() -> void:
 
 func setupAnimationTree() -> void:
 	if animationTree:
-		var dupRoot = animationTree.tree_root.duplicate()
+		animationTree.active = false
+		animationPlayer.active = false
+		var dupRoot = gameManager.defaultPawnTreeRoot.duplicate()
+		animationTree.tree_root = null
 		animationTree.tree_root = dupRoot
+		animationTree.active = true
+		animationPlayer.active = true
 
 func setRunBlendFilters(value:bool) -> void:
 	var filterBlend = animationTree.tree_root.get_node("weaponBlend")
@@ -1260,7 +1289,6 @@ func getPawnSkeleton()->Skeleton3D:
 	#When the female skeleton gets added we will use this to get the skeleton of the character, but for now just return the male one
 	return $Mesh/MaleSkeleton/Skeleton3D
 
-
 func flinch(flinchDirection : Vector3) -> void:
 	##New Flinch
 	#print(flinchDirection)
@@ -1313,6 +1341,12 @@ func disarmThrowable()->void:
 		isThrowing = false
 		isArmingThrowable = false
 
+func resetThrowables()->void:
+	disableThrowableAnim()
+	await get_tree().create_timer(0.5).timeout
+	canThrowThrowable = true
+	isThrowing = false
+	isArmingThrowable = false
 
 func throwThrowable()->void:
 	if is_instance_valid(heldThrowable):
@@ -1326,6 +1360,7 @@ func throwThrowable()->void:
 		heldThrowable.freeze = false
 		heldThrowable.thrown.emit()
 		heldThrowable.isThrown = true
+		heldThrowable.dealer = self
 		if is_instance_valid(attachedCam):
 			attachedCam.fireRecoil(0.0,0.0,0.8,true)
 			heldThrowable.global_position = neckBone.global_position
@@ -1726,14 +1761,70 @@ func playGrabAnimation()->void:
 		animationTree.set("parameters/useType/transition_request", "grabL")
 		animationTree.set("parameters/useShot/request",AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 
+func stopRingtone()->void:
+	%ringtone.stop()
+
+func playRingtone()->void:
+	if !%ringtone.playing:
+		%ringtone.play()
+
+	%ringtone.finished.connect(%ringtone.play)
+
+func playPhoneCall()->void:
+	if !isUsingPhone and queuedPhoneCall and isPlayerPawn() and !isPawnDead:
+		gameManager.hideHUD()
+		attachedCam.fadePhoneCallNotificationOut()
+		isUsingPhone = true
+		currentItemIndex = 0
+		currentItem = null
+		playPhoneAnswerAnimation()
+		isUsingPhone = true
+		await get_tree().create_timer(2.1,false).timeout
+		var pcall = await gameManager.playDialogue2D(queuedPhoneCall)
+		await pcall.tree_exited
+		isUsingPhone = false
+		gameManager.showHUD()
+		queuedPhoneCall = null
+		if attachedCam:
+			attachedCam.hud.fadeHudIn()
+		playPhoneHangupAnimation()
+
+
+func playPhoneAnswerAnimation()->void:
+	if !isPawnDead and is_instance_valid(self):
+		if phoneTween:
+			phoneTween.kill()
+		phoneTween = create_tween()
+		%flipphone.visible = true
+		phoneTween.tween_method(setPhoneBlend,animationTree.get("parameters/phoneOpened/blend_amount"),1,0.05).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+		animationTree.set("parameters/phoneAnimation/transition_request","phoneAnswer")
+		animationTree.set("parameters/phoneSeek/seek_request",0.1)
+
 func playPhoneOpenAnimation()->void:
 	if !isPawnDead and is_instance_valid(self):
 		if phoneTween:
 			phoneTween.kill()
 		phoneTween = create_tween()
-		#animationTree.set("parameters/phoneSeek/seek_request",0)
 		%flipphone.visible = true
-		phoneTween.tween_method(setPhoneBlend,animationTree.get("parameters/phoneOpened/blend_amount"),1,0.15).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+		phoneTween.tween_method(setPhoneBlend,animationTree.get("parameters/phoneOpened/blend_amount"),1,0.05).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+		animationTree.set("parameters/phoneAnimation/transition_request","phoneOpen")
+		animationTree.set("parameters/phoneSeek/seek_request",0.1)
+
+func playPhoneHangupAnimation()->void:
+	if !isPawnDead and is_instance_valid(self):
+		%flipphone.visible = true
+		if phoneTween:
+			phoneTween.kill()
+		phoneTween = create_tween()
+		animationTree.set("parameters/phoneAnimation/transition_request","phoneHangup")
+		animationTree.set("parameters/phoneSeek/seek_request",0.1)
+		await get_tree().create_timer(1.3,false).timeout
+		%flipphone.visible = false
+		callFinished.emit()
+		if phoneTween:
+			phoneTween.kill()
+		phoneTween = create_tween()
+		phoneTween.tween_method(setPhoneBlend,animationTree.get("parameters/phoneOpened/blend_amount"),0,0.25).set_ease(defaultEaseType).set_trans(defaultTransitionType)
 
 func playPhoneCloseAnimation()->void:
 	if !isPawnDead and is_instance_valid(self):
@@ -1752,12 +1843,20 @@ func togglePhone()->void:
 
 		openPhone()
 
+func showPhone()->void:
+	gameManager.initializePhoneMenu(self)
+
+func deletePhone()->void:
+	gameManager.removePhoneMenu()
+
 func openPhone()->void:
 	if isPlayerPawn() and !isPawnDead:
 		currentItemIndex = 0
 		currentItem = null
 		playPhoneOpenAnimation()
 		isUsingPhone = true
+		#direction = Vector3.ZERO
+		#velocity = Vector3.ZERO
 
 func closePhone()->void:
 	if isPlayerPawn() and !isPawnDead:
@@ -1863,6 +1962,16 @@ func disableStaggerBlend()->void:
 	staggerTween = create_tween()
 	staggerTween.tween_method(setStaggerBlend,animationTree.get("parameters/staggerBlend/blend_amount"),0,0.25).set_ease(defaultEaseType).set_trans(defaultTransitionType)
 
+func playPhoneCloseSound()->void:
+	if !%phoneClose.playing:
+		%phoneClose.play()
+
+func playPhoneOpenSound()->void:
+	if !%phoneOpen.playing:
+		%phoneOpen.play()
+
+func playPhoneBeepSound()->void:
+	%phoneBeep.play()
 
 func staggerEnd()->void:
 	isStaggered = false

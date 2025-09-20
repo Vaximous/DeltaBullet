@@ -1,21 +1,34 @@
 extends CharacterBody3D
 class_name BloodDroplet
+@onready var mesh:MeshInstance3D = %bloodMesh
 const framesRecalculation : int = 5
 var framesSinceRecalc : int = 0
 var meshDraw = ImmediateMesh.new()
+var tween : Tween
+var norm : Vector3 = Vector3.UP
 
 func _ready() -> void:
-	get_tree().create_timer(2.5).timeout.connect(queue_free)
+	if mesh:
+		var dup = mesh.mesh.duplicate()
+		mesh.mesh = mesh.mesh.duplicate()
+
+func _process(delta: float) -> void:
+	pass
 
 
 func _physics_process(delta: float) -> void:
 	var col
-	if framesSinceRecalc >= framesRecalculation:
-		col = move_and_collide(velocity * delta)
+	if Engine.get_physics_frames() % 2 == 0:
+		col = move_and_collide((velocity * randf_range(0.25,0.35)) * delta)
 		velocity += get_gravity() * delta * 16
+		if mesh:
+			mesh.position = global_position
+			mesh.mesh.size.x = velocity.length() * 0.004
+			mesh.look_at(velocity,norm,true)
+		#var tgt = mesh.transform.looking_at(mesh.transform.origin - velocity, Vector3.MODEL_TOP)
+		#tween.parallel().tween_method(meshInterpRot,mesh.rotation,velocity * Vector3.DOWN,0.05).set_trans(Tween.TRANS_LINEAR)
 		#updateLine(delta)
-		%bloodMesh.rotate_z(velocity.y)
-		%bloodMesh.global_position = self.global_position
+		#%bloodMesh.look_at(velocity * Vector3.FORWARD)
 		if col is KinematicCollision3D:
 			#print(col.get_collider())
 			gameManager.createSplat(col.get_position(),col.get_normal())
@@ -29,7 +42,22 @@ func _physics_process(delta: float) -> void:
 			audio.max_distance = 0.5
 			audio.bus = &"Sounds"
 			audio.play()
+			%bloodSpurt.finished.connect(%bloodSpurt.queue_free)
+			%bloodSpurt.restart()
+			%bloodSpurt.reparent(gameManager.world.worldParticles)
 			queue_free()
-		framesSinceRecalc = 0
-	else:
-		framesSinceRecalc += 1
+
+
+		if tween:
+			tween.kill()
+		tween = create_tween()
+		tween.parallel().tween_method(meshInterpPos,mesh.position,global_position,0.05).set_trans(Tween.TRANS_LINEAR)
+
+
+func meshInterpRot(rot:Vector3)->void:
+	if mesh:
+		mesh.rotation = rot
+
+func meshInterpPos(pos:Vector3)->void:
+	if mesh:
+		mesh.position = pos

@@ -97,7 +97,7 @@ var controllerVector = Vector2.ZERO:
 			camPivot.rotation_degrees.y += motionX
 			vertical.rotation_degrees.x += motionY
 			#Lock Cam
-			vertical.rotation.x = clamp(vertical.rotation.x, deg_to_rad(-88), deg_to_rad(88))
+			vertical.rotation.x = clamp(vertical.rotation.x, deg_to_rad(-85), deg_to_rad(85))
 var defaultZoomAmount : float = 25.0
 var defaultZoomSpeed : float = 16.0
 @export var zoomSpeed : float = 11.0:
@@ -326,6 +326,29 @@ func _physics_process(delta)->void:
 
 		move_and_slide()
 
+func createSubtitle(actorAudio:ActorAudio,timeout:float = 1)->MarginContainer:
+	var label = load("res://assets/scenes/ui/captionSubtitle.tscn")
+	var subtitle = label.instantiate()
+	%subtitleContainer.add_child(subtitle)
+	if actorAudio.showActorNames:
+		subtitle.setSpeaker(actorAudio.actorName)
+		subtitle.setSubtitle(actorAudio.subtitleText)
+		subtitle.setSpeakerColor(actorAudio.actorColor)
+	else:
+		subtitle.setSpeaker("")
+		subtitle.setSubtitle(actorAudio.subtitleText)
+	return subtitle
+
+func fadePhoneCallNotificationIn()->void:
+	%phoneCallNotification.modulate = Color.TRANSPARENT
+	if !%phoneCallNotification.visible:
+		%phoneCallNotification.show()
+	var tween = create_tween()
+	tween.tween_property(%phoneCallNotification,"modulate",Color.WHITE,0.35)
+
+func fadePhoneCallNotificationOut()->void:
+	var tween = create_tween()
+	tween.tween_property(%phoneCallNotification,"modulate",Color.TRANSPARENT,0.25)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MouseMode.MOUSE_MODE_CAPTURED:
@@ -340,7 +363,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		camPivot.rotate_y(motionX)
 		vertical.rotate_x(motionY)
 		#Lock Cam
-		vertical.rotation.x = clamp(vertical.rotation.x, deg_to_rad(-88), deg_to_rad(88))
+		vertical.rotation.x = clamp(vertical.rotation.x, deg_to_rad(-85), deg_to_rad(85))
 
 func posessObject(object, posessPart:Node3D = object)->void:
 	if object.is_in_group("Posessable") and !object == null:

@@ -1,7 +1,7 @@
 extends RayCast3D
 class_name Projectile
 
-
+var max_damage : float
 var velocity : Vector3
 var distance_traveled : float
 @export var max_distance : float = 100.0

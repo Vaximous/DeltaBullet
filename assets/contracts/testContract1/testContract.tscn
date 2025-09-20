@@ -15,7 +15,11 @@ func onQuestEntered()->void:
 			boss.active = true
 			var enemy : BasePawn = boss.spawnPawn()
 			boss.active = false
+			enemy.onPawnKilled.connect(addGrit)
 			enemy.onPawnKilled.connect(contractOwner.progressQuest)
+
+func addGrit()->void:
+	gameManager.getCurrentPawn().pawnCash += 40
 "
 
 [node name="testContract" type="Node"]

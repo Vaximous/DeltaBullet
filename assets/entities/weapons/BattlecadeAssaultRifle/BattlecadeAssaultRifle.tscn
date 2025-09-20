@@ -8,7 +8,7 @@
 [ext_resource type="Animation" uid="uid://bvvo2vyqekr4o" path="res://assets/animations/pawn/BattlecadeRifleReload.res" id="5_kjs77"]
 [ext_resource type="Animation" uid="uid://cvd8u6kwdf0kj" path="res://assets/animations/pawn/BattlecadeRifleFire.res" id="6_qj88c"]
 [ext_resource type="Animation" uid="uid://4hyae6bomtel" path="res://assets/animations/pawn/BattlecadeRifleIdle.res" id="7_kract"]
-[ext_resource type="AudioStream" uid="uid://bukhlxn8gad1w" path="res://assets/sounds/weapons/bcassaultRifle/bcAssaultRiflefire_1.wav" id="8_3iuom"]
+[ext_resource type="AudioStream" uid="uid://d0xm44d2bnvqk" path="res://assets/sounds/weapons/bcassaultRifle/ar_gunshot.wav" id="9_7c0n4"]
 [ext_resource type="AudioStream" uid="uid://cqqb2fcen14sv" path="res://assets/sounds/weapons/aimSound/m4_lockin_1.wav" id="10_7c0n4"]
 [ext_resource type="AudioStream" uid="uid://c1ha0spgsursu" path="res://assets/sounds/weapons/aimSound/m4_lockin_2.wav" id="11_y7wh5"]
 [ext_resource type="AudioStream" uid="uid://ukbh6rvxex23" path="res://assets/sounds/weapons/aimSound/m4_lockin_3.wav" id="12_i806f"]
@@ -16,6 +16,24 @@
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_h474d"]
 points = PackedVector3Array(-0.0216012, -0.149575, 0.0683584, -0.0216012, -0.143036, 0.0442365, 0.0206785, -0.149575, 0.0683584, -0.0101112, -0.126844, 0.231422, -0.0259028, -0.0557997, 0.416598, -0.0379854, -0.0263617, 0.106471, -0.0379854, -0.0263617, -0.0463812, -0.0420002, 0.0145258, -0.214671, 0.0206785, -0.143036, 0.0442365, -0.0216012, -0.124976, -0.0220182, 0.0258977, -0.0557997, 0.416598, 0.0100966, -0.126844, 0.231422, 0.0419952, 0.0145258, -0.214671, 0.0556359, 0.059126, -0.0339183, 0.0556359, 0.059126, -0.022581, -0.0183607, -0.0633449, 0.419734, -0.0259028, -0.0450689, 0.427372, -0.0420002, 0.0145258, 0.147237, -0.0420002, 0.0453052, -0.214671, -0.0189055, 0.0336641, -0.386499, 0.0206785, -0.124976, -0.0220182, -0.00526477, 0.0185738, -0.385133, -7.29784e-06, 0.0155318, -0.385133, 0.0258977, -0.0450689, 0.427372, 0.0183556, -0.0633449, 0.419734, 0.0188909, 0.0336641, -0.386499, 0.0419952, 0.0453052, -0.214671, 0.0556551, 0.0614015, -0.0331142, 0.0556551, 0.0614015, -0.0233851, 0.0258977, 0.063174, 0.427372, -0.0183607, -0.0482067, 0.43493, -0.0259028, 0.063174, 0.427372, -0.0420002, 0.0453052, 0.147317, -0.0296786, 0.0722761, -0.179534, -0.02813, 0.0702161, -0.257608, -0.0189055, 0.0554851, -0.386499, -0.0353089, 0.0739288, 0.0871735, -7.29784e-06, 0.0227416, -0.386499, 0.00525974, 0.0185738, -0.385133, 0.0183556, -0.0482067, 0.43493, 0.0188909, 0.0554851, -0.386499, 0.028125, 0.0702161, -0.257608, 0.0205542, 0.0845639, -0.257608, 0.025783, 0.0933306, 0.101245, 0.025783, 0.0933306, 0.113064, -7.29784e-06, 0.0781206, 0.427372, -7.29784e-06, 0.0694257, 0.43493, 0.0183556, 0.0588146, 0.43493, -0.0183607, 0.0588146, 0.43493, -0.0353089, 0.0739288, 0.123115, -0.0257881, 0.0933306, 0.113064, -0.0205688, 0.0845639, -0.257608, -0.0257881, 0.0933306, 0.101245, -7.29784e-06, 0.0663837, -0.386499, -0.0076163, 0.0951271, -0.253106, 0.00760171, 0.0951271, -0.253106, 0.00760171, 0.0951271, -0.241286, -0.0076163, 0.0951271, -0.241286)
+
+[sub_resource type="Animation" id="Animation_de73y"]
+resource_name = "new_animation"
+
+[sub_resource type="Animation" id="Animation_bqsep"]
+
+[sub_resource type="Animation" id="Animation_0n52y"]
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1qweh"]
+_data = {
+&"aim": ExtResource("4_wypj0"),
+&"equip": SubResource("Animation_de73y"),
+&"fire": ExtResource("6_qj88c"),
+&"idle": ExtResource("7_kract"),
+&"reload": ExtResource("5_kjs77"),
+&"sprint": SubResource("Animation_bqsep"),
+&"unequip": SubResource("Animation_0n52y")
+}
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ybwpt"]
 animation = &"weaponAnims/aim"
@@ -120,24 +138,6 @@ nodes/weaponStateSpeed/node = SubResource("AnimationNodeTimeScale_uy32p")
 nodes/weaponStateSpeed/position = Vector2(80, 100)
 node_connections = [&"output", 0, &"weaponStateSpeed", &"weaponStateSpeed", 0, &"weaponState"]
 
-[sub_resource type="Animation" id="Animation_de73y"]
-resource_name = "new_animation"
-
-[sub_resource type="Animation" id="Animation_bqsep"]
-
-[sub_resource type="Animation" id="Animation_0n52y"]
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_1qweh"]
-_data = {
-&"aim": ExtResource("4_wypj0"),
-&"equip": SubResource("Animation_de73y"),
-&"fire": ExtResource("6_qj88c"),
-&"idle": ExtResource("7_kract"),
-&"reload": ExtResource("5_kjs77"),
-&"sprint": SubResource("Animation_bqsep"),
-&"unequip": SubResource("Animation_0n52y")
-}
-
 [sub_resource type="Animation" id="Animation_5kwo3"]
 length = 0.001
 tracks/0/type = "value"
@@ -194,7 +194,7 @@ _data = {
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_bfm8c"]
 random_pitch = 1.1
 streams_count = 1
-stream_0/stream = ExtResource("8_3iuom")
+stream_0/stream = ExtResource("9_7c0n4")
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_xtq4g"]
 random_pitch = 1.05
@@ -222,6 +222,9 @@ blend_shapes/OpenEject = 0.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0403128, -0.389985)
 
 [node name="AnimationTree" parent="." index="2"]
+libraries = {
+&"weaponAnims": SubResource("AnimationLibrary_1qweh")
+}
 tree_root = SubResource("AnimationNodeBlendTree_wbn7x")
 parameters/weaponStateSpeed/scale = 1.0
 

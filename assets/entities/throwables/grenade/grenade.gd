@@ -17,6 +17,10 @@ func createExplosion()->void:
 	explo.doesBurn = false
 	explo.explosionLOS = false
 	explo.explode()
+	if dealer:
+		if dealer is BasePawn and !dealer.isPawnDead:
+			dealer.resetThrowables()
+
 
 
 func activateThrowable()->void:

@@ -66,9 +66,11 @@ xfade_curve = SubResource("Curve_2dqma")
 allow_transition_to_self = true
 input_0/name = "notAiming"
 input_0/auto_advance = false
+input_0/break_loop_at_end = false
 input_0/reset = true
 input_1/name = "aiming"
 input_1/auto_advance = false
+input_1/break_loop_at_end = false
 input_1/reset = true
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_t4bis"]
@@ -160,9 +162,11 @@ xfade_curve = SubResource("Curve_q812e")
 allow_transition_to_self = true
 input_0/name = "walking"
 input_0/auto_advance = false
+input_0/break_loop_at_end = false
 input_0/reset = true
 input_1/name = "running"
 input_1/auto_advance = false
+input_1/break_loop_at_end = false
 input_1/reset = true
 
 [sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_p1o66"]
@@ -180,7 +184,8 @@ node_connections = [&"output", 0, &"BlendSpace1D"]
 [resource]
 resource_local_to_scene = true
 resource_name = "PawnAnimTree"
-graph_offset = Vector2(-716.223, -70.8449)
+graph_offset = Vector2(-660.63586, -162.7739)
+nodes/output/position = Vector2(880, -280)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_1ekym")
 nodes/Animation/position = Vector2(-1340, -200)
 nodes/Jump/node = SubResource("AnimationNodeAnimation_nnmm3")
@@ -199,7 +204,6 @@ nodes/idleSpace/node = SubResource("AnimationNodeBlendSpace1D_jqpay")
 nodes/idleSpace/position = Vector2(-1340, -340)
 nodes/jumpBlend/node = SubResource("AnimationNodeBlend2_tq78d")
 nodes/jumpBlend/position = Vector2(-600, -340)
-nodes/output/position = Vector2(880, -280)
 nodes/runBlend/node = SubResource("AnimationNodeBlend2_xgvxi")
 nodes/runBlend/position = Vector2(-780, -340)
 nodes/runSpeed/node = SubResource("AnimationNodeTimeScale_ljt1v")
@@ -212,4 +216,4 @@ nodes/weaponBlend/node = SubResource("AnimationNodeBlend2_p1o66")
 nodes/weaponBlend/position = Vector2(320, -220)
 nodes/weaponState/node = SubResource("AnimationNodeBlendTree_34w1o")
 nodes/weaponState/position = Vector2(-120, -40)
-node_connections = [&"aimSprintScale", 0, &"aimSprintStrafe", &"aimTransition", 0, &"fallBlend", &"aimTransition", 1, &"strafeType", &"fallBlend", 0, &"jumpBlend", &"fallBlend", 1, &"fallAnim", &"jumpBlend", 0, &"runBlend", &"jumpBlend", 1, &"Jump", &"output", 0, &"weaponBlend", &"runBlend", 0, &"idleSpace", &"runBlend", 1, &"runSpeed", &"runSpeed", 0, &"Animation", &"strafeType", 0, &"strafeSpace", &"strafeType", 1, &"aimSprintScale", &"weaponBlend", 0, &"aimTransition", &"weaponBlend", 1, &"weaponState"]
+node_connections = [&"output", 0, &"weaponBlend", &"aimSprintScale", 0, &"aimSprintStrafe", &"aimTransition", 0, &"fallBlend", &"aimTransition", 1, &"strafeType", &"fallBlend", 0, &"jumpBlend", &"fallBlend", 1, &"fallAnim", &"jumpBlend", 0, &"runBlend", &"jumpBlend", 1, &"Jump", &"runBlend", 0, &"idleSpace", &"runBlend", 1, &"runSpeed", &"runSpeed", 0, &"Animation", &"strafeType", 0, &"strafeSpace", &"strafeType", 1, &"aimSprintScale", &"weaponBlend", 0, &"aimTransition", &"weaponBlend", 1, &"weaponState"]

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bnmuhug3fwq4a"]
+
+[ext_resource type="Script" uid="uid://dxywxihghurl3" path="res://assets/scenes/ui/phoneUI/apps/notes/note_button.gd" id="1_medrc"]
+
+[node name="noteButton" type="Button"]
+script = ExtResource("1_medrc")

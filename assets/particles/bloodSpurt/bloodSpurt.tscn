@@ -52,11 +52,11 @@ script/source = "extends GPUParticles3D
 func _ready()->void:
 	material_override = gameManager.bloodSpurts.pick_random()
 	amount = randi_range(minParticles,maxParticles)
-	await get_tree()
-	emitting = true
-	%bloodSmoke.emitting = true
-	if !finished.is_connected(queue_free):
-		finished.connect(queue_free)
+	await get_tree().process_frame
+	restart()
+	%bloodSmoke.restart()
+	finished.connect(queue_free)
+	get_tree().create_timer(2).timeout.connect(queue_free)
 
 func  _destroy()->void:
 	queue_free()

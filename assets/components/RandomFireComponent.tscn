@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://371g5hmxqce3"]
+
+[ext_resource type="Script" uid="uid://dfafsiba142ys" path="res://assets/components/random_fire_component.gd" id="1_5uoxe"]
+
+[node name="RandomEmit" type="Node"]
+script = ExtResource("1_5uoxe")
+chance_percent = 0.01

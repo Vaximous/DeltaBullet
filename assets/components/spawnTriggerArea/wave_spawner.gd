@@ -18,7 +18,7 @@ func is_cleared() -> bool:
 	return current_wave_index > waves.size()
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if state == 3:
 		$label.text = "Done."
 		return
@@ -62,11 +62,11 @@ func _physics_process(delta: float) -> void:
 func start_next_wave() -> void:
 	print("Next wave started.")
 	current_wave = get_wave_and_advance()
-	var timeBetween = current_wave.time_between_spawns
 	if current_wave == null:
 		print("--- All waves completed.")
 		set_completed()
 		return #It's all done
+	var timeBetween = current_wave.time_between_spawns
 	set_physics_process(true)
 	state = 2
 	wave_time = current_wave.wave_time_limit
@@ -89,7 +89,7 @@ func start_next_wave() -> void:
 			if current_wave != null:
 				await get_tree().create_timer(timeBetween, false, true, false).timeout
 
-
+# Returns the next wave and advances the wave index
 func get_wave_and_advance() -> WaveSpawnerWaveParams:
 	if waves.size() <= current_wave_index:
 		return null
@@ -97,11 +97,11 @@ func get_wave_and_advance() -> WaveSpawnerWaveParams:
 	current_wave_index += 1
 	return next_wave
 
-
+# Checks if the current wave is the last one
 func is_last_wave() -> bool:
 	return current_wave_index >= waves.size()
 
-
+# Starts the countdown before the next wave begins
 func countdown_next_wave() -> void:
 	if enabled:
 		clear_wave()
@@ -109,19 +109,17 @@ func countdown_next_wave() -> void:
 		state = 1
 		start(between_wave_time)
 
-
+# Clears the current wave reference
 func clear_wave() -> void:
 	current_wave = null
 
-
+# Sets the spawner state to completed and emits the all_cleared signal
 func set_completed() -> void:
 	state = 3
 	set_physics_process(false)
 	all_cleared.emit()
 
-
-#Used between waves
+# Called when the timer times out to start the next wave
 func _on_timeout() -> void:
 	if enabled:
 		start_next_wave()
-		pass # Replace with function body.

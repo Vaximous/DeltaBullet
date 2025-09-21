@@ -1,6 +1,6 @@
 extends Resource
 class_name WaveSpawnerWaveParams
-
+signal pawnSpawned(pawn)
 
 @export var wave_time_limit : float = 120.0
 @export var spawn_parameters : Array[PawnSpawnParameters]
@@ -27,9 +27,9 @@ func spawn_next_pawn(wave_spawner : Timer) -> Array:
 	var new_pawn = next_spawnpoint.spawnPawn(null, next_params)
 	next_spawnpoint.active = _spawn_active
 	wave_spawns.append(new_pawn)
+	pawnSpawned.emit(new_pawn)
 	next_spawn_index += 1
 	return [next_params, new_pawn]
-
 
 # Helper to check if there are unspawned pawns left in this wave.
 func has_unspawned_pawns() -> bool:

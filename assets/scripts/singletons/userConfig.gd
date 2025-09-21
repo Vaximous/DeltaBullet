@@ -20,6 +20,7 @@ var audio_GameVolume : float = 1.0
 var audio_MusicVolume : float = 0.6
 var audio_ambience_volume : float = 0.6
 var audio_UiVolume : float = 0.6
+var audio_voice_volume : float = 0.6
 var audio_custom_music_enabled : bool = false
 
 #graphics settings
@@ -111,6 +112,7 @@ func applyConfigs() -> void:
 	AudioServer.set_bus_volume_db(2, audio_GameVolume)
 	AudioServer.set_bus_volume_db(3, audio_MusicVolume)
 	AudioServer.set_bus_volume_db(4, audio_ambience_volume)
+	AudioServer.set_bus_volume_db(5, audio_voice_volume)
 	applyShadowQuality()
 	applyShadowFilterQuality()
 	get_window().mode = Window.MODE_EXCLUSIVE_FULLSCREEN if graphics_fullscreen else Window.MODE_WINDOWED

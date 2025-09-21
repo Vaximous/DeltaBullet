@@ -32,6 +32,7 @@ const setting_remap : Dictionary = {
 	\"audio_MasterVolume\" = ^'panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer/hBoxContainer/masterVolSlider:value',
 	\"audio_MusicVolume\" = ^'panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer2/hBoxContainer/musicSlider:value',
 	\"audio_UiVolume\" = ^'panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer4/hBoxContainer/uiSlider:value',
+	\"audio_voice_volume\" = ^'panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer6/hBoxContainer/voiceSlider:value',
 	\"audio_GameVolume\" = ^'panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer3/hBoxContainer/soundsSlider:value',
 	\"game_ragdoll_remove_time\" = ^'panelHolder/panel/optionsPanel/Performance/marginContainer/vBoxContainer/ragdollDeleteTime:value',
 	\"game_decal_remove_time\" = ^'panelHolder/panel/optionsPanel/Performance/marginContainer/vBoxContainer/decalRemoveTimeSlider:value',
@@ -137,6 +138,7 @@ func refreshAudioLabels()->void:
 	%uiLabel.text = \"%s\" %(int(100 * %uiSlider.value))+\"%\"
 	%soundsLabel.text = \"%s\"  %(int(100 * %soundsSlider.value))+\"%\"
 	%ambienceLabel.text = \"%s\" %(int(100 * %AmbienceSlider.value))+\"%\"
+	%voiceLabel.text = \"%s\" %(int(100 * %voiceSlider.value))+\"%\"
 
 
 func _on_visibility_changed()->void:
@@ -640,6 +642,30 @@ layout_mode = 2
 text = "50"
 label_settings = SubResource("LabelSettings_pfmxh")
 
+[node name="vBoxContainer6" type="VBoxContainer" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer"]
+layout_mode = 2
+
+[node name="label" type="Label" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer6"]
+layout_mode = 2
+text = "VOICE"
+label_settings = SubResource("LabelSettings_pfmxh")
+
+[node name="hBoxContainer" type="HBoxContainer" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer6"]
+layout_mode = 2
+
+[node name="voiceSlider" type="HSlider" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer6/hBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.0
+
+[node name="voiceLabel" type="Label" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer6/hBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "50"
+label_settings = SubResource("LabelSettings_pfmxh")
+
 [node name="vBoxContainer5" type="VBoxContainer" parent="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer"]
 layout_mode = 2
 
@@ -694,10 +720,10 @@ offset_top = 27.0
 offset_right = 959.0
 offset_bottom = 43.0
 size_flags_horizontal = 3
-min_value = 0.010000000009313226
+min_value = 0.01000000000931322
 max_value = 5.0
 step = 0.0
-value = 0.020000000004074536
+value = 0.02000000000407453
 
 [node name="mouseSensAmount" type="SpinBox" parent="panelHolder/panel/optionsPanel/Controls/vBoxContainer/mousesens"]
 unique_name_in_owner = true
@@ -705,10 +731,10 @@ layout_mode = 0
 offset_top = 46.0
 offset_right = 959.0
 offset_bottom = 78.0
-min_value = 0.0010000000038417056
+min_value = 0.0010000000038417
 max_value = 5.0
-step = 0.010000000009313226
-value = 0.0010000000038417056
+step = 0.01000000000931322
+value = 0.0010000000038417
 alignment = 2
 
 [node name="mousesensscope" type="Control" parent="panelHolder/panel/optionsPanel/Controls/vBoxContainer"]
@@ -729,20 +755,20 @@ offset_top = 27.0
 offset_right = 959.0
 offset_bottom = 43.0
 size_flags_horizontal = 3
-min_value = 0.0010000000038417056
+min_value = 0.0010000000038417
 max_value = 0.25
 step = 0.0
-value = 0.020000000004074536
+value = 0.02000000000407453
 
 [node name="mouseSensScopedAmount" type="SpinBox" parent="panelHolder/panel/optionsPanel/Controls/vBoxContainer/mousesensscope"]
 layout_mode = 0
 offset_top = 46.0
 offset_right = 959.0
 offset_bottom = 78.0
-min_value = 0.0010000000038417056
+min_value = 0.0010000000038417
 max_value = 0.25
 step = 0.0
-value = 0.0010000000038417056
+value = 0.0010000000038417
 alignment = 2
 
 [node name="Performance" type="Control" parent="panelHolder/panel/optionsPanel"]
@@ -917,6 +943,7 @@ bus = &"UI"
 [connection signal="value_changed" from="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer2/hBoxContainer/musicSlider" to="." method="refreshAudioLabels" unbinds=1]
 [connection signal="value_changed" from="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer3/hBoxContainer/soundsSlider" to="." method="refreshAudioLabels" unbinds=1]
 [connection signal="value_changed" from="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer4/hBoxContainer/uiSlider" to="." method="refreshAudioLabels" unbinds=1]
+[connection signal="value_changed" from="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer6/hBoxContainer/voiceSlider" to="." method="refreshAudioLabels" unbinds=1]
 [connection signal="value_changed" from="panelHolder/panel/optionsPanel/Audio/marginContainer/vBoxContainer/vBoxContainer5/hBoxContainer/AmbienceSlider" to="." method="refreshAudioLabels" unbinds=1]
 [connection signal="value_changed" from="panelHolder/panel/optionsPanel/Controls/vBoxContainer/mousesens/mousesensSlider" to="." method="_on_mousesens_slider_value_changed"]
 [connection signal="value_changed" from="panelHolder/panel/optionsPanel/Controls/vBoxContainer/mousesens/mouseSensAmount" to="." method="_on_mouse_sens_amount_value_changed"]

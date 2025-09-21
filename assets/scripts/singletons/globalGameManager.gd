@@ -134,6 +134,13 @@ func _process(delta: float) -> void:
 #endregion
 
 #region Gameplay Effects
+func pawnKillSlowMo()->void:
+	if gameManager.getCurrentPawn() and !gameManager.bulletTime:
+		gameManager.bulletTime = false
+		Engine.time_scale = 0.3
+		var tween = gameManager.world.create_tween()
+		tween.tween_property(Engine,"time_scale",1,1)
+
 func burnTarget(node: Node3D, burnTime: float = 10, burnDamage: float = 3.5):
 	if node.has_method("hit") or node.has_meta("isFlammable") and node.get_meta("isFlammable") == true and !node.get_meta("isBurning"):
 		node.set_meta("isBurning", true)
@@ -184,7 +191,7 @@ func playDialogue2D(dialogue: ActorDialogue) -> AudioStreamPlayer:
 	if world:
 		var audioPlayer = AudioStreamPlayer.new()
 		audioPlayer.add_to_group(&"phonecall")
-		audioPlayer.bus = &"Sounds"
+		audioPlayer.bus = &"Voice"
 		world.worldMisc.add_child(audioPlayer)
 		#print(dialogue.actorAudios.size())
 		if audioPlayer and is_instance_valid(dialogue):

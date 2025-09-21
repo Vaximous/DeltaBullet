@@ -88,11 +88,17 @@ func setVignetteSoftness(amount:float)->void:
 func setVignetteColor(color:Color)->void:
 	vignette.get_material().set_shader_parameter("color",color)
 
-func invokePainDirection(dir:Vector3)->void:
+func invokePainDirection(from : Node3D)->void:
+	#If we already know about this node damaging us, just reset alpha
+	for n in get_tree().get_nodes_in_group(&"hud_dir_pain_indicator"):
+		if n.painDealerNode == from:
+			n.reset_alpha()
+			return
+	#It's a new attacker, add
 	var pDir = painDir.instantiate()
-	pDir.pawn = camOwner.getAttachedOwner()
-	pDir.painDealerPosition = dir
+	pDir.painDealerNode = from
 	%centerContainer.add_child(pDir)
+	pDir.global_position = get_tree().root.size / 2.0
 
 func disableVignette()->void:
 	if vignetteTween:

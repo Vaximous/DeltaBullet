@@ -1,4 +1,4 @@
-[gd_scene load_steps=212 format=4 uid="uid://b883b6dhrfe8q"]
+[gd_scene load_steps=207 format=4 uid="uid://b883b6dhrfe8q"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_5asdl"]
 [ext_resource type="Script" uid="uid://b31u24at18p5t" path="res://assets/resources/customResources/worldData/worldData.gd" id="2_7yxuj"]
@@ -20,8 +20,6 @@
 [ext_resource type="PackedScene" uid="uid://nyee136gj7vd" path="res://assets/entities/clothing/longSleeve/long_sleeved_jacket.tscn" id="16_bxgbc"]
 [ext_resource type="Texture2D" uid="uid://c4dw2v52tkq51" path="res://assets/textures/Developer_Textures/Dark/texture_08.png" id="17_p66ai"]
 [ext_resource type="Texture2D" uid="uid://cl5igunl62bm" path="res://assets/textures/Developer_Textures/Orange/texture_04.png" id="18_2q8nh"]
-[ext_resource type="CompressedTexture3D" uid="uid://sr0kr5d88j54" path="res://assets/textures/misc/neutral-lut.png" id="18_8uorl"]
-[ext_resource type="Texture2D" uid="uid://d0f0crtwpmoka" path="res://assets/textures/panoramas/panoramatest1.png" id="19_01kv4"]
 [ext_resource type="Texture2D" uid="uid://b4o0f3lsxgcye" path="res://assets/textures/Developer_Textures/Dark/texture_03.png" id="19_4tb8i"]
 [ext_resource type="Texture2D" uid="uid://djrij8kjdtc50" path="res://assets/textures/Developer_Textures/Green/texture_06.png" id="20_70ji2"]
 [ext_resource type="Texture2D" uid="uid://bado0y6x8is5j" path="res://assets/textures/crosshair/crosshair008.png" id="21_e0q05"]
@@ -62,36 +60,6 @@ script = ExtResource("2_7yxuj")
 worldName = "Tiggly Toomber Bop."
 worldDescription = "Fuck you."
 worldLoadingTexture = ExtResource("3_ag7s8")
-
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_8760s"]
-panorama = ExtResource("19_01kv4")
-
-[sub_resource type="Sky" id="Sky_y2n23"]
-sky_material = SubResource("PanoramaSkyMaterial_8760s")
-
-[sub_resource type="Environment" id="Environment_6khvv"]
-background_mode = 2
-sky = SubResource("Sky_y2n23")
-reflected_light_source = 1
-tonemap_mode = 3
-tonemap_white = 1.85
-ssao_enabled = true
-ssil_intensity = 0.75
-sdfgi_use_occlusion = true
-sdfgi_y_scale = 2
-glow_normalized = true
-glow_bloom = 0.15
-glow_blend_mode = 1
-fog_light_energy = 0.0
-fog_sun_scatter = 0.17
-fog_density = 0.009
-fog_sky_affect = 0.765
-fog_height = 96.8
-fog_height_density = 0.089
-volumetric_fog_density = 0.0112
-adjustment_enabled = true
-adjustment_saturation = 1.15
-adjustment_color_correction = ExtResource("18_8uorl")
 
 [sub_resource type="CompositorEffect" id="CompositorEffect_pmh78"]
 resource_local_to_scene = false
@@ -1192,7 +1160,6 @@ randomAnimationSpeed = false
 pawnColor = Color(1, 0.74, 0.44, 1)
 
 [node name="worldEnvironment" parent="Environment" index="0"]
-environment = SubResource("Environment_6khvv")
 compositor = SubResource("Compositor_rq2mq")
 script = SubResource("GDScript_vhnid")
 

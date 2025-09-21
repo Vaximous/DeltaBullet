@@ -176,6 +176,10 @@ func stopPhoneCall() -> void:
 		for i in get_tree().get_nodes_in_group(&"phonecall"):
 			i.queue_free()
 
+func removeDialogue2D()->void:
+	for i in get_tree().get_nodes_in_group(&"phonecall"):
+		i.queue_free()
+
 func playDialogue2D(dialogue: ActorDialogue) -> AudioStreamPlayer:
 	if world:
 		var audioPlayer = AudioStreamPlayer.new()
@@ -183,7 +187,7 @@ func playDialogue2D(dialogue: ActorDialogue) -> AudioStreamPlayer:
 		audioPlayer.bus = &"Sounds"
 		world.worldMisc.add_child(audioPlayer)
 		#print(dialogue.actorAudios.size())
-		if audioPlayer:
+		if audioPlayer and is_instance_valid(dialogue):
 			for i in dialogue.actorAudios.size():
 				var subtitle
 				#print(i)

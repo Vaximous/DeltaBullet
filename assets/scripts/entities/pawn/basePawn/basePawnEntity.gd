@@ -165,6 +165,7 @@ var isStaggered : bool = false:
 			direction = Vector3.ZERO
 		else:
 			movementController.enabled = true
+var playingCall : bool = false
 var queuedPhoneCall : ActorDialogue = null:
 	set(value):
 		queuedPhoneCall = value
@@ -1770,9 +1771,29 @@ func playRingtone()->void:
 
 	%ringtone.finished.connect(%ringtone.play)
 
+func endPhoneCall()->void:
+	if queuedPhoneCall and !isPawnDead and playingCall:
+		if gameManager.bulletTime:
+			gameManager.bulletTime = false
+		gameManager.showHUD()
+		queuedPhoneCall = null
+		playPhoneHangupAnimation()
+		await get_tree().create_timer(0.65,false).timeout
+		attachedCam.fadePhoneCallNotificationOut()
+		if attachedCam:
+			attachedCam.clearSubtitles()
+			attachedCam.hud.fadeHudIn()
+		gameManager.removeDialogue2D()
+		stopRingtone()
+		playingCall = false
+		isUsingPhone = false
+
 func playPhoneCall()->void:
 	if !isUsingPhone and queuedPhoneCall and isPlayerPawn() and !isPawnDead:
+		if gameManager.bulletTime:
+			gameManager.bulletTime = false
 		gameManager.hideHUD()
+		playingCall = true
 		attachedCam.fadePhoneCallNotificationOut()
 		isUsingPhone = true
 		currentItemIndex = 0
@@ -1784,6 +1805,7 @@ func playPhoneCall()->void:
 		await pcall.tree_exited
 		isUsingPhone = false
 		gameManager.showHUD()
+		playingCall = false
 		queuedPhoneCall = null
 		if attachedCam:
 			attachedCam.hud.fadeHudIn()
@@ -1835,7 +1857,7 @@ func playPhoneCloseAnimation()->void:
 		phoneTween.tween_method(setPhoneBlend,animationTree.get("parameters/phoneOpened/blend_amount"),0,0.25).set_ease(defaultEaseType).set_trans(defaultTransitionType)
 
 func togglePhone()->void:
-	if isUsingPhone:
+	if isUsingPhone and !isPawnDead:
 		closePhone()
 	else:
 		if isInCover:

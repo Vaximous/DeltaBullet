@@ -1,4 +1,5 @@
 extends Node3D
+var removing : bool = false
 @onready var decal : Decal = $pool
 const poolDecals : Array = [preload("res://assets/textures/blood/bloodPool/T_Pool_001.png"), preload("res://assets/textures/blood/bloodPool/T_Pool_002.png"), preload("res://assets/textures/blood/bloodPool/T_Pool_003.png"), preload("res://assets/textures/blood/bloodPool/T_Pool_004.png"), preload("res://assets/textures/blood/bloodPool/T_Pool_005.png"), preload("res://assets/textures/blood/bloodPool/T_Pool_006.png"), preload("res://assets/textures/blood/bloodPool/T_Pool_007.png"), preload("res://assets/textures/blood/bloodPool/T_Pool_008.png"), preload("res://assets/textures/blood/bloodPool/T_Pool_009.png"), preload("res://assets/textures/blood/bloodPool/T_Pool_010.png")]
 const defaultTweenSpeed : float = 35
@@ -23,8 +24,10 @@ func startPool(_size:float = 0.5)->void:
 		#i.get_owner().queue_free()
 
 func deletePool()->void:
-	if poolTween:
-		poolTween.kill()
-	poolTween = create_tween().set_ease(defaultEaseType).set_trans(defaultTransitionType)
-	await poolTween.tween_property(decal,"modulate",Color.TRANSPARENT,0.25).finished
+	if !removing:
+		removing = true
+		if poolTween:
+			poolTween.kill()
+		poolTween = create_tween().set_ease(defaultEaseType).set_trans(defaultTransitionType)
+		await poolTween.tween_property(decal,"modulate",Color.TRANSPARENT,0.25).finished
 	queue_free()

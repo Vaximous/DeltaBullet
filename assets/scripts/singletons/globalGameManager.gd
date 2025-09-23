@@ -59,6 +59,8 @@ var sounds: Dictionary = {
 
 #region Misc
 # Misc
+var physEntities: Array = Engine.get_main_loop().get_nodes_in_group(&"physicsEntity")
+var decals = Engine.get_main_loop().get_nodes_in_group(&"decal")
 var lastConsolePosition: Vector2 = Vector2(25, 62)
 var orphanedData := []
 var richPresenceEnabled: bool = false
@@ -122,11 +124,16 @@ func _ready() -> void:
 
 func cleanupWorld() -> void:
 	physEntityCheck()
-	await decalAmountCheck()
+	decalAmountCheck()
 	#worldCleanup.emit()
 
 
 func _process(delta: float) -> void:
+	if world:
+		cleanupWorld()
+		#physEntities = Engine.get_main_loop().get_nodes_in_group(&"physicsEntity")
+		#decals = Engine.get_main_loop().get_nodes_in_group(&"decal")
+
 	#Set audio pitch to match timescale
 	AudioServer.playback_speed_scale = Engine.time_scale
 	#physEntityCheck()
@@ -191,7 +198,6 @@ func playDialogue2D(dialogue: ActorDialogue) -> AudioStreamPlayer:
 	if world:
 		var audioPlayer = AudioStreamPlayer.new()
 		audioPlayer.add_to_group(&"phonecall")
-		audioPlayer.bus = &"Voice"
 		world.worldMisc.add_child(audioPlayer)
 		#print(dialogue.actorAudios.size())
 		if audioPlayer and is_instance_valid(dialogue):
@@ -202,6 +208,7 @@ func playDialogue2D(dialogue: ActorDialogue) -> AudioStreamPlayer:
 					audioPlayer.finished.connect(audioPlayer.queue_free)
 				if getCurrentPawn():
 					subtitle = getCurrentPawn().attachedCam.createSubtitle(dialogue.actorAudios[i].audioResource)
+				audioPlayer.bus = &"Voice"
 				audioPlayer.stream = dialogue.actorAudios[i].audioResource.audioStream
 				audioPlayer.play()
 				await audioPlayer.finished
@@ -911,8 +918,8 @@ func get_from_mouse(length: float = 1000, worldObject: Node3D = gameManager.worl
 
 #region Motion Blur
 func setMotionBlur(camera: Camera3D) -> void:
-	if !UserConfig.configs_updated.is_connected(setMotionBlur.bind(camera)):
-		UserConfig.configs_updated.connect(setMotionBlur.bind(camera))
+	if !UserConfig.configs_updated.is_connected(setMotionBlur):
+		UserConfig.configs_updated.connect(setMotionBlur)
 	if UserConfig.graphics_motion_blur:
 		if camera.compositor == null:
 			var comp = load("res://assets/envs/mBlurCompositor.tres")
@@ -1102,17 +1109,19 @@ func createSoundAtPosition(stream: AudioStream, position: Vector3):
 
 #region Decal Amount
 func decalAmountCheck() -> void:
-	var decals = Engine.get_main_loop().get_nodes_in_group(&"decal")
+	#decals = Engine.get_main_loop().get_nodes_in_group(&"decal")
 	#print(decals)
-	while decals.size() > UserConfig.game_max_decals:
-		if is_instance_valid(decals[0]):
-			if decals[0].has_method("deleteSplat"):
-				decals[0].deleteSplat()
-			elif decals[0].has_method("deletePool"):
-				decals[0].deletePool()
-			elif decals[0].has_method("deleteHole"):
-				decals[0].deleteHole()
-			decals.remove_at(0)
+	while get_tree().get_nodes_in_group(&"decal").size() > UserConfig.game_max_decals:
+		if is_instance_valid(get_tree().get_nodes_in_group(&"decal")[0]):
+			if get_tree().get_nodes_in_group(&"decal")[0].has_method("deleteSplat"):
+				get_tree().get_nodes_in_group(&"decal")[0].call_deferred("deleteSplat")
+			elif get_tree().get_nodes_in_group(&"decal")[0].has_method("deletePool"):
+				get_tree().get_nodes_in_group(&"decal")[0].call_deferred("deletePool")
+			elif get_tree().get_nodes_in_group(&"decal")[0].has_method("deleteHole"):
+				get_tree().get_nodes_in_group(&"decal")[0].call_deferred("deleteHole")
+			get_tree().get_nodes_in_group(&"decal").remove_at(0)
+			await get_tree().process_frame
+			#Engine.get_main_loop().get_nodes_in_group(&"decal").remove_at(0)
 	return
 #endregion
 
@@ -1141,14 +1150,14 @@ func createPulverizeSound(pPosition: Vector3 = Vector3.ZERO) -> void:
 	pulverizeSound.play()
 #endregion
 
+
 #region Physics Entity Check
 func physEntityCheck() -> void:
-	var physEntities: Array = Engine.get_main_loop().get_nodes_in_group(&"physicsEntity")
-	#print(physEntities)
-	while physEntities.size() > UserConfig.game_max_physics_entities:
-		if is_instance_valid(physEntities[0]):
-			physEntities[0].queue_free()
-			physEntities.remove_at(0)
+	while get_tree().get_nodes_in_group(&"physicsEntity").size() > UserConfig.game_max_physics_entities:
+		if is_instance_valid(get_tree().get_nodes_in_group(&"physicsEntity")[0]):
+			get_tree().get_nodes_in_group(&"physicsEntity")[0].call_deferred("queue_free")
+			get_tree().get_nodes_in_group(&"physicsEntity").remove_at(0)
+			await get_tree().process_frame
 	return
 #endregion
 

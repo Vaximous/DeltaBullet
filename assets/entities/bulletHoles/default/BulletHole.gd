@@ -2,6 +2,7 @@ extends Node3D
 class_name BulletHole
 signal bulletHoleEmitted
 @export_category("Bullet Hole")
+var removing : bool = false
 var bulletVelocity : Vector3
 @export var forceGlobalPosition : bool = false
 @export var bulletTextures : Array[Texture2D]
@@ -37,11 +38,13 @@ func _ready()->void:
 
 
 func deleteHole()->void:
-	if holeTween:
-		holeTween.kill()
-	holeTween = create_tween().set_ease(defaultEaseType).set_trans(defaultTransitionType)
-	await holeTween.tween_property(decal,"modulate",Color.TRANSPARENT,0.25).finished
-	queue_free()
+	if !removing:
+		removing = true
+		if holeTween:
+			holeTween.kill()
+		holeTween = create_tween().set_ease(defaultEaseType).set_trans(defaultTransitionType)
+		await holeTween.tween_property(decal,"modulate",Color.TRANSPARENT,0.25).finished
+		queue_free()
 
 func setSoundVariables(audio:AudioStreamPlayer3D)->void:
 	audio.bus = &"Sounds"

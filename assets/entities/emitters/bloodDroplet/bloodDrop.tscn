@@ -61,7 +61,7 @@ anim_speed_max = 2.5
 
 [sub_resource type="QuadMesh" id="QuadMesh_iugd7"]
 
-[node name="bloodDrop" type="CharacterBody3D"]
+[node name="bloodDrop" type="CharacterBody3D" groups=["physicsEntity"]]
 physics_interpolation_mode = 1
 collision_layer = 0
 script = ExtResource("1_250ge")

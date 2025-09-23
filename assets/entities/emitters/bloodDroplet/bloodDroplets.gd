@@ -12,10 +12,6 @@ func _ready() -> void:
 		var dup = mesh.mesh.duplicate()
 		mesh.mesh = mesh.mesh.duplicate()
 
-func _process(delta: float) -> void:
-	pass
-
-
 func _physics_process(delta: float) -> void:
 	var col
 	if Engine.get_physics_frames() % 2 == 0:

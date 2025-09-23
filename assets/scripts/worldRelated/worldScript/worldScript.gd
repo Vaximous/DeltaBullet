@@ -1,7 +1,7 @@
 @tool
 extends Node
 class_name WorldScene
-signal worldLoaded
+#signal worldLoaded
 
 
 @onready var worldSpawns : Node = $Spawns
@@ -35,7 +35,7 @@ func _ready()->void:
 	if !Engine.is_editor_hint():
 		#gameManager.freeOrphanNodes()
 		gameManager.pauseMenu = pauseControl
-		emit_signal("worldLoaded")
+		gameManager.worldLoaded.emit()
 		gameManager.getEventSignal("contractRefresh").emit()
 		setupWorld()
 

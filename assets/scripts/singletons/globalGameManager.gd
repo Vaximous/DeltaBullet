@@ -4,6 +4,15 @@ extends Node
 #region Signals
 # Signals
 signal freeOrphans
+signal worldLoaded
+#endregion
+
+#region Pooling
+#BloodDroplet Pooling
+const MAX_DROPLETS = 64
+var droplet_pool: Array[BloodDroplet] = []
+var droplet_index := 0
+
 #endregion
 
 #region Constants
@@ -112,6 +121,7 @@ var isMultiplayerGame: bool = false
 #region Lifecycle
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	worldLoaded.connect(initDropletPool)
 	UserConfig.configs_updated.connect(cleanupChecker)
 	add_child(soundPlayer)
 	initializeSteam()
@@ -194,6 +204,18 @@ func freeOrphanNodes():
 	#print("Kept : %s"%keep)
 	#orphanedData = keep
 	freeOrphans.emit()
+#endregion
+
+#region Pooling Funcs
+func initDropletPool()->void:
+	droplet_pool.clear()
+	for i in MAX_DROPLETS:
+		var d : BloodDroplet = preload("res://assets/entities/emitters/bloodDroplet/bloodDrop.tscn").instantiate()
+		d.hide()
+		if world:
+			world.worldParticles.add_child(d)
+			droplet_pool.append(d)
+
 #endregion
 
 #region Phone Calls
@@ -556,20 +578,25 @@ func castRay(cam: Camera3D, range: float = 50000, mask := 0b10111, exceptions: A
 #region Blood Effects
 func createDroplet(position: Vector3, velocity: Vector3 = Vector3.ONE, amount: int = 1, normal: Vector3 = Vector3.UP, allowRandomFlip: bool = true):
 	if is_instance_valid(world):
-		for i in amount:
-			#var flipVel = [true,false].pick_random()
-			var droplet: BloodDroplet = bloodDrop.instantiate()
-			droplet.norm = normal
-			world.worldParticles.add_child(droplet)
-			droplet.global_position = position
-			if allowRandomFlip:
-				var flipVel = [true, false].pick_random()
-				if !flipVel:
-					droplet.velocity += Vector3(velocity.x * randf_range(-1, 2), velocity.y * randf_range(-1, 2), velocity.z * randf_range(-1, 2))
-				else:
-					droplet.velocity += -Vector3(velocity.x * randf_range(-1, 2), velocity.y * randf_range(-1, 2), velocity.z * randf_range(-1, 2))
-			else:
-				droplet.velocity += Vector3(velocity.x * randf_range(1, 3), velocity.y * randf_range(1, 3), velocity.z * randf_range(1, 3))
+		var d = droplet_pool[droplet_index]
+		droplet_index = (droplet_index + 1) % MAX_DROPLETS
+		d.reset(position, velocity, normal)
+		d.show()
+		#OLD CODE
+		#for i in amount:
+			##var flipVel = [true,false].pick_random()
+			#var droplet: BloodDroplet = bloodDrop.instantiate()
+			#droplet.norm = normal
+			#world.worldParticles.add_child(droplet)
+			#droplet.global_position = position
+			#if allowRandomFlip:
+				#var flipVel = [true, false].pick_random()
+				#if !flipVel:
+					#droplet.velocity += Vector3(velocity.x * randf_range(-1, 2), velocity.y * randf_range(-1, 2), velocity.z * randf_range(-1, 2))
+				#else:
+					#droplet.velocity += -Vector3(velocity.x * randf_range(-1, 2), velocity.y * randf_range(-1, 2), velocity.z * randf_range(-1, 2))
+			#else:
+				#droplet.velocity += Vector3(velocity.x * randf_range(1, 3), velocity.y * randf_range(1, 3), velocity.z * randf_range(1, 3))
 #endregion
 
 #region Event Signals

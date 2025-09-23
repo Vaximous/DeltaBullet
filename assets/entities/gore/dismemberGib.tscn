@@ -7,8 +7,8 @@
 [ext_resource type="Material" uid="uid://co86jd67xrcl" path="res://assets/materials/blood/spurts/bloodSpurt3.tres" id="4_ky12t"]
 [ext_resource type="AudioStream" uid="uid://bjhhwih6knndf" path="res://assets/sounds/gore/fleshimpact8.wav" id="5_ky12t"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_xphrd"]
-radius = 0.03
+[sub_resource type="SphereShape3D" id="SphereShape3D_34rgu"]
+radius = 0.1
 
 [sub_resource type="Skin" id="Skin_f1w22"]
 resource_name = "Skin"
@@ -224,7 +224,7 @@ collisionSounds = [NodePath("audioStreamPlayer3d")]
 metadata/_custom_type_script = "uid://mpu0audo4bfj"
 
 [node name="collisionShape3d" type="CollisionShape3D" parent="."]
-shape = SubResource("SphereShape3D_xphrd")
+shape = SubResource("SphereShape3D_34rgu")
 
 [node name="fleshBit" type="MeshInstance3D" parent="."]
 top_level = true

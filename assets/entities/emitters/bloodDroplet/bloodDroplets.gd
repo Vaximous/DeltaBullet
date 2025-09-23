@@ -8,6 +8,7 @@ var tween : Tween
 var norm : Vector3 = Vector3.UP
 
 func _ready() -> void:
+	gameManager.registerPhysicsEntity(self)
 	if mesh:
 		var dup = mesh.mesh.duplicate()
 		mesh.mesh = mesh.mesh.duplicate()

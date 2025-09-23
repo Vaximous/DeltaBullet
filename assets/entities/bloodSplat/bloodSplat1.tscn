@@ -42,6 +42,7 @@ var splatTween : Tween
 
 
 func _enter_tree() -> void:
+	gameManager.registerDecal(self)
 	#gameManager.decals.erase(self)
 	#gameManager.decalAmountCheck()
 	pass

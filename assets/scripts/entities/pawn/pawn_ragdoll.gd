@@ -64,6 +64,7 @@ signal cameraAttached
 		return attachedCam
 # Called when the node enters the scene tree for the first time.
 func _ready()-> void:
+	gameManager.registerRagdoll(self)
 	removeTimer.wait_time = UserConfig.game_ragdoll_remove_time
 	removeTimer.start()
 	appendPhysicalBoneArray()

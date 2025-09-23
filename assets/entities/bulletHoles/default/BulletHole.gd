@@ -33,6 +33,7 @@ func _enter_tree() -> void:
 
 func _ready()->void:
 	#gameManager.decals.append(self)
+	gameManager.registerDecal(self)
 	initializeBulletHole()
 #	gameManager.beginCleanup()
 

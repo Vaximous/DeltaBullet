@@ -59,8 +59,9 @@ var sounds: Dictionary = {
 
 #region Misc
 # Misc
-var physEntities: Array = Engine.get_main_loop().get_nodes_in_group(&"physicsEntity")
-var decals = Engine.get_main_loop().get_nodes_in_group(&"decal")
+var ragdolls: Array
+var physEntities: Array
+var decals : Array
 var lastConsolePosition: Vector2 = Vector2(25, 62)
 var orphanedData := []
 var richPresenceEnabled: bool = false
@@ -111,6 +112,7 @@ var isMultiplayerGame: bool = false
 #region Lifecycle
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	UserConfig.configs_updated.connect(cleanupChecker)
 	add_child(soundPlayer)
 	initializeSteam()
 	DisplayServer.window_set_title(ProjectSettings.get_setting("application/config/name"))
@@ -127,10 +129,30 @@ func cleanupWorld() -> void:
 	decalAmountCheck()
 	#worldCleanup.emit()
 
+func cleanupChecker()->void:
+	if decals.size() >= UserConfig.game_max_decals:
+		for i in decals:
+			if is_instance_valid(i):
+				if i.has_method("deleteSplat"):
+					i.call_deferred("deleteSplat")
+				elif i.has_method("deletePool"):
+					i.call_deferred("deletePool")
+				elif i.has_method("deleteHole"):
+					i.call_deferred("deleteHole")
+			else:
+				decals.erase(i)
+		decals.clear()
+
+	if physEntities.size() >= UserConfig.game_max_physics_entities:
+		for i in physEntities:
+			if is_instance_valid(i):
+				i.queue_free()
+			else:
+				decals.erase(i)
+		physEntities.clear()
+
 
 func _process(delta: float) -> void:
-	if world:
-		cleanupWorld()
 		#physEntities = Engine.get_main_loop().get_nodes_in_group(&"physicsEntity")
 		#decals = Engine.get_main_loop().get_nodes_in_group(&"decal")
 
@@ -676,6 +698,8 @@ func loadWorld(worldscene: String, fadein: bool = false) -> void:
 	stopPhoneCall()
 	targetedEnemies.clear()
 	playerPawns.clear()
+	decals.clear()
+	physEntities.clear()
 	get_tree().change_scene_to_file("res://assets/scenes/menu/loadingscreen/emptyLoaderScene.tscn")
 	await get_tree().process_frame
 	allPawns.clear()
@@ -1150,6 +1174,51 @@ func createPulverizeSound(pPosition: Vector3 = Vector3.ZERO) -> void:
 	pulverizeSound.play()
 #endregion
 
+func registerDecal(decal:Node3D)->void:
+	decal.tree_exited.connect(removeFromArrayOnExitTree.bind(decal,decals))
+	for i in decals:
+		if !is_instance_valid(i):
+			decals.erase(i)
+
+	decals.append(decal)
+
+	if decals.size() > UserConfig.game_max_decals:
+		var oldest = decals.pop_front()
+		if is_instance_valid(oldest):
+			if oldest.has_method("deleteSplat"):
+				oldest.call_deferred("deleteSplat")
+			elif oldest.has_method("deletePool"):
+				oldest.call_deferred("deletePool")
+			elif oldest.has_method("deleteHole"):
+				oldest.call_deferred("deleteHole")
+
+func removeFromArrayOnExitTree(node:Node3D,array:Array):
+	if array.has(node):
+		array.erase(node)
+
+func registerRagdoll(ragdoll:PawnRagdoll)->void:
+	ragdoll.tree_exited.connect(removeFromArrayOnExitTree.bind(ragdoll,ragdolls))
+	for i in ragdolls:
+		if !is_instance_valid(i):
+			physEntities.erase(i)
+
+	ragdolls.append(ragdoll)
+	if ragdolls.size() > UserConfig.game_max_ragdolls:
+		var oldest = ragdolls.pop_front()
+		if is_instance_valid(oldest):
+			oldest.queue_free()
+
+func registerPhysicsEntity(entity:Node3D)->void:
+	entity.tree_exited.connect(removeFromArrayOnExitTree.bind(entity,physEntities))
+	for i in physEntities:
+		if !is_instance_valid(i):
+			physEntities.erase(i)
+
+	physEntities.append(entity)
+	if physEntities.size() > UserConfig.game_max_physics_entities:
+		var oldest = physEntities.pop_front()
+		if is_instance_valid(oldest):
+			oldest.queue_free()
 
 #region Physics Entity Check
 func physEntityCheck() -> void:

@@ -13,6 +13,7 @@ var game_crosshair_dynamic_position : bool = true
 var game_simple_crosshairs : bool = false
 var game_ragdoll_remove_time : int = 15
 var game_decal_remove_time : int = 120
+var game_max_ragdolls : int = 6
 
 #audio configs
 var audio_MasterVolume : float = -15.0

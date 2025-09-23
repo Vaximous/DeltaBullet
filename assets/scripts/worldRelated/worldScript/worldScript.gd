@@ -113,6 +113,8 @@ func setupWorld()-> void:
 	if worldData != null:
 		name = worldData.worldName
 		#Set the sky texture
+		var env = load("res://assets/envs/default_environment.tres").duplicate()
+		worldSky.environment = env
 		if worldData.skyTexture:
 			worldSky.environment.sky.sky_material = worldData.skyTexture.duplicate()
 		##Soundscape

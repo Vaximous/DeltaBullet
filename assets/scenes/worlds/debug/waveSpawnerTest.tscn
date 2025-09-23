@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=3 uid="uid://guuwxb1s6c86"]
+[gd_scene load_steps=72 format=3 uid="uid://guuwxb1s6c86"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_kfgfw"]
 [ext_resource type="PackedScene" uid="uid://boicvk4qeqmbd" path="res://assets/entities/pawnSpawn/pawnSpawn.tscn" id="2_b53fi"]
@@ -30,10 +30,14 @@
 [ext_resource type="PackedScene" uid="uid://bb5qvdslt6004" path="res://assets/entities/clothing/Pants/armored_pants.tscn" id="13_kogde"]
 [ext_resource type="Texture2D" uid="uid://dm8bfaw5upmtl" path="res://assets/textures/areas/carpet/carpet_ripped_normal.png" id="14_4qivi"]
 [ext_resource type="Texture2D" uid="uid://b2plpi1yyq4ev" path="res://assets/textures/areas/carpet/carpet_roughness.png" id="15_n36nk"]
-[ext_resource type="PackedScene" uid="uid://bgk584lddf4aa" path="res://assets/entities/weapons/BattlecadeAssaultRifle/BattlecadeAssaultRifle.tscn" id="17_8lt0s"]
 [ext_resource type="PackedScene" uid="uid://dvmmlj4mvj88r" path="res://assets/entities/aiMarker/aiMarker.tscn" id="18_kogde"]
 [ext_resource type="Curve" uid="uid://cex2ggwxevnuj" path="res://assets/entities/projectiles/linear_falloff_curve.tres" id="19_juc33"]
 [ext_resource type="Material" uid="uid://8pgvingf5jbw" path="res://assets/materials/world/brick/brickwallMiddle.tres" id="19_tff1h"]
+[ext_resource type="PackedScene" uid="uid://b026rv1louhqg" path="res://assets/entities/clothing/Longcoats/longCoat.tscn" id="31_wfc1a"]
+[ext_resource type="PackedScene" uid="uid://4seyitfkc6wn" path="res://assets/entities/clothing/Pants/pants.tscn" id="32_h0mgc"]
+[ext_resource type="PackedScene" uid="uid://wkxn0uldc80v" path="res://assets/entities/clothing/Gloves/left_glove_full.tscn" id="33_8w4pm"]
+[ext_resource type="PackedScene" uid="uid://c05q2g0x6l12r" path="res://assets/entities/clothing/Gloves/right_glove_full.tscn" id="34_x23g7"]
+[ext_resource type="PackedScene" uid="uid://bporbvksq0guk" path="res://assets/entities/weapons/shotgun/Shotgun.tscn" id="35_ixqaw"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_h62op"]
 panorama = ExtResource("5_juc33")
@@ -122,7 +126,7 @@ metadata/_custom_type_script = ExtResource("6_hs6fo")
 
 [sub_resource type="Resource" id="Resource_8gaxs"]
 script = ExtResource("6_hs6fo")
-spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn")
+spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn6")
 weapons = Array[PackedScene]([ExtResource("11_qxayr")])
 metadata/_custom_type_script = ExtResource("6_hs6fo")
 
@@ -132,27 +136,41 @@ spawn_parameters = Array[ExtResource("6_hs6fo")]([SubResource("Resource_yom2c"),
 time_between_spawns = 3.0
 metadata/_custom_type_script = ExtResource("5_nk0i3")
 
-[sub_resource type="Resource" id="Resource_kogde"]
+[sub_resource type="Resource" id="Resource_wfc1a"]
 script = ExtResource("6_hs6fo")
-spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn")
-weapons = Array[PackedScene]([ExtResource("11_qxayr")])
+spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn3")
+weapons = Array[PackedScene]([ExtResource("3_6fcsa")])
 metadata/_custom_type_script = ExtResource("6_hs6fo")
 
 [sub_resource type="Resource" id="Resource_ifu6l"]
 script = ExtResource("6_hs6fo")
-spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn2")
+spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn7")
 clothes = Array[PackedScene]([ExtResource("12_8gaxs"), ExtResource("13_kogde")])
+weapons = Array[PackedScene]([ExtResource("3_6fcsa")])
+metadata/_custom_type_script = ExtResource("6_hs6fo")
+
+[sub_resource type="Resource" id="Resource_0td2u"]
+script = ExtResource("6_hs6fo")
+spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn7")
+clothes = Array[PackedScene]([ExtResource("31_wfc1a"), ExtResource("32_h0mgc"), ExtResource("33_8w4pm"), ExtResource("34_x23g7")])
+weapons = Array[PackedScene]([ExtResource("3_6fcsa")])
+metadata/_custom_type_script = ExtResource("6_hs6fo")
+
+[sub_resource type="Resource" id="Resource_h0mgc"]
+script = ExtResource("6_hs6fo")
+spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn7")
+clothes = Array[PackedScene]([ExtResource("31_wfc1a"), ExtResource("32_h0mgc"), ExtResource("33_8w4pm"), ExtResource("34_x23g7")])
 weapons = Array[PackedScene]([ExtResource("3_6fcsa")])
 metadata/_custom_type_script = ExtResource("6_hs6fo")
 
 [sub_resource type="Resource" id="Resource_81g3a"]
 script = ExtResource("5_nk0i3")
-spawn_parameters = Array[ExtResource("6_hs6fo")]([SubResource("Resource_kogde"), SubResource("Resource_ifu6l")])
+spawn_parameters = Array[ExtResource("6_hs6fo")]([SubResource("Resource_wfc1a"), SubResource("Resource_ifu6l"), SubResource("Resource_0td2u"), SubResource("Resource_h0mgc")])
 metadata/_custom_type_script = ExtResource("5_nk0i3")
 
 [sub_resource type="Resource" id="Resource_8lt0s"]
 script = ExtResource("6_hs6fo")
-spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn")
+spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn2")
 weapons = Array[PackedScene]([ExtResource("3_6fcsa")])
 metadata/_custom_type_script = ExtResource("6_hs6fo")
 
@@ -162,21 +180,25 @@ spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn2")
 weapons = Array[PackedScene]([ExtResource("10_8umm3")])
 metadata/_custom_type_script = ExtResource("6_hs6fo")
 
-[sub_resource type="Resource" id="Resource_juc33"]
+[sub_resource type="Resource" id="Resource_8w4pm"]
 script = ExtResource("6_hs6fo")
-spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn")
-weapons = Array[PackedScene]([ExtResource("17_8lt0s")])
+spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn7")
+clothes = Array[PackedScene]([ExtResource("31_wfc1a"), ExtResource("32_h0mgc"), ExtResource("33_8w4pm"), ExtResource("34_x23g7")])
+weapons = Array[PackedScene]([ExtResource("3_6fcsa")])
 metadata/_custom_type_script = ExtResource("6_hs6fo")
 
 [sub_resource type="Resource" id="Resource_qt2cm"]
 script = ExtResource("6_hs6fo")
-spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn2")
+spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn5")
+clothes = Array[PackedScene]([ExtResource("31_wfc1a"), ExtResource("32_h0mgc"), ExtResource("33_8w4pm"), ExtResource("34_x23g7")])
+weapons = Array[PackedScene]([ExtResource("35_ixqaw")])
 metadata/_custom_type_script = ExtResource("6_hs6fo")
 
-[sub_resource type="Resource" id="Resource_akbhf"]
+[sub_resource type="Resource" id="Resource_x23g7"]
 script = ExtResource("6_hs6fo")
 spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn2")
-weapons = Array[PackedScene]([ExtResource("11_qxayr")])
+clothes = Array[PackedScene]([ExtResource("31_wfc1a"), ExtResource("32_h0mgc"), ExtResource("33_8w4pm"), ExtResource("34_x23g7")])
+weapons = Array[PackedScene]([ExtResource("3_6fcsa")])
 metadata/_custom_type_script = ExtResource("6_hs6fo")
 
 [sub_resource type="Resource" id="Resource_wko7f"]
@@ -193,7 +215,32 @@ metadata/_custom_type_script = ExtResource("6_hs6fo")
 
 [sub_resource type="Resource" id="Resource_iytwq"]
 script = ExtResource("5_nk0i3")
-spawn_parameters = Array[ExtResource("6_hs6fo")]([SubResource("Resource_8lt0s"), SubResource("Resource_pu1nq"), SubResource("Resource_juc33"), SubResource("Resource_qt2cm"), SubResource("Resource_akbhf"), SubResource("Resource_wko7f"), SubResource("Resource_tq1sb")])
+spawn_parameters = Array[ExtResource("6_hs6fo")]([SubResource("Resource_8lt0s"), SubResource("Resource_pu1nq"), SubResource("Resource_8w4pm"), SubResource("Resource_qt2cm"), SubResource("Resource_x23g7"), SubResource("Resource_wko7f"), SubResource("Resource_tq1sb")])
+metadata/_custom_type_script = ExtResource("5_nk0i3")
+
+[sub_resource type="Resource" id="Resource_ixqaw"]
+script = ExtResource("6_hs6fo")
+spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn5")
+clothes = Array[PackedScene]([ExtResource("31_wfc1a"), ExtResource("32_h0mgc"), ExtResource("33_8w4pm"), ExtResource("34_x23g7")])
+weapons = Array[PackedScene]([ExtResource("35_ixqaw")])
+metadata/_custom_type_script = ExtResource("6_hs6fo")
+
+[sub_resource type="Resource" id="Resource_akbhf"]
+script = ExtResource("6_hs6fo")
+spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn6")
+weapons = Array[PackedScene]([ExtResource("11_qxayr")])
+metadata/_custom_type_script = ExtResource("6_hs6fo")
+
+[sub_resource type="Resource" id="Resource_edr41"]
+script = ExtResource("6_hs6fo")
+spawn_location = NodePath("../../Spawns/pawnSpawns/pawnSpawn7")
+clothes = Array[PackedScene]([ExtResource("31_wfc1a"), ExtResource("32_h0mgc"), ExtResource("33_8w4pm"), ExtResource("34_x23g7")])
+weapons = Array[PackedScene]([ExtResource("3_6fcsa")])
+metadata/_custom_type_script = ExtResource("6_hs6fo")
+
+[sub_resource type="Resource" id="Resource_7a2gs"]
+script = ExtResource("5_nk0i3")
+spawn_parameters = Array[ExtResource("6_hs6fo")]([SubResource("Resource_8lt0s"), SubResource("Resource_pu1nq"), SubResource("Resource_ixqaw"), SubResource("Resource_qt2cm"), SubResource("Resource_akbhf"), SubResource("Resource_edr41"), SubResource("Resource_tq1sb")])
 metadata/_custom_type_script = ExtResource("5_nk0i3")
 
 [sub_resource type="Resource" id="Resource_qxayr"]
@@ -242,22 +289,34 @@ worldData = SubResource("Resource_rhokj")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.50799, 10.0552)
 pawnType = 0
 pawnWeapons = Array[PackedScene]([ExtResource("3_6fcsa")])
-randomAnimationSpeed = false
 
 [node name="pawnSpawn" parent="Spawns/pawnSpawns" index="0" instance=ExtResource("2_b53fi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.079, -0.414169, -3)
 active = false
-randomAnimationSpeed = false
 
 [node name="pawnSpawn2" parent="Spawns/pawnSpawns" index="1" instance=ExtResource("2_b53fi")]
 transform = Transform3D(-0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866025, 8.92407, -0.441364, -12.2023)
 active = false
-randomAnimationSpeed = false
 
-[node name="pawnSpawn3" parent="Spawns/pawnSpawns" index="2" instance=ExtResource("2_b53fi")]
+[node name="pawnSpawn4" parent="Spawns/pawnSpawns" index="2" instance=ExtResource("2_b53fi")]
+transform = Transform3D(0.99833053, 0, -0.057755888, 0, 1, 0, 0.057755888, 0, 0.99833053, 13.32788, -0.441364, -11.106713)
+active = false
+
+[node name="pawnSpawn5" parent="Spawns/pawnSpawns" index="3" instance=ExtResource("2_b53fi")]
+transform = Transform3D(0.99291766, 0, 0.1188024, 0, 1, 0, -0.1188024, 0, 0.99291766, 12.863242, -0.441364, 2.5205956)
+active = false
+
+[node name="pawnSpawn6" parent="Spawns/pawnSpawns" index="4" instance=ExtResource("2_b53fi")]
+transform = Transform3D(0.99881697, 0, -0.048623353, 0, 1, 0, 0.048623353, 0, 0.99881697, 16.580755, -0.441364, 11.728182)
+active = false
+
+[node name="pawnSpawn7" parent="Spawns/pawnSpawns" index="5" instance=ExtResource("2_b53fi")]
+transform = Transform3D(0.70068514, 0, 0.7134703, 0, 1, 0, -0.7134703, 0, 0.70068514, 15.034693, -0.441364, 10.585772)
+active = false
+
+[node name="pawnSpawn3" parent="Spawns/pawnSpawns" index="6" instance=ExtResource("2_b53fi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.0481, -0.291638, -13.9659)
 active = false
-randomAnimationSpeed = false
 
 [node name="directionalLight3d" parent="Environment" index="2"]
 transform = Transform3D(0.034413844, -0.99937075, 0.008599974, 0.50097394, 0.024695957, 0.86511004, -0.86477786, -0.025463402, 0.5015086, 0, 0, 0)
@@ -271,8 +330,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.105286, 0)
 use_collision = true
 
 [node name="csgBox3d" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgCombiner3d" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.15692, -1, -0.0108032)
-size = Vector3(25.7789, 1, 31.8798)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.207437, -1, -0.0108032)
+size = Vector3(34.507614, 1, 31.8798)
 material = SubResource("StandardMaterial3D_tff1h")
 
 [node name="csgBox3d4" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgCombiner3d" index="1"]
@@ -281,39 +340,101 @@ size = Vector3(0.7981415, 3.925293, 31.8798)
 material = ExtResource("19_tff1h")
 
 [node name="csgBox3d5" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgCombiner3d" index="2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.0122147, 0.46264648, -15.617472)
-size = Vector3(26.06831, 3.925293, 0.6664629)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8607292, 0.46264648, -15.617472)
+size = Vector3(33.814198, 3.925293, 0.6664629)
 material = ExtResource("19_tff1h")
 
 [node name="csgBox3d6" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgCombiner3d" index="3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.604862, 0.46264648, 0.19046688)
-size = Vector3(0.8341551, 3.925293, 32.282337)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.604862, 0.46264648, -8.28965)
+size = Vector3(0.8341551, 3.925293, 5.968045)
 material = ExtResource("19_tff1h")
 
-[node name="csgBox3d7" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgCombiner3d" index="4"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.938796, 0.46264648, 15.655085)
-size = Vector3(25.921473, 3.925293, 0.001)
+[node name="csgBox3d11" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgCombiner3d" index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.604862, 0.46264648, 4.1315246)
+size = Vector3(0.8341551, 3.925293, 5)
 material = ExtResource("19_tff1h")
 
-[node name="csgBox3d2" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgCombiner3d" index="5"]
+[node name="csgBox3d17" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgCombiner3d" index="5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.604862, 0.46264648, 11.02706)
+size = Vector3(0.8341551, 3.925293, 4.73291)
+material = ExtResource("19_tff1h")
+
+[node name="csgBox3d19" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgCombiner3d" index="6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.165672, 0.46264648, -0.14274025)
+size = Vector3(0.8341551, 3.925293, 31.60669)
+material = ExtResource("19_tff1h")
+
+[node name="csgBox3d12" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgCombiner3d" index="7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.327893, 0.46264648, 4.7158527)
+size = Vector3(4.6259584, 3.925293, 0.68841887)
+material = ExtResource("19_tff1h")
+
+[node name="csgBox3d18" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgCombiner3d" index="8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.327893, 0.46264648, 12.147985)
+size = Vector3(4.6259584, 3.925293, 0.68841887)
+material = ExtResource("19_tff1h")
+
+[node name="csgBox3d13" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgCombiner3d" index="9"]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 15.772722, 0.46264648, 5.1573153)
+size = Vector3(7.3059387, 3.925293, 0.68841887)
+material = ExtResource("19_tff1h")
+
+[node name="csgBox3d14" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgCombiner3d" index="10"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.5149145, 0.46264648, -10.080116)
+size = Vector3(5, 3.925293, 0.68841887)
+material = ExtResource("19_tff1h")
+
+[node name="csgBox3d15" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgCombiner3d" index="11"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.507057, 0.46264648, -10.080116)
+size = Vector3(1.5156159, 3.925293, 0.68841887)
+material = ExtResource("19_tff1h")
+
+[node name="csgBox3d16" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgCombiner3d" index="12"]
+transform = Transform3D(0.8660254, 0, -0.5, 0, 1, 0, 0.5, 0, 0.8660254, 4.6515884, 0.46264648, -10.080116)
+size = Vector3(5, 3.925293, 0.68841887)
+material = ExtResource("19_tff1h")
+
+[node name="csgBox3d20" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgCombiner3d" index="13"]
+transform = Transform3D(0.73463047, 0, 0.67846745, 0, 1, 0, -0.67846745, 0, 0.73463047, -5.920418, 0.46264648, -9.112896)
+size = Vector3(5, 3.925293, 0.68841887)
+material = ExtResource("19_tff1h")
+
+[node name="csgBox3d7" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgCombiner3d" index="14"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2786717, 0.46264648, 15.992664)
+size = Vector3(34.356407, 3.925293, 0.6761592)
+material = ExtResource("19_tff1h")
+
+[node name="csgBox3d2" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgCombiner3d" index="15"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, -0.151112, -3)
 size = Vector3(3, 2, 3)
 
-[node name="csgBox3d3" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgCombiner3d" index="6"]
+[node name="csgBox3d3" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgCombiner3d" index="16"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0.155125, -3)
 size = Vector3(3, 2, 3)
 
-[node name="csgBox3d8" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgCombiner3d" index="7"]
+[node name="csgBox3d8" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgCombiner3d" index="17"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.541769, 0.15512502, 7.032154)
 size = Vector3(3, 2, 3)
 
-[node name="csgBox3d9" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgCombiner3d" index="8"]
+[node name="csgBox3d9" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgCombiner3d" index="18"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.0645866, 0.15512502, 7.703882)
 size = Vector3(3.4453125, 2, 1.2960205)
 
-[node name="csgBox3d10" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgCombiner3d" index="9"]
+[node name="csgBox3d10" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgCombiner3d" index="19"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.4776726, -0.2362324, 8.054682)
 size = Vector3(4.6191406, 1.2172852, 0.5944214)
+
+[node name="omniLight3d" type="OmniLight3D" parent="Geometry/navigationRegion3d/csgCombiner3d" index="20"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.634223, 2.0135198, -11.368679)
+
+[node name="omniLight3d2" type="OmniLight3D" parent="Geometry/navigationRegion3d/csgCombiner3d" index="21"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.634223, 2.0135198, 2.1177273)
+
+[node name="omniLight3d3" type="OmniLight3D" parent="Geometry/navigationRegion3d/csgCombiner3d" index="22"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.634223, 2.0135198, 7.549803)
+
+[node name="omniLight3d4" type="OmniLight3D" parent="Geometry/navigationRegion3d/csgCombiner3d" index="23"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.634223, 2.0135198, 13.296947)
 
 [node name="node3d" type="Node3D" parent="Geometry" index="1"]
 script = SubResource("GDScript_qt2cm")
@@ -333,28 +454,69 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.6203, -0.289057, -15.0053
 [node name="aiMarker2" parent="Misc/WaypointNodes" index="1" instance=ExtResource("18_kogde")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.37967, -0.289057, -15.0053)
 
-[node name="aiMarker3" parent="Misc/WaypointNodes" index="2" instance=ExtResource("18_kogde")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.37967, -0.289057, 11.9372)
+[node name="aiMarker8" parent="Misc/WaypointNodes" index="2" instance=ExtResource("18_kogde")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.37967, -0.289057, -14.0053)
 
-[node name="aiMarker4" parent="Misc/WaypointNodes" index="3" instance=ExtResource("18_kogde")]
+[node name="aiMarker9" parent="Misc/WaypointNodes" index="3" instance=ExtResource("18_kogde")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.37967, -0.289057, -4.0052996)
+
+[node name="aiMarker10" parent="Misc/WaypointNodes" index="4" instance=ExtResource("18_kogde")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.379669, -0.289057, -4.0052996)
+
+[node name="aiMarker11" parent="Misc/WaypointNodes" index="5" instance=ExtResource("18_kogde")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.002787, -0.289057, 3.4334698)
+
+[node name="aiMarker12" parent="Misc/WaypointNodes" index="6" instance=ExtResource("18_kogde")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.882942, -0.289057, 5.362652)
+
+[node name="aiMarker13" parent="Misc/WaypointNodes" index="7" instance=ExtResource("18_kogde")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.882942, -0.289057, 13.97006)
+
+[node name="aiMarker14" parent="Misc/WaypointNodes" index="8" instance=ExtResource("18_kogde")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.498318, -0.289057, 6.6435637)
+
+[node name="aiMarker15" parent="Misc/WaypointNodes" index="9" instance=ExtResource("18_kogde")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.762975, -0.289057, 10.299755)
+
+[node name="aiMarker16" parent="Misc/WaypointNodes" index="10" instance=ExtResource("18_kogde")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.2370253, -0.289057, 12.299755)
+
+[node name="aiMarker17" parent="Misc/WaypointNodes" index="11" instance=ExtResource("18_kogde")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.762975, -0.289057, -3.700245)
+
+[node name="aiMarker18" parent="Misc/WaypointNodes" index="12" instance=ExtResource("18_kogde")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8448019, -0.289057, -7.0127425)
+
+[node name="aiMarker3" parent="Misc/WaypointNodes" index="13" instance=ExtResource("18_kogde")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.402085, -0.289057, 14.068234)
+
+[node name="aiMarker19" parent="Misc/WaypointNodes" index="14" instance=ExtResource("18_kogde")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.402085, -0.289057, 14.068234)
+
+[node name="aiMarker20" parent="Misc/WaypointNodes" index="15" instance=ExtResource("18_kogde")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.339268, -0.289057, -11.272546)
+
+[node name="aiMarker21" parent="Misc/WaypointNodes" index="16" instance=ExtResource("18_kogde")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.104036, -0.289057, -11.272546)
+
+[node name="aiMarker4" parent="Misc/WaypointNodes" index="17" instance=ExtResource("18_kogde")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.5579, -0.289057, 11.9372)
 
-[node name="aiMarker5" parent="Misc/WaypointNodes" index="4" instance=ExtResource("18_kogde")]
+[node name="aiMarker5" parent="Misc/WaypointNodes" index="18" instance=ExtResource("18_kogde")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.11106, -0.289057, -1.96477)
 
-[node name="aiMarker6" parent="Misc/WaypointNodes" index="5" instance=ExtResource("18_kogde")]
+[node name="aiMarker6" parent="Misc/WaypointNodes" index="19" instance=ExtResource("18_kogde")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.93777, -0.289057, 14.6931)
 
-[node name="aiMarker7" parent="Misc/WaypointNodes" index="6" instance=ExtResource("18_kogde")]
+[node name="aiMarker7" parent="Misc/WaypointNodes" index="20" instance=ExtResource("18_kogde")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.93777, -0.289057, -14.7133)
 
 [node name="WaveSpawner" parent="Misc" index="5" instance=ExtResource("4_yom2c")]
 wait_time = 5.0
 one_shot = true
-waves = Array[ExtResource("5_nk0i3")]([SubResource("Resource_dx34i"), SubResource("Resource_jhlmf"), SubResource("Resource_81g3a"), SubResource("Resource_iytwq")])
+waves = Array[ExtResource("5_nk0i3")]([SubResource("Resource_dx34i"), SubResource("Resource_jhlmf"), SubResource("Resource_81g3a"), SubResource("Resource_iytwq"), SubResource("Resource_7a2gs")])
 
 [node name="label" type="Label" parent="Misc/WaveSpawner" index="0"]
-anchors_preset = -1
 offset_left = 409.0
 offset_top = 40.0
 offset_right = 941.0

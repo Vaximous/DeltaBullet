@@ -722,6 +722,10 @@ func playKillSound()->void:
 
 func die(killer) -> void:
 	if is_instance_valid(self) and !isPawnDead:
+		isPawnDead = true
+		if isPlayerPawn():
+			stopPhoneCall()
+			gameManager.removePhoneMenu()
 		%flipphone.queue_free()
 		stopRingtone()
 		gameManager.allPawns.erase(self)
@@ -729,10 +733,7 @@ func die(killer) -> void:
 		dropWeapon()
 		onPawnKilled.emit()
 		playKillSound()
-		isPawnDead = true
 		var ragdoll = createRagdoll(lastHitPart, killer)
-		if isPlayerPawn():
-			gameManager.removePhoneMenu()
 		#moveHitboxDecals()
 		moveDecalsToRagdoll(ragdoll)
 		endPawn()
@@ -1771,6 +1772,17 @@ func playRingtone()->void:
 
 	%ringtone.finished.connect(%ringtone.play)
 
+func stopPhoneCall()->void:
+	if attachedCam:
+		attachedCam.fadePhoneCallNotificationOut()
+		attachedCam.clearSubtitles()
+		if !isPawnDead:
+			attachedCam.hud.fadeHudIn()
+	gameManager.removeDialogue2D()
+	stopRingtone()
+	playingCall = false
+	isUsingPhone = false
+
 func endPhoneCall()->void:
 	if queuedPhoneCall and !isPawnDead and playingCall:
 		if gameManager.bulletTime:
@@ -1778,15 +1790,8 @@ func endPhoneCall()->void:
 		gameManager.showHUD()
 		queuedPhoneCall = null
 		playPhoneHangupAnimation()
-		await get_tree().create_timer(0.65,false).timeout
-		attachedCam.fadePhoneCallNotificationOut()
-		if attachedCam:
-			attachedCam.clearSubtitles()
-			attachedCam.hud.fadeHudIn()
-		gameManager.removeDialogue2D()
-		stopRingtone()
-		playingCall = false
-		isUsingPhone = false
+		await callFinished
+		stopPhoneCall()
 
 func playPhoneCall()->void:
 	if !isUsingPhone and queuedPhoneCall and isPlayerPawn() and !isPawnDead:
@@ -1842,7 +1847,7 @@ func playPhoneHangupAnimation()->void:
 		animationTree.set("parameters/phoneSeek/seek_request",0.1)
 		await get_tree().create_timer(1.3,false).timeout
 		%flipphone.visible = false
-		callFinished.emit()
+		#callFinished.emit()
 		if phoneTween:
 			phoneTween.kill()
 		phoneTween = create_tween()

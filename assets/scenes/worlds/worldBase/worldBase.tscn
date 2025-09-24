@@ -82,5 +82,3 @@ metadata/_edit_use_anchors_ = true
 
 [node name="mapLogic" type="Node" parent="."]
 physics_interpolation_mode = 1
-
-[connection signal="worldLoaded" from="." to="." method="playSoundscape"]

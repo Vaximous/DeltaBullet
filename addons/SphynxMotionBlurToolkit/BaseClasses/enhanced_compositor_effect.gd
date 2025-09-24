@@ -14,7 +14,7 @@ var all_shader_stages: Dictionary
 	set(value):
 		if (debug == value):
 			return
-
+		
 		debug = value
 		free_shaders.call_deferred()
 		generate_shaders.call_deferred()
@@ -62,9 +62,9 @@ func generate_shaders():
 func subscirbe_shader_stage(shader_stage: ShaderStageResource):
 	if all_shader_stages.has(shader_stage):
 		return
-
+	
 	all_shader_stages[shader_stage] = 1
-
+	
 	if rd:
 		generate_shader_stage(shader_stage)
 
@@ -73,7 +73,7 @@ func unsubscribe_shader_stage(shader_stage: ShaderStageResource):
 		all_shader_stages.erase(shader_stage)
 		if !rd:
 			return
-
+		
 		if shader_stage.shader.is_valid():
 			rd.free_rid(shader_stage.shader)
 		if shader_stage.pipeline.is_valid():
@@ -81,26 +81,26 @@ func unsubscribe_shader_stage(shader_stage: ShaderStageResource):
 
 func _initialize_compute():
 	rd = RenderingServer.get_rendering_device()
-
+	
 	if !rd:
 		return
-
+	
 	var sampler_state := RDSamplerState.new()
-
+	
 	sampler_state.min_filter = RenderingDevice.SAMPLER_FILTER_LINEAR
 	sampler_state.mag_filter = RenderingDevice.SAMPLER_FILTER_LINEAR
 	sampler_state.repeat_u = RenderingDevice.SAMPLER_REPEAT_MODE_CLAMP_TO_EDGE
 	sampler_state.repeat_v = RenderingDevice.SAMPLER_REPEAT_MODE_CLAMP_TO_EDGE
-
+	
 	linear_sampler = rd.sampler_create(sampler_state)
-
+	
 	sampler_state.min_filter = RenderingDevice.SAMPLER_FILTER_NEAREST
 	sampler_state.mag_filter = RenderingDevice.SAMPLER_FILTER_NEAREST
 	sampler_state.repeat_u = RenderingDevice.SAMPLER_REPEAT_MODE_CLAMP_TO_EDGE
 	sampler_state.repeat_v = RenderingDevice.SAMPLER_REPEAT_MODE_CLAMP_TO_EDGE
-
+	
 	nearest_sampler = rd.sampler_create(sampler_state)
-
+	
 	generate_shaders()
 
 
@@ -129,24 +129,24 @@ layout(rgba16f, set = 0, binding = 17) uniform image2D debug_8_image;",
 		print(content)
 	else:
 		shader_spirv = shader_stage.shader_file.get_spirv()
-
+	
 	shader_stage.shader = rd.shader_create_from_spirv(shader_spirv)
 	shader_stage.pipeline = rd.compute_pipeline_create(shader_stage.shader)
 
 func _render_callback(p_effect_callback_type, p_render_data):
 	if !rd:
 		return
-
+	
 	var render_scene_buffers: RenderSceneBuffersRD = p_render_data.get_render_scene_buffers()
 	var render_scene_data: RenderSceneDataRD = p_render_data.get_render_scene_data()
 	if !render_scene_buffers or !render_scene_data:
 		return
-
+	
 	var render_size: Vector2i = render_scene_buffers.get_internal_size()
-
+	
 	if render_size.x == 0 or render_size.y == 0:
 		return
-
+	
 	if debug:
 		ensure_texture(debug_1, render_scene_buffers)
 		ensure_texture(debug_2, render_scene_buffers)
@@ -156,9 +156,9 @@ func _render_callback(p_effect_callback_type, p_render_data):
 		ensure_texture(debug_6, render_scene_buffers)
 		ensure_texture(debug_7, render_scene_buffers)
 		ensure_texture(debug_8, render_scene_buffers)
-
+		
 		var view_count = render_scene_buffers.get_view_count()
-
+		
 		for view in range(view_count):
 			all_debug_images.append(render_scene_buffers.get_texture_slice(context, debug_1, view, 0, 1, 1))
 			all_debug_images.append(render_scene_buffers.get_texture_slice(context, debug_2, view, 0, 1, 1))
@@ -168,9 +168,9 @@ func _render_callback(p_effect_callback_type, p_render_data):
 			all_debug_images.append(render_scene_buffers.get_texture_slice(context, debug_6, view, 0, 1, 1))
 			all_debug_images.append(render_scene_buffers.get_texture_slice(context, debug_7, view, 0, 1, 1))
 			all_debug_images.append(render_scene_buffers.get_texture_slice(context, debug_8, view, 0, 1, 1))
-
+	
 	_render_callback_2(render_size, render_scene_buffers, render_scene_data)
-
+	
 	all_debug_images.clear()
 
 func _render_callback_2(render_size: Vector2i, render_scene_buffers: RenderSceneBuffersRD, render_scene_data: RenderSceneDataRD):
@@ -178,7 +178,7 @@ func _render_callback_2(render_size: Vector2i, render_scene_buffers: RenderScene
 
 func ensure_texture(texture_name: StringName, render_scene_buffers: RenderSceneBuffersRD, texture_format: RenderingDevice.DataFormat = RenderingDevice.DATA_FORMAT_R16G16B16A16_SFLOAT, render_size_multiplier: Vector2 = Vector2(1, 1)):
 	var render_size: Vector2i = Vector2(render_scene_buffers.get_internal_size()) * render_size_multiplier
-
+	
 	if render_scene_buffers.has_texture(context, texture_name):
 		var tf: RDTextureFormat = render_scene_buffers.get_texture_format(context, texture_name)
 		if tf.width != render_size.x or tf.height != render_size.y:
@@ -205,23 +205,26 @@ func get_sampler_uniform(image: RID, binding: int, linear: bool = true) -> RDUni
 
 func dispatch_stage(stage: ShaderStageResource, uniforms: Array[RDUniform], push_constants: PackedByteArray, dispatch_size: Vector3i, label: String = "DefaultLabel", view: int = 0, color: Color = Color(1, 1, 1, 1)):
 	rd.draw_command_begin_label(label + " " + str(view), color)
-
+	
 	if debug:
 		for i in 8:
 			var debug_image_index = i + view * 8;
 			uniforms.append(get_image_uniform(all_debug_images[debug_image_index], 10 + i))
 
+	if (!stage.shader.is_valid()):
+		subscirbe_shader_stage(stage)
+	
 	var tex_uniform_set = UniformSetCacheRD.get_cache(stage.shader, 0, uniforms)
-
+	
 	var compute_list = rd.compute_list_begin()
 	rd.compute_list_bind_compute_pipeline(compute_list, stage.pipeline)
 	rd.compute_list_bind_uniform_set(compute_list, tex_uniform_set, 0)
-
+	
 	if !push_constants.is_empty():
 		rd.compute_list_set_push_constant(compute_list, push_constants, push_constants.size())
-
+		
 	rd.compute_list_dispatch(compute_list, dispatch_size.x, dispatch_size.y, dispatch_size.z)
-
+	
 	rd.compute_list_end()
-
+	
 	rd.draw_command_end_label()

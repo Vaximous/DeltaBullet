@@ -14,6 +14,8 @@ func startPool(_size:float = 0.5)->void:
 	var timer := get_tree().create_timer(UserConfig.game_decal_remove_time).timeout.connect(deletePool)
 	decal.scale = Vector3(0.01,0.01,0.01)
 	decal.texture_albedo = poolDecals.pick_random()
+	for i in decal.get_children():
+		i.texture_albedo = decal.texture_albedo
 	if poolTween:
 		poolTween.kill()
 	poolTween = create_tween().set_ease(defaultEaseType).set_trans(defaultTransitionType)

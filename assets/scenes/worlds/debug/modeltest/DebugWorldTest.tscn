@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=4 uid="uid://cgunekse1vc0y"]
+[gd_scene load_steps=40 format=4 uid="uid://cgunekse1vc0y"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_67ne2"]
 [ext_resource type="Script" uid="uid://b31u24at18p5t" path="res://assets/resources/customResources/worldData/worldData.gd" id="2_fy4y7"]
@@ -10,7 +10,6 @@
 [ext_resource type="PackedScene" uid="uid://4seyitfkc6wn" path="res://assets/entities/clothing/Pants/pants.tscn" id="9_mbgbw"]
 [ext_resource type="PackedScene" uid="uid://bn07wnk5k005c" path="res://assets/entities/weapons/HoneyBadger/honeybadger.tscn" id="9_om7fk"]
 [ext_resource type="Texture2D" uid="uid://d0i65o0jg2gix" path="res://assets/textures/Developer_Textures/Orange/texture_10.png" id="10_nawvt"]
-[ext_resource type="CompressedTexture3D" uid="uid://sr0kr5d88j54" path="res://assets/textures/misc/neutral-lut.png" id="11_avnyq"]
 [ext_resource type="Texture2D" uid="uid://bgtcoeh7a2ioy" path="res://assets/textures/Developer_Textures/Red/texture_10.png" id="11_gpgop"]
 [ext_resource type="Texture2D" uid="uid://ctr85fl50dulx" path="res://assets/textures/Developer_Textures/Dark/texture_09.png" id="11_qrw7y"]
 [ext_resource type="Texture2D" uid="uid://b35duytn55243" path="res://assets/textures/panoramas/panoramatest2.png" id="12_2sxj3"]
@@ -23,40 +22,14 @@
 [ext_resource type="Texture2D" uid="uid://rnjqykyxts43" path="res://assets/textures/crosshair/crosshair037.png" id="20_qc7kd"]
 [ext_resource type="PackedScene" uid="uid://ciwfrp34s8dta" path="res://assets/entities/moneyPickup/MoneyPickup.tscn" id="22_3ac44"]
 
-[sub_resource type="Resource" id="Resource_s2r52"]
-script = ExtResource("2_fy4y7")
-worldName = "Shit"
-
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_bruvl"]
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_76vbv"]
 panorama = ExtResource("12_2sxj3")
 
-[sub_resource type="Sky" id="Sky_4wej1"]
-sky_material = SubResource("PanoramaSkyMaterial_bruvl")
-
-[sub_resource type="Environment" id="Environment_odggt"]
-background_mode = 2
-sky = SubResource("Sky_4wej1")
-reflected_light_source = 1
-tonemap_mode = 3
-tonemap_white = 1.85
-ssao_enabled = true
-ssil_intensity = 0.75
-sdfgi_use_occlusion = true
-sdfgi_y_scale = 2
-glow_enabled = true
-glow_normalized = true
-glow_bloom = 0.15
-glow_blend_mode = 1
-fog_light_energy = 0.0
-fog_sun_scatter = 0.17
-fog_density = 0.009
-fog_sky_affect = 0.765
-fog_height = 96.8
-fog_height_density = 0.089
-volumetric_fog_density = 0.0112
-adjustment_enabled = true
-adjustment_saturation = 1.15
-adjustment_color_correction = ExtResource("11_avnyq")
+[sub_resource type="Resource" id="Resource_s2r52"]
+script = ExtResource("2_fy4y7")
+worldEditable = true
+skyTexture = SubResource("PanoramaSkyMaterial_76vbv")
+worldName = "Shit"
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_lblvd"]
 vertices = PackedVector3Array(-39.9776, 85.3269, -11.6223, -39.9776, 85.3269, -11.1223, 16.5224, 85.3269, -11.1223, 16.5224, 85.3269, -11.8723, -11.9776, 58.8269, -7.87233, -10.2276, 58.8269, -8.12233, -10.2276, 58.8269, -9.62233, -20.7276, 58.8269, -9.37233, -20.7276, 58.8269, -9.37233, -20.7276, 58.8269, -3.37233, -19.7276, 58.8269, -3.37233, -11.9776, 58.8269, -3.62233, -11.9776, 58.8269, -7.87233, -10.2276, 58.8269, -9.62233, -10.2276, 58.8269, -8.12233, -8.7276, 58.8269, -7.87233, 15.7724, 58.8269, -9.62233, -8.7276, 58.8269, -7.87233, -8.9776, 59.0769, 3.37767, -6.9776, 59.0769, 4.62767, 15.7724, 58.8269, 4.62767, 15.7724, 58.8269, -9.62233, -33.4776, 59.0769, 5.37767, -33.4776, 59.0769, 3.37767, -33.9776, 59.0769, 3.37767, -32.9776, 59.0769, -1.12233, -32.7276, 59.0769, -0.622331, -30.2276, 58.8269, -2.37233, -33.4776, 59.0769, 5.37767, -33.9776, 59.0769, 3.37767, -35.2276, 59.0769, 1.87767, -38.4776, 59.0769, 4.62767, -39.2276, 59.0769, 5.37767, -34.2276, 59.0769, -1.12233, -32.9776, 59.0769, -1.12233, -30.2276, 58.8269, -2.37233, -30.7276, 58.8269, -5.12233, -38.4776, 59.0769, 4.62767, -35.2276, 59.0769, 1.87767, -35.7276, 59.0769, 0.127669, -38.4776, 58.8269, -8.87233, -35.7276, 59.0769, 0.127669, -34.2276, 59.0769, -1.12233, -30.7276, 58.8269, -5.12233, -38.4776, 58.8269, -8.87233, -30.7276, 58.8269, -5.12233, -27.9776, 58.8269, -5.87233, -27.9776, 58.8269, -9.37233, -38.9776, 58.8269, -9.37233, -38.4776, 58.8269, -8.87233, -27.9776, 58.8269, -9.37233, -27.9776, 58.8269, -5.87233, -26.9776, 58.8269, -5.62233, -26.4776, 58.8269, -3.37233, -22.4776, 58.8269, -2.87233, -22.2276, 58.8269, -3.37233, -26.9776, 58.8269, -5.62233, -22.2276, 58.8269, -3.37233, -20.7276, 58.8269, -3.37233, -20.7276, 58.8269, -9.37233, -27.9776, 58.8269, -9.37233, -26.9776, 58.8269, -5.62233, -40.4776, 80.3269, -9.12233, -40.4776, 80.3269, 4.87767, -39.4776, 80.3269, 4.12767, -39.4776, 80.3269, -8.37233, -10.9776, 63.0769, 2.87767, -9.9776, 63.0769, 2.87767, -9.7276, 63.0769, -0.622331, -9.7276, 63.0769, -7.12233, -10.9776, 63.0769, -7.12233, -29.7276, 59.8269, -4.37233, -29.4776, 59.8269, -3.37233, -27.7276, 59.8269, -3.87233, -27.9776, 59.8269, -4.87233, -10.9776, 59.0769, 5.37767, -10.9776, 59.0769, 3.87767, -11.9776, 59.0769, 3.62767, -19.2276, 59.0769, 0.127669, -20.9776, 59.0769, 0.377669, -20.9776, 59.0769, 5.37767, -10.9776, 59.0769, 5.37767, -11.9776, 59.0769, 3.62767, -11.9776, 58.8269, -3.62233, -19.7276, 58.8269, -3.37233, -19.2276, 58.8269, -3.12233, -11.9776, 58.8269, -3.62233, -19.2276, 58.8269, -3.12233, -19.2276, 59.0769, 0.127669, -11.9776, 59.0769, 3.62767, -30.2276, 58.8269, -2.37233, -32.7276, 59.0769, -0.622331, -31.4776, 59.0769, 0.877669, -31.4776, 59.0769, 2.12767, -33.4776, 59.0769, 3.37767, -33.4776, 59.0769, 5.37767, -28.2276, 58.8269, -2.37233, -30.2276, 58.8269, -2.37233, -31.4776, 59.0769, 0.877669, -31.4776, 59.0769, 2.12767, -22.4776, 59.0769, 0.127669, -22.4776, 58.8269, -2.87233, -26.4776, 58.8269, -3.37233, -20.9776, 59.0769, 5.37767, -20.9776, 59.0769, 0.377669, -22.4776, 59.0769, 0.127669, -22.4776, 59.0769, 0.127669, -26.4776, 58.8269, -3.37233, -28.2276, 58.8269, -2.37233, -31.4776, 59.0769, 2.12767, -33.4776, 59.0769, 5.37767, -20.9776, 59.0769, 5.37767, -21.4776, 59.8269, -2.37233, -21.4776, 59.8269, -0.622331, -20.2276, 59.8269, -0.622331, -20.2276, 59.8269, -2.37233, -33.4776, 59.8269, 2.12767, -32.7276, 59.8269, 1.62767, -33.4776, 59.8269, 0.127669, -34.4776, 59.8269, 0.627669, -7.4776, 59.0769, 4.87767, -6.9776, 59.0769, 4.62767, -8.9776, 59.0769, 3.37767, -9.2276, 59.0769, 3.87767, -9.7276, 59.0769, 21.3777, -7.4776, 59.0769, 21.3777, -7.4776, 59.0769, 7.87767, -9.7276, 59.0769, 5.62767, -10.9776, 59.0769, 3.87767, -10.9776, 59.0769, 5.37767, -9.7276, 59.0769, 5.62767, -9.2276, 59.0769, 3.87767, -2.4776, 59.0769, 7.62767, -2.2276, 59.0769, 6.62767, -7.2276, 59.0769, 6.62767, -7.4776, 59.0769, 7.87767, -7.4776, 59.0769, 4.87767, -9.2276, 59.0769, 3.87767, -9.7276, 59.0769, 5.62767, -7.4776, 59.0769, 7.87767, -7.2276, 59.0769, 6.62767, -40.4776, 80.3269, 6.37767, -40.4776, 80.3269, 7.87767, 16.5224, 80.3269, 7.87767, 16.5224, 80.3269, 6.37767, -38.9776, 59.0769, 6.62767, -38.9776, 59.0769, 7.62767, -10.9776, 59.0769, 7.37767, -10.9776, 59.0769, 6.62767, 5.7724, 59.0769, 7.87767, 6.5224, 59.0769, 7.62767, 6.5224, 59.0769, 6.62767, -2.2276, 59.0769, 6.62767, -2.4776, 59.0769, 7.62767, -0.727604, 59.0769, 7.87767, 5.7724, 59.0769, 7.87767, -0.727604, 59.0769, 7.87767, -0.977604, 59.0769, 9.62767, -0.977604, 59.0769, 9.62767, -5.4776, 59.0769, 9.62767, -5.4776, 59.0769, 21.3777, -0.977604, 59.0769, 9.62767, -5.4776, 59.0769, 21.3777, 5.7724, 59.0769, 21.3777, 5.7724, 59.0769, 7.87767, 7.5224, 65.3269, 6.62767, 7.5224, 65.3269, 7.62767, 8.5224, 65.3269, 7.62767, 8.5224, 65.3269, 6.62767, -38.9776, 59.0769, 8.87767, -38.9776, 59.0769, 11.1277, -15.2276, 59.0769, 11.1277, -15.2276, 59.0769, 8.87767, -6.7276, 64.3269, 9.37767, -9.7276, 64.3269, 9.37767, -9.7276, 64.3269, 21.3777, -6.4776, 64.3269, 21.3777, -6.4776, 64.3269, 8.87767, -6.7276, 64.3269, 9.37767, -6.4776, 64.3269, 21.3777, -6.2276, 64.3269, 22.3777, 6.7724, 64.3269, 22.3777, 6.7724, 64.3269, 8.87767, 7.7724, 59.0769, 8.87767, 7.7724, 59.0769, 11.8777, 8.5224, 59.0769, 11.8777, 8.5224, 59.0769, 8.87767)
@@ -252,7 +225,6 @@ worldData = SubResource("Resource_s2r52")
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -8.74208, 58.6002, 11.7847)
 pawnType = 0
 pawnWeapons = Array[PackedScene]([ExtResource("16_ebxv2"), ExtResource("9_om7fk"), ExtResource("17_p4k7j"), ExtResource("8_bpgik")])
-randomAnimationSpeed = false
 
 [node name="pawnSpawn" parent="Spawns/pawnSpawns" index="0" instance=ExtResource("3_qeok2")]
 transform = Transform3D(0.0802858, 0, -0.996772, 0, 1, 0, 0.996772, 0, 0.0802858, -38.5701, 58.9997, -1.60258)
@@ -262,7 +234,6 @@ pawnClothing = Array[PackedScene]([ExtResource("12_m53f1")])
 equipWeaponOnSpawn = true
 weaponToEquip = 1
 aiType = 1
-randomAnimationSpeed = false
 
 [node name="pawnSpawn2" parent="Spawns/pawnSpawns" index="1" instance=ExtResource("3_qeok2")]
 transform = Transform3D(0.0615888, 0, 0.998102, 0, 1, 0, -0.998102, 0, 0.0615888, 15.5592, 58.5263, -2.7038)
@@ -272,7 +243,6 @@ pawnClothing = Array[PackedScene]([ExtResource("12_m53f1")])
 equipWeaponOnSpawn = true
 weaponToEquip = 1
 aiType = 1
-randomAnimationSpeed = false
 
 [node name="pawnSpawn3" parent="Spawns/pawnSpawns" index="2" instance=ExtResource("3_qeok2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.207866, 58.5492, 14.4059)
@@ -281,10 +251,6 @@ pawnWeapons = Array[PackedScene]([ExtResource("17_p4k7j")])
 pawnClothing = Array[PackedScene]([ExtResource("12_m53f1"), ExtResource("8_2c08c"), ExtResource("9_mbgbw")])
 equipWeaponOnSpawn = true
 weaponToEquip = 1
-randomAnimationSpeed = false
-
-[node name="worldEnvironment" parent="Environment" index="0"]
-environment = SubResource("Environment_odggt")
 
 [node name="directionalLight3d" parent="Environment" index="2"]
 transform = Transform3D(0.520592, -0.672797, 0.52567, -0.00857555, 0.611527, 0.791177, -0.853763, -0.416388, 0.312586, 0, 90.4571, 0)

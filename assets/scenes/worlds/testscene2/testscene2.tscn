@@ -996,7 +996,6 @@ pawnType = 0
 pawnWeapons = Array[PackedScene]([ExtResource("3_glhev"), ExtResource("4_obu2t")])
 pawnClothing = Array[PackedScene]([ExtResource("9_80ovt"), ExtResource("9_msab0"), ExtResource("6_qqxlv"), ExtResource("13_pdeob")])
 aiType = null
-randomAnimationSpeed = false
 pawnColor = Color(0.52, 0.8, 0.92, 1)
 
 [node name="pawnSpawn2" parent="Spawns/playerSpawns" index="1" instance=ExtResource("2_26w0h")]
@@ -1005,7 +1004,6 @@ pawnType = 0
 pawnWeapons = Array[PackedScene]([ExtResource("3_glhev"), ExtResource("4_obu2t")])
 pawnClothing = Array[PackedScene]([ExtResource("9_msab0"), ExtResource("6_qqxlv"), ExtResource("13_pdeob")])
 aiType = null
-randomAnimationSpeed = false
 pawnColor = Color(0.52, 0.8, 0.92, 1)
 
 [node name="pawnSpawn" parent="Spawns/pawnSpawns" index="0" instance=ExtResource("2_26w0h")]
@@ -1016,7 +1014,6 @@ equipWeaponOnSpawn = true
 weaponToEquip = 2
 aiType = 1
 hatedGroups = Array[StringName]([&"Booger", &"Player", &"Hostile"])
-randomAnimationSpeed = false
 pawnColor = Color(1, 0.741176, 0.439216, 1)
 
 [node name="pawnSpawn11" parent="Spawns/pawnSpawns" index="1" instance=ExtResource("2_26w0h")]
@@ -1028,7 +1025,6 @@ equipWeaponOnSpawn = true
 weaponToEquip = 1
 aiType = 1
 hatedGroups = Array[StringName]([&"Booger", &"Player", &"Hostile"])
-randomAnimationSpeed = false
 pawnColor = Color(1, 0.74, 0.44, 1)
 
 [node name="pawnSpawn17" parent="Spawns/pawnSpawns" index="2" instance=ExtResource("2_26w0h")]
@@ -1039,7 +1035,6 @@ equipWeaponOnSpawn = true
 weaponToEquip = 1
 aiType = 1
 hatedGroups = Array[StringName]([&"Booger", &"Player", &"Hostile"])
-randomAnimationSpeed = false
 pawnColor = Color(1, 0.74, 0.44, 1)
 
 [node name="pawnSpawn14" parent="Spawns/pawnSpawns" index="3" instance=ExtResource("2_26w0h")]
@@ -1051,7 +1046,6 @@ equipWeaponOnSpawn = true
 weaponToEquip = 1
 aiType = 1
 hatedGroups = Array[StringName]([&"Booger", &"Player", &"Hostile"])
-randomAnimationSpeed = false
 pawnColor = Color(0.898039, 0.772549, 0.662745, 1)
 
 [node name="boogerSpawn" parent="Spawns/pawnSpawns" index="4" groups=["cloakedupcontract"] instance=ExtResource("2_26w0h")]
@@ -1066,7 +1060,6 @@ weaponToEquip = 1
 isInteractable = true
 aiType = 1
 hatedGroups = Array[StringName]([&"Hostile"])
-randomAnimationSpeed = false
 pawnColor = Color(0.345098, 0.356863, 0.345098, 1)
 
 [node name="booger2Spawn" parent="Spawns/pawnSpawns" index="5" groups=["cloakedupcontract"] instance=ExtResource("2_26w0h")]
@@ -1081,7 +1074,6 @@ weaponToEquip = 3
 isInteractable = true
 aiType = 1
 hatedGroups = Array[StringName]([&"Hostile"])
-randomAnimationSpeed = false
 pawnColor = Color(0.380392, 0, 0, 1)
 
 [node name="pawnSpawn16" parent="Spawns/pawnSpawns" index="6" instance=ExtResource("2_26w0h")]
@@ -1093,7 +1085,6 @@ equipWeaponOnSpawn = true
 weaponToEquip = 1
 aiType = 1
 hatedGroups = Array[StringName]([&"Booger", &"Player", &"Hostile"])
-randomAnimationSpeed = false
 pawnColor = Color(1, 0.74, 0.44, 1)
 
 [node name="pawnSpawn5" parent="Spawns/pawnSpawns" index="7" instance=ExtResource("2_26w0h")]
@@ -1104,7 +1095,6 @@ equipWeaponOnSpawn = true
 weaponToEquip = 1
 aiType = 1
 hatedGroups = Array[StringName]([&"Booger", &"Player", &"Hostile"])
-randomAnimationSpeed = false
 pawnColor = Color(1, 0.74, 0.44, 1)
 
 [node name="pawnSpawn6" parent="Spawns/pawnSpawns" index="8" instance=ExtResource("2_26w0h")]
@@ -1118,7 +1108,6 @@ equipWeaponOnSpawn = true
 weaponToEquip = 2
 aiType = 1
 hatedGroups = Array[StringName]([&"Booger", &"Player", &"Hostile"])
-randomAnimationSpeed = false
 pawnColor = Color(1, 0.74, 0.44, 1)
 
 [node name="pawnSpawn7" parent="Spawns/pawnSpawns" index="9" instance=ExtResource("2_26w0h")]
@@ -1130,7 +1119,6 @@ pawnClothing = Array[PackedScene]([ExtResource("15_ivnks"), ExtResource("9_kyyf3
 weaponToEquip = 1
 hatedGroups = Array[StringName]([])
 animationToForce = &"PawnAnim/shopIdle1"
-randomAnimationSpeed = false
 pawnColor = Color(0.989497, 0.714754, 0.728352, 1)
 
 [node name="pawnSpawn9" parent="Spawns/pawnSpawns" index="10" instance=ExtResource("2_26w0h")]
@@ -1142,7 +1130,6 @@ pawnClothing = Array[PackedScene]([ExtResource("16_bxgbc"), ExtResource("9_kyyf3
 weaponToEquip = 1
 hatedGroups = Array[StringName]([])
 animationToForce = &"PawnAnim/shopIdle1"
-randomAnimationSpeed = false
 pawnColor = Color(0.29987, 0.370373, 0.383806, 1)
 
 [node name="pawnSpawn8" parent="Spawns/pawnSpawns" index="11" instance=ExtResource("2_26w0h")]
@@ -1156,7 +1143,6 @@ equipWeaponOnSpawn = true
 weaponToEquip = 1
 aiType = 1
 hatedGroups = Array[StringName]([&"Booger", &"Player", &"Hostile"])
-randomAnimationSpeed = false
 pawnColor = Color(1, 0.74, 0.44, 1)
 
 [node name="worldEnvironment" parent="Environment" index="0"]

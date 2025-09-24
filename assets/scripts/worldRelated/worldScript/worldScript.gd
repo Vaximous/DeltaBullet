@@ -34,6 +34,7 @@ func _enter_tree()->void:
 func _ready()->void:
 	if !Engine.is_editor_hint():
 		#gameManager.freeOrphanNodes()
+		gameManager.worldLoaded.connect(playSoundscape)
 		gameManager.pauseMenu = pauseControl
 		gameManager.worldLoaded.emit()
 		gameManager.getEventSignal("contractRefresh").emit()
@@ -57,6 +58,8 @@ func _ready()->void:
 				worldData.spawnPawnsOnLoad = false
 	else:
 		if worldData:
+			var env = load("res://assets/envs/default_environment.tres").duplicate()
+			worldSky.environment = env
 			if worldData.skyTexture:
 				worldSky.environment.sky.sky_material = worldData.skyTexture.duplicate()
 

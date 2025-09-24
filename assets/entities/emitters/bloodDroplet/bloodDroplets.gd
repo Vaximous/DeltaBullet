@@ -9,7 +9,7 @@ var alive : bool = false:
 	set(value):
 		alive = value
 		set_physics_process(value)
-var norm : Vector3 = Vector3.UP
+var norm : Vector3
 var params : PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.new()
 
 func _ready() -> void:
@@ -34,7 +34,7 @@ func _physics_process(delta: float) -> void:
 
 	if mesh:
 		mesh.position = global_position
-		mesh.mesh.size.x = velocity.length() * 0.008
+		mesh.mesh.size.x = velocity.length() * 0.005
 		mesh.look_at(global_position + velocity,norm,true)
 		mesh.global_position = global_position
 

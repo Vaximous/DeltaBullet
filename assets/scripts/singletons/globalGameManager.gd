@@ -580,7 +580,14 @@ func createDroplet(position: Vector3, velocity: Vector3 = Vector3.ONE, amount: i
 	if is_instance_valid(world):
 		var d = droplet_pool[droplet_index]
 		droplet_index = (droplet_index + 1) % MAX_DROPLETS
-		d.reset(position, velocity, normal)
+		if allowRandomFlip:
+			var flipVel = [true, false].pick_random()
+			if !flipVel:
+				d.reset(position, Vector3(velocity.x * randf_range(-1, 2), velocity.y * randf_range(-1, 2), velocity.z * randf_range(-1, 2)), normal)
+			else:
+				d.reset(position, -Vector3(velocity.x * randf_range(-1, 2), velocity.y * randf_range(-1, 2), velocity.z * randf_range(-1, 2)), normal)
+		else:
+			d.reset(position, velocity, normal)
 		d.show()
 		#OLD CODE
 		#for i in amount:
@@ -970,7 +977,7 @@ func get_from_mouse(length: float = 1000, worldObject: Node3D = gameManager.worl
 #region Motion Blur
 func setMotionBlur(camera: Camera3D) -> void:
 	if !UserConfig.configs_updated.is_connected(setMotionBlur):
-		UserConfig.configs_updated.connect(setMotionBlur)
+		UserConfig.configs_updated.connect(setMotionBlur.bind(camera))
 	if UserConfig.graphics_motion_blur:
 		if camera.compositor == null:
 			var comp = load("res://assets/envs/mBlurCompositor.tres")

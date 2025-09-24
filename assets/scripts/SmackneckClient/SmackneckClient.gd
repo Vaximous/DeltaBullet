@@ -9,7 +9,7 @@ signal masterserver_data_received(data : Dictionary)
 signal response_recieved(data : Dictionary)
 
 var masterserver_connection : StreamPeerTCP = StreamPeerTCP.new()
-var masterserver_address : String = "127.0.0.1"
+var masterserver_address : String = "5.161.123.32"
 var pending_response_messages : Array[Dictionary]
 const masterserver_port : int = 7777
 #localhost	: 127.0.0.1
@@ -71,11 +71,15 @@ func put_message(header : String, body : Dictionary, full_objects : bool = false
 
 
 func parse_message(data : Dictionary) -> void:
+	print(data)
 	masterserver_data_received.emit(data)
 	if data["header"] == Authentication.header:
 		Authentication.handle_message(data)
 		return
 	if data["header"] == "MESSAGE":
+		if data.get("body",{}).has("chatroom"):
+			Messaging.handle_message(data.get("body"))
+
 		if data.has("response"):
 			#ignore malformed response
 			var response : String = data["response"].get("response", null)

@@ -50,7 +50,6 @@ boot_splash/minimum_display_time=1
 [autoload]
 
 gameManager="*res://assets/scripts/singletons/globalGameManager.gd"
-Console="*res://assets/scenes/menu/dev/Console.tscn"
 globalParticles="*res://assets/scripts/singletons/globalParticles.gd"
 musicManager="*res://assets/scripts/singletons/musicManager.gd"
 UserConfig="*res://assets/scripts/singletons/userConfig.gd"
@@ -59,7 +58,9 @@ cutsceneManager="*res://assets/scripts/singletons/cutsceneManager.gd"
 questManager="*res://assets/scripts/singletons/questManager.gd"
 AiManager="*res://assets/scripts/singletons/AIManager.gd"
 gameState="*res://assets/scripts/singletons/gameState.gd"
+SmackneckClient="*res://assets/scripts/SmackneckClient/SmackneckClient.gd"
 Util="*res://assets/scripts/singletons/Util.gd"
+Console="*res://assets/scenes/menu/dev/Console.tscn"
 
 [debug]
 

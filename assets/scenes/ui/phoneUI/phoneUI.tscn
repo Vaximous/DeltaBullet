@@ -1,10 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://bgjq1tua1qj7g"]
+[gd_scene load_steps=12 format=3 uid="uid://bgjq1tua1qj7g"]
 
 [ext_resource type="Texture2D" uid="uid://bag0nbin3udvs" path="res://assets/textures/misc/bootlogo.png" id="1_cavcd"]
 [ext_resource type="Script" uid="uid://drlec1sueg0nt" path="res://assets/scenes/ui/phoneUI/phone_ui.gd" id="1_tn2ty"]
 [ext_resource type="PackedScene" uid="uid://bqja4fa2wfcko" path="res://assets/scenes/ui/phoneUI/appBase.tscn" id="3_e8vmq"]
+[ext_resource type="Texture2D" uid="uid://ct4hlwq6r5lqw" path="res://assets/textures/ui/phonebar.png" id="3_jstq1"]
 [ext_resource type="PackedScene" uid="uid://c3ybj1r2jib40" path="res://assets/scenes/ui/phoneUI/apps/stats/playerStats.tscn" id="4_md34r"]
 [ext_resource type="PackedScene" uid="uid://dbokbcmuyyg1u" path="res://assets/scenes/ui/phoneUI/apps/notes/notesapp.tscn" id="4_xlsti"]
+[ext_resource type="PackedScene" uid="uid://ct46ybrwhjaub" path="res://assets/scenes/ui/phoneUI/apps/smacknetChat/smacknetChat.tscn" id="7_de4go"]
 
 [sub_resource type="Shader" id="Shader_tn2ty"]
 code = "shader_type canvas_item;
@@ -25,6 +27,14 @@ void fragment() {
 shader = SubResource("Shader_tn2ty")
 shader_parameter/blur_amount = 1.0147060453891754
 shader_parameter/tint = Color(1, 1, 1, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_de4go"]
+atlas = ExtResource("3_jstq1")
+region = Rect2(0, 162, 32, 29)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_577f1"]
+atlas = ExtResource("3_jstq1")
+region = Rect2(0, 7, 32, 24)
 
 [node name="phoneUi" type="Panel"]
 anchors_preset = -1
@@ -68,10 +78,39 @@ layout_mode = 2
 [node name="hBoxContainer" type="HBoxContainer" parent="panelContainer/homeContainer"]
 layout_mode = 2
 
-[node name="label" type="Label" parent="panelContainer/homeContainer/hBoxContainer"]
+[node name="smacknetConnection" type="Label" parent="panelContainer/homeContainer/hBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Roaming"
+text = "         Roaming"
+
+[node name="iconRefresh" type="Timer" parent="panelContainer/homeContainer/hBoxContainer/smacknetConnection"]
+unique_name_in_owner = true
+wait_time = 0.1
+autostart = true
+
+[node name="iconBG" type="TextureRect" parent="panelContainer/homeContainer/hBoxContainer/smacknetConnection"]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 0
+offset_left = 6.1035156e-05
+offset_top = -5.999996
+offset_right = 35.000122
+offset_bottom = 29.000065
+texture = SubResource("AtlasTexture_de4go")
+stretch_mode = 3
+
+[node name="connection" type="TextureRect" parent="panelContainer/homeContainer/hBoxContainer/smacknetConnection/iconBG"]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_577f1")
+stretch_mode = 3
 
 [node name="label2" type="Label" parent="panelContainer/homeContainer/hBoxContainer"]
 layout_mode = 2
@@ -141,6 +180,12 @@ layout_mode = 2
 text = "Phone Settings
 "
 
+[node name="smackneckChat" parent="panelContainer/homeContainer/centerContainer/appContainer" instance=ExtResource("3_e8vmq")]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Smacknet. chat!"
+app = ExtResource("7_de4go")
+
 [node name="hSeparator2" type="HSeparator" parent="panelContainer/homeContainer"]
 layout_mode = 2
 
@@ -148,3 +193,5 @@ layout_mode = 2
 layout_mode = 2
 text = "CrapOS V.01"
 horizontal_alignment = 2
+
+[connection signal="timeout" from="panelContainer/homeContainer/hBoxContainer/smacknetConnection/iconRefresh" to="." method="_on_icon_refresh_timeout"]

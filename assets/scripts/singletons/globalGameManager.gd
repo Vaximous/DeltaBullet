@@ -121,10 +121,12 @@ var isMultiplayerGame: bool = false
 #region Lifecycle
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	SmackneckClient.masterserver_connected.connect(sm_PushGame)
 	worldLoaded.connect(initDropletPool)
 	UserConfig.configs_updated.connect(cleanupChecker)
 	add_child(soundPlayer)
 	initializeSteam()
+	SmackneckClient.connect_to_masterserver()
 	DisplayServer.window_set_title(ProjectSettings.get_setting("application/config/name"))
 	soundPlayer.name = "globalSoundPlayer"
 	if !userDir.dir_exists("saves"):
@@ -134,10 +136,8 @@ func _ready() -> void:
 	if richPresenceEnabled:
 		pass
 
-func cleanupWorld() -> void:
-	physEntityCheck()
-	decalAmountCheck()
-	#worldCleanup.emit()
+func sm_PushGame()->void:
+	SmackneckClient.put_message("MESSAGE",{"msg":"set_game", "game": "Delta Bullet"})
 
 func cleanupChecker()->void:
 	if decals.size() >= UserConfig.game_max_decals:

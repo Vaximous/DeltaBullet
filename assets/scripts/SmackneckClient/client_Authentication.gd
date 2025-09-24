@@ -50,7 +50,7 @@ func handle_message(data : Dictionary) -> void:
 
 func authenticate_with_masterserver(authdict : Dictionary) -> void:
 	last_login_data = authdict
-	#Network.put_message(header, {"phase":PHASE_AUTH_START, "mode":"smackneck_account", "auth":authdict})
+	SmackneckClient.put_message(header, {"phase":PHASE_AUTH_START, "mode":"smackneck_account", "auth":authdict})
 
 
 func store_loginfile(username : String, password : String, token : int = -2) -> void:
@@ -61,8 +61,7 @@ func store_loginfile(username : String, password : String, token : int = -2) -> 
 
 
 func auth_register_account(username : String, password : String) -> void:
-	pass
-	#Network.put_message(header, {"phase":PHASE_AUTH_REGISTER, "username":username, "password":password})
+	SmackneckClient.put_message(header, {"phase":PHASE_AUTH_REGISTER, "username":username, "password":password})
 
 
 func is_masterserver_authenticated() -> bool:

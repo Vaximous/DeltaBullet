@@ -28,6 +28,7 @@ func setCurrentApp(app:PackedScene)->void:
 	phoneBackground.hide()
 
 func init(pawn:BasePawn)->void:
+	%smackneckChat.hide()
 	modulate = Color.TRANSPARENT
 	var tween : Tween
 	if tween:

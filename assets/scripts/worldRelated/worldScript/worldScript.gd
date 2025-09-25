@@ -3,7 +3,7 @@ extends Node
 class_name WorldScene
 #signal worldLoaded
 
-
+@onready var pooledObjects : Node = $Misc/pooledObjects
 @onready var worldSpawns : Node = $Spawns
 @onready var playerWorldSpawns : Node = $Spawns/playerSpawns
 @onready var pawnWorldSpawns : Node = $Spawns/pawnSpawns

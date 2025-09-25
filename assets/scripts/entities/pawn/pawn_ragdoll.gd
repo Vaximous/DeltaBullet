@@ -33,6 +33,9 @@ var physicsBones : Array[PhysicalBone3D]
 @export_category("Ragdoll")
 var savedPose :Array[Transform3D]
 @export_subgroup("Active Ragdoll")
+@export var maxAngularForce : float = 100
+@export var angularSpringStiffness : float = 1000
+@export var angularSpringDamping : float = 1000
 var totalMass : float
 var angularVelocity : Vector3
 @export var activeRagdollEnabled:bool = false:
@@ -137,29 +140,36 @@ func checkClothingHider()-> void:
 		if clothes is ClothingItem:
 			setBodyShape(clothes)
 
-func hookes_law(displacement: Vector3, velocity: Vector3, stiffness: float, damping: float) -> Vector3:
-# See: "https://en.wikipedia.org/wiki/Hooke's_law"
-	var dis: = displacement * stiffness
-	var vel: = velocity * damping
-	return dis - vel
+func hookes_law(displacement: Vector3, current_velocity: Vector3, stiffness: float, damping: float) -> Vector3:
+	return (stiffness * displacement) - (damping * current_velocity)
 
 func _physics_process(delta: float) -> void:
-	pass
 	if activeRagdollEnabled:
 		var total_ang_vel := Vector3.ZERO
 		angularVelocity = total_ang_vel / totalMass
-
 		for b in physicsBones:
-			if is_instance_valid(b) and is_instance_valid(targetSkeleton):
-				total_ang_vel += b.angular_velocity * b.mass
-				b.angular_velocity = angularVelocity
-				#var target_rotation : Basis = TARGET_SKELETON.get_bone_global_pose(BONE_B_INDEX).basis.inverse() * self.get_parent().get_bone_global_pose(BONE_B_INDEX).basis
-				#var target_velocity : Vector3 = target_rotation.get_euler() * matching_velocity_multiplier
-				#if is_instance_valid(findPhysicsBone(ragdollSkeleton.get_bone_parent(b.get_bone_id()))):
-					#setAngularMotor(b,true)
-					#animate_bone_by_physics_motor(b,delta,5,10)
-			else:
-				activeRagdollEnabled = false
+			if is_instance_valid(b):
+				var target_transform: Transform3D = targetSkeleton.global_transform * targetSkeleton.get_bone_global_pose(b.get_bone_id())
+				var current_transform: Transform3D = global_transform * ragdollSkeleton.get_bone_global_pose(b.get_bone_id())
+				var rotation_difference: Basis = (target_transform.basis * current_transform.basis.inverse())
+
+				var position_difference:Vector3 = target_transform.origin - current_transform.origin
+
+				#if position_difference.length_squared() > 1.0:
+					#b.global_position = target_transform.origin
+				#else:
+					#var force: Vector3 = hookes_law(position_difference, b.linear_velocity, linear_spring_stiffness, linear_spring_damping)
+					#force = force.limit_length(max_linear_force)
+					#b.linear_velocity += (force * delta)
+
+				var torque = hookes_law(rotation_difference.get_euler(), b.angular_velocity, angularSpringStiffness, angularSpringDamping)
+				torque = torque.limit_length(maxAngularForce)
+				b.angular_velocity += torque * delta
+				#setAngularMotorTargetVelocity(b,torque)
+				#setAngularMotor(b,true)
+				#setAngularMotorForceLimit(b,maxAngularForce)
+	else:
+		activeRagdollEnabled = false
 
 func setAngularMotorTargetVelocity(b:PhysicalBone3D,value:Vector3 = Vector3.ZERO):
 	b.set("joint_constraints/x/target_velocity",value.x)

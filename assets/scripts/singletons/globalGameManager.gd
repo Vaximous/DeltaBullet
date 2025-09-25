@@ -213,7 +213,7 @@ func initDropletPool()->void:
 		var d : BloodDroplet = preload("res://assets/entities/emitters/bloodDroplet/bloodDrop.tscn").instantiate()
 		d.hide()
 		if world:
-			world.worldParticles.add_child(d)
+			world.pooledObjects.add_child(d)
 			droplet_pool.append(d)
 
 #endregion

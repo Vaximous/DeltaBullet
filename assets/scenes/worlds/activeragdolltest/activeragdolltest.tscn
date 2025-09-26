@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=3 uid="uid://1uuvtqrmyqus"]
+[gd_scene load_steps=57 format=3 uid="uid://1uuvtqrmyqus"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_fy66m"]
 [ext_resource type="PackedScene" uid="uid://boicvk4qeqmbd" path="res://assets/entities/pawnSpawn/pawnSpawn.tscn" id="2_mn033"]
@@ -6,7 +6,6 @@
 [ext_resource type="AudioStream" uid="uid://ddfe5wktqvtp8" path="res://assets/sounds/ambient/toomba.mp3" id="3_7jnid"]
 [ext_resource type="AudioStream" uid="uid://dueh83f2ybvgv" path="res://assets/sounds/ambient/515704_Destruction-Reigns.mp3" id="3_yb1nc"]
 [ext_resource type="PackedScene" uid="uid://wtqya32cwdbk" path="res://assets/entities/weapons/Beretta/Beretta.tscn" id="4_a2bgr"]
-[ext_resource type="CompressedTexture3D" uid="uid://sr0kr5d88j54" path="res://assets/textures/misc/neutral-lut.png" id="4_qmki0"]
 [ext_resource type="Texture2D" uid="uid://bljmnrakvy4dt" path="res://assets/scenes/worlds/activeragdolltest/loader.png" id="5_6wdlm"]
 [ext_resource type="Texture2D" uid="uid://dvfkpbe83xcf4" path="res://assets/textures/panoramas/panoramatest3.png" id="5_moksx"]
 [ext_resource type="PackedScene" uid="uid://bn07wnk5k005c" path="res://assets/entities/weapons/HoneyBadger/honeybadger.tscn" id="5_pk0d2"]
@@ -34,6 +33,9 @@
 [ext_resource type="Texture2D" uid="uid://4jvae4k8kvoo" path="res://assets/textures/areas/wood/sawnLumber_Normal.png" id="32_hd3li"]
 [ext_resource type="Texture2D" uid="uid://lscokuqc7gqv" path="res://assets/textures/areas/wood/sawnLumber_Roughness.png" id="33_okfmn"]
 
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_rtu2k"]
+panorama = ExtResource("5_moksx")
+
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_14nxj"]
 streams_count = 2
 stream_0/stream = ExtResource("3_yb1nc")
@@ -41,35 +43,46 @@ stream_1/stream = ExtResource("3_7jnid")
 
 [sub_resource type="Resource" id="Resource_vjbvd"]
 script = ExtResource("2_mvtic")
+skyTexture = SubResource("PanoramaSkyMaterial_rtu2k")
 worldName = "Active Ragdoll Testing"
 worldDescription = "You're not supposed to be here.."
 worldLoadingTexture = ExtResource("5_6wdlm")
 soundScape = SubResource("AudioStreamRandomizer_14nxj")
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_y3yir"]
+[sub_resource type="Gradient" id="Gradient_tipwx"]
+offsets = PackedFloat32Array(0, 0.07621247, 0.36720553, 1)
+colors = PackedColorArray(0.00593019, 1.2032687e-07, 0.09481714, 1, 0.052353777, 0.07570592, 0.124175064, 1, 0.34062108, 0.37052992, 0.41018295, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_afll2"]
+gradient = SubResource("Gradient_tipwx")
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_p26y2"]
 panorama = ExtResource("5_moksx")
 
-[sub_resource type="Sky" id="Sky_g0fvd"]
-sky_material = SubResource("PanoramaSkyMaterial_y3yir")
+[sub_resource type="Sky" id="Sky_nj1fe"]
+sky_material = SubResource("PanoramaSkyMaterial_p26y2")
 
-[sub_resource type="Environment" id="Environment_ly0hw"]
+[sub_resource type="Environment" id="Environment_qqkv5"]
 background_mode = 2
-background_energy_multiplier = 0.55
-sky = SubResource("Sky_g0fvd")
-ambient_light_source = 3
+sky = SubResource("Sky_nj1fe")
 reflected_light_source = 1
 tonemap_mode = 3
-tonemap_white = 1.85
-ssr_enabled = true
 ssao_enabled = true
+ssao_intensity = 3.5
+ssao_power = 1.5529
+ssao_detail = 5.0
+ssao_horizon = 0.07
 ssil_enabled = true
 ssil_intensity = 0.75
-sdfgi_enabled = true
+ssil_sharpness = 0.45
+ssil_normal_rejection = 0.0
 sdfgi_use_occlusion = true
 sdfgi_y_scale = 2
 glow_enabled = true
+glow_levels/5 = 0.0
+glow_levels/6 = 1.0
 glow_normalized = true
-glow_bloom = 0.15
+glow_bloom = 0.1
 glow_blend_mode = 1
 fog_light_energy = 0.0
 fog_sun_scatter = 0.17
@@ -77,10 +90,11 @@ fog_density = 0.009
 fog_sky_affect = 0.765
 fog_height = 96.8
 fog_height_density = 0.089
-volumetric_fog_density = 0.0112
+volumetric_fog_density = 0.2457
+volumetric_fog_albedo = Color(0.848227, 0.767118, 0.651965, 1)
 adjustment_enabled = true
-adjustment_saturation = 1.15
-adjustment_color_correction = ExtResource("4_qmki0")
+adjustment_saturation = 0.9
+adjustment_color_correction = SubResource("GradientTexture1D_afll2")
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_57wiy"]
 vertices = PackedVector3Array(5.2640076, 0.52, -5.735901, 5.2640076, 0.52, -4.235901, 77.51401, 0.52, -4.485901, 4.2640076, 0.52, -5.985901, 77.51401, 0.52, -166.9859, 4.5140076, 0.52, 117.0141, 4.5140076, 0.52, 8.764099, 4.0140076, 0.52, 8.514099, -308.736, 0.52, 117.0141, -308.736, 0.52, -166.9859, 5.2640076, 0.52, 7.014099, 77.51401, 0.52, 7.264099, 5.2640076, 0.52, 8.514099, 77.51401, 0.52, 117.0141)
@@ -318,7 +332,6 @@ pawnType = 0
 pawnWeapons = Array[PackedScene]([ExtResource("4_a2bgr"), ExtResource("5_pk0d2"), ExtResource("6_81xn8")])
 pawnClothing = Array[PackedScene]([ExtResource("7_qm1ts"), ExtResource("8_30e07"), ExtResource("9_oa5hw"), ExtResource("10_ogp5d")])
 hatedGroups = Array[StringName]([&"Player", &"Hostile"])
-randomAnimationSpeed = false
 
 [node name="pawnSpawn" parent="Spawns/pawnSpawns" index="0" groups=["badboss"] instance=ExtResource("2_mn033")]
 transform = Transform3D(-0.863642, 0, 0.504106, 0, 1, 0, -0.504106, 0, -0.863642, 7.89555, 0.5, 2.78226)
@@ -329,11 +342,10 @@ pawnClothing = Array[PackedScene]([ExtResource("14_bhjxw"), ExtResource("15_wjsd
 equipWeaponOnSpawn = true
 weaponToEquip = 2
 pawnHP = 3500
-randomAnimationSpeed = false
 pawnColor = Color(0.926594, 0.735976, 0.847277, 1)
 
 [node name="worldEnvironment" parent="Environment" index="0"]
-environment = SubResource("Environment_ly0hw")
+environment = SubResource("Environment_qqkv5")
 
 [node name="reflectionProbe" parent="Environment" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -111.999, 10.6119, -24.2307)
@@ -366,24 +378,26 @@ shape = SubResource("BoxShape3D_6khn8")
 
 [node name="pawnRagdoll" parent="Props" index="0" instance=ExtResource("15_4qgq4")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1.13853, 0.5, -0.267807)
+maxAngularForce = 500.0
+angularSpringStiffness = 25000.0
 activeRagdollEnabled = true
 startOnInstance = true
 
 [node name="Physical Bone Spine_0" parent="Props/pawnRagdoll/Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" index="0"]
-transform = Transform3D(1, 2.1767819e-07, -1.6390493e-07, -1.5777272e-07, -0.027878318, -0.9996114, -2.2216297e-07, 0.9996113, -0.027878318, 0.0745728, 0.9370713, -0.09298587)
-joint_offset = Transform3D(-3.6199901e-06, 0, 1, 0, 1, 0, -1, 0, -3.6199901e-06, -0.07602075, -2.0456451e-05, 0.069517106)
+transform = Transform3D(1, 2.1767819e-07, -1.6390493e-07, -1.5777272e-07, -0.027878318, -0.9996114, -2.2216297e-07, 0.9996113, -0.027878318, 0.0782876, 0.9370713, -0.09298587)
+joint_offset = Transform3D(-3.6199901e-06, 0, 1, 0, 1, 0, -1, 0, -3.6199901e-06, -0.07973551, -2.045636e-05, 0.069517106)
 joint_rotation = Vector3(0, 1.5708, 0)
-body_offset = Transform3D(1.000009, -2.4466488e-08, -1.5645514e-07, -1.5645442e-07, -2.37301e-06, -1.000004, 2.4465919e-08, 1.000003, -2.3711473e-06, 0.07602143, 0.069517374, 2.0623207e-05)
+body_offset = Transform3D(1.000009, -2.4466488e-08, -1.5645514e-07, -1.5645442e-07, -2.37301e-06, -1.000004, 2.4465919e-08, 1.000003, -2.3711473e-06, 0.07973623, 0.069517374, 2.0623207e-05)
 
 [node name="Physical Bone Spine_1" parent="Props/pawnRagdoll/Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" index="1"]
-transform = Transform3D(1, 2.2094525e-07, 1.0434321e-06, 1.0324239e-06, 0.045031812, -0.99898565, -2.6770874e-07, 0.9989856, 0.045031812, 0.07593274, 1.1084656, -0.09575111)
-joint_offset = Transform3D(-3.61999e-06, 0, 1, 0, 1, 0, -1, 0, -3.61999e-06, -0.077380784, 1.364272e-05, 0.10304091)
-body_offset = Transform3D(1.0000091, -2.5568369e-08, 1.0535688e-06, 1.0535795e-06, 1.0915101e-06, -1.0000191, 2.5567687e-08, 1.000018, 9.49949e-07, 0.07738137, 0.10304296, -1.3738871e-05)
+transform = Transform3D(1, 2.2094525e-07, 1.0434321e-06, 1.0324239e-06, 0.045031812, -0.99898565, -2.6770874e-07, 0.9989856, 0.045031812, 0.08071983, 1.1084656, -0.09575111)
+joint_offset = Transform3D(-3.61999e-06, 0, 1, 0, 1, 0, -1, 0, -3.61999e-06, -0.08216783, 1.36428425e-05, 0.103040904)
+body_offset = Transform3D(1.0000091, -2.5568369e-08, 1.0535688e-06, 1.0535795e-06, 1.0915101e-06, -1.0000191, 2.5567687e-08, 1.000018, 9.49949e-07, 0.08216846, 0.10304296, -1.3738871e-05)
 
 [node name="Physical Bone Spine_2" parent="Props/pawnRagdoll/Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" index="2"]
-transform = Transform3D(1, 1.8547381e-07, 1.8638768e-06, 1.8393488e-06, 0.09076515, -0.9958723, -3.538833e-07, 0.9958723, 0.090765156, 0.07505894, 1.3401556, -0.112238884)
-joint_offset = Transform3D(-3.61999e-06, 0, 1, 0, 1, 0, -1, 0, -3.61999e-06, -0.07650713, 5.7405323e-06, 0.13192414)
-body_offset = Transform3D(1.000009, -6.0802506e-08, 1.873873e-06, 1.8738731e-06, 9.0897083e-07, -1.000009, 6.080114e-08, 1.000008, 6.854534e-07, 0.07650757, 0.13192546, -5.826354e-06)
+transform = Transform3D(1, 1.8547381e-07, 1.8638768e-06, 1.8393488e-06, 0.09076515, -0.9958723, -3.538833e-07, 0.9958723, 0.090765156, 0.07877374, 1.3401556, -0.112238884)
+joint_offset = Transform3D(-3.61999e-06, 0, 1, 0, 1, 0, -1, 0, -3.61999e-06, -0.0802219, 5.740758e-06, 0.13192414)
+body_offset = Transform3D(1.000009, -6.0802506e-08, 1.873873e-06, 1.8738731e-06, 9.0897083e-07, -1.000009, 6.080114e-08, 1.000008, 6.854534e-07, 0.08022237, 0.13192546, -5.826354e-06)
 
 [node name="Physical Bone L_UpperArm" parent="Props/pawnRagdoll/Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" index="3"]
 transform = Transform3D(-0.022378767, 0.9117354, -0.4101681, 0.04966382, 0.41077816, 0.91038173, 0.99851525, 2.70571e-06, -0.054472968, 0.1764512, 1.3165475, -0.14281097)
@@ -396,9 +410,9 @@ joint_offset = Transform3D(-3.61999e-06, 0, -1, 0, 1, 0, 1, 0, -3.61999e-06, 9.6
 body_offset = Transform3D(1.000025, 6.7963265e-06, -1.3694167e-05, -1.6391277e-06, -1.2596138e-07, -1.0000162, 1.2670644e-06, 1.0000027, 1.15297735e-05, -9.484589e-05, 0.12766838, 4.7683716e-06)
 
 [node name="Physical Bone L_Hand" parent="Props/pawnRagdoll/Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" index="5"]
-transform = Transform3D(0.8050855, 0.52410805, -0.2777557, 0.57691306, -0.5830381, 0.5720472, 0.13787232, -0.6207877, -0.7717602, 0.37783563, 0.9662491, -0.040636778)
-joint_offset = Transform3D(-3.61999e-06, 0, -1, 0, 1, 0, 1, 0, -3.61999e-06, -7.546041e-06, -3.1533127e-06, 0.047656063)
-body_offset = Transform3D(0.13271615, -0.7074886, -0.6941921, -7.4040145e-06, 0.70036274, -0.7137933, 0.9911674, 0.09472125, 0.09294701, 0.033081234, 0.034018785, -0.004421711)
+transform = Transform3D(0.8050855, 0.52410805, -0.27775565, 0.57691306, -0.5830381, 0.5720471, 0.13787232, -0.6207877, -0.7717602, 0.37783563, 0.9662491, -0.040636778)
+joint_offset = Transform3D(-3.61999e-06, 0, -1, 0, 1, 0, 1, 0, -3.61999e-06, -7.5455755e-06, -3.151421e-06, 0.047656063)
+body_offset = Transform3D(0.13271615, -0.7074886, -0.6941921, -7.4040145e-06, 0.70036274, -0.71379334, 0.9911674, 0.09472125, 0.09294701, 0.033081234, 0.034018785, -0.004421711)
 
 [node name="Physical Bone R_UpperArm" parent="Props/pawnRagdoll/Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" index="6"]
 transform = Transform3D(-0.02237934, -0.91173476, 0.41016942, -0.04966414, 0.41077948, 0.91038114, -0.99851525, 3.017386e-06, -0.054473497, -0.18651366, 1.3106169, -0.1410949)
@@ -416,9 +430,9 @@ joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00020504883, 0.00031413
 body_offset = Transform3D(0.15380856, 0.69019437, 0.7071079, 7.206574e-06, 0.71562135, -0.6985319, -0.9881024, 0.10743176, 0.11005772, -0.03295721, 0.032149673, -0.0053371415)
 
 [node name="Physical Bone L_UpperLeg" parent="Props/pawnRagdoll/Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" index="9"]
-transform = Transform3D(0.9814518, -0.0031493877, -0.19168353, 0.19158295, 0.05242316, 0.9800754, 0.00696202, -0.99862, 0.05205417, 0.08594775, 0.66932833, -0.105478644)
-joint_offset = Transform3D(-3.61999e-06, 0, 1, 0, 1, 0, -1, 0, -3.61999e-06, -0.00025423022, -3.7942611e-06, 0.20233369)
-body_offset = Transform3D(0.99999887, -3.16184e-07, -2.5716145e-06, -6.9182715e-07, -1.6391277e-07, -1.0000283, 2.8917566e-07, 1.000003, -1.0058284e-07, 0.00025475025, 0.20233941, 3.8146973e-06)
+transform = Transform3D(0.98145175, -0.0031493863, -0.1916835, 0.19158292, 0.05242316, 0.9800754, 0.0069620195, -0.99862, 0.05205417, 0.08594775, 0.66932833, -0.105478644)
+joint_offset = Transform3D(-3.61999e-06, 0, 1, 0, 1, 0, -1, 0, -3.61999e-06, -0.0002542332, -3.7942611e-06, 0.20233369)
+body_offset = Transform3D(0.9999989, -3.1571835e-07, -2.5567133e-06, -6.9176895e-07, -1.6391277e-07, -1.0000283, 2.8917566e-07, 1.000003, -1.0058284e-07, 0.00025475025, 0.20233941, 3.8146973e-06)
 
 [node name="Physical Bone L_LowerLeg" parent="Props/pawnRagdoll/Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" index="10"]
 transform = Transform3D(0.9904941, -0.00058933924, -0.13755414, 0.13732007, 0.06270561, 0.98854, 0.008042831, -0.998032, 0.062190462, 0.15117884, 0.27711356, -0.1282529)
@@ -446,15 +460,15 @@ joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.003106709, -0.004627254
 body_offset = Transform3D(1.0000005, 0.00035046786, 0.00020702183, 0.00021483004, 0.0003683567, -1.0000145, -0.00035621226, 1.0000236, 0.00039425492, 0.00310421, 0.019914687, 0.0046184063)
 
 [node name="Physical Bone Neck" parent="Props/pawnRagdoll/Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" index="15"]
-transform = Transform3D(-1, -2.2429191e-08, -7.952007e-09, 7.801629e-09, 0.0066966084, -0.9999776, 2.2481942e-08, -0.9999776, -0.006696608, 0.07642019, 1.5043373, -0.11770117)
+transform = Transform3D(-1, -2.3396083e-08, -7.958482e-09, 7.801629e-09, 0.0066966084, -0.9999776, 2.3448848e-08, -0.9999776, -0.006696608, 0.08169472, 1.5043373, -0.11770117)
 axis_lock_linear_x = true
 axis_lock_linear_y = true
 axis_lock_linear_z = true
 axis_lock_angular_x = true
 axis_lock_angular_y = true
 axis_lock_angular_z = true
-joint_offset = Transform3D(1, 1.49012e-08, 4.44089e-16, -1.49012e-08, 1, 2.98023e-08, 1.00585e-21, -2.98023e-08, 1, 0.07786811, 0.0059619728, 0.036155306)
-body_offset = Transform3D(-1.0000091, 2.2524215e-07, 6.300873e-10, 8.7834473e-10, 0.0066968547, -0.99998766, -2.2524137e-07, -0.9999867, -0.006696893, 0.07786882, 0.03611493, 0.006204039)
+joint_offset = Transform3D(1, 1.49012e-08, 4.44089e-16, -1.49012e-08, 1, 2.98023e-08, 1.00585e-21, -2.98023e-08, 1, 0.0831426, 0.0059619714, 0.036155306)
+body_offset = Transform3D(-1.0000091, 2.2427525e-07, 6.236116e-10, 8.7834456e-10, 0.0066968547, -0.99998766, -2.2427444e-07, -0.9999867, -0.006696893, 0.08314335, 0.03611493, 0.006204039)
 
 [node name="untitled" parent="Props" index="1" instance=ExtResource("7_4j4hu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.7448, 0.5, -3.38265)
@@ -589,8 +603,8 @@ joint_constraints/x/linear_equilibrium_point = 0.0
 joint_constraints/x/linear_restitution = 0.5
 joint_constraints/x/linear_damping = 1.0
 joint_constraints/x/angular_limit_enabled = true
-joint_constraints/x/angular_limit_upper = 78.969986
-joint_constraints/x/angular_limit_lower = -90.33998
+joint_constraints/x/angular_limit_upper = 78.96997
+joint_constraints/x/angular_limit_lower = -90.33997
 joint_constraints/x/angular_limit_softness = 0.5
 joint_constraints/x/angular_restitution = 0.0
 joint_constraints/x/angular_damping = 1.0

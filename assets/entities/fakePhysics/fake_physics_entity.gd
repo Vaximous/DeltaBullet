@@ -10,9 +10,9 @@ var rotational_velocity : Vector3
 var first_bounce = true
 var colNormal : Vector3
 
-
-
-
+func _enter_tree() -> void:
+	await get_tree().process_frame
+	gameManager.registerPhysicsEntity(self)
 
 func _ready() -> void:
 	#gameManager.beginCleanup()

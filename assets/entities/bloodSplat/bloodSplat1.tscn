@@ -23,6 +23,7 @@
 resource_name = "bloodSplatHandler"
 script/source = "extends Node3D
 class_name bloodSplatHandler
+var removing : bool = false
 @onready var dropletSound : AudioStreamPlayer3D = $dropletSound
 @onready var splatDecal : Decal = $bloodSplat1
 const defaultTweenSpeed : float = 0.25
@@ -41,6 +42,7 @@ var splatTween : Tween
 
 
 func _enter_tree() -> void:
+	gameManager.registerDecal(self)
 	#gameManager.decals.erase(self)
 	#gameManager.decalAmountCheck()
 	pass
@@ -60,10 +62,12 @@ func _ready()->void:
 	#decalCollisionCheck(Vector3(maxSize,maxSize,maxSize))
 
 func deleteSplat()->void:
-	if splatTween:
-		splatTween.kill()
-	splatTween = create_tween().set_ease(defaultEaseType).set_trans(defaultTransitionType)
-	await splatTween.tween_property(splatDecal,\"modulate\",Color.TRANSPARENT,0.25).finished
+	if !removing:
+		removing = true
+		if splatTween:
+			splatTween.kill()
+		splatTween = create_tween().set_ease(defaultEaseType).set_trans(defaultTransitionType)
+		await splatTween.tween_property(splatDecal,\"modulate\",Color.TRANSPARENT,0.25).finished
 	queue_free()
 
 func _on_visible_on_screen_notifier_3d_screen_entered()->void:

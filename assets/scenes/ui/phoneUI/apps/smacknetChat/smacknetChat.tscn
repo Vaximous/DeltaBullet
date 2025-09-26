@@ -1,0 +1,65 @@
+[gd_scene load_steps=3 format=3 uid="uid://ct46ybrwhjaub"]
+
+[ext_resource type="Script" uid="uid://dem6ygiy6dcp2" path="res://assets/scenes/ui/phoneUI/apps/smacknetChat/smacknet_chat.gd" id="1_srtse"]
+[ext_resource type="AudioStream" uid="uid://bpnc5gaooaoo6" path="res://assets/sounds/ui/smacknet/connectedChat.wav" id="2_3ucit"]
+
+[node name="smacknetChat" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_srtse")
+
+[node name="chat" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="topbar" type="HBoxContainer" parent="chat"]
+layout_mode = 2
+
+[node name="back" type="Button" parent="chat/topbar"]
+layout_mode = 2
+text = "<"
+
+[node name="label" type="Label" parent="chat/topbar"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Smacknet. Chat!"
+horizontal_alignment = 1
+
+[node name="hSeparator" type="HSeparator" parent="chat"]
+layout_mode = 2
+
+[node name="vBoxContainer" type="VBoxContainer" parent="chat"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="panelContainer" type="PanelContainer" parent="chat/vBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="richTextLabel" type="RichTextLabel" parent="chat/vBoxContainer/panelContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "Chat!"
+
+[node name="hSeparator" type="HSeparator" parent="chat/vBoxContainer"]
+layout_mode = 2
+
+[node name="lineEdit" type="LineEdit" parent="chat/vBoxContainer"]
+layout_mode = 2
+placeholder_text = "Type here to chat."
+
+[node name="connectionSuccess" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("2_3ucit")
+volume_db = -6.228
+bus = &"UI"
+
+[node name="userLeftChannel" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+
+[node name="messageSent" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+
+[connection signal="pressed" from="chat/topbar/back" to="." method="queue_free"]

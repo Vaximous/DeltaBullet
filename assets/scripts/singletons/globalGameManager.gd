@@ -4,6 +4,15 @@ extends Node
 #region Signals
 # Signals
 signal freeOrphans
+signal worldLoaded
+#endregion
+
+#region Pooling
+#BloodDroplet Pooling
+const MAX_DROPLETS = 64
+var droplet_pool: Array[BloodDroplet] = []
+var droplet_index := 0
+
 #endregion
 
 #region Constants
@@ -59,6 +68,9 @@ var sounds: Dictionary = {
 
 #region Misc
 # Misc
+var ragdolls: Array
+var physEntities: Array
+var decals : Array
 var lastConsolePosition: Vector2 = Vector2(25, 62)
 var orphanedData := []
 var richPresenceEnabled: bool = false
@@ -109,8 +121,12 @@ var isMultiplayerGame: bool = false
 #region Lifecycle
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	SmackneckClient.masterserver_connected.connect(sm_PushGame)
+	worldLoaded.connect(initDropletPool)
+	UserConfig.configs_updated.connect(cleanupChecker)
 	add_child(soundPlayer)
 	initializeSteam()
+	SmackneckClient.connect_to_masterserver()
 	DisplayServer.window_set_title(ProjectSettings.get_setting("application/config/name"))
 	soundPlayer.name = "globalSoundPlayer"
 	if !userDir.dir_exists("saves"):
@@ -120,13 +136,36 @@ func _ready() -> void:
 	if richPresenceEnabled:
 		pass
 
-func cleanupWorld() -> void:
-	physEntityCheck()
-	await decalAmountCheck()
-	#worldCleanup.emit()
+func sm_PushGame()->void:
+	SmackneckClient.put_message("MESSAGE",{"msg":"set_game", "game": "Delta Bullet"})
+
+func cleanupChecker()->void:
+	if decals.size() >= UserConfig.game_max_decals:
+		for i in decals:
+			if is_instance_valid(i):
+				if i.has_method("deleteSplat"):
+					i.call_deferred("deleteSplat")
+				elif i.has_method("deletePool"):
+					i.call_deferred("deletePool")
+				elif i.has_method("deleteHole"):
+					i.call_deferred("deleteHole")
+			else:
+				decals.erase(i)
+		decals.clear()
+
+	if physEntities.size() >= UserConfig.game_max_physics_entities:
+		for i in physEntities:
+			if is_instance_valid(i):
+				i.queue_free()
+			else:
+				decals.erase(i)
+		physEntities.clear()
 
 
 func _process(delta: float) -> void:
+		#physEntities = Engine.get_main_loop().get_nodes_in_group(&"physicsEntity")
+		#decals = Engine.get_main_loop().get_nodes_in_group(&"decal")
+
 	#Set audio pitch to match timescale
 	AudioServer.playback_speed_scale = Engine.time_scale
 	#physEntityCheck()
@@ -134,6 +173,13 @@ func _process(delta: float) -> void:
 #endregion
 
 #region Gameplay Effects
+func pawnKillSlowMo()->void:
+	if gameManager.getCurrentPawn() and !gameManager.bulletTime:
+		gameManager.bulletTime = false
+		Engine.time_scale = 0.3
+		var tween = gameManager.world.create_tween()
+		tween.tween_property(Engine,"time_scale",1,1)
+
 func burnTarget(node: Node3D, burnTime: float = 10, burnDamage: float = 3.5):
 	if node.has_method("hit") or node.has_meta("isFlammable") and node.get_meta("isFlammable") == true and !node.get_meta("isBurning"):
 		node.set_meta("isBurning", true)
@@ -160,6 +206,18 @@ func freeOrphanNodes():
 	freeOrphans.emit()
 #endregion
 
+#region Pooling Funcs
+func initDropletPool()->void:
+	droplet_pool.clear()
+	for i in MAX_DROPLETS:
+		var d : BloodDroplet = preload("res://assets/entities/emitters/bloodDroplet/bloodDrop.tscn").instantiate()
+		d.hide()
+		if world:
+			world.pooledObjects.add_child(d)
+			droplet_pool.append(d)
+
+#endregion
+
 #region Phone Calls
 func queuePhoneCall(dialogue: ActorDialogue) -> void:
 	if getCurrentPawn():
@@ -184,7 +242,6 @@ func playDialogue2D(dialogue: ActorDialogue) -> AudioStreamPlayer:
 	if world:
 		var audioPlayer = AudioStreamPlayer.new()
 		audioPlayer.add_to_group(&"phonecall")
-		audioPlayer.bus = &"Sounds"
 		world.worldMisc.add_child(audioPlayer)
 		#print(dialogue.actorAudios.size())
 		if audioPlayer and is_instance_valid(dialogue):
@@ -195,6 +252,7 @@ func playDialogue2D(dialogue: ActorDialogue) -> AudioStreamPlayer:
 					audioPlayer.finished.connect(audioPlayer.queue_free)
 				if getCurrentPawn():
 					subtitle = getCurrentPawn().attachedCam.createSubtitle(dialogue.actorAudios[i].audioResource)
+				audioPlayer.bus = &"Voice"
 				audioPlayer.stream = dialogue.actorAudios[i].audioResource.audioStream
 				audioPlayer.play()
 				await audioPlayer.finished
@@ -520,20 +578,32 @@ func castRay(cam: Camera3D, range: float = 50000, mask := 0b10111, exceptions: A
 #region Blood Effects
 func createDroplet(position: Vector3, velocity: Vector3 = Vector3.ONE, amount: int = 1, normal: Vector3 = Vector3.UP, allowRandomFlip: bool = true):
 	if is_instance_valid(world):
-		for i in amount:
-			#var flipVel = [true,false].pick_random()
-			var droplet: BloodDroplet = bloodDrop.instantiate()
-			droplet.norm = normal
-			world.worldParticles.add_child(droplet)
-			droplet.global_position = position
-			if allowRandomFlip:
-				var flipVel = [true, false].pick_random()
-				if !flipVel:
-					droplet.velocity += Vector3(velocity.x * randf_range(-1, 2), velocity.y * randf_range(-1, 2), velocity.z * randf_range(-1, 2))
-				else:
-					droplet.velocity += -Vector3(velocity.x * randf_range(-1, 2), velocity.y * randf_range(-1, 2), velocity.z * randf_range(-1, 2))
+		var d = droplet_pool[droplet_index]
+		droplet_index = (droplet_index + 1) % MAX_DROPLETS
+		if allowRandomFlip:
+			var flipVel = [true, false].pick_random()
+			if !flipVel:
+				d.reset(position, Vector3(velocity.x * randf_range(-1, 2), velocity.y * randf_range(-1, 2), velocity.z * randf_range(-1, 2)), normal)
 			else:
-				droplet.velocity += Vector3(velocity.x * randf_range(1, 3), velocity.y * randf_range(1, 3), velocity.z * randf_range(1, 3))
+				d.reset(position, -Vector3(velocity.x * randf_range(-1, 2), velocity.y * randf_range(-1, 2), velocity.z * randf_range(-1, 2)), normal)
+		else:
+			d.reset(position, velocity, normal)
+		d.show()
+		#OLD CODE
+		#for i in amount:
+			##var flipVel = [true,false].pick_random()
+			#var droplet: BloodDroplet = bloodDrop.instantiate()
+			#droplet.norm = normal
+			#world.worldParticles.add_child(droplet)
+			#droplet.global_position = position
+			#if allowRandomFlip:
+				#var flipVel = [true, false].pick_random()
+				#if !flipVel:
+					#droplet.velocity += Vector3(velocity.x * randf_range(-1, 2), velocity.y * randf_range(-1, 2), velocity.z * randf_range(-1, 2))
+				#else:
+					#droplet.velocity += -Vector3(velocity.x * randf_range(-1, 2), velocity.y * randf_range(-1, 2), velocity.z * randf_range(-1, 2))
+			#else:
+				#droplet.velocity += Vector3(velocity.x * randf_range(1, 3), velocity.y * randf_range(1, 3), velocity.z * randf_range(1, 3))
 #endregion
 
 #region Event Signals
@@ -662,6 +732,8 @@ func loadWorld(worldscene: String, fadein: bool = false) -> void:
 	stopPhoneCall()
 	targetedEnemies.clear()
 	playerPawns.clear()
+	decals.clear()
+	physEntities.clear()
 	get_tree().change_scene_to_file("res://assets/scenes/menu/loadingscreen/emptyLoaderScene.tscn")
 	await get_tree().process_frame
 	allPawns.clear()
@@ -904,7 +976,7 @@ func get_from_mouse(length: float = 1000, worldObject: Node3D = gameManager.worl
 
 #region Motion Blur
 func setMotionBlur(camera: Camera3D) -> void:
-	if !UserConfig.configs_updated.is_connected(setMotionBlur.bind(camera)):
+	if !UserConfig.configs_updated.is_connected(setMotionBlur):
 		UserConfig.configs_updated.connect(setMotionBlur.bind(camera))
 	if UserConfig.graphics_motion_blur:
 		if camera.compositor == null:
@@ -1095,17 +1167,19 @@ func createSoundAtPosition(stream: AudioStream, position: Vector3):
 
 #region Decal Amount
 func decalAmountCheck() -> void:
-	var decals = Engine.get_main_loop().get_nodes_in_group(&"decal")
+	#decals = Engine.get_main_loop().get_nodes_in_group(&"decal")
 	#print(decals)
-	while decals.size() > UserConfig.game_max_decals:
-		if is_instance_valid(decals[0]):
-			if decals[0].has_method("deleteSplat"):
-				decals[0].deleteSplat()
-			elif decals[0].has_method("deletePool"):
-				decals[0].deletePool()
-			elif decals[0].has_method("deleteHole"):
-				decals[0].deleteHole()
-			decals.remove_at(0)
+	while get_tree().get_nodes_in_group(&"decal").size() > UserConfig.game_max_decals:
+		if is_instance_valid(get_tree().get_nodes_in_group(&"decal")[0]):
+			if get_tree().get_nodes_in_group(&"decal")[0].has_method("deleteSplat"):
+				get_tree().get_nodes_in_group(&"decal")[0].call_deferred("deleteSplat")
+			elif get_tree().get_nodes_in_group(&"decal")[0].has_method("deletePool"):
+				get_tree().get_nodes_in_group(&"decal")[0].call_deferred("deletePool")
+			elif get_tree().get_nodes_in_group(&"decal")[0].has_method("deleteHole"):
+				get_tree().get_nodes_in_group(&"decal")[0].call_deferred("deleteHole")
+			get_tree().get_nodes_in_group(&"decal").remove_at(0)
+			await get_tree().process_frame
+			#Engine.get_main_loop().get_nodes_in_group(&"decal").remove_at(0)
 	return
 #endregion
 
@@ -1134,14 +1208,59 @@ func createPulverizeSound(pPosition: Vector3 = Vector3.ZERO) -> void:
 	pulverizeSound.play()
 #endregion
 
+func registerDecal(decal:Node3D)->void:
+	decal.tree_exited.connect(removeFromArrayOnExitTree.bind(decal,decals))
+	for i in decals:
+		if !is_instance_valid(i):
+			decals.erase(i)
+
+	decals.append(decal)
+
+	if decals.size() > UserConfig.game_max_decals:
+		var oldest = decals.pop_front()
+		if is_instance_valid(oldest):
+			if oldest.has_method("deleteSplat"):
+				oldest.call_deferred("deleteSplat")
+			elif oldest.has_method("deletePool"):
+				oldest.call_deferred("deletePool")
+			elif oldest.has_method("deleteHole"):
+				oldest.call_deferred("deleteHole")
+
+func removeFromArrayOnExitTree(node:Node3D,array:Array):
+	if array.has(node):
+		array.erase(node)
+
+func registerRagdoll(ragdoll:PawnRagdoll)->void:
+	ragdoll.tree_exited.connect(removeFromArrayOnExitTree.bind(ragdoll,ragdolls))
+	for i in ragdolls:
+		if !is_instance_valid(i):
+			physEntities.erase(i)
+
+	ragdolls.append(ragdoll)
+	if ragdolls.size() > UserConfig.game_max_ragdolls:
+		var oldest = ragdolls.pop_front()
+		if is_instance_valid(oldest):
+			oldest.queue_free()
+
+func registerPhysicsEntity(entity:Node3D)->void:
+	entity.tree_exited.connect(removeFromArrayOnExitTree.bind(entity,physEntities))
+	for i in physEntities:
+		if !is_instance_valid(i):
+			physEntities.erase(i)
+
+	physEntities.append(entity)
+	if physEntities.size() > UserConfig.game_max_physics_entities:
+		var oldest = physEntities.pop_front()
+		if is_instance_valid(oldest):
+			oldest.queue_free()
+
 #region Physics Entity Check
 func physEntityCheck() -> void:
-	var physEntities: Array = Engine.get_main_loop().get_nodes_in_group(&"physicsEntity")
-	#print(physEntities)
-	while physEntities.size() > UserConfig.game_max_physics_entities:
-		if is_instance_valid(physEntities[0]):
-			physEntities[0].queue_free()
-			physEntities.remove_at(0)
+	while get_tree().get_nodes_in_group(&"physicsEntity").size() > UserConfig.game_max_physics_entities:
+		if is_instance_valid(get_tree().get_nodes_in_group(&"physicsEntity")[0]):
+			get_tree().get_nodes_in_group(&"physicsEntity")[0].call_deferred("queue_free")
+			get_tree().get_nodes_in_group(&"physicsEntity").remove_at(0)
+			await get_tree().process_frame
 	return
 #endregion
 

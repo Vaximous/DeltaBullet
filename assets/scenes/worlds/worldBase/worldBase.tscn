@@ -76,11 +76,11 @@ physics_interpolation_mode = 1
 _spawnable_scenes = PackedStringArray("uid://c1r6apfs6eb8j")
 spawn_path = NodePath("../../Pawns/Players")
 
+[node name="pooledObjects" type="Node" parent="Misc"]
+
 [node name="GamePauseMenu" parent="." instance=ExtResource("3_2mura")]
 physics_interpolation_mode = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="mapLogic" type="Node" parent="."]
 physics_interpolation_mode = 1
-
-[connection signal="worldLoaded" from="." to="." method="playSoundscape"]

@@ -26,6 +26,7 @@ var config = UserConfig
 var GameState = gameState
 var _gameManager = gameManager
 var _questManager = questManager
+var smClient = SmackneckClient
 var userDir = ProjectSettings.globalize_path("user://")
 var help:
 	get:
@@ -185,6 +186,8 @@ func spawnNode(node : Node, parent : Node = null) -> Node:
 	parent.add_child(node)
 	return node
 
+func getAudioBusVol(bus:int)->float:
+	return AudioServer.get_bus_volume_db(bus)
 
 func setTimescale(value : float = 1.0) -> void:
 	Engine.time_scale = clamp(value, 0.0, 10.0)

@@ -1,9 +1,9 @@
 @tool
 extends Node
 class_name WorldScene
-signal worldLoaded
+#signal worldLoaded
 
-
+@onready var pooledObjects : Node = $Misc/pooledObjects
 @onready var worldSpawns : Node = $Spawns
 @onready var playerWorldSpawns : Node = $Spawns/playerSpawns
 @onready var pawnWorldSpawns : Node = $Spawns/pawnSpawns
@@ -34,8 +34,9 @@ func _enter_tree()->void:
 func _ready()->void:
 	if !Engine.is_editor_hint():
 		#gameManager.freeOrphanNodes()
+		gameManager.worldLoaded.connect(playSoundscape)
 		gameManager.pauseMenu = pauseControl
-		emit_signal("worldLoaded")
+		gameManager.worldLoaded.emit()
 		gameManager.getEventSignal("contractRefresh").emit()
 		setupWorld()
 
@@ -57,6 +58,8 @@ func _ready()->void:
 				worldData.spawnPawnsOnLoad = false
 	else:
 		if worldData:
+			var env = load("res://assets/envs/default_environment.tres").duplicate()
+			worldSky.environment = env
 			if worldData.skyTexture:
 				worldSky.environment.sky.sky_material = worldData.skyTexture.duplicate()
 
@@ -113,6 +116,8 @@ func setupWorld()-> void:
 	if worldData != null:
 		name = worldData.worldName
 		#Set the sky texture
+		var env = load("res://assets/envs/default_environment.tres").duplicate()
+		worldSky.environment = env
 		if worldData.skyTexture:
 			worldSky.environment.sky.sky_material = worldData.skyTexture.duplicate()
 		##Soundscape

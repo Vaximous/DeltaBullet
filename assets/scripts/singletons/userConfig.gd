@@ -13,6 +13,7 @@ var game_crosshair_dynamic_position : bool = true
 var game_simple_crosshairs : bool = false
 var game_ragdoll_remove_time : int = 15
 var game_decal_remove_time : int = 120
+var game_max_ragdolls : int = 6
 
 #audio configs
 var audio_MasterVolume : float = -15.0
@@ -20,6 +21,7 @@ var audio_GameVolume : float = 1.0
 var audio_MusicVolume : float = 0.6
 var audio_ambience_volume : float = 0.6
 var audio_UiVolume : float = 0.6
+var audio_voice_volume : float = 0.6
 var audio_custom_music_enabled : bool = false
 
 #graphics settings
@@ -111,6 +113,7 @@ func applyConfigs() -> void:
 	AudioServer.set_bus_volume_db(2, audio_GameVolume)
 	AudioServer.set_bus_volume_db(3, audio_MusicVolume)
 	AudioServer.set_bus_volume_db(4, audio_ambience_volume)
+	AudioServer.set_bus_volume_db(5, audio_voice_volume)
 	applyShadowQuality()
 	applyShadowFilterQuality()
 	get_window().mode = Window.MODE_EXCLUSIVE_FULLSCREEN if graphics_fullscreen else Window.MODE_WINDOWED

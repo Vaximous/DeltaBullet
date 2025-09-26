@@ -1,12 +1,21 @@
-[gd_scene load_steps=2 format=3 uid="uid://cngcjnotfymj5"]
+[gd_scene load_steps=3 format=3 uid="uid://cngcjnotfymj5"]
 
 [ext_resource type="Script" uid="uid://cw04pitfb4xqr" path="res://assets/entities/bloodPool/blood_pool.gd" id="1_q50fq"]
+[ext_resource type="PackedScene" uid="uid://drcgl8skh3q26" path="res://assets/components/TriplanarDecal.tscn" id="2_nk30m"]
 
 [node name="bloodPool" type="Node3D" groups=["decal"]]
 script = ExtResource("1_q50fq")
 
-[node name="pool" type="Decal" parent="."]
-transform = Transform3D(0.035, 0, 0, 0, 0.035, 0, 0, 0, 0.035, 0, 0, 0)
-distance_fade_enabled = true
-distance_fade_begin = 10.0
+[node name="pool" parent="." instance=ExtResource("2_nk30m")]
+layers = 999
 cull_mask = 1048551
+
+[node name="decal" parent="pool" index="0"]
+layers = 999
+cull_mask = 1048551
+
+[node name="decal2" parent="pool" index="1"]
+layers = 999
+cull_mask = 1048551
+
+[editable path="pool"]

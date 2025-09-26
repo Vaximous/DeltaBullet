@@ -1575,7 +1575,6 @@ worldData = SubResource("Resource_3bd3l")
 [node name="pawnSpawn" parent="Spawns/playerSpawns" index="0" instance=ExtResource("2_v576b")]
 transform = Transform3D(-0.999163, 0, -0.0408992, 0, 1, 0, 0.0408992, 0, -0.999163, 8.41205, 4.00722, -1.01851)
 pawnType = 0
-randomAnimationSpeed = false
 
 [node name="worldEnvironment" parent="Environment" index="0"]
 compositor = SubResource("Compositor_fvwrp")

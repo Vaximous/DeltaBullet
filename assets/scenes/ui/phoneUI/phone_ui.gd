@@ -28,6 +28,7 @@ func setCurrentApp(app:PackedScene)->void:
 	phoneBackground.hide()
 
 func init(pawn:BasePawn)->void:
+	%smackneckChat.hide()
 	modulate = Color.TRANSPARENT
 	var tween : Tween
 	if tween:
@@ -41,6 +42,10 @@ func init(pawn:BasePawn)->void:
 		pawn.direction = Vector3.ZERO
 		%welcomeLabel.text = "Welcome, %s" %pawn.name
 		%gritAmount.text = "Grit: %sG" %pawn.pawnCash
+	if SmackneckClient.is_connected_to_masterserver():
+		%smacknetConnection.text = "         Connected"
+		$%smackneckChat.show()
+
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("gEscape") or event.is_action_pressed("gTabMenu"):
@@ -59,3 +64,18 @@ func close()->void:
 	gameManager.hideMouse()
 	gameManager.pauseMenu.canPause = true
 	gameManager.removePhoneMenu()
+
+
+func _on_icon_refresh_timeout() -> void:
+	if SmackneckClient.is_connected_to_masterserver():
+		var regions = [
+			39,
+			70,
+			102,
+			135
+		]
+		%connection.texture.region.position.y = regions.pick_random()
+	else:
+		%connection.texture.region.position.y = 7
+
+	%iconRefresh.wait_time = randf_range(6,25)

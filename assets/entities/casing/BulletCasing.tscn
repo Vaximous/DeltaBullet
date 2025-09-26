@@ -7,7 +7,7 @@
 [sub_resource type="SphereShape3D" id="SphereShape3D_l1elw"]
 radius = 0.0303793
 
-[node name="BulletCasing" type="CharacterBody3D" node_paths=PackedStringArray("mesh", "collisionSounds")]
+[node name="BulletCasing" type="CharacterBody3D" node_paths=PackedStringArray("mesh", "collisionSounds") groups=["physicsEntity"]]
 collision_layer = 0
 script = ExtResource("1_f76y0")
 mesh = NodePath("meshInstance3d")

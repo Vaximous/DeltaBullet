@@ -86,7 +86,7 @@ func start_next_wave() -> void:
 					wavePawn[1].inputComponent.lookAtPosition(gameManager.getCurrentPawn().global_position)
 				#print(wavePawn[1].inputComponent.pawnFSM.current_state)
 			#Wait for the duration before spawning next pawn.
-			if current_wave != null:
+			if is_instance_valid(current_wave):
 				await get_tree().create_timer(timeBetween, false, true, false).timeout
 
 

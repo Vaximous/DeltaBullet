@@ -16,6 +16,7 @@ signal channel_state_update() #Joined or left a channel
 
 #If a message's body is ["chatroom"]
 func handle_message(msg : Dictionary) -> void:
+	print(msg)
 	if msg.has("heartbeat"):
 		print("Heartbeat: %s" % msg["heartbeat"])
 	if msg.has_all(["sender", "channel", "messagedata"]):
@@ -29,35 +30,29 @@ func handle_message(msg : Dictionary) -> void:
 
 
 func request_set_irc_open(open : bool) -> void:
-	pass
-	#Network.put_message("MESSAGE", {"msg":"chatroom", "request":"set_irc_open", "open":open})
+	SmackneckClient.put_message("MESSAGE", {"msg":"chatroom", "request":"set_irc_open", "open":open})
 
 
 ##The user calls this when it wants to update the channel list
 func request_channel_list() -> void:
-	pass
-	#Network.put_message("MESSAGE", {"msg":"chatroom", "request":"get_channel_list"})
+	SmackneckClient.put_message("MESSAGE", {"msg":"chatroom", "request":"get_channel_list"})
 
 
 func request_leave_channel(channel_name : String) -> void:
-	pass
-	#Network.put_message("MESSAGE", {"msg":"chatroom", "request":"leave_channel", "channel_name":channel_name})
+	SmackneckClient.put_message("MESSAGE", {"msg":"chatroom", "request":"leave_channel", "channel_name":channel_name})
 
 
 ##User calls this when they want to join a channel
 func request_join_channel(channel_name : String) -> void:
-	pass
-	#Network.put_message("MESSAGE", {"msg":"chatroom", "request":"join_channel", "channel_name":channel_name})
+	SmackneckClient.put_message("MESSAGE", {"msg":"chatroom", "request":"join_channel", "channel_name":channel_name})
 
 
 func request_create_channel(channel_name : String, visibility : ChannelVisibility) -> void:
-	pass
-	#Network.put_message("MESSAGE", {"msg":"chatroom", "request":"create_channel", "channel_name":channel_name, "visibility":visibility})
+	SmackneckClient.put_message("MESSAGE", {"msg":"chatroom", "request":"create_channel", "channel_name":channel_name, "visibility":visibility})
 
 
 func request_usercount() -> void:
-	pass
-	#Network.put_message("MESSAGE", {"msg":"chatroom","request":"get_total_users"})
+	SmackneckClient.put_message("MESSAGE", {"msg":"chatroom","request":"get_total_users"})
 
 
 func _update_channel_data(channel : String, data : Dictionary) -> void:

@@ -13,6 +13,7 @@ func onQuestEntered()->void:
 				var pawn : BasePawn = _spawns.spawnPawn()
 				_spawns.active = false
 				pawn.onPawnKilled.connect(addtokillcount)
+				pawn.onPawnKilled.connect(gameManager.pawnKillSlowMo)
 
 func addtokillcount()->void:
 	var _notification = load("res://assets/scenes/ui/generalNotif/generalNotification.tscn").instantiate()

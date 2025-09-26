@@ -43,6 +43,22 @@ func get_health_component(baseNode: Node) -> HealthComponent:
 	return null
 
 
+func create_canvas_layer(layer : int, parent : Node = null) -> CanvasLayer:
+	if parent == null:
+		parent = get_tree().root
+
+	var layer_name = "UtilCanvasLayer%d" % layer
+
+	if parent.has_node(layer_name):
+		return parent.get_node(layer_name)
+
+	var canvaslayer := CanvasLayer.new()
+	canvaslayer.layer = layer
+	canvaslayer.name = layer_name
+	parent.add_child(canvaslayer)
+	return canvaslayer
+
+
 ##Damages a node using its HealthComponent
 func damage_node(baseNode : Node3D, amount : float, dealer : Node3D = null, hitDirection : Vector3 = Vector3.ZERO) -> void:
 	var hc := get_health_component(baseNode)

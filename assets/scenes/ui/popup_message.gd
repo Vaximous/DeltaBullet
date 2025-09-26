@@ -5,10 +5,10 @@ extends PanelContainer
 static var displaying : bool = false
 
 
-static func display_text(text : String, duration : float = 5.0, abort_if_displaying : bool = false) -> Control:
+static func display_text(text : String, duration : float = 5.0, abort_if_displaying : bool = false, parent : Node = null) -> Control:
 	var scene = load("res://assets/scenes/ui/PopupMessage.tscn") as PackedScene
 	var inst = scene.instantiate()
-	Util.create_canvas_layer(100).add_child(inst)
+	Util.create_canvas_layer(100, parent).add_child(inst)
 	inst._display_text(text, duration, abort_if_displaying)
 	return inst
 

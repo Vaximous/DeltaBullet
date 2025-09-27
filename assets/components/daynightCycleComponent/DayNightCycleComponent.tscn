@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://h6hecddw0yjk"]
+
+[ext_resource type="Script" uid="uid://cip2b8pgq3tpi" path="res://assets/components/daynightCycleComponent/day_night_cycle_component.gd" id="1_sj3po"]
+
+[node name="dayNightCycleComponent" type="Node"]
+script = ExtResource("1_sj3po")

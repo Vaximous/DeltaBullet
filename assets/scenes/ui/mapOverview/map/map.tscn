@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://c63b0ewnfkf4n"]
+[gd_scene load_steps=52 format=3 uid="uid://c63b0ewnfkf4n"]
 
 [ext_resource type="Script" uid="uid://t733jevi3esu" path="res://assets/scenes/ui/mapOverview/map/map.gd" id="1_rkk0n"]
 [ext_resource type="Texture2D" uid="uid://d0f0crtwpmoka" path="res://assets/textures/panoramas/panoramatest1.png" id="2_1xklm"]
@@ -61,6 +61,14 @@ radius = 0.065
 transparency = 2
 alpha_scissor_threshold = 0.5
 alpha_antialiasing_mode = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uyve1"]
+resource_name = "buildings"
+albedo_color = Color(0.9063318, 0.9063318, 0.9063318, 1)
+roughness = 0.5
+distance_fade_mode = 2
+distance_fade_min_distance = 3.0
+distance_fade_max_distance = 8.0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_htbkg"]
 size = Vector3(3.7597656, 0.63568115, 5.830078)
@@ -273,6 +281,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65.6323, 0, 99.9221)
 [node name="Plane" parent="model/mapoverview" index="0" groups=["navigation_mesh_source_group"]]
 ignore_occlusion_culling = true
 surface_material_override/0 = SubResource("StandardMaterial3D_htbkg")
+surface_material_override/1 = SubResource("StandardMaterial3D_uyve1")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="model/mapoverview/Plane" index="0"]
 
@@ -502,7 +511,7 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -1.6
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -1.6012611, 0, -2.4419556)
 
 [node name="icon" parent="areaNodes/mapLocation6" index="6"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.1469727, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.598175, 0)
 
 [node name="navPoint" parent="areaNodes/mapLocation6" index="7"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3738346, 0, 0)
@@ -538,7 +547,7 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -4.4
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -4.421097, 0, -2.086731)
 
 [node name="icon" parent="areaNodes/wave" index="6"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.1469727, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.30909, 0)
 
 [node name="navPoint" parent="areaNodes/wave" index="7"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3738346, 0, 0)
@@ -574,7 +583,7 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.9
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -0.90701485, 0, -1.2437744)
 
 [node name="icon" parent="areaNodes/interiortest" index="6"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 29.45221, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.254776, 0)
 
 [node name="navPoint" parent="areaNodes/interiortest" index="7"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3738346, 0, 0)
@@ -646,7 +655,7 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -4.3
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -4.382951, 0, -2.8440552)
 
 [node name="icon" parent="areaNodes/debugstreet" index="6"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.254776, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.891914, 0)
 
 [node name="navPoint" parent="areaNodes/debugstreet" index="7"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3738346, 0, 0)

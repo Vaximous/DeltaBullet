@@ -35,8 +35,14 @@ var savedPose :Array[Transform3D]
 @export_subgroup("Active Ragdoll")
 @export var maxAngularForce : float = 100
 @export var angularSpringStiffness : float = 1000
-@export var angularSpringDamping : float = 1000
+@export var angularSpringDamping : float = 25:
+	set(value):
+		angularSpringDamping = value
+		setAllBonesSpringDamping(value)
 var totalMass : float
+@export var stiffeningBones : Array[RagdollBone]
+@export var stiffen : float = 15
+@export var stiffSpeed : float = 59
 var angularVelocity : Vector3
 @export var activeRagdollEnabled:bool = false:
 	set(value):
@@ -81,11 +87,16 @@ func _ready()-> void:
 	#physicalBoneSimulator.ragdoll = self
 	checkClothingHider()
 
+
 	#Active Ragdoll Stuff
 	if activeRagdollEnabled:
 		# Calculate total ragdoll mass.
 		for bone in physicsBones: totalMass += bone.mass
 
+
+	#await get_tree().create_timer(randf_range(0.2,1)).timeout
+	#setAllBonesSpringStiffness(0)
+	#setAllBonesSpringEnabled(false)
 
 func setBoneOwners()->void:
 	for pb in physicsBones:
@@ -100,6 +111,16 @@ func appendPhysicalBoneArray()->void:
 func startRagdoll()-> void:
 	#ragdollSkeleton.animate_physical_bones = true
 	physicalBoneSimulator.physical_bones_start_simulation()
+	beginStiffening()
+
+
+
+func beginStiffening()->void:
+	if !activeRagdollEnabled:
+		stiffen = randf_range(185,195)
+		for b in stiffeningBones:
+			if is_instance_valid(b):
+				setBoneSpringEnabled(b,true)
 	#checkClothingHider()
 
 func ragTwitch(convulsionAmount : float = 10.0, bodyPartIDX : int = 0)-> void:
@@ -143,33 +164,59 @@ func checkClothingHider()-> void:
 func hookes_law(displacement: Vector3, current_velocity: Vector3, stiffness: float, damping: float) -> Vector3:
 	return (stiffness * displacement) - (damping * current_velocity)
 
+func setAllBonesSpringEnabled(value:bool):
+	for b in physicsBones:
+		if is_instance_valid(b):
+			b.set("joint_constraints/x/angular_spring_enabled",value)
+			b.set("joint_constraints/y/angular_spring_enabled",value)
+			b.set("joint_constraints/z/angular_spring_enabled",value)
+
+func setAllBonesSpringStiffness(value:float):
+	for b in physicsBones:
+		if is_instance_valid(b):
+			b.set("joint_constraints/x/angular_spring_stiffness",value)
+			b.set("joint_constraints/y/angular_spring_stiffness",value)
+			b.set("joint_constraints/z/angular_spring_stiffness",value)
+
+func setAllBonesSpringDamping(value:float):
+	for b in physicsBones:
+		if is_instance_valid(b):
+			b.set("joint_constraints/x/angular_spring_damping",value)
+			b.set("joint_constraints/y/angular_spring_damping",value)
+			b.set("joint_constraints/z/angular_spring_damping",value)
+
+func setBoneSpringEnabled(b:PhysicalBone3D,value:bool):
+	if is_instance_valid(b):
+		b.set("joint_constraints/x/angular_spring_enabled",value)
+		b.set("joint_constraints/y/angular_spring_enabled",value)
+		b.set("joint_constraints/z/angular_spring_enabled",value)
+
+func setBoneSpringStiffness(b:PhysicalBone3D,value:float):
+	if is_instance_valid(b):
+		b.set("joint_constraints/x/angular_spring_stiffness",value)
+		b.set("joint_constraints/y/angular_spring_stiffness",value)
+		b.set("joint_constraints/z/angular_spring_stiffness",value)
+
+func setBoneSpringDamping(b:PhysicalBone3D,value:float):
+	if is_instance_valid(b):
+		b.set("joint_constraints/x/angular_spring_damping",value)
+		b.set("joint_constraints/y/angular_spring_damping",value)
+		b.set("joint_constraints/z/angular_spring_damping",value)
+
 func _physics_process(delta: float) -> void:
 	if activeRagdollEnabled:
-		var total_ang_vel := Vector3.ZERO
-		angularVelocity = total_ang_vel / totalMass
-		for b in physicsBones:
-			if is_instance_valid(b):
-				var target_transform: Transform3D = targetSkeleton.global_transform * targetSkeleton.get_bone_global_pose(b.get_bone_id())
-				var current_transform: Transform3D = global_transform * ragdollSkeleton.get_bone_global_pose(b.get_bone_id())
-				var rotation_difference: Basis = (target_transform.basis * current_transform.basis.inverse())
-
-				var position_difference:Vector3 = target_transform.origin - current_transform.origin
-
-				#if position_difference.length_squared() > 1.0:
-					#b.global_position = target_transform.origin
-				#else:
-					#var force: Vector3 = hookes_law(position_difference, b.linear_velocity, linear_spring_stiffness, linear_spring_damping)
-					#force = force.limit_length(max_linear_force)
-					#b.linear_velocity += (force * delta)
-
-				var torque = hookes_law(rotation_difference.get_euler(), b.angular_velocity, angularSpringStiffness, angularSpringDamping)
-				torque = torque.limit_length(maxAngularForce)
-				b.angular_velocity += torque * delta
-				#setAngularMotorTargetVelocity(b,torque)
-				#setAngularMotor(b,true)
-				#setAngularMotorForceLimit(b,maxAngularForce)
+		pass
 	else:
-		activeRagdollEnabled = false
+		stiffen = lerpf(stiffen,0,stiffSpeed*delta)
+		#stiffen -= randf_range(5,10) * delta
+		if stiffen <= 0:
+			for b in stiffeningBones:
+				if is_instance_valid(b):
+					setBoneSpringEnabled(b,false)
+		else:
+			for b in stiffeningBones:
+				if is_instance_valid(b):
+					setBoneSpringStiffness(b,stiffen)
 
 func setAngularMotorTargetVelocity(b:PhysicalBone3D,value:Vector3 = Vector3.ZERO):
 	b.set("joint_constraints/x/target_velocity",value.x)
@@ -402,14 +449,12 @@ func damageBoneHitboxes(impulse_bone:int,killer)->void:
 
 func setRagdollPositionAndRotation(pawn:BasePawn)->void:
 	if is_instance_valid(pawn):
+		targetSkeleton = pawn.pawnSkeleton
 		global_transform = pawn.pawnMesh.global_transform
 		rotation = pawn.pawnMesh.rotation
-		targetSkeleton = pawn.pawnSkeleton
 
 func _on_skeleton_3d_skeleton_updated() -> void:
-	for bones in ragdollSkeleton.get_bone_count():
-		#ragdollSkeleton.set_bone_rest(bones, savedPose[bones])
-		ragdollSkeleton.set_bone_pose(bones, savedPose[bones])
+	pass
 
 func getBoneChildren(skeleton3d:Skeleton3D,bone:PhysicalBone3D)->Array:
 	return skeleton3d.get_bone_children(bone.get_bone_id())
@@ -420,3 +465,16 @@ func findPhysicsBone(id:int)->PhysicalBone3D:
 		if is_instance_valid(bones) and bones.get_bone_id() == id:
 			foundBone = bones
 	return foundBone
+
+
+func _on_skeleton_3d_pose_updated() -> void:
+	pass
+	#if savedPose.size() > 0:
+		#for b in physicsBones:
+			#var boneid = b
+			#if is_instance_valid(targetSkeleton):
+				#for i in savedPose.size():
+					#if is_instance_valid(ragdollSkeleton.get_bone_children(i)):
+						#ragdollSkeleton.set_bone_pose(boneid,savedPose[i])
+						#ragdollSkeleton.set_bone_global_pose(boneid,savedPose[i])
+						#ragdollSkeleton.set_bone_rest(boneid,savedPose[i])

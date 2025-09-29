@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://b1x2t2na1bc2b"]
+[gd_scene load_steps=12 format=3 uid="uid://b1x2t2na1bc2b"]
 
 [ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="1_cg2cc"]
 [ext_resource type="Texture2D" uid="uid://cchng1uogx7qf" path="res://assets/textures/misc/logo.png" id="3_hv6kb"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://dc3fkfugwvtla" path="res://assets/textures/misc/company-logo (1).png" id="5_bto6s"]
 [ext_resource type="PackedScene" uid="uid://ba0s8u6mtjxns" path="res://assets/scenes/menu/menuButton.tscn" id="5_nxhqu"]
 [ext_resource type="PackedScene" uid="uid://81cyr0xg0y7d" path="res://assets/scenes/ui/saveloadmenu/saveloadmenu.tscn" id="6_8a5q4"]
+[ext_resource type="PackedScene" uid="uid://dylch0jp14e1b" path="res://assets/scripts/SmackneckClient/login_screen.tscn" id="7_ig8dm"]
 
 [sub_resource type="GDScript" id="GDScript_xob6c"]
 script/source = "extends Control
@@ -18,6 +19,7 @@ var anykey = false
 var pressed = false
 # Called when the node enters the scene tree for the first time.
 func _ready()->void:
+	SmackneckClient.Authentication.auth_success.connect(%smacknetConnect.hide)
 	gameManager.clearTemporaryPawnInfo()
 	versionLabel.text = ProjectSettings.get_setting(\"application/config/version\")
 	if checkCurrentSave():
@@ -63,6 +65,11 @@ func _on_continue_button_pressed() -> void:
 
 func checkCurrentSave():
 	return gameManager.get_persistent_data().has(\"lastSave\")
+
+
+func _on_smacknet_connect_pressed() -> void:
+	if !%LoginScreen.visible:
+		%LoginScreen.show()
 "
 
 [sub_resource type="Gradient" id="Gradient_qjgg7"]
@@ -71,6 +78,8 @@ colors = PackedColorArray(0, 0, 0, 0.905882, 0.286275, 0.286275, 0.286275, 0, 1,
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_x7df6"]
 gradient = SubResource("Gradient_qjgg7")
+
+[sub_resource type="Theme" id="Theme_ktkeu"]
 
 [node name="MenuUI" type="Control"]
 process_mode = 3
@@ -157,6 +166,11 @@ text = "Options"
 layout_mode = 2
 text = "Credits"
 
+[node name="smacknetConnect" parent="buttonHolder" instance=ExtResource("5_nxhqu")]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Log in to Smacknet"
+
 [node name="quitButton" parent="buttonHolder" instance=ExtResource("5_nxhqu")]
 layout_mode = 2
 text = "Quit
@@ -197,10 +211,17 @@ text = "1.0"
 visible = false
 layout_mode = 1
 
+[node name="LoginScreen" parent="." instance=ExtResource("7_ig8dm")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+theme = SubResource("Theme_ktkeu")
+
 [connection signal="pressed" from="buttonHolder/playButton" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="buttonHolder/continueButton" to="." method="_on_continue_button_pressed"]
-[connection signal="pressed" from="buttonHolder/loadButton" to="saveLoadMenu" method="initLoadPanel"]
 [connection signal="pressed" from="buttonHolder/loadButton" to="saveLoadMenu" method="show"]
+[connection signal="pressed" from="buttonHolder/loadButton" to="saveLoadMenu" method="initLoadPanel"]
 [connection signal="pressed" from="buttonHolder/optionsButton" to="." method="_on_options_button_pressed"]
 [connection signal="pressed" from="buttonHolder/creditsButton" to="." method="_on_credits_button_pressed"]
+[connection signal="pressed" from="buttonHolder/smacknetConnect" to="." method="_on_smacknet_connect_pressed"]
 [connection signal="pressed" from="buttonHolder/quitButton" to="." method="_on_quit_button_pressed"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=188 format=4 uid="uid://c8bkdy6aqwxls"]
+[gd_scene load_steps=193 format=4 uid="uid://c8bkdy6aqwxls"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_ypyko"]
 [ext_resource type="PackedScene" uid="uid://boicvk4qeqmbd" path="res://assets/entities/pawnSpawn/pawnSpawn.tscn" id="2_v576b"]
@@ -51,7 +51,7 @@
 [ext_resource type="Material" uid="uid://doi2tqqimhggh" path="res://assets/models/interior/changingroom/WardrobeSteel.tres" id="41_7m3hx"]
 [ext_resource type="PackedScene" uid="uid://dvmmlj4mvj88r" path="res://assets/entities/aiMarker/aiMarker.tscn" id="47_7m3hx"]
 [ext_resource type="PackedScene" uid="uid://dakipfkiu0xqt" path="res://assets/components/musicChangeZone/music_change_zone.tscn" id="51_7i0qu"]
-[ext_resource type="AudioStream" uid="uid://c1mk4s30dq3nc" path="res://assets/music/menu/Idlehoodtune.wav" id="53_cj522"]
+[ext_resource type="AudioStream" uid="uid://c107fr0piwph4" path="res://assets/music/ambient/initial.wav" id="52_dvo7e"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_6ok4a"]
 panorama = ExtResource("3_rcju0")
@@ -64,6 +64,53 @@ worldName = "Home"
 worldDescription = "Yes.. My home.."
 worldLoadingTexture = ExtResource("3_6em3y")
 worldType = 2
+
+[sub_resource type="Gradient" id="Gradient_tipwx"]
+offsets = PackedFloat32Array(0, 0.07621247, 0.36720553, 1)
+colors = PackedColorArray(0.00593019, 1.2032687e-07, 0.09481714, 1, 0.052353777, 0.07570592, 0.124175064, 1, 0.34062108, 0.37052992, 0.41018295, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_afll2"]
+gradient = SubResource("Gradient_tipwx")
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_jg2d5"]
+panorama = ExtResource("3_rcju0")
+
+[sub_resource type="Sky" id="Sky_nj1fe"]
+sky_material = SubResource("PanoramaSkyMaterial_jg2d5")
+
+[sub_resource type="Environment" id="Environment_8gbvr"]
+background_mode = 2
+sky = SubResource("Sky_nj1fe")
+reflected_light_source = 1
+tonemap_mode = 3
+ssao_enabled = true
+ssao_intensity = 3.5
+ssao_power = 1.5529
+ssao_detail = 5.0
+ssao_horizon = 0.07
+ssil_enabled = true
+ssil_intensity = 0.75
+ssil_sharpness = 0.45
+ssil_normal_rejection = 0.0
+sdfgi_use_occlusion = true
+sdfgi_y_scale = 2
+glow_enabled = true
+glow_levels/5 = 0.0
+glow_levels/6 = 1.0
+glow_normalized = true
+glow_bloom = 0.1
+glow_blend_mode = 1
+fog_light_energy = 0.0
+fog_sun_scatter = 0.17
+fog_density = 0.009
+fog_sky_affect = 0.765
+fog_height = 96.8
+fog_height_density = 0.089
+volumetric_fog_density = 0.2457
+volumetric_fog_albedo = Color(0.848227, 0.767118, 0.651965, 1)
+adjustment_enabled = true
+adjustment_saturation = 0.9
+adjustment_color_correction = SubResource("GradientTexture1D_afll2")
 
 [sub_resource type="CompositorEffect" id="CompositorEffect_pmh78"]
 resource_local_to_scene = false
@@ -1562,9 +1609,9 @@ func _on_object_used(user: Variant) -> void:
 "
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_6hcyr"]
-streams_count = 2
-stream_0/stream = ExtResource("53_cj522")
-stream_1/stream = ExtResource("10_8mobu")
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("52_dvo7e")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_gugwl"]
 size = Vector3(7.03693, 3.60657, 6.11816)
@@ -1577,6 +1624,7 @@ transform = Transform3D(-0.999163, 0, -0.0408992, 0, 1, 0, 0.0408992, 0, -0.9991
 pawnType = 0
 
 [node name="worldEnvironment" parent="Environment" index="0"]
+environment = SubResource("Environment_8gbvr")
 compositor = SubResource("Compositor_fvwrp")
 
 [node name="reflectionProbe" parent="Environment" index="1"]

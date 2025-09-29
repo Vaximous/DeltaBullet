@@ -1,0 +1,125 @@
+[gd_scene load_steps=5 format=3 uid="uid://dylch0jp14e1b"]
+
+[ext_resource type="Script" uid="uid://dufk14barq0tj" path="res://assets/scripts/SmackneckClient/login_screen.gd" id="1_s7f14"]
+[ext_resource type="Texture2D" uid="uid://bag0nbin3udvs" path="res://assets/textures/misc/bootlogo.png" id="2_pjjqa"]
+
+[sub_resource type="Theme" id="Theme_pjjqa"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_vtwjt"]
+font_size = 32
+font_color = Color(1, 0.121569, 0.0156863, 1)
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[node name="LoginScreen" type="PanelContainer"]
+custom_minimum_size = Vector2(556, 445)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -278.0
+offset_top = -222.5
+offset_right = 278.0
+offset_bottom = 222.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_pjjqa")
+script = ExtResource("1_s7f14")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "SmackNet Account"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Username"
+horizontal_alignment = 1
+
+[node name="UsernameField" type="LineEdit" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "username"
+max_length = 32
+
+[node name="ErrorMessage" type="Label" parent="VBoxContainer/UsernameField"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -134.0
+offset_top = -23.5
+offset_right = -6.0
+offset_bottom = 9.5
+grow_horizontal = 0
+label_settings = SubResource("LabelSettings_vtwjt")
+
+[node name="Label3" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Password"
+horizontal_alignment = 1
+
+[node name="PasswordField" type="LineEdit" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "password"
+secret = true
+
+[node name="Label4" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Retype Password"
+horizontal_alignment = 1
+
+[node name="RetypePasswordField" type="LineEdit" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "retype password"
+secret = true
+
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="LoginButton" type="Button" parent="VBoxContainer/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Login"
+
+[node name="RegisterButton" type="Button" parent="VBoxContainer/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Register
+"
+
+[node name="CancelButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Cancel"
+
+[node name="centerContainer" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="textureRect" type="TextureRect" parent="VBoxContainer/centerContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("2_pjjqa")
+expand_mode = 1
+stretch_mode = 4
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/LoginButton" to="." method="_on_login_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/RegisterButton" to="." method="_on_register_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/CancelButton" to="." method="_on_cancel_button_pressed"]

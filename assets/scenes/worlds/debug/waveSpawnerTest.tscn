@@ -1,4 +1,4 @@
-[gd_scene load_steps=72 format=3 uid="uid://guuwxb1s6c86"]
+[gd_scene load_steps=77 format=3 uid="uid://guuwxb1s6c86"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_kfgfw"]
 [ext_resource type="PackedScene" uid="uid://boicvk4qeqmbd" path="res://assets/entities/pawnSpawn/pawnSpawn.tscn" id="2_b53fi"]
@@ -59,6 +59,53 @@ worldDescription = "Testing the Wave spawner for spawning a bunch of dudes."
 worldLoadingTexture = ExtResource("5_juc33")
 soundScape = SubResource("AudioStreamRandomizer_tq1sb")
 metadata/_custom_type_script = ExtResource("2_jhlmf")
+
+[sub_resource type="Gradient" id="Gradient_tipwx"]
+offsets = PackedFloat32Array(0, 0.07621247, 0.36720553, 1)
+colors = PackedColorArray(0.00593019, 1.2032687e-07, 0.09481714, 1, 0.052353777, 0.07570592, 0.124175064, 1, 0.34062108, 0.37052992, 0.41018295, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_afll2"]
+gradient = SubResource("Gradient_tipwx")
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_0td2u"]
+panorama = ExtResource("5_juc33")
+
+[sub_resource type="Sky" id="Sky_nj1fe"]
+sky_material = SubResource("PanoramaSkyMaterial_0td2u")
+
+[sub_resource type="Environment" id="Environment_wfc1a"]
+background_mode = 2
+sky = SubResource("Sky_nj1fe")
+reflected_light_source = 1
+tonemap_mode = 3
+ssao_enabled = true
+ssao_intensity = 3.5
+ssao_power = 1.5529
+ssao_detail = 5.0
+ssao_horizon = 0.07
+ssil_enabled = true
+ssil_intensity = 0.75
+ssil_sharpness = 0.45
+ssil_normal_rejection = 0.0
+sdfgi_use_occlusion = true
+sdfgi_y_scale = 2
+glow_enabled = true
+glow_levels/5 = 0.0
+glow_levels/6 = 1.0
+glow_normalized = true
+glow_bloom = 0.1
+glow_blend_mode = 1
+fog_light_energy = 0.0
+fog_sun_scatter = 0.17
+fog_density = 0.009
+fog_sky_affect = 0.765
+fog_height = 96.8
+fog_height_density = 0.089
+volumetric_fog_density = 0.2457
+volumetric_fog_albedo = Color(0.848227, 0.767118, 0.651965, 1)
+adjustment_enabled = true
+adjustment_saturation = 0.9
+adjustment_color_correction = SubResource("GradientTexture1D_afll2")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tff1h"]
 albedo_texture = ExtResource("10_dx34i")
@@ -318,6 +365,9 @@ active = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.0481, -0.291638, -13.9659)
 active = false
 
+[node name="worldEnvironment" parent="Environment" index="0"]
+environment = SubResource("Environment_wfc1a")
+
 [node name="directionalLight3d" parent="Environment" index="2"]
 transform = Transform3D(0.034413844, -0.99937075, 0.008599974, 0.50097394, 0.024695957, 0.86511004, -0.86477786, -0.025463402, 0.5015086, 0, 0, 0)
 
@@ -517,6 +567,7 @@ one_shot = true
 waves = Array[ExtResource("5_nk0i3")]([SubResource("Resource_dx34i"), SubResource("Resource_jhlmf"), SubResource("Resource_81g3a"), SubResource("Resource_iytwq"), SubResource("Resource_7a2gs")])
 
 [node name="label" type="Label" parent="Misc/WaveSpawner" index="0"]
+visible = false
 offset_left = 409.0
 offset_top = 40.0
 offset_right = 941.0

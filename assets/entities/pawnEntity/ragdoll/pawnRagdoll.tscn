@@ -648,10 +648,11 @@ stream_2/stream = ExtResource("27_1hup5")
 stream_3/stream = ExtResource("28_jgl2r")
 stream_4/stream = ExtResource("29_qibad")
 
-[node name="pawnRagdoll" type="Node3D" node_paths=PackedStringArray("healthComponent", "rootCameraNode", "followNode") groups=["Posessable", "ragdolls"]]
+[node name="pawnRagdoll" type="Node3D" node_paths=PackedStringArray("stiffeningBones", "healthComponent", "rootCameraNode", "followNode") groups=["Posessable", "ragdolls"]]
 physics_interpolation_mode = 1
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 script = ExtResource("1_p53ah")
+stiffeningBones = [NodePath("Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone Spine_0"), NodePath("Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone Spine_1"), NodePath("Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone Spine_2"), NodePath("Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone L_UpperLeg"), NodePath("Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone L_LowerLeg"), NodePath("Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone L_Foot"), NodePath("Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone R_UpperLeg"), NodePath("Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone R_LowerLeg"), NodePath("Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone R_Foot")]
 canTwitch = false
 healthComponent = NodePath("healthComponent")
 startOnInstance = false
@@ -1156,16 +1157,16 @@ physics_interpolation_mode = 1
 
 [node name="Physical Bone Spine_0" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
 physics_interpolation_mode = 1
-transform = Transform3D(1, 2.1767833e-07, -1.6390482e-07, -1.5777259e-07, -0.027878318, -0.9996114, -2.2216311e-07, 0.9996113, -0.027878318, -0.0011112741, 0.88743067, -0.093238905)
+transform = Transform3D(1, 3.6135287e-07, -1.8998998e-07, -1.798422e-07, -0.027878318, -0.9996114, -3.6650908e-07, 0.9996113, -0.027878318, -0.0011107433, 0.88744617, -0.09323871)
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
-joint_offset = Transform3D(1, -9.92614e-24, -5.32907e-15, 0, 1, -1.86264e-09, 5.32907e-15, 1.86264e-09, 1, -0.00033675085, -0.0011513622, 0.01988874)
+joint_offset = Transform3D(1, -9.92614e-24, -5.32907e-15, 0, 1, -1.86264e-09, 5.32907e-15, 1.86264e-09, 1, -0.00033728097, -0.0011511238, 0.019904237)
 joint_rotation = Vector3(1.86264e-09, -5.32907e-15, 0)
-body_offset = Transform3D(1.000009, -2.4466345e-08, -1.5645503e-07, -1.5645429e-07, -2.37301e-06, -1.000004, 2.4465749e-08, 1.000003, -2.3711473e-06, 0.00033675693, 0.019888818, 0.0011514127)
+body_offset = Transform3D(1.000009, 1.1920949e-07, -1.8254045e-07, -1.8253921e-07, -2.37301e-06, -1.000004, -1.1920932e-07, 1.000003, -2.3711473e-06, 0.00033728778, 0.019904315, 0.0011511743)
 mass = 1.88
 friction = 0.85
-bounce = 0.5
+bounce = 0.25
 gravity_scale = 1.2
 angular_damp = 75.0
 continuous_cd = true
@@ -1189,7 +1190,7 @@ joint_constraints/x/angular_limit_softness = 0.5
 joint_constraints/x/angular_restitution = 0.0
 joint_constraints/x/angular_damping = 1.0
 joint_constraints/x/erp = 0.5
-joint_constraints/x/angular_spring_enabled = true
+joint_constraints/x/angular_spring_enabled = false
 joint_constraints/x/angular_spring_stiffness = 1500.0
 joint_constraints/x/angular_spring_damping = 1100.0
 joint_constraints/x/angular_equilibrium_point = 0.0
@@ -1249,7 +1250,7 @@ healthComponent = NodePath("healthComponent")
 lightImpactSounds = SubResource("AudioStreamRandomizer_3ftxd")
 mediumImpactSounds = SubResource("AudioStreamRandomizer_eq8rt")
 heavyImpactSounds = SubResource("AudioStreamRandomizer_gjo1i")
-lightImpactThreshold = 5.0
+lightImpactThreshold = 3.0
 mediumImpactThreshold = 8.0
 heavyImpactThreshold = 20.0
 
@@ -1263,16 +1264,16 @@ health = 250.0
 
 [node name="Physical Bone Spine_1" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
 physics_interpolation_mode = 1
-transform = Transform3D(1, 2.2094514e-07, 1.0434321e-06, 1.0324239e-06, 0.045031812, -0.99898565, -2.6770863e-07, 0.9989856, 0.045031812, -0.0019362886, 1.0374417, -0.09573713)
+transform = Transform3D(1, -9.622742e-08, -3.7892067e-07, -3.7420295e-07, 0.045031812, -0.99898565, 1.1319328e-07, 0.9989856, 0.045031812, -0.0019362888, 1.0374417, -0.09573713)
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
-joint_offset = Transform3D(-3.6199901e-06, 0, 1, 0, 1, 0, -1, 0, -3.6199901e-06, 0.00048824286, 0.003198029, 0.032088626)
+joint_offset = Transform3D(-3.6199901e-06, 0, 1, 0, 1, 0, -1, 0, -3.6199901e-06, 0.00048828975, 0.0031980288, 0.032088626)
 joint_rotation = Vector3(0, 1.5708, 0)
-body_offset = Transform3D(1.0000091, -2.5568482e-08, 1.0535688e-06, 1.0535795e-06, 1.0915101e-06, -1.0000191, 2.55678e-08, 1.000018, 9.49949e-07, -0.00048828102, 0.032089233, -0.003198117)
+body_offset = Transform3D(1.0000091, -3.4274393e-07, -3.6879683e-07, -3.6879993e-07, 1.0915101e-06, -1.0000191, 3.427474e-07, 1.000018, 9.49949e-07, -0.00048828125, 0.032089233, -0.003198117)
 mass = 1.88
 friction = 0.85
-bounce = 0.5
+bounce = 0.25
 gravity_scale = 1.2
 angular_damp = 75.0
 continuous_cd = true
@@ -1296,7 +1297,7 @@ joint_constraints/x/angular_limit_softness = 0.5
 joint_constraints/x/angular_restitution = 0.0
 joint_constraints/x/angular_damping = 1.0
 joint_constraints/x/erp = 0.5
-joint_constraints/x/angular_spring_enabled = true
+joint_constraints/x/angular_spring_enabled = false
 joint_constraints/x/angular_spring_stiffness = 1500.0
 joint_constraints/x/angular_spring_damping = 1100.0
 joint_constraints/x/angular_equilibrium_point = 0.0
@@ -1356,7 +1357,7 @@ healthComponent = NodePath("healthComponent")
 lightImpactSounds = SubResource("AudioStreamRandomizer_3ftxd")
 mediumImpactSounds = SubResource("AudioStreamRandomizer_eq8rt")
 heavyImpactSounds = SubResource("AudioStreamRandomizer_gjo1i")
-lightImpactThreshold = 5.0
+lightImpactThreshold = 3.0
 mediumImpactThreshold = 8.0
 heavyImpactThreshold = 20.0
 
@@ -1370,16 +1371,16 @@ health = 250.0
 
 [node name="Physical Bone Spine_2" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
 physics_interpolation_mode = 1
-transform = Transform3D(1, 1.8555654e-07, 1.8643037e-06, 1.8397662e-06, 0.09076514, -0.9958724, -3.5400438e-07, 0.9958723, 0.09076515, -0.001252498, 1.246458, -0.100455716)
+transform = Transform3D(1, 1.8667394e-07, 1.8591918e-06, 1.834574e-06, 0.09076516, -0.9958724, -3.546533e-07, 0.9958723, 0.09076517, -0.0012525015, 1.246458, -0.100455716)
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
-joint_offset = Transform3D(-3.6199901e-06, 0, 1, 0, 1, 0, -1, 0, -3.6199901e-06, -0.0001956128, -0.0032242902, 0.037544027)
+joint_offset = Transform3D(-3.6199901e-06, 0, 1, 0, 1, 0, -1, 0, -3.6199901e-06, -0.0001956091, -0.0032242911, 0.037544027)
 joint_rotation = Vector3(0, 1.5708, 0)
-body_offset = Transform3D(1.000009, -6.0719714e-08, 1.8743e-06, 1.8742999e-06, 9.0152025e-07, -1.0000091, 6.071849e-08, 1.000008, 6.7055225e-07, 0.00019554398, 0.03754437, 0.003224291)
+body_offset = Transform3D(1.000009, -5.9602314e-08, 1.8691879e-06, 1.8691879e-06, 9.23872e-07, -1.0000091, 5.960095e-08, 1.000008, 6.92904e-07, 0.00019554049, 0.03754437, 0.003224291)
 mass = 1.89
 friction = 0.85
-bounce = 0.5
+bounce = 0.25
 gravity_scale = 1.2
 angular_damp = 75.0
 continuous_cd = true
@@ -1403,7 +1404,7 @@ joint_constraints/x/angular_limit_softness = 0.5
 joint_constraints/x/angular_restitution = 0.0
 joint_constraints/x/angular_damping = 1.0
 joint_constraints/x/erp = 0.5
-joint_constraints/x/angular_spring_enabled = true
+joint_constraints/x/angular_spring_enabled = false
 joint_constraints/x/angular_spring_stiffness = 1500.0
 joint_constraints/x/angular_spring_damping = 1100.0
 joint_constraints/x/angular_equilibrium_point = 0.0
@@ -1463,7 +1464,7 @@ healthComponent = NodePath("healthComponent")
 lightImpactSounds = SubResource("AudioStreamRandomizer_3ftxd")
 mediumImpactSounds = SubResource("AudioStreamRandomizer_eq8rt")
 heavyImpactSounds = SubResource("AudioStreamRandomizer_gjo1i")
-lightImpactThreshold = 5.0
+lightImpactThreshold = 3.0
 mediumImpactThreshold = 8.0
 heavyImpactThreshold = 20.0
 
@@ -1477,12 +1478,12 @@ health = 250.0
 
 [node name="Physical Bone L_UpperArm" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
 physics_interpolation_mode = 1
-transform = Transform3D(-0.022378694, 0.9117354, -0.41016805, 0.049663655, 0.4107781, 0.91038173, 0.99851525, 2.7094334e-06, -0.05447279, 0.14242303, 1.397244, -0.1454241)
+transform = Transform3D(-0.022378623, 0.9117355, -0.41016796, 0.0496636, 0.41077802, 0.9103818, 0.9985153, 2.673994e-06, -0.054472703, 0.14242327, 1.3972447, -0.1454241)
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00084329507, -0.0004828232, 0.030248687)
-body_offset = Transform3D(1.000037, 6.679539e-06, -6.709248e-06, 5.327165e-07, 7.93069e-08, -1.0000261, -2.0937387e-07, 1.0000111, 8.899135e-06, 0.0008435324, 0.030249476, 0.0004825592)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0008433349, -0.00048336238, 0.03024809)
+body_offset = Transform3D(1.000037, 6.6404195e-06, -6.623566e-06, 6.146729e-07, 1.6678298e-07, -1.0000261, -1.6653291e-07, 1.000011, 8.9885425e-06, 0.00084356964, 0.03024888, 0.00048309565)
 mass = 1.3
 friction = 0.5
 bounce = 0.25
@@ -1569,7 +1570,7 @@ canBeDismembered = true
 lightImpactSounds = SubResource("AudioStreamRandomizer_3ftxd")
 mediumImpactSounds = SubResource("AudioStreamRandomizer_eq8rt")
 heavyImpactSounds = SubResource("AudioStreamRandomizer_gjo1i")
-lightImpactThreshold = 5.0
+lightImpactThreshold = 3.0
 mediumImpactThreshold = 8.0
 heavyImpactThreshold = 20.0
 
@@ -1583,13 +1584,13 @@ health = 250.0
 
 [node name="Physical Bone L_Forearm" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
 physics_interpolation_mode = 1
-transform = Transform3D(-0.12709662, 0.83841676, -0.53000367, 0.18723561, 0.5450101, 0.8172557, 0.97405815, 0.004634881, -0.22625041, 0.24380158, 1.1790158, -0.12938507)
+transform = Transform3D(-0.12709665, 0.8384165, -0.5300041, 0.18723556, 0.5450105, 0.81725544, 0.97405815, 0.004634827, -0.22625038, 0.24380085, 1.1790149, -0.12938632)
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
-joint_offset = Transform3D(-3.6199901e-06, 0, -1, 0, 1, 0, 1, 0, -3.6199901e-06, 0.0005397689, 0.00040645638, 0.024732487)
+joint_offset = Transform3D(-3.6199901e-06, 0, -1, 0, 1, 0, 1, 0, -3.6199901e-06, 0.0005410496, 0.00040754108, 0.02473249)
 joint_rotation = Vector3(0, -1.5708, 0)
-body_offset = Transform3D(1.000025, 6.423332e-06, -1.347065e-05, -1.4007092e-06, -2.1257438e-07, -1.0000162, 1.640059e-06, 1.0000027, 1.1471217e-05, -0.00053945184, 0.024732888, -0.0004067421)
+body_offset = Transform3D(1.000025, 6.47502e-06, -1.3440847e-05, -1.385808e-06, -7.0163514e-07, -1.0000161, 1.587905e-06, 1.0000027, 1.0994612e-05, -0.00054073334, 0.024732888, -0.00040781498)
 mass = 1.3
 friction = 0.5
 bounce = 0.25
@@ -1676,7 +1677,7 @@ canBeDismembered = true
 lightImpactSounds = SubResource("AudioStreamRandomizer_3ftxd")
 mediumImpactSounds = SubResource("AudioStreamRandomizer_eq8rt")
 heavyImpactSounds = SubResource("AudioStreamRandomizer_gjo1i")
-lightImpactThreshold = 5.0
+lightImpactThreshold = 3.0
 mediumImpactThreshold = 8.0
 heavyImpactThreshold = 20.0
 
@@ -1690,13 +1691,13 @@ health = 250.0
 
 [node name="Physical Bone L_Hand" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
 physics_interpolation_mode = 1
-transform = Transform3D(0.8050836, 0.52410966, -0.27775818, 0.57691664, -0.5830396, 0.57204205, 0.13786876, -0.62078494, -0.7717631, 0.36452913, 0.9868407, -0.075012825)
+transform = Transform3D(0.8050841, 0.52410895, -0.27775797, 0.5769158, -0.58303964, 0.5720429, 0.13786884, -0.62078553, -0.77176267, 0.36452952, 0.9868372, -0.075012766)
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
-joint_offset = Transform3D(-3.6199901e-06, 0, -1, 0, 1, 0, 1, 0, -3.6199901e-06, 0.0035652798, -0.0023636261, 0.0056505944)
+joint_offset = Transform3D(-3.6199901e-06, 0, -1, 0, 1, 0, 1, 0, -3.6199901e-06, 0.003566967, -0.0023658432, 0.005652764)
 joint_rotation = Vector3(0, -1.5708, 0)
-body_offset = Transform3D(0.13271308, -0.70748615, -0.6941953, -1.1811033e-05, 0.7003652, -0.7137909, 0.9911679, 0.09472174, 0.09294205, 0.0017772242, 0.0056887865, -0.003835082)
+body_offset = Transform3D(0.13271303, -0.7074867, -0.6941948, -1.0818243e-05, 0.7003647, -0.71379143, 0.99116784, 0.09472108, 0.09294269, 0.0017769337, 0.005691886, -0.003836751)
 mass = 1.3
 friction = 0.5
 bounce = 0.25
@@ -1783,7 +1784,7 @@ canBeDismembered = true
 lightImpactSounds = SubResource("AudioStreamRandomizer_3ftxd")
 mediumImpactSounds = SubResource("AudioStreamRandomizer_eq8rt")
 heavyImpactSounds = SubResource("AudioStreamRandomizer_gjo1i")
-lightImpactThreshold = 5.0
+lightImpactThreshold = 3.0
 mediumImpactThreshold = 8.0
 heavyImpactThreshold = 20.0
 
@@ -1797,13 +1798,13 @@ health = 300.0
 
 [node name="Physical Bone R_UpperArm" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
 physics_interpolation_mode = 1
-transform = Transform3D(-0.02237936, -0.9117335, 0.41017216, -0.049664177, 0.41078225, 0.9103798, -0.99851525, 2.855095e-06, -0.054473534, -0.14475463, 1.4015242, -0.14612523)
+transform = Transform3D(-0.02237974, -0.9117335, 0.41017216, -0.049664143, 0.41078228, 0.9103798, -0.99851525, 3.2113899e-06, -0.05447366, -0.14475407, 1.4015282, -0.14612843)
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
-joint_offset = Transform3D(1, 0, 0, 0, 0.6009779, 0.7992651, 0, -0.7992651, 0.6009779, 0.00042853563, 0.00073325884, 0.024976002)
+joint_offset = Transform3D(1, 0, 0, 0, 0.6009779, 0.7992651, 0, -0.7992651, 0.6009779, 0.00042555263, 0.00073206663, 0.02497183)
 joint_rotation = Vector3(-0.926072, 0, 0)
-body_offset = Transform3D(1.000034, -6.428089e-06, 7.338822e-06, 1.0058284e-07, -4.4849508e-06, -1.0000051, -3.321952e-08, 1.0000091, 4.40684e-06, -0.00042872876, 0.024976134, -0.00073337555)
+body_offset = Transform3D(1.000034, -6.7857295e-06, 7.4654818e-06, 2.2724271e-07, -4.4953445e-06, -1.0000051, 3.26271e-07, 1.0000091, 4.4068397e-06, -0.00042574853, 0.024971962, -0.00073218346)
 mass = 1.3
 friction = 0.15
 bounce = 0.25
@@ -1890,7 +1891,7 @@ canBeDismembered = true
 lightImpactSounds = SubResource("AudioStreamRandomizer_3ftxd")
 mediumImpactSounds = SubResource("AudioStreamRandomizer_eq8rt")
 heavyImpactSounds = SubResource("AudioStreamRandomizer_gjo1i")
-lightImpactThreshold = 5.0
+lightImpactThreshold = 3.0
 mediumImpactThreshold = 8.0
 heavyImpactThreshold = 20.0
 
@@ -1904,13 +1905,13 @@ health = 250.0
 
 [node name="Physical Bone R_Forearm" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
 physics_interpolation_mode = 1
-transform = Transform3D(-0.12710111, -0.8384164, 0.5300032, -0.18723638, 0.54501057, 0.8172552, -0.97405744, 0.0046381713, -0.22625348, -0.24481803, 1.1829127, -0.12991433)
+transform = Transform3D(-0.12710108, -0.8384171, 0.53000206, -0.18723641, 0.5450095, 0.817256, -0.97405744, 0.004638431, -0.2262535, -0.24481803, 1.1829127, -0.12991433)
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
-joint_offset = Transform3D(-3.6199901e-06, 0, 1, 0, 1, 0, -1, 0, -3.6199901e-06, 0.0002567499, 0.00212182, 0.018995987)
+joint_offset = Transform3D(-3.6199901e-06, 0, 1, 0, 1, 0, -1, 0, -3.6199901e-06, 0.0002567495, 0.0021217933, 0.018995991)
 joint_rotation = Vector3(0, 1.5708, 0)
-body_offset = Transform3D(1.0000215, -8.43266e-06, 1.9326806e-05, 1.4007092e-06, 2.739951e-06, -1.0000261, 1.3867393e-06, 1.0000002, 8.640578e-06, -0.00025710464, 0.018996477, -0.002121985)
+body_offset = Transform3D(1.0000215, -8.394942e-06, 1.9341707e-05, 1.4007092e-06, 4.0504383e-06, -1.0000261, 1.3420358e-06, 1.0000002, 1.0041171e-05, -0.00025710464, 0.018996477, -0.002121985)
 mass = 1.3
 friction = 0.15
 bounce = 0.25
@@ -1997,7 +1998,7 @@ canBeDismembered = true
 lightImpactSounds = SubResource("AudioStreamRandomizer_3ftxd")
 mediumImpactSounds = SubResource("AudioStreamRandomizer_eq8rt")
 heavyImpactSounds = SubResource("AudioStreamRandomizer_gjo1i")
-lightImpactThreshold = 5.0
+lightImpactThreshold = 3.0
 mediumImpactThreshold = 8.0
 heavyImpactThreshold = 20.0
 
@@ -2011,12 +2012,12 @@ health = 250.0
 
 [node name="Physical Bone R_Hand" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
 physics_interpolation_mode = 1
-transform = Transform3D(0.8300166, -0.51425254, 0.21590917, -0.53241, -0.6152125, 0.58142346, -0.16616842, -0.59754336, -0.7844298, -0.3707549, 0.9937781, -0.06924609)
+transform = Transform3D(0.8300166, -0.51425254, 0.21590912, -0.53241, -0.61521256, 0.5814234, -0.16616842, -0.5975433, -0.7844297, -0.37075502, 0.99377817, -0.06924594)
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.001976057, 0.004757352, 0.0063718855)
-body_offset = Transform3D(0.15381294, 0.6901947, 0.7071066, 3.1685457e-05, 0.71561795, -0.69853544, -0.98810154, 0.107452765, 0.11004341, -0.008093044, 0.0010464787, 0.0007401705)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0019761962, 0.0047573936, 0.0063720136)
+body_offset = Transform3D(0.15381294, 0.69019467, 0.70710665, 3.1685457e-05, 0.71561795, -0.6985354, -0.98810154, 0.107452706, 0.11004339, -0.008093186, 0.0010465384, 0.0007402897)
 mass = 1.3
 friction = 0.15
 bounce = 0.25
@@ -2103,7 +2104,7 @@ canBeDismembered = true
 lightImpactSounds = SubResource("AudioStreamRandomizer_3ftxd")
 mediumImpactSounds = SubResource("AudioStreamRandomizer_eq8rt")
 heavyImpactSounds = SubResource("AudioStreamRandomizer_gjo1i")
-lightImpactThreshold = 5.0
+lightImpactThreshold = 3.0
 mediumImpactThreshold = 8.0
 heavyImpactThreshold = 20.0
 
@@ -2117,16 +2118,16 @@ health = 300.0
 
 [node name="Physical Bone L_UpperLeg" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
 physics_interpolation_mode = 1
-transform = Transform3D(0.981453, -0.003149304, -0.19167726, 0.19157666, 0.05242278, 0.98007673, 0.0069616935, -0.9986201, 0.052053828, 0.03636348, 0.8261796, -0.095208354)
+transform = Transform3D(0.9814535, -0.0031494887, -0.1916749, 0.19157435, 0.052423477, 0.9800771, 0.006961525, -0.99862, 0.052054565, 0.03636348, 0.8261796, -0.095208265)
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
-joint_offset = Transform3D(-3.6199901e-06, 0, 1, 0, 1, 0, -1, 0, -3.6199901e-06, 0.018288486, 0.0018734859, 0.03856864)
+joint_offset = Transform3D(-3.6199901e-06, 0, 1, 0, 1, 0, -1, 0, -3.6199901e-06, 0.018288393, 0.0018736026, 0.038568687)
 joint_rotation = Vector3(0, 1.5708, 0)
-body_offset = Transform3D(0.99999887, -3.091991e-07, 3.8483995e-06, 5.717826e-06, 2.30968e-07, -1.0000284, 2.8219074e-07, 1.0000031, 2.9057264e-07, -0.018288612, 0.03856963, -0.0018735081)
+body_offset = Transform3D(0.999999, -3.5529956e-07, 6.2228355e-06, 8.0809405e-06, -4.954636e-07, -1.0000283, 3.2782555e-07, 1.000003, -4.3213367e-07, -0.018288612, 0.03856963, -0.0018735975)
 mass = 1.3
 friction = 0.45
-bounce = 0.6
+bounce = 0.25
 gravity_scale = 1.2
 angular_damp = 30.0
 contact_monitor = true
@@ -2210,7 +2211,7 @@ canBeDismembered = true
 lightImpactSounds = SubResource("AudioStreamRandomizer_3ftxd")
 mediumImpactSounds = SubResource("AudioStreamRandomizer_eq8rt")
 heavyImpactSounds = SubResource("AudioStreamRandomizer_gjo1i")
-lightImpactThreshold = 5.0
+lightImpactThreshold = 3.0
 mediumImpactThreshold = 8.0
 heavyImpactThreshold = 20.0
 
@@ -2224,16 +2225,16 @@ health = 250.0
 
 [node name="Physical Bone L_LowerLeg" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
 physics_interpolation_mode = 1
-transform = Transform3D(0.9904941, -0.00058933656, -0.13755429, 0.13732022, 0.06270569, 0.98853993, 0.008042852, -0.998032, 0.062190536, 0.12614858, 0.4378559, -0.11357516)
+transform = Transform3D(0.9904941, -0.000589764, -0.13755424, 0.13732019, 0.06270572, 0.98853993, 0.008042431, -0.998032, 0.062190626, 0.12614772, 0.43785903, -0.11357567)
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
-joint_offset = Transform3D(-3.6199901e-06, 0, -1, 0, 1, 0, 1, 0, -3.6199901e-06, 0.0025872283, 0.004557611, 0.038094953)
+joint_offset = Transform3D(-3.6199901e-06, 0, -1, 0, 1, 0, 1, 0, -3.6199901e-06, 0.0025876458, 0.004556913, 0.038091764)
 joint_rotation = Vector3(0, -1.5708, 0)
-body_offset = Transform3D(1.00001, -1.8626451e-07, -6.110233e-06, -1.04832e-06, -1.5646219e-07, -1.00003, 7.357448e-08, 1.000003, 3.874302e-07, -0.0025870204, 0.0380961, -0.0045576394)
+body_offset = Transform3D(1.0000099, -6.06291e-07, -6.0647726e-06, -9.923242e-07, -2.4586916e-07, -1.00003, 4.917383e-07, 1.000003, 2.9802322e-07, -0.0025874376, 0.03809291, -0.004556939)
 mass = 1.3
 friction = 0.45
-bounce = 0.6
+bounce = 0.25
 gravity_scale = 1.2
 angular_damp = 50.0
 contact_monitor = true
@@ -2317,7 +2318,7 @@ canBeDismembered = true
 lightImpactSounds = SubResource("AudioStreamRandomizer_3ftxd")
 mediumImpactSounds = SubResource("AudioStreamRandomizer_eq8rt")
 heavyImpactSounds = SubResource("AudioStreamRandomizer_gjo1i")
-lightImpactThreshold = 5.0
+lightImpactThreshold = 3.0
 mediumImpactThreshold = 8.0
 heavyImpactThreshold = 20.0
 
@@ -2331,15 +2332,15 @@ health = 250.0
 
 [node name="Physical Bone L_Foot" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
 physics_interpolation_mode = 1
-transform = Transform3D(-0.97713697, 0.07994348, -0.19700871, -0.075103, 0.7370942, 0.6716038, 0.19890434, 0.67104477, -0.71423805, 0.18320225, 0.078122504, -0.13239267)
+transform = Transform3D(-0.977137, 0.07994352, -0.1970087, -0.075103, 0.7370941, 0.671604, 0.19890435, 0.67104495, -0.71423787, 0.18320224, 0.07812256, -0.13239267)
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0029530914, -0.0021059522, 0.010136223)
-body_offset = Transform3D(1.0000101, 1.0505319e-05, 2.3320317e-05, 1.5988946e-05, -9.149313e-06, -1.0000398, -6.5863132e-06, 1.0000267, 1.7136335e-05, -0.0029533356, 0.01013656, 0.0021058545)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0029530763, -0.0021059923, 0.010136178)
+body_offset = Transform3D(1.0000103, 1.0505319e-05, 2.3320317e-05, 1.5988946e-05, -8.940697e-06, -1.0000398, -6.5863132e-06, 1.0000267, 1.7404556e-05, -0.0029533207, 0.010136515, 0.0021058917)
 mass = 1.3
 friction = 0.85
-bounce = 0.6
+bounce = 0.25
 gravity_scale = 1.2
 angular_damp = 30.0
 contact_monitor = true
@@ -2423,7 +2424,7 @@ canBeDismembered = true
 lightImpactSounds = SubResource("AudioStreamRandomizer_3ftxd")
 mediumImpactSounds = SubResource("AudioStreamRandomizer_eq8rt")
 heavyImpactSounds = SubResource("AudioStreamRandomizer_gjo1i")
-lightImpactThreshold = 5.0
+lightImpactThreshold = 3.0
 mediumImpactThreshold = 8.0
 heavyImpactThreshold = 20.0
 
@@ -2437,16 +2438,16 @@ health = 300.0
 
 [node name="Physical Bone R_UpperLeg" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
 physics_interpolation_mode = 1
-transform = Transform3D(0.9814513, 0.0031416558, 0.19168605, -0.191585, 0.052431554, 0.9800745, -0.006971341, -0.99861956, 0.05206091, -0.061268795, 0.8263948, -0.09780932)
+transform = Transform3D(0.9814513, 0.0031415743, 0.19168606, -0.191585, 0.05243099, 0.98007464, -0.006971312, -0.9986197, 0.052060343, -0.061268795, 0.8263948, -0.09780932)
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
-joint_offset = Transform3D(-3.6199901e-06, 0, 1, 0, 1, 0, -1, 0, -3.6199901e-06, 0.00068793347, -0.0006740795, 0.04219491)
+joint_offset = Transform3D(-3.6199901e-06, 0, 1, 0, 1, 0, -1, 0, -3.6199901e-06, 0.0006879333, -0.00067410356, 0.04219491)
 joint_rotation = Vector3(0, 1.5708, 0)
-body_offset = Transform3D(0.9999988, -8.971896e-06, 5.3734693e-06, 3.4740951e-06, -6.966293e-06, -1.0000283, 8.99937e-06, 1.000003, -6.9104135e-06, -0.0006881654, 0.042196095, 0.00067436695)
+body_offset = Transform3D(0.9999988, -8.943025e-06, 5.3774274e-06, 3.4725817e-06, -6.388873e-06, -1.0000283, 8.970499e-06, 1.000003, -6.340444e-06, -0.0006881654, 0.042196095, 0.00067436695)
 mass = 1.3
 friction = 0.45
-bounce = 0.6
+bounce = 0.25
 gravity_scale = 1.2
 angular_damp = 30.0
 contact_monitor = true
@@ -2530,7 +2531,7 @@ canBeDismembered = true
 lightImpactSounds = SubResource("AudioStreamRandomizer_3ftxd")
 mediumImpactSounds = SubResource("AudioStreamRandomizer_eq8rt")
 heavyImpactSounds = SubResource("AudioStreamRandomizer_gjo1i")
-lightImpactThreshold = 5.0
+lightImpactThreshold = 3.0
 mediumImpactThreshold = 8.0
 heavyImpactThreshold = 20.0
 
@@ -2544,16 +2545,16 @@ health = 250.0
 
 [node name="Physical Bone R_LowerLeg" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
 physics_interpolation_mode = 1
-transform = Transform3D(0.99049354, 0.0005869525, 0.13755798, -0.13732374, 0.06270779, 0.9885393, -0.008045731, -0.99803174, 0.06219226, -0.13336067, 0.43596786, -0.11534316)
+transform = Transform3D(0.99049354, 0.00058678805, 0.13755798, -0.13732374, 0.06270661, 0.98853934, -0.008045731, -0.9980319, 0.062191065, -0.13336067, 0.43596786, -0.115343176)
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
-joint_offset = Transform3D(-3.6199901e-06, 0, 1, 0, 1, 0, -1, 0, -3.6199901e-06, -0.0012574914, 0.0029125232, 0.040294077)
+joint_offset = Transform3D(-3.6199901e-06, 0, 1, 0, 1, 0, -1, 0, -3.6199901e-06, -0.0012574919, 0.0029124597, 0.04029408)
 joint_rotation = Vector3(0, 1.5708, 0)
-body_offset = Transform3D(1.00001, -2.5760382e-06, 1.0046468e-05, 4.944857e-06, -1.821667e-06, -1.0000302, 2.6887283e-06, 1.000003, -1.2852252e-06, 0.0012571067, 0.040295303, -0.0029124767)
+body_offset = Transform3D(1.00001, -2.575107e-06, 1.0056072e-05, 4.944857e-06, -6.2584877e-07, -1.0000302, 2.6887283e-06, 1.0000031, -8.940697e-08, 0.0012571067, 0.040295303, -0.0029124618)
 mass = 1.3
 friction = 0.45
-bounce = 0.6
+bounce = 0.25
 gravity_scale = 1.2
 angular_damp = 50.0
 contact_monitor = true
@@ -2637,7 +2638,7 @@ canBeDismembered = true
 lightImpactSounds = SubResource("AudioStreamRandomizer_3ftxd")
 mediumImpactSounds = SubResource("AudioStreamRandomizer_eq8rt")
 heavyImpactSounds = SubResource("AudioStreamRandomizer_gjo1i")
-lightImpactThreshold = 5.0
+lightImpactThreshold = 3.0
 mediumImpactThreshold = 8.0
 heavyImpactThreshold = 20.0
 
@@ -2651,15 +2652,15 @@ health = 250.0
 
 [node name="Physical Bone R_Foot" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
 physics_interpolation_mode = 1
-transform = Transform3D(-0.9879309, -0.08134059, 0.1318197, 0.030276634, 0.7332005, 0.6793382, -0.15190805, 0.6751303, -0.72188854, -0.18557742, 0.076078, -0.13667151)
+transform = Transform3D(-0.9879309, -0.08134472, 0.13181718, 0.03027307, 0.7331951, 0.67934424, -0.15190879, 0.6751357, -0.72188354, -0.1855774, 0.07607808, -0.1366716)
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0010211443, 0.0024840478, 0.007783591)
-body_offset = Transform3D(1.0000005, 0.00045303255, 0.0002629459, 0.0002707094, 0.00040873885, -1.0000147, -0.00045882165, 1.0000236, 0.00043457747, 0.0010179728, 0.007782966, -0.0024879575)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0010211519, 0.002483982, 0.007783489)
+body_offset = Transform3D(1.0000005, 0.00045613945, 0.00026485324, 0.00027260184, 0.00041678548, -1.0000147, -0.00046192855, 1.0000236, 0.0004426241, 0.0010179579, 0.0077828467, -0.0024879575)
 mass = 1.3
 friction = 0.85
-bounce = 0.35
+bounce = 0.25
 gravity_scale = 1.2
 angular_damp = 30.0
 contact_monitor = true
@@ -2743,7 +2744,7 @@ canBeDismembered = true
 lightImpactSounds = SubResource("AudioStreamRandomizer_3ftxd")
 mediumImpactSounds = SubResource("AudioStreamRandomizer_eq8rt")
 heavyImpactSounds = SubResource("AudioStreamRandomizer_gjo1i")
-lightImpactThreshold = 5.0
+lightImpactThreshold = 3.0
 mediumImpactThreshold = 8.0
 heavyImpactThreshold = 20.0
 
@@ -2757,16 +2758,16 @@ health = 300.0
 
 [node name="Physical Bone Neck" type="PhysicalBone3D" parent="Mesh/Male/MaleSkeleton/Skeleton3D/PhysicalBoneSimulator3D" node_paths=PackedStringArray("healthComponent") groups=["Flesh"]]
 physics_interpolation_mode = 1
-transform = Transform3D(-1, -1.8419074e-07, -9.085779e-09, 7.807233e-09, 0.0069402424, -0.9999759, 1.8424932e-07, -0.999976, -0.006940242, -0.0014486504, 1.4761835, -0.12088087)
+transform = Transform3D(-1, -4.276469e-06, 8.991769e-06, -9.021232e-06, 0.00694004, -0.9999759, 4.2139623e-06, -0.9999759, -0.00694004, -0.0014486441, 1.4761835, -0.12088076)
 collision_layer = 2
 collision_mask = 11
 joint_type = 5
-joint_offset = Transform3D(1, 1.49012e-08, 4.44089e-16, -1.49012e-08, 1, 2.98023e-08, 1.0058516e-21, -2.98023e-08, 1, -6.283357e-07, 0.0029689195, 0.007981752)
+joint_offset = Transform3D(1, 1.49012e-08, 4.44089e-16, -1.49012e-08, 1, 2.98023e-08, 1.0058516e-21, -2.98023e-08, 1, -5.6235683e-07, 0.0029690329, 0.007981753)
 joint_rotation = Vector3(-2.98023e-08, 4.44089e-16, -1.49012e-08)
-body_offset = Transform3D(-1.0000091, 6.3477074e-08, -4.4335446e-10, 8.839202e-10, 0.00694049, -0.999986, -6.347253e-08, -0.999985, -0.0069405288, -6.285263e-07, 0.007961035, 0.0030242726)
+body_offset = Transform3D(-1.0000091, -4.0288387e-06, 9.000494e-06, -9.028246e-06, 0.0069402885, -0.999986, 3.966275e-06, -0.99998504, -0.0069403267, -6.222399e-07, 0.007961035, 0.0030243844)
 mass = 1.75
 friction = 0.05
-bounce = 0.45
+bounce = 0.25
 angular_damp = 30.0
 contact_monitor = true
 max_contacts_reported = 4
@@ -2848,7 +2849,7 @@ healthComponent = NodePath("healthComponent")
 lightImpactSounds = SubResource("AudioStreamRandomizer_3ftxd")
 mediumImpactSounds = SubResource("AudioStreamRandomizer_eq8rt")
 heavyImpactSounds = SubResource("AudioStreamRandomizer_gjo1i")
-lightImpactThreshold = 5.0
+lightImpactThreshold = 3.0
 mediumImpactThreshold = 8.0
 heavyImpactThreshold = 20.0
 
@@ -2898,4 +2899,6 @@ volume_db = -2.0
 bus = &"Sounds"
 attenuation_filter_db = 0.0
 
+[connection signal="pose_updated" from="Mesh/Male/MaleSkeleton/Skeleton3D" to="." method="_on_skeleton_3d_pose_updated"]
+[connection signal="skeleton_updated" from="Mesh/Male/MaleSkeleton/Skeleton3D" to="." method="_on_skeleton_3d_skeleton_updated"]
 [connection signal="timeout" from="remove_timer" to="." method="_on_remove_timer_timeout"]

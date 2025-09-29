@@ -1,0 +1,30 @@
+[gd_scene load_steps=2 format=3 uid="uid://w1u73x7aeak8"]
+
+[ext_resource type="Script" uid="uid://gb8udqs22swy" path="res://assets/scenes/ui/phoneUI/apps/smacknetChat/smacknet_chatbox.gd" id="1_ykuuo"]
+
+[node name="smacknetChatbox" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 218.0
+offset_bottom = 388.0
+script = ExtResource("1_ykuuo")
+
+[node name="vBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 216.0
+offset_bottom = 381.0
+
+[node name="chatContainer" type="ScrollContainer" parent="vBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="chatMessages" type="VBoxContainer" parent="vBoxContainer/chatContainer"]
+layout_mode = 2
+
+[node name="hSeparator" type="HSeparator" parent="vBoxContainer"]
+layout_mode = 2
+
+[node name="messageField" type="LineEdit" parent="vBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "Type Message here"

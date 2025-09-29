@@ -54,7 +54,7 @@ func enter_material(material : DB_PhysicsMaterial, collisionObject : Object, col
 	if collisionObject.has_method(&"hit"):
 		if is_instance_valid(projectile_owner):
 			if projectile_owner is Weapon:
-				if collisionObject is Hitbox and "bulletResistanceModifier" in collisionObject.healthComponent.componentOwner:
+				if collisionObject is Hitbox:
 					collisionObject.hit(
 					get_damage()/gameManager.get_modified_stat(collisionObject.healthComponent.componentOwner,
 					&"bulletResistanceModifier"),

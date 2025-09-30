@@ -72,13 +72,14 @@ colors = PackedColorArray(0.00593019, 1.2032687e-07, 0.09481714, 1, 0.052353777,
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_afll2"]
 gradient = SubResource("Gradient_tipwx")
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_jg2d5"]
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_yiehp"]
 panorama = ExtResource("3_rcju0")
+energy_multiplier = 0.85
 
 [sub_resource type="Sky" id="Sky_nj1fe"]
-sky_material = SubResource("PanoramaSkyMaterial_jg2d5")
+sky_material = SubResource("PanoramaSkyMaterial_yiehp")
 
-[sub_resource type="Environment" id="Environment_8gbvr"]
+[sub_resource type="Environment" id="Environment_dvo7e"]
 background_mode = 2
 sky = SubResource("Sky_nj1fe")
 reflected_light_source = 1
@@ -1624,7 +1625,7 @@ transform = Transform3D(-0.999163, 0, -0.0408992, 0, 1, 0, 0.0408992, 0, -0.9991
 pawnType = 0
 
 [node name="worldEnvironment" parent="Environment" index="0"]
-environment = SubResource("Environment_8gbvr")
+environment = SubResource("Environment_dvo7e")
 compositor = SubResource("Compositor_fvwrp")
 
 [node name="reflectionProbe" parent="Environment" index="1"]

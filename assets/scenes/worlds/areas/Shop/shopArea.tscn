@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=3 uid="uid://gunf36bni4oe"]
+[gd_scene load_steps=68 format=3 uid="uid://gunf36bni4oe"]
 
 [ext_resource type="Script" uid="uid://0jwheadtfh77" path="res://assets/scripts/worldRelated/worldScript/worldScript.gd" id="1_t2nyd"]
 [ext_resource type="PackedScene" uid="uid://boicvk4qeqmbd" path="res://assets/entities/pawnSpawn/pawnSpawn.tscn" id="2_cx0r4"]
@@ -13,8 +13,9 @@
 [ext_resource type="PackedScene" uid="uid://4seyitfkc6wn" path="res://assets/entities/clothing/Pants/pants.tscn" id="11_rcdrs"]
 [ext_resource type="AudioStream" uid="uid://4fr4v3mmy3oj" path="res://assets/music/menu/Frenzy.mp3" id="12_rwpt3"]
 [ext_resource type="PackedScene" uid="uid://jwq6tye7ok4r" path="res://assets/entities/clothing/Glasses/SiftinShades/SiftinShades.tscn" id="13_4ny3e"]
-[ext_resource type="Environment" uid="uid://dnig6jq4e6pjs" path="res://assets/envs/default_environment.tres" id="13_wb68e"]
+[ext_resource type="Texture2D" uid="uid://bfttaom6lw465" path="res://assets/envs/gradient_color_correction_blue_tint.tres" id="14_4yesb"]
 [ext_resource type="PackedScene" uid="uid://cgghffeqks1ac" path="res://assets/entities/clothing/Gloves/left_glove_fingerless.tscn" id="14_ex2yk"]
+[ext_resource type="Texture2D" uid="uid://d0f0crtwpmoka" path="res://assets/textures/panoramas/panoramatest1.png" id="15_eirrc"]
 [ext_resource type="PackedScene" uid="uid://bb5qvdslt6004" path="res://assets/entities/clothing/Pants/armored_pants.tscn" id="16_crfc1"]
 [ext_resource type="PackedScene" uid="uid://dodu8jdt3nw06" path="res://assets/scenes/ui/GamePauseMenu.tscn" id="18_jge35"]
 [ext_resource type="PackedScene" uid="uid://cn7cu77jr8mqg" path="res://assets/entities/props/radio.tscn" id="18_wditn"]
@@ -39,14 +40,49 @@ panorama = ExtResource("3_4yesb")
 
 [sub_resource type="Resource" id="Resource_o85ge"]
 script = ExtResource("2_ex3qv")
-worldEditable = false
 skyTexture = SubResource("PanoramaSkyMaterial_eirrc")
 worldName = "Uncle Tsimks' Shop"
 worldDescription = "Get ripped off at this jackasses pawn shop.."
-worldType = 0
-spawnPawnsOnLoad = true
-playOnStart = false
-spawnType = 0
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_ksj5j"]
+panorama = ExtResource("15_eirrc")
+energy_multiplier = 0.85
+
+[sub_resource type="Sky" id="Sky_nj1fe"]
+sky_material = SubResource("PanoramaSkyMaterial_ksj5j")
+
+[sub_resource type="Environment" id="Environment_q8rdj"]
+background_mode = 2
+sky = SubResource("Sky_nj1fe")
+reflected_light_source = 1
+tonemap_mode = 3
+ssao_enabled = true
+ssao_intensity = 3.5
+ssao_power = 1.5529
+ssao_detail = 5.0
+ssao_horizon = 0.07
+ssil_intensity = 0.75
+ssil_sharpness = 0.45
+ssil_normal_rejection = 0.0
+sdfgi_use_occlusion = true
+sdfgi_y_scale = 2
+glow_enabled = true
+glow_levels/5 = 0.0
+glow_levels/6 = 1.0
+glow_normalized = true
+glow_bloom = 0.1
+glow_blend_mode = 1
+fog_light_energy = 0.0
+fog_sun_scatter = 0.17
+fog_density = 0.009
+fog_sky_affect = 0.765
+fog_height = 96.8
+fog_height_density = 0.089
+volumetric_fog_density = 0.2457
+volumetric_fog_albedo = Color(0.848227, 0.767118, 0.651965, 1)
+adjustment_enabled = true
+adjustment_saturation = 0.9
+adjustment_color_correction = ExtResource("14_4yesb")
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_rpwqt"]
 vertices = PackedVector3Array(1.5, 6.75, -0.5, 2.75, 6.75, -0.75, 2.5, 6.75, -3.5, -0.5, 6.75, -3.5, -0.75, 6.75, -0.75, -3.5, 6.75, -0.75, -3.25, 6.75, 18.5, 1.5, 7, 18.5, 11.5, 1.5, 8.5, 11.75, 1.5, 10.25, 12.5, 1.5, 10.25, 12.5, 1.5, 7.75, 4.25, 1.5, 8.5, 4.75, 1.5, 7.5, 5.25, 1.75, 1.5, 0.5, 1.5, 0.5, -4.25, 1.5, 4.5, -4.5, 1.5, 8.25, 7, 1.5, 8.5, 7.25, 1.5, 10.25, 8.25, 1.5, 10.25, 8.5, 1.5, 8.5, 1.5, 1.5, 0.25, 1.5, 1.5, -2.25, 0.75, 1.5, -2.25, -5.25, 1.5, 4.5, -5.5, 1.5, 7.25, -4.75, 1.5, 7.25, -3.75, 1.5, 0.5, -3.75, 1.5, 1.25, -4.5, 1.75, 1.5, 4.75, 1.5, 1.25, 4.75, 1.5, 0.5, -6.25, 6.75, -0.75, -9.5, 6.75, -0.75, -9.75, 6.75, 3.25, -6.25, 6.75, 20.5, -14.5, 6.75, 20.5, -14.5, 6.75, 3.25, 11.5, 6.75, 3, 11.5, 6.75, -0.75, 5.5, 6.75, -0.75, 13.5, 6.75, 16.25, 13.5, 6.75, 3.25, 5.75, 6.75, 16.25, -4.25, 7.75, 9.75, -4.25, 7.75, 0.25, -5.5, 7.75, 0.25, -5.5, 7.75, 19.5, -4.5, 7.75, 19.5, 12.5, 8, 19.5, 12.5, 8, 17.25, 4.5, 8, 17, 2.5, 8, 19.5, 2.5, 7.75, 0.25, 4.5, 7.75, 0.25, -6.75, 1.5, 14.5, -7.25, 1.5, 14.5, -9, 1.5, 14.75, -9, 1.5, 15.25, -5, 1.5, 15.25, -5, 1.5, 14.75, -7.5, 1.5, 10.5, -7.5, 1.5, 11.25, -6.5, 1.5, 11.25, -6.5, 1.5, 10.5, -6.75, 1.5, 7.5, -7.25, 1.5, 7.5, -6.25, 1.5, 4.25, -6.25, 1.5, 0.5, -8.25, 1.5, 0.5, -8.25, 1.5, 4.25, -11.75, 1.5, 6.5, -9.25, 1.5, 7.75, -9, 1.5, 7.25, -11.5, 1.5, 4.5, 12.5, 1.5, 5.25, 12.5, 1.5, 4.5, 10.5, 1.5, 4.25, 7.25, 1.5, 5.25, 7.25, 1.5, 0.5, 10.5, 1.5, 0.5, 7.25, 2.5, 6.25, 7.25, 2.5, 6.75, 9.5, 2.5, 6.75, 9.5, 2.5, 6.25, 11.25, 2.5, 6.25, 11.25, 2.5, 6.75, 11.75, 2.5, 6.75, 11.75, 2.5, 6.25, -9.25, 1.5, 11.5, -9.25, 1.5, 10.25, -13.25, 1.5, 6.75, -13.25, 1.5, 15.25, -4.25, 1.5, 15.5, -4.5, 1.5, 14.25, -0.25, 1.5, 16.25, 3.25, 1.5, 16.25, 3.75, 1.5, 13.25, -4.5, 1.5, 11.5, -4.5, 1.5, 10.25, -2.25, 1.5, 21.25, -3.25, 1.5, 21.5, -3.25, 1.5, 23.25, 1.5, 1.5, 23.25, 1.5, 1.5, 21.5, -1.5, 1.5, 21.25, -1.5, 1.5, 19.5, -0.5, 1.5, 19.25, -4.25, 1.5, 19.25, -2.25, 1.5, 19.5, 3.75, 1.5, 8.75, 10.5, 1.5, 13.25, 10.5, 1.5, 10.5, 9.5, 1.5, 10.5, 9.25, 1.5, 13.5, 8.75, 1.5, 16.25, 5.75, 1.5, 13.5, 3.75, 1.5, 16.5, 3.75, 1.5, 19.25, 8.5, 1.5, 19.25, 7, 1.5, 13.25, 7, 1.5, 10.5, 6, 1.5, 10.5, 12.5, 1.5, 13.5, 12.5, 1.5, 16.25, -13.25, 1.5, 16.5, -13.25, 1.5, 19.5, -5.5, 1.5, 19.5, -5.5, 1.5, 16.5, 0.75, 1.5, 19.25, 2.5, 1.5, 19.5, 2.5, 1.5, 17.5, 0.75, 1.5, 17.5, 9.75, 1.5, 17.5, 9.75, 1.5, 19.25, 12.5, 1.5, 19.25, 12.5, 1.5, 17.5, 2.5, 6.75, 24.5, 2.75, 6.75, 20.5, 1.5, 6.75, 20.25, -3.25, 6.75, 20.25, -4.75, 6.75, 20.5, -4.5, 6.75, 24.5, -3.25, 4.5, 20.5, -3.25, 4.5, 23.25, 1.5, 4.5, 23.25, 1.5, 4.5, 20.5)
@@ -223,7 +259,6 @@ pawnWeapons = Array[PackedScene]([ExtResource("7_rht07"), ExtResource("3_s544t")
 pawnClothing = Array[PackedScene]([ExtResource("16_crfc1")])
 aiSkill = null
 aiType = null
-randomAnimationSpeed = false
 
 [node name="pawnSpawns" type="Node" parent="Spawns"]
 
@@ -240,13 +275,13 @@ spawnGroup = Array[StringName]([&"Friendly"])
 dialogueStartingCam = NodePath("../../../Misc/dialogueCam")
 dialogueName = &"uncleTalk"
 animationToForce = &"PawnAnim/shopIdle1"
-randomAnimationSpeed = false
 pawnColor = Color(0.225761, 0.616941, 0.860719, 1)
 
 [node name="Environment" type="Node" parent="."]
 
 [node name="worldEnvironment" type="WorldEnvironment" parent="Environment"]
-environment = ExtResource("13_wb68e")
+unique_name_in_owner = true
+environment = SubResource("Environment_q8rdj")
 
 [node name="reflectionProbe" type="ReflectionProbe" parent="Environment"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.494911, 0, 10.3879)
@@ -488,6 +523,8 @@ spawn_path = NodePath("../../Pawns/Players")
 
 [node name="dialogueCam" type="Marker3D" parent="Misc"]
 transform = Transform3D(-0.390105, 0, 0.92077, 0, 1, 0, -0.92077, 0, -0.390105, 7.31816, 2.49711, 2.74202)
+
+[node name="pooledObjects" type="Node" parent="Misc"]
 
 [node name="GamePauseMenu" parent="." instance=ExtResource("18_jge35")]
 

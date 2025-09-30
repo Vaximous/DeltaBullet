@@ -213,7 +213,7 @@ func initDropletPool()->void:
 	for i in MAX_DROPLETS:
 		var d : BloodDroplet = preload("res://assets/entities/emitters/bloodDroplet/bloodDrop.tscn").instantiate()
 		d.hide()
-		if world:
+		if is_instance_valid(world):
 			world.pooledObjects.add_child(d)
 			droplet_pool.append(d)
 
@@ -583,6 +583,15 @@ func castRay(cam: Camera3D, range: float = 50000, mask := 0b10111, exceptions: A
 	var params := PhysicsRayQueryParameters3D.create(transform.origin, transform.origin - (transform.basis.z * range), 23, exceptions)
 	params.collide_with_areas = hit_areas
 	return state.intersect_ray(params)
+#endregion
+
+#region Update World Environment
+func updateGraphics(env:WorldEnvironment)->void:
+	if is_instance_valid(env):
+		env.get_environment().ssil_enabled = UserConfig.graphics_Ssil
+		env.get_environment().ssr_enabled = UserConfig.graphics_Ssr
+		env.get_environment().sdfgi_enabled = UserConfig.graphics_Sdfgi
+		env.get_environment().ssao_enabled = UserConfig.graphics_Ssao
 #endregion
 
 #region Blood Effects
@@ -988,17 +997,10 @@ func get_from_mouse(length: float = 1000, worldObject: Node3D = gameManager.worl
 func setMotionBlur(camera: Camera3D) -> void:
 	if !UserConfig.configs_updated.is_connected(setMotionBlur):
 		UserConfig.configs_updated.connect(setMotionBlur.bind(camera))
-	if UserConfig.graphics_motion_blur:
-		if camera.compositor == null:
-			var comp = load("res://assets/envs/mBlurCompositor.tres")
-			camera.compositor = comp
-		else:
-			camera.compositor.compositor_effects[0].set("enabled", true)
-			camera.compositor.compositor_effects[1].set("enabled", true)
-	else:
-		if camera.compositor:
-			camera.compositor.compositor_effects[0].set("enabled", false)
-			camera.compositor.compositor_effects[1].set("enabled", false)
+
+	if camera.compositor is MotionBlurCompositor:
+		camera.compositor.compositor_effects[0].set("enabled", UserConfig.graphics_motion_blur)
+		camera.compositor.compositor_effects[1].set("enabled", UserConfig.graphics_motion_blur)
 #endregion
 
 #region Death Effect

@@ -1,13 +1,7 @@
-[gd_resource type="Environment" load_steps=6 format=3 uid="uid://dnig6jq4e6pjs"]
+[gd_resource type="Environment" load_steps=5 format=3 uid="uid://dnig6jq4e6pjs"]
 
+[ext_resource type="Texture2D" uid="uid://bfttaom6lw465" path="res://assets/envs/gradient_color_correction_blue_tint.tres" id="1_afll2"]
 [ext_resource type="Texture2D" uid="uid://d0f0crtwpmoka" path="res://assets/textures/panoramas/panoramatest1.png" id="1_tipwx"]
-
-[sub_resource type="Gradient" id="Gradient_tipwx"]
-offsets = PackedFloat32Array(0, 0.07621247, 0.36720553, 1)
-colors = PackedColorArray(0.00593019, 1.2032687e-07, 0.09481714, 1, 0.052353777, 0.07570592, 0.124175064, 1, 0.34062108, 0.37052992, 0.41018295, 1, 1, 1, 1, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_afll2"]
-gradient = SubResource("Gradient_tipwx")
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_tipwx"]
 panorama = ExtResource("1_tipwx")
@@ -20,12 +14,10 @@ background_mode = 2
 sky = SubResource("Sky_nj1fe")
 reflected_light_source = 1
 tonemap_mode = 3
-ssao_enabled = true
 ssao_intensity = 3.5
 ssao_power = 1.5529
 ssao_detail = 5.0
 ssao_horizon = 0.07
-ssil_enabled = true
 ssil_intensity = 0.75
 ssil_sharpness = 0.45
 ssil_normal_rejection = 0.0
@@ -47,4 +39,4 @@ volumetric_fog_density = 0.2457
 volumetric_fog_albedo = Color(0.848227, 0.767118, 0.651965, 1)
 adjustment_enabled = true
 adjustment_saturation = 0.9
-adjustment_color_correction = SubResource("GradientTexture1D_afll2")
+adjustment_color_correction = ExtResource("1_afll2")

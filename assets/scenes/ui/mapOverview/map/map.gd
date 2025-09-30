@@ -24,6 +24,9 @@ var direction : Vector3
 @export var speed : float = 30
 var acceleration : float = 5
 var cursorSpeed : float = 25
+#var desired_springarm_length : float = 10.0
+var desired_fov : float = 10.0
+var fading_out : bool = false
 
 #Variables
 @export var enabled: bool = true
@@ -45,12 +48,15 @@ func getInputDir()->Vector3:
 
 
 func _ready() -> void:
+	#desired_springarm_length = clamp(desired_springarm_length, 500.0, 5000.0)
 	scanMarkers()
 	await get_tree().process_frame
 	#fadeModel(modelHolder)
 	modelHolder.global_position.y = -1
 	tweenModelPosition(modelHolder,Vector3.ZERO)
 	#gameManager.setMotionBlur(camera)
+	cameraController.global_position.x = getCurrentLocationMarker().global_position.x
+	cameraController.global_position.z = getCurrentLocationMarker().global_position.z
 
 
 func _physics_process(delta: float) -> void:
@@ -63,6 +69,9 @@ func _physics_process(delta: float) -> void:
 
 			cameraController.velocity.x = lerpf(cameraController.velocity.x, speed * direction.normalized().x,acceleration*delta)
 			cameraController.velocity.z = lerpf(cameraController.velocity.z, speed * direction.normalized().z,acceleration*delta)
+
+			camera.fov = lerp(camera.fov, desired_fov, delta * 4.0)
+			#%springArm3d.spring_length = lerp(%springArm3d.spring_length, desired_springarm_length, delta * 5.0)
 		else:
 			%mapSelectionMarker.hide()
 			isMovingInput = false
@@ -99,6 +108,7 @@ func fadeModel(parent:Node3D)->void:
 			tween.parallel().tween_property(i,"transparency",0,0.5).set_trans(gameManager.defaultTransitionType).set_ease(gameManager.defaultEaseType)
 
 func _unhandled_input(event: InputEvent) -> void:
+	if fading_out: return
 	if event is InputEventMouseMotion:
 		mousePosition2D = event.relative
 		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED or Input.mouse_mode == Input.MOUSE_MODE_CONFINED_HIDDEN:
@@ -114,12 +124,14 @@ func _unhandled_input(event: InputEvent) -> void:
 
 	if event is InputEventMouseButton:
 		if event.is_action_pressed("gMwheelUp"):
-			if !springArm.spring_length < -4:
-				springArm.spring_length -= 0.5
-
+			#desired_springarm_length -= 2.0
+			desired_fov -= 1.0
 		if event.is_action_pressed("gMwheelDown"):
-			if !springArm.spring_length > 6:
-				springArm.spring_length += 0.5
+			#desired_springarm_length += 2.0
+			desired_fov += 1.0
+		#desired_springarm_length = clamp(desired_springarm_length, 100.0, 5000.0)
+		desired_fov = clamp(desired_fov, 5.0, 45.0)
+
 
 
 func scanMarkers()->void:
@@ -169,9 +181,9 @@ func createNaviPath(start : Vector3, end : Vector3) -> void:
 	var new_curve := Curve3D.new()
 	$pathVisualizerStartPosition/path3d.curve = new_curve
 	navAgent.get_next_path_position()
-	var navPath = navAgent.get_current_navigation_path()
+	var navPath = Util.smooth_position3d_array(navAgent.get_current_navigation_path(), 2)
+
 	for idx in navPath.size():
-		##TODO : add smoothing?
 		var point = navPath.get(idx)
 		new_curve.add_point(point, Vector3.ZERO, Vector3.ZERO)
 
@@ -186,7 +198,14 @@ func _on_map_selection_marker_selected_marker(node: Node3D) -> void:
 			return
 		var destination = node.getNavPoint()
 		var start_closest = NavigationServer3D.region_get_closest_point($model/mapoverview/MapNavigation.get_rid(), current.getNavPoint())
-
+		cameraController.global_position.x = node.global_position.x
+		cameraController.global_position.z = node.global_position.z
 		createNaviPath(start_closest, destination)
 	else:
 		$pathVisualizerStartPosition/path3d.hide()
+
+
+func _on_travel_button_pressed() -> void:
+	#desired_springarm_length = 1
+	desired_fov = 0.1
+	fading_out = true

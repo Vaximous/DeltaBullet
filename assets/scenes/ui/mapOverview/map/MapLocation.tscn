@@ -157,7 +157,7 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 0)
 offset = Vector2(0, 32)
 modulate = Color(0.5764706, 0, 0, 1)
-pixel_size = 0.0008
+pixel_size = 0.0004
 billboard = 1
 no_depth_test = true
 fixed_size = true
@@ -166,7 +166,7 @@ texture = ExtResource("3_aptmj")
 [node name="mapLabel" type="Label3D" parent="icon" index="0"]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00977084, -0.63163614, 0)
-pixel_size = 0.0005
+pixel_size = 0.0002
 billboard = 1
 fixed_size = true
 text = "MapName"

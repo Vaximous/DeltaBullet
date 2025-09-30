@@ -70,3 +70,61 @@ func damage_node(baseNode : Node3D, amount : float, dealer : Node3D = null, hitD
 	var hc := get_health_component(baseNode)
 	if hc != null:
 		hc.damage(amount, dealer, hitDirection)
+
+
+func smooth_position2d_array(array : Array[Vector2], iterations : int = 1) -> Array[Vector2]:
+	iterations -= 1
+	var smoothed_array : Array[Vector2] = []
+	#For every position in the array, cubic interp between them
+	#Add first
+	smoothed_array.append(array.front())
+	for idx in array.size():
+		#Skip last for smoothing
+		if idx + 1 >= array.size():
+			continue
+		var previous = array[0]
+		if idx - 1 > 0:
+			previous = array[idx - 1]
+		var current = array[idx]
+		var next = array[idx + 1]
+		var nextnext = next
+		if idx + 2 < array.size():
+			nextnext = array[idx + 2]
+		#Add current to smoothed_array
+		smoothed_array.append(current)
+		#Get the interpolated position between current and next
+		smoothed_array.append(current.cubic_interpolate(next, previous, nextnext, 0.5))
+	#Add last
+	smoothed_array.append(array.back())
+	if iterations > 0:
+		smoothed_array = smooth_position2d_array(smoothed_array, iterations)
+	return smoothed_array
+
+
+func smooth_position3d_array(array : Array[Vector3], iterations : int = 1) -> Array[Vector3]:
+	iterations -= 1
+	var smoothed_array : Array[Vector3] = []
+	#For every position in the array, cubic interp between them
+	#Add first
+	smoothed_array.append(array.front())
+	for idx in array.size():
+		#Skip last for smoothing
+		if idx + 1 >= array.size():
+			continue
+		var previous = array[0]
+		if idx - 1 > 0:
+			previous = array[idx - 1]
+		var current = array[idx]
+		var next = array[idx + 1]
+		var nextnext = next
+		if idx + 2 < array.size():
+			nextnext = array[idx + 2]
+		#Add current to smoothed_array
+		smoothed_array.append(current)
+		#Get the interpolated position between current and next
+		smoothed_array.append(current.cubic_interpolate(next, previous, nextnext, 0.5))
+	#Add last
+	smoothed_array.append(array.back())
+	if iterations > 0:
+		smoothed_array = smooth_position3d_array(smoothed_array, iterations)
+	return smoothed_array

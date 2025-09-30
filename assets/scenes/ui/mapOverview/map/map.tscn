@@ -1,7 +1,8 @@
-[gd_scene load_steps=52 format=3 uid="uid://c63b0ewnfkf4n"]
+[gd_scene load_steps=51 format=3 uid="uid://c63b0ewnfkf4n"]
 
 [ext_resource type="Script" uid="uid://t733jevi3esu" path="res://assets/scenes/ui/mapOverview/map/map.gd" id="1_rkk0n"]
 [ext_resource type="Texture2D" uid="uid://d0f0crtwpmoka" path="res://assets/textures/panoramas/panoramatest1.png" id="2_1xklm"]
+[ext_resource type="Texture2D" uid="uid://bfttaom6lw465" path="res://assets/envs/gradient_color_correction_blue_tint.tres" id="2_m7rdm"]
 [ext_resource type="PackedScene" uid="uid://cqmrcejc0uwpb" path="res://assets/models/misc/mapoverview.glb" id="3_fvi35"]
 [ext_resource type="PackedScene" uid="uid://b0c42ujfj0pdo" path="res://assets/scenes/ui/mapOverview/mapSelectionMarker.tscn" id="3_htbkg"]
 [ext_resource type="LightmapGIData" uid="uid://dd1r62syvv628" path="res://assets/scenes/ui/mapOverview/map/map.lmbake" id="4_e1lil"]
@@ -17,12 +18,6 @@
 [ext_resource type="PackedScene" uid="uid://1uuvtqrmyqus" path="res://assets/scenes/worlds/activeragdolltest/activeragdolltest.tscn" id="15_ab8qf"]
 [ext_resource type="PackedScene" uid="uid://b883b6dhrfe8q" path="res://assets/scenes/worlds/testscene2/testscene2.tscn" id="16_uyve1"]
 
-[sub_resource type="Gradient" id="Gradient_6voip"]
-colors = PackedColorArray(0, 0, 0, 1, 0.996078, 0.941176, 0.811765, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_iun5n"]
-gradient = SubResource("Gradient_6voip")
-
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_tipwx"]
 panorama = ExtResource("2_1xklm")
 
@@ -31,28 +26,30 @@ sky_material = SubResource("PanoramaSkyMaterial_tipwx")
 
 [sub_resource type="Environment" id="Environment_e1lil"]
 background_mode = 1
-background_color = Color(0.5019608, 0.09803922, 0, 1)
+background_color = Color(1, 1, 1, 1)
 sky = SubResource("Sky_nj1fe")
 ambient_light_source = 1
 reflected_light_source = 1
-tonemap_mode = 4
 ssil_intensity = 0.75
 sdfgi_use_occlusion = true
 sdfgi_cascades = 8
 glow_normalized = true
 glow_bloom = 0.15
 glow_blend_mode = 1
+fog_enabled = true
+fog_mode = 1
 fog_light_energy = 0.0
 fog_sun_scatter = 0.17
-fog_density = 0.009
+fog_density = 1.0
 fog_sky_affect = 0.765
 fog_height = 96.8
 fog_height_density = 0.089
+fog_depth_begin = 2570.0
+fog_depth_end = 4000.0
 volumetric_fog_density = 0.2457
 volumetric_fog_albedo = Color(0.848227, 0.767118, 0.651965, 1)
-adjustment_brightness = 0.9
-adjustment_saturation = 1.15
-adjustment_color_correction = SubResource("GradientTexture1D_iun5n")
+adjustment_enabled = true
+adjustment_color_correction = ExtResource("2_m7rdm")
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_htbkg"]
 radius = 0.065
@@ -185,11 +182,6 @@ size = Vector3(1.8140297, 8.254776, 5.6881104)
 size = Vector3(8.765902, 15.891914, 5.6881104)
 
 [sub_resource type="Curve3D" id="Curve3D_l5ph3"]
-_data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 27.10254, -38.92656, 10.38958, 0, 0, 0, 0, 0, 0, 26.518085, -43.334656, -5.26128),
-"tilts": PackedFloat32Array(0, 0)
-}
-point_count = 2
 
 [sub_resource type="Gradient" id="Gradient_4t545"]
 interpolation_mode = 1
@@ -244,19 +236,22 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5292459, 6.5257053, 4.9839
 
 [node name="camHoriz" type="Node3D" parent="cameraController/Camera"]
 unique_name_in_owner = true
-transform = Transform3D(0.9999999, 0, 0, 0, 0.78214073, 0.6231018, 0, -0.62310183, 0.7821406, 0, 0, 0)
+transform = Transform3D(0.7071067, -0.44018432, 0.55338746, 0, 0.78260815, 0.6225146, -0.7071067, -0.44018432, 0.55338746, 0, 0, 0)
 
 [node name="camVert" type="Node3D" parent="cameraController/Camera/camHoriz"]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1.0000001, 0, 0, 0, 1.0000001, 0, 0, 0)
 
 [node name="springArm3d" type="SpringArm3D" parent="cameraController/Camera/camHoriz/camVert"]
-transform = Transform3D(1, 0, 0, 0, 1, -2.9802322e-08, 0, 2.9802322e-08, 1, 0, 0, 0)
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 0.98480767, 0.17364816, 0, -0.17364816, 0.98480767, 0, 0, 0)
 collision_mask = 0
+spring_length = 500.0
 
 [node name="camera3d" type="Camera3D" parent="cameraController/Camera/camHoriz/camVert/springArm3d"]
 unique_name_in_owner = true
-transform = Transform3D(1.0000001, 0, 0, 0, 0.9999999, -2.9802322e-08, 0, 0, 1, 0, 0, 0)
+transform = Transform3D(1.0000001, 0, 0, 0, 0.9999999, -2.9802322e-08, 0, 0, 1, 18.85117, -1.6803513e-07, 50.638313)
+fov = 149.0
 
 [node name="mapSelectionMarker" parent="cameraController/Camera/camHoriz" node_paths=PackedStringArray("map") instance=ExtResource("3_htbkg")]
 unique_name_in_owner = true
@@ -670,7 +665,7 @@ directional_shadow_mode = 0
 path_desired_distance = 0.5
 target_desired_distance = 0.5
 simplify_path = true
-simplify_epsilon = 1.0
+simplify_epsilon = 2.0
 debug_path_custom_color = Color(0, 1, 0, 1)
 debug_path_custom_point_size = 8.0
 

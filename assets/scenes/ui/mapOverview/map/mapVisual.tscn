@@ -1,6 +1,15 @@
-[gd_scene load_steps=5 format=4 uid="uid://dalnlm78l67yh"]
+[gd_scene load_steps=6 format=4 uid="uid://dalnlm78l67yh"]
 
 [ext_resource type="Material" uid="uid://dfrmsbwp3jxcd" path="res://assets/scenes/ui/mapOverview/map/defaultMarker.tres" id="1_k7wew"]
+
+[sub_resource type="GDScript" id="GDScript_k7wew"]
+script/source = "extends Marker3D
+
+
+
+func _process(delta: float) -> void:
+	scale = Vector3.ONE * get_viewport().get_camera_3d().global_position.distance_to(global_position) * 0.015
+"
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_h8g5u"]
 _surfaces = [{
@@ -33,6 +42,7 @@ _surfaces = [{
 }]
 
 [node name="corner" type="Marker3D"]
+script = SubResource("GDScript_k7wew")
 
 [node name="CSGBakedMeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.05316341, 0, -0.22584258)

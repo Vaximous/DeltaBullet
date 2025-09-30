@@ -72,6 +72,7 @@ func setVisible(value:bool)->void:
 		gameManager.pauseMenu.canPause = true
 		gameManager.removeWorldMap()
 
+
 func setIndex(value:int):
 	if !value > map.mapRotations.size()-1 and map:
 		map.setCameraPositionAndRotation(map.mapPositions[value],map.mapRotations[value])

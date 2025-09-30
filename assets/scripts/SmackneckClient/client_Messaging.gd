@@ -1,5 +1,5 @@
 extends RefCounted
-
+class_name Messaging
 
 #const header := "CHATROOM" TODO implement
 
@@ -14,7 +14,7 @@ signal total_user_count_update(amount : int)
 signal channel_state_update() #Joined or left a channel
 
 
-#If a message's body is ["chatroom"]
+#TODO: If a message's body is ["chatroom"]
 func handle_message(msg : Dictionary) -> void:
 	print(msg)
 	if msg.has("heartbeat"):

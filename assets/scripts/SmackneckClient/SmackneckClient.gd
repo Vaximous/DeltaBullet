@@ -2,6 +2,7 @@ extends Node
 
 
 #region ---------------------- masterserver connectivity
+var connect_on_startup : bool = false
 signal masterserver_connected
 signal masterserver_connection_lost
 signal masterserver_authentication_success
@@ -25,7 +26,8 @@ func _ready() -> void:
 	#export auto change
 	if not OS.has_feature("editor"):
 		masterserver_address = "5.161.123.32"
-	connect_to_masterserver()
+	if connect_on_startup:
+		connect_to_masterserver()
 	Authentication.auth_success.connect(func():
 		masterserver_authentication_success.emit()
 		)
@@ -35,14 +37,17 @@ func _ready() -> void:
 
 func connect_to_masterserver() -> void:
 	print("Connecting to masterserver.")
+	Console.add_rich_console_message("[color=blue]Connecting to Smacknet™..[/color]")
 	var err = masterserver_connection.connect_to_host(masterserver_address, masterserver_port)
 	print("Connection code: %s" % err)
 	if err == OK:
 		masterserver_connected.emit()
+		Console.add_rich_console_message("[color=green]Connection to Smacknet™ Successful![/color]")
 	while masterserver_connection.get_status() != 0:
 		poll_masterserver()
 		await get_tree().create_timer(MASTERSERVER_POLL_INTERVAL).timeout
 	print("Lost connection to masterserver.")
+	Console.add_rich_console_message("[color=red]Lost connection to Smacknet™[/color]")
 	masterserver_connection_lost.emit()
 
 

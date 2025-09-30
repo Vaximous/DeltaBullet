@@ -11,44 +11,115 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_srtse")
 
-[node name="chat" type="VBoxContainer" parent="."]
+[node name="hSplitContainer" type="HSplitContainer" parent="."]
+layout_mode = 2
+split_offset = 1275
+
+[node name="marginContainer2" type="MarginContainer" parent="hSplitContainer"]
 layout_mode = 2
 
-[node name="topbar" type="HBoxContainer" parent="chat"]
+[node name="chat" type="VBoxContainer" parent="hSplitContainer/marginContainer2"]
 layout_mode = 2
 
-[node name="back" type="Button" parent="chat/topbar"]
+[node name="topbar" type="HBoxContainer" parent="hSplitContainer/marginContainer2/chat"]
+layout_mode = 2
+
+[node name="back" type="Button" parent="hSplitContainer/marginContainer2/chat/topbar"]
 layout_mode = 2
 text = "<"
 
-[node name="label" type="Label" parent="chat/topbar"]
+[node name="label" type="Label" parent="hSplitContainer/marginContainer2/chat/topbar"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Smacknet. Chat!"
 horizontal_alignment = 1
 
-[node name="hSeparator" type="HSeparator" parent="chat"]
+[node name="hSeparator" type="HSeparator" parent="hSplitContainer/marginContainer2/chat"]
 layout_mode = 2
 
-[node name="vBoxContainer" type="VBoxContainer" parent="chat"]
+[node name="chats" type="TabContainer" parent="hSplitContainer/marginContainer2/chat"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+current_tab = 0
+
+[node name="+" type="VBoxContainer" parent="hSplitContainer/marginContainer2/chat/chats"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="scrollContainer" type="ScrollContainer" parent="hSplitContainer/marginContainer2/chat/chats/+"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="panelContainer" type="PanelContainer" parent="chat/vBoxContainer"]
+[node name="vBoxContainer" type="VBoxContainer" parent="hSplitContainer/marginContainer2/chat/chats/+/scrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="hSeparator2" type="HSeparator" parent="hSplitContainer/marginContainer2/chat/chats/+/scrollContainer/vBoxContainer"]
+layout_mode = 2
+
+[node name="richTextLabel" type="Label" parent="hSplitContainer/marginContainer2/chat/chats/+/scrollContainer/vBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Available Rooms
+"
+horizontal_alignment = 1
+
+[node name="hSeparator3" type="HSeparator" parent="hSplitContainer/marginContainer2/chat/chats/+/scrollContainer/vBoxContainer"]
+layout_mode = 2
+
+[node name="panelContainer" type="PanelContainer" parent="hSplitContainer/marginContainer2/chat/chats/+/scrollContainer/vBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="richTextLabel" type="RichTextLabel" parent="chat/vBoxContainer/panelContainer"]
-layout_mode = 2
-bbcode_enabled = true
-text = "Chat!"
-
-[node name="hSeparator" type="HSeparator" parent="chat/vBoxContainer"]
+[node name="chatrooms" type="VBoxContainer" parent="hSplitContainer/marginContainer2/chat/chats/+/scrollContainer/vBoxContainer/panelContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 
-[node name="lineEdit" type="LineEdit" parent="chat/vBoxContainer"]
+[node name="hSeparator" type="HSeparator" parent="hSplitContainer/marginContainer2/chat/chats/+"]
+layout_mode = 2
+
+[node name="lineEdit" type="LineEdit" parent="hSplitContainer/marginContainer2/chat/chats/+"]
 layout_mode = 2
 placeholder_text = "Type here to chat."
+
+[node name="marginContainer" type="MarginContainer" parent="hSplitContainer"]
+layout_mode = 2
+
+[node name="panelContainer" type="PanelContainer" parent="hSplitContainer/marginContainer"]
+layout_mode = 2
+
+[node name="vBoxContainer" type="VBoxContainer" parent="hSplitContainer/marginContainer/panelContainer"]
+layout_mode = 2
+
+[node name="hBoxContainer" type="HBoxContainer" parent="hSplitContainer/marginContainer/panelContainer/vBoxContainer"]
+layout_mode = 2
+
+[node name="totalUserCount" type="Label" parent="hSplitContainer/marginContainer/panelContainer/vBoxContainer/hBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Total Users: "
+
+[node name="hSeparator" type="HSeparator" parent="hSplitContainer/marginContainer/panelContainer/vBoxContainer"]
+layout_mode = 2
+
+[node name="users" type="ScrollContainer" parent="hSplitContainer/marginContainer/panelContainer/vBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="userContainer" type="VBoxContainer" parent="hSplitContainer/marginContainer/panelContainer/vBoxContainer/users"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="label" type="Label" parent="hSplitContainer/marginContainer/panelContainer/vBoxContainer/users/userContainer"]
+layout_mode = 2
+text = "Users"
+horizontal_alignment = 1
+
+[node name="hSeparator" type="HSeparator" parent="hSplitContainer/marginContainer/panelContainer/vBoxContainer/users/userContainer"]
+layout_mode = 2
 
 [node name="connectionSuccess" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
@@ -62,4 +133,5 @@ unique_name_in_owner = true
 [node name="messageSent" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
 
-[connection signal="pressed" from="chat/topbar/back" to="." method="queue_free"]
+[connection signal="pressed" from="hSplitContainer/marginContainer2/chat/topbar/back" to="." method="queue_free"]
+[connection signal="tab_selected" from="hSplitContainer/marginContainer2/chat/chats" to="." method="displayChatroom"]

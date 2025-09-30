@@ -27,6 +27,7 @@ var GameState = gameState
 var _gameManager = gameManager
 var _questManager = questManager
 var smClient = SmackneckClient
+var util = Util
 var userDir = ProjectSettings.globalize_path("user://")
 var help:
 	get:

@@ -126,7 +126,6 @@ func _ready() -> void:
 	UserConfig.configs_updated.connect(cleanupChecker)
 	add_child(soundPlayer)
 	initializeSteam()
-	SmackneckClient.connect_to_masterserver()
 	DisplayServer.window_set_title(ProjectSettings.get_setting("application/config/name"))
 	soundPlayer.name = "globalSoundPlayer"
 	if !userDir.dir_exists("saves"):
@@ -135,6 +134,8 @@ func _ready() -> void:
 	soundPlayer.bus = "Sounds"
 	if richPresenceEnabled:
 		pass
+	await get_tree().process_frame
+	SmackneckClient.connect_to_masterserver()
 
 func sm_PushGame()->void:
 	SmackneckClient.put_message("MESSAGE",{"msg":"set_game", "game": "Delta Bullet"})
@@ -467,6 +468,15 @@ func takeScreenshot(path: String = "user://screenshots", screenshotName: String 
 	return savedfilepath
 #endregion
 
+#region Sound Play
+func playSound2D(sound:String,bus = &"UI")->AudioStreamPlayer:
+	var _sound : AudioStream = load(sound)
+	var player = AudioStreamPlayer.new()
+	add_child(player)
+	player.stream = _sound
+	player.finished.connect(player.queue_free)
+	player.play()
+	return player
 #region Scene Management
 func restartScene() -> void:
 	#var curr = get_tree().current_scene.scene_file_path

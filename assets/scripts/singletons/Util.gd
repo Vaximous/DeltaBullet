@@ -1,6 +1,9 @@
 extends Node
 
-
+##Get node and kill its children
+func queueFreeNodeChildren(node : Node) -> void:
+	for ch in node.get_children():
+		ch.queue_free()
 
 func display_message_simple(text : String, duration : float = 5.0, abort_if_displaying : bool = false, parent : Node = null) -> Control:
 	var script := preload("res://assets/scenes/ui/popup_message.gd")
@@ -14,6 +17,10 @@ func resize_array_and_fill(array : Array, size : int, value : Variant) -> void:
 	while array.size() < size:
 		array.append(value)
 
+func stripBbcode(bbcodeText : String) -> String:
+	var regex := RegEx.new()
+	regex.compile("\\[(.+?)\\]")
+	return regex.sub(bbcodeText, "", true)
 
 ##Given an array of floats, picks a random index with the floats as the weight for the index
 func pick_weighted(weight_array:Array[float]) -> int:

@@ -1,11 +1,11 @@
 [gd_resource type="Compositor" script_class="MotionBlurCompositor" load_steps=16 format=3 uid="uid://ygyy16d6bosi"]
 
-[ext_resource type="Script" uid="uid://buj8yio6lnyh1" path="res://addons/SphynxMotionBlurToolkit/BaseClasses/mb_compositor.gd" id="1_3v37r"]
+[ext_resource type="Script" uid="uid://miqeye1gjimr" path="res://addons/SphynxMotionBlurToolkit/BaseClasses/mb_compositor.gd" id="1_3v37r"]
 [ext_resource type="Resource" uid="uid://ca45noqewsyvp" path="res://addons/SphynxMotionBlurToolkit/Guertin/guertin_experimental_blur_stage.tres" id="1_coqow"]
 [ext_resource type="Resource" uid="uid://cslvcweyejh3c" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/default_camera_movement_component.tres" id="1_fy7ch"]
-[ext_resource type="Script" uid="uid://bwldhd2dt6n16" path="res://addons/SphynxMotionBlurToolkit/Guertin/new_guertin_motion_blur.gd" id="2_galmu"]
+[ext_resource type="Script" uid="uid://d3fmk1i3w3jho" path="res://addons/SphynxMotionBlurToolkit/Guertin/new_guertin_motion_blur.gd" id="2_galmu"]
 [ext_resource type="Resource" uid="uid://iru8ynu04i00" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/default_camera_rotation_component.tres" id="2_x52xf"]
-[ext_resource type="Script" uid="uid://cksg4cwolmrs7" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/pre_blur_processor.gd" id="3_8v7q4"]
+[ext_resource type="Script" uid="uid://b4n1i7gnlrx1n" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/pre_blur_processor.gd" id="3_8v7q4"]
 [ext_resource type="Resource" uid="uid://cvb65hfs2lrxo" path="res://addons/SphynxMotionBlurToolkit/Guertin/guertin_neighbor_max_stage.tres" id="3_h6x5o"]
 [ext_resource type="Resource" uid="uid://bidsfymvdyhek" path="res://addons/SphynxMotionBlurToolkit/Guertin/guertin_overlay_stage.tres" id="4_catxw"]
 [ext_resource type="Resource" uid="uid://rp3mpjmisoyh" path="res://addons/SphynxMotionBlurToolkit/PreBlurProcessing/default_object_movement_component.tres" id="4_qswkd"]
@@ -24,11 +24,6 @@ access_resolved_depth = false
 needs_motion_vectors = false
 needs_normal_roughness = false
 script = ExtResource("3_8v7q4")
-pre_blur_processor_stage = ExtResource("5_usvuw")
-camera_rotation_component = ExtResource("2_x52xf")
-camera_movement_component = ExtResource("1_fy7ch")
-object_movement_component = ExtResource("4_qswkd")
-debug = false
 metadata/_custom_type_script = ExtResource("3_8v7q4")
 
 [sub_resource type="CompositorEffect" id="CompositorEffect_fy7ch"]
@@ -41,27 +36,10 @@ access_resolved_depth = false
 needs_motion_vectors = false
 needs_normal_roughness = false
 script = ExtResource("2_galmu")
-blur_stage = ExtResource("1_coqow")
-overlay_stage = ExtResource("4_catxw")
-tile_max_x_stage = ExtResource("5_h7xg5")
-tile_max_y_stage = ExtResource("6_fy7ch")
-neighbor_max_stage = ExtResource("3_h6x5o")
-tile_variance_stage = ExtResource("7_x52xf")
-tile_size = 40
-linear_falloff_slope = 1.0
-importance_bias = 40.0
-maximum_jitter_value = 0.95
-minimum_user_threshold = 1.5
-debug = false
 metadata/_custom_type_script = ExtResource("2_galmu")
 
 [resource]
 compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_g8lgu"), SubResource("CompositorEffect_fy7ch")])
 script = ExtResource("1_3v37r")
-samples = 16
-intensity = 1.0
-center_fade = 0.0
-framerate_independent = true
-uncapped_independence = false
 target_constant_framerate = 60.0
 metadata/_custom_type_script = "uid://buj8yio6lnyh1"

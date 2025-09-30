@@ -773,15 +773,24 @@ func setRagdollPose(ragdoll:PawnRagdoll)->void:
 		ragdoll.ragdollSkeleton.set_bone_global_pose(bones, pawnSkeleton.get_bone_global_pose(bones))
 
 func setRagdollPositionAndRotation(ragdoll:PawnRagdoll)->void:
+	ragdoll.targetSkeleton = pawnSkeleton
 	ragdoll.global_transform = pawnMesh.global_transform
 	ragdoll.rotation = pawnMesh.rotation
-	ragdoll.targetSkeleton = pawnSkeleton
 
 func createRagdoll(impulse_bone : int = 0,killer = null)->PawnRagdoll:
 	var ragdoll : PawnRagdoll = ragdollScene.instantiate()
 	gameManager.world.worldMisc.add_child(ragdoll)
+	ragdoll.savedPose = createRagdollPose(ragdoll)
+	ragdoll.targetSkeleton = pawnSkeleton
 	ragdoll.initializeRagdoll(self,velocity,impulse_bone,hitImpulse,hitVector,killer)
 	return ragdoll
+
+func createRagdollPose(ragdoll:PawnRagdoll)->Array[Transform3D]:
+	var pose : Array[Transform3D] = []
+	for i in ragdoll.physicsBones:
+		for ps in pawnSkeleton.get_bone_count():
+			pose.append(pawnSkeleton.get_bone_pose(i.get_bone_id()))
+	return pose
 
 func checkItems()->void:
 	for items in itemHolder.get_children():

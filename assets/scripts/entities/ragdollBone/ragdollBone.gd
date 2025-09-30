@@ -64,7 +64,6 @@ var bonePhysics : PhysicsDirectBodyState3D
 @export var currentVelocity : Vector3
 @export var contactCount : int
 
-
 var audioStreamPlayer : AudioStreamPlayer3D
 var inAirStreamPlayer : AudioStreamPlayer3D
 
@@ -80,10 +79,83 @@ var activeRagdollJoint : Generic6DOFJoint3D
 func _ready()-> void:
 	boneSetup()
 
+func apply_spring_torque(
+	bone: PhysicalBone3D,
+	target_transform: Transform3D,
+	stiffness: float = 20.0,
+	damping: float = 2.0,
+	epsilon: float = 1e-4,
+	max_torque: float = 1000.0
+) -> void:
+	# Get current and target rotations as quaternions
+	var cur_q: Quaternion = bone.global_transform.basis.get_rotation_quaternion()
+	var tgt_q: Quaternion = target_transform.basis.get_rotation_quaternion()
+
+	# Rotation that rotates current -> target
+	var delta_q: Quaternion = (tgt_q * cur_q.inverse()).normalized()
+
+	# Angle (radians) and axis from quaternion
+	var angle: float = delta_q.get_angle()
+	if angle <= epsilon:
+		return # nothing to do for tiny angles
+
+	var axis: Vector3 = delta_q.get_axis()
+	if axis.length_squared() == 0.0:
+		return
+
+	axis = axis.normalized() # normalize because get_axis() can be unreliable near zero-angle
+	# PD controller (proportional by angle, derivative by angular velocity)
+	var _torque: Vector3 = axis * (angle * stiffness)
+	_torque -= bone.angular_velocity * damping
+
+	# safety clamp
+	var t_len = torque.length()
+	if t_len > max_torque and t_len > 0.0:
+		_torque = _torque / t_len * max_torque
+
+	angular_velocity = _torque
+
+func apply_ragdoll_motor(b: PhysicalBone3D, target_basis: Basis, kp: float = 500, kd: float = 1, force_limit: float = 1.5) -> void:
+# Apply ragdoll motor control to make a PhysicalBone3D follow a target orientation.
+# - b: the PhysicalBone3D
+# - target_basis: the desired orientation (Basis) from the animated Skeleton
+# - kp: proportional gain (stiffness)
+# - kd: derivative gain (damping)
+# - force_limit: maximum torque the motor can apply
+	if not b:
+		return
+
+	# Current and target orientations as quaternions
+	var current_q: Quaternion = b.global_transform.basis.get_rotation_quaternion()
+	var target_q: Quaternion = target_basis.get_rotation_quaternion()
+
+	# Quaternion error (rotation from current -> target)
+	var error_q: Quaternion = current_q.inverse() * target_q
+	error_q = error_q.normalized()
+
+	# Convert to axis-angle
+	var angle: float = 2.0 * acos(clamp(error_q.w, -1.0, 1.0))
+	if angle > PI:
+		angle -= TAU
+
+	var angular_error: Vector3 = Vector3.ZERO
+	if abs(angle) > 0.0001:
+		angular_error = error_q.get_axis() * angle
+
+	# PD controller: target angular velocity
+	var desired_velocity: Vector3 = angular_error * kp - b.angular_velocity * kd
+
+	# Enable & configure motor
+	ragdoll.setAngularMotor(b, true)
+	ragdoll.setAngularMotorForceLimit(b, force_limit)
+	ragdoll.setAngularMotorTargetVelocity(b, desired_velocity)
+
 func _physics_process(delta: float) -> void:
 	if ragdoll.activeRagdollEnabled:
 		pass
-		#ragdoll.animate_bone_by_physics_motor(self,delta,5,10)
+		#var target_pose: Transform3D = ragdoll.targetSkeleton.get_bone_pose(get_bone_id())
+
+
 
 func boneSetup()->void:
 	excludeAllAI()
@@ -167,45 +239,7 @@ func createContactBlood(state:PhysicsDirectBodyState3D)->void:
 func _integrate_forces(state:PhysicsDirectBodyState3D)->void:
 	boneState = state.sleeping
 	currentVelocity = state.get_velocity_at_local_position(position)
-	#if audioCooldown > 0 or boneState == true:
-			#return
-##
-	#if state.get_contact_count() > 0 and !boneState and is_instance_valid(ragdoll):
-		#if exclusionArray.has(state.get_contact_collider(0)):
-			#return
-		##var contactNormal = state.get_contact_local_normal(0)
-		##var contactDot = state.get_contact_local_velocity_at_position(0).normalized().dot(contactNormal)
-		#var contactForce = state.get_contact_impulse(0).length()*2
-		##contactForce = clampf(contactForce,0,heavyImpactThreshold)
-		#if gameManager.debugEnabled:
-			#print("%s Contact Force : %s"%[name,contactForce])
-		##audioStreamPlayer.attenuation_filter_db = lerp(-20, 0, clamp(abs(contactDot) * contactForce, 0, 1))
 
-
-
-
-
-		#if contactForce >= heavyImpactThreshold:
-			#createContactBlood(state)
-			##gameManager.sprayBlood(state.get_contact_collider_position(0),15,3)
-			#if is_instance_valid(audioStreamPlayer):
-				#audioStreamPlayer.stream = heavyImpactSounds
-				#audioStreamPlayer.play()
-				#audioCooldown = 0.25
-#
-		#elif contactForce >= mediumImpactThreshold:
-			#createContactBlood(state)
-			#if is_instance_valid(audioStreamPlayer):
-				#audioStreamPlayer.stream = mediumImpactSounds
-				#audioStreamPlayer.play()
-				#audioCooldown = 0.25
-#
-		#elif contactForce >= lightImpactThreshold:
-			#createContactBlood(state)
-			#if is_instance_valid(audioStreamPlayer):
-				#audioStreamPlayer.stream = lightImpactSounds
-				#audioStreamPlayer.play()
-				#audioCooldown = 0.35
 
 
 func hit(dmg, dealer=null, hitImpulse:Vector3 = Vector3.ZERO, hitPoint:Vector3 = Vector3.ZERO, bullet:Projectile = null)->void:

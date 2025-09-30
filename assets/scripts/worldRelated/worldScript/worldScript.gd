@@ -7,7 +7,6 @@ class_name WorldScene
 @onready var worldSpawns : Node = $Spawns
 @onready var playerWorldSpawns : Node = $Spawns/playerSpawns
 @onready var pawnWorldSpawns : Node = $Spawns/pawnSpawns
-@onready var worldEnvironment : Node = $Environment
 @onready var worldGeometry : Node3D = $Geometry
 @onready var worldPawns : Node3D = $Pawns
 @onready var worldProps : Node3D = $Props
@@ -23,8 +22,6 @@ class_name WorldScene
 	set(value):
 		worldData = value
 
-
-
 func _enter_tree()->void:
 	if !Engine.is_editor_hint():
 		gameManager.world = self
@@ -39,6 +36,8 @@ func _ready()->void:
 		gameManager.worldLoaded.emit()
 		gameManager.getEventSignal("contractRefresh").emit()
 		setupWorld()
+		gameManager.updateGraphics(worldSky)
+		UserConfig.configs_updated.connect(gameManager.updateGraphics.bind(worldSky))
 
 		##Spawn pawns at their respective points.
 		if worldData != null:

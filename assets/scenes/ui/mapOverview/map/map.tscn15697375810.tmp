@@ -226,10 +226,9 @@ uv1_offset = Vector3(1.1991097, 0, 0)
 script = SubResource("GDScript_uyve1")
 scroll_speed = Vector3(-1, 0, 0)
 
-[node name="map" type="Node3D" node_paths=PackedStringArray("worldEnv")]
+[node name="map" type="Node3D"]
 script = ExtResource("1_rkk0n")
 mapName = &"Lacren"
-worldEnv = NodePath("worldEnvironment")
 mapRotations = Array[Vector3]([Vector3(-30, 149, 0), Vector3(-35, -35.4, 0), Vector3(-36.9, -158, 0)])
 mapPositions = Array[Vector3]([Vector3(5.21291, 37.0915, 4.57104), Vector3(-19.2002, 37.0915, -0.622449), Vector3(-18.7244, 32.5327, -74.3564)])
 

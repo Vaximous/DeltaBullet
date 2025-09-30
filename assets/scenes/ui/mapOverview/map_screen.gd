@@ -63,6 +63,7 @@ func setVisible(value:bool)->void:
 	visibleTween = create_tween()
 	if value:
 		show()
+		%mapTheme.play()
 		visibleTween.parallel().tween_property(%mapScreen,"modulate",Color.WHITE,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
 	else:
 		visibleTween.parallel().tween_property(%mapTheme,"volume_db",linear_to_db(-100.0),1)

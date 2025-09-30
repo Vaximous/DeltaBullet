@@ -1,4 +1,4 @@
-[gd_resource type="Compositor" script_class="MotionBlurCompositor" load_steps=16 format=3 uid="uid://ygyy16d6bosi"]
+[gd_resource type="Compositor" script_class="MotionBlurCompositor" load_steps=16 format=3 uid="uid://bgwknhe71ml0l"]
 
 [ext_resource type="Script" uid="uid://miqeye1gjimr" path="res://addons/SphynxMotionBlurToolkit/BaseClasses/mb_compositor.gd" id="1_3v37r"]
 [ext_resource type="Resource" uid="uid://ca45noqewsyvp" path="res://addons/SphynxMotionBlurToolkit/Guertin/guertin_experimental_blur_stage.tres" id="1_coqow"]
@@ -14,32 +14,27 @@
 [ext_resource type="Resource" uid="uid://bxfg45ubc2pv7" path="res://addons/SphynxMotionBlurToolkit/Guertin/guertin_tile_max_y_stage.tres" id="6_fy7ch"]
 [ext_resource type="Resource" uid="uid://bqehecsdgt70s" path="res://addons/SphynxMotionBlurToolkit/Guertin/guertin_tile_variance_stage.tres" id="7_x52xf"]
 
-[sub_resource type="CompositorEffect" id="CompositorEffect_g8lgu"]
-resource_local_to_scene = false
-resource_name = ""
-enabled = true
-effect_callback_type = 3
-access_resolved_color = false
-access_resolved_depth = false
-needs_motion_vectors = false
-needs_normal_roughness = false
-script = ExtResource("3_8v7q4")
-metadata/_custom_type_script = ExtResource("3_8v7q4")
-
 [sub_resource type="CompositorEffect" id="CompositorEffect_fy7ch"]
 resource_local_to_scene = false
 resource_name = ""
 enabled = true
-effect_callback_type = 3
-access_resolved_color = false
-access_resolved_depth = false
+effect_callback_type = 4
+needs_motion_vectors = false
+needs_normal_roughness = false
+script = ExtResource("3_8v7q4")
+metadata/_custom_type_script = "uid://b4n1i7gnlrx1n"
+
+[sub_resource type="CompositorEffect" id="CompositorEffect_x52xf"]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
 needs_motion_vectors = false
 needs_normal_roughness = false
 script = ExtResource("2_galmu")
-metadata/_custom_type_script = ExtResource("2_galmu")
+metadata/_custom_type_script = "uid://d3fmk1i3w3jho"
 
 [resource]
-compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_g8lgu"), SubResource("CompositorEffect_fy7ch")])
+compositor_effects = Array[CompositorEffect]([SubResource("CompositorEffect_fy7ch"), SubResource("CompositorEffect_x52xf")])
 script = ExtResource("1_3v37r")
-target_constant_framerate = 60.0
-metadata/_custom_type_script = "uid://buj8yio6lnyh1"
+metadata/_custom_type_script = "uid://miqeye1gjimr"

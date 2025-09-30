@@ -25,6 +25,7 @@ const setting_remap : Dictionary = {
 	'graphics_Sdfgi' = ^'panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer/sdfgiToggle:button_pressed',
 	'graphics_Ssil' = ^'panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer/ssilToggle:button_pressed',
 	'graphics_Ssr' = ^'panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer/ssrToggle:button_pressed',
+	'graphics_Ssao' = ^'panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer/ssaoToggle:button_pressed',
 	'game_camera_screentilt_always' = ^'panelHolder/panel/optionsPanel/Game/marginContainer/vBoxContainer/alwaysCamRoll:button_pressed',
 	'game_show_fps' = ^'panelHolder/panel/optionsPanel/Game/marginContainer/vBoxContainer/showFPSButton:button_pressed',
 	'game_simple_crosshairs' = ^'panelHolder/panel/optionsPanel/Game/marginContainer/vBoxContainer/simpleCrosshairs:button_pressed',
@@ -419,6 +420,10 @@ text = "Signed distance field global illumination (SDFGI)"
 [node name="ssrToggle" type="CheckButton" parent="panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer"]
 layout_mode = 2
 text = "Screen-Space Reflections"
+
+[node name="ssaoToggle" type="CheckButton" parent="panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer"]
+layout_mode = 2
+text = "Screen-Space Ambient Occlusion"
 
 [node name="ssilToggle" type="CheckButton" parent="panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer"]
 layout_mode = 2

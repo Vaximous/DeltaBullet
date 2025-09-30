@@ -30,6 +30,7 @@ var audio_custom_music_enabled : bool = false
 var graphics_motion_blur : bool = false
 var graphics_resolution : int = 0
 var graphics_fullscreen : bool = false
+var graphics_Ssao: bool = true
 var graphics_vsync : bool = true:
 	set(value):
 		graphics_vsync = value

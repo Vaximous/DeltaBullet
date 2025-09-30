@@ -3,6 +3,7 @@ extends Node3D
 @export var mapName : StringName = &""
 const markerColors = ["res://assets/scenes/ui/mapOverview/map/defaultMarker.tres","res://assets/scenes/ui/mapOverview/map/atLocationMarker.tres","res://assets/scenes/ui/mapOverview/map/selectedMarker.tres"]
 var camTween : Tween
+
 @onready var modelHolder : Node3D = $model
 @onready var cameraController : CharacterBody3D = $cameraController
 @export var mapScreen : CanvasLayer
@@ -12,6 +13,7 @@ var camTween : Tween
 @onready var springArm : SpringArm3D = $cameraController/Camera/camHoriz/camVert/springArm3d
 @onready var cameraHolder = $Camera
 @onready var mapCursor = %mapSelectionMarker
+@export var worldEnv : WorldEnvironment
 ## Which direction will the camera face on the map? The array holds rotations that the player can cycle through to view different parts of the map
 @export var mapRotations : Array[Vector3]
 ## Which position will the camera be at on the map? The array holds positions that the player can cycle through to view different parts of the map
@@ -55,6 +57,8 @@ func _ready() -> void:
 	modelHolder.global_position.y = -1
 	tweenModelPosition(modelHolder,Vector3.ZERO)
 	#gameManager.setMotionBlur(camera)
+	gameManager.updateGraphics(worldEnv)
+	UserConfig.configs_updated.connect(gameManager.updateGraphics.bind(worldEnv))
 	cameraController.global_position.x = getCurrentLocationMarker().global_position.x
 	cameraController.global_position.z = getCurrentLocationMarker().global_position.z
 
@@ -157,6 +161,7 @@ func getCurrentLocationMarker() -> Marker3D:
 	return null
 
 
+
 func setCameraPositionAndRotation(pos:Vector3,rot:Vector3 , posSpeed : float = 3, rotSpeed : float = 3)->void:
 	if camTween:
 		camTween.kill()
@@ -198,8 +203,9 @@ func _on_map_selection_marker_selected_marker(node: Node3D) -> void:
 			return
 		var destination = node.getNavPoint()
 		var start_closest = NavigationServer3D.region_get_closest_point($model/mapoverview/MapNavigation.get_rid(), current.getNavPoint())
-		cameraController.global_position.x = node.global_position.x
-		cameraController.global_position.z = node.global_position.z
+		setCameraPositionAndRotation(Vector3(node.global_position.x,cameraController.global_position.y,node.global_position.z),Vector3.ZERO,1)
+		#cameraController.global_position.x = node.global_position.x
+		#cameraController.global_position.z = node.global_position.z
 		createNaviPath(start_closest, destination)
 	else:
 		$pathVisualizerStartPosition/path3d.hide()

@@ -135,3 +135,11 @@ func smooth_position3d_array(array : Array[Vector3], iterations : int = 1) -> Ar
 	if iterations > 0:
 		smoothed_array = smooth_position3d_array(smoothed_array, iterations)
 	return smoothed_array
+
+
+func get_worldenvironment_node(viewport_node : Viewport) -> WorldEnvironment:
+	return viewport_node.find_child("WorldEnvironment")
+
+
+func get_environment(viewport_node : Viewport) -> Environment:
+	return viewport_node.world_3d.environment

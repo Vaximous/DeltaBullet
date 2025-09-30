@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://c16c3eavotfjn"]
+
+[ext_resource type="Script" uid="uid://dxhaao34mbpqe" path="res://assets/components/pawn_trigger_area_3d.gd" id="1_a3b8v"]
+
+[node name="PawnTriggerArea3D" type="Area3D"]
+script = ExtResource("1_a3b8v")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

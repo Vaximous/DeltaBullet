@@ -12,10 +12,12 @@ func _ready() -> void:
 		if ch is PawnSpawn:
 			ch.ignore_spawn_on_load = true
 
+
 func createPawn()->void:
 	for ch in get_children():
 		if ch is PawnSpawn:
 			ch.spawnPawn()
+
 
 func _on_body_entered(body : Node3D) -> void:
 	if body is BasePawn:

@@ -58,7 +58,12 @@ func _ready() -> void:
 	tweenModelPosition(modelHolder,Vector3.ZERO)
 	#gameManager.setMotionBlur(camera)
 	gameManager.updateGraphics(worldEnv)
-	UserConfig.configs_updated.connect(gameManager.updateGraphics.bind(worldEnv))
+	if !UserConfig.configs_updated.is_connected(gameManager.updateGraphics.bind(worldEnv)):
+		UserConfig.configs_updated.connect(gameManager.updateGraphics.bind(worldEnv))
+	else:
+		UserConfig.configs_updated.disconnect(gameManager.updateGraphics.bind(worldEnv))
+		UserConfig.configs_updated.connect(gameManager.updateGraphics.bind(worldEnv))
+
 	cameraController.global_position.x = getCurrentLocationMarker().global_position.x
 	cameraController.global_position.z = getCurrentLocationMarker().global_position.z
 

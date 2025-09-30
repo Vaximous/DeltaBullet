@@ -36,8 +36,7 @@ func _ready()->void:
 		gameManager.worldLoaded.emit()
 		gameManager.getEventSignal("contractRefresh").emit()
 		setupWorld()
-		gameManager.updateGraphics(worldSky)
-		UserConfig.configs_updated.connect(gameManager.updateGraphics.bind(worldSky))
+
 
 		##Spawn pawns at their respective points.
 		if worldData != null:
@@ -111,12 +110,17 @@ func playSoundscape()->void:
 
 
 func setupWorld()-> void:
+	gameManager.updateGraphics(worldSky)
+	if !UserConfig.configs_updated.is_connected(gameManager.updateGraphics.bind(worldSky)):
+		UserConfig.configs_updated.connect(gameManager.updateGraphics.bind(worldSky))
+	else:
+		UserConfig.configs_updated.disconnect(gameManager.updateGraphics.bind(worldSky))
+		UserConfig.configs_updated.connect(gameManager.updateGraphics.bind(worldSky))
+
 	#gameManager.freeOrphanNodes()
 	if worldData != null:
 		name = worldData.worldName
 		#Set the sky texture
-		var env = load("res://assets/envs/default_environment.tres").duplicate()
-		worldSky.environment = env
 		if worldData.skyTexture:
 			worldSky.environment.sky.sky_material = worldData.skyTexture.duplicate()
 		##Soundscape

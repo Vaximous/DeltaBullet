@@ -587,11 +587,10 @@ func castRay(cam: Camera3D, range: float = 50000, mask := 0b10111, exceptions: A
 
 #region Update World Environment
 func updateGraphics(env:WorldEnvironment)->void:
-	if is_instance_valid(env):
-		env.get_environment().ssil_enabled = UserConfig.graphics_Ssil
-		env.get_environment().ssr_enabled = UserConfig.graphics_Ssr
-		env.get_environment().sdfgi_enabled = UserConfig.graphics_Sdfgi
-		env.get_environment().ssao_enabled = UserConfig.graphics_Ssao
+	env.get_environment().ssil_enabled = UserConfig.graphics_Ssil
+	env.get_environment().ssr_enabled = UserConfig.graphics_Ssr
+	env.get_environment().sdfgi_enabled = UserConfig.graphics_Sdfgi
+	env.get_environment().ssao_enabled = UserConfig.graphics_Ssao
 #endregion
 
 #region Blood Effects

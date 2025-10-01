@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://bxog5iq8771kh"]
+[gd_scene load_steps=48 format=3 uid="uid://bxog5iq8771kh"]
 
 [ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="1_iee3r"]
 [ext_resource type="PackedScene" uid="uid://c63b0ewnfkf4n" path="res://assets/scenes/ui/mapOverview/map/map.tscn" id="1_lplem"]
@@ -144,32 +144,55 @@ scale_curve = SubResource("CurveTexture_uhde6")
 color = Color(1, 0, 0, 1)
 color_ramp = SubResource("GradientTexture1D_eds7j")
 
+[sub_resource type="Gradient" id="Gradient_od2qg"]
+offsets = PackedFloat32Array(0.25968993, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_s27yt"]
+gradient = SubResource("Gradient_od2qg")
+
+[sub_resource type="Curve" id="Curve_vvgek"]
+_data = [Vector2(0, 0), 0.0, 2.8112292, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_1x2q7"]
+curve = SubResource("Curve_vvgek")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_r3bbh"]
+resource_local_to_scene = true
+gravity = Vector3(0, 0, 0)
+scale_min = 1.1999999
+scale_max = 1.1999999
+scale_curve = SubResource("CurveTexture_1x2q7")
+color = Color(1, 0, 0, 1)
+color_ramp = SubResource("GradientTexture1D_s27yt")
+
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_vifrn"]
 resource_local_to_scene = true
 gravity = Vector3(0, 0, 0)
 scale_min = 1.1999999
 scale_max = 1.1999999
-scale_curve = SubResource("CurveTexture_uhde6")
+scale_curve = SubResource("CurveTexture_1x2q7")
 color = Color(1, 0, 0, 1)
-color_ramp = SubResource("GradientTexture1D_eds7j")
+color_ramp = SubResource("GradientTexture1D_s27yt")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_st2wt"]
 resource_local_to_scene = true
 gravity = Vector3(0, 0, 0)
 scale_min = 1.1999999
 scale_max = 1.1999999
-scale_curve = SubResource("CurveTexture_uhde6")
+scale_curve = SubResource("CurveTexture_1x2q7")
 color = Color(1, 0, 0, 1)
-color_ramp = SubResource("GradientTexture1D_eds7j")
+color_ramp = SubResource("GradientTexture1D_s27yt")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_3adhi"]
 resource_local_to_scene = true
 gravity = Vector3(0, 0, 0)
 scale_min = 1.1999999
 scale_max = 1.1999999
-scale_curve = SubResource("CurveTexture_uhde6")
+scale_curve = SubResource("CurveTexture_1x2q7")
 color = Color(1, 0, 0, 1)
-color_ramp = SubResource("GradientTexture1D_eds7j")
+color_ramp = SubResource("GradientTexture1D_s27yt")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_5gb03"]
 resource_local_to_scene = true
@@ -498,7 +521,6 @@ own_world_3d = true
 world_3d = SubResource("World3D_p8ko3")
 handle_input_locally = false
 size = Vector2i(1600, 900)
-render_target_update_mode = 4
 
 [node name="map" parent="mapScreen/subViewportContainer/subViewport" node_paths=PackedStringArray("mapScreen") instance=ExtResource("1_lplem")]
 unique_name_in_owner = true
@@ -517,23 +539,26 @@ process_material = SubResource("ParticleProcessMaterial_wficc")
 [node name="pingParticle" parent="mapScreen/subViewportContainer/subViewport/map/areaNodes/homeLocation" index="2"]
 process_material = SubResource("ParticleProcessMaterial_wwelr")
 
-[node name="pingParticle" parent="mapScreen/subViewportContainer/subViewport/map/areaNodes/mapLocation5" index="2"]
+[node name="pingParticle" parent="mapScreen/subViewportContainer/subViewport/map/areaNodes/lantonWarehouse" index="2"]
+process_material = SubResource("ParticleProcessMaterial_r3bbh")
+
+[node name="pingParticle" parent="mapScreen/subViewportContainer/subViewport/map/areaNodes/tsimkShop" index="2"]
 process_material = SubResource("ParticleProcessMaterial_vifrn")
 
-[node name="pingParticle" parent="mapScreen/subViewportContainer/subViewport/map/areaNodes/mapLocation3" index="2"]
+[node name="pingParticle" parent="mapScreen/subViewportContainer/subViewport/map/areaNodes/harvelonaHospital" index="2"]
 process_material = SubResource("ParticleProcessMaterial_st2wt")
 
-[node name="pingParticle" parent="mapScreen/subViewportContainer/subViewport/map/areaNodes/mapLocation4" index="2"]
+[node name="pingParticle" parent="mapScreen/subViewportContainer/subViewport/map/areaNodes/survivalStreet" index="2"]
 process_material = SubResource("ParticleProcessMaterial_3adhi")
-
-[node name="pingParticle" parent="mapScreen/subViewportContainer/subViewport/map/areaNodes/mapLocation6" index="2"]
-process_material = SubResource("ParticleProcessMaterial_5gb03")
 
 [node name="pingParticle" parent="mapScreen/subViewportContainer/subViewport/map/areaNodes/wave" index="2"]
 process_material = SubResource("ParticleProcessMaterial_5gb03")
 
 [node name="pingParticle" parent="mapScreen/subViewportContainer/subViewport/map/areaNodes/interiortest" index="2"]
 process_material = SubResource("ParticleProcessMaterial_5gb03")
+
+[node name="icon" parent="mapScreen/subViewportContainer/subViewport/map/areaNodes/interiortest" index="6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.005806, 0)
 
 [node name="pingParticle" parent="mapScreen/subViewportContainer/subViewport/map/areaNodes/activeragdolltest" index="2"]
 process_material = SubResource("ParticleProcessMaterial_5gb03")
@@ -611,13 +636,12 @@ bus = &"Music"
 [connection signal="pressed" from="mapScreen/AreaInformation/control/travelButton" to="mapScreen/subViewportContainer/subViewport/map" method="_on_travel_button_pressed"]
 
 [editable path="mapScreen/subViewportContainer/subViewport/map"]
-[editable path="mapScreen/subViewportContainer/subViewport/map/model/mapoverview"]
 [editable path="mapScreen/subViewportContainer/subViewport/map/areaNodes/mapLocation"]
 [editable path="mapScreen/subViewportContainer/subViewport/map/areaNodes/homeLocation"]
-[editable path="mapScreen/subViewportContainer/subViewport/map/areaNodes/mapLocation5"]
-[editable path="mapScreen/subViewportContainer/subViewport/map/areaNodes/mapLocation3"]
-[editable path="mapScreen/subViewportContainer/subViewport/map/areaNodes/mapLocation4"]
-[editable path="mapScreen/subViewportContainer/subViewport/map/areaNodes/mapLocation6"]
+[editable path="mapScreen/subViewportContainer/subViewport/map/areaNodes/lantonWarehouse"]
+[editable path="mapScreen/subViewportContainer/subViewport/map/areaNodes/tsimkShop"]
+[editable path="mapScreen/subViewportContainer/subViewport/map/areaNodes/harvelonaHospital"]
+[editable path="mapScreen/subViewportContainer/subViewport/map/areaNodes/survivalStreet"]
 [editable path="mapScreen/subViewportContainer/subViewport/map/areaNodes/wave"]
 [editable path="mapScreen/subViewportContainer/subViewport/map/areaNodes/interiortest"]
 [editable path="mapScreen/subViewportContainer/subViewport/map/areaNodes/activeragdolltest"]

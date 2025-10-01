@@ -4,10 +4,11 @@ extends Node3D
 const markerColors = ["res://assets/scenes/ui/mapOverview/map/defaultMarker.tres","res://assets/scenes/ui/mapOverview/map/atLocationMarker.tres","res://assets/scenes/ui/mapOverview/map/selectedMarker.tres"]
 var camTween : Tween
 
-@onready var modelHolder : Node3D = $model
+@export var navRegion : NavigationRegion3D
+@export var modelHolder : Node3D
 @onready var cameraController : CharacterBody3D = $cameraController
 @export var mapScreen : CanvasLayer
-@onready var horizontal = %camHoriz
+@onready var horizontal = %camHorizs
 @onready var vertical = %camVert
 @onready var camera : Camera3D = %camera3d
 @onready var springArm : SpringArm3D = $cameraController/Camera/camHoriz/camVert/springArm3d
@@ -54,7 +55,7 @@ func _ready() -> void:
 	scanMarkers()
 	await get_tree().process_frame
 	#fadeModel(modelHolder)
-	modelHolder.global_position.y = -1
+#	modelHolder.global_position.y = -1
 	tweenModelPosition(modelHolder,Vector3.ZERO)
 	#gameManager.setMotionBlur(camera)
 	gameManager.updateGraphics(worldEnv)
@@ -207,7 +208,7 @@ func _on_map_selection_marker_selected_marker(node: Node3D) -> void:
 			clearNaviPath()
 			return
 		var destination = node.getNavPoint()
-		var start_closest = NavigationServer3D.region_get_closest_point($model/mapoverview/MapNavigation.get_rid(), current.getNavPoint())
+		var start_closest = NavigationServer3D.region_get_closest_point(navRegion.get_rid(), current.getNavPoint())
 		setCameraPositionAndRotation(Vector3(node.global_position.x,cameraController.global_position.y,node.global_position.z),Vector3.ZERO,1)
 		#cameraController.global_position.x = node.global_position.x
 		#cameraController.global_position.z = node.global_position.z

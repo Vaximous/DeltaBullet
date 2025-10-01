@@ -1,0 +1,15 @@
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://c0232f4oe53nj"]
+
+[ext_resource type="Texture2D" uid="uid://dn16wjivpjps" path="res://assets/models/props/barstool/Ucupaint BarChairMat Color.png" id="1_g52op"]
+[ext_resource type="Texture2D" uid="uid://dy76rgxpx8blv" path="res://assets/models/props/barstool/Ucupaint BarChairMat Metallic-Ucupaint BarChairMat Roughness.png" id="2_fqhv0"]
+
+[resource]
+resource_name = "BarChairMat"
+cull_mode = 2
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_g52op")
+metallic = 1.0
+metallic_texture = ExtResource("2_fqhv0")
+metallic_texture_channel = 2
+roughness_texture = ExtResource("2_fqhv0")
+roughness_texture_channel = 1

@@ -2,6 +2,7 @@ extends Node3D
 @onready var area3d : Area3D = $area3d
 signal selectedMarker(node:Node3D)
 @export var map : Node3D
+@onready var markerIcon : Sprite3D = $markerIcon
 
 
 func selectMarker(marker:Area3D):

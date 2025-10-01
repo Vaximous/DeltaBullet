@@ -3,6 +3,7 @@ extends Node
 
 #region Signals
 # Signals
+signal exitedWorldMap
 signal freeOrphans
 signal worldLoaded
 #endregion
@@ -939,6 +940,7 @@ func removeWorldMap() -> void:
 	for i in get_children():
 		if i.is_in_group(&"worldMap"):
 			i.queue_free()
+			exitedWorldMap.emit()
 
 
 func removeCustomization() -> void:

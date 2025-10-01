@@ -41,6 +41,7 @@ func subtractIndex()->void:
 
 
 func _ready() -> void:
+	musicManager.fade_all_audioplayers_out(0.5)
 	%mapScreen.modulate = Color.TRANSPARENT
 	setVisible(true)
 	gameManager.showMouse()
@@ -63,10 +64,12 @@ func setVisible(value:bool)->void:
 	visibleTween = create_tween()
 	if value:
 		show()
-		%mapTheme.play()
+		#%mapTheme.play()
+		musicManager.create_audioplayer_with_stream(load("res://assets/music/menu/maptheme.wav"),0.5)
 		visibleTween.parallel().tween_property(%mapScreen,"modulate",Color.WHITE,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
 	else:
-		visibleTween.parallel().tween_property(%mapTheme,"volume_db",linear_to_db(-100.0),1)
+
+		musicManager.fade_all_audioplayers_out(0.5)
 		map.tweenModelPosition(map.modelHolder,Vector3(0,-5,0),0.7)
 		await visibleTween.parallel().tween_property(%mapScreen,"modulate",Color.TRANSPARENT,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType).finished
 		gameManager.hideMouse()

@@ -4,10 +4,12 @@ extends Node3D
 const markerColors = ["res://assets/scenes/ui/mapOverview/map/defaultMarker.tres","res://assets/scenes/ui/mapOverview/map/atLocationMarker.tres","res://assets/scenes/ui/mapOverview/map/selectedMarker.tres"]
 var camTween : Tween
 
-@onready var modelHolder : Node3D = $model
+@onready var pathVis : Path3D = %path3d
+@export var navRegion : NavigationRegion3D
+@export var modelHolder : Node3D
 @onready var cameraController : CharacterBody3D = $cameraController
 @export var mapScreen : CanvasLayer
-@onready var horizontal = %camHoriz
+@onready var horizontal = %camHorizs
 @onready var vertical = %camVert
 @onready var camera : Camera3D = %camera3d
 @onready var springArm : SpringArm3D = $cameraController/Camera/camHoriz/camVert/springArm3d
@@ -22,13 +24,20 @@ const defaultTransitionType = Tween.TRANS_QUINT
 const defaultEaseType = Tween.EASE_OUT
 const defaultTweenSpeed : float = 1
 
-var direction : Vector3
+var direction : Vector3:
+	set(value):
+		if value != Vector3.ZERO:
+			if camTween:
+				camTween.kill()
+		direction = value
 @export var speed : float = 30
 var acceleration : float = 5
 var cursorSpeed : float = 25
 #var desired_springarm_length : float = 10.0
 var desired_fov : float = 10.0
 var fading_out : bool = false
+const MAX_FOV : float = 70.0
+const MIN_FOV : float = 10.0
 
 #Variables
 @export var enabled: bool = true
@@ -51,10 +60,11 @@ func getInputDir()->Vector3:
 
 func _ready() -> void:
 	#desired_springarm_length = clamp(desired_springarm_length, 500.0, 5000.0)
+	pathVis.hide()
 	scanMarkers()
 	await get_tree().process_frame
 	#fadeModel(modelHolder)
-	modelHolder.global_position.y = -1
+#	modelHolder.global_position.y = -1
 	tweenModelPosition(modelHolder,Vector3.ZERO)
 	#gameManager.setMotionBlur(camera)
 	gameManager.updateGraphics(worldEnv)
@@ -84,6 +94,8 @@ func _physics_process(delta: float) -> void:
 		else:
 			%mapSelectionMarker.hide()
 			isMovingInput = false
+			if camTween:
+				camTween.kill()
 			Input.set_default_cursor_shape(Input.CURSOR_CROSS)
 			direction = Vector3.ZERO
 			cameraController.velocity = Vector3.ZERO
@@ -96,8 +108,10 @@ func _physics_process(delta: float) -> void:
 			var point = gameManager.get_from_mouse(1000,self,camera,[cameraController.get_rid()])
 			if point.has("position"):
 				#%mapSelectionMarker.global_position = Vector3.ZERO
+				%mapSelectionMarker.markerIcon.modulate = lerp(%mapSelectionMarker.markerIcon.modulate,Color.DARK_RED,12*delta)
 				%mapSelectionMarker.global_position = lerp(%mapSelectionMarker.global_position,to_global(point["position"]),cursorSpeed*delta)
-
+			else:
+				%mapSelectionMarker.markerIcon.modulate = lerp(%mapSelectionMarker.markerIcon.modulate,Color.TRANSPARENT,12*delta)
 		if Input.is_action_pressed("gRightClick"):
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		else:
@@ -139,7 +153,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			#desired_springarm_length += 2.0
 			desired_fov += 1.0
 		#desired_springarm_length = clamp(desired_springarm_length, 100.0, 5000.0)
-		desired_fov = clamp(desired_fov, 5.0, 45.0)
+		desired_fov = clamp(desired_fov, MIN_FOV, MAX_FOV)
 
 
 
@@ -189,7 +203,7 @@ func createNaviPath(start : Vector3, end : Vector3) -> void:
 	$pathVisualizerStartPosition.global_position = start
 	navAgent.target_position = end
 	var new_curve := Curve3D.new()
-	$pathVisualizerStartPosition/path3d.curve = new_curve
+	pathVis.curve = new_curve
 	navAgent.get_next_path_position()
 	var navPath = Util.smooth_position3d_array(navAgent.get_current_navigation_path(), 2)
 
@@ -201,13 +215,13 @@ func createNaviPath(start : Vector3, end : Vector3) -> void:
 ##Marker selected callback
 func _on_map_selection_marker_selected_marker(node: Node3D) -> void:
 	if is_instance_valid(node):
-		$pathVisualizerStartPosition/path3d.show()
+		pathVis.show()
 		var current = getCurrentLocationMarker()
 		if node == current:
 			clearNaviPath()
 			return
 		var destination = node.getNavPoint()
-		var start_closest = NavigationServer3D.region_get_closest_point($model/mapoverview/MapNavigation.get_rid(), current.getNavPoint())
+		var start_closest = NavigationServer3D.region_get_closest_point(navRegion.get_rid(), current.getNavPoint())
 		setCameraPositionAndRotation(Vector3(node.global_position.x,cameraController.global_position.y,node.global_position.z),Vector3.ZERO,1)
 		#cameraController.global_position.x = node.global_position.x
 		#cameraController.global_position.z = node.global_position.z

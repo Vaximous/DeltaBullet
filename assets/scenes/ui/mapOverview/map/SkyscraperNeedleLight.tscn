@@ -1,0 +1,125 @@
+[gd_scene load_steps=9 format=3 uid="uid://cuuiq5dj8dj0u"]
+
+[ext_resource type="Texture2D" uid="uid://cric12rvmnof5" path="res://addons/kenney_particle_pack/flare_01.png" id="1_kuueu"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_env6a"]
+shading_mode = 0
+disable_ambient_light = true
+disable_fog = true
+disable_specular_occlusion = true
+albedo_color = Color(4.415934, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_an06e"]
+radius = 0.25
+height = 0.5
+radial_segments = 4
+rings = 1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uyve1"]
+blend_mode = 1
+shading_mode = 0
+disable_ambient_light = true
+disable_fog = true
+albedo_color = Color(1.6124506, 0, 0, 1)
+albedo_texture = ExtResource("1_kuueu")
+billboard_mode = 1
+proximity_fade_enabled = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_m7rdm"]
+size = Vector2(16, 12)
+center_offset = Vector3(0, 0, 0.31)
+
+[sub_resource type="Animation" id="Animation_kuueu"]
+resource_name = "blink"
+length = 1.4
+loop_mode = 2
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:transparency")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.75000006, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Flare:transparency")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.75000006, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("omniLight3d:light_energy")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.7, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_env6a"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:transparency")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("omniLight3d:light_energy")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_an06e"]
+_data = {
+&"RESET": SubResource("Animation_env6a"),
+&"blink": SubResource("Animation_kuueu")
+}
+
+[node name="SkyscraperNeedleLight" type="MeshInstance3D"]
+material_override = SubResource("StandardMaterial3D_env6a")
+mesh = SubResource("SphereMesh_an06e")
+skeleton = NodePath("Flare")
+
+[node name="Flare" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_uyve1")
+mesh = SubResource("QuadMesh_m7rdm")
+skeleton = NodePath("../..")
+
+[node name="omniLight3d" type="OmniLight3D" parent="."]
+light_color = Color(1, 0, 0, 1)
+omni_range = 10.0
+
+[node name="animationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_an06e")
+}
+autoplay = "blink"

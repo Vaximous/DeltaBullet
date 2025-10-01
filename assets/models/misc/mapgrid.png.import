@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cric12rvmnof5"
-path.s3tc="res://.godot/imported/flare_01.png-a9946f2fcc298f4448a52e5029b074bc.s3tc.ctex"
+uid="uid://3rluaglbmbj7"
+path.s3tc="res://.godot/imported/mapgrid.png-710d851dad27e792b74be0bf78e67676.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://addons/kenney_particle_pack/flare_01.png"
-dest_files=["res://.godot/imported/flare_01.png-a9946f2fcc298f4448a52e5029b074bc.s3tc.ctex"]
+source_file="res://assets/models/misc/mapgrid.png"
+dest_files=["res://.godot/imported/mapgrid.png-710d851dad27e792b74be0bf78e67676.s3tc.ctex"]
 
 [params]
 

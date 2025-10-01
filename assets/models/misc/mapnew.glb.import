@@ -49,6 +49,26 @@ _subresources={
 "use_external/fallback_path": "res://assets/models/misc/newmapoverview-mat/GridMat-triplanar.tres",
 "use_external/path": "uid://dqq55h3wqmxkl"
 }
+},
+"meshes": {
+"mapnew_ApartmentBasic": {
+"generate/lightmap_uv": 0,
+"generate/lods": 1,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": false,
+"save_to_file/fallback_path": "",
+"save_to_file/path": ""
+},
+"mapnew_grasspatchmesh": {
+"generate/lightmap_uv": 0,
+"generate/lods": 1,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": false,
+"save_to_file/fallback_path": "",
+"save_to_file/path": ""
+}
 }
 }
 gltf/naming_version=2

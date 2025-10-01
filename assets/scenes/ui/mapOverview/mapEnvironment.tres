@@ -1,0 +1,40 @@
+[gd_resource type="Environment" load_steps=6 format=3 uid="uid://q0mcnueo0n8e"]
+
+[sub_resource type="Gradient" id="Gradient_p8ko3"]
+colors = PackedColorArray(0, 0, 0, 1, 0.996078, 0.941176, 0.811765, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_od2qg"]
+gradient = SubResource("Gradient_p8ko3")
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_s27yt"]
+load_path = "res://.godot/imported/panoramatest1.png-b6abf0ac9e52f51c8497d847bef752cc.bptc.ctex"
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_vvgek"]
+panorama = SubResource("CompressedTexture2D_s27yt")
+
+[sub_resource type="Sky" id="Sky_1x2q7"]
+sky_material = SubResource("PanoramaSkyMaterial_vvgek")
+
+[resource]
+background_mode = 1
+background_color = Color(0.15564, 0.15480001, 0.18, 1)
+sky = SubResource("Sky_1x2q7")
+ambient_light_energy = 2.0
+reflected_light_source = 1
+ssil_intensity = 0.75
+sdfgi_use_occlusion = true
+sdfgi_cascades = 8
+glow_normalized = true
+glow_bloom = 0.15
+glow_blend_mode = 1
+fog_enabled = true
+fog_mode = 1
+fog_light_color = Color(0.15686275, 0.15294118, 0.18039216, 1)
+fog_density = 1.0
+fog_depth_begin = 4000.0
+fog_depth_end = 4000.0
+volumetric_fog_density = 0.2457
+volumetric_fog_albedo = Color(0.848227, 0.767118, 0.651965, 1)
+adjustment_brightness = 0.9
+adjustment_saturation = 1.15
+adjustment_color_correction = SubResource("GradientTexture1D_od2qg")

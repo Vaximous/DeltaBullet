@@ -14,8 +14,9 @@ resource_name = "mapgrid"
 image = SubResource("Image_5px7x")
 
 [resource]
-resource_name = "GridMat"
+resource_name = "GridMatTriplanar"
 cull_mode = 2
+vertex_color_use_as_albedo = true
 albedo_texture = SubResource("ImageTexture_yd2v7")
 uv1_scale = Vector3(1, 0, 1)
 uv1_triplanar = true

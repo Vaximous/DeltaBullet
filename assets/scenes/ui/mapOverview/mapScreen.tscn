@@ -360,7 +360,7 @@ tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0.26666668, 0.6666667),
-"transitions": PackedFloat32Array(0.0824697, 1),
+"transitions": PackedFloat32Array(0.0824697, 0.48296815),
 "update": 0,
 "values": [Color(0.7670248, 1.4920532e-06, 3.85046e-07, 0), Color(1, 1, 1, 1)]
 }
@@ -383,8 +383,8 @@ tracks/2/path = NodePath("subViewportContainer:material:shader_parameter/pixel_d
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 2),
-"transitions": PackedFloat32Array(1, 2),
+"times": PackedFloat32Array(0, 1.1333333),
+"transitions": PackedFloat32Array(1, 0.30778614),
 "update": 0,
 "values": [0.0010000000475, 1.0]
 }
@@ -396,7 +396,7 @@ tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0, 1.0333333),
-"transitions": PackedFloat32Array(0.15932015, 1),
+"transitions": PackedFloat32Array(0.15932015, 0.2973018),
 "update": 0,
 "values": [-4.85, 0.2]
 }
@@ -456,9 +456,9 @@ tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
 "times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
+"transitions": PackedFloat32Array(1, 0.2871746),
 "update": 0,
-"values": [Color(1, 1, 1, 1), Color(0.15564, 0.15480001, 0.18, 1)]
+"values": [Color(0.43605796, 8.663535e-07, 1.6845763e-07, 1), Color(0.15564, 0.15480001, 0.18, 1)]
 }
 tracks/9/type = "value"
 tracks/9/imported = false
@@ -505,7 +505,7 @@ grow_vertical = 2
 theme = ExtResource("1_iee3r")
 
 [node name="subViewportContainer" type="SubViewportContainer" parent="mapScreen"]
-texture_filter = 4
+texture_filter = 2
 material = SubResource("ShaderMaterial_od2qg")
 layout_mode = 1
 anchors_preset = 15
@@ -521,6 +521,7 @@ own_world_3d = true
 world_3d = SubResource("World3D_p8ko3")
 handle_input_locally = false
 size = Vector2i(1600, 900)
+render_target_update_mode = 4
 
 [node name="map" parent="mapScreen/subViewportContainer/subViewport" node_paths=PackedStringArray("mapScreen") instance=ExtResource("1_lplem")]
 unique_name_in_owner = true
@@ -556,9 +557,6 @@ process_material = SubResource("ParticleProcessMaterial_5gb03")
 
 [node name="pingParticle" parent="mapScreen/subViewportContainer/subViewport/map/areaNodes/interiortest" index="2"]
 process_material = SubResource("ParticleProcessMaterial_5gb03")
-
-[node name="icon" parent="mapScreen/subViewportContainer/subViewport/map/areaNodes/interiortest" index="6"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.005806, 0)
 
 [node name="pingParticle" parent="mapScreen/subViewportContainer/subViewport/map/areaNodes/activeragdolltest" index="2"]
 process_material = SubResource("ParticleProcessMaterial_5gb03")
@@ -636,6 +634,7 @@ bus = &"Music"
 [connection signal="pressed" from="mapScreen/AreaInformation/control/travelButton" to="mapScreen/subViewportContainer/subViewport/map" method="_on_travel_button_pressed"]
 
 [editable path="mapScreen/subViewportContainer/subViewport/map"]
+[editable path="mapScreen/subViewportContainer/subViewport/map/mapnew"]
 [editable path="mapScreen/subViewportContainer/subViewport/map/areaNodes/mapLocation"]
 [editable path="mapScreen/subViewportContainer/subViewport/map/areaNodes/homeLocation"]
 [editable path="mapScreen/subViewportContainer/subViewport/map/areaNodes/lantonWarehouse"]

@@ -6,7 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://dwy1ieh8lo0m0" path="res://assets/scenes/worlds/areas/playerHome/previewscreenTest.png" id="3_6em3y"]
 [ext_resource type="Texture2D" uid="uid://d0f0crtwpmoka" path="res://assets/textures/panoramas/panoramatest1.png" id="3_rcju0"]
 [ext_resource type="Texture2D" uid="uid://cbmlfyhpeyeau" path="res://assets/textures/areas/carpet/oldCarpet_Albedo.png" id="6_7h7tx"]
+[ext_resource type="Texture2D" uid="uid://bfttaom6lw465" path="res://assets/envs/gradient_color_correction_blue_tint.tres" id="6_8gbvr"]
 [ext_resource type="PackedScene" uid="uid://36wgm1ed6j3p" path="res://assets/entities/door/doorBase.tscn" id="6_rcju0"]
+[ext_resource type="Texture2D" uid="uid://dvfkpbe83xcf4" path="res://assets/textures/panoramas/panoramatest3.png" id="7_7i0qu"]
 [ext_resource type="Texture2D" uid="uid://ckn24qqt3cf46" path="res://assets/textures/areas/carpet/oldCarpet_AO.png" id="7_wmb2x"]
 [ext_resource type="Script" uid="uid://tiffkbp5ry74" path="res://assets/scripts/entities/interactiveObject/interactiveObject.gd" id="8_36425"]
 [ext_resource type="Texture2D" uid="uid://c3gnsrmvmyxg6" path="res://assets/textures/areas/carpet/oldCarpet_Height.png" id="8_hp0yx"]
@@ -65,21 +67,13 @@ worldDescription = "Yes.. My home.."
 worldLoadingTexture = ExtResource("3_6em3y")
 worldType = 2
 
-[sub_resource type="Gradient" id="Gradient_tipwx"]
-offsets = PackedFloat32Array(0, 0.07621247, 0.36720553, 1)
-colors = PackedColorArray(0.00593019, 1.2032687e-07, 0.09481714, 1, 0.052353777, 0.07570592, 0.124175064, 1, 0.34062108, 0.37052992, 0.41018295, 1, 1, 1, 1, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_afll2"]
-gradient = SubResource("Gradient_tipwx")
-
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_yiehp"]
-panorama = ExtResource("3_rcju0")
-energy_multiplier = 0.85
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_afll2"]
+panorama = ExtResource("7_7i0qu")
 
 [sub_resource type="Sky" id="Sky_nj1fe"]
-sky_material = SubResource("PanoramaSkyMaterial_yiehp")
+sky_material = SubResource("PanoramaSkyMaterial_afll2")
 
-[sub_resource type="Environment" id="Environment_dvo7e"]
+[sub_resource type="Environment" id="Environment_6hcyr"]
 background_mode = 2
 sky = SubResource("Sky_nj1fe")
 reflected_light_source = 1
@@ -89,7 +83,6 @@ ssao_intensity = 3.5
 ssao_power = 1.5529
 ssao_detail = 5.0
 ssao_horizon = 0.07
-ssil_enabled = true
 ssil_intensity = 0.75
 ssil_sharpness = 0.45
 ssil_normal_rejection = 0.0
@@ -111,7 +104,7 @@ volumetric_fog_density = 0.2457
 volumetric_fog_albedo = Color(0.848227, 0.767118, 0.651965, 1)
 adjustment_enabled = true
 adjustment_saturation = 0.9
-adjustment_color_correction = SubResource("GradientTexture1D_afll2")
+adjustment_color_correction = ExtResource("6_8gbvr")
 
 [sub_resource type="CompositorEffect" id="CompositorEffect_pmh78"]
 resource_local_to_scene = false
@@ -1615,7 +1608,7 @@ streams_count = 1
 stream_0/stream = ExtResource("52_dvo7e")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_gugwl"]
-size = Vector3(7.03693, 3.60657, 6.11816)
+size = Vector3(19.384232, 3.60657, 25.998413)
 
 [node name="playerHome" instance=ExtResource("1_ypyko")]
 worldData = SubResource("Resource_3bd3l")
@@ -1625,7 +1618,7 @@ transform = Transform3D(-0.999163, 0, -0.0408992, 0, 1, 0, 0.0408992, 0, -0.9991
 pawnType = 0
 
 [node name="worldEnvironment" parent="Environment" index="0"]
-environment = SubResource("Environment_dvo7e")
+environment = SubResource("Environment_6hcyr")
 compositor = SubResource("Compositor_fvwrp")
 
 [node name="reflectionProbe" parent="Environment" index="1"]
@@ -2388,7 +2381,7 @@ area_music = SubResource("AudioStreamRandomizer_6hcyr")
 switch_back_on_exit = true
 
 [node name="collisionShape3d" type="CollisionShape3D" parent="Misc/MusicChangeZone" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.580536, 1.30328, -0.0297852)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.2248, 1.3032799, -8.384094)
 shape = SubResource("BoxShape3D_gugwl")
 
 [connection signal="objectUsed" from="Props/PlayerCloset/closetInteraction" to="Props/PlayerCloset" method="_onClosetUsed"]

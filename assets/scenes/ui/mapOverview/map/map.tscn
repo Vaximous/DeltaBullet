@@ -222,6 +222,11 @@ mapPositions = Array[Vector3]([Vector3(5.21291, 37.0915, 4.57104), Vector3(-19.2
 [node name="worldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_e1lil")
 
+[node name="mapSelectionMarker" parent="." node_paths=PackedStringArray("map") instance=ExtResource("3_htbkg")]
+unique_name_in_owner = true
+transform = Transform3D(1.4142135, 0, 1.4142134, 0, 2, 0, -1.4142135, 0, 1.4142134, 6.080288, 1.6084194, -19.51192)
+map = NodePath("..")
+
 [node name="cameraController" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.080288, 16.512793, -19.51192)
 motion_mode = 1
@@ -248,11 +253,6 @@ transform = Transform3D(1.0000001, 0, 0, 0, 0.9999999, -2.9802322e-08, 0, 0, 1, 
 fov = 149.0
 near = 20.0
 far = 800.0
-
-[node name="mapSelectionMarker" parent="cameraController/Camera/camHoriz" node_paths=PackedStringArray("map") instance=ExtResource("3_htbkg")]
-unique_name_in_owner = true
-transform = Transform3D(2.0000002, 0, 0, 0, 2, 0, 0, 0, 2, 0, -14.904373, 0)
-map = NodePath("../../../..")
 
 [node name="rayCast3d" type="RayCast3D" parent="cameraController/Camera/camHoriz"]
 unique_name_in_owner = true
@@ -565,7 +565,7 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -2.0
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -2.0168648, 0, -2.315567)
 
 [node name="icon" parent="areaNodes/interiortest" index="6"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.254776, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.005806, 0)
 
 [node name="navPoint" parent="areaNodes/interiortest" index="7"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3738346, 0, 0)
@@ -661,6 +661,7 @@ debug_path_custom_color = Color(0, 1, 0, 1)
 debug_path_custom_point_size = 8.0
 
 [node name="path3d" type="Path3D" parent="pathVisualizerStartPosition"]
+unique_name_in_owner = true
 top_level = true
 curve = SubResource("Curve3D_l5ph3")
 
@@ -680,7 +681,7 @@ path_u_distance = 1.0
 path_joined = false
 smooth_faces = true
 
-[connection signal="selectedMarker" from="cameraController/Camera/camHoriz/mapSelectionMarker" to="." method="_on_map_selection_marker_selected_marker"]
+[connection signal="selectedMarker" from="mapSelectionMarker" to="." method="_on_map_selection_marker_selected_marker"]
 [connection signal="path_changed" from="pathVisualizerStartPosition/pathVisualizerNavAgent" to="pathVisualizerStartPosition/path3d" method="_on_path_visualizer_nav_agent_path_changed"]
 
 [editable path="mapnew"]

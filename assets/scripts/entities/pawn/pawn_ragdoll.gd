@@ -42,7 +42,8 @@ var savedPose :Array[Transform3D]
 var totalMass : float
 @export var stiffeningBones : Array[RagdollBone]
 @export var stiffen : float = 15
-@export var stiffSpeed : float = 59
+var stoppedStiffening : bool = false
+@export var stiffSpeed : float = 27
 var angularVelocity : Vector3
 @export var activeRagdollEnabled:bool = false:
 	set(value):
@@ -207,16 +208,19 @@ func _physics_process(delta: float) -> void:
 	if activeRagdollEnabled:
 		pass
 	else:
-		stiffen = lerpf(stiffen,0,stiffSpeed*delta)
-		#stiffen -= randf_range(5,10) * delta
-		if stiffen <= 0:
-			for b in stiffeningBones:
-				if is_instance_valid(b):
-					setBoneSpringEnabled(b,false)
-		else:
-			for b in stiffeningBones:
-				if is_instance_valid(b):
-					setBoneSpringStiffness(b,stiffen)
+		if !stoppedStiffening:
+			stiffen = lerpf(stiffen,0,stiffSpeed*delta)
+			#stiffen -= randf_range(5,10) * delta
+			if is_equal_approx(stiffen,0):
+				stoppedStiffening = true
+				for b in stiffeningBones:
+					if is_instance_valid(b):
+						setBoneSpringStiffness(b,0)
+						setBoneSpringEnabled(b,false)
+			else:
+				for b in stiffeningBones:
+					if is_instance_valid(b):
+						setBoneSpringStiffness(b,stiffen)
 
 func setAngularMotorTargetVelocity(b:PhysicalBone3D,value:Vector3 = Vector3.ZERO):
 	b.set("joint_constraints/x/target_velocity",value.x)

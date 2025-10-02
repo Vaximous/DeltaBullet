@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://bxog5iq8771kh"]
+[gd_scene load_steps=42 format=3 uid="uid://bxog5iq8771kh"]
 
 [ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="1_iee3r"]
 [ext_resource type="PackedScene" uid="uid://c63b0ewnfkf4n" path="res://assets/scenes/ui/mapOverview/map/map.tscn" id="1_lplem"]
@@ -7,7 +7,6 @@
 [ext_resource type="Shader" uid="uid://ek6u8jv6hlhk" path="res://assets/scenes/ui/mapOverview/canvaspixelate.gdshader" id="3_p8ko3"]
 [ext_resource type="PackedScene" uid="uid://2mlt2r4jpb1c" path="res://assets/scenes/ui/mapOverview/areaInformation.tscn" id="5_n3oiv"]
 [ext_resource type="AudioStream" uid="uid://du1ctorps21mp" path="res://assets/sounds/ui/map/Map_transition_1.wav" id="6_avv0b"]
-[ext_resource type="Environment" uid="uid://q0mcnueo0n8e" path="res://assets/scenes/ui/mapOverview/mapEnvironment.tres" id="6_od2qg"]
 [ext_resource type="AudioStream" uid="uid://b17pk0i3nawqv" path="res://assets/sounds/ui/map/Map_transition_2.wav" id="7_60wph"]
 [ext_resource type="AudioStream" uid="uid://rileq1nck1o0" path="res://assets/sounds/ui/map/Map_transition_3.wav" id="8_p8ko3"]
 [ext_resource type="AudioStream" uid="uid://dci1eyvaxauee" path="res://assets/sounds/ui/map/Map_transition_4.wav" id="9_od2qg"]
@@ -529,15 +528,13 @@ script = SubResource("GDScript_60wph")
 own_world_3d = true
 world_3d = SubResource("World3D_p8ko3")
 handle_input_locally = false
+audio_listener_enable_3d = true
 size = Vector2i(1600, 900)
 render_target_update_mode = 4
 
 [node name="map" parent="mapScreen/subViewportContainer/subViewport" node_paths=PackedStringArray("mapScreen") instance=ExtResource("1_lplem")]
 unique_name_in_owner = true
 mapScreen = NodePath("../../../..")
-
-[node name="worldEnvironment" parent="mapScreen/subViewportContainer/subViewport/map" index="0"]
-environment = ExtResource("6_od2qg")
 
 [node name="springArm3d" parent="mapScreen/subViewportContainer/subViewport/map/cameraController/Camera/camHoriz/camVert" index="0"]
 transform = Transform3D(1, 0, 0, 0, 0.9848076, 0.17364816, 0, -0.17364816, 0.9848076, 0, 0, 0)

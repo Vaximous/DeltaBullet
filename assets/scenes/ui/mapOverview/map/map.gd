@@ -227,7 +227,7 @@ func _on_map_selection_marker_selected_marker(node: Node3D) -> void:
 		#cameraController.global_position.z = node.global_position.z
 		createNaviPath(start_closest, destination)
 	else:
-		$pathVisualizerStartPosition/path3d.hide()
+		pathVis.hide()
 
 
 func _on_travel_button_pressed() -> void:

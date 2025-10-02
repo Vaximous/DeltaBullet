@@ -691,6 +691,7 @@ debug_path_custom_point_size = 8.0
 [node name="path3d" type="Path3D" parent="pathVisualizerStartPosition"]
 unique_name_in_owner = true
 top_level = true
+visible = false
 curve = SubResource("Curve3D_l5ph3")
 
 [node name="csgPolygon3d" type="CSGPolygon3D" parent="pathVisualizerStartPosition/path3d"]

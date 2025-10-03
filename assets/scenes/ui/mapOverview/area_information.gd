@@ -1,7 +1,8 @@
 extends Control
 
-var popup : PackedScene = preload("res://assets/scenes/ui/mapOverview/MapPopup.tscn")
 @export var map: CanvasLayer
+
+var popup: PackedScene = preload("res://assets/scenes/ui/mapOverview/MapPopup.tscn")
 
 var tween: Tween
 var marker:
@@ -42,8 +43,8 @@ func evaluateSelectedMarker() -> void:
 						var clayer = Util.create_canvas_layer(3)
 						var _popup = popup.instantiate()
 						clayer.add_child(_popup)
-						_popup.set_meta(&"price",marker.propertyPrice)
-						_popup.set_meta(&"id",marker.propertyID)
+						_popup.set_meta(&"price", marker.propertyPrice)
+						_popup.set_meta(&"id", marker.propertyID)
 						_popup.propertyPurchased.connect(marker.setPropertyState.bind(marker.PropertyState.Purchased))
 						_popup.mapScreen = map
 						_popup.add_to_group(&"purchaseMapAreaPopup")
@@ -54,8 +55,9 @@ func evaluateSelectedMarker() -> void:
 							marker.PropertyType.REWARD:
 								%travelButton.hide()
 							marker.PropertyType.SCENE:
-								%travelButton.show()
-								%travelButton.text = "TRAVEL"
+								if marker.propertyStatus == marker.PropertyState.Purchased:
+									%travelButton.show()
+									%travelButton.text = "TRAVEL"
 
 
 func playTravelSound() -> void:

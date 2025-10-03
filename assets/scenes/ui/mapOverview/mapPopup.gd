@@ -1,23 +1,30 @@
 extends MarginContainer
+
 signal propertyPurchased
-var mapScreen : CanvasLayer
-@onready var animPlayer : AnimationPlayer = %animationPlayer
+
+var mapScreen: CanvasLayer
+
+@onready var animPlayer: AnimationPlayer = %animationPlayer
+
 
 func _ready() -> void:
 	initializePanel()
 
-func initializePanel()->void:
+
+func initializePanel() -> void:
 	animPlayer.play("open")
 	await get_tree().process_frame
 	if mapScreen:
 		mapScreen.screenBusy = true
 
-func close()->void:
+
+func close() -> void:
 	animPlayer.play("close")
 	if mapScreen:
 		mapScreen.screenBusy = false
 
-func purchase()->void:
+
+func purchase() -> void:
 	if has_meta(&"price"):
 		if gameState.getPawnCash() >= get_meta(&"price"):
 			if has_meta(&"id"):
@@ -29,6 +36,6 @@ func purchase()->void:
 			%successfulPurchase.play()
 			close()
 		else:
-			Util.display_message_simple("Insufficient Funds",5,true)
+			Util.display_message_simple("Insufficient Funds", 5, true)
 			%unsuccessfulPurchase.play()
 			close()

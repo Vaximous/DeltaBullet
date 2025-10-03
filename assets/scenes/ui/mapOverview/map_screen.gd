@@ -16,7 +16,7 @@ const defaultTweenSpeed: float = 0.25
 	set(value):
 		selectedIndex = value
 
-var screenBusy : bool = false
+var screenBusy: bool = false
 var visibleTween: Tween
 ##This is the marker that is selected
 var selectedMarker: Node3D = null:

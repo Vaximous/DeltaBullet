@@ -17,7 +17,7 @@ enum PropertyState {
 
 enum PropertyType {
 	REWARD,
-	SCENE
+	SCENE,
 }
 
 const defaultTransitionType = Tween.TRANS_QUINT
@@ -29,7 +29,6 @@ const defaultTweenSpeed: float = 1
 @export var locationName: String = "":
 	set(value):
 		locationName = value
-		#notify_property_list_changed()
 @export var markerType: Types = 0:
 	set(value):
 		if markerType == value: return
@@ -41,6 +40,8 @@ const defaultTweenSpeed: float = 1
 		iconColor = value
 		notify_property_list_changed
 	get: return iconColor
+
+		#notify_property_list_changed()
 
 ##What is this areas name?
 var map: Node3D:
@@ -79,7 +80,7 @@ var useDescription: bool = false:
 		notify_property_list_changed()
 
 #Property
-var propertyID : StringName = &''
+var propertyID: StringName = &''
 var propertyStatus: PropertyState:
 	set(value):
 		propertyStatus = value
@@ -151,8 +152,8 @@ func setupMap() -> void:
 		if map:
 			%mapLabel.text = locationName
 			if markerType == Types.PROPERTY:
-				set_meta(&"id",propertyID)
-				set_meta(&"price",propertyPrice)
+				set_meta(&"id", propertyID)
+				set_meta(&"price", propertyPrice)
 				if gameState.hasOwnedProperty(get_meta(&"id")):
 					setPropertyState(PropertyState.Purchased)
 
@@ -236,8 +237,10 @@ func gotoLocation() -> void:
 	else:
 		gameManager.notify_warn("You're already at this location.", 4, 5)
 
-func setPropertyState(value:PropertyState):
+
+func setPropertyState(value: PropertyState):
 	propertyStatus = value
+
 
 func setVisible(value: bool) -> void:
 	if visibilityTween:
@@ -262,6 +265,10 @@ func setMarkerMaterial(material: StandardMaterial3D):
 ##Used for Navigation visualization on the map
 func getNavPoint() -> Vector3:
 	return $navPoint.global_position
+
+
+func setMarkerIcon(icon):
+	pass
 
 
 func _get_property_list() -> Array[Dictionary]:
@@ -405,14 +412,13 @@ func _get_property_list() -> Array[Dictionary]:
 					PropertyType.REWARD:
 						pass
 
-
 				if propertyType == PropertyType.REWARD:
 					if useDescription:
 						ret.append(
 							{
 							"name": &"locationDescription",
 							"type": TYPE_STRING,
-							"hint" : PROPERTY_HINT_MULTILINE_TEXT,
+							"hint": PROPERTY_HINT_MULTILINE_TEXT,
 							"usage": PROPERTY_USAGE_EDITOR | PROPERTY_USAGE_STORAGE
 							}
 						)

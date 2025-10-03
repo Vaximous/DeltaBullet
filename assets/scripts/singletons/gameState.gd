@@ -43,7 +43,8 @@ func loadGame(save:String)->void:
 					return
 				var nodeData = json.get_data() as Dictionary
 				stateInfo = nodeData
-				_gameState = _gameState.get_or_add("stateSave",stateInfo)
+				_gameState.get_or_add("stateSave",stateInfo)
+				_gameState.get_or_add("saveVersion",saveVersion)
 				gameManager.currentSave = save
 				gameManager.modify_persistent_data("lastSave", save)
 				gameManager.loadWorld(nodeData["saveScene"])
@@ -114,11 +115,11 @@ func addPawnCash(value:int)->int:
 	saveInfo["grit"] += value
 	return saveInfo["grit"]
 
-func AddProperty(id:StringName)->StringName:
-	var saveInfo = getOwnedProperties()
-	if !getOwnedProperties().has(id):
-		saveInfo.append(id)
-	return saveInfo.get_or_add("ownedProperties", [])
+func AddProperty(id:StringName)->Array:
+	var saveInfo = getGameState()
+	if !saveInfo["ownedProperties"].has(id):
+		saveInfo["ownedProperties"].append(id)
+	return saveInfo["ownedProperties"]
 
 func getGameState()->Dictionary:
 	return _gameState.get_or_add("stateSave",stateInfo)
@@ -166,15 +167,16 @@ func getOwnedProperties()->Array:
 
 func hasOwnedProperty(id:StringName)->bool:
 	var result : bool = false
-	var properties = getOwnedProperties()
+	var saveInfo = getGameState()
+	var properties = saveInfo["ownedProperties"]
 	for i in properties:
 		if i == id:
 			result = true
 	return result
 
 func getOwnedProperty(id:StringName)->int:
-	var properties = getOwnedProperties()
-	return properties.find(id)
+	var properties = getGameState()
+	return properties["ownedProperties"].find(id)
 
 func getSaveDateDict()->Dictionary:
 	var saveInfo = getGameState()

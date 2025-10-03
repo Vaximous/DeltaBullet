@@ -150,7 +150,9 @@ func setupMap() -> void:
 		playCloseAnimation()
 		if map:
 			%mapLabel.text = locationName
-			if has_meta(&"id"):
+			if markerType == Types.PROPERTY:
+				set_meta(&"id",propertyID)
+				set_meta(&"price",propertyPrice)
 				if gameState.hasOwnedProperty(get_meta(&"id")):
 					setPropertyState(PropertyState.Purchased)
 

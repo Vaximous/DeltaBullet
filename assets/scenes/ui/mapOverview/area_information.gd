@@ -65,7 +65,7 @@ func playTravelSound() -> void:
 				gameManager.playSound(preload("res://assets/sounds/ui/map/travelRandomizer.tres"), -15)
 				#marker.gotoLocation()
 			marker.Types.PROPERTY:
-				if marker.propertyType == marker.PropertyType.SCENE:
+				if marker.propertyType == marker.PropertyType.SCENE and marker.propertyStatus == marker.PropertyState.Purchased:
 					gameManager.playSound(preload("res://assets/sounds/ui/map/travelRandomizer.tres"), -15)
 					#marker.gotoLocation()
 
@@ -82,7 +82,7 @@ func setInfo(marker):
 			marker.Types.PROPERTY:
 				if marker.propertyStatus == marker.PropertyState.Purchased and marker.propertyType == marker.PropertyType.REWARD:
 					%travelButton.hide()
-				if marker.propertyType == marker.PropertyType.SCENE:
+				if marker.propertyType == marker.PropertyType.SCENE and marker.propertyStatus == marker.PropertyState.Purchased:
 					%travelButton.text = "TRAVEL"
 				elif marker.propertyType == marker.PropertyType.REWARD:
 					%travelButton.text = "PURCHASE"

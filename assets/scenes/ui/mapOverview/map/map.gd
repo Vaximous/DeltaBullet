@@ -236,6 +236,6 @@ func _on_map_selection_marker_selected_marker(node: Node3D) -> void:
 func _on_travel_button_pressed() -> void:
 	#desired_springarm_length = 1
 	if mapScreen.selectedMarker:
-		if mapScreen.selectedMarker.markerType == mapScreen.selectedMarker.Types.TRAVEL:
+		if mapScreen.selectedMarker.markerType == mapScreen.selectedMarker.Types.TRAVEL or mapScreen.selectedMarker.propertyType == mapScreen.selectedMarker.PropertyType.SCENE and mapScreen.selectedMarker.propertyStatus == mapScreen.selectedMarker.PropertyState.Purchased:
 			desired_fov = 0.1
 			fading_out = true

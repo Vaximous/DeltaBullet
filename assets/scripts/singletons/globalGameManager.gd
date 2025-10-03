@@ -124,6 +124,7 @@ var isMultiplayerGame: bool = false
 func _ready() -> void:
 	SmackneckClient.masterserver_connected.connect(sm_PushGame)
 	worldLoaded.connect(initDropletPool)
+	worldLoaded.connect(giveModifierToPlayers)
 	UserConfig.configs_updated.connect(cleanupChecker)
 	add_child(soundPlayer)
 	initializeSteam()
@@ -267,10 +268,25 @@ func playDialogue2D(dialogue: ActorDialogue) -> AudioStreamPlayer:
 #endregion
 
 #region Modifiers
+func giveModifierToPlayers()->void:
+	if world:
+		await get_tree().process_frame
+		for players in playerPawns:
+			var p = players
+			for i in gameState.getPawnSkills():
+				give_stat_modifier(p,i["name"])
+
 func getModifierFromName(modName: String):
 	for i in DirAccess.get_files_at("res://assets/entities/modifiers/"):
 		if i == modName + ".tscn":
 			return "res://assets/entities/modifiers/%s"%i
+
+func hasModifier(modName: String)->bool:
+	var result : bool = false
+	for i in gameState.getGameState()["skills"]:
+		if i["name"] == modName:
+			result = true
+	return result
 
 func give_stat_modifier(parent: Node, mod: String):
 	if parent.has_node(^"statModifierStack"):
@@ -279,7 +295,8 @@ func give_stat_modifier(parent: Node, mod: String):
 		if modifier:
 			if !stack.has_node(mod):
 				stack.add_child(modifier.instantiate())
-				gameState.addToSkills(mod)
+				if !hasModifier(mod):
+					gameState.addToSkills(mod)
 				if debugEnabled:
 					notify_warn("Added stat modifier '%s' to '%s'" % [mod, parent.name], 2, 2)
 			else:

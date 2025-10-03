@@ -46,7 +46,7 @@ func evaluateSelectedMarker() -> void:
 						_popup.propertyPurchased.connect(marker.setPropertyState.bind(marker.PropertyState.Purchased))
 						_popup.mapScreen = map
 						_popup.add_to_group(&"purchaseMapAreaPopup")
-						_popup.tree_exited.connect(%travelButton.show)
+						_popup.tree_exited.connect(setInfo.bind(marker))
 						_popup.tree_exited.connect(clayer.queue_free)
 					marker.PropertyState.Purchased:
 						match marker.propertyType:
@@ -76,9 +76,15 @@ func setIsHovered(value: bool) -> void:
 func setInfo(marker):
 	if is_instance_valid(marker):
 		playOpen()
+		%travelButton.show()
 		match marker.markerType:
 			marker.Types.PROPERTY:
-				%travelButton.text = "PURCHASE"
+				if marker.propertyStatus == marker.PropertyState.Purchased and marker.propertyType == marker.PropertyType.REWARD:
+					%travelButton.hide()
+				if marker.propertyType == marker.PropertyType.SCENE:
+					%travelButton.text = "TRAVEL"
+				elif marker.propertyType == marker.PropertyType.REWARD:
+					%travelButton.text = "PURCHASE"
 
 			marker.Types.TRAVEL:
 				%travelButton.text = "TRAVEL"

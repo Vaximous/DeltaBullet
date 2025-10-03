@@ -1,6 +1,8 @@
 extends Node
 ##Gamestate
 var notes : Dictionary
+var saveVersion : float = 1.0
+var stateInfo : Dictionary = {}
 var _gameState : Dictionary = {
 	"saveVersion" : 1.0,
 	"stateSave" : {
@@ -20,8 +22,13 @@ var _gameState : Dictionary = {
 	}
 }
 
+func clearStates()->void:
+		_gameState.clear()
+		stateInfo.clear()
+
 func loadGame(save:String)->void:
 	if save != "" or save != null:
+		clearStates()
 		var saveFile = FileAccess.open(save, FileAccess.READ)
 		if saveFile != null:
 			Engine.time_scale = 1.0
@@ -33,7 +40,9 @@ func loadGame(save:String)->void:
 				if not result == OK:
 					Console.add_rich_console_message("[color=red]Couldn't Parse %s![/color]"%string)
 					return
-				var nodeData = json.get_data()
+				var nodeData = json.get_data() as Dictionary
+				stateInfo = nodeData
+				_gameState = _gameState.get_or_add("stateSave",{"saveVersion" = saveVersion,"stateSave" = stateInfo})
 				gameManager.currentSave = save
 				gameManager.modify_persistent_data("lastSave", save)
 				gameManager.loadWorld(nodeData["saveScene"])
@@ -64,15 +73,15 @@ func saveGame(saveName : String = "Save1"):
 		screenshot.save_png("user://saves/%s/%s.png" % [saveName, saveName])
 		print("user://saves/%s/%s.png" % [saveName, saveName])
 		var pawnFile = gameManager.playerPawns[0].savePawnFile(gameManager.playerPawns[0].savePawnInformation(), "user://saves/%s/%s" % [saveName, saveName])
-		saveInfo["saveName"] = saveName
-		saveInfo["screenshot"] = "user://saves/%s/%s.png" % [saveName, saveName]
-		saveInfo["dateDict"] = Time.get_date_dict_from_system()
-		saveInfo["pawninfo"] = pawnFile
-		saveInfo["saveLocation"] = gameManager.world.worldData.worldName
-		saveInfo["position"] = gameManager.playerPawns[0].global_position
-		saveInfo["saveScene"] = get_tree().current_scene.get_scene_file_path()
-		saveInfo["prologueComplete"] = gameManager.get_persistent_data().get("seen_prologue", false)
-		#saveInfo["pawnRank"] = getPawnLevel()
+		stateInfo["saveName"] = saveName
+		stateInfo["screenshot"] = "user://saves/%s/%s.png" % [saveName, saveName]
+		stateInfo["dateDict"] = Time.get_date_dict_from_system()
+		stateInfo["pawninfo"] = pawnFile
+		stateInfo["saveLocation"] = gameManager.world.worldData.worldName
+		stateInfo["position"] = gameManager.playerPawns[0].global_position
+		stateInfo["saveScene"] = get_tree().current_scene.get_scene_file_path()
+		stateInfo["prologueComplete"] = gameManager.get_persistent_data().get("seen_prologue", false)
+		stateInfo["pawnRank"] = getPawnLevel()
 		gameManager.activeCamera.hud.show()
 		gameManager.getPauseMenu().show()
 		var stringy = JSON.stringify(saveInfo)
@@ -83,39 +92,47 @@ func saveGame(saveName : String = "Save1"):
 		#print(get_persistent_data()["lastSaveData"])
 		return saveFile
 
+
 func addToOwnedProperties(property:String):
-	var saveInfo = _gameState.get_or_add("stateSave","stateSave")
+	var saveInfo = getGameState()
 	if saveInfo["ownedProperties"].has(property): return
 	saveInfo["ownedProperties"].append(property)
 
 func addToSkills(skill:String):
 	if gameManager.getModifierFromName(skill):
-		var saveInfo = _gameState.get_or_add("stateSave","stateSave")
+		var saveInfo = getGameState()
 		saveInfo["skills"].append({"name":skill,"skill":gameManager.getModifierFromName(skill)})
 
 func addToGamestate()->void:
-	var saveInfo = _gameState.get_or_add("stateSave","stateSave")
+	var saveInfo = getGameState()
 	saveInfo["position"] = gameManager.getCurrentPawn().global_position
 	saveInfo["grit"] = getPawnCash()
 	saveInfo["weapons"] = gameManager.getCurrentPawn().itemInventory
 
 func addPawnCash(value:int)->int:
-	var saveInfo = _gameState.get_or_add("stateSave","stateSave")
+	var saveInfo = getGameState()
 	saveInfo["grit"] += value
 	return saveInfo["grit"]
 
+func getGameState()->Dictionary:
+	return _gameState.get_or_add("stateSave",{"saveVersion" = saveVersion,"stateSave" = stateInfo})
+
 func setPawnCash(value:int)->int:
-	var saveInfo = _gameState.get_or_add("stateSave","stateSave")
+	var saveInfo = getGameState()
 	saveInfo["grit"] = value
 	return saveInfo["grit"]
 
 func getPawnCash()->int:
-	var saveInfo = _gameState.get_or_add("stateSave","stateSave")
-	return saveInfo["grit"]
+	var saveInfo = getGameState()
+	return saveInfo.get_or_add("grit",0)
+
+func getPawnSkills()->Array:
+	var saveInfo = getGameState()
+	return saveInfo.get_or_add("skills",[])
 
 func getPawnLevel()->int:
-	var saveInfo = _gameState.get_or_add("stateSave","stateSave")
-	return saveInfo["pawnRank"]
+	var saveInfo = getGameState()
+	return saveInfo.get_or_add("pawnRank",0)
 
 func updateSaveFile(save):
 	##Update Old Saves to a new ver

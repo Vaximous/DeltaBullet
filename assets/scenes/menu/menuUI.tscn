@@ -41,6 +41,7 @@ func _on_play_button_pressed()->void:
 	gameManager.playSound(gameManager.getGlobalSound(\"startGame\"), -15)
 	gameManager.clearTemporaryPawnInfo()
 	gameManager.currentSave = \"\"
+	gameState.clearStates()
 	musicManager.change_song_to(null,0.5)
 	await Fade.fade_out(0.3, Color(0,0,0,1),\"GradientVertical\",false,true).finished
 	gameManager.loadWorld(\"res://assets/scenes/worlds/areas/playerHome/playerHome.tscn\")

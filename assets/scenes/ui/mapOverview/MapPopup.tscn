@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://eovl4whsv3lj"]
+[gd_scene load_steps=16 format=3 uid="uid://eovl4whsv3lj"]
 
 [ext_resource type="Script" uid="uid://cs5s4elix6y65" path="res://assets/scenes/ui/mapOverview/mapPopup.gd" id="1_sgctd"]
 [ext_resource type="Texture2D" uid="uid://bag0nbin3udvs" path="res://assets/textures/misc/bootlogo.png" id="1_yv6rj"]
@@ -15,6 +15,82 @@ colors = PackedColorArray(0, 0, 0, 1, 0.13319641, 0.13319641, 0.13319638, 1, 0.1
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_5bmur"]
 gradient = SubResource("Gradient_6u8km")
 fill_to = Vector2(0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_o65sk"]
+font_size = 31
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 3
+shadow_color = Color(0, 0, 0, 0.6627451)
+
+[sub_resource type="Animation" id="Animation_ces1u"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(983, 797.25)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_3d58x"]
+resource_name = "close"
+step = 0.0333333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.17075495, 1),
+"update": 0,
+"values": [Vector2(983, 797.25), Vector2(152, 82)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.56666666),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.13333334, 0.51),
+"transitions": PackedFloat32Array(0.24148433, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_8yvlr"]
 resource_name = "open"
@@ -67,75 +143,6 @@ tracks/3/keys = {
 "args": [0.0],
 "method": &"play"
 }]
-}
-
-[sub_resource type="Animation" id="Animation_3d58x"]
-resource_name = "close"
-step = 0.0333333
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:size")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(0.17075495, 1),
-"update": 0,
-"values": [Vector2(983, 797.25), Vector2(152, 82)]
-}
-tracks/1/type = "method"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0.56666666),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"queue_free"
-}]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath(".:modulate")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0.13333334, 0.51),
-"transitions": PackedFloat32Array(0.24148433, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_ces1u"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:size")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(983, 797.25)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_cavjm"]
@@ -226,6 +233,33 @@ Etiam imperdiet, nibh non dictum varius, sapien eros aliquam dui, in dapibus dia
 
 Sed vel consequat urna. Integer nisi elit, efficitur ut magna quis, aliquet convallis purus. Aliquam erat volutpat. Vestibulum eu eros neque. Aenean finibus, dolor vel finibus scelerisque, velit arcu congue velit, sit amet posuere risus est sed odio. Fusce ut cursus odio. Maecenas dapibus felis sed ante lacinia pulvinar. Sed eros risus, fermentum id nisi at, sollicitudin convallis ex. Aenean luctus nunc in malesuada ultricies. Quisque leo elit, tristique non vehicula id, feugiat in nibh. Sed vel risus id velit pretium porta a eu velit. Phasellus suscipit lacus a efficitur ultrices. Nunc eget mauris ligula. Duis faucibus quam felis, a lacinia orci vulputate at. Sed porttitor lacus eu ligula vestibulum hendrerit. Cras vel metus posuere, mollis nisi in, tempor tellus."
 horizontal_alignment = 1
+
+[node name="hSeparator3" type="HSeparator" parent="popupVbox/contents/panelContainer/hSplitContainer"]
+layout_mode = 2
+
+[node name="rewardsContainer" type="ScrollContainer" parent="popupVbox/contents/panelContainer/hSplitContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+vertical_scroll_mode = 0
+
+[node name="vBoxContainer" type="VBoxContainer" parent="popupVbox/contents/panelContainer/hSplitContainer/rewardsContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="label" type="Label" parent="popupVbox/contents/panelContainer/hSplitContainer/rewardsContainer/vBoxContainer"]
+layout_mode = 2
+text = "REWARDS"
+label_settings = SubResource("LabelSettings_o65sk")
+horizontal_alignment = 1
+
+[node name="hSeparator4" type="HSeparator" parent="popupVbox/contents/panelContainer/hSplitContainer/rewardsContainer/vBoxContainer"]
+layout_mode = 2
+
+[node name="rewardsBox" type="HBoxContainer" parent="popupVbox/contents/panelContainer/hSplitContainer/rewardsContainer/vBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
 
 [node name="bottom" type="MarginContainer" parent="popupVbox"]
 clip_contents = true

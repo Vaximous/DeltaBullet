@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=4 uid="uid://c63b0ewnfkf4n"]
+[gd_scene load_steps=55 format=4 uid="uid://c63b0ewnfkf4n"]
 
 [ext_resource type="Script" uid="uid://t733jevi3esu" path="res://assets/scenes/ui/mapOverview/map/map.gd" id="1_rkk0n"]
 [ext_resource type="Environment" uid="uid://dyvr8n1vauu0k" path="res://assets/scenes/ui/mapOverview/mapEnvironment.tres" id="2_m7rdm"]
@@ -19,6 +19,8 @@
 [ext_resource type="PackedScene" uid="uid://b883b6dhrfe8q" path="res://assets/scenes/worlds/testscene2/testscene2.tscn" id="17_rtr4q"]
 [ext_resource type="PackedScene" uid="uid://cgunekse1vc0y" path="res://assets/scenes/worlds/debug/modeltest/DebugWorldTest.tscn" id="18_lmyb2"]
 [ext_resource type="AudioStream" uid="uid://dccqaa0buyajj" path="res://assets/sounds/ambient/690009__matth3wc04__warehouse-ambience-wind-and-such.mp3" id="18_mp7cn"]
+[ext_resource type="PackedScene" uid="uid://0hwrw78c2jum" path="res://assets/scenes/ui/mapOverview/rewards/reloadSpeed/ReloadSpeed1.tscn" id="18_of6yx"]
+[ext_resource type="Script" uid="uid://c84guc6w8jnwe" path="res://assets/scenes/ui/mapOverview/rewardDefinition/rewardDefinition.gd" id="19_3gufb"]
 [ext_resource type="AudioStream" uid="uid://b0jti5a6gqvcg" path="res://assets/sounds/ambient/689713__felixblume__city-parking-lot-ambience-in-car-wash-at-dusk-with-traffic-city-hum-and-bell-ringing-far.wav" id="19_lmyb2"]
 [ext_resource type="AudioStream" uid="uid://2l3hukuuinhw" path="res://assets/sounds/ambient/wind.wav" id="20_riqnu"]
 
@@ -169,6 +171,12 @@ size = Vector3(1.8140297, 8.254776, 5.6881104)
 [sub_resource type="BoxShape3D" id="BoxShape3D_riqnu"]
 size = Vector3(8.765902, 15.891914, 5.6881104)
 
+[sub_resource type="Resource" id="Resource_d7cw3"]
+script = ExtResource("19_3gufb")
+rewardID = &"reloadSpeed1"
+rewardDisplay = ExtResource("18_of6yx")
+metadata/_custom_type_script = "uid://c84guc6w8jnwe"
+
 [sub_resource type="Curve3D" id="Curve3D_l5ph3"]
 _data = {
 "points": PackedVector3Array(0, 0, 0, 0, 0, 0, 27.10254, -38.92656, 10.38958, 0, 0, 0, 0, 0, 0, 26.518085, -43.334656, -5.26128),
@@ -318,6 +326,7 @@ unique_name_in_owner = true
 [node name="testPlace" parent="areaNodes" instance=ExtResource("4_fvi35")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.13633, 1.5796454, -0.8054652)
 locationName = "Test Place!"
+markerIcon = 3
 travelScene = ExtResource("8_htbkg")
 
 [node name="pingParticle" parent="areaNodes/testPlace" index="2"]
@@ -344,6 +353,7 @@ transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -5.7
 
 [node name="icon" parent="areaNodes/testPlace" index="6"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.358917, 0)
+frame = 3
 
 [node name="navPoint" parent="areaNodes/testPlace" index="7"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.119544506, 0, 2.6530495)
@@ -351,6 +361,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.119544506, 0, 2.6530495)
 [node name="homeLocation" parent="areaNodes" instance=ExtResource("4_fvi35")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.506769, 1.5449052, 4.983064)
 locationName = "Home"
+markerIcon = 1
 travelScene = ExtResource("8_e1lil")
 useDescription = true
 
@@ -378,6 +389,7 @@ transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -1.9
 
 [node name="icon" parent="areaNodes/homeLocation" index="6"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.661255, 0)
+frame = 1
 
 [node name="navPoint" parent="areaNodes/homeLocation" index="7"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5101452, 0, 0)
@@ -419,6 +431,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.756363, 0, 0.72745514)
 [node name="tsimkShop" parent="areaNodes" instance=ExtResource("4_fvi35")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.072841, 1.3927863, 7.2655916)
 locationName = "Uncle Tsimk's Shop"
+markerIcon = 3
 travelScene = ExtResource("11_lmyb2")
 useDescription = true
 
@@ -446,6 +459,7 @@ transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -1.0
 
 [node name="icon" parent="areaNodes/tsimkShop" index="6"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6835938, 0)
+frame = 3
 
 [node name="navPoint" parent="areaNodes/tsimkShop" index="7"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3793068, 0, 6.922716)
@@ -492,6 +506,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5934925, 0, 3.1526308)
 [node name="survivalStreet" parent="areaNodes" instance=ExtResource("4_fvi35")]
 transform = Transform3D(0.6648654, 0, 0.7469632, 0, 1, 0, -0.7469632, 0, 0.6648654, 38.899437, 1.487052, 1.1343052)
 locationName = "Survival Street"
+markerIcon = 2
 travelScene = ExtResource("13_of6yx")
 hasCollectibleNotes = true
 
@@ -523,6 +538,7 @@ transform = Transform3D(-1.0000014, 0, -2.682209e-07, 0, 1, 0, 2.682209e-07, 0, 
 
 [node name="icon" parent="areaNodes/survivalStreet" index="6"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.598175, 0)
+frame = 2
 
 [node name="navPoint" parent="areaNodes/survivalStreet" index="7"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3738346, 0, 0)
@@ -531,6 +547,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3738346, 0, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.159706, 1.5156269, -17.681265)
 locationName = "Wave Test"
 iconColor = Color(0.53977627, 0, 0.12294883, 1)
+markerIcon = 2
 travelScene = ExtResource("14_3gufb")
 hasExploration = true
 
@@ -558,6 +575,7 @@ transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -4.4
 
 [node name="icon" parent="areaNodes/wave" index="6"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.30909, 0)
+frame = 2
 
 [node name="navPoint" parent="areaNodes/wave" index="7"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3738346, 0, 0)
@@ -566,6 +584,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3738346, 0, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.482704, 1.4640918, 0.05520892)
 locationName = "Interior Test"
 iconColor = Color(0.53977627, 0, 0.12294883, 1)
+markerIcon = 3
 travelScene = ExtResource("15_d7cw3")
 hasCollectibleNotes = true
 hasExploration = true
@@ -595,6 +614,7 @@ transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -2.0
 
 [node name="icon" parent="areaNodes/interiortest" index="6"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.005806, 0)
+frame = 3
 
 [node name="navPoint" parent="areaNodes/interiortest" index="7"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3738346, 0, 0)
@@ -603,6 +623,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3738346, 0, 0)
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 10.133866, 1.4727097, -19.188698)
 locationName = "Active Ragdoll Test"
 iconColor = Color(0.53977627, 0, 0.12294883, 1)
+markerIcon = 3
 travelScene = ExtResource("16_lunbr")
 hasCollectibleNotes = true
 hasCollectibleItems = true
@@ -635,6 +656,7 @@ transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -0.90701675, 0, -2.8440504)
 
 [node name="icon" parent="areaNodes/activeragdolltest" index="6"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.254776, 0)
+frame = 3
 
 [node name="navPoint" parent="areaNodes/activeragdolltest" index="7"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3738346, 0, 0)
@@ -643,6 +665,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3738346, 0, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.941406, 1.5363638, -25.213455)
 locationName = "Debug Street"
 iconColor = Color(0.53977627, 0, 0.12294883, 1)
+markerIcon = 2
 travelScene = ExtResource("17_rtr4q")
 hasCollectibleNotes = true
 hasExploration = true
@@ -672,6 +695,7 @@ transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -4.3
 
 [node name="icon" parent="areaNodes/debugstreet" index="6"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.891914, 0)
+frame = 2
 
 [node name="navPoint" parent="areaNodes/debugstreet" index="7"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3738346, 0, 0)
@@ -681,11 +705,13 @@ transform = Transform3D(0.7904651, 0, -0.6125069, 0, 1, 0, 0.6125069, 0, 0.79046
 locationName = "Test Reward Property"
 markerType = 1
 iconColor = Color(0.9999961, 0.9346612, 0.93185353, 1)
+markerIcon = 3
 propertyType = 0
 useDescription = true
 propertyPrice = 100
 propertyID = &"testProperty"
-locationDescription = "[color=purple]This is a test property! This is a map area that the player is able to purchase.[/color]"
+propertyRewards = [SubResource("Resource_d7cw3")]
+locationDescription = "[color=purple]This is a test property! This is a map area that the player is able to purchase. This property should give the player the level 1 reload speed upgrade upon purchase.[/color]"
 
 [node name="pingParticle" parent="areaNodes/testRewardProperty" index="2"]
 transform = Transform3D(8.8421955, 0, 0, 0, 1, 0, 0, 0, 9.158997, 0, 0, 0)
@@ -702,7 +728,7 @@ transform = Transform3D(8.8421955, 0, 0, 0, 14.30909, 0, 0, 0, 9.158997, 0, 0, 0
 transform = Transform3D(1.0000033, 0, 0, 0, 1, 0, 0, 0, 1.0000033, 0, 0, 0)
 
 [node name="cornerUpLeft" parent="areaNodes/testRewardProperty/visualHolder" index="0"]
-transform = Transform3D(0, 0, 0.99999964, 0, 1, 0, -0.99999964, 0, 0, 4.4210873, 0, -4.579485)
+transform = Transform3D(0, 0, 0.99999964, 0, 1, 0, -0.99999964, 0, 0, 4.4210854, 0, -4.579485)
 
 [node name="cornerUpRight" parent="areaNodes/testRewardProperty/visualHolder" index="1"]
 transform = Transform3D(1.0000014, 0, -8.940697e-08, 0, 1, 0, 8.940697e-08, 0, 1.0000014, 4.4210854, 0, 4.579483)
@@ -715,6 +741,7 @@ transform = Transform3D(-1.0000014, 0, 8.940697e-08, 0, 1, 0, -8.940697e-08, 0, 
 
 [node name="icon" parent="areaNodes/testRewardProperty" index="6"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.30909, 0)
+frame = 3
 
 [node name="navPoint" parent="areaNodes/testRewardProperty" index="7"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3738346, 0, 0)
@@ -724,6 +751,7 @@ transform = Transform3D(0.9817202, 0, -0.19032913, 0, 1, 0, 0.19032913, 0, 0.981
 locationName = "Test Scene Property"
 markerType = 1
 iconColor = Color(0.9999961, 0.9346612, 0.93185353, 1)
+markerIcon = 3
 propertyType = 1
 useDescription = true
 propertyPrice = 100
@@ -758,6 +786,7 @@ transform = Transform3D(-1.0000017, 0, -4.172325e-07, 0, 1, 0, 4.172325e-07, 0, 
 
 [node name="icon" parent="areaNodes/testRewardProperty2" index="6"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.30909, 0)
+frame = 3
 
 [node name="navPoint" parent="areaNodes/testRewardProperty2" index="7"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3738346, 0, 0)

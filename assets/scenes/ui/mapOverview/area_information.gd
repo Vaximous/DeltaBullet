@@ -44,6 +44,7 @@ func evaluateSelectedMarker() -> void:
 						var _popup = popup.instantiate()
 						clayer.add_child(_popup)
 						_popup.set_meta(&"price", marker.propertyPrice)
+						_popup.set_meta(&"rewards", marker.propertyRewards)
 						_popup.set_meta(&"id", marker.propertyID)
 						_popup.propertyPurchased.connect(marker.setPropertyState.bind(marker.PropertyState.Purchased))
 						_popup.mapScreen = map
@@ -86,6 +87,8 @@ func setInfo(marker):
 					%travelButton.hide()
 				if marker.propertyType == marker.PropertyType.SCENE and marker.propertyStatus == marker.PropertyState.Purchased:
 					%travelButton.text = "TRAVEL"
+				elif marker.propertyType == marker.PropertyType.SCENE and marker.propertyStatus == marker.PropertyState.Locked:
+					%travelButton.text = "PURCHASE"
 				elif marker.propertyType == marker.PropertyType.REWARD:
 					%travelButton.text = "PURCHASE"
 

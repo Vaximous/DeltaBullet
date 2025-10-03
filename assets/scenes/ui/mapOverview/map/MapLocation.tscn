@@ -2,7 +2,6 @@
 
 [ext_resource type="PackedScene" uid="uid://cbmy8aewv7g1w" path="res://assets/components/3Dto2Dcomponent/3Dto2DComponent.tscn" id="1_568f0"]
 [ext_resource type="Script" uid="uid://dpnbcwkkk6au2" path="res://assets/scenes/ui/mapOverview/map/map_location.gd" id="2_aptmj"]
-[ext_resource type="Texture2D" uid="uid://c1vivm6xnyiik" path="res://assets/textures/icons/map/mapMarkerNone.png" id="3_aptmj"]
 [ext_resource type="AudioStream" uid="uid://ndkwkgepa84i" path="res://assets/sounds/ui/map/Map_hover_1.wav" id="4_kmnqu"]
 [ext_resource type="AudioStream" uid="uid://be4ww1jibxhyi" path="res://assets/sounds/ui/map/Map_hover_2.wav" id="5_c10ua"]
 [ext_resource type="AudioStream" uid="uid://diqx0wlekf6xi" path="res://assets/sounds/ui/map/Map_hover_3.wav" id="6_eds7j"]
@@ -12,6 +11,7 @@
 [ext_resource type="AudioStream" uid="uid://dduxbmpvf0dq" path="res://assets/sounds/ui/map/map_click_3.wav" id="10_x17kg"]
 [ext_resource type="AudioStream" uid="uid://crx1srwif2i8c" path="res://assets/sounds/ui/map/map_click_4.wav" id="11_5x2qw"]
 [ext_resource type="PackedScene" uid="uid://dalnlm78l67yh" path="res://assets/scenes/ui/mapOverview/map/mapVisual.tscn" id="12_c10ua"]
+[ext_resource type="Texture2D" uid="uid://ycfbtxweegmx" path="res://assets/textures/ui/maplegend.png" id="12_eds7j"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_i54d4"]
 streams_count = 4
@@ -81,6 +81,7 @@ locationName = ""
 markerType = 0
 iconColor = Color(0.54509807, 0, 0, 1)
 map = null
+markerIcon = 0
 travelScene = null
 travelStatus = 1
 useDescription = false
@@ -161,7 +162,10 @@ pixel_size = 0.0004
 billboard = 1
 no_depth_test = true
 fixed_size = true
-texture = ExtResource("3_aptmj")
+texture_filter = 0
+texture = ExtResource("12_eds7j")
+vframes = 4
+region_rect = Rect2(0, 0, 128, 128)
 
 [node name="mapLabel" type="Label3D" parent="icon" index="0"]
 unique_name_in_owner = true
@@ -169,6 +173,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00977084, -0.63163614, 0)
 pixel_size = 0.0002
 billboard = 1
 fixed_size = true
+texture_filter = 0
 text = "MapName"
 
 [node name="navPoint" type="Marker3D" parent="." index="7"]

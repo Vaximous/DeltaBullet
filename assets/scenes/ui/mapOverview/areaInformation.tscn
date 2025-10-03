@@ -725,5 +725,5 @@ libraries = {
 &"": SubResource("AnimationLibrary_mougi")
 }
 
-[connection signal="pressed" from="control/travelButton" to="." method="playTravelSound"]
 [connection signal="pressed" from="control/travelButton" to="." method="evaluateSelectedMarker"]
+[connection signal="pressed" from="control/travelButton" to="." method="playTravelSound"]

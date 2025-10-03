@@ -1,13 +1,14 @@
 [gd_resource type="Environment" load_steps=5 format=3 uid="uid://dnig6jq4e6pjs"]
 
 [ext_resource type="Texture2D" uid="uid://bfttaom6lw465" path="res://assets/envs/gradient_color_correction_blue_tint.tres" id="1_afll2"]
-[ext_resource type="Texture2D" uid="uid://dvfkpbe83xcf4" path="res://assets/textures/panoramas/panoramatest3.png" id="2_afll2"]
+[ext_resource type="Texture2D" uid="uid://d0f0crtwpmoka" path="res://assets/textures/panoramas/panoramatest1.png" id="2_afll2"]
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_afll2"]
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_8s5oi"]
 panorama = ExtResource("2_afll2")
+energy_multiplier = 0.85
 
 [sub_resource type="Sky" id="Sky_nj1fe"]
-sky_material = SubResource("PanoramaSkyMaterial_afll2")
+sky_material = SubResource("PanoramaSkyMaterial_8s5oi")
 
 [resource]
 background_mode = 2

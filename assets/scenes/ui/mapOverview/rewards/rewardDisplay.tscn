@@ -1,0 +1,64 @@
+[gd_scene load_steps=13 format=3 uid="uid://bqceu3hmfx8du"]
+
+[ext_resource type="Script" uid="uid://oc47264arnq4" path="res://assets/scenes/ui/mapOverview/rewards/reward_display.gd" id="1_dig3h"]
+[ext_resource type="Texture2D" uid="uid://bag0nbin3udvs" path="res://assets/textures/misc/bootlogo.png" id="2_ecbta"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_tm411"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ecbta"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tm411"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_obho6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jvr8p"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qltax"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fb2wc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6hax0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ikp5u"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_k0wtm"]
+
+[node name="rewardDisplay" type="PanelContainer"]
+offset_right = 128.0
+offset_bottom = 128.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_dig3h")
+
+[node name="vBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="rewardName" type="Label" parent="vBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Reload Speed - Level 1"
+label_settings = SubResource("LabelSettings_tm411")
+horizontal_alignment = 1
+
+[node name="hSeparator" type="HSeparator" parent="vBoxContainer"]
+layout_mode = 2
+
+[node name="rewardIcon" type="TextureRect" parent="vBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("2_ecbta")
+expand_mode = 4
+
+[node name="tooltipDet" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ecbta")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_tm411")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_obho6")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_jvr8p")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_qltax")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_fb2wc")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_6hax0")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_ikp5u")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_k0wtm")

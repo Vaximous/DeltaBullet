@@ -25,7 +25,9 @@ var selectedMarker: Node3D = null:
 			if selectedMarker != null:
 				var previousMarker = selectedMarker
 				selectedMarker = value
+				selectedMarker.setMarkerIcon(selectedMarker.IconType.CURRENT)
 				previousMarker.playCloseAnimation()
+				previousMarker.setMarkerIcon(previousMarker.defaultMarkerIcon)
 				%AreaInformation.show()
 			else:
 				selectedMarker = value
@@ -66,6 +68,7 @@ func subtractIndex() -> void:
 
 func setSelectedMarker(value) -> void:
 	selectedMarker = value
+
 
 
 func setVisible(value: bool) -> void:

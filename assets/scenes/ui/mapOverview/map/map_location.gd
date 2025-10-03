@@ -1,6 +1,13 @@
 @tool
 extends Marker3D
 
+enum IconType{
+	STORY,
+	SAFEHOUSE,
+	MISSION,
+	CURRENT
+}
+
 enum Types {
 	TRAVEL,
 	PROPERTY,
@@ -25,6 +32,14 @@ const defaultEaseType = Tween.EASE_OUT
 const defaultTweenSpeed: float = 1
 
 @export_category("Marker")
+var defaultMarkerIcon : IconType = 0
+var markerIcon : IconType = 0:
+	set(value):
+		markerIcon = value
+		notify_property_list_changed()
+		if is_instance_valid(get_tree()):
+			await get_tree().process_frame
+			setMarkerIcon(value)
 @export_subgroup("Marker Identity")
 @export var locationName: String = "":
 	set(value):
@@ -150,10 +165,13 @@ func setupMap() -> void:
 	if !Engine.is_editor_hint():
 		playCloseAnimation()
 		if map:
+			defaultMarkerIcon = markerIcon
+			setMarkerIcon(markerIcon)
 			%mapLabel.text = locationName
 			if markerType == Types.PROPERTY:
 				set_meta(&"id", propertyID)
 				set_meta(&"price", propertyPrice)
+				set_meta(&"rewards", propertyRewards)
 				if gameState.hasOwnedProperty(get_meta(&"id")):
 					setPropertyState(PropertyState.Purchased)
 
@@ -267,8 +285,9 @@ func getNavPoint() -> Vector3:
 	return $navPoint.global_position
 
 
-func setMarkerIcon(icon):
-	pass
+func setMarkerIcon(icon:IconType):
+	if is_instance_valid(%icon):
+		%icon.frame = icon
 
 
 func _get_property_list() -> Array[Dictionary]:
@@ -287,6 +306,16 @@ func _get_property_list() -> Array[Dictionary]:
 			"name": &"map",
 			"type": TYPE_NODE_PATH,
 			"usage": PROPERTY_USAGE_EDITOR | PROPERTY_USAGE_STORAGE
+			}
+		)
+
+		ret.append(
+			{
+		"name": &"markerIcon",
+		"type": TYPE_INT,
+		"hint": PROPERTY_HINT_ENUM,
+		"usage": PROPERTY_USAGE_EDITOR | PROPERTY_USAGE_STORAGE,
+		"hint_string": ",".join(IconType.keys())
 			}
 		)
 
@@ -410,7 +439,15 @@ func _get_property_list() -> Array[Dictionary]:
 						)
 
 					PropertyType.REWARD:
-						pass
+						ret.append(
+							{
+							"name": &"propertyRewards",
+							"type": TYPE_ARRAY,
+							"hint" : PROPERTY_HINT_RESOURCE_TYPE,
+							"hint_string" : "RewardDefinition",
+							"usage": PROPERTY_USAGE_EDITOR | PROPERTY_USAGE_STORAGE,
+							}
+						)
 
 				if propertyType == PropertyType.REWARD:
 					if useDescription:

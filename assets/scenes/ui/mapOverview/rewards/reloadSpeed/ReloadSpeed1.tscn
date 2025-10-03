@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://0hwrw78c2jum"]
+
+[ext_resource type="PackedScene" uid="uid://bqceu3hmfx8du" path="res://assets/scenes/ui/mapOverview/rewards/rewardDisplay.tscn" id="1_fbr46"]
+[ext_resource type="Texture2D" uid="uid://bepkbon3axypu" path="res://assets/models/effects/shoot_flare_1.png" id="2_dfebl"]
+
+[node name="reloadSpeed1" instance=ExtResource("1_fbr46")]
+rewardName = "Reload Speed 1"
+rewardIcon = ExtResource("2_dfebl")
+rewardTooltipText = "Increases reload speed by a small amount."

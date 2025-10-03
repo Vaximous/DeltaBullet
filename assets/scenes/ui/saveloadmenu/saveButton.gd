@@ -34,7 +34,7 @@ func parseData(data:String)->void:
 			if not result == OK:
 				Console.add_rich_console_message("[color=red]Couldn't Parse %s![/color]"%string)
 				return
-			var jsonData = json.get_data()
+			var jsonData : Dictionary = json.get_data()
 			var date = jsonData["dateDict"]
 			saveTimestamp.text = "%d/%02d/%02d" % [date.month, date.day, date.year]
 			saveName.text = jsonData["saveName"]

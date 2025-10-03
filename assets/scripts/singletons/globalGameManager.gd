@@ -279,6 +279,7 @@ func give_stat_modifier(parent: Node, mod: String):
 		if modifier:
 			if !stack.has_node(mod):
 				stack.add_child(modifier.instantiate())
+				gameState.addToSkills(mod)
 				if debugEnabled:
 					notify_warn("Added stat modifier '%s' to '%s'" % [mod, parent.name], 2, 2)
 			else:
@@ -923,6 +924,9 @@ func initWorldMap() -> void:
 	_WorldMapUI.add_to_group(&"worldMap")
 	add_child(_WorldMapUI)
 
+func removeMapPurchasePopups()->void:
+	for i in get_tree().get_nodes_in_group(&"purchaseMapAreaPopup"):
+		i.close()
 
 func initCustomization(pawn: BasePawn) -> void:
 	removeShop()

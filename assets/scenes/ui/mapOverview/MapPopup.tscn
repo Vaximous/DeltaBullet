@@ -1,0 +1,278 @@
+[gd_scene load_steps=15 format=3 uid="uid://eovl4whsv3lj"]
+
+[ext_resource type="Script" uid="uid://cs5s4elix6y65" path="res://assets/scenes/ui/mapOverview/mapPopup.gd" id="1_sgctd"]
+[ext_resource type="Texture2D" uid="uid://bag0nbin3udvs" path="res://assets/textures/misc/bootlogo.png" id="1_yv6rj"]
+[ext_resource type="AudioStream" uid="uid://d1pr7ltc6f600" path="res://assets/sounds/ui/uiappear.wav" id="3_o65sk"]
+[ext_resource type="AudioStream" uid="uid://cpacq6td0fe4q" path="res://assets/sounds/ui/shop/Buy sound_1.wav" id="4_t2nau"]
+[ext_resource type="AudioStream" uid="uid://c3bhon2ro1hq7" path="res://assets/sounds/ui/shop/Buy sound_2.wav" id="5_vonld"]
+[ext_resource type="AudioStream" uid="uid://cxrbsrsbi167g" path="res://assets/sounds/ui/shop/Buy sound_3.wav" id="6_hjkdg"]
+[ext_resource type="AudioStream" uid="uid://crpcvvr4dupq6" path="res://assets/sounds/ui/slideOpen.wav" id="7_uvhqi"]
+
+[sub_resource type="Gradient" id="Gradient_6u8km"]
+offsets = PackedFloat32Array(0, 0.14173229, 0.8385827, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.13319641, 0.13319641, 0.13319638, 1, 0.1584723, 0.15847233, 0.1584723, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_5bmur"]
+gradient = SubResource("Gradient_6u8km")
+fill_to = Vector2(0, 1)
+
+[sub_resource type="Animation" id="Animation_8yvlr"]
+resource_name = "open"
+step = 0.0333333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.1961461, 1),
+"update": 0,
+"values": [Vector2(152, 82), Vector2(983, 797.25)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"values": []
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.26666668),
+"transitions": PackedFloat32Array(0.40612632, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("popupOpen")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_3d58x"]
+resource_name = "close"
+step = 0.0333333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.17075495, 1),
+"update": 0,
+"values": [Vector2(983, 797.25), Vector2(152, 82)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.56666666),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.13333334, 0.51),
+"transitions": PackedFloat32Array(0.24148433, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ces1u"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(983, 797.25)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_cavjm"]
+_data = {
+&"RESET": SubResource("Animation_ces1u"),
+&"close": SubResource("Animation_3d58x"),
+&"open": SubResource("Animation_8yvlr")
+}
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_da4mp"]
+streams_count = 3
+stream_0/stream = ExtResource("4_t2nau")
+stream_1/stream = ExtResource("5_vonld")
+stream_2/stream = ExtResource("6_hjkdg")
+
+[node name="mapPopup" type="MarginContainer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -491.5
+offset_top = -398.625
+offset_right = 491.5
+offset_bottom = 398.625
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_sgctd")
+
+[node name="popupVbox" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="contents" type="VBoxContainer" parent="popupVbox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="top" type="MarginContainer" parent="popupVbox/contents"]
+clip_contents = true
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="textureRect" type="TextureRect" parent="popupVbox/contents/top"]
+layout_mode = 2
+texture = SubResource("GradientTexture2D_5bmur")
+expand_mode = 1
+
+[node name="close" type="Button" parent="popupVbox/contents/top"]
+layout_mode = 2
+text = "X"
+
+[node name="panelContainer" type="PanelContainer" parent="popupVbox/contents"]
+clip_contents = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="hSplitContainer" type="VBoxContainer" parent="popupVbox/contents/panelContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="textureButton" type="TextureRect" parent="popupVbox/contents/panelContainer/hSplitContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("1_yv6rj")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="hSeparator2" type="HSeparator" parent="popupVbox/contents/panelContainer/hSplitContainer"]
+layout_mode = 2
+
+[node name="scrollContainer" type="ScrollContainer" parent="popupVbox/contents/panelContainer/hSplitContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="richTextLabel" type="RichTextLabel" parent="popupVbox/contents/panelContainer/hSplitContainer/scrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vel euismod metus, id scelerisque nibh. Vivamus scelerisque leo id eros pharetra ullamcorper. Phasellus ipsum dolor, lobortis sit amet iaculis in, ultrices non arcu. Etiam ornare sapien vel condimentum aliquet. Duis pellentesque, lacus et blandit efficitur, lectus ligula auctor libero, non mollis lorem turpis id diam. Curabitur lobortis orci ac orci blandit, a luctus arcu efficitur. Curabitur interdum orci nibh, non tincidunt urna tincidunt ac.
+
+Aenean tempor auctor urna, id maximus nisl. Pellentesque vehicula in nibh in ultricies. Vivamus et convallis eros, vel tincidunt justo. Pellentesque cursus imperdiet leo a semper. Praesent aliquet sapien et eros cursus pretium. Mauris lacinia efficitur ex id venenatis. Donec sit amet risus vel odio semper congue. Pellentesque pharetra felis at purus porttitor tempus. Pellentesque semper odio id egestas aliquam. Aliquam viverra pulvinar nulla, ut condimentum tellus rhoncus ut. Fusce commodo posuere ante, a egestas dui ultrices sit amet. Nam maximus libero pulvinar augue feugiat tincidunt. Aenean iaculis eros vel orci bibendum iaculis.
+
+Etiam mollis id metus vitae blandit. Etiam velit dui, mollis nec dictum et, venenatis ac massa. Pellentesque pulvinar est quis nisl malesuada interdum. Donec fermentum porta nunc ut cursus. Aenean arcu sem, tincidunt at porttitor vitae, maximus in urna. Vivamus condimentum lacus et sollicitudin dictum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris rutrum lobortis dui in egestas. Suspendisse ut libero vel velit tincidunt interdum et id lectus. Phasellus et condimentum sem. Aenean vestibulum lacinia sem, ut facilisis nisi ornare at. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Ut aliquam metus mi, vel iaculis arcu sodales eget.
+
+Etiam imperdiet, nibh non dictum varius, sapien eros aliquam dui, in dapibus diam lacus in ligula. Praesent faucibus, risus nec molestie commodo, tellus lectus aliquet urna, sed dictum arcu elit in magna. Curabitur nec ornare justo. Cras in sagittis odio. Duis lacus dolor, dictum id consectetur sed, tincidunt in nibh. Nullam in luctus libero. Suspendisse ultricies ligula quis nisl interdum fringilla. Nullam auctor semper tristique. Nulla id ante eros. Cras sed erat convallis, rutrum ante eu, luctus dolor.
+
+Sed vel consequat urna. Integer nisi elit, efficitur ut magna quis, aliquet convallis purus. Aliquam erat volutpat. Vestibulum eu eros neque. Aenean finibus, dolor vel finibus scelerisque, velit arcu congue velit, sit amet posuere risus est sed odio. Fusce ut cursus odio. Maecenas dapibus felis sed ante lacinia pulvinar. Sed eros risus, fermentum id nisi at, sollicitudin convallis ex. Aenean luctus nunc in malesuada ultricies. Quisque leo elit, tristique non vehicula id, feugiat in nibh. Sed vel risus id velit pretium porta a eu velit. Phasellus suscipit lacus a efficitur ultrices. Nunc eget mauris ligula. Duis faucibus quam felis, a lacinia orci vulputate at. Sed porttitor lacus eu ligula vestibulum hendrerit. Cras vel metus posuere, mollis nisi in, tempor tellus."
+horizontal_alignment = 1
+
+[node name="bottom" type="MarginContainer" parent="popupVbox"]
+clip_contents = true
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="textureRect" type="TextureRect" parent="popupVbox/bottom"]
+layout_mode = 2
+texture = SubResource("GradientTexture2D_5bmur")
+expand_mode = 1
+
+[node name="hBoxContainer" type="HBoxContainer" parent="popupVbox/bottom"]
+layout_mode = 2
+
+[node name="cancel" type="Button" parent="popupVbox/bottom/hBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Cancel"
+
+[node name="vSeparator" type="VSeparator" parent="popupVbox/bottom/hBoxContainer"]
+layout_mode = 2
+
+[node name="purchase" type="Button" parent="popupVbox/bottom/hBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Purchase"
+
+[node name="animationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+&"": SubResource("AnimationLibrary_cavjm")
+}
+
+[node name="popupOpen" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_o65sk")
+bus = &"UI"
+
+[node name="successfulPurchase" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_da4mp")
+bus = &"UI"
+
+[node name="unsuccessfulPurchase" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("7_uvhqi")
+bus = &"UI"
+
+[connection signal="pressed" from="popupVbox/contents/top/close" to="." method="close"]
+[connection signal="pressed" from="popupVbox/bottom/hBoxContainer/cancel" to="." method="close"]
+[connection signal="pressed" from="popupVbox/bottom/hBoxContainer/purchase" to="." method="purchase"]

@@ -10,7 +10,6 @@ func _ready() -> void:
 	get_tree().change_scene_to_file("res://assets/scenes/cutscenes/PrologueChapterCutscene.tscn")
 
 
-
 func has_seen_prologue() -> bool:
 	var data = gameManager.get_persistent_data()
 	return data.has("seen_prologue")

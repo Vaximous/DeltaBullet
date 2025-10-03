@@ -38,11 +38,11 @@ func parseData(data:String)->void:
 			var date = jsonData["dateDict"]
 			saveTimestamp.text = "%d/%02d/%02d" % [date.month, date.day, date.year]
 			saveName.text = jsonData["saveName"]
-			imgicon.load(jsonData["saveScreenie"])
+			imgicon.load(jsonData["screenshot"])
 			imgtexture.set_image(imgicon)
 			saveIcon.texture = imgtexture
 			saveLocation.text = jsonData["saveLocation"]
-			sceneLoad = jsonData["scene"]
+			sceneLoad = jsonData["saveScene"]
 
 func hoverOn()->void:
 	hoverSound.play()
@@ -68,7 +68,7 @@ func _on_pressed()->void:
 			gameManager.removeWorldMap()
 			await Fade.fade_out(0.3, Color(0,0,0,1),"GradientVertical",false,true).finished
 			#gameManager.notifyCheck("'%s' Sucessfully Loaded."%saveName.text, 2, 1.5)
-			gameManager.loadGame(saveFile)
+			gameState.loadGame(saveFile)
 			gameManager.clearTemporaryPawnInfo()
 		2:
 			gameManager.getEventSignal("overwriteSave").emit()

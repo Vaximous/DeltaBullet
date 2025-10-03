@@ -1,17 +1,91 @@
-[gd_scene load_steps=125 format=3 uid="uid://cwavya38gkrim"]
+[gd_scene load_steps=203 format=3 uid="uid://cwavya38gkrim"]
 
 [ext_resource type="PackedScene" uid="uid://bg8aarggcxwa8" path="res://assets/entities/pawnEntity/pawnEntity.tscn" id="1_5kkiw"]
+[ext_resource type="Animation" uid="uid://ccxhuw1ksweh1" path="res://assets/animations/pawn/+_Reference.res" id="3_n6qpv"]
+[ext_resource type="Animation" uid="uid://cbwg4d7sjree1" path="res://assets/animations/pawn/BadgerAim.res" id="4_il7xj"]
+[ext_resource type="Animation" uid="uid://b8jh2j4cjasdw" path="res://assets/animations/pawn/BadgerIdle.res" id="5_yttrl"]
+[ext_resource type="Animation" uid="uid://bs1bse6dk0ppq" path="res://assets/animations/pawn/BadgerReload.res" id="6_ipl8x"]
+[ext_resource type="Animation" uid="uid://bai4ysnjy4ijg" path="res://assets/animations/pawn/BadgerShoot.res" id="7_h01e4"]
 [ext_resource type="PackedScene" uid="uid://bidurnqgd1c74" path="res://assets/entities/weapons/m4/m4.tscn" id="8_qyyfh"]
 [ext_resource type="CompressedTexture3D" uid="uid://du5nefbe7hm5v" path="res://assets/textures/misc/neutral-lut - Copy.png" id="8_s3dyu"]
+[ext_resource type="Animation" uid="uid://d1v5ctkn0snr1" path="res://assets/animations/pawn/BattlecadeRifleAim.res" id="8_tfkfs"]
 [ext_resource type="ArrayMesh" uid="uid://b0jgjxjwcgi01" path="res://assets/scenes/worlds/areas/playerHome/distantBuildings.res" id="9_14tex"]
+[ext_resource type="Animation" uid="uid://cvd8u6kwdf0kj" path="res://assets/animations/pawn/BattlecadeRifleFire.res" id="9_gsm73"]
 [ext_resource type="Curve" uid="uid://ba3idydj71l2p" path="res://assets/resources/weaponCurves/mediumRange.tres" id="9_sdhud"]
 [ext_resource type="Resource" uid="uid://bxx56mrt1hj5e" path="res://assets/resources/customResources/weaponData/M4/M4Display.tres" id="10_25et3"]
+[ext_resource type="Animation" uid="uid://4hyae6bomtel" path="res://assets/animations/pawn/BattlecadeRifleIdle.res" id="10_aolkg"]
 [ext_resource type="AudioStream" uid="uid://brxvjv4isdmvu" path="res://assets/sounds/weapons/m4/m4_draw_1.wav" id="11_i4n4i"]
+[ext_resource type="Animation" uid="uid://bvvo2vyqekr4o" path="res://assets/animations/pawn/BattlecadeRifleReload.res" id="11_oglow"]
 [ext_resource type="AudioStream" uid="uid://cyxfip8hwv23f" path="res://assets/sounds/weapons/m4/m4_draw_2.wav" id="12_leves"]
+[ext_resource type="Animation" uid="uid://co4m2d1f5fnqv" path="res://assets/animations/pawn/CrouchIdle.res" id="12_p1tg6"]
+[ext_resource type="Animation" uid="uid://dc2jof5njlt7u" path="res://assets/animations/pawn/crouchWalk3.res" id="13_da4yr"]
 [ext_resource type="AudioStream" uid="uid://74p6gclkalsk" path="res://assets/sounds/weapons/m4/m4_draw_3.wav" id="13_nyvbo"]
+[ext_resource type="Animation" uid="uid://pj7rhspiale0" path="res://assets/animations/pawn/CrouchWalk.res" id="14_prrlo"]
 [ext_resource type="AudioStream" uid="uid://c85mepdrdblyy" path="res://assets/sounds/weapons/m4/m4_draw_4.wav" id="14_qaydr"]
 [ext_resource type="Texture2D" uid="uid://c7b38t83ckisx" path="res://assets/textures/crosshair/crosshair161.png" id="15_g7e2c"]
+[ext_resource type="Animation" uid="uid://brnrvqrp3cjat" path="res://assets/animations/pawn/CrouchWalk_Alt.res" id="15_itv2n"]
+[ext_resource type="Animation" uid="uid://hwfrkxccx5au" path="res://assets/animations/pawn/Fall.res" id="16_8tul8"]
 [ext_resource type="Script" uid="uid://b6r8ewrq3qb3y" path="res://assets/resources/customResources/weaponData/weaponData.gd" id="16_o7jd5"]
+[ext_resource type="Animation" uid="uid://cq3qubowfjlom" path="res://assets/animations/pawn/FinalWalkForward.res" id="17_255ju"]
+[ext_resource type="Animation" uid="uid://scd61e36e0xi" path="res://assets/animations/pawn/grabL.res" id="18_di8nd"]
+[ext_resource type="Animation" uid="uid://dn47dtkcjqfay" path="res://assets/animations/pawn/Idle.res" id="19_0hmen"]
+[ext_resource type="Animation" uid="uid://brmkwuo7bhtvl" path="res://assets/animations/pawn/interactL2.res" id="20_5o02e"]
+[ext_resource type="Animation" uid="uid://d4c4u7arjklwl" path="res://assets/animations/pawn/interactL.res" id="21_yedgq"]
+[ext_resource type="Animation" uid="uid://b5wdilqcnloh5" path="res://assets/animations/pawn/Jump.res" id="22_7lhov"]
+[ext_resource type="Animation" uid="uid://bg0313d0l84gm" path="res://assets/animations/pawn/leftThrow.res" id="23_rsf27"]
+[ext_resource type="Animation" uid="uid://bgx5o88jbv2af" path="res://assets/animations/pawn/leftThrowableArmed.res" id="24_jss1r"]
+[ext_resource type="Animation" uid="uid://bm0g2afncaddw" path="res://assets/animations/pawn/MenuIdle2.res" id="25_oq0iw"]
+[ext_resource type="Animation" uid="uid://bynksixbuay4y" path="res://assets/animations/pawn/MenuIdle.res" id="26_yyidj"]
+[ext_resource type="Animation" uid="uid://c5dmpx6trc3on" path="res://assets/animations/pawn/NewerWalkUpleft.res" id="27_qjkd8"]
+[ext_resource type="Animation" uid="uid://tpa2oqeja03w" path="res://assets/animations/pawn/NewerWalkUpRight.res" id="28_1svnc"]
+[ext_resource type="Animation" uid="uid://l4xwyqaweg8v" path="res://assets/animations/pawn/NewWalkUpLeft.res" id="29_8q68a"]
+[ext_resource type="Animation" uid="uid://dkhs0dy4ikfci" path="res://assets/animations/pawn/NewWalkUpRight.res" id="30_japef"]
+[ext_resource type="Animation" uid="uid://w21i7xhkhp51" path="res://assets/animations/pawn/phoneOpen.res" id="31_lgpja"]
+[ext_resource type="Animation" uid="uid://jyirr10haokj" path="res://assets/animations/pawn/PistolAim.res" id="32_1v4t8"]
+[ext_resource type="Animation" uid="uid://dheycahhpmdh8" path="res://assets/animations/pawn/PistolIdle.res" id="33_jj1s6"]
+[ext_resource type="Animation" uid="uid://dem03w0ueepai" path="res://assets/animations/pawn/PistolReload.res" id="34_ab14g"]
+[ext_resource type="Animation" uid="uid://cuxcqkbux6bt0" path="res://assets/animations/pawn/PistolShot.res" id="35_tpmj0"]
+[ext_resource type="Animation" uid="uid://dnouuy1f2ies8" path="res://assets/animations/pawn/ref.res" id="36_xh5qk"]
+[ext_resource type="Animation" uid="uid://drkhfmrnlxjlf" path="res://assets/animations/pawn/Reference.res" id="37_mjrqb"]
+[ext_resource type="Animation" uid="uid://bin28ufeeq5q1" path="res://assets/animations/pawn/Run2.res" id="38_q4tdm"]
+[ext_resource type="Animation" uid="uid://brqeipvcs2ibf" path="res://assets/animations/pawn/Run3.res" id="39_oswwa"]
+[ext_resource type="Animation" uid="uid://c4s0rft5pi7rf" path="res://assets/animations/pawn/Run4.res" id="40_a8kou"]
+[ext_resource type="Animation" uid="uid://bikkq323tnqjh" path="res://assets/animations/pawn/runCartoonish.res" id="41_o2s8k"]
+[ext_resource type="Animation" uid="uid://bqrgexbb5dksc" path="res://assets/animations/pawn/RunUpLeftNew.res" id="42_f7s7u"]
+[ext_resource type="Animation" uid="uid://csu18ii7l2fmg" path="res://assets/animations/pawn/RunUpRightNew.res" id="43_7xeug"]
+[ext_resource type="Animation" uid="uid://ckkiaq21boeoo" path="res://assets/animations/pawn/ShirtEquip.res" id="44_ttfys"]
+[ext_resource type="Animation" uid="uid://ctr4kf5sgnntq" path="res://assets/animations/pawn/shopIdle1.res" id="45_7vh2o"]
+[ext_resource type="Animation" uid="uid://br570qqsgqjn2" path="res://assets/animations/pawn/shotgunAim.res" id="46_n5pdm"]
+[ext_resource type="Animation" uid="uid://ddw580uybuefv" path="res://assets/animations/pawn/shotgunFire.res" id="47_t1ouk"]
+[ext_resource type="Animation" uid="uid://be53w68fsr0ii" path="res://assets/animations/pawn/shotgunIdle.res" id="48_25q8m"]
+[ext_resource type="Animation" uid="uid://dfbtvqn0m0b8p" path="res://assets/animations/pawn/SitRestless.res" id="49_7cqp6"]
+[ext_resource type="Animation" uid="uid://cktwthgv6knyb" path="res://assets/animations/pawn/ssssss.res" id="50_t6ryu"]
+[ext_resource type="Animation" uid="uid://bb4i8bt2gnyox" path="res://assets/animations/pawn/StaggerLeftLeg1.res" id="51_mqn08"]
+[ext_resource type="Animation" uid="uid://dj8kb8ju2ag2b" path="res://assets/animations/pawn/StandingCoverIdleL.res" id="52_i0ayv"]
+[ext_resource type="Animation" uid="uid://d3wfm2qbkggbp" path="res://assets/animations/pawn/StandingCoverIdleR.res" id="53_bfr6o"]
+[ext_resource type="Animation" uid="uid://bp06c3e4opx52" path="res://assets/animations/pawn/StandingCoverWalkL.res" id="54_cleie"]
+[ext_resource type="Animation" uid="uid://npsebc1adkn3" path="res://assets/animations/pawn/StandingCoverWalkR.res" id="55_dr20m"]
+[ext_resource type="Animation" uid="uid://bi8isijf0jg2y" path="res://assets/animations/pawn/testOpen.res" id="56_q0m1t"]
+[ext_resource type="Animation" uid="uid://bcnp7ca33y5vq" path="res://assets/animations/pawn/useLeft.res" id="57_xis8r"]
+[ext_resource type="Animation" uid="uid://cg5rdmclfrukg" path="res://assets/animations/pawn/UziAim.res" id="58_inxw5"]
+[ext_resource type="Animation" uid="uid://bc2d5fksn26jf" path="res://assets/animations/pawn/UziAimCorrect.res" id="59_krope"]
+[ext_resource type="Animation" uid="uid://cyi6wwvfld3gp" path="res://assets/animations/pawn/UziFire.res" id="60_bgbru"]
+[ext_resource type="Animation" uid="uid://cn104bd4royk3" path="res://assets/animations/pawn/UziIdle.res" id="61_xr84w"]
+[ext_resource type="Animation" uid="uid://bd8jr1ifulhhv" path="res://assets/animations/pawn/WalkBackwards.res" id="62_1yxr7"]
+[ext_resource type="Animation" uid="uid://1prl8mtseah" path="res://assets/animations/pawn/WalkBackwardsLeft.res" id="63_38n6w"]
+[ext_resource type="Animation" uid="uid://8h6flp38xkla" path="res://assets/animations/pawn/WalkBackwardsR.res" id="64_6m7fu"]
+[ext_resource type="Animation" uid="uid://ditpyqb6njqjs" path="res://assets/animations/pawn/WalkLeft.res" id="65_47q8f"]
+[ext_resource type="Animation" uid="uid://cdna5a6lx8dbk" path="res://assets/animations/pawn/WritheChestBack.res" id="66_xfgdx"]
+[ext_resource type="Animation" uid="uid://cpdq8geqgnxox" path="res://assets/animations/pawn/WritheRightKneeBack.res" id="67_f4g04"]
+[ext_resource type="Animation" uid="uid://bly43x5pivfk1" path="res://assets/animations/pawn/WalkRight.res" id="68_rl0v5"]
+[ext_resource type="Animation" uid="uid://sptrj4q2h2yi" path="res://assets/animations/pawn/PhoneAnswer.res" id="69_tvu24"]
+[ext_resource type="Animation" uid="uid://c6ymtsrss2btd" path="res://assets/animations/pawn/phoneHangup.res" id="70_x8qu5"]
+[ext_resource type="Animation" uid="uid://dqhqknptbcn40" path="res://assets/animations/pawn/flinches/StaggerLeftHand.res" id="71_r1l7i"]
+[ext_resource type="Animation" uid="uid://b5deob3kc8wp6" path="res://assets/animations/pawn/flinches/StaggerRightHand.res" id="72_2od71"]
+[ext_resource type="Animation" uid="uid://bbpgkjbk578de" path="res://assets/animations/pawn/flinches/StaggerRightLeg.res" id="73_4ojuc"]
+[ext_resource type="Animation" uid="uid://djga7rlyg8upw" path="res://assets/animations/pawn/flinches/StaggerUpperRight.res" id="74_5q706"]
+[ext_resource type="Animation" uid="uid://csmho05mag111" path="res://assets/animations/pawn/flinches/StaggerUpperLeft.res" id="75_7vnu0"]
+[ext_resource type="AnimationLibrary" uid="uid://pdt1e6uuiu5m" path="res://assets/entities/weapons/WeaponAnims.res" id="76_qd8ts"]
 
 [sub_resource type="GDScript" id="GDScript_aswpt"]
 resource_name = "menuScene"
@@ -33,7 +107,7 @@ func checkPawn()->void:
 		lastSaveData = gameManager.get_persistent_data()[\"lastSaveData\"]
 
 	if lastSaveData:
-		playerCharacter.loadPawnFile(lastSaveData[\"pawnToLoad\"])
+		playerCharacter.loadPawnFile(lastSaveData[\"pawninfo\"])
 "
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o85j6"]
@@ -83,6 +157,143 @@ albedo = Color(0.541176, 0, 0, 1)
 emission = Color(0.494118, 0, 0, 1)
 height_falloff = 0.0522071
 edge_fade = 0.835298
+
+[sub_resource type="Animation" id="Animation_0274p"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MaleSkeleton:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 3.14159, 0)]
+}
+tracks/1/type = "rotation_3d"
+tracks/1/imported = false
+tracks/1/enabled = false
+tracks/1/path = NodePath("%flipphone/phone/Skeleton3D:bottom_2")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1)
+tracks/2/type = "rotation_3d"
+tracks/2/imported = false
+tracks/2/enabled = false
+tracks/2/path = NodePath("%flipphone/phone/Skeleton3D:top_2")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = PackedFloat32Array(0, 1, 5.86635e-09, 1.19209e-07, 6.99324e-16, 1)
+tracks/3/type = "rotation_3d"
+tracks/3/imported = false
+tracks/3/enabled = false
+tracks/3/path = NodePath("%flipphone/phone/Skeleton3D:top_end")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = PackedFloat32Array(0, 1, -5.86635e-09, 0, -1.39865e-15, 1)
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("%flipphone/phone/Skeleton3D/boneAttachment3d/meshInstance3d/omniLight3d:light_energy")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.45]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yl8s8"]
+_data = {
+&"RESET": SubResource("Animation_0274p")
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jautt"]
+resource_local_to_scene = true
+_data = {
+&"+_Reference": ExtResource("3_n6qpv"),
+&"BadgerAim": ExtResource("4_il7xj"),
+&"BadgerIdle": ExtResource("5_yttrl"),
+&"BadgerReload": ExtResource("6_ipl8x"),
+&"BadgerShoot": ExtResource("7_h01e4"),
+&"BattlecadeRifleAim": ExtResource("8_tfkfs"),
+&"BattlecadeRifleFire": ExtResource("9_gsm73"),
+&"BattlecadeRifleIdle": ExtResource("10_aolkg"),
+&"BattlecadeRifleReload": ExtResource("11_oglow"),
+&"CrouchIdle": ExtResource("12_p1tg6"),
+&"CrouchWalk": ExtResource("14_prrlo"),
+&"CrouchWalk_Alt": ExtResource("15_itv2n"),
+&"Fall": ExtResource("16_8tul8"),
+&"FinalWalkForward": ExtResource("17_255ju"),
+&"Idle": ExtResource("19_0hmen"),
+&"Jump": ExtResource("22_7lhov"),
+&"MenuIdle": ExtResource("26_yyidj"),
+&"MenuIdle2": ExtResource("25_oq0iw"),
+&"NewWalkUpLeft": ExtResource("29_8q68a"),
+&"NewWalkUpRight": ExtResource("30_japef"),
+&"NewerWalkUpRight": ExtResource("28_1svnc"),
+&"NewerWalkUpleft": ExtResource("27_qjkd8"),
+&"PhoneAnswer": ExtResource("69_tvu24"),
+&"PistolAim": ExtResource("32_1v4t8"),
+&"PistolIdle": ExtResource("33_jj1s6"),
+&"PistolReload": ExtResource("34_ab14g"),
+&"PistolShot": ExtResource("35_tpmj0"),
+&"Reference": ExtResource("37_mjrqb"),
+&"Run2": ExtResource("38_q4tdm"),
+&"Run3": ExtResource("39_oswwa"),
+&"Run4": ExtResource("40_a8kou"),
+&"RunUpLeftNew": ExtResource("42_f7s7u"),
+&"RunUpRightNew": ExtResource("43_7xeug"),
+&"ShirtEquip": ExtResource("44_ttfys"),
+&"SitRestless": ExtResource("49_7cqp6"),
+&"StaggerLeftLeg1": ExtResource("51_mqn08"),
+&"StandingCoverIdleL": ExtResource("52_i0ayv"),
+&"StandingCoverIdleR": ExtResource("53_bfr6o"),
+&"StandingCoverWalkL": ExtResource("54_cleie"),
+&"StandingCoverWalkR": ExtResource("55_dr20m"),
+&"UziAim": ExtResource("58_inxw5"),
+&"UziAimCorrect": ExtResource("59_krope"),
+&"UziFire": ExtResource("60_bgbru"),
+&"UziIdle": ExtResource("61_xr84w"),
+&"WalkBackwards": ExtResource("62_1yxr7"),
+&"WalkBackwardsLeft": ExtResource("63_38n6w"),
+&"WalkBackwardsR": ExtResource("64_6m7fu"),
+&"WalkLeft": ExtResource("65_47q8f"),
+&"WalkRight": ExtResource("68_rl0v5"),
+&"WritheChestBack": ExtResource("66_xfgdx"),
+&"WritheRightKneeBack": ExtResource("67_f4g04"),
+&"crouchWalk3": ExtResource("13_da4yr"),
+&"grabL": ExtResource("18_di8nd"),
+&"interactL": ExtResource("21_yedgq"),
+&"interactL2": ExtResource("20_5o02e"),
+&"leftThrow": ExtResource("23_rsf27"),
+&"leftThrowableArmed": ExtResource("24_jss1r"),
+&"phoneHangup": ExtResource("70_x8qu5"),
+&"phoneOpen": ExtResource("31_lgpja"),
+&"ref": ExtResource("36_xh5qk"),
+&"runCartoonish": ExtResource("41_o2s8k"),
+&"shopIdle1": ExtResource("45_7vh2o"),
+&"shotgunAim": ExtResource("46_n5pdm"),
+&"shotgunFire": ExtResource("47_t1ouk"),
+&"shotgunIdle": ExtResource("48_25q8m"),
+&"ssssss": ExtResource("50_t6ryu"),
+&"testOpen": ExtResource("56_q0m1t"),
+&"useLeft": ExtResource("57_xis8r")
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bouqm"]
+resource_local_to_scene = true
+_data = {
+&"StaggerLeftHand": ExtResource("71_r1l7i"),
+&"StaggerLeftLeg1": ExtResource("51_mqn08"),
+&"StaggerRightHand": ExtResource("72_2od71"),
+&"StaggerRightLeg": ExtResource("73_4ojuc"),
+&"StaggerUpperLeft": ExtResource("75_7vnu0"),
+&"StaggerUpperRight": ExtResource("74_5q706")
+}
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fgfye"]
 animation = &"PawnAnim/Jump"
@@ -772,7 +983,7 @@ material_override = SubResource("StandardMaterial3D_o85j6")
 size = Vector3(121.878, 1, 112.072)
 
 [node name="camera3d" type="Camera3D" parent="."]
-transform = Transform3D(0.9033798, -0.12741613, 0.40947598, 0.06274215, 0.9838359, 0.16771857, -0.42422745, -0.12582205, 0.8967721, 0.821734, 1.46595, 0.147694)
+transform = Transform3D(0.9033798, -0.12741613, 0.40947598, 0.06274215, 0.9838358, 0.16771857, -0.42422745, -0.12582205, 0.8967721, 0.821734, 1.46595, 0.147694)
 environment = SubResource("Environment_bqejv")
 current = true
 fov = 49.593
@@ -788,31 +999,45 @@ forceAnimation = true
 animationToForce = "PawnAnim/MenuIdle2"
 
 [node name="Skeleton3D" parent="pawnEntity/Mesh/MaleSkeleton" index="0"]
-bones/1/rotation = Quaternion(-0.13979857, -0.06995865, -0.0039011398, 0.98769784)
-bones/2/rotation = Quaternion(0.18704025, 0.013285963, 0.0129965395, 0.9821764)
-bones/3/rotation = Quaternion(-0.052415095, 0.009696254, -0.011272696, 0.9985148)
-bones/4/rotation = Quaternion(0.555747, 0.33435494, 0.5668245, -0.5079981)
-bones/5/rotation = Quaternion(-0.45498106, 0.31136128, -0.34551623, 0.75938463)
-bones/6/rotation = Quaternion(0.07088953, 0.013074743, -0.08115734, 0.99409115)
-bones/7/rotation = Quaternion(-0.017541593, -0.24407318, -0.016153086, 0.96946365)
-bones/23/rotation = Quaternion(-0.5594831, 0.319812, 0.5568979, 0.52398825)
-bones/24/rotation = Quaternion(-0.50434935, -0.33832994, 0.25397903, 0.7527677)
-bones/25/rotation = Quaternion(0.13434409, -0.012874737, 0.15382221, 0.97883844)
-bones/26/rotation = Quaternion(0.0060005006, 0.18565385, -0.057450477, 0.980916)
-bones/42/rotation = Quaternion(0.037348654, 0.001385756, -0.00404509, 0.9992932)
-bones/43/rotation = Quaternion(0.006384496, 0.7085331, 0.05725318, 0.70332223)
-bones/44/rotation = Quaternion(0.9900919, 0.07862251, -0.06887457, -0.09377053)
-bones/45/rotation = Quaternion(0.20485364, 0.0020543686, 0.028384725, 0.9783789)
-bones/46/rotation = Quaternion(0.039455213, 0.865508, -0.49495572, 0.06601517)
-bones/48/rotation = Quaternion(0.9944496, -0.09172092, 0.013968077, 0.04962002)
-bones/49/rotation = Quaternion(0.1722913, -0.0020698071, -0.02830567, 0.9846371)
-bones/50/rotation = Quaternion(-0.016383631, 0.8985166, -0.43135008, -0.07960242)
+bones/1/rotation = Quaternion(-0.1397791, -0.069932304, -0.0043257354, 0.9877007)
+bones/2/rotation = Quaternion(0.18077844, 0.013283372, 0.012938259, 0.9833491)
+bones/3/rotation = Quaternion(-0.038389668, 0.009649381, -0.011273313, 0.99915266)
+bones/4/rotation = Quaternion(0.5594523, 0.3375208, 0.56426215, -0.5046793)
+bones/5/rotation = Quaternion(-0.4554466, 0.31161556, -0.34361973, 0.75986165)
+bones/6/rotation = Quaternion(0.07231267, 0.013071628, -0.082786955, 0.9938543)
+bones/7/rotation = Quaternion(-0.02145348, -0.24347039, -0.011360369, 0.9696046)
+bones/23/rotation = Quaternion(-0.56320417, 0.3220297, 0.5545032, 0.52117574)
+bones/24/rotation = Quaternion(-0.50720245, -0.33083698, 0.2524526, 0.7546922)
+bones/25/rotation = Quaternion(0.1317641, -0.012885352, 0.15086801, 0.9796485)
+bones/26/rotation = Quaternion(0.016773915, 0.19548446, -0.050758094, 0.97924876)
+bones/42/rotation = Quaternion(0.03170464, 0.0011655763, -0.0034206945, 0.99949086)
+bones/43/rotation = Quaternion(0.0059766825, 0.70867735, 0.056544296, 0.70323783)
+bones/44/rotation = Quaternion(0.9897377, 0.07929617, -0.06878768, -0.096952535)
+bones/45/rotation = Quaternion(0.20180836, 0.0020559165, 0.028378503, 0.97901165)
+bones/46/rotation = Quaternion(0.038617626, 0.866217, -0.49376652, 0.06611644)
+bones/48/rotation = Quaternion(0.99458766, -0.09118284, 0.0146227535, 0.0476177)
+bones/49/rotation = Quaternion(0.17195934, -0.0020699487, -0.02830469, 0.98469526)
+bones/50/rotation = Quaternion(-0.01597151, 0.89858997, -0.43117863, -0.079787605)
 
-[node name="AnimationTree" parent="pawnEntity" index="4"]
+[node name="AnimationTree" parent="pawnEntity" index="5"]
+libraries = {
+&"": SubResource("AnimationLibrary_yl8s8"),
+&"PawnAnim": SubResource("AnimationLibrary_jautt"),
+&"PawnFlinches": SubResource("AnimationLibrary_bouqm"),
+&"WeaponAnims": ExtResource("76_qd8ts")
+}
 tree_root = SubResource("AnimationNodeBlendTree_6gv5e")
 
+[node name="AnimationPlayer" parent="pawnEntity" index="6"]
+libraries = {
+&"": SubResource("AnimationLibrary_yl8s8"),
+&"PawnAnim": SubResource("AnimationLibrary_jautt"),
+&"PawnFlinches": SubResource("AnimationLibrary_bouqm"),
+&"WeaponAnims": ExtResource("76_qd8ts")
+}
+
 [node name="rightHand" parent="pawnEntity/BoneAttatchments" index="0"]
-transform = Transform3D(0.9575208, -0.08751293, -0.27471346, -0.043539703, -0.9857415, 0.16235164, -0.28502306, -0.14349723, -0.94771755, 0.65975225, 0.8932054, -1.070353)
+transform = Transform3D(0.9667102, -0.09917663, -0.2358123, -0.05766835, -0.9825051, 0.17691267, -0.24924919, -0.15742788, -0.95555705, 0.66050977, 0.89327943, -1.0696572)
 
 [node name="M4" parent="pawnEntity/BoneAttatchments/rightHand" index="3" instance=ExtResource("8_qyyfh")]
 transform = Transform3D(0.100967675, -0.0042318003, -0.99488074, -0.041875664, -0.99912286, 0, -0.99400806, 0.041661292, -0.101056315, -0.082, 0.217, -0.036)
@@ -820,49 +1045,49 @@ freeze = true
 weaponResource = SubResource("Resource_o1fhv")
 
 [node name="UpperChest" parent="pawnEntity/BoneAttatchments" index="1"]
-transform = Transform3D(-0.080285236, -0.016734576, -0.99662304, 0.01105742, 0.9997738, -0.01767788, 0.99670184, -0.012438849, -0.08008272, 0.61161184, 1.1557425, -0.90303606)
+transform = Transform3D(-0.080255255, -0.032141194, -0.99624753, 0.009930387, 0.9993957, -0.033042356, 0.99671614, -0.012544444, -0.0798883, 0.6141372, 1.1560515, -0.9024382)
 
 [node name="LeftThigh" parent="pawnEntity/BoneAttatchments" index="2"]
-transform = Transform3D(0.032406256, -0.07134771, 0.99692124, 0.140614, -0.98717415, -0.07522464, 0.98953325, 0.142614, -0.021957036, 0.59518385, 0.8206818, -0.8494856)
+transform = Transform3D(0.031980947, -0.06496263, 0.9973714, 0.14163676, -0.98749197, -0.0688642, 0.9894013, 0.14346191, -0.022378735, 0.59518176, 0.8206407, -0.8494856)
 
 [node name="LeftFoot" parent="pawnEntity/BoneAttatchments" index="3"]
-transform = Transform3D(-0.17900002, -0.62898743, -0.75650126, -0.13635807, -0.74560523, 0.6522189, -0.9743457, 0.21989673, 0.04770118, 0.6989643, 0.052463215, -0.76569724)
+transform = Transform3D(-0.17858574, -0.62691486, -0.7583176, -0.1359555, -0.747558, 0.65006363, -0.9744779, 0.21918397, 0.048276134, 0.7015888, 0.052352827, -0.7649367)
 
 [node name="LeftKnee" parent="pawnEntity/BoneAttatchments" index="4"]
-transform = Transform3D(0.035916798, 0.3327147, 0.94233984, 0.08415278, -0.9405865, 0.3288827, 0.9957986, 0.06748299, -0.061778508, 0.56668794, 0.42640936, -0.79252625)
+transform = Transform3D(0.035674326, 0.33290696, 0.9422812, 0.0852052, -0.9404415, 0.32902586, 0.99571776, 0.068544276, -0.061911814, 0.56923604, 0.4262413, -0.7921876)
 
 [node name="RightThigh" parent="pawnEntity/BoneAttatchments" index="5"]
-transform = Transform3D(-0.20740986, -0.31209543, 0.9271281, -0.15822603, -0.9245313, -0.34663415, 0.96537083, -0.2185842, 0.1423792, 0.6080261, 0.81988984, -0.948085)
+transform = Transform3D(-0.2080478, -0.30837288, 0.9282302, -0.15782012, -0.92595303, -0.34300485, 0.9652999, -0.2178479, 0.14397906, 0.6080283, 0.81993324, -0.94808507)
 
 [node name="RightFoot" parent="pawnEntity/BoneAttatchments" index="6"]
-transform = Transform3D(0.34671265, -0.7322105, -0.58621156, 0.061803717, -0.6057666, 0.7932053, -0.9359284, -0.31124276, -0.16478215, 0.48742908, 0.055247884, -1.0766579)
+transform = Transform3D(0.3476182, -0.7299113, -0.5885378, 0.06098592, -0.608733, 0.79099435, -0.9356457, -0.31085503, -0.16710094, 0.49018037, 0.054693293, -1.0759296)
 
 [node name="RightKnee" parent="pawnEntity/BoneAttatchments" index="7"]
-transform = Transform3D(-0.19471914, 0.010192748, 0.98080015, -0.10380819, -0.9945211, -0.010289043, 0.9753416, -0.10381002, 0.19471194, 0.48337677, 0.45063663, -1.0353864)
+transform = Transform3D(-0.19555426, 0.013367912, 0.98059595, -0.103350006, -0.99459684, -0.007066816, 0.97522306, -0.10271801, 0.19588083, 0.48486573, 0.45011216, -1.0350924)
 
 [node name="Stomach" parent="pawnEntity/BoneAttatchments" index="8"]
-transform = Transform3D(-0.10108529, -0.11885135, -0.987735, 0.032179702, 0.99190974, -0.122646615, 0.99434835, -0.044183005, -0.09644415, 0.635793, 0.9539316, -0.8940467)
+transform = Transform3D(-0.100992315, -0.10637951, -0.9891654, 0.031033553, 0.9934275, -0.110005975, 0.9943942, -0.041807275, -0.0970285, 0.6357808, 0.9539318, -0.8939322)
 
 [node name="Hips" parent="pawnEntity/BoneAttatchments" index="9"]
-transform = Transform3D(-0.12915266, 0.24899085, -0.95985234, 0.00796653, 0.968188, 0.25008148, 0.9915839, 0.024652207, -0.12702887, 0.6014318, 0.8203198, -0.8974488)
+transform = Transform3D(-0.12919587, 0.24890262, -0.9598694, 0.0071161455, 0.9681892, 0.2501025, 0.99158466, 0.025481857, -0.12685849, 0.6014318, 0.8203198, -0.8974488)
 
 [node name="Neck" parent="pawnEntity/BoneAttatchments" index="10"]
-transform = Transform3D(-0.077087425, -0.091725886, -0.9927863, 0.0031321733, 0.9957222, -0.09223993, 0.997011, -0.010219599, -0.076471016, 0.60725206, 1.4162076, -0.9062767)
+transform = Transform3D(-0.07749846, -0.09576166, -0.99237317, 0.0032543747, 0.9953371, -0.09630139, 0.99697876, -0.010692248, -0.07682613, 0.6057636, 1.4164181, -0.90570635)
 
 [node name="leftHand" parent="pawnEntity/BoneAttatchments" index="11"]
-transform = Transform3D(-0.87198883, -0.22826442, -0.43298492, 0.19801772, -0.9734849, 0.11442568, -0.4476321, 0.014041051, 0.89409167, 0.5618708, 0.89091927, -0.7290382)
+transform = Transform3D(-0.87591314, -0.21472372, -0.43198898, 0.18589494, -0.9765509, 0.10848227, -0.44516125, 0.014718205, 0.89531344, 0.5626091, 0.8909437, -0.72830313)
 
 [node name="leftArm" parent="pawnEntity/BoneAttatchments" index="12"]
-transform = Transform3D(-0.6127058, -0.017014254, -0.7900853, -0.0751531, -0.9939507, 0.07969579, -0.7866993, 0.108213075, 0.60775363, 0.62313056, 1.3816513, -0.7713313)
+transform = Transform3D(-0.61540264, -0.010942133, -0.7880941, -0.07900374, -0.99397933, 0.07550341, -0.7842127, 0.10873299, 0.6108662, 0.6219608, 1.3817711, -0.77082217)
 
 [node name="leftForearm" parent="pawnEntity/BoneAttatchments" index="13"]
-transform = Transform3D(-0.5720856, -0.2262991, -0.78832585, 0.081411384, -0.97207755, 0.21997914, -0.81612396, 0.06167161, 0.57456416, 0.6189256, 1.1360004, -0.7445869)
+transform = Transform3D(-0.57506776, -0.22468351, -0.7866161, 0.08092741, -0.9724276, 0.21860594, -0.81407326, 0.06205782, 0.5774244, 0.6192565, 1.136113, -0.74394923)
 
 [node name="rightArm" parent="pawnEntity/BoneAttatchments" index="14"]
-transform = Transform3D(0.7844959, 0.22379775, -0.5782893, 0.21124765, -0.97326547, -0.09005563, -0.5830036, -0.051520854, -0.8108186, 0.650736, 1.3807554, -1.0375315)
+transform = Transform3D(0.79536754, 0.22305498, -0.5635374, 0.21024455, -0.97361535, -0.08860904, -0.56845367, -0.048010726, -0.82129794, 0.64974135, 1.3812008, -1.0368576)
 
 [node name="rightForearm" parent="pawnEntity/BoneAttatchments" index="15"]
-transform = Transform3D(0.7752579, -0.18362084, -0.6043248, -0.09452815, -0.97972953, 0.1764593, -0.6245083, -0.07967798, -0.7769373, 0.7060468, 1.1402158, -1.0502647)
+transform = Transform3D(0.78744453, -0.17594296, -0.5906985, -0.08964646, -0.9808595, 0.17268878, -0.6098071, -0.083031125, -0.788183, 0.70486856, 1.1405747, -1.0487233)
 
 [node name="directionalLight3d" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.802486, -0.283059, 0.525256, 0.588586, -0.231111, 0.774696, -0.0978921, 0.930841, 0.352068, 1.42524, 2.94746, -4.61403)

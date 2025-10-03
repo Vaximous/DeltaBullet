@@ -1,8 +1,10 @@
 extends MarginContainer
-@onready var equippedSound : AudioStreamPlayer = $equipSound
-@onready var unequipSound : AudioStreamPlayer = $unequipSound
-@onready var equippedIcon : TextureRect = $backgroundPanel/equippedIcon
-@export var isEquipped : bool = false:
+
+const defaultTweenSpeed: float = 0.25
+const defaultTransitionType = Tween.TRANS_QUART
+const defaultEaseType = Tween.EASE_OUT
+
+@export var isEquipped: bool = false:
 	set(value):
 		isEquipped = value
 		if equippedIcon:
@@ -10,28 +12,29 @@ extends MarginContainer
 				equippedIcon.show()
 			else:
 				equippedIcon.hide()
-@export var button : Button
-@export var itemText : Label
-@export var pawnHolder : Node3D
-@export var animationPlayer : AnimationPlayer
-@export var viewportCamera : Camera3D
-@export var examplePawn : BasePawn:
+@export var button: Button
+@export var itemText: Label
+@export var pawnHolder: Node3D
+@export var animationPlayer: AnimationPlayer
+@export var viewportCamera: Camera3D
+@export var examplePawn: BasePawn:
 	set(value):
 		examplePawn = value
 
-const defaultTweenSpeed : float = 0.25
-const defaultTransitionType = Tween.TRANS_QUART
-const defaultEaseType = Tween.EASE_OUT
-
-
 @export_category("Clothing Options")
-@export var clothingItem : PackedScene
+@export var clothingItem: PackedScene
+
+@onready var equippedSound: AudioStreamPlayer = $equipSound
+@onready var unequipSound: AudioStreamPlayer = $unequipSound
+@onready var equippedIcon: TextureRect = $backgroundPanel/equippedIcon
+
 
 func _ready() -> void:
 	initClothingItem()
 	setupButton()
 
-func initClothingItem()->void:
+
+func initClothingItem() -> void:
 	animationPlayer.play("buffer")
 	if clothingItem != null:
 		#Set up the pawn
@@ -43,7 +46,7 @@ func initClothingItem()->void:
 			examplePawn.forceAnimation = true
 
 		#Spawn the clothing item and add it to the pawn
-		var item : ClothingItem = clothingItem.instantiate()
+		var item: ClothingItem = clothingItem.instantiate()
 		examplePawn.clothingHolder.add_child(item)
 		itemText.text = item.itemName
 		examplePawn.checkClothes()
@@ -53,32 +56,31 @@ func initClothingItem()->void:
 		animationPlayer.play("buffer_done")
 
 
-
-func enlargeControlScale(control:Control)->void:
+func enlargeControlScale(control: Control) -> void:
 	var tween = create_tween()
-	tween.tween_property(control,"scale",Vector2(1.1,1.1),defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+	tween.tween_property(control, "scale", Vector2(1.1, 1.1), defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
 
 
-func resetControlScale(control:Control)->void:
+func resetControlScale(control: Control) -> void:
 	var tween = create_tween()
-	tween.tween_property(control,"scale",Vector2(1,1),defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+	tween.tween_property(control, "scale", Vector2(1, 1), defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
 
 
-func setupButton()->void:
+func setupButton() -> void:
 	if button:
-		pivot_offset = size/2
+		pivot_offset = size / 2
 		button.mouse_entered.connect(enlargeControlScale.bind(self))
 		button.mouse_exited.connect(resetControlScale.bind(self))
 
 
-func playSound()->void:
+func playSound() -> void:
 	if isEquipped:
 		unequipSound.play()
 	else:
 		equippedSound.play()
 
 
-func setCameraPosition()->void:
+func setCameraPosition() -> void:
 	if viewportCamera != null and clothingItem != null:
 		var itemInstance = clothingItem.instantiate()
 		match itemInstance.clothingType:

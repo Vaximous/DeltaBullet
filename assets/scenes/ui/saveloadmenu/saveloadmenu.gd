@@ -89,7 +89,7 @@ func saveGame()->void:
 	gameManager.getPauseMenu().hide()
 	await get_tree().create_timer(0.1).timeout
 	if saveName.text != "" or saveName.text != " ":
-		gameManager.saveGame(saveName.text)
+		gameState.saveGame(saveName.text)
 		clearSaves()
 		createSaveMaker()
 		scanSaves(2)
@@ -105,7 +105,7 @@ func _on_yes_button_pressed()->void:
 	gameManager.activeCamera.hud.hide()
 	gameManager.getPauseMenu().hide()
 	await get_tree().create_timer(0.1).timeout
-	gameManager.saveGame(gameManager.saveOverwrite)
+	gameState.saveGame(gameManager.saveOverwrite)
 	gameManager.notifyCheck("'%s' Sucessfully Saved."%gameManager.saveOverwrite, 2, 1.5)
 	await get_tree().create_timer(0.1).timeout
 	gameManager.activeCamera.hud.show()

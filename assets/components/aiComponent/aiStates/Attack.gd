@@ -1,17 +1,20 @@
 extends StateMachineState
+
 @export_category("Attack State")
-@export var aiOwner : AIComponent
+@export var aiOwner: AIComponent
+
 ## The target the enemy will actively attack
-var nearestTarget : BasePawn
-var lastKnownPosition : Vector3
-var lostTarget : bool = false
-var targetPosition : Vector3 = Vector3.ZERO:
+var nearestTarget: BasePawn
+var lastKnownPosition: Vector3
+var lostTarget: bool = false
+var targetPosition: Vector3 = Vector3.ZERO:
 	set(value):
 		if is_instance_valid(aiOwner.pawnOwner) and !aiOwner.pawnOwner.isPawnDead and is_instance_valid(gameManager.world) and aiOwner.is_ai_processing():
 			targetPosition = value
 			if aiOwner.targetPosition != targetPosition:
 				aiOwner.targetPosition = targetPosition
-				lastKnownPosition = Vector3(targetPosition.x,targetPosition.y + 1.25, targetPosition.z)
+				lastKnownPosition = Vector3(targetPosition.x, targetPosition.y + 1.25, targetPosition.z)
+
 
 func on_physics_process(_delta):
 	if !is_current_state() or aiOwner.pawnOwner.isPawnDead or aiOwner.pawnOwner.isStaggered: return
@@ -55,12 +58,12 @@ func on_physics_process(_delta):
 				#aiOwner.getCurrentWeapon().isAiming = true
 
 			##Look at the target if it can see the target
-			if !isSightToTargetBlocked(Vector3(nearestTarget.global_position.x,nearestTarget.global_position.y + 1.5, nearestTarget.global_position.z)):
+			if !isSightToTargetBlocked(Vector3(nearestTarget.global_position.x, nearestTarget.global_position.y + 1.5, nearestTarget.global_position.z)):
 				if !nearestTarget.global_position.distance_to(aiOwner.pawnOwner.global_position) > aiOwner.maxRange:
 					lostTarget = false
-					lastKnownPosition = Vector3(nearestTarget.global_position.x,nearestTarget.global_position.y + 1.5, nearestTarget.global_position.z)
+					lastKnownPosition = Vector3(nearestTarget.global_position.x, nearestTarget.global_position.y + 1.5, nearestTarget.global_position.z)
 					aiOwner.pawnOwner.movementController.onSetCamRot(aiOwner.pawnOwner.meshRotation)
-					aiOwner.lookAtPosition(Vector3(nearestTarget.upperChestBone.global_position.x,nearestTarget.upperChestBone.global_position.y,nearestTarget.upperChestBone.global_position.z))
+					aiOwner.lookAtPosition(Vector3(nearestTarget.upperChestBone.global_position.x, nearestTarget.upperChestBone.global_position.y, nearestTarget.upperChestBone.global_position.z))
 				else:
 					aiOwner.lookAtPosition(lastKnownPosition)
 			else:
@@ -81,8 +84,8 @@ func on_physics_process(_delta):
 
 			##Pawn seeking, would get closer if out of range
 			if nearestTarget.global_position.distance_to(aiOwner.pawnOwner.global_position) > aiOwner.maxRange and !lostTarget:
-					targetPosition = nearestTarget.global_position
-					aiOwner.pawnOwner.isRunning = false
+				targetPosition = nearestTarget.global_position
+				aiOwner.pawnOwner.isRunning = false
 			#elif lostTarget:
 				#if lastKnownPosition != Vector3.ZERO and !aiOwner.pawnOwner.global_position.is_equal_approx(lastKnownPosition):
 					#targetPosition = lastKnownPosition
@@ -99,14 +102,16 @@ func on_physics_process(_delta):
 			#aiOwner.pawnOwner.movementController.onSetCamRot(aiOwner.aimCast.global_transform.basis.get_euler().y)
 			#aiOwner.pawnOwner.meshRotation = aiOwner.aimCast.global_transform.basis.get_euler().y
 
-func isSightToTargetBlocked(position:Vector3)->bool:
-	var result = aiOwner.rayTest(aiOwner.pawnOwner.global_position,position)
+
+func isSightToTargetBlocked(position: Vector3) -> bool:
+	var result = aiOwner.rayTest(aiOwner.pawnOwner.global_position, position)
 	if result:
 		return true
 	else:
 		return false
 
-func returnToPreviousState()->void:
+
+func returnToPreviousState() -> void:
 	aiOwner.stopMoving()
 	aiOwner.setPawnType()
 

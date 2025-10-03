@@ -77,16 +77,16 @@ size = Vector2(1, 1)
 
 [node name="mapLocation" instance=ExtResource("1_568f0")]
 script = ExtResource("2_aptmj")
-iconColor = Color(0.54509807, 0, 0, 1)
 locationName = ""
+markerType = 0
+iconColor = Color(0.54509807, 0, 0, 1)
+map = null
 travelScene = null
 travelStatus = 1
-travelGroupID = 0
-travelID = 0
-hasCollectibleItems = false
-hasExploration = false
-hasCollectibleNotes = false
 useDescription = false
+hasCollectibleNotes = false
+hasExploration = false
+hasCollectibleItems = false
 
 [node name="hoverSound" type="AudioStreamPlayer" parent="." index="0"]
 stream = SubResource("AudioStreamRandomizer_i54d4")

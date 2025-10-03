@@ -114,6 +114,12 @@ func addPawnCash(value:int)->int:
 	saveInfo["grit"] += value
 	return saveInfo["grit"]
 
+func AddProperty(id:StringName)->StringName:
+	var saveInfo = getOwnedProperties()
+	if !getOwnedProperties().has(id):
+		saveInfo.append(id)
+	return saveInfo.get_or_add("ownedProperties", [])
+
 func getGameState()->Dictionary:
 	return _gameState.get_or_add("stateSave",stateInfo)
 
@@ -138,11 +144,11 @@ func getSaveScene()->String:
 	var saveInfo = getGameState()
 	return saveInfo.get_or_add("saveScene" ,get_tree().current_scene.get_scene_file_path())
 
-func getPrologueComplete()->void:
+func getPrologueComplete()->bool:
 	var saveInfo = getGameState()
 	return saveInfo.get_or_add("prologueComplete" ,gameManager.get_persistent_data().get("seen_prologue", false))
 
-func getSaveLocation()->void:
+func getSaveLocation()->String:
 	var saveInfo = getGameState()
 	return saveInfo.get_or_add("saveLocation" ,gameManager.world.worldData.worldName)
 
@@ -153,6 +159,22 @@ func getSaveTimestamp()->String:
 func getSaveName()->String:
 	var saveInfo = getGameState()
 	return saveInfo.get_or_add("saveName", "BlankName")
+
+func getOwnedProperties()->Array:
+	var saveInfo = getGameState()
+	return saveInfo.get_or_add("ownedProperties", [])
+
+func hasOwnedProperty(id:StringName)->bool:
+	var result : bool = false
+	var properties = getOwnedProperties()
+	for i in properties:
+		if i == id:
+			result = true
+	return result
+
+func getOwnedProperty(id:StringName)->int:
+	var properties = getOwnedProperties()
+	return properties.find(id)
 
 func getSaveDateDict()->Dictionary:
 	var saveInfo = getGameState()

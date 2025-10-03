@@ -20,6 +20,9 @@ func close()->void:
 func purchase()->void:
 	if has_meta(&"price"):
 		if gameState.getPawnCash() >= get_meta(&"price"):
+			if has_meta(&"id"):
+				gameState.AddProperty(get_meta(&"id"))
+
 			propertyPurchased.emit()
 			gameState.addPawnCash(-get_meta(&"price"))
 			Util.display_message_simple("Property Purchased")

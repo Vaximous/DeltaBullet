@@ -79,6 +79,7 @@ var useDescription: bool = false:
 		notify_property_list_changed()
 
 #Property
+var propertyID : StringName = &''
 var propertyStatus: PropertyState:
 	set(value):
 		propertyStatus = value
@@ -149,6 +150,10 @@ func setupMap() -> void:
 		playCloseAnimation()
 		if map:
 			%mapLabel.text = locationName
+			if has_meta(&"id"):
+				if gameState.hasOwnedProperty(get_meta(&"id")):
+					setPropertyState(PropertyState.Purchased)
+
 			if travelScene:
 				var scene = travelScene.instantiate()
 				locationDescription = scene.worldData.worldDescription
@@ -371,6 +376,34 @@ func _get_property_list() -> Array[Dictionary]:
 					hasCollectibleItems = false
 					hasCollectibleNotes = false
 			Types.PROPERTY:
+				ret.append(
+					{
+					"name": &"propertyPrice",
+					"type": TYPE_INT,
+					"usage": PROPERTY_USAGE_EDITOR | PROPERTY_USAGE_STORAGE,
+					}
+				)
+				ret.append(
+					{
+					"name": &"propertyID",
+					"type": TYPE_STRING_NAME,
+					"usage": PROPERTY_USAGE_EDITOR | PROPERTY_USAGE_STORAGE,
+					}
+				)
+				match propertyType:
+					PropertyType.SCENE:
+						ret.append(
+							{
+							"name": &"travelScene",
+							"type": TYPE_OBJECT,
+							"usage": PROPERTY_USAGE_EDITOR | PROPERTY_USAGE_STORAGE
+							}
+						)
+
+					PropertyType.REWARD:
+						pass
+
+
 				if propertyType == PropertyType.REWARD:
 					if useDescription:
 						ret.append(

@@ -43,6 +43,7 @@ func evaluateSelectedMarker() -> void:
 						var _popup = popup.instantiate()
 						clayer.add_child(_popup)
 						_popup.set_meta(&"price",marker.propertyPrice)
+						_popup.set_meta(&"id",marker.propertyID)
 						_popup.propertyPurchased.connect(marker.setPropertyState.bind(marker.PropertyState.Purchased))
 						_popup.mapScreen = map
 						_popup.add_to_group(&"purchaseMapAreaPopup")

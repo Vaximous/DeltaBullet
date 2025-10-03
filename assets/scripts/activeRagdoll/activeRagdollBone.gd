@@ -1,5 +1,6 @@
-extends RigidBody3D
 class_name ActiveRagdollBone
+extends RigidBody3D
+
 @export var doActive = false
 """
 	Active Ragdolls - Ragdoll Bone
@@ -14,14 +15,17 @@ class_name ActiveRagdollBone
 """
 	INIT
 """
+
+
 func _ready() -> void:
 	if Engine.is_editor_hint():
 		set_physics_process(false)
 
-
 """
 	APPLY OWN ROTATION TO THE RESPECTIVE BONE IN PARENT Skeleton3D
 """
+
+
 func _physics_process(_delta: float) -> void:
 	if doActive:
 		pass

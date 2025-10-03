@@ -1,6 +1,7 @@
 extends PanelContainer
+
 #@onready var materialContainer : HBoxContainer = $hBoxContainer/materials
-@export var clothingItem : ClothingItem:
+@export var clothingItem: ClothingItem:
 	set(value):
 		clothingItem = value
 		clearPreview()
@@ -12,18 +13,19 @@ func _process(delta: float) -> void:
 		for override in getMeshSurfaceOverrides(clothingItem.clothingMesh).size():
 			getMeshSurfaceOverrides(clothingItem.clothingMesh)[override].albedo_color = getMaterialPickers()[override].color
 
+	%camhold.rotation.y += 2 * delta
 
-	%camhold.rotation.y += 2*delta
 
-
-func clearPreview()->void:
+func clearPreview() -> void:
 	for i in %item.get_children():
 		i.queue_free()
 
-func getMaterialPickers()->Array:
+
+func getMaterialPickers() -> Array:
 	return %materials.get_children()
 
-func clearMaterialList()->void:
+
+func clearMaterialList() -> void:
 	for i in %materials.get_children():
 		i.queue_free()
 
@@ -34,14 +36,16 @@ func clearMaterialList()->void:
 			#button = i
 	#return button
 
-func getMeshSurfaceOverrides(mesh:MeshInstance3D)->Array:
-	var arr:Array = []
+
+func getMeshSurfaceOverrides(mesh: MeshInstance3D) -> Array:
+	var arr: Array = []
 	for i in mesh.get_surface_override_material_count():
 		arr.append(mesh.get_surface_override_material(i))
 	return arr
 
-func getMeshSurfaces(mesh:Mesh)->Array:
-	var arr:Array = []
+
+func getMeshSurfaces(mesh: Mesh) -> Array:
+	var arr: Array = []
 	for i in mesh.get_surface_count():
 		arr.append(mesh.surface_get_material(i))
 	return arr
@@ -50,25 +54,28 @@ func getMeshSurfaces(mesh:Mesh)->Array:
 	#selectedID = matID
 	#colorPicker.color = selectedItem.clothingMesh.get_surface_override_material(matID).albedo_color
 
-func createOverrideFromSurfaceMaterial(meshInstance:MeshInstance3D,mesh:Mesh,id:int):
+
+func createOverrideFromSurfaceMaterial(meshInstance: MeshInstance3D, mesh: Mesh, id: int):
 	var surface = getMeshSurfaces(mesh)[id].duplicate()
-	meshInstance.set_surface_override_material(id,surface)
+	meshInstance.set_surface_override_material(id, surface)
 	return surface
 
-func setPreviewMesh(mesh:MeshInstance3D)->void:
+
+func setPreviewMesh(mesh: MeshInstance3D) -> void:
 	for i in %item.get_children():
 		i.queue_free()
 
 	var mi = mesh.duplicate()
 	%item.add_child(mi)
 
-func generateMaterialList()->void:
+
+func generateMaterialList() -> void:
 	#Each material that makes up a mesh will have a button generated for it, the button holds the ID of the surface which is used to identify which material it is
 	clearMaterialList()
 	if clothingItem:
 		for i in getMeshSurfaceOverrides(clothingItem.clothingMesh):
 			if !is_instance_valid(i):
-				createOverrideFromSurfaceMaterial(clothingItem.clothingMesh,clothingItem.clothingMesh.mesh,getMeshSurfaceOverrides(clothingItem.clothingMesh).find(i))
+				createOverrideFromSurfaceMaterial(clothingItem.clothingMesh, clothingItem.clothingMesh.mesh, getMeshSurfaceOverrides(clothingItem.clothingMesh).find(i))
 
 		var mats = getMeshSurfaceOverrides(clothingItem.clothingMesh)
 		#print(mats)
@@ -77,5 +84,5 @@ func generateMaterialList()->void:
 			%materials.add_child(picker)
 			picker.custom_minimum_size.x = 70
 			picker.color = materials.albedo_color
-			picker.set_meta(&"materialID",mats.find(materials))
+			picker.set_meta(&"materialID", mats.find(materials))
 		setPreviewMesh(clothingItem.clothingMesh)

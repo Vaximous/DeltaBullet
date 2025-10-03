@@ -1,53 +1,58 @@
-extends Node3D
 class_name BulletHole
+extends Node3D
+
 signal bulletHoleEmitted
-@export_category("Bullet Hole")
-var removing : bool = false
-var bulletVelocity : Vector3
-@export var forceGlobalPosition : bool = false
-@export var bulletTextures : Array[Texture2D]
-@export var decal : Decal
-@export var particleArray : Array[GPUParticles3D]
-@export var soundArray : Array[AudioStreamPlayer3D]
-@export_range(0.001,1.0) var decalSize : float = 0.15:
-	set(value):
-		decalSize = value
-		if decal!=null:
-			decal.scale = Vector3(decalSize,decalSize,decalSize)
-@export_range(-80,80) var audioVolume : float = 1
-const defaultTweenSpeed : float = 35
+
+const defaultTweenSpeed: float = 35
 const defaultTransitionType = Tween.TRANS_QUART
 const defaultEaseType = Tween.EASE_OUT
-var holeTween : Tween
-var normal : Vector3
-var colPoint : Vector3
-var rot : float
 
-func _exit_tree() -> void:
-	pass
+@export_category("Bullet Hole")
+var removing: bool = false
+@export var forceGlobalPosition: bool = false
+@export var bulletTextures: Array[Texture2D]
+@export var decal: Decal
+@export var particleArray: Array[GPUParticles3D]
+@export var soundArray: Array[AudioStreamPlayer3D]
+@export_range(0.001, 1.0) var decalSize: float = 0.15:
+	set(value):
+		decalSize = value
+		if decal != null:
+			decal.scale = Vector3(decalSize, decalSize, decalSize)
+@export_range(-80, 80) var audioVolume: float = 1
+
+var bulletVelocity: Vector3
+var holeTween: Tween
+var normal: Vector3
+var colPoint: Vector3
+var rot: float
+
 
 func _enter_tree() -> void:
 	#gameManager.decals.erase(self)
 	#gameManager.decalAmountCheck()
 	pass
 
-func _ready()->void:
+
+func _ready() -> void:
 	#gameManager.decals.append(self)
 	gameManager.registerDecal(self)
 	initializeBulletHole()
+
 #	gameManager.beginCleanup()
 
 
-func deleteHole()->void:
+func deleteHole() -> void:
 	if !removing:
 		removing = true
 		if holeTween:
 			holeTween.kill()
 		holeTween = create_tween().set_ease(defaultEaseType).set_trans(defaultTransitionType)
-		await holeTween.tween_property(decal,"modulate",Color.TRANSPARENT,0.25).finished
+		await holeTween.tween_property(decal, "modulate", Color.TRANSPARENT, 0.25).finished
 		queue_free()
 
-func setSoundVariables(audio:AudioStreamPlayer3D)->void:
+
+func setSoundVariables(audio: AudioStreamPlayer3D) -> void:
 	audio.bus = &"Sounds"
 	audio.attenuation_filter_db = -24
 	audio.attenuation_filter_cutoff_hz = 20500
@@ -61,7 +66,8 @@ func setSoundVariables(audio:AudioStreamPlayer3D)->void:
 	#for i in overlap:
 		#i.get_owner().queue_free()
 
-func initializeBulletHole()->void:
+
+func initializeBulletHole() -> void:
 	#Play the sounds
 	for sounds in soundArray:
 		#sounds.max_db = audioVolume
@@ -74,7 +80,7 @@ func initializeBulletHole()->void:
 		sounds.play()
 
 	#Make particle emitters face the direction of the normal
-	global_transform = gameManager.create_surface_transform(colPoint,bulletVelocity,normal)
+	global_transform = gameManager.create_surface_transform(colPoint, bulletVelocity, normal)
 
 	#Set Decal Scale
 	setDecalScale()
@@ -118,7 +124,11 @@ func initializeBulletHole()->void:
 		particles.emitting = true
 
 
-func setDecalScale()->void:
+func setDecalScale() -> void:
 	#scale = Vector3.ONE
-	decal.scale = Vector3(decalSize,decalSize,decalSize)
+	decal.scale = Vector3(decalSize, decalSize, decalSize)
 	#decalCollisionCheck(Vector3(decalSize,decalSize,decalSize))
+
+
+func _exit_tree() -> void:
+	pass

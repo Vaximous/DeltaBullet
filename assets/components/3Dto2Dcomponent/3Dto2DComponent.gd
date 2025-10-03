@@ -1,11 +1,9 @@
 extends Marker3D
 
-
-var control_nodes : Array[Control]
-
-
 @export_subgroup("Behavior")
-@export var clamp_to_edge : bool = true
+@export var clamp_to_edge: bool = true
+
+var control_nodes: Array[Control]
 
 
 func _ready() -> void:
@@ -23,8 +21,8 @@ func _process(_delta: float) -> void:
 				clamp_to_screen(n)
 
 
-func clamp_to_screen(item : Control) -> void:
-	var view_rect : Rect2 = get_viewport().get_visible_rect()
+func clamp_to_screen(item: Control) -> void:
+	var view_rect: Rect2 = get_viewport().get_visible_rect()
 	item.global_position = item.global_position.clamp(Vector2.ZERO, view_rect.size - (item.size * item.scale))
 
 

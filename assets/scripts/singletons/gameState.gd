@@ -4,17 +4,94 @@ var notes : Dictionary
 var _gameState : Dictionary = {
 	"saveVersion" : 1.0,
 	"stateSave" : {
+		"screenshot" = "",
+		"saveName" = "",
+		"timestamp" = Time.get_unix_time_from_system(),
+		"dateDict" = Time.get_date_dict_from_system(),
+		"saveLocation" = "gameManager.world.worldData.worldName",
+		"saveScene" = "",
+		"pawninfo" = "",
+		"areaStats" = [],
+		"pawnRank" = 0,
 		"grit" = 0,
-		"position" = Vector3.ZERO
-	},
-	"Skills": []
+		"position" = Vector3.ZERO,
+		"skills" = [],
+		"ownedProperties" = []
+	}
 }
 
-func loadGame()->void:
-	pass
+func loadGame(save:String)->void:
+	if save != "" or save != null:
+		var saveFile = FileAccess.open(save, FileAccess.READ)
+		if saveFile != null:
+			Engine.time_scale = 1.0
+			get_tree().paused = false
+			while saveFile.get_position() < saveFile.get_length():
+				var string = saveFile.get_line()
+				var json = JSON.new()
+				var result = json.parse(string)
+				if not result == OK:
+					Console.add_rich_console_message("[color=red]Couldn't Parse %s![/color]"%string)
+					return
+				var nodeData = json.get_data()
+				gameManager.currentSave = save
+				gameManager.modify_persistent_data("lastSave", save)
+				gameManager.loadWorld(nodeData["saveScene"])
+				gameManager.modify_persistent_data("lastSaveData", nodeData)
+				#print(get_persistent_data()["lastSaveData"])
+				#purchasedPlacables = nodeData["purchasePlacables"]
+				#temporaryPawnInfo.clear()
+		else:
+			Console.add_rich_console_message("[color=red]Unable to find that save![/color]")
 
-func saveGame()->void:
-	pass
+func saveGame(saveName : String = "Save1"):
+	var saveInfo = _gameState.get_or_add("stateSave","stateSave")
+	if gameManager.world != null:
+		# Ensure the saves directory exists
+		if not DirAccess.dir_exists_absolute("user://saves"):
+			DirAccess.make_dir_absolute("user://saves")
+		var saveDir = DirAccess.open("user://saves")
+		if saveDir == null:
+			push_error("Failed to open user://saves directory.")
+			return
+		if not saveDir.dir_exists(saveName):
+			saveDir.make_dir(saveName)
+		var saveFile = FileAccess.open("user://saves/%s/%s.pwnSave" % [saveName, saveName], FileAccess.WRITE)
+		gameManager.currentSave = "user://saves/%s/%s.pwnSave" % [saveName, saveName]
+		gameManager.activeCamera.hud.hide()
+		gameManager.getPauseMenu().hide()
+		var screenshot = get_viewport().get_texture().get_image()
+		screenshot.save_png("user://saves/%s/%s.png" % [saveName, saveName])
+		print("user://saves/%s/%s.png" % [saveName, saveName])
+		var pawnFile = gameManager.playerPawns[0].savePawnFile(gameManager.playerPawns[0].savePawnInformation(), "user://saves/%s/%s" % [saveName, saveName])
+		saveInfo["saveName"] = saveName
+		saveInfo["screenshot"] = "user://saves/%s/%s.png" % [saveName, saveName]
+		saveInfo["dateDict"] = Time.get_date_dict_from_system()
+		saveInfo["pawninfo"] = pawnFile
+		saveInfo["saveLocation"] = gameManager.world.worldData.worldName
+		saveInfo["position"] = gameManager.playerPawns[0].global_position
+		saveInfo["saveScene"] = get_tree().current_scene.get_scene_file_path()
+		saveInfo["prologueComplete"] = gameManager.get_persistent_data().get("seen_prologue", false)
+		#saveInfo["pawnRank"] = getPawnLevel()
+		gameManager.activeCamera.hud.show()
+		gameManager.getPauseMenu().show()
+		var stringy = JSON.stringify(saveInfo)
+		saveFile.store_line(stringy)
+		Console.add_rich_console_message("[color=green] Saved game '%s' sucessfully!"%saveName)
+		gameManager.modify_persistent_data("lastSaveData", saveInfo)
+		gameManager.modify_persistent_data("lastSave", gameManager.currentSave)
+		#print(get_persistent_data()["lastSaveData"])
+		return saveFile
+
+func addToOwnedProperties(property:String):
+	var saveInfo = _gameState.get_or_add("stateSave","stateSave")
+	if saveInfo["ownedProperties"].has(property): return
+	saveInfo["ownedProperties"].append(property)
+
+func addToSkills(skill:String):
+	if gameManager.getModifierFromName(skill):
+		var saveInfo = _gameState.get_or_add("stateSave","stateSave")
+		saveInfo["skills"].append({"name":skill,"skill":gameManager.getModifierFromName(skill)})
 
 func addToGamestate()->void:
 	var saveInfo = _gameState.get_or_add("stateSave","stateSave")
@@ -35,6 +112,10 @@ func setPawnCash(value:int)->int:
 func getPawnCash()->int:
 	var saveInfo = _gameState.get_or_add("stateSave","stateSave")
 	return saveInfo["grit"]
+
+func getPawnLevel()->int:
+	var saveInfo = _gameState.get_or_add("stateSave","stateSave")
+	return saveInfo["pawnRank"]
 
 func updateSaveFile(save):
 	##Update Old Saves to a new ver

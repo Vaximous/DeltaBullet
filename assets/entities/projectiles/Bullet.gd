@@ -1,22 +1,17 @@
 extends Projectile
 
-
-@export var falloff : Curve = preload("res://assets/entities/projectiles/linear_falloff_curve.tres")
-@export var penetration_power : float = 1.0:
+@export var falloff: Curve = preload("res://assets/entities/projectiles/linear_falloff_curve.tres")
+@export var penetration_power: float = 1.0:
 	set(value):
 		penetration_power = max(0.1, value)
-var insideMaterial : DB_PhysicsMaterial
-var last_hit_data : Dictionary
 
-func set_projectile_owner(value : Node) -> void:
-	if value is Weapon:
-		#max_damage = value.weaponResource.weaponDamage
-		#penetration_power = value.weaponResource.bulletPenetration
-		falloff = value.weaponResource.damageFalloff
-	projectile_owner = value
+var insideMaterial: DB_PhysicsMaterial
+var last_hit_data: Dictionary
+
 
 func _ready() -> void:
 	hit_back_faces = false
+
 
 func _physics_process(delta: float) -> void:
 	var hit_data = step(velocity * delta)
@@ -33,12 +28,20 @@ func _physics_process(delta: float) -> void:
 	var collisionMaterial: DB_PhysicsMaterial = gameManager.getColliderPhysicsMaterial(col)
 
 	if collisionMaterial != insideMaterial:
-		enter_material(collisionMaterial,col, col_point, col_normal,remainder)
+		enter_material(collisionMaterial, col, col_point, col_normal, remainder)
 	else:
 		queue_free()
 
 
-func enter_material(material : DB_PhysicsMaterial, collisionObject : Object, collisionPoint : Vector3, collisionNormal : Vector3, remainder : float) -> void:
+func set_projectile_owner(value: Node) -> void:
+	if value is Weapon:
+		#max_damage = value.weaponResource.weaponDamage
+		#penetration_power = value.weaponResource.bulletPenetration
+		falloff = value.weaponResource.damageFalloff
+	projectile_owner = value
+
+
+func enter_material(material: DB_PhysicsMaterial, collisionObject: Object, collisionPoint: Vector3, collisionNormal: Vector3, remainder: float) -> void:
 	insideMaterial = material
 
 	if collisionPoint.is_finite():
@@ -46,30 +49,30 @@ func enter_material(material : DB_PhysicsMaterial, collisionObject : Object, col
 			material.bullet_hole,
 			collisionObject,
 			collisionPoint,
-			randf_range(0,180),
+			randf_range(0, 180),
 			collisionNormal.round(),
-			velocity.normalized() * randf_range(8,20)
-			)
+			velocity.normalized() * randf_range(8, 20)
+		)
 
 	if collisionObject.has_method(&"hit"):
 		if is_instance_valid(projectile_owner):
 			if projectile_owner is Weapon:
 				if collisionObject is Hitbox:
 					collisionObject.hit(
-					get_damage()/gameManager.get_modified_stat(collisionObject.healthComponent.componentOwner,
-					&"bulletResistanceModifier"),
-					projectile_owner.weaponOwner,
-					velocity.normalized() * (falloff.sample(get_travel_progress()*3) * projectile_owner.weaponResource.weaponImpulse),
-					collisionPoint-global_position,
-					self
+						get_damage() / gameManager.get_modified_stat(collisionObject.healthComponent.componentOwner,
+							&"bulletResistanceModifier"),
+						projectile_owner.weaponOwner,
+						velocity.normalized() * (falloff.sample(get_travel_progress() * 3) * projectile_owner.weaponResource.weaponImpulse),
+						collisionPoint - global_position,
+						self
 					)
 				else:
 					collisionObject.hit(
 						get_damage(),
-						projectile_owner.weaponOwner,velocity.normalized() * (falloff.sample(get_travel_progress()*3) * projectile_owner.weaponResource.weaponImpulse),
-						collisionPoint-global_position,
+						projectile_owner.weaponOwner, velocity.normalized() * (falloff.sample(get_travel_progress() * 3) * projectile_owner.weaponResource.weaponImpulse),
+						collisionPoint - global_position,
 						self
-						)
+					)
 				queue_free()
 	#if penetration_power > 0:
 		#var hit = gather_collision_info()
@@ -84,24 +87,28 @@ func enter_material(material : DB_PhysicsMaterial, collisionObject : Object, col
 	#distance_traveled = max_distance
 	queue_free()
 
-func exit_material(hit_data : Dictionary) -> void:
+
+func exit_material(hit_data: Dictionary) -> void:
 	queue_free()
+
+
+func get_damage() -> float:
+	var _falloff = falloff.sample(get_travel_progress() * 3) * max_damage
+	#print("Falloff damage : %s (travel : %s)" % [_falloff, get_travel_progress()])
+	return _falloff
+
 	#if expire_by_distance():
 		#return
 	#print("<< Exited material %s" % insideMaterial)
 	#globalParticles.spawnBulletHolePackedScene(insideMaterial.bullet_hole, hit_data['col'], hit_data['col_point'], randf_range(0, TAU), -last_hit_data['col_normal'])
 	#insideMaterial = null
 
-func _add_distance(distance : float) -> void:
+
+func _add_distance(distance: float) -> void:
 	if insideMaterial:
 		distance *= (1.0 + (insideMaterial.penetration_resistance / penetration_power))
 		#print("distance increased!!! %s, %s" % [distance_traveled, distance])
 	distance_traveled += distance
-
-func get_damage() -> float:
-	var _falloff = falloff.sample(get_travel_progress()*3) * max_damage
-	#print("Falloff damage : %s (travel : %s)" % [_falloff, get_travel_progress()])
-	return _falloff
 
 
 func _on_flyby_area_body_entered(body: Node3D) -> void:

@@ -61,7 +61,7 @@ func _on_continue_button_pressed() -> void:
 	gameManager.currentSave = gameManager.get_persistent_data()[\"lastSave\"]
 	musicManager.change_song_to(null,0.5)
 	await Fade.fade_out(0.3, Color(0,0,0,1),\"GradientVertical\",false,true).finished
-	gameManager.loadGame(gameManager.get_persistent_data()[\"lastSave\"])
+	gameState.loadGame(gameManager.get_persistent_data()[\"lastSave\"])
 
 func checkCurrentSave():
 	return gameManager.get_persistent_data().has(\"lastSave\")
@@ -219,8 +219,8 @@ theme = SubResource("Theme_ktkeu")
 
 [connection signal="pressed" from="buttonHolder/playButton" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="buttonHolder/continueButton" to="." method="_on_continue_button_pressed"]
-[connection signal="pressed" from="buttonHolder/loadButton" to="saveLoadMenu" method="show"]
 [connection signal="pressed" from="buttonHolder/loadButton" to="saveLoadMenu" method="initLoadPanel"]
+[connection signal="pressed" from="buttonHolder/loadButton" to="saveLoadMenu" method="show"]
 [connection signal="pressed" from="buttonHolder/optionsButton" to="." method="_on_options_button_pressed"]
 [connection signal="pressed" from="buttonHolder/creditsButton" to="." method="_on_credits_button_pressed"]
 [connection signal="pressed" from="buttonHolder/smacknetConnect" to="." method="_on_smacknet_connect_pressed"]

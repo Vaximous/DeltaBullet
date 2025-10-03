@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://bxog5iq8771kh"]
+[gd_scene load_steps=47 format=3 uid="uid://bxog5iq8771kh"]
 
 [ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="1_iee3r"]
 [ext_resource type="PackedScene" uid="uid://c63b0ewnfkf4n" path="res://assets/scenes/ui/mapOverview/map/map.tscn" id="1_lplem"]
@@ -20,16 +20,18 @@ shader_parameter/pixel_density = 1.0
 resource_name = "mapVPI"
 script/source = "extends SubViewportContainer
 
+
 func _ready():
 	set_process_unhandled_input(true)
 
 func _input(event):
 	# fix by ArdaE https://github.com/godotengine/godot/issues/17326#issuecomment-431186323
 	if event is InputEventMouse:
-		var mouseEvent = event.duplicate()
-		mouseEvent.position = get_global_transform_with_canvas().affine_inverse() * event.position
-		%map._unhandled_input(mouseEvent)
-		%map.mapCursor._input(mouseEvent)
+		if !get_owner().screenBusy:
+			var mouseEvent = event.duplicate()
+			mouseEvent.position = get_global_transform_with_canvas().affine_inverse() * event.position
+			%map._unhandled_input(mouseEvent)
+			%map.mapCursor._input(mouseEvent)
 "
 
 [sub_resource type="Gradient" id="Gradient_6voip"]
@@ -72,38 +74,6 @@ adjustment_color_correction = SubResource("GradientTexture1D_iun5n")
 [sub_resource type="World3D" id="World3D_p8ko3"]
 environment = SubResource("Environment_60wph")
 
-[sub_resource type="Gradient" id="Gradient_c10ua"]
-offsets = PackedFloat32Array(0.25968993, 1)
-colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_eds7j"]
-gradient = SubResource("Gradient_c10ua")
-
-[sub_resource type="Curve" id="Curve_6py30"]
-_data = [Vector2(0, 0), 0.0, 2.8112292, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="CurveTexture" id="CurveTexture_uhde6"]
-curve = SubResource("Curve_6py30")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wficc"]
-resource_local_to_scene = true
-gravity = Vector3(0, 0, 0)
-scale_min = 1.1999999
-scale_max = 1.1999999
-scale_curve = SubResource("CurveTexture_uhde6")
-color = Color(1, 0, 0, 1)
-color_ramp = SubResource("GradientTexture1D_eds7j")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wwelr"]
-resource_local_to_scene = true
-gravity = Vector3(0, 0, 0)
-scale_min = 1.1999999
-scale_max = 1.1999999
-scale_curve = SubResource("CurveTexture_uhde6")
-color = Color(1, 0, 0, 1)
-color_ramp = SubResource("GradientTexture1D_eds7j")
-
 [sub_resource type="Gradient" id="Gradient_od2qg"]
 offsets = PackedFloat32Array(0.25968993, 1)
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
@@ -118,7 +88,7 @@ point_count = 2
 [sub_resource type="CurveTexture" id="CurveTexture_1x2q7"]
 curve = SubResource("Curve_vvgek")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_r3bbh"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_p8ko3"]
 resource_local_to_scene = true
 gravity = Vector3(0, 0, 0)
 scale_min = 1.1999999
@@ -126,33 +96,79 @@ scale_max = 1.1999999
 scale_curve = SubResource("CurveTexture_1x2q7")
 color = Color(1, 0, 0, 1)
 color_ramp = SubResource("GradientTexture1D_s27yt")
+
+[sub_resource type="Gradient" id="Gradient_c10ua"]
+offsets = PackedFloat32Array(0.25968993, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_eds7j"]
+gradient = SubResource("Gradient_c10ua")
+
+[sub_resource type="Curve" id="Curve_6py30"]
+_data = [Vector2(0, 0), 0.0, 2.8112292, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_uhde6"]
+curve = SubResource("Curve_6py30")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wwelr"]
+resource_local_to_scene = true
+gravity = Vector3(0, 0, 0)
+scale_min = 1.1999999
+scale_max = 1.1999999
+scale_curve = SubResource("CurveTexture_uhde6")
+color = Color(1, 0, 0, 1)
+color_ramp = SubResource("GradientTexture1D_eds7j")
+
+[sub_resource type="Gradient" id="Gradient_s27yt"]
+offsets = PackedFloat32Array(0.25968993, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_vvgek"]
+gradient = SubResource("Gradient_s27yt")
+
+[sub_resource type="Curve" id="Curve_1x2q7"]
+_data = [Vector2(0, 0), 0.0, 2.8112292, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_r3bbh"]
+curve = SubResource("Curve_1x2q7")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_r3bbh"]
+resource_local_to_scene = true
+gravity = Vector3(0, 0, 0)
+scale_min = 1.1999999
+scale_max = 1.1999999
+scale_curve = SubResource("CurveTexture_r3bbh")
+color = Color(1, 0, 0, 1)
+color_ramp = SubResource("GradientTexture1D_vvgek")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_vifrn"]
 resource_local_to_scene = true
 gravity = Vector3(0, 0, 0)
 scale_min = 1.1999999
 scale_max = 1.1999999
-scale_curve = SubResource("CurveTexture_1x2q7")
+scale_curve = SubResource("CurveTexture_r3bbh")
 color = Color(1, 0, 0, 1)
-color_ramp = SubResource("GradientTexture1D_s27yt")
+color_ramp = SubResource("GradientTexture1D_vvgek")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_st2wt"]
 resource_local_to_scene = true
 gravity = Vector3(0, 0, 0)
 scale_min = 1.1999999
 scale_max = 1.1999999
-scale_curve = SubResource("CurveTexture_1x2q7")
+scale_curve = SubResource("CurveTexture_r3bbh")
 color = Color(1, 0, 0, 1)
-color_ramp = SubResource("GradientTexture1D_s27yt")
+color_ramp = SubResource("GradientTexture1D_vvgek")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_3adhi"]
 resource_local_to_scene = true
 gravity = Vector3(0, 0, 0)
 scale_min = 1.1999999
 scale_max = 1.1999999
-scale_curve = SubResource("CurveTexture_1x2q7")
+scale_curve = SubResource("CurveTexture_r3bbh")
 color = Color(1, 0, 0, 1)
-color_ramp = SubResource("GradientTexture1D_s27yt")
+color_ramp = SubResource("GradientTexture1D_vvgek")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_5gb03"]
 resource_local_to_scene = true
@@ -162,6 +178,15 @@ scale_max = 1.1999999
 scale_curve = SubResource("CurveTexture_uhde6")
 color = Color(1, 0, 0, 1)
 color_ramp = SubResource("GradientTexture1D_eds7j")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wficc"]
+resource_local_to_scene = true
+gravity = Vector3(0, 0, 0)
+scale_min = 1.1999999
+scale_max = 1.1999999
+scale_curve = SubResource("CurveTexture_1x2q7")
+color = Color(1, 0, 0, 1)
+color_ramp = SubResource("GradientTexture1D_s27yt")
 
 [sub_resource type="LabelSettings" id="LabelSettings_kc4o1"]
 font_size = 66
@@ -525,6 +550,7 @@ stretch = true
 script = SubResource("GDScript_60wph")
 
 [node name="subViewport" type="SubViewport" parent="mapScreen/subViewportContainer"]
+unique_name_in_owner = true
 own_world_3d = true
 world_3d = SubResource("World3D_p8ko3")
 handle_input_locally = false
@@ -540,8 +566,8 @@ mapScreen = NodePath("../../../..")
 transform = Transform3D(1, 0, 0, 0, 0.9848076, 0.17364816, 0, -0.17364816, 0.9848076, 0, 0, 0)
 spring_length = 200.0
 
-[node name="pingParticle" parent="mapScreen/subViewportContainer/subViewport/map/areaNodes/mapLocation" index="2"]
-process_material = SubResource("ParticleProcessMaterial_wficc")
+[node name="pingParticle" parent="mapScreen/subViewportContainer/subViewport/map/areaNodes/testPlace" index="2"]
+process_material = SubResource("ParticleProcessMaterial_p8ko3")
 
 [node name="pingParticle" parent="mapScreen/subViewportContainer/subViewport/map/areaNodes/homeLocation" index="2"]
 process_material = SubResource("ParticleProcessMaterial_wwelr")
@@ -569,6 +595,12 @@ process_material = SubResource("ParticleProcessMaterial_5gb03")
 
 [node name="pingParticle" parent="mapScreen/subViewportContainer/subViewport/map/areaNodes/debugstreet" index="2"]
 process_material = SubResource("ParticleProcessMaterial_5gb03")
+
+[node name="pingParticle" parent="mapScreen/subViewportContainer/subViewport/map/areaNodes/testRewardProperty" index="2"]
+process_material = SubResource("ParticleProcessMaterial_wficc")
+
+[node name="cornerUpLeft" parent="mapScreen/subViewportContainer/subViewport/map/areaNodes/testRewardProperty/visualHolder" index="0"]
+transform = Transform3D(0, 0, 0.99999964, 0, 1, 0, -0.99999964, 0, 0, 4.4210854, 0, -4.579485)
 
 [node name="mapAreaLocation" type="MarginContainer" parent="mapScreen"]
 clip_contents = true
@@ -629,6 +661,7 @@ libraries = {
 [node name="mapOpen" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamRandomizer_s27yt")
 volume_db = -5.0
+bus = &"UI"
 
 [node name="mapTheme" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
@@ -641,7 +674,7 @@ bus = &"Music"
 
 [editable path="mapScreen/subViewportContainer/subViewport/map"]
 [editable path="mapScreen/subViewportContainer/subViewport/map/mapnew"]
-[editable path="mapScreen/subViewportContainer/subViewport/map/areaNodes/mapLocation"]
+[editable path="mapScreen/subViewportContainer/subViewport/map/areaNodes/testPlace"]
 [editable path="mapScreen/subViewportContainer/subViewport/map/areaNodes/homeLocation"]
 [editable path="mapScreen/subViewportContainer/subViewport/map/areaNodes/lantonWarehouse"]
 [editable path="mapScreen/subViewportContainer/subViewport/map/areaNodes/tsimkShop"]
@@ -651,4 +684,5 @@ bus = &"Music"
 [editable path="mapScreen/subViewportContainer/subViewport/map/areaNodes/interiortest"]
 [editable path="mapScreen/subViewportContainer/subViewport/map/areaNodes/activeragdolltest"]
 [editable path="mapScreen/subViewportContainer/subViewport/map/areaNodes/debugstreet"]
+[editable path="mapScreen/subViewportContainer/subViewport/map/areaNodes/testRewardProperty"]
 [editable path="mapScreen/AreaInformation"]

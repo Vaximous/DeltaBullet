@@ -1,13 +1,25 @@
 extends CanvasLayer
-signal index_changed(value:int)
-var visibleTween : Tween
+
+signal index_changed(value: int)
+
 const defaultTransitionType = Tween.TRANS_QUINT
 const defaultEaseType = Tween.EASE_OUT
-const defaultTweenSpeed : float = 0.25
-@onready var uiAnimPlayer : AnimationPlayer = $mapScreen/uiAnimPlayer
-@onready var areaInfo := %AreaInformation
+const defaultTweenSpeed: float = 0.25
+
+##The map object
+@export var map: Node3D:
+	set(value):
+		map = value
+		%cityName.text = map.mapName
+##Currently selected map index, controls the rotation and position of where the camera is looking
+@export var selectedIndex: int = 0:
+	set(value):
+		selectedIndex = value
+
+var screenBusy : bool = false
+var visibleTween: Tween
 ##This is the marker that is selected
-var selectedMarker : Node3D = null:
+var selectedMarker: Node3D = null:
 	set(value):
 		if value != null:
 			if selectedMarker != null:
@@ -21,23 +33,9 @@ var selectedMarker : Node3D = null:
 				#selectedMarker.playCloseAnimation()
 		if !%AreaInformation.isTravelHovered:
 			%AreaInformation.marker = value
-##The map object
-@export var map : Node3D:
-	set(value):
-		map = value
-		%cityName.text = map.mapName
-##Currently selected map index, controls the rotation and position of where the camera is looking
-@export var selectedIndex : int = 0:
-	set(value):
-		selectedIndex = value
 
-func addIndex()->void:
-	if !selectedIndex >= map.mapRotations.size()-1:
-		selectedIndex += 1
-
-func subtractIndex()->void:
-	if !selectedIndex <= 0:
-		selectedIndex -= 1
+@onready var uiAnimPlayer: AnimationPlayer = $mapScreen/uiAnimPlayer
+@onready var areaInfo := %AreaInformation
 
 
 func _ready() -> void:
@@ -52,31 +50,42 @@ func _ready() -> void:
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("gEscape"):
+		gameManager.removeMapPurchasePopups()
 		setVisible(false)
 
-func setSelectedMarker(value)->void:
+
+func addIndex() -> void:
+	if !selectedIndex >= map.mapRotations.size() - 1:
+		selectedIndex += 1
+
+
+func subtractIndex() -> void:
+	if !selectedIndex <= 0:
+		selectedIndex -= 1
+
+
+func setSelectedMarker(value) -> void:
 	selectedMarker = value
 
 
-func setVisible(value:bool)->void:
+func setVisible(value: bool) -> void:
 	if visibleTween:
 		visibleTween.kill()
 	visibleTween = create_tween()
 	if value:
 		show()
 		#%mapTheme.play()
-		musicManager.create_audioplayer_with_stream(load("res://assets/music/menu/maptheme.wav"),0.5)
-		visibleTween.parallel().tween_property(%mapScreen,"modulate",Color.WHITE,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+		musicManager.create_audioplayer_with_stream(load("res://assets/music/menu/maptheme.wav"), 0.5)
+		visibleTween.parallel().tween_property(%mapScreen, "modulate", Color.WHITE, defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType)
 	else:
-
 		musicManager.fade_all_audioplayers_out(0.5)
-		map.tweenModelPosition(map.modelHolder,Vector3(0,-5,0),0.7)
-		await visibleTween.parallel().tween_property(%mapScreen,"modulate",Color.TRANSPARENT,defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType).finished
+		map.tweenModelPosition(map.modelHolder, Vector3(0, -5, 0), 0.7)
+		await visibleTween.parallel().tween_property(%mapScreen, "modulate", Color.TRANSPARENT, defaultTweenSpeed).set_ease(defaultEaseType).set_trans(defaultTransitionType).finished
 		gameManager.hideMouse()
 		gameManager.pauseMenu.canPause = true
 		gameManager.removeWorldMap()
 
 
-func setIndex(value:int):
-	if !value > map.mapRotations.size()-1 and map:
-		map.setCameraPositionAndRotation(map.mapPositions[value],map.mapRotations[value])
+func setIndex(value: int):
+	if !value > map.mapRotations.size() - 1 and map:
+		map.setCameraPositionAndRotation(map.mapPositions[value], map.mapRotations[value])

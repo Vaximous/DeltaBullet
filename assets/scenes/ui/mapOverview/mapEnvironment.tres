@@ -1,4 +1,4 @@
-[gd_resource type="Environment" load_steps=6 format=3 uid="uid://q0mcnueo0n8e"]
+[gd_resource type="Environment" load_steps=6 format=3 uid="uid://dyvr8n1vauu0k"]
 
 [sub_resource type="Gradient" id="Gradient_p8ko3"]
 colors = PackedColorArray(0, 0, 0, 1, 0.996078, 0.941176, 0.811765, 1)
@@ -29,10 +29,11 @@ glow_bloom = 0.15
 glow_blend_mode = 1
 fog_enabled = true
 fog_mode = 1
-fog_light_color = Color(0.15686275, 0.15294118, 0.18039216, 1)
+fog_light_color = Color(1, 1, 1, 1)
 fog_density = 1.0
-fog_depth_begin = 4000.0
-fog_depth_end = 4000.0
+fog_height_density = 2.0
+fog_depth_begin = 0.0
+fog_depth_end = 15.0
 volumetric_fog_density = 0.2457
 volumetric_fog_albedo = Color(0.848227, 0.767118, 0.651965, 1)
 adjustment_brightness = 0.9

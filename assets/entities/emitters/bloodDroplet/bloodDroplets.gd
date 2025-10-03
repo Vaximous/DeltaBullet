@@ -1,16 +1,20 @@
-extends CharacterBody3D
 class_name BloodDroplet
-@onready var mesh:MeshInstance3D = %bloodMesh
-const framesRecalculation : int = 5
-var framesSinceRecalc : int = 0
+extends CharacterBody3D
+
+const framesRecalculation: int = 5
+
+var framesSinceRecalc: int = 0
 var meshDraw = ImmediateMesh.new()
-var tween : Tween
-var alive : bool = false:
+var tween: Tween
+var alive: bool = false:
 	set(value):
 		alive = value
 		set_physics_process(value)
-var norm : Vector3
-var params : PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.new()
+var norm: Vector3
+var params: PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.new()
+
+@onready var mesh: MeshInstance3D = %bloodMesh
+
 
 func _ready() -> void:
 	#gameManager.registerPhysicsEntity(self)
@@ -18,24 +22,18 @@ func _ready() -> void:
 		var dup = mesh.mesh.duplicate()
 		mesh.mesh = mesh.mesh.duplicate()
 
-func reset(position: Vector3, vel: Vector3, n: Vector3):
-	global_position = position
-	velocity = vel
-	norm = n
-	alive = true
 
 func _physics_process(delta: float) -> void:
 	if not alive:
 		return
 
-
-	global_position  += velocity * delta
+	global_position += velocity * delta
 	velocity += get_gravity() * delta * 10
 
 	if mesh:
 		mesh.position = global_position
 		mesh.mesh.size.x = velocity.length() * 0.005
-		mesh.look_at(global_position + velocity,norm,true)
+		mesh.look_at(global_position + velocity, norm, true)
 		mesh.global_position = global_position
 
 	params.from = global_position
@@ -78,16 +76,24 @@ func _physics_process(delta: float) -> void:
 			#queue_free()
 #
 #
+
+
+func reset(position: Vector3, vel: Vector3, n: Vector3):
+	global_position = position
+	velocity = vel
+	norm = n
+	alive = true
 		#if tween:
 			#tween.kill()
 		#tween = create_tween()
 		#tween.parallel().tween_method(meshInterpPos,mesh.position,global_position,0.05).set_trans(Tween.TRANS_LINEAR)
 
 
-func meshInterpRot(rot:Vector3)->void:
+func meshInterpRot(rot: Vector3) -> void:
 	if mesh:
 		mesh.rotation = rot
 
-func meshInterpPos(pos:Vector3)->void:
+
+func meshInterpPos(pos: Vector3) -> void:
 	if mesh:
 		mesh.position = pos

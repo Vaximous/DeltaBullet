@@ -123,7 +123,7 @@ func spawnPawn(forceParent : Node = null, _params : PawnSpawnParameters = null) 
 										Console.add_rich_console_message("[color=red]Couldn't Parse %s![/color]"%string)
 										return
 									var nodeData = json.get_data()
-									pawn.loadPawnFile(nodeData["pawnToLoad"])
+									pawn.loadPawnFile(nodeData["pawninfo"])
 					elif gameManager.temporaryPawnInfo.size() > 0:
 						pawn.loadPawnInfo(gameManager.temporaryPawnInfo[0])
 					#for clothing in pawnClothing.size():

@@ -1,14 +1,24 @@
 extends Node
+
 ## This will control how often the AI is calculates per frame. Default is 20, so every 20 frames the AI will be recalculated
-const framesRecalculation : int = 30
-var framesSinceRecalc : int = 0
-
-var ai_process_counter : int = 0
+const framesRecalculation: int = 30
 #How many AI are processed per tick.
-const ai_processed_per_tick : int = 5
+const ai_processed_per_tick: int = 5
+
+var framesSinceRecalc: int = 0
+
+var ai_process_counter: int = 0
 
 
-func updateAI(delta:float)->void:
+func _physics_process(_delta: float) -> void:
+	if framesSinceRecalc >= framesRecalculation:
+		updateAI(_delta)
+		framesSinceRecalc = 0
+	else:
+		framesSinceRecalc += 1
+
+
+func updateAI(delta: float) -> void:
 	#Update the AI
 	for i in ai_processed_per_tick:
 		if AIComponent.instances.size() > 0:
@@ -24,12 +34,3 @@ func updateAI(delta:float)->void:
 				return
 			component._ai_process(delta)
 			component.set_ai_processing(true)
-
-
-
-func _physics_process(_delta: float) -> void:
-	if framesSinceRecalc >= framesRecalculation:
-		updateAI(_delta)
-		framesSinceRecalc = 0
-	else:
-		framesSinceRecalc += 1

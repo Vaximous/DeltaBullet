@@ -1,43 +1,128 @@
 @tool
 extends Marker3D
-var visibilityTween : Tween
-var sizeTween : Tween
-var iconTween : Tween
+
+enum Types {
+	TRAVEL,
+	PROPERTY,
+}
+enum TravelStatus {
+	Locked,
+	Unlocked,
+}
+
+enum PropertyState {
+	Locked,
+	Purchased,
+}
+
+enum PropertyType {
+	REWARD,
+	SCENE
+}
+
 const defaultTransitionType = Tween.TRANS_QUINT
 const defaultEaseType = Tween.EASE_OUT
-const defaultTweenSpeed : float = 1
+const defaultTweenSpeed: float = 1
 
-@export var iconColor : Color = Color.DARK_RED
-@onready var collisionShape: CollisionShape3D = $area3d/collisionShape3d
-@onready var clickSound : AudioStreamPlayer = $clickSound
-@onready var hoverSound : AudioStreamPlayer = $hoverSound
-@onready var area3d : Area3D = $area3d
-@onready var ping_particles := $pingParticle
-@export var map : Node3D:
+@export_category("Marker")
+@export_subgroup("Marker Identity")
+@export var locationName: String = "":
+	set(value):
+		locationName = value
+		#notify_property_list_changed()
+@export var markerType: Types = 0:
+	set(value):
+		if markerType == value: return
+		markerType = value
+		notify_property_list_changed()
+
+@export var iconColor: Color = Color.DARK_RED:
+	set(value):
+		iconColor = value
+		notify_property_list_changed
+	get: return iconColor
+
+##What is this areas name?
+var map: Node3D:
 	set(value):
 		map = value
+		notify_property_list_changed()
 		setupMap()
-##What is this areas name?
-@export var locationName : String = ""
+
 ##What scene will this location load?
-@export var travelScene : PackedScene
-var locationDescription : String = ""
+var travelScene: PackedScene:
+	set(value):
+		if travelScene == value: return
+		travelScene = value
+		notify_property_list_changed()
 ##Controls whether or not this area is locked or unlocked. If its locked then the player will be unable to travel to this location. Otherwise, they will be able to
-@export_enum("Locked","Unlocked") var travelStatus : int = 1
-## This ID will correspong with whichever area value the selection index is currently on. If it equals the selection index of the map, it will be visible. Otherwise it won't be
-@export var travelGroupID = 0
-##This is the ID of the location itself.
-@export var travelID = 0
-@export_category("Info")
-@export var hasCollectibleItems : bool = false
-@export var hasExploration : bool = false
-@export var hasCollectibleNotes : bool = false
-@export var useDescription : bool = false
+var travelStatus: TravelStatus = 0:
+	set(value):
+		travelStatus = value
+		notify_property_list_changed()
+
+var hasCollectibleItems: bool = false:
+	set(value):
+		notify_property_list_changed()
+		hasCollectibleItems = value
+var hasExploration: bool = false:
+	set(value):
+		notify_property_list_changed()
+		hasExploration = value
+var hasCollectibleNotes: bool = false:
+	set(value):
+		notify_property_list_changed()
+		hasCollectibleNotes = value
+var useDescription: bool = false:
+	set(value):
+		useDescription = value
+		notify_property_list_changed()
+
+#Property
+var propertyStatus: PropertyState:
+	set(value):
+		propertyStatus = value
+		notify_property_list_changed()
+var propertyType: PropertyType:
+	set(value):
+		propertyType = value
+		notify_property_list_changed()
+var propertyRewards: Array = []:
+	set(value):
+		propertyRewards = value
+		notify_property_list_changed()
+var propertyPrice: int = 100:
+	get:
+		return propertyPrice
+	set(value):
+		propertyPrice = value
+		notify_property_list_changed()
+
+var visibilityTween: Tween
+var sizeTween: Tween
+var iconTween: Tween
+var locationDescription: String = ""
+
+@onready var collisionShape: CollisionShape3D = $area3d/collisionShape3d
+@onready var clickSound: AudioStreamPlayer = $clickSound
+@onready var hoverSound: AudioStreamPlayer = $hoverSound
+@onready var area3d: Area3D = $area3d
+@onready var ping_particles := $pingParticle
 
 
-func setVisualMarkers()->void:
+func _ready() -> void:
+	%icon.position.y = collisionShape.shape.size.y - 4.0
+	setupMap()
+
+
+func _process(_delta: float) -> void:
+	#super(delta)
+	setVisualMarkers()
+
+
+func setVisualMarkers() -> void:
 	if is_instance_valid(collisionShape.shape) and collisionShape.shape is BoxShape3D:
-		var boxShape : BoxShape3D = collisionShape.shape
+		var boxShape: BoxShape3D = collisionShape.shape
 		ping_particles.scale = collisionShape.shape.size
 		ping_particles.scale.y = 1.0
 		collisionShape.global_position = global_position
@@ -53,93 +138,73 @@ func setVisualMarkers()->void:
 
 		##Top
 		$%cornerUpRight.global_position.x = %topRight.global_position.x
-		$%cornerUpRight.global_position.z =%topRight.global_position.z
+		$%cornerUpRight.global_position.z = %topRight.global_position.z
 
 		$%cornerUpLeft.global_position.x = %topLeft.global_position.x
 		$%cornerUpLeft.global_position.z = %topLeft.global_position.z
 
 
-func setupMap()->void:
+func setupMap() -> void:
 	if !Engine.is_editor_hint():
 		playCloseAnimation()
 		if map:
-			if !map.mapScreen.index_changed.is_connected(updateVisibility.unbind(1)):
-				map.mapScreen.index_changed.connect(updateVisibility.unbind(1))
-				%mapLabel.text = locationName
+			%mapLabel.text = locationName
 			if travelScene:
 				var scene = travelScene.instantiate()
 				locationDescription = scene.worldData.worldDescription
 				scene.free()
 
 
-func updateVisibility()->void:
-	if map.mapScreen.selectedIndex == travelGroupID:
-		setVisible(true)
-	else:
-		setVisible(false)
-
-
-func _process(_delta: float) -> void:
-	#super(delta)
-	setVisualMarkers()
-
-
-func _ready() -> void:
-	%icon.position.y = collisionShape.shape.size.y - 4.0
-	setupMap()
-
-
-func playOpenAnimation()->void:
+func playOpenAnimation() -> void:
 	if map:
 		if map.mapScreen.selectedMarker != self or isLocationCurrent():
 			enlargeVisual()
 			fadeIconIn()
 
 
-
-func enlargeVisual(size:float=1.2)->void:
+func enlargeVisual(size: float = 1.2) -> void:
 	if sizeTween:
 		sizeTween.kill()
 	sizeTween = create_tween()
-	sizeTween.tween_property(self,"scale",Vector3(size,size,size),0.5).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
+	sizeTween.tween_property(self, "scale", Vector3(size, size, size), 0.5).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
 
 
-func fadeIconIn()->void:
+func fadeIconIn() -> void:
 	if iconTween:
 		iconTween.kill()
 	ping_particles.emitting = true
 	%mapLabel.no_depth_test = true
 	iconTween = create_tween()
-	iconTween.parallel().tween_property(%icon,"position:y",collisionShape.shape.size.y - 2.5,0.5).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
-	iconTween.parallel().tween_property(%icon,"scale",Vector3.ONE,0.5).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
-	iconTween.parallel().tween_property(%mapLabel,"modulate",Color.WHITE,0.5).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
-	iconTween.parallel().tween_property(%mapLabel,"scale",Vector3.ONE*1.5,0.5).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
+	iconTween.parallel().tween_property(%icon, "position:y", collisionShape.shape.size.y - 2.5, 0.5).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
+	iconTween.parallel().tween_property(%icon, "scale", Vector3.ONE, 0.5).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
+	iconTween.parallel().tween_property(%mapLabel, "modulate", Color.WHITE, 0.5).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
+	iconTween.parallel().tween_property(%mapLabel, "scale", Vector3.ONE * 1.5, 0.5).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
 	#Don't fade out the icon
 	#iconTween.parallel().tween_property(%icon,"modulate",iconColor,0.5).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
 
 
-func fadeIconOut()->void:
+func fadeIconOut() -> void:
 	if iconTween:
 		iconTween.kill()
 	ping_particles.emitting = false
 	%mapLabel.no_depth_test = false
 	iconTween = create_tween()
-	iconTween.parallel().tween_property(%icon,"position:y",collisionShape.shape.size.y - 4.0,1).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
-	iconTween.parallel().tween_property(%icon,"scale",Vector3.ONE*0.5,1).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
-	iconTween.parallel().tween_property(%mapLabel,"modulate",Color.TRANSPARENT,1).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
-	iconTween.parallel().tween_property(%mapLabel,"scale",Vector3.ZERO,1).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
+	iconTween.parallel().tween_property(%icon, "position:y", collisionShape.shape.size.y - 4.0, 1).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
+	iconTween.parallel().tween_property(%icon, "scale", Vector3.ONE * 0.5, 1).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
+	iconTween.parallel().tween_property(%mapLabel, "modulate", Color.TRANSPARENT, 1).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
+	iconTween.parallel().tween_property(%mapLabel, "scale", Vector3.ZERO, 1).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
 	#Don't fade out the icon
 	#iconTween.parallel().tween_property(%icon,"modulate",Color.TRANSPARENT,1).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
 
 
-func reduceVisual()->void:
+func reduceVisual() -> void:
 	if sizeTween:
 		sizeTween.kill()
 	sizeTween = create_tween()
-	sizeTween.tween_property(self,"scale",Vector3.ONE,0.5).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
+	sizeTween.tween_property(self, "scale", Vector3.ONE, 0.5).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
 
 
-func playCloseAnimation()->void:
+func playCloseAnimation() -> void:
 	if map:
 		if map.mapScreen.selectedMarker != self and !isLocationCurrent():
 			reduceVisual()
@@ -149,13 +214,13 @@ func playCloseAnimation()->void:
 
 ##Checks if this is the current location.
 func isLocationCurrent() -> bool:
-	if gameManager.world:
+	if gameManager.world and is_instance_valid(travelScene):
 		if gameManager.world.scene_file_path == travelScene.resource_path:
 			return true
 	return false
 
 
-func gotoLocation()->void:
+func gotoLocation() -> void:
 	if travelScene and get_tree().current_scene.scene_file_path != travelScene.resource_path:
 		gameManager.saveTemporaryPawnInfo()
 		await Fade.fade_out(0.5).finished
@@ -164,8 +229,10 @@ func gotoLocation()->void:
 	else:
 		gameManager.notify_warn("You're already at this location.", 4, 5)
 
+func setPropertyState(value:PropertyState):
+	propertyStatus = value
 
-func setVisible(value:bool)->void:
+func setVisible(value: bool) -> void:
 	if visibilityTween:
 		visibilityTween.kill()
 	visibilityTween = create_tween()
@@ -177,17 +244,145 @@ func setVisible(value:bool)->void:
 		hide()
 
 
-func setMarkerMaterial(material:StandardMaterial3D):
+func setMarkerMaterial(material: StandardMaterial3D):
 	for i in $visualHolder.get_children():
 		for marker in i.get_children():
-			var ppppm : ParticleProcessMaterial = ping_particles.process_material
+			var ppppm: ParticleProcessMaterial = ping_particles.process_material
 			ppppm.color = material.albedo_color
-			marker.set_surface_override_material(0,material)
+			marker.set_surface_override_material(0, material)
 
 
 ##Used for Navigation visualization on the map
 func getNavPoint() -> Vector3:
 	return $navPoint.global_position
+
+
+func _get_property_list() -> Array[Dictionary]:
+	var ret: Array[Dictionary] = [{}]
+	if Engine.is_editor_hint():
+		ret.append(
+			{
+			"name": &"Marker Essentials",
+			"type": TYPE_NIL,
+			"usage": PROPERTY_USAGE_GROUP
+			}
+		)
+
+		ret.append(
+			{
+			"name": &"map",
+			"type": TYPE_NODE_PATH,
+			"usage": PROPERTY_USAGE_EDITOR | PROPERTY_USAGE_STORAGE
+			}
+		)
+
+		##Switch behavior definitions based on marker type
+		match markerType:
+			Types.TRAVEL:
+				ret.append(
+					{
+					"name": &"Travel Behavior",
+					"type": TYPE_NIL,
+					"usage": PROPERTY_USAGE_GROUP
+					}
+				)
+
+				ret.append(
+					{
+					"name": &"travelScene",
+					"type": TYPE_OBJECT,
+					"usage": PROPERTY_USAGE_EDITOR | PROPERTY_USAGE_STORAGE
+					}
+				)
+
+				ret.append(
+					{
+					"name": &"travelStatus",
+					"type": TYPE_INT,
+					"hint": PROPERTY_HINT_ENUM,
+					"usage": PROPERTY_USAGE_EDITOR | PROPERTY_USAGE_STORAGE,
+					"hint_string": ",".join(TravelStatus.keys())
+					}
+
+				)
+
+			Types.PROPERTY:
+				ret.append(
+					{
+					"name": &"Property Behavior",
+					"type": TYPE_NIL,
+					"usage": PROPERTY_USAGE_GROUP
+					}
+				)
+
+				ret.append(
+					{
+					"name": &"propertyType",
+					"type": TYPE_INT,
+					"hint": PROPERTY_HINT_ENUM,
+					"usage": PROPERTY_USAGE_EDITOR | PROPERTY_USAGE_STORAGE,
+					"hint_string": ",".join(PropertyType.keys())
+					}
+				)
+
+#region Info subbroup
+		ret.append(
+			{
+			"name": &"Marker Info",
+			"type": TYPE_NIL,
+			"usage": PROPERTY_USAGE_GROUP
+			}
+		)
+
+		ret.append(
+			{
+			"name": &"useDescription",
+			"type": TYPE_BOOL,
+			"usage": PROPERTY_USAGE_EDITOR | PROPERTY_USAGE_STORAGE
+			}
+		)
+
+		match markerType:
+			Types.TRAVEL:
+				if !useDescription:
+					ret.append(
+						{
+						"name": &"hasCollectibleNotes",
+						"type": TYPE_BOOL,
+						"usage": PROPERTY_USAGE_EDITOR | PROPERTY_USAGE_STORAGE
+						}
+					)
+					ret.append(
+						{
+						"name": &"hasExploration",
+						"type": TYPE_BOOL,
+						"usage": PROPERTY_USAGE_EDITOR | PROPERTY_USAGE_STORAGE
+						}
+					)
+					ret.append(
+						{
+						"name": &"hasCollectibleItems",
+						"type": TYPE_BOOL,
+						"usage": PROPERTY_USAGE_EDITOR | PROPERTY_USAGE_STORAGE
+						}
+					)
+				else:
+					hasExploration = false
+					hasCollectibleItems = false
+					hasCollectibleNotes = false
+			Types.PROPERTY:
+				if propertyType == PropertyType.REWARD:
+					if useDescription:
+						ret.append(
+							{
+							"name": &"locationDescription",
+							"type": TYPE_STRING,
+							"hint" : PROPERTY_HINT_MULTILINE_TEXT,
+							"usage": PROPERTY_USAGE_EDITOR | PROPERTY_USAGE_STORAGE
+							}
+						)
+		#endregion
+	return ret
 
 
 func _on_button_pressed() -> void:

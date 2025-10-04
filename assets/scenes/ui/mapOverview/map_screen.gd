@@ -70,7 +70,6 @@ func setSelectedMarker(value) -> void:
 	selectedMarker = value
 
 
-
 func setVisible(value: bool) -> void:
 	if visibleTween:
 		visibleTween.kill()

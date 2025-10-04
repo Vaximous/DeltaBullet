@@ -48,7 +48,7 @@ func _physics_process(delta: float) -> void:
 
 
 func refresh_progression_view() -> void:
-	Util.free_node_children(%ProgressionViewContainer)
+	Util.queueFreeNodeChildren(%ProgressionViewContainer)
 	var progression_achievements = get_tree().get_nodes_in_group(&"achievement_tasks")
 	var progression_tasks = get_tree().get_nodes_in_group(&"checklist_tasks")
 
@@ -350,7 +350,7 @@ func gs_editor_create_lineedit(dict_key: Variant, text: String, holder: Variant)
 func refresh_gamestate_viewer() -> void:
 	Util.queueFreeNodeChildren(%GamestateEditorContainer)
 	%GamestateEditorContainer.add_child(
-		create_dictionary_view(gameState._gamestate, "gameState")
+		create_dictionary_view(gameState._gameState, "gameState")
 	)
 	return
 

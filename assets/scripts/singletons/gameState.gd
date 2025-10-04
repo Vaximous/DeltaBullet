@@ -168,7 +168,7 @@ func getOwnedProperties()->Array:
 func hasOwnedProperty(id:StringName)->bool:
 	var result : bool = false
 	var saveInfo = getGameState()
-	var properties = saveInfo["ownedProperties"]
+	var properties = saveInfo.get_or_add("ownedProperties",[])
 	for i in properties:
 		if i == id:
 			result = true

@@ -102,7 +102,7 @@ func _physics_process(delta: float) -> void:
 		cameraController.move_and_slide()
 
 		##Use the mouse position and set the cursor to it
-		if is_instance_valid(camera):
+		if is_instance_valid(camera) and !mapScreen.screenBusy:
 			var point = gameManager.get_from_mouse(1000, self, camera, [cameraController.get_rid()])
 			if point.has("position"):
 				#%mapSelectionMarker.global_position = Vector3.ZERO

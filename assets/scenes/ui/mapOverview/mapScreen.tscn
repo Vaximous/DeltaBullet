@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://bxog5iq8771kh"]
+[gd_scene load_steps=52 format=3 uid="uid://bxog5iq8771kh"]
 
 [ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="1_iee3r"]
 [ext_resource type="PackedScene" uid="uid://c63b0ewnfkf4n" path="res://assets/scenes/ui/mapOverview/map/map.tscn" id="1_lplem"]
@@ -187,6 +187,29 @@ scale_max = 1.1999999
 scale_curve = SubResource("CurveTexture_1x2q7")
 color = Color(1, 0, 0, 1)
 color_ramp = SubResource("GradientTexture1D_s27yt")
+
+[sub_resource type="Gradient" id="Gradient_p8ko3"]
+offsets = PackedFloat32Array(0.25968993, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_od2qg"]
+gradient = SubResource("Gradient_p8ko3")
+
+[sub_resource type="Curve" id="Curve_s27yt"]
+_data = [Vector2(0, 0), 0.0, 2.8112292, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_vvgek"]
+curve = SubResource("Curve_s27yt")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1x2q7"]
+resource_local_to_scene = true
+gravity = Vector3(0, 0, 0)
+scale_min = 1.1999999
+scale_max = 1.1999999
+scale_curve = SubResource("CurveTexture_vvgek")
+color = Color(1, 0, 0, 1)
+color_ramp = SubResource("GradientTexture1D_od2qg")
 
 [sub_resource type="LabelSettings" id="LabelSettings_kc4o1"]
 font_size = 66
@@ -600,7 +623,10 @@ process_material = SubResource("ParticleProcessMaterial_5gb03")
 process_material = SubResource("ParticleProcessMaterial_wficc")
 
 [node name="cornerUpLeft" parent="mapScreen/subViewportContainer/subViewport/map/areaNodes/testRewardProperty/visualHolder" index="0"]
-transform = Transform3D(0, 0, 0.99999964, 0, 1, 0, -0.99999964, 0, 0, 4.4210854, 0, -4.579485)
+transform = Transform3D(0, 0, 0.99999964, 0, 1, 0, -0.99999964, 0, 0, 4.4210873, 0, -4.579485)
+
+[node name="pingParticle" parent="mapScreen/subViewportContainer/subViewport/map/areaNodes/testRewardProperty2" index="2"]
+process_material = SubResource("ParticleProcessMaterial_1x2q7")
 
 [node name="mapAreaLocation" type="MarginContainer" parent="mapScreen"]
 clip_contents = true
@@ -685,4 +711,5 @@ bus = &"Music"
 [editable path="mapScreen/subViewportContainer/subViewport/map/areaNodes/activeragdolltest"]
 [editable path="mapScreen/subViewportContainer/subViewport/map/areaNodes/debugstreet"]
 [editable path="mapScreen/subViewportContainer/subViewport/map/areaNodes/testRewardProperty"]
+[editable path="mapScreen/subViewportContainer/subViewport/map/areaNodes/testRewardProperty2"]
 [editable path="mapScreen/AreaInformation"]

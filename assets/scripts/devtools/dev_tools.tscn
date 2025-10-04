@@ -1,0 +1,317 @@
+[gd_scene load_steps=11 format=3 uid="uid://cgq78lswj3uhc"]
+
+[ext_resource type="Script" uid="uid://cjobseq2mpsgb" path="res://assets/scripts/devtools/dev_tools.gd" id="1_cfufr"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cfufr"]
+content_margin_left = 2.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(1, 0.8, 0.8, 1)
+border_width_left = 4
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.99, 0, 0, 1)
+shadow_size = 1
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_cfufr"]
+resource_name = "toolbar group"
+allow_unpress = true
+
+[sub_resource type="LabelSettings" id="LabelSettings_cfufr"]
+font_size = 24
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 12
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(0, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ins7r"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ins7r"]
+draw_center = false
+
+[sub_resource type="Theme" id="Theme_diykj"]
+FoldableContainer/styles/focus = SubResource("StyleBoxEmpty_ins7r")
+FoldableContainer/styles/panel = SubResource("StyleBoxFlat_ins7r")
+
+[sub_resource type="Theme" id="Theme_cfufr"]
+Label/colors/font_outline_color = Color(0, 0, 0, 1)
+Label/constants/outline_size = 4
+
+[sub_resource type="Theme" id="Theme_ins7r"]
+RichTextLabel/colors/font_outline_color = Color(0, 0, 0, 1)
+RichTextLabel/constants/outline_size = 4
+
+[sub_resource type="LabelSettings" id="LabelSettings_ins7r"]
+outline_size = 4
+outline_color = Color(0.297706, 0.297706, 0.297706, 1)
+shadow_size = 6
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(0, 1)
+
+[node name="DevTools" type="CanvasLayer"]
+process_mode = 3
+layer = 127
+script = ExtResource("1_cfufr")
+available_levels = PackedStringArray("uid://cxx0f4leb4ty5", "uid://ctirhrky4cyqr")
+gamestate_editor_panel_style = SubResource("StyleBoxFlat_cfufr")
+
+[node name="OptionsBar" type="MarginContainer" parent="."]
+offset_right = 311.0
+offset_bottom = 47.0
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="OptionsBar"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="ToolsMenuButton" type="Button" parent="OptionsBar/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+button_group = SubResource("ButtonGroup_cfufr")
+text = "Dev Tools"
+
+[node name="GamestateViewerButton" type="Button" parent="OptionsBar/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+button_group = SubResource("ButtonGroup_cfufr")
+text = "Gamestate Editor"
+
+[node name="ProgressionView" type="Button" parent="OptionsBar/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+button_group = SubResource("ButtonGroup_cfufr")
+text = "Progression View"
+
+[node name="ToolsPanel" type="PanelContainer" parent="."]
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_top = 48.0
+offset_right = 256.0
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="ToolsPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="ScrollContainer" type="ScrollContainer" parent="ToolsPanel/MarginContainer"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ToolsPanel/MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="ToolsPanel/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Dev Tools"
+label_settings = SubResource("LabelSettings_cfufr")
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="ToolsPanel/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ChangeLevelButton" type="Button" parent="ToolsPanel/MarginContainer/ScrollContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Select Level"
+
+[node name="godModeToggle" type="CheckButton" parent="ToolsPanel/MarginContainer/ScrollContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Godmode"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ToolsPanel/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ToolsPanel/MarginContainer/ScrollContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Timescale"
+
+[node name="Timescale" type="HSlider" parent="ToolsPanel/MarginContainer/ScrollContainer/VBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 2.0
+step = 0.01
+value = 1.0
+tick_count = 3
+ticks_on_borders = true
+
+[node name="GamestateViewerPanel" type="PanelContainer" parent="."]
+visible = false
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_top = 48.0
+offset_right = 256.0
+grow_vertical = 2
+theme = SubResource("Theme_diykj")
+
+[node name="MarginContainer" type="MarginContainer" parent="GamestateViewerPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="ScrollContainer" type="ScrollContainer" parent="GamestateViewerPanel/MarginContainer"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GamestateViewerPanel/MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="GamestateViewerPanel/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Gamestate Editor"
+
+[node name="HSeparator" type="HSeparator" parent="GamestateViewerPanel/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="GamestateEditorContainer" type="VBoxContainer" parent="GamestateViewerPanel/MarginContainer/ScrollContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = SubResource("Theme_cfufr")
+
+[node name="RefreshButton" type="Button" parent="GamestateViewerPanel/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Refresh"
+
+[node name="ProgressionViewPanel" type="PanelContainer" parent="."]
+visible = false
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_top = 48.0
+offset_right = 256.0
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="ProgressionViewPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="ScrollContainer" type="ScrollContainer" parent="ProgressionViewPanel/MarginContainer"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ProgressionViewPanel/MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="ProgressionViewPanel/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Progression"
+
+[node name="HSeparator" type="HSeparator" parent="ProgressionViewPanel/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ProgressionViewContainer" type="VBoxContainer" parent="ProgressionViewPanel/MarginContainer/ScrollContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = SubResource("Theme_ins7r")
+
+[node name="Messages" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -312.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = 744.0
+grow_horizontal = 0
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -156.0
+offset_top = -57.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Dev Menu Active
+hold ctrl+alt+D to toggle"
+label_settings = SubResource("LabelSettings_ins7r")
+horizontal_alignment = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+metadata/_edit_lock_ = true
+
+[node name="LevelSelectPanel" type="PanelContainer" parent="CenterContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/LevelSelectPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/LevelSelectPanel/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/LevelSelectPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Select Level"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="CenterContainer/LevelSelectPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CenterContainer/LevelSelectPanel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(512, 64)
+layout_mode = 2
+
+[node name="LevelSelectionContainer" type="HBoxContainer" parent="CenterContainer/LevelSelectPanel/MarginContainer/VBoxContainer/ScrollContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="GoToShop" type="Button" parent="CenterContainer/LevelSelectPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "go to Shop"
+
+[node name="Button" type="Button" parent="CenterContainer/LevelSelectPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "close"
+
+[connection signal="toggled" from="OptionsBar/HBoxContainer/ToolsMenuButton" to="." method="_on_tools_menu_button_toggled"]
+[connection signal="toggled" from="OptionsBar/HBoxContainer/GamestateViewerButton" to="." method="_on_gamestate_viewer_button_toggled"]
+[connection signal="toggled" from="OptionsBar/HBoxContainer/ProgressionView" to="." method="_on_progression_view_toggled"]
+[connection signal="hidden" from="ToolsPanel" to="CenterContainer/LevelSelectPanel" method="hide"]
+[connection signal="pressed" from="ToolsPanel/MarginContainer/ScrollContainer/VBoxContainer/ChangeLevelButton" to="." method="_on_change_level_button_pressed"]
+[connection signal="toggled" from="ToolsPanel/MarginContainer/ScrollContainer/VBoxContainer/godModeToggle" to="." method="_on_god_mode_toggle_toggled"]
+[connection signal="drag_ended" from="ToolsPanel/MarginContainer/ScrollContainer/VBoxContainer/VBoxContainer/Timescale" to="." method="_on_timescale_drag_ended"]
+[connection signal="pressed" from="GamestateViewerPanel/MarginContainer/ScrollContainer/VBoxContainer/RefreshButton" to="." method="_on_refresh_button_pressed"]
+[connection signal="pressed" from="CenterContainer/LevelSelectPanel/MarginContainer/VBoxContainer/GoToShop" to="." method="_on_go_to_shop_pressed"]
+[connection signal="pressed" from="CenterContainer/LevelSelectPanel/MarginContainer/VBoxContainer/Button" to="CenterContainer/LevelSelectPanel" method="hide"]

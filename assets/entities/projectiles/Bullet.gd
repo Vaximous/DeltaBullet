@@ -43,7 +43,7 @@ func set_projectile_owner(value: Node) -> void:
 
 func enter_material(material: DB_PhysicsMaterial, collisionObject: Object, collisionPoint: Vector3, collisionNormal: Vector3, remainder: float) -> void:
 	insideMaterial = material
-
+	#print(material)
 	if collisionPoint.is_finite():
 		globalParticles.spawnBulletHolePackedScene(
 			material.bullet_hole,
@@ -62,7 +62,7 @@ func enter_material(material: DB_PhysicsMaterial, collisionObject: Object, colli
 						get_damage() / gameManager.get_modified_stat(collisionObject.healthComponent.componentOwner,
 							&"bulletResistanceModifier"),
 						projectile_owner.weaponOwner,
-						velocity.normalized() * (falloff.sample(get_travel_progress() * 3) * projectile_owner.weaponResource.weaponImpulse),
+						velocity.normalized() * projectile_owner.weaponResource.weaponImpulse,
 						collisionPoint - global_position,
 						self
 					)

@@ -246,17 +246,22 @@ func playDialogue2D(dialogue: ActorDialogue) -> AudioStreamPlayer:
 		var audioPlayer = AudioStreamPlayer.new()
 		audioPlayer.add_to_group(&"phonecall")
 		world.worldMisc.add_child(audioPlayer)
+		audioPlayer.bus = &"VO"
+		await get_tree().process_frame
+		audioPlayer.volume_db = AudioServer.get_bus_volume_db(5)
 		#print(dialogue.actorAudios.size())
 		if audioPlayer and is_instance_valid(dialogue):
 			for i in dialogue.actorAudios.size():
 				var subtitle
+				audioPlayer.bus = &"VO"
+				audioPlayer.volume_db = AudioServer.get_bus_volume_db(5)
 				#print(i)
 				if i == dialogue.actorAudios.size() - 1:
 					audioPlayer.finished.connect(audioPlayer.queue_free)
 				if getCurrentPawn():
 					subtitle = getCurrentPawn().attachedCam.createSubtitle(dialogue.actorAudios[i].audioResource)
-				audioPlayer.bus = &"Voice"
 				audioPlayer.stream = dialogue.actorAudios[i].audioResource.audioStream
+				audioPlayer.stream_paused = false
 				audioPlayer.play()
 				await audioPlayer.finished
 				if subtitle:
@@ -937,9 +942,15 @@ func initWorldMap() -> void:
 	removeShop()
 	removeCustomization()
 	gameManager.pauseMenu.canPause = false
+	for i in playerPawns:
+		if is_instance_valid(i):
+			i.inputComponent.movementEnabled = false
+			i.inputComponent.mouseActionsEnabled = false
+	await Fade.fade_out(0.25,Color.DARK_RED).finished
 	var _WorldMapUI = worldMapUI.instantiate()
 	_WorldMapUI.add_to_group(&"worldMap")
 	add_child(_WorldMapUI)
+	Fade.fade_in(0.25,Color.DARK_RED)
 
 func removeMapPurchasePopups()->void:
 	for i in get_tree().get_nodes_in_group(&"purchaseMapAreaPopup"):
@@ -958,6 +969,10 @@ func initCustomization(pawn: BasePawn) -> void:
 	_customizationUI.generateClothingOptions(pawn)
 
 func removeWorldMap() -> void:
+	for i in playerPawns:
+		if is_instance_valid(i):
+			i.inputComponent.movementEnabled = true
+			i.inputComponent.mouseActionsEnabled = true
 	for i in get_children():
 		if i.is_in_group(&"worldMap"):
 			i.queue_free()
@@ -1124,6 +1139,9 @@ func disableBulletTime() -> void:
 	deathTween = create_tween()
 	deathTween.parallel().tween_property(Engine, "time_scale", 1, 2).set_ease(defaultEaseType).set_trans(defaultTransitionType)
 	bulletTime = false
+	setBasePlayerRecoilMod(1)
+	setBasePlayerSpreadMod(1)
+	setBasePlayerBulletResistMod(1)
 
 func enableBulletTime() -> void:
 	if activeCamera:
@@ -1137,6 +1155,9 @@ func enableBulletTime() -> void:
 	deathTween = create_tween()
 	deathTween.parallel().tween_property(Engine, "time_scale", 0.55, 1.5).set_ease(defaultEaseType).set_trans(defaultTransitionType)
 	bulletTime = true
+	setBasePlayerRecoilMod(2)
+	setBasePlayerSpreadMod(2)
+	setBasePlayerBulletResistMod(1.5)
 #endregion
 
 #region Sound Variables

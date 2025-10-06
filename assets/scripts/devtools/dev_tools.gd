@@ -416,7 +416,7 @@ func gs_editor_update_display(node_array: Array[Node]) -> void:
 			#Array size mismatch. Repopulate the VBox
 			if new_value.size() != size:
 				#print("Array size mismatch!")
-				Util.free_node_children(update_node)
+				Util.queueFreeNodeChildren(update_node)
 				if new_value.is_empty():
 					var empty_label := Label.new()
 					empty_label.text = "[ EMPTY ]"

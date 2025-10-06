@@ -17,7 +17,7 @@ func _ready()->void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta:float)->void:
-		if is_instance_valid(controllingPawn) and gameManager.isMouseHidden() and !controllingPawn.isPawnDead:
+		if is_instance_valid(controllingPawn) and gameManager.isMouseHidden() and !controllingPawn.isPawnDead and mouseActionsEnabled:
 			if Input.is_action_pressed("gThrowThrowable"):
 				if is_instance_valid(controllingPawn) and controllingPawn.throwableAmount > 0:
 					if !controllingPawn.freeAim:

@@ -1,6 +1,18 @@
 extends Node
 ##Gamestate
 var notes : Dictionary
+var levels : Dictionary = {
+	0 : "Pipsqueak",
+	1 : "No-Name",
+	2 : "Little Boy",
+	3 : "Hoodlum",
+	4 : "Runt",
+	5 : "Thug",
+	6 : "Two-Bit",
+	7 : "Third Rate",
+	50 : "Legendary Bullet",
+	100 : "Delta Bullet"
+}
 var saveVersion : float = 1.0
 var stateInfo : Dictionary = {}
 var _gameState : Dictionary = {
@@ -48,7 +60,7 @@ func loadGame(save:String)->void:
 				gameManager.currentSave = save
 				gameManager.modify_persistent_data("lastSave", save)
 				gameManager.loadWorld(nodeData["saveScene"])
-				gameManager.modify_persistent_data("lastSaveData", nodeData)
+				gameManager.modify_persistent_data("lastSaveData", stateInfo)
 				#print(get_persistent_data()["lastSaveData"])
 				#purchasedPlacables = nodeData["purchasePlacables"]
 				#temporaryPawnInfo.clear()
@@ -129,6 +141,10 @@ func setPawnCash(value:int)->int:
 	saveInfo["grit"] = value
 	return saveInfo["grit"]
 
+func getPawnInfo():
+	var saveInfo = getGameState()
+	return saveInfo.get_or_add("pawninfo",null)
+
 func getPawnCash()->int:
 	var saveInfo = getGameState()
 	return saveInfo.get_or_add("grit",0)
@@ -181,6 +197,11 @@ func getOwnedProperty(id:StringName)->int:
 func getSaveDateDict()->Dictionary:
 	var saveInfo = getGameState()
 	return saveInfo.get_or_add("dateDict", Time.get_date_dict_from_system())
+
+func getPawnRank()->String:
+	if int(getPawnLevel()) > levels.size()-1: return "Unknown Rank"
+	else:
+		return levels[int(getPawnLevel())]
 
 func updateSaveFile(save):
 	##Update Old Saves to a new ver

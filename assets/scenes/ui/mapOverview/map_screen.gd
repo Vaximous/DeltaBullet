@@ -49,6 +49,8 @@ func _ready() -> void:
 	uiAnimPlayer.play("open")
 	selectedIndex = 0
 
+func _process(delta: float) -> void:
+	setGritLabel(str(gameState.getPawnCash()))
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("gEscape"):
@@ -87,6 +89,11 @@ func setVisible(value: bool) -> void:
 		gameManager.pauseMenu.canPause = true
 		gameManager.removeWorldMap()
 
+func setRankLabel(text:String)->void:
+	%ranklabel.text = text
+
+func setGritLabel(text:String)->void:
+	%gritLabel.text = text
 
 func setIndex(value: int):
 	if !value > map.mapRotations.size() - 1 and map:

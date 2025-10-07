@@ -1,4 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://n500uprpwbbk"]
+[gd_scene load_steps=3 format=3 uid="uid://n500uprpwbbk"]
+
+[ext_resource type="PhysicsMaterial" uid="uid://cc5ltv4umlj8t" path="res://assets/resources/PhysicsMaterials/metal_physics_material.tres" id="1_ar5r3"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3cggw"]
 albedo_color = Color(1, 0.603922, 0, 1)
@@ -6,10 +8,12 @@ albedo_color = Color(1, 0.603922, 0, 1)
 [node name="csgtruck" type="CSGCombiner3D"]
 material_override = SubResource("StandardMaterial3D_3cggw")
 use_collision = true
+metadata/physics_material_override = ExtResource("1_ar5r3")
 
 [node name="csgBox3d16" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.20967, 0.635551, -0.00574589)
 size = Vector3(3, 0.9, 2.1)
+metadata/physics_material_override = ExtResource("1_ar5r3")
 
 [node name="csgBox3d" type="CSGBox3D" parent="csgBox3d16"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0.4, 0)
@@ -19,6 +23,7 @@ size = Vector3(3, 1, 1.9)
 [node name="csgBox3d14" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.913632, 0.650761, -0.00574589)
 size = Vector3(2.7, 0.93042, 2.11206)
+metadata/physics_material_override = ExtResource("1_ar5r3")
 
 [node name="csgBox3d15" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.472734, 1.05068, -0.00574589)

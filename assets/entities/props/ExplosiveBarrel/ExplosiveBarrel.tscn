@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=4 uid="uid://xtveejtd5yy8"]
+[gd_scene load_steps=9 format=4 uid="uid://xtveejtd5yy8"]
 
 [ext_resource type="Script" uid="uid://di2gvi8q8hte6" path="res://assets/entities/props/ExplosiveBarrel/explosive_barrel.gd" id="1_4tp7o"]
+[ext_resource type="PhysicsMaterial" uid="uid://cc5ltv4umlj8t" path="res://assets/resources/PhysicsMaterials/metal_physics_material.tres" id="2_4tp7o"]
 [ext_resource type="PackedScene" uid="uid://hrkahs61jbi" path="res://assets/components/healthComponent/healthComponent.tscn" id="2_nvb75"]
 [ext_resource type="PackedScene" uid="uid://cos0eijlpcj7n" path="res://assets/entities/hitbox/hitbox.tscn" id="3_4tp7o"]
 
@@ -43,6 +44,7 @@ mass = 10.0
 script = ExtResource("1_4tp7o")
 explosionImpulse = 15.0
 healthComponent = NodePath("healthComponent")
+propMaterial = ExtResource("2_4tp7o")
 metadata/_custom_type_script = "uid://cd4iini3uq6ci"
 
 [node name="healthComponent" parent="." instance=ExtResource("2_nvb75")]

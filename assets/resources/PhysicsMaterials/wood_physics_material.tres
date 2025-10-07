@@ -1,0 +1,11 @@
+[gd_resource type="PhysicsMaterial" script_class="DB_PhysicsMaterial" load_steps=3 format=3 uid="uid://cdxrasph25xol"]
+
+[ext_resource type="PackedScene" uid="uid://dke6il0mgsflx" path="res://assets/entities/bulletHoles/wood/WoodBullethole.tscn" id="1_vkun1"]
+[ext_resource type="Script" uid="uid://dr0phe3qewla0" path="res://assets/resources/PhysicsMaterials/DB_PhysicsMaterial.gd" id="2_srbne"]
+
+[resource]
+resource_name = "WoodPhysicsMat"
+script = ExtResource("2_srbne")
+penetration_resistance = 600.0
+penetration_entry_cost = 200.0
+bullet_hole = ExtResource("1_vkun1")

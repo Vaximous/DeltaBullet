@@ -1,0 +1,53 @@
+[gd_scene load_steps=11 format=3 uid="uid://5y4hkwqs45ej"]
+
+[ext_resource type="PackedScene" uid="uid://dend7ate7mq6e" path="res://assets/entities/bulletHoles/default/BulletHoleBase.tscn" id="1_vuclq"]
+[ext_resource type="Texture2D" uid="uid://dxgkacxbki8ag" path="res://assets/textures/bullet/holes/metal/metal1.png" id="2_y3ad8"]
+[ext_resource type="Texture2D" uid="uid://vgc8mwi4cmqa" path="res://assets/textures/bullet/holes/metal/metal2.png" id="3_mhqwu"]
+[ext_resource type="Texture2D" uid="uid://diubltht1u47v" path="res://assets/textures/bullet/holes/metal/metal3.png" id="4_s7q15"]
+[ext_resource type="Texture2D" uid="uid://cggxtfpymimwo" path="res://assets/textures/bullet/holes/metal/metal4.png" id="5_uha8x"]
+[ext_resource type="Material" uid="uid://cy8gqq4kaovdk" path="res://assets/materials/effects/spark/spark.tres" id="6_sxd4d"]
+
+[sub_resource type="Curve" id="Curve_0ejmo"]
+_limits = [0.0, 3.0, 0.0, 1.0]
+_data = [Vector2(0, 3), 0.0, -0.826575, 0, 0, Vector2(1, 0), -5.2809, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_t8ufm"]
+curve = SubResource("Curve_0ejmo")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_osy6d"]
+particle_flag_align_y = true
+direction = Vector3(0, 1, 0)
+spread = 5.854
+initial_velocity_min = 2.5
+initial_velocity_max = 15.0
+gravity = Vector3(0, -19.8, 0)
+scale_min = 0.5
+scale_max = 0.59999996
+color = Color(1, 1, 0, 1)
+emission_curve = SubResource("CurveTexture_t8ufm")
+
+[sub_resource type="QuadMesh" id="QuadMesh_ida67"]
+material = ExtResource("6_sxd4d")
+size = Vector2(0.02, 0.1)
+
+[node name="MetalHole" node_paths=PackedStringArray("particleArray", "soundArray") instance=ExtResource("1_vuclq")]
+bulletTextures = Array[Texture2D]([ExtResource("2_y3ad8"), ExtResource("3_mhqwu"), ExtResource("4_s7q15"), ExtResource("5_uha8x")])
+particleArray = [NodePath("explosionSparks")]
+soundArray = [NodePath("audioStreamPlayer3d")]
+decalSize = 0.05
+
+[node name="audioStreamPlayer3d" type="AudioStreamPlayer3D" parent="." index="1"]
+bus = &"Sounds"
+attenuation_filter_cutoff_hz = 20500.0
+
+[node name="explosionSparks" type="GPUParticles3D" parent="." index="2"]
+emitting = false
+amount = 5
+lifetime = 2.0
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+fixed_fps = 0
+process_material = SubResource("ParticleProcessMaterial_osy6d")
+draw_pass_1 = SubResource("QuadMesh_ida67")

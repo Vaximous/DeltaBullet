@@ -2,21 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b31rtcyhto5oe"
-path.s3tc="res://.godot/imported/genericWoodIImpact.png-6c25c52299a46191eec2b94a6e1b3077.s3tc.ctex"
+uid="uid://cbes1xjd28c5l"
+path="res://.godot/imported/wood1.png-e383276edb2ec4811280e9a5feba5b0c.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/impact/genericWoodIImpact.png"
-dest_files=["res://.godot/imported/genericWoodIImpact.png-6c25c52299a46191eec2b94a6e1b3077.s3tc.ctex"]
+source_file="res://assets/textures/bullet/holes/wood/wood1.png"
+dest_files=["res://.godot/imported/wood1.png-e383276edb2ec4811280e9a5feba5b0c.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
@@ -24,7 +23,7 @@ compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=true
+mipmaps/generate=false
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
@@ -38,4 +37,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=0
+detect_3d/compress_to=1

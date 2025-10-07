@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://bxog5iq8771kh"]
+[gd_scene load_steps=58 format=3 uid="uid://bxog5iq8771kh"]
 
 [ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="1_iee3r"]
 [ext_resource type="PackedScene" uid="uid://c63b0ewnfkf4n" path="res://assets/scenes/ui/mapOverview/map/map.tscn" id="1_lplem"]
@@ -11,6 +11,7 @@
 [ext_resource type="AudioStream" uid="uid://rileq1nck1o0" path="res://assets/sounds/ui/map/Map_transition_3.wav" id="8_p8ko3"]
 [ext_resource type="AudioStream" uid="uid://dci1eyvaxauee" path="res://assets/sounds/ui/map/Map_transition_4.wav" id="9_od2qg"]
 [ext_resource type="AudioStream" uid="uid://d1lgsqudso57r" path="res://assets/music/menu/maptheme.wav" id="10_60wph"]
+[ext_resource type="Texture2D" uid="uid://b4lmvlm0y6lp4" path="res://assets/textures/icons/fatcow/attribution.png" id="12_od2qg"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_od2qg"]
 shader = ExtResource("3_p8ko3")
@@ -546,6 +547,25 @@ stream_2/weight = 24.0
 stream_3/stream = ExtResource("9_od2qg")
 stream_3/weight = 0.0
 
+[sub_resource type="Gradient" id="Gradient_vvgek"]
+offsets = PackedFloat32Array(0, 0.62450594, 1)
+colors = PackedColorArray(1, 0, 0, 0, 0.7058824, 0, 0, 0.25882354, 0.25490198, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_1x2q7"]
+gradient = SubResource("Gradient_vvgek")
+
+[sub_resource type="LabelSettings" id="LabelSettings_r3bbh"]
+font_size = 31
+outline_size = 3
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Gradient" id="Gradient_wficc"]
+colors = PackedColorArray(0.5647059, 0, 0, 1, 0.60784316, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_wwelr"]
+gradient = SubResource("Gradient_wficc")
+fill_from = Vector2(1, 1)
+
 [node name="map_screen" type="CanvasLayer" node_paths=PackedStringArray("map")]
 script = ExtResource("1_r48cj")
 map = NodePath("mapScreen/subViewportContainer/subViewport/map")
@@ -622,9 +642,6 @@ process_material = SubResource("ParticleProcessMaterial_5gb03")
 [node name="pingParticle" parent="mapScreen/subViewportContainer/subViewport/map/areaNodes/testRewardProperty" index="2"]
 process_material = SubResource("ParticleProcessMaterial_wficc")
 
-[node name="cornerUpLeft" parent="mapScreen/subViewportContainer/subViewport/map/areaNodes/testRewardProperty/visualHolder" index="0"]
-transform = Transform3D(0, 0, 0.99999964, 0, 1, 0, -0.99999964, 0, 0, 4.4210873, 0, -4.579485)
-
 [node name="pingParticle" parent="mapScreen/subViewportContainer/subViewport/map/areaNodes/testRewardProperty2" index="2"]
 process_material = SubResource("ParticleProcessMaterial_1x2q7")
 
@@ -694,6 +711,107 @@ unique_name_in_owner = true
 stream = ExtResource("10_60wph")
 volume_db = -5.65
 bus = &"Music"
+
+[node name="gritCount" type="HBoxContainer" parent="."]
+clip_contents = true
+anchors_preset = -1
+anchor_left = 0.9990001
+anchor_right = 0.9990001
+offset_left = -323.40015
+offset_right = 0.5998535
+offset_bottom = 64.0
+alignment = 2
+
+[node name="textureRect" type="TextureRect" parent="gritCount"]
+clip_contents = true
+layout_mode = 2
+texture = SubResource("GradientTexture1D_1x2q7")
+
+[node name="gritLabel" type="Label" parent="gritCount/textureRect"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "GRIT AMOUNT"
+label_settings = SubResource("LabelSettings_r3bbh")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="userInfo" type="MarginContainer" parent="gritCount"]
+layout_mode = 2
+
+[node name="dock" type="TextureRect" parent="gritCount/userInfo"]
+layout_mode = 2
+texture = SubResource("GradientTexture2D_wwelr")
+
+[node name="dockIcon" type="TextureRect" parent="gritCount/userInfo/dock"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.5
+offset_top = -16.5
+offset_right = 16.5
+offset_bottom = 16.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("12_od2qg")
+
+[node name="playerRank" type="HBoxContainer" parent="."]
+clip_contents = true
+anchors_preset = -1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -325.0
+offset_top = 64.0
+offset_right = -1.0
+offset_bottom = 128.0
+alignment = 2
+
+[node name="rank" type="TextureRect" parent="playerRank"]
+clip_contents = true
+layout_mode = 2
+texture = SubResource("GradientTexture1D_1x2q7")
+
+[node name="ranklabel" type="Label" parent="playerRank/rank"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Rank Label"
+label_settings = SubResource("LabelSettings_r3bbh")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="userInfo" type="MarginContainer" parent="playerRank"]
+layout_mode = 2
+
+[node name="rankPendant" type="TextureRect" parent="playerRank/userInfo"]
+layout_mode = 2
+texture = SubResource("GradientTexture2D_wwelr")
+
+[node name="rankIcon" type="TextureRect" parent="playerRank/userInfo/rankPendant"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.5
+offset_top = -16.5
+offset_right = 16.5
+offset_bottom = 16.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("12_od2qg")
 
 [connection signal="ready" from="." to="mapOpen" method="play"]
 [connection signal="pressed" from="mapScreen/AreaInformation/control/travelButton" to="mapScreen/subViewportContainer/subViewport/map" method="_on_travel_button_pressed"]

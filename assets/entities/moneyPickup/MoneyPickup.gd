@@ -11,9 +11,10 @@ func pickupCash(pawn:BasePawn)->void:
 	if pawn.attachedCam:
 		gameManager.notifyFade("$%s has been added to your balance." %cashAmount)
 		pawn.attachedCam.fireRecoil(randf_range(1.15,1.8),0.0,randf_range(1.15,1.8),true)
-	pawn.pawnCash += cashAmount
+	gameState.addPawnCash(cashAmount)
+	pawn.playGrabAnimation()
 	meshHolder.hide()
 	#useSound.play()
 	canBeUsed = false
 	$collisionShape3d.disabled = true
-	#queue_free()
+	queue_free()

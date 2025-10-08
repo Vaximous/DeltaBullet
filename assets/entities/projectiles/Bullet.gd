@@ -23,12 +23,12 @@ func _physics_process(delta: float) -> void:
 	var col: Object = hit_data.col
 	var col_point: Vector3 = hit_data.col_point
 	var col_normal: Vector3 = hit_data.col_normal
-	var remainder: float = hit_data.remainder
+	#var remainder: float = hit_data.remainder
 
 	var collisionMaterial: DB_PhysicsMaterial = gameManager.getColliderPhysicsMaterial(col)
 
 	if collisionMaterial != insideMaterial:
-		enter_material(collisionMaterial, col, col_point, col_normal, remainder)
+		enter_material(collisionMaterial, col, col_point, col_normal)
 	else:
 		queue_free()
 
@@ -41,7 +41,7 @@ func set_projectile_owner(value: Node) -> void:
 	projectile_owner = value
 
 
-func enter_material(material: DB_PhysicsMaterial, collisionObject: Object, collisionPoint: Vector3, collisionNormal: Vector3, remainder: float) -> void:
+func enter_material(material: DB_PhysicsMaterial, collisionObject: Object, collisionPoint: Vector3, collisionNormal: Vector3) -> void:
 	insideMaterial = material
 	#print(material)
 	if collisionPoint.is_finite():
@@ -88,8 +88,8 @@ func enter_material(material: DB_PhysicsMaterial, collisionObject: Object, colli
 	queue_free()
 
 
-func exit_material(hit_data: Dictionary) -> void:
-	queue_free()
+#func exit_material(hit_data: Dictionary) -> void:
+	#queue_free()
 
 
 func get_damage() -> float:

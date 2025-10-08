@@ -715,22 +715,71 @@ stream = ExtResource("10_60wph")
 volume_db = -5.65
 bus = &"Music"
 
-[node name="gritCount" type="HBoxContainer" parent="."]
+[node name="hBoxContainer" type="HBoxContainer" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+
+[node name="dollenCount" type="HBoxContainer" parent="hBoxContainer"]
+unique_name_in_owner = true
 clip_contents = true
-anchors_preset = -1
-anchor_left = 0.9990001
-anchor_right = 0.9990001
-offset_left = -323.40015
-offset_right = 0.5998535
-offset_bottom = 64.0
+layout_mode = 2
 alignment = 2
 
-[node name="textureRect" type="TextureRect" parent="gritCount"]
+[node name="textureRect" type="TextureRect" parent="hBoxContainer/dollenCount"]
 clip_contents = true
 layout_mode = 2
 texture = SubResource("GradientTexture1D_1x2q7")
 
-[node name="gritLabel" type="Label" parent="gritCount/textureRect"]
+[node name="dollenLabel" type="Label" parent="hBoxContainer/dollenCount/textureRect"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "DOLLEN AMOUNT"
+label_settings = SubResource("LabelSettings_r3bbh")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="userInfo" type="MarginContainer" parent="hBoxContainer/dollenCount"]
+layout_mode = 2
+
+[node name="dock" type="TextureRect" parent="hBoxContainer/dollenCount/userInfo"]
+layout_mode = 2
+texture = SubResource("GradientTexture2D_wwelr")
+
+[node name="dockIcon" type="TextureRect" parent="hBoxContainer/dollenCount/userInfo/dock"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.5
+offset_top = -16.5
+offset_right = 16.5
+offset_bottom = 16.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("12_od2qg")
+
+[node name="gritCount" type="HBoxContainer" parent="hBoxContainer"]
+clip_contents = true
+layout_mode = 2
+alignment = 2
+
+[node name="textureRect" type="TextureRect" parent="hBoxContainer/gritCount"]
+clip_contents = true
+layout_mode = 2
+texture = SubResource("GradientTexture1D_1x2q7")
+
+[node name="gritLabel" type="Label" parent="hBoxContainer/gritCount/textureRect"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -743,14 +792,14 @@ label_settings = SubResource("LabelSettings_r3bbh")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="userInfo" type="MarginContainer" parent="gritCount"]
+[node name="userInfo" type="MarginContainer" parent="hBoxContainer/gritCount"]
 layout_mode = 2
 
-[node name="dock" type="TextureRect" parent="gritCount/userInfo"]
+[node name="dock" type="TextureRect" parent="hBoxContainer/gritCount/userInfo"]
 layout_mode = 2
 texture = SubResource("GradientTexture2D_wwelr")
 
-[node name="dockIcon" type="TextureRect" parent="gritCount/userInfo/dock"]
+[node name="dockIcon" type="TextureRect" parent="hBoxContainer/gritCount/userInfo/dock"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5

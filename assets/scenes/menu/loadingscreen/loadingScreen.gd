@@ -40,7 +40,7 @@ func _ready() -> void:
 	#gameManager.freeOrphanNodes()
 	gameManager.playerPawns.clear()
 	worldNameControl.hide()
-	await Fade.fade_in(0.3)
+	Fade.fade_in(0.3)
 	await get_tree().create_timer(0.2).timeout
 	OS.delay_msec(100)
 	ResourceLoader.load_threaded_request(sceneToLoad)

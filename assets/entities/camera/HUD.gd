@@ -79,7 +79,7 @@ func enableVignette(color:Color,duration:float)->void:
 	if vignetteTween:
 		vignetteTween.kill()
 	vignetteTween = create_tween()
-	vignetteTween.parallel().tween_method(setVignetteColor,vignette.get_material().get_shader_parameter("color"),Color.DARK_RED,3).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
+	vignetteTween.parallel().tween_method(setVignetteColor,vignette.get_material().get_shader_parameter("color"),color,duration).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
 	vignetteTween.parallel().tween_method(setVignetteSoftness,vignette.get_material().get_shader_parameter("softness"),0.8,2).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
 
 func setVignetteSoftness(amount:float)->void:
@@ -138,10 +138,8 @@ func flashColor(color:Color)->void:
 	if flashTween:
 		flashTween.kill()
 	flashTween = create_tween()
-	const defaultTransitionType = Tween.TRANS_QUART
-	const defaultEaseType = Tween.EASE_OUT
 	bulletTimeFlash.color = color
-	flashTween.parallel().tween_property(bulletTimeFlash,"color",Color.TRANSPARENT,1).set_ease(defaultEaseType).set_trans(defaultTransitionType)
+	flashTween.parallel().tween_property(bulletTimeFlash,"color",Color.TRANSPARENT,1).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUART)
 
 
 func fadeInteractHudIn()->void:

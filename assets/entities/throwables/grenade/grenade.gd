@@ -1,7 +1,7 @@
 extends ThrowableBase
 var exploded : bool = false
 @export var explosionRadius : float = 65.0
-@export var explosionImpulse :float  = 25.0
+@export var explosionImpulse :float  = 10.0
 
 func createExplosion()->void:
 	if exploded: queue_free()
@@ -30,6 +30,6 @@ func activateThrowable()->void:
 	queue_free()
 
 
-func _on_health_component_health_depleted(dealer: Node3D) -> void:
-	if dealer is BasePawn and dealer.isPlayerPawn() and is_instance_valid(dealer):
+func _on_health_component_health_depleted(_dealer: Node3D) -> void:
+	if _dealer is BasePawn and dealer.isPlayerPawn() and is_instance_valid(dealer):
 		activateThrowable()

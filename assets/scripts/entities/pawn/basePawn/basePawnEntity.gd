@@ -393,7 +393,7 @@ var isPeeking: bool = false:
 
 var peekPos: Vector3
 var isGrounded: bool = true
-var lastFrameOnFloor: int = -INF
+var lastFrameOnFloor: float = -INF
 var throwableItem: PackedScene = load("res://assets/entities/throwables/grenade/Grenade.tscn")
 var heldThrowable: ThrowableBase:
 	set(value):
@@ -655,7 +655,7 @@ func snapUpStairCheck(delta) -> bool:
 
 
 func stairSnapCheck() -> void:
-	var snapped: bool = false
+	var _snapped: bool = false
 	var isFloorBelow: bool = %stairUnder.is_colliding() and not isSurfaceSteep(%stairUnder.get_collision_normal())
 	var wasOnFloorFrame = Engine.get_physics_frames() - lastFrameOnFloor == 1
 	if not is_on_floor() and velocity.y <= 0 and (wasOnFloorFrame or snappedToStairsLastFrame) and isFloorBelow:
@@ -664,8 +664,8 @@ func stairSnapCheck() -> void:
 			var yTranslate = testResult.get_travel().y
 			self.position.y += yTranslate
 			apply_floor_snap()
-			snapped = true
-	snappedToStairsLastFrame = snapped
+			_snapped = true
+	snappedToStairsLastFrame = _snapped
 
 
 func isSurfaceSteep(normal: Vector3) -> bool:
@@ -1046,7 +1046,7 @@ func playEquipSound() -> void:
 
 
 func equipWeapon(index: int) -> void:
-	await unequipWeapon()
+	unequipWeapon()
 	playEquipSound()
 	currentItem = itemInventory[index]
 	if !freeAimChanged.is_connected(currentItem.checkFreeAim):
@@ -1499,7 +1499,7 @@ func loadPawnInfo(pawnInfo: String) -> void:
 		purchasedClothing = nodeData["purchasedClothes"]
 
 	for clothing in nodeData["clothes"]:
-		var colors = nodeData["clothesColors"]
+		#var colors = nodeData["clothesColors"]
 		var clothingItem: ClothingItem = load(clothing).instantiate()
 		clothingHolder.add_child(clothingItem)
 		for i in clothingItem.clothingMesh.get_surface_override_material_count():

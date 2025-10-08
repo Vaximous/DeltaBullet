@@ -283,6 +283,8 @@ func spawnPlayer(pos:Vector3 = Vector3.ZERO):
 	playerPawn.componentHolder.add_child(controller)
 	playerPawn.inputComponent = controller
 	playerPawn.checkComponents()
+	if pos != Vector3.ZERO:
+		playerPawn.global_plosition = pos
 
 func setTimeOfDay(time:float)->void:
 	if gameManager.world:
@@ -325,7 +327,6 @@ func debugToggle()->void:
 		Console.add_console_message("Debug controls are now enabled.")
 
 func loadMap(map)->void:
-	var dir : DirAccess
 	if map is String:
 		if map != "" or " ":
 			gameManager.loadWorld(str("%s.tscn"%map))

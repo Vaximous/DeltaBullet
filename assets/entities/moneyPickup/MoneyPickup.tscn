@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://ciwfrp34s8dta"]
 
 [ext_resource type="PackedScene" uid="uid://ccjm54ftqg7qc" path="res://assets/entities/interactiveObject/interactiveObject.tscn" id="1_21oit"]
-[ext_resource type="Script" path="res://assets/entities/moneyPickup/MoneyPickup.gd" id="2_uwxfj"]
+[ext_resource type="Script" uid="uid://oigqxwkmooe4" path="res://assets/entities/moneyPickup/MoneyPickup.gd" id="2_uwxfj"]
 [ext_resource type="AudioStream" uid="uid://b87nyjqxhfano" path="res://assets/sounds/ui/rareItemFound.wav" id="3_x6nr8"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_rumjx"]

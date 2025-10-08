@@ -29,7 +29,7 @@ func _get_configuration_warnings() -> PackedStringArray:
 	return []
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Engine.get_process_frames() % 20 == 0:
 		update_configuration_warnings()
 	if target_controls.size() > 0:

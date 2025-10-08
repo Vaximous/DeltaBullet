@@ -51,6 +51,11 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	setGritLabel(str(gameState.getPawnCash()))
+	if gameState.getPawnBlackMarketCurrency() > 0:
+		%dollenCount.show()
+		setDollenLabel(str(gameState.getPawnBlackMarketCurrency()))
+	else:
+		%dollenCount.hide()
 	setRankLabel(gameState.getPawnRank())
 
 func _input(event: InputEvent) -> void:
@@ -95,6 +100,9 @@ func setRankLabel(text:String)->void:
 
 func setGritLabel(text:String)->void:
 	%gritLabel.text = text
+
+func setDollenLabel(text:String)->void:
+	%dollenLabel.text = text
 
 func setIndex(value: int):
 	if !value > map.mapRotations.size() - 1 and map:

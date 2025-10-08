@@ -144,7 +144,7 @@ func removeAI() -> void:
 func get_and_update_ai_process_delta(time_msec: int) -> float:
 	var delta_msec = last_ai_process_tick - time_msec
 	last_ai_process_tick = time_msec
-	return float(delta_msec / 1000)
+	return float(delta_msec / 1000.0)
 
 
 func setPawnDirection(dir: Vector3) -> void:
@@ -186,7 +186,7 @@ func lookAtPosition(pos: Vector3, snap: bool = false) -> void:
 	if pos == Vector3.ZERO:
 		print("AI is looking zero, abort.")
 		return
-	var lookModifier = aimTargetRecoil * aimRecoilStrength
+#	var lookModifier = aimTargetRecoil * aimRecoilStrength
 	var completePosition = pos + aimTargetRecoil * aimRecoilStrength
 
 	if completePosition == Vector3.ZERO:

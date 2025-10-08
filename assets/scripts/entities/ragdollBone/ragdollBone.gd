@@ -150,10 +150,10 @@ func apply_ragdoll_motor(b: PhysicalBone3D, target_basis: Basis, kp: float = 500
 	ragdoll.setAngularMotorForceLimit(b, force_limit)
 	ragdoll.setAngularMotorTargetVelocity(b, desired_velocity)
 
-func _physics_process(delta: float) -> void:
-	if ragdoll.activeRagdollEnabled:
-		pass
-		#var target_pose: Transform3D = ragdoll.targetSkeleton.get_bone_pose(get_bone_id())
+#func _physics_process(delta: float) -> void:
+	#if ragdoll.activeRagdollEnabled:
+		#pass
+		##var target_pose: Transform3D = ragdoll.targetSkeleton.get_bone_pose(get_bone_id())
 
 
 

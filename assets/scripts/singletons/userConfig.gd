@@ -25,8 +25,8 @@ var audio_voice_volume : float = 0.6
 var audio_custom_music_enabled : bool = false
 
 #graphics settings
-@export_enum("Hard"," Soft Very Low", "Soft Low", "Soft Medium", "Soft High") var graphics_shadow_filter_quality : int = 1
-@export_enum("Very Low", "Low", "Medium", "High", "Very High") var graphics_shadow_quality : int = 3
+@export var graphics_shadow_filter_quality : RenderingServer.ShadowQuality = 1
+@export  var graphics_shadow_quality : RenderingServer.ShadowQuality = 3
 var graphics_motion_blur : bool = false
 var graphics_resolution : int = 0
 var graphics_fullscreen : bool = false
@@ -138,41 +138,36 @@ func getOption(optionString:String):
 
 func applyShadowFilterQuality() -> void:
 	match graphics_shadow_filter_quality:
-		-1:
-			RenderingServer.directional_soft_shadow_filter_set_quality(0)
-			RenderingServer.positional_soft_shadow_filter_set_quality(0)
-			ProjectSettings.set_setting("rendering/lights_and_shadows/directional_shadow/soft_shadow_filter_quality",0)
-			ProjectSettings.set_setting("rendering/lights_and_shadows/positional_shadow/soft_shadow_filter_quality",0)
-		0:
-			RenderingServer.directional_soft_shadow_filter_set_quality(0)
-			RenderingServer.positional_soft_shadow_filter_set_quality(0)
-			ProjectSettings.set_setting("rendering/lights_and_shadows/directional_shadow/soft_shadow_filter_quality",0)
-			ProjectSettings.set_setting("rendering/lights_and_shadows/positional_shadow/soft_shadow_filter_quality",0)
-		1:
-			RenderingServer.directional_soft_shadow_filter_set_quality(1)
-			RenderingServer.positional_soft_shadow_filter_set_quality(1)
-			ProjectSettings.set_setting("rendering/lights_and_shadows/directional_shadow/soft_shadow_filter_quality",1)
-			ProjectSettings.set_setting("rendering/lights_and_shadows/positional_shadow/soft_shadow_filter_quality",1)
-		2:
-			RenderingServer.directional_soft_shadow_filter_set_quality(2)
-			RenderingServer.positional_soft_shadow_filter_set_quality(2)
-			ProjectSettings.set_setting("rendering/lights_and_shadows/directional_shadow/soft_shadow_filter_quality",2)
-			ProjectSettings.set_setting("rendering/lights_and_shadows/positional_shadow/soft_shadow_filter_quality",2)
-		3:
-			RenderingServer.directional_soft_shadow_filter_set_quality(3)
-			RenderingServer.positional_soft_shadow_filter_set_quality(3)
-			ProjectSettings.set_setting("rendering/lights_and_shadows/directional_shadow/soft_shadow_filter_quality",3)
-			ProjectSettings.set_setting("rendering/lights_and_shadows/positional_shadow/soft_shadow_filter_quality",3)
-		4:
-			RenderingServer.directional_soft_shadow_filter_set_quality(4)
-			RenderingServer.positional_soft_shadow_filter_set_quality(4)
-			ProjectSettings.set_setting("rendering/lights_and_shadows/directional_shadow/soft_shadow_filter_quality",4)
-			ProjectSettings.set_setting("rendering/lights_and_shadows/positional_shadow/soft_shadow_filter_quality",4)
-		5:
-			RenderingServer.directional_soft_shadow_filter_set_quality(5)
-			RenderingServer.positional_soft_shadow_filter_set_quality(5)
-			ProjectSettings.set_setting("rendering/lights_and_shadows/directional_shadow/soft_shadow_filter_quality",5)
-			ProjectSettings.set_setting("rendering/lights_and_shadows/positional_shadow/soft_shadow_filter_quality",5)
+		RenderingServer.ShadowQuality.SHADOW_QUALITY_HARD:
+			RenderingServer.directional_soft_shadow_filter_set_quality(RenderingServer.ShadowQuality.SHADOW_QUALITY_HARD)
+			RenderingServer.positional_soft_shadow_filter_set_quality(RenderingServer.ShadowQuality.SHADOW_QUALITY_HARD)
+			ProjectSettings.set_setting("rendering/lights_and_shadows/directional_shadow/soft_shadow_filter_quality",RenderingServer.ShadowQuality.SHADOW_QUALITY_HARD)
+			ProjectSettings.set_setting("rendering/lights_and_shadows/positional_shadow/soft_shadow_filter_quality",RenderingServer.ShadowQuality.SHADOW_QUALITY_HARD)
+		RenderingServer.ShadowQuality.SHADOW_QUALITY_SOFT_VERY_LOW:
+			RenderingServer.directional_soft_shadow_filter_set_quality(RenderingServer.ShadowQuality.SHADOW_QUALITY_SOFT_VERY_LOW)
+			RenderingServer.positional_soft_shadow_filter_set_quality(RenderingServer.ShadowQuality.SHADOW_QUALITY_SOFT_VERY_LOW)
+			ProjectSettings.set_setting("rendering/lights_and_shadows/directional_shadow/soft_shadow_filter_quality",RenderingServer.ShadowQuality.SHADOW_QUALITY_SOFT_VERY_LOW)
+			ProjectSettings.set_setting("rendering/lights_and_shadows/positional_shadow/soft_shadow_filter_quality",RenderingServer.ShadowQuality.SHADOW_QUALITY_SOFT_VERY_LOW)
+		RenderingServer.ShadowQuality.SHADOW_QUALITY_SOFT_LOW:
+			RenderingServer.directional_soft_shadow_filter_set_quality(RenderingServer.ShadowQuality.SHADOW_QUALITY_SOFT_LOW)
+			RenderingServer.positional_soft_shadow_filter_set_quality(RenderingServer.ShadowQuality.SHADOW_QUALITY_SOFT_LOW)
+			ProjectSettings.set_setting("rendering/lights_and_shadows/directional_shadow/soft_shadow_filter_quality",RenderingServer.ShadowQuality.SHADOW_QUALITY_SOFT_LOW)
+			ProjectSettings.set_setting("rendering/lights_and_shadows/positional_shadow/soft_shadow_filter_quality",RenderingServer.ShadowQuality.SHADOW_QUALITY_SOFT_LOW)
+		RenderingServer.ShadowQuality.SHADOW_QUALITY_SOFT_MEDIUM:
+			RenderingServer.directional_soft_shadow_filter_set_quality(RenderingServer.ShadowQuality.SHADOW_QUALITY_SOFT_MEDIUM)
+			RenderingServer.positional_soft_shadow_filter_set_quality(RenderingServer.ShadowQuality.SHADOW_QUALITY_SOFT_MEDIUM)
+			ProjectSettings.set_setting("rendering/lights_and_shadows/directional_shadow/soft_shadow_filter_quality",RenderingServer.ShadowQuality.SHADOW_QUALITY_SOFT_MEDIUM)
+			ProjectSettings.set_setting("rendering/lights_and_shadows/positional_shadow/soft_shadow_filter_quality",RenderingServer.ShadowQuality.SHADOW_QUALITY_SOFT_MEDIUM)
+		RenderingServer.ShadowQuality.SHADOW_QUALITY_SOFT_HIGH:
+			RenderingServer.directional_soft_shadow_filter_set_quality(RenderingServer.ShadowQuality.SHADOW_QUALITY_SOFT_HIGH)
+			RenderingServer.positional_soft_shadow_filter_set_quality(RenderingServer.ShadowQuality.SHADOW_QUALITY_SOFT_HIGH)
+			ProjectSettings.set_setting("rendering/lights_and_shadows/directional_shadow/soft_shadow_filter_quality",RenderingServer.ShadowQuality.SHADOW_QUALITY_SOFT_HIGH)
+			ProjectSettings.set_setting("rendering/lights_and_shadows/positional_shadow/soft_shadow_filter_quality",RenderingServer.ShadowQuality.SHADOW_QUALITY_SOFT_HIGH)
+		RenderingServer.ShadowQuality.SHADOW_QUALITY_SOFT_ULTRA:
+			RenderingServer.directional_soft_shadow_filter_set_quality(RenderingServer.ShadowQuality.SHADOW_QUALITY_SOFT_ULTRA)
+			RenderingServer.positional_soft_shadow_filter_set_quality(RenderingServer.ShadowQuality.SHADOW_QUALITY_SOFT_ULTRA)
+			ProjectSettings.set_setting("rendering/lights_and_shadows/directional_shadow/soft_shadow_filter_quality",RenderingServer.ShadowQuality.SHADOW_QUALITY_SOFT_ULTRA)
+			ProjectSettings.set_setting("rendering/lights_and_shadows/positional_shadow/soft_shadow_filter_quality",RenderingServer.ShadowQuality.SHADOW_QUALITY_SOFT_ULTRA)
 
 func applyShadowQuality() -> void:
 	match graphics_shadow_quality:

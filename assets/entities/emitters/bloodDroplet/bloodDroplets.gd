@@ -20,7 +20,7 @@ func _ready() -> void:
 	#gameManager.registerPhysicsEntity(self)
 	if mesh:
 		var dup = mesh.mesh.duplicate()
-		mesh.mesh = mesh.mesh.duplicate()
+		mesh.mesh = dup
 
 
 func _physics_process(delta: float) -> void:
@@ -78,8 +78,8 @@ func _physics_process(delta: float) -> void:
 #
 
 
-func reset(position: Vector3, vel: Vector3, n: Vector3):
-	global_position = position
+func reset(pposition: Vector3, vel: Vector3, n: Vector3):
+	global_position = pposition
 	velocity = vel
 	norm = n
 	alive = true

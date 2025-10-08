@@ -1,6 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://dylrxnppg33qw"]
+[gd_scene load_steps=12 format=3 uid="uid://dylrxnppg33qw"]
 
 [ext_resource type="PackedScene" uid="uid://1lm2jr6bfhx2" path="res://assets/entities/throwables/throwableBase/throwableBase.tscn" id="1_c1g2t"]
+[ext_resource type="PhysicsMaterial" uid="uid://cc5ltv4umlj8t" path="res://assets/resources/PhysicsMaterials/metal_physics_material.tres" id="2_a7s8l"]
 [ext_resource type="Script" uid="uid://xnrabr3i45q8" path="res://assets/entities/throwables/grenade/grenade.gd" id="2_xwxxe"]
 [ext_resource type="Script" uid="uid://b1b7keu4relxk" path="res://assets/entities/throwables/throwableResource/throwableResource.gd" id="3_xdnty"]
 [ext_resource type="Script" uid="uid://dd6my2ga34tq7" path="res://assets/components/healthComponent/healthComponent.gd" id="4_mwroi"]
@@ -29,12 +30,13 @@ radius = 0.151687
 radius = 0.27223
 
 [node name="Grenade" node_paths=PackedStringArray("healthComponent") instance=ExtResource("1_c1g2t")]
+physics_material_override = ExtResource("2_a7s8l")
 continuous_cd = true
 linear_damp = 1.2
 angular_damp = 3.0
 script = ExtResource("2_xwxxe")
 explosionRadius = 5.0
-explosionImpulse = 15.0
+explosionImpulse = 5.0
 healthComponent = NodePath("healthComponent")
 throwableResource = SubResource("Resource_q2uit")
 

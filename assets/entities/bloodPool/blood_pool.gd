@@ -16,7 +16,7 @@ func _enter_tree() -> void:
 
 
 func startPool(_size: float = 0.5) -> void:
-	var timer := get_tree().create_timer(UserConfig.game_decal_remove_time).timeout.connect(deletePool)
+	get_tree().create_timer(UserConfig.game_decal_remove_time).timeout.connect(deletePool)
 	decal.scale = Vector3(0.01, 0.01, 0.01)
 	decal.texture_albedo = poolDecals.pick_random()
 	for i in decal.get_children():

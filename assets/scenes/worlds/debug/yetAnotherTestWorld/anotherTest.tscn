@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=4 uid="uid://ccnq3cc8k6nt5"]
+[gd_scene load_steps=70 format=4 uid="uid://ccnq3cc8k6nt5"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_iq3s1"]
 [ext_resource type="Resource" uid="uid://cm1dad74uaa1i" path="res://assets/scenes/worlds/debug/yetAnotherTestWorld/anotherTestData.tres" id="2_givre"]
@@ -44,12 +44,14 @@
 [ext_resource type="AudioStream" uid="uid://c1mk4s30dq3nc" path="res://assets/music/menu/Idlehoodtune.wav" id="24_qkxav"]
 [ext_resource type="PhysicsMaterial" uid="uid://cdxrasph25xol" path="res://assets/resources/PhysicsMaterials/wood_physics_material.tres" id="29_0op2q"]
 [ext_resource type="PackedScene" uid="uid://xtveejtd5yy8" path="res://assets/entities/props/ExplosiveBarrel/ExplosiveBarrel.tscn" id="31_snp5j"]
+[ext_resource type="PackedScene" uid="uid://bpv3s5oyvrbi5" path="res://assets/entities/props/breaker/breakerBox.tscn" id="36_ax0jb"]
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_ax0jb"]
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_12hni"]
 panorama = ExtResource("22_0op2q")
+energy_multiplier = 0.85
 
 [sub_resource type="Sky" id="Sky_nj1fe"]
-sky_material = SubResource("PanoramaSkyMaterial_ax0jb")
+sky_material = SubResource("PanoramaSkyMaterial_12hni")
 
 [sub_resource type="Environment" id="Environment_fccdg"]
 background_mode = 2
@@ -770,6 +772,9 @@ canBeUsed = true
 [node name="collisionShape3d" type="CollisionShape3D" parent="Geometry/navigationRegion3d/csgtruck/worldMapInteract" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.228889, 0.779267, 0.0284081)
 shape = SubResource("BoxShape3D_r7ihw")
+
+[node name="breakerBox" parent="Geometry/navigationRegion3d" index="19" instance=ExtResource("36_ax0jb")]
+transform = Transform3D(-0.19842838, 0, 0.28831607, 0, 0.35000002, 0, -0.28831607, 0, -0.19842838, 11.439185, 2.7479157, 11.512237)
 
 [node name="Uzi" parent="Props" index="0" instance=ExtResource("5_gs5af")]
 transform = Transform3D(0.721047, -0.348327, 0.598965, 0.26794, 0.937373, 0.222575, -0.638983, 0, 0.769221, -9.71416, 2.71492, 9.35189)

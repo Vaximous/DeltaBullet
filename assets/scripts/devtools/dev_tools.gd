@@ -49,8 +49,8 @@ func _physics_process(delta: float) -> void:
 
 func refresh_progression_view() -> void:
 	Util.queueFreeNodeChildren(%ProgressionViewContainer)
-	var progression_achievements = get_tree().get_nodes_in_group(&"achievement_tasks")
-	var progression_tasks = get_tree().get_nodes_in_group(&"checklist_tasks")
+	#var progression_achievements = get_tree().get_nodes_in_group(&"achievement_tasks")
+	#var progression_tasks = get_tree().get_nodes_in_group(&"checklist_tasks")
 
 	var achievements_display := FoldableContainer.new()
 	#achievements_display.title = "Achievements \t %d / %d" % [PlayerProgression.get_completed_achievements().size(), progression_achievements.size()]
@@ -494,7 +494,3 @@ func _on_timescale_drag_ended(value_changed: bool) -> void:
 
 func _on_change_level_button_pressed() -> void:
 	Console.cvars.maps()
-
-
-func _on_god_mode_toggle_toggled(toggled_on: bool) -> void:
-	gameManager.godmode()

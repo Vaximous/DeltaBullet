@@ -116,16 +116,20 @@ func addToSkills(skill:String):
 		var saveInfo = getGameState()
 		saveInfo["skills"].append({"name":skill,"skill":gameManager.getModifierFromName(skill)})
 
-func addToGamestate()->void:
-	var saveInfo = getGameState()
-	saveInfo["position"] = gameManager.getCurrentPawn().global_position
-	saveInfo["grit"] = getPawnCash()
-	saveInfo["weapons"] = gameManager.getCurrentPawn().itemInventory
-
 func addPawnCash(value:int)->int:
 	var saveInfo = getGameState()
 	saveInfo["grit"] += value
 	return saveInfo["grit"]
+
+func setPawnCash(value:int)->int:
+	var saveInfo = getGameState()
+	saveInfo["grit"] = value
+	return saveInfo["grit"]
+
+func addPawnBlackMarketCurrency(value:int)->int:
+	var saveInfo = getGameState()
+	saveInfo["dollen"] += value
+	return saveInfo["dollen"]
 
 func AddProperty(id:StringName)->Array:
 	var saveInfo = getGameState()
@@ -136,10 +140,11 @@ func AddProperty(id:StringName)->Array:
 func getGameState()->Dictionary:
 	return _gameState.get_or_add("stateSave",stateInfo)
 
-func setPawnCash(value:int)->int:
+
+func setPawnBlackMarketCurrency(value:int)->int:
 	var saveInfo = getGameState()
-	saveInfo["grit"] = value
-	return saveInfo["grit"]
+	saveInfo["dollen"] = value
+	return saveInfo["dollen"]
 
 func getPawnInfo():
 	var saveInfo = getGameState()
@@ -148,6 +153,24 @@ func getPawnInfo():
 func getPawnCash()->int:
 	var saveInfo = getGameState()
 	return saveInfo.get_or_add("grit",0)
+
+func addPawnXP(value:int)->int:
+	var saveInfo = getGameState()
+	saveInfo["xp"] += value
+	return saveInfo["xp"]
+
+func setPawnXP(value:int)->int:
+	var saveInfo = getGameState()
+	saveInfo["xp"] = value
+	return saveInfo["xp"]
+
+func getPawnXP()->int:
+	var saveInfo = getGameState()
+	return saveInfo.get_or_add("xp",0)
+
+func getPawnBlackMarketCurrency()->int:
+	var saveInfo = getGameState()
+	return saveInfo.get_or_add("dollen",0)
 
 func getPawnSkills()->Array:
 	var saveInfo = getGameState()

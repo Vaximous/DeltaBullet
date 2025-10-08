@@ -124,7 +124,7 @@ func beginStiffening()->void:
 				setBoneSpringEnabled(b,true)
 	#checkClothingHider()
 
-func ragTwitch(convulsionAmount : float = 10.0, bodyPartIDX : int = 0)-> void:
+func ragTwitch(_convulsionAmount : float = 10.0, _bodyPartIDX : int = 0)-> void:
 	pass
 
 func setBodyShape(clothingItem:ClothingItem):
@@ -266,7 +266,7 @@ func doRagdollHeadshot(pawn:BasePawn = null, dismember : bool = false, shotvel:V
 				clothes.queue_free()
 				checkClothingHider()
 	if dismember:
-		var headPos : = findPhysicsBone(42).position
+		#var headPos : = findPhysicsBone(42).position
 		findPhysicsBone(42).friction = 0.5
 		findPhysicsBone(42).mass = 20
 		findPhysicsBone(3).apply_impulse(shotvel*3,hitPos)

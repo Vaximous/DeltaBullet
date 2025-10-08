@@ -37,9 +37,9 @@ func healthCheck()->void:
 		if has_meta(&"god"):
 			if get_meta(&"god") == true:
 				return
-
-		isDead = true
-		HPisDead.emit()
+		if !isDead:
+			isDead = true
+			HPisDead.emit()
 		if lastDealer!=null and is_instance_valid(self) and is_instance_valid(lastDealer):
 			healthDepleted.emit(lastDealer)
 		else:

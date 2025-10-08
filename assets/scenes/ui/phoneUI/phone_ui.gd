@@ -42,6 +42,7 @@ func init(pawn:BasePawn)->void:
 		pawn.direction = Vector3.ZERO
 		%welcomeLabel.text = "Welcome, %s" %pawn.name
 		%gritAmount.text = "Grit: %sG" %gameState.getPawnCash()
+		%pawnInfo.text = "Rank: %s | Level: %s"%[gameState.getPawnRank(),gameState.getPawnLevel()]
 	if SmackneckClient.is_connected_to_masterserver():
 		%smacknetConnection.text = "         Connected"
 		$%smackneckChat.show()

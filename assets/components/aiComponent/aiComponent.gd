@@ -172,7 +172,7 @@ func setPawnType() -> void:
 			stateMachine.change_state("Patrol")
 
 
-func setToAttackState(amount, impulse, vector, dealer: BasePawn) -> void:
+func setToAttackState(_amount, _impulse, _vector, dealer: BasePawn) -> void:
 	if !targetedPawns.has(dealer):
 		targetedPawns.append(dealer)
 

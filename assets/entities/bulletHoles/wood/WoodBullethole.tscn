@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dke6il0mgsflx"]
+[gd_scene load_steps=19 format=3 uid="uid://dke6il0mgsflx"]
 
 [ext_resource type="PackedScene" uid="uid://dend7ate7mq6e" path="res://assets/entities/bulletHoles/default/BulletHoleBase.tscn" id="1_s80kj"]
 [ext_resource type="Texture2D" uid="uid://cbes1xjd28c5l" path="res://assets/textures/bullet/holes/wood/wood1.png" id="2_jkwfc"]
@@ -6,6 +6,14 @@
 [ext_resource type="Texture2D" uid="uid://b54631borxrb2" path="res://assets/textures/bullet/holes/wood/wood3.png" id="4_agjrq"]
 [ext_resource type="Texture2D" uid="uid://bfdyabpryobd0" path="res://assets/textures/bullet/holes/wood/wood4.png" id="5_5o6e2"]
 [ext_resource type="Texture2D" uid="uid://b31rtcyhto5oe" path="res://assets/textures/impact/genericWoodIImpact.png" id="6_wt15b"]
+[ext_resource type="AudioStream" uid="uid://vrsk47fecn3m" path="res://assets/sounds/impact/wood/bullet_impact_wood_heavy_01.wav" id="7_x3d8s"]
+[ext_resource type="AudioStream" uid="uid://cex7os2566m1g" path="res://assets/sounds/impact/wood/bullet_impact_wood_heavy_02.wav" id="8_5vw25"]
+[ext_resource type="AudioStream" uid="uid://c3ol5ywo1sc27" path="res://assets/sounds/impact/wood/bullet_impact_wood_heavy_03.wav" id="9_sidgp"]
+[ext_resource type="AudioStream" uid="uid://bnk6psnc41l2y" path="res://assets/sounds/impact/wood/bullet_impact_wood_heavy_04.wav" id="10_pnhmp"]
+[ext_resource type="AudioStream" uid="uid://dte2pmq2c6bba" path="res://assets/sounds/impact/wood/bullet_impact_wood_heavy_05.wav" id="11_c10js"]
+[ext_resource type="AudioStream" uid="uid://dfvp1pvdpf51t" path="res://assets/sounds/impact/wood/bullet_impact_wood_heavy_06.wav" id="12_5tdf0"]
+[ext_resource type="AudioStream" uid="uid://dk1deeywp4t1k" path="res://assets/sounds/impact/wood/bullet_impact_wood_heavy_07.wav" id="13_r00dl"]
+[ext_resource type="AudioStream" uid="uid://drqx5m1afjda8" path="res://assets/sounds/impact/wood/bullet_impact_wood_heavy_08.wav" id="14_b50t1"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_gnupi"]
 particle_flag_align_y = true
@@ -35,6 +43,18 @@ particles_anim_loop = false
 material = SubResource("StandardMaterial3D_fnkmy")
 size = Vector2(0.15, 0.15)
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_6wa4w"]
+random_pitch = 1.05
+streams_count = 8
+stream_0/stream = ExtResource("7_x3d8s")
+stream_1/stream = ExtResource("8_5vw25")
+stream_2/stream = ExtResource("9_sidgp")
+stream_3/stream = ExtResource("10_pnhmp")
+stream_4/stream = ExtResource("11_c10js")
+stream_5/stream = ExtResource("12_5tdf0")
+stream_6/stream = ExtResource("13_r00dl")
+stream_7/stream = ExtResource("14_b50t1")
+
 [node name="bulletHoleWood" node_paths=PackedStringArray("particleArray", "soundArray") instance=ExtResource("1_s80kj")]
 bulletTextures = Array[Texture2D]([ExtResource("2_jkwfc"), ExtResource("3_gjnx8"), ExtResource("4_agjrq"), ExtResource("5_5o6e2")])
 particleArray = [NodePath("explosionSparks")]
@@ -53,4 +73,6 @@ process_material = SubResource("ParticleProcessMaterial_gnupi")
 draw_pass_1 = SubResource("QuadMesh_6nrff")
 
 [node name="audioStreamPlayer3d" type="AudioStreamPlayer3D" parent="." index="2"]
+stream = SubResource("AudioStreamRandomizer_6wa4w")
 bus = &"Sounds"
+attenuation_filter_cutoff_hz = 20500.0

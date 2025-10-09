@@ -4,6 +4,10 @@
 
 [Trello](https://trello.com/b/RC2LMNCn/delta-bullet)
 
+[Game Design Document](https://docs.google.com/document/d/17fTTWup7rysvHVhc_OuykYA5GW188SOUCsvw_JiojeI/edit?usp=sharing)
+
+[World of Delta Bullet](https://docs.google.com/document/d/1UONYHuMojk4DLT7iQ-1NHp44cJiWJyC-Qp7tuxpuLYI/edit?usp=sharing)
+
 **Delta Bullet** is a violent third person action shooter in which you take the role of "Bullet". The best contract killer in the underground business, taking up any available mission to further his own goal of revenge after being left for dead by a contractor in a gang-conspiracy that runs deeper than they could ever imagine.
 
 **Delta Bullet** features a whole host of weapons from your simple handguns to power crushing shotguns all the way to military grade arsenal like Miniguns and Rocket Launchers all laundered through various shady channels and into your hands

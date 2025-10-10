@@ -401,6 +401,9 @@ func onPlayerDeath() -> void:
 func create_dialogue_camera() -> CutsceneCamera:
 	var new_cam = dialogue_cam.instantiate()
 	return new_cam
+
+func getCurrentCamera()->PlayerCamera:
+	return getCurrentPawn().attachedCam
 #endregion
 
 #region Physics Materials

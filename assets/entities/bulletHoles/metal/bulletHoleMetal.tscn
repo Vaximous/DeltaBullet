@@ -1,11 +1,31 @@
-[gd_scene load_steps=11 format=3 uid="uid://5y4hkwqs45ej"]
+[gd_scene load_steps=28 format=3 uid="uid://5y4hkwqs45ej"]
 
 [ext_resource type="PackedScene" uid="uid://dend7ate7mq6e" path="res://assets/entities/bulletHoles/default/BulletHoleBase.tscn" id="1_vuclq"]
 [ext_resource type="Texture2D" uid="uid://dxgkacxbki8ag" path="res://assets/textures/bullet/holes/metal/metal1.png" id="2_y3ad8"]
 [ext_resource type="Texture2D" uid="uid://vgc8mwi4cmqa" path="res://assets/textures/bullet/holes/metal/metal2.png" id="3_mhqwu"]
 [ext_resource type="Texture2D" uid="uid://diubltht1u47v" path="res://assets/textures/bullet/holes/metal/metal3.png" id="4_s7q15"]
 [ext_resource type="Texture2D" uid="uid://cggxtfpymimwo" path="res://assets/textures/bullet/holes/metal/metal4.png" id="5_uha8x"]
+[ext_resource type="AudioStream" uid="uid://gtd8vqp1wu01" path="res://assets/sounds/impact/metal/bullet_impact_metal_light_01.wav" id="6_ida67"]
 [ext_resource type="Material" uid="uid://cy8gqq4kaovdk" path="res://assets/materials/effects/spark/spark.tres" id="6_sxd4d"]
+[ext_resource type="AudioStream" uid="uid://htx3oydjt3fk" path="res://assets/sounds/impact/metal/bullet_impact_metal_light_02.wav" id="7_gqk27"]
+[ext_resource type="AudioStream" uid="uid://c7464o8vjtdqu" path="res://assets/sounds/impact/metal/bullet_impact_metal_light_03.wav" id="8_uilnx"]
+[ext_resource type="AudioStream" uid="uid://n4uag6j7ogav" path="res://assets/sounds/impact/metal/bullet_impact_metal_light_04.wav" id="9_jqpfw"]
+[ext_resource type="AudioStream" uid="uid://nbmiuvhytf6" path="res://assets/sounds/impact/metal/bullet_impact_metal_light_05.wav" id="10_cb57y"]
+[ext_resource type="AudioStream" uid="uid://h7eyo6wtetri" path="res://assets/sounds/impact/metal/bullet_impact_metal_light_06.wav" id="11_cncj1"]
+[ext_resource type="AudioStream" uid="uid://dl6gvtuytfc7y" path="res://assets/sounds/impact/metal/bullet_impact_metal_light_07.wav" id="12_y07bf"]
+[ext_resource type="AudioStream" uid="uid://c2ys5agnuiif2" path="res://assets/sounds/impact/metal/bullet_impact_metal_light_08.wav" id="13_hulnr"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_nc3ry"]
+random_pitch = 1.05
+streams_count = 8
+stream_0/stream = ExtResource("6_ida67")
+stream_1/stream = ExtResource("7_gqk27")
+stream_2/stream = ExtResource("8_uilnx")
+stream_3/stream = ExtResource("9_jqpfw")
+stream_4/stream = ExtResource("10_cb57y")
+stream_5/stream = ExtResource("11_cncj1")
+stream_6/stream = ExtResource("12_y07bf")
+stream_7/stream = ExtResource("13_hulnr")
 
 [sub_resource type="Curve" id="Curve_0ejmo"]
 _limits = [0.0, 3.0, 0.0, 1.0]
@@ -31,13 +51,68 @@ emission_curve = SubResource("CurveTexture_t8ufm")
 material = ExtResource("6_sxd4d")
 size = Vector2(0.02, 0.1)
 
+[sub_resource type="Curve" id="Curve_ida67"]
+_limits = [0.0, 5.0, 0.0, 5.0]
+_data = [Vector2(0, 1), 0.0, -1.10285, 0, 0, Vector2(0.390335, 0), 0.0263227, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_gqk27"]
+curve = SubResource("Curve_ida67")
+
+[sub_resource type="Curve" id="Curve_uilnx"]
+_limits = [0.0, 2.0, 0.0, 1.0]
+_data = [Vector2(0, 0), 0.0, 5.69393, 0, 0, Vector2(0.509294, 2), 1.9116, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_jqpfw"]
+curve = SubResource("Curve_uilnx")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_cb57y"]
+particle_flag_rotate_y = true
+angle_min = 1.07288e-05
+angle_max = 180.6
+direction = Vector3(0, 1, 0)
+spread = 18.121
+flatness = 1.0
+initial_velocity_min = 0.25
+initial_velocity_max = 1.35
+gravity = Vector3(0, -0.6, 0)
+attractor_interaction_enabled = false
+scale_min = 0.0
+scale_max = 1.1999999
+scale_curve = SubResource("CurveTexture_jqpfw")
+alpha_curve = SubResource("CurveTexture_gqk27")
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_cncj1"]
+load_path = "res://.godot/imported/ParticleCloudWhite.png-e95e1c408598070902f3444ffcd2d04a.bptc.ctex"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y07bf"]
+transparency = 1
+shading_mode = 0
+diffuse_mode = 3
+specular_mode = 2
+disable_ambient_light = true
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.47788018, 0.47788012, 0.47788012, 0.8627451)
+albedo_texture = SubResource("CompressedTexture2D_cncj1")
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_hulnr"]
+material = SubResource("StandardMaterial3D_y07bf")
+size = Vector2(0.3, 0.3)
+
 [node name="MetalHole" node_paths=PackedStringArray("particleArray", "soundArray") instance=ExtResource("1_vuclq")]
 bulletTextures = Array[Texture2D]([ExtResource("2_y3ad8"), ExtResource("3_mhqwu"), ExtResource("4_s7q15"), ExtResource("5_uha8x")])
-particleArray = [NodePath("explosionSparks")]
+particleArray = [NodePath("explosionSparks"), NodePath("smoke")]
 soundArray = [NodePath("audioStreamPlayer3d")]
 decalSize = 0.05
 
 [node name="audioStreamPlayer3d" type="AudioStreamPlayer3D" parent="." index="1"]
+stream = SubResource("AudioStreamRandomizer_nc3ry")
 bus = &"Sounds"
 attenuation_filter_cutoff_hz = 20500.0
 
@@ -51,3 +126,17 @@ randomness = 1.0
 fixed_fps = 0
 process_material = SubResource("ParticleProcessMaterial_osy6d")
 draw_pass_1 = SubResource("QuadMesh_ida67")
+
+[node name="smoke" type="GPUParticles3D" parent="." index="3"]
+unique_name_in_owner = true
+emitting = false
+amount = 5
+lifetime = 4.0
+one_shot = true
+speed_scale = 2.1
+explosiveness = 1.0
+randomness = 1.0
+fixed_fps = 0
+visibility_aabb = AABB(-0.309371, -0.3, -0.342307, 0.609581, 0.866252, 0.642307)
+process_material = SubResource("ParticleProcessMaterial_cb57y")
+draw_pass_1 = SubResource("QuadMesh_hulnr")

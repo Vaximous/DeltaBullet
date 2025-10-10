@@ -1,7 +1,7 @@
 [gd_scene load_steps=35 format=3 uid="uid://1d1rfqprpnrb"]
 
 [ext_resource type="Script" uid="uid://bqcb21u5nterd" path="res://assets/entities/camera/HUD.gd" id="1_on6xd"]
-[ext_resource type="Shader" path="res://assets/scenes/ui/radialBlur.gdshader" id="2_4y830"]
+[ext_resource type="Shader" uid="uid://c75blutw6w8na" path="res://assets/scenes/ui/radialBlur.gdshader" id="2_4y830"]
 [ext_resource type="FontFile" uid="uid://xmwjvmqspojb" path="res://assets/fonts/Grand_Aventure_Text.otf" id="2_tf7jg"]
 [ext_resource type="Texture2D" uid="uid://dc3fkfugwvtla" path="res://assets/textures/misc/company-logo (1).png" id="3_4nkiw"]
 [ext_resource type="Texture2D" uid="uid://birbjoai58xb7" path="res://assets/textures/crosshair/crosshair001.png" id="4_uhc5s"]
@@ -31,7 +31,7 @@ default_font = ExtResource("2_tf7jg")
 resource_name = "crosshair"
 script/source = "extends TextureRect
 signal crosshairSet(crosshair)
-const  defaultCrosshair = preload(\"res://assets/textures/crosshair/crosshair012.png\")
+const  defaultCrosshair = preload(\"res://assets/textures/crosshair/crosshair001.png\")
 @export var dynamicCrosshair : bool = true
 @export var overridePosition : bool = true
 var positionOverride

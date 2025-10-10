@@ -60,6 +60,7 @@ func loadGame(save:String)->void:
 				gameManager.currentSave = save
 				gameManager.modify_persistent_data("lastSave", save)
 				gameManager.loadWorld(nodeData["saveScene"])
+				questManager.loadQuestsFromGamestate()
 				gameManager.modify_persistent_data("lastSaveData", stateInfo)
 				#print(get_persistent_data()["lastSaveData"])
 				#purchasedPlacables = nodeData["purchasePlacables"]
@@ -212,6 +213,30 @@ func hasOwnedProperty(id:StringName)->bool:
 		if i == id:
 			result = true
 	return result
+
+func getQuestDatabase()->Dictionary:
+	var saveInfo = getGameState()
+	var quests = saveInfo.get_or_add("questDatabase",{})
+	return quests
+
+func addQuestToGamestate(quest:Contract)->Dictionary:
+	var saveInfo = getGameState()
+	var quests : Dictionary = saveInfo.get_or_add("questDatabase",{})
+	var questToAdd : Dictionary = quests.get_or_add(quest.questName,{})
+	#questToAdd.get_or_add("questName",quest.questName)
+	questToAdd.get_or_add("questScene",quest.scene_file_path)
+	questToAdd.get_or_add("questStatus",quest.questStatus)
+	questToAdd.get_or_add("questProgress",quest.questProgress)
+	return questToAdd
+
+func updateQuestGamestate(quest:Contract)->Dictionary:
+	var saveInfo = getGameState()
+	var quests : Dictionary = saveInfo.get_or_add("questDatabase",{})
+	var questToUpdate : Dictionary = quests.get_or_add(quest.questName,{})
+	#questToAdd.get_or_add("questName",quest.questName)
+	questToUpdate["questStatus"] = quest.questStatus
+	questToUpdate["questStatus"] = quest.questProgress
+	return questToUpdate
 
 func getOwnedProperty(id:StringName)->int:
 	var properties = getGameState()

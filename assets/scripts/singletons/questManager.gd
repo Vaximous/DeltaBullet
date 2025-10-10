@@ -44,3 +44,17 @@ func checkIfContractCompleted(contract:Contract)->bool:
 		return true
 	else:
 		return false
+
+func loadQuestsFromGamestate()->void:
+	var gamestateDB : Dictionary = gameState.getQuestDatabase()
+	#questDatabase.clear()
+	for i in gamestateDB:
+		var getter = gamestateDB.get_or_add(i)
+		var contract : Contract = load(getter.get_or_add("questScene")).instantiate()
+		contract.questProgress = getter.get_or_add("questProgress")
+		contract.questStatus = getter.get_or_add("questStatus")
+		if questDatabase.has(contract):
+			contract.queue_free()
+		else:
+			questDatabase.append(contract)
+	evaluateContracts()

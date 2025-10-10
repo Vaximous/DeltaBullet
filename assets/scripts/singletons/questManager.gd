@@ -18,9 +18,10 @@ func _enter_tree()->void:
 func evaluateContracts()->void:
 		for i in questDatabase:
 			if i is Contract:
+				if !get_children().has(i):
+					add_child(i)
 				match i.questStatus:
 					0:
-						add_child(i)
 						i.enableQuest()
 					1:
 						i.startQuest(i.questProgress)
@@ -54,7 +55,7 @@ func loadQuestsFromGamestate()->void:
 		contract.questProgress = getter.get_or_add("questProgress")
 		contract.questStatus = getter.get_or_add("questStatus")
 		questDatabase.append(contract)
-		evaluateContracts()
+	evaluateContracts()
 
 func clearDatabase()->void:
 	for i in get_children():

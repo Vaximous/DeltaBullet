@@ -235,7 +235,7 @@ func updateQuestGamestate(quest:Contract)->Dictionary:
 	var questToUpdate : Dictionary = quests.get_or_add(quest.questName,{})
 	#questToAdd.get_or_add("questName",quest.questName)
 	questToUpdate["questStatus"] = quest.questStatus
-	questToUpdate["questStatus"] = quest.questProgress
+	questToUpdate["questProgress"] = quest.questProgress
 	return questToUpdate
 
 func getOwnedProperty(id:StringName)->int:

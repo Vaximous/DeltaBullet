@@ -88,9 +88,11 @@ func progressQuest()->void:
 	gameState.updateQuestGamestate(self)
 
 func finishQuest()->void:
-	var questNotif = load("res://assets/scenes/ui/questUI/questNotification.tscn").instantiate()
 	questManager.questCompleted.emit(self)
 	##Temporary Quest Finish Confirmation
-	gameManager.activeCamera.hud.questNotifHolder.add_child(questNotif)
-	questNotif.playQuestNotif(self,0)
+	if is_instance_valid(gameManager.world):
+		var questNotif = load("res://assets/scenes/ui/questUI/questNotification.tscn").instantiate()
+		gameManager.activeCamera.hud.questNotifHolder.add_child(questNotif)
+		questNotif.playQuestNotif(self,0)
+	#gameState.updateQuestGamestate(self)
 	#gameManager.notifyCheck("Contract '%s' has been completed." %questName,2,4)

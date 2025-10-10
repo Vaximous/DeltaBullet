@@ -47,14 +47,22 @@ func checkIfContractCompleted(contract:Contract)->bool:
 
 func loadQuestsFromGamestate()->void:
 	var gamestateDB : Dictionary = gameState.getQuestDatabase()
-	#questDatabase.clear()
+	clearDatabase()
 	for i in gamestateDB:
 		var getter = gamestateDB.get_or_add(i)
 		var contract : Contract = load(getter.get_or_add("questScene")).instantiate()
 		contract.questProgress = getter.get_or_add("questProgress")
 		contract.questStatus = getter.get_or_add("questStatus")
-		if questDatabase.has(contract):
-			contract.queue_free()
-		else:
-			questDatabase.append(contract)
-	evaluateContracts()
+		questDatabase.append(contract)
+		evaluateContracts()
+
+func clearDatabase()->void:
+	for i in get_children():
+		i.queue_free()
+	questDatabase.clear()
+
+func checkIfContractExists(contract:Contract):
+	for i in questDatabase:
+		if i.questName == contract.questName or i == contract or i.scene_file_path == contract.scene_file_path:
+			return true
+	return false

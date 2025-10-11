@@ -147,6 +147,8 @@ func _on_area_entered(area: Area3D) -> void:
 func _on_shaker_area_body_entered(body: Node3D) -> void:
 	if body is BasePawn:
 		var distance = global_position.distance_to(body.global_position) / %shakerCollider.shape.radius
+		print(global_position.distance_to(body.global_position))
+		#print(distance)
 		if body.isPlayerPawn() and is_instance_valid(body.attachedCam):
 			%cameraShakerComponent.shakeCam(distance,body.attachedCam,global_position.direction_to(body.attachedCam.camera.global_position))
 

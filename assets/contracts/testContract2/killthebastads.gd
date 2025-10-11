@@ -23,6 +23,7 @@ func addtokillcount() -> void:
 	var _notification = load("res://assets/scenes/ui/generalNotif/generalNotification.tscn").instantiate()
 	if killcount < 1:
 		for players in gameManager.playerPawns:
-			players.attachedCam.hud.gameNotifications.add_child(_notification)
-			_notification.doNotification(null, "Cloaked Up", "Target Eliminated.")
+			if is_instance_valid(players):
+				players.attachedCam.hud.gameNotifications.add_child(_notification)
+				_notification.doNotification(null, "Cloaked Up", "Target Eliminated.")
 	killcount += 1

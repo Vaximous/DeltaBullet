@@ -18,9 +18,10 @@ func _enter_tree()->void:
 func evaluateContracts()->void:
 		for i in questDatabase:
 			if i is Contract:
+				if !get_children().has(i):
+					add_child(i)
 				match i.questStatus:
 					0:
-						add_child(i)
 						i.enableQuest()
 					1:
 						i.startQuest(i.questProgress)
@@ -44,3 +45,25 @@ func checkIfContractCompleted(contract:Contract)->bool:
 		return true
 	else:
 		return false
+
+func loadQuestsFromGamestate()->void:
+	var gamestateDB : Dictionary = gameState.getQuestDatabase()
+	clearDatabase()
+	for i in gamestateDB:
+		var getter = gamestateDB.get_or_add(i)
+		var contract : Contract = load(getter.get_or_add("questScene")).instantiate()
+		contract.questProgress = getter.get_or_add("questProgress")
+		contract.questStatus = getter.get_or_add("questStatus")
+		questDatabase.append(contract)
+	evaluateContracts()
+
+func clearDatabase()->void:
+	for i in get_children():
+		i.queue_free()
+	questDatabase.clear()
+
+func checkIfContractExists(contract:Contract):
+	for i in questDatabase:
+		if i.questName == contract.questName or i == contract or i.scene_file_path == contract.scene_file_path:
+			return true
+	return false

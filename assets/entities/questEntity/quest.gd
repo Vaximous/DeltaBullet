@@ -42,6 +42,7 @@ func _ready()->void:
 		print_rich("[color=red]Contract '%s' doesn't have a sub-contract![/color]")
 
 func _enter_tree() -> void:
+	gameState.addQuestToGamestate(self)
 	if is_node_ready() and is_instance_valid(get_child(questProgress)):
 		var subquest : SubContract = get_child(questProgress)
 		subcontract = subquest
@@ -57,6 +58,7 @@ func disableQuest()->bool:
 		questManager.currentQuests.erase(questInt)
 	if subcontract != null:
 		subcontract.onQuestExited()
+	gameState.updateQuestGamestate(self)
 	return true
 
 func enableQuest()->bool:
@@ -66,6 +68,7 @@ func enableQuest()->bool:
 			questManager.add_child(self)
 		if subcontract != null:
 			subcontract.onQuestEntered()
+	gameState.updateQuestGamestate(self)
 	return true
 
 func startQuest(at:int=0)->void:
@@ -75,17 +78,21 @@ func startQuest(at:int=0)->void:
 			subcontract = get_child(questProgress)
 			if subcontract != null:
 				subcontract.onQuestEntered()
+	gameState.updateQuestGamestate(self)
 
 func progressQuest()->void:
 	questProgress += 1
 	if is_instance_valid(get_child(questProgress)):
 		subcontract = get_child(questProgress)
 		subcontract.onQuestEntered()
+	gameState.updateQuestGamestate(self)
 
 func finishQuest()->void:
-	var questNotif = load("res://assets/scenes/ui/questUI/questNotification.tscn").instantiate()
 	questManager.questCompleted.emit(self)
 	##Temporary Quest Finish Confirmation
-	gameManager.activeCamera.hud.questNotifHolder.add_child(questNotif)
-	questNotif.playQuestNotif(self,0)
+	if is_instance_valid(gameManager.world):
+		var questNotif = load("res://assets/scenes/ui/questUI/questNotification.tscn").instantiate()
+		gameManager.activeCamera.hud.questNotifHolder.add_child(questNotif)
+		questNotif.playQuestNotif(self,0)
+	#gameState.updateQuestGamestate(self)
 	#gameManager.notifyCheck("Contract '%s' has been completed." %questName,2,4)

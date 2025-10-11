@@ -458,7 +458,7 @@ func _input(_event) -> void:
 
 #region Pawn/Player
 func getCurrentPawn() -> BasePawn:
-	if activeCamera.followingEntity is BasePawn:
+	if is_instance_valid(activeCamera.followingEntity) and activeCamera.followingEntity is BasePawn:
 		return activeCamera.followingEntity
 	else: return null
 #endregion

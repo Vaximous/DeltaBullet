@@ -1,0 +1,85 @@
+[remap]
+
+importer="scene"
+importer_version=1
+type="PackedScene"
+uid="uid://dghclfthxofsq"
+path="res://.godot/imported/utilitypoles.gltf-3f79fb29ea5157102d8c81f53aacf24e.scn"
+
+[deps]
+
+source_file="res://assets/models/world/utilitypoles/utilitypoles.gltf"
+dest_files=["res://.godot/imported/utilitypoles.gltf-3f79fb29ea5157102d8c81f53aacf24e.scn"]
+
+[params]
+
+nodes/root_type=""
+nodes/root_name=""
+nodes/root_script=null
+nodes/apply_root_scale=true
+nodes/root_scale=1.0
+nodes/import_as_skeleton_bones=false
+nodes/use_name_suffixes=true
+nodes/use_node_type_suffixes=true
+meshes/ensure_tangents=true
+meshes/generate_lods=true
+meshes/create_shadow_meshes=true
+meshes/light_baking=1
+meshes/lightmap_texel_size=0.2
+meshes/force_disable_compression=false
+skins/use_named_skins=true
+animation/import=true
+animation/fps=30
+animation/trimming=false
+animation/remove_immutable_tracks=true
+animation/import_rest_as_RESET=false
+import_script/path=""
+materials/extract=0
+materials/extract_format=0
+materials/extract_path=""
+_subresources={
+"materials": {
+"UtilityPoleCrossbarMaterial": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://assets/models/world/utilitypoles/UtilityPoleCrossbarMaterial.tres",
+"use_external/path": "uid://b1slb146pggm3"
+},
+"UtilityPoleDownstepperMaterial": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://assets/models/world/utilitypoles/UtilityPoleDownstepperMaterial.tres",
+"use_external/path": "uid://be71jynl0t4ku"
+},
+"UtilityPoleFuseMaterial": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://assets/models/world/utilitypoles/UtilityPoleFuseMaterial.tres",
+"use_external/path": "uid://0osfavckn0dw"
+},
+"UtilityPoleGroundWireGuideMaterial": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://assets/models/world/utilitypoles/UtilityPoleGroundWireGuideMaterial.tres",
+"use_external/path": "uid://8peqk5soklaw"
+},
+"UtilityPoleInsulatorMaterial": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://assets/models/world/utilitypoles/UtilityPoleInsulatorMaterial.tres",
+"use_external/path": "uid://cnfnaqawabd7p"
+},
+"UtilityPoleMetalMaterial": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://assets/models/world/utilitypoles/UtilityPoleMetalMaterial.tres",
+"use_external/path": "uid://bwsqdk3m25jb8"
+},
+"UtilityPoleSurgeArrestorMaterial": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://assets/models/world/utilitypoles/UtilityPoleSurgeArrestorMaterial.tres",
+"use_external/path": "uid://dkkqhuuvv3p47"
+},
+"UtilityPoleWoodMaterial": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://assets/models/world/utilitypoles/UtilityPoleWoodMaterial.tres",
+"use_external/path": "uid://d326f66ulajon"
+}
+}
+}
+gltf/naming_version=2
+gltf/embedded_image_handling=1

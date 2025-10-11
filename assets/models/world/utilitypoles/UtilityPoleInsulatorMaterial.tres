@@ -1,0 +1,5 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://cnfnaqawabd7p"]
+
+[resource]
+resource_name = "UtilityPoleInsulatorMaterial"
+cull_mode = 2

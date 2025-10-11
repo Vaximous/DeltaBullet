@@ -1,0 +1,5 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://8peqk5soklaw"]
+
+[resource]
+resource_name = "UtilityPoleGroundWireGuideMaterial"
+cull_mode = 2

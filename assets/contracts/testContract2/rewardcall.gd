@@ -9,4 +9,5 @@ func onQuestEntered()->void:
 
 func finishQuest()->void:
 	contractOwner.progressQuest()
+	gameState.addPawnCash(50)
 	gameManager.getCurrentPawn().callFinished.disconnect(finishQuest)

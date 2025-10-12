@@ -9,6 +9,20 @@ func display_message_simple(text : String, duration : float = 5.0, abort_if_disp
 	var script := preload("res://assets/scenes/ui/popup_message.gd")
 	return script.display_text(text, duration, abort_if_displaying, parent)
 
+func getPawnAnimationTree(pawn:BasePawn)->AnimationTree:
+	return pawn.animationTree
+
+func getPawnCurrentWeaponAnimationTree(pawn:BasePawn)->AnimationTree:
+	if is_instance_valid(pawn):
+		if is_instance_valid(pawn.currentItem):
+			return pawn.currentItem.animationTree
+	return null
+
+func getPawnWeaponState(pawn:BasePawn)->AnimationNodeStateMachinePlayback:
+	if is_instance_valid(pawn):
+		var atree : AnimationTree = getPawnCurrentWeaponAnimationTree(pawn)
+		return atree.get("parameters/weaponState/playback")
+	return null
 
 ##Resizes an array, filling spaces with a given value
 func resize_array_and_fill(array : Array, size : int, value : Variant) -> void:

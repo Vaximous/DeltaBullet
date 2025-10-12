@@ -18,8 +18,11 @@ extends Panel
 
 
 func playQuestNotif(contract:Contract, type:int=0):
-	contractNameLabel.text = contract.questName
-	contractType = type
-	animPlayer.play("entry")
-	await animPlayer.animation_finished
-	queue_free()
+	if is_instance_valid(contract):
+		if is_instance_valid(contractNameLabel):
+			contractNameLabel.text = contract.questName
+		contractType = type
+		if is_instance_valid(animPlayer):
+			animPlayer.play("entry")
+			await animPlayer.animation_finished
+		queue_free()

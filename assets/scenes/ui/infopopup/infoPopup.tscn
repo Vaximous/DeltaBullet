@@ -1,12 +1,12 @@
-[gd_scene load_steps=16 format=3 uid="uid://eovl4whsv3lj"]
+[gd_scene load_steps=15 format=3 uid="uid://bcru4abwkjkaq"]
 
-[ext_resource type="Script" uid="uid://dos6iw15xdqvj" path="res://assets/scenes/ui/mapOverview/mapPopup.gd" id="1_sgctd"]
-[ext_resource type="Texture2D" uid="uid://bag0nbin3udvs" path="res://assets/textures/misc/bootlogo.png" id="1_yv6rj"]
-[ext_resource type="AudioStream" uid="uid://d1pr7ltc6f600" path="res://assets/sounds/ui/uiappear.wav" id="3_o65sk"]
-[ext_resource type="AudioStream" uid="uid://cpacq6td0fe4q" path="res://assets/sounds/ui/shop/Buy sound_1.wav" id="4_t2nau"]
-[ext_resource type="AudioStream" uid="uid://c3bhon2ro1hq7" path="res://assets/sounds/ui/shop/Buy sound_2.wav" id="5_vonld"]
-[ext_resource type="AudioStream" uid="uid://cxrbsrsbi167g" path="res://assets/sounds/ui/shop/Buy sound_3.wav" id="6_hjkdg"]
-[ext_resource type="AudioStream" uid="uid://crpcvvr4dupq6" path="res://assets/sounds/ui/slideOpen.wav" id="7_uvhqi"]
+[ext_resource type="Script" uid="uid://cs5s4elix6y65" path="res://assets/scenes/ui/infopopup/infoPopup.gd" id="1_2pigh"]
+[ext_resource type="Texture2D" uid="uid://bag0nbin3udvs" path="res://assets/textures/misc/bootlogo.png" id="2_bxcga"]
+[ext_resource type="AudioStream" uid="uid://d1pr7ltc6f600" path="res://assets/sounds/ui/uiappear.wav" id="3_r3dv4"]
+[ext_resource type="AudioStream" uid="uid://dhnyhynlkif8t" path="res://assets/sounds/ui/toolbox/Ui_toolbox_click_1.wav" id="6_no2dw"]
+[ext_resource type="AudioStream" uid="uid://bqhb61oo4k6ey" path="res://assets/sounds/ui/toolbox/Ui_toolbox_click_2.wav" id="7_lctpn"]
+[ext_resource type="AudioStream" uid="uid://bge2jvcacei4n" path="res://assets/sounds/ui/toolbox/Ui_toolbox_click_3.wav" id="8_jgtky"]
+[ext_resource type="AudioStream" uid="uid://ckoiy8al3fvmf" path="res://assets/sounds/ui/toolbox/Ui_toolbox_click_4.wav" id="9_nte3l"]
 
 [sub_resource type="Gradient" id="Gradient_6u8km"]
 offsets = PackedFloat32Array(0, 0.14173229, 0.8385827, 1)
@@ -15,13 +15,6 @@ colors = PackedColorArray(0, 0, 0, 1, 0.13319641, 0.13319641, 0.13319638, 1, 0.1
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_5bmur"]
 gradient = SubResource("Gradient_6u8km")
 fill_to = Vector2(0, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_o65sk"]
-font_size = 31
-outline_size = 5
-outline_color = Color(0, 0, 0, 1)
-shadow_size = 3
-shadow_color = Color(0, 0, 0, 0.6627451)
 
 [sub_resource type="Animation" id="Animation_ces1u"]
 length = 0.001
@@ -153,12 +146,13 @@ _data = {
 }
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_da4mp"]
-streams_count = 3
-stream_0/stream = ExtResource("4_t2nau")
-stream_1/stream = ExtResource("5_vonld")
-stream_2/stream = ExtResource("6_hjkdg")
+streams_count = 4
+stream_0/stream = ExtResource("6_no2dw")
+stream_1/stream = ExtResource("7_lctpn")
+stream_2/stream = ExtResource("8_jgtky")
+stream_3/stream = ExtResource("9_nte3l")
 
-[node name="mapPopup" type="MarginContainer"]
+[node name="infoPopup" type="MarginContainer"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -170,7 +164,7 @@ offset_right = 491.5
 offset_bottom = 398.625
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_sgctd")
+script = ExtResource("1_2pigh")
 
 [node name="popupVbox" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -203,11 +197,12 @@ clip_contents = true
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="textureButton" type="TextureRect" parent="popupVbox/contents/panelContainer/hSplitContainer"]
+[node name="infoPicture" type="TextureRect" parent="popupVbox/contents/panelContainer/hSplitContainer"]
+unique_name_in_owner = true
 clip_contents = true
 layout_mode = 2
 size_flags_vertical = 3
-texture = ExtResource("1_yv6rj")
+texture = ExtResource("2_bxcga")
 expand_mode = 1
 stretch_mode = 5
 
@@ -218,7 +213,8 @@ layout_mode = 2
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="richTextLabel" type="RichTextLabel" parent="popupVbox/contents/panelContainer/hSplitContainer/scrollContainer"]
+[node name="infoText" type="RichTextLabel" parent="popupVbox/contents/panelContainer/hSplitContainer/scrollContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -237,30 +233,6 @@ horizontal_alignment = 1
 [node name="hSeparator3" type="HSeparator" parent="popupVbox/contents/panelContainer/hSplitContainer"]
 layout_mode = 2
 
-[node name="rewardsContainer" type="ScrollContainer" parent="popupVbox/contents/panelContainer/hSplitContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-vertical_scroll_mode = 0
-
-[node name="vBoxContainer" type="VBoxContainer" parent="popupVbox/contents/panelContainer/hSplitContainer/rewardsContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="label" type="Label" parent="popupVbox/contents/panelContainer/hSplitContainer/rewardsContainer/vBoxContainer"]
-layout_mode = 2
-text = "REWARDS"
-label_settings = SubResource("LabelSettings_o65sk")
-horizontal_alignment = 1
-
-[node name="hSeparator4" type="HSeparator" parent="popupVbox/contents/panelContainer/hSplitContainer/rewardsContainer/vBoxContainer"]
-layout_mode = 2
-
-[node name="rewardsBox" type="HBoxContainer" parent="popupVbox/contents/panelContainer/hSplitContainer/rewardsContainer/vBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-alignment = 1
-
 [node name="bottom" type="MarginContainer" parent="popupVbox"]
 clip_contents = true
 custom_minimum_size = Vector2(0, 30)
@@ -274,18 +246,21 @@ expand_mode = 1
 [node name="hBoxContainer" type="HBoxContainer" parent="popupVbox/bottom"]
 layout_mode = 2
 
-[node name="cancel" type="Button" parent="popupVbox/bottom/hBoxContainer"]
+[node name="left" type="Button" parent="popupVbox/bottom/hBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Cancel"
+text = "<"
 
 [node name="vSeparator" type="VSeparator" parent="popupVbox/bottom/hBoxContainer"]
 layout_mode = 2
 
-[node name="purchase" type="Button" parent="popupVbox/bottom/hBoxContainer"]
+[node name="right" type="Button" parent="popupVbox/bottom/hBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Purchase"
+text = ">
+"
 
 [node name="animationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
@@ -294,19 +269,16 @@ libraries = {
 }
 
 [node name="popupOpen" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_o65sk")
+stream = ExtResource("3_r3dv4")
 bus = &"UI"
 
-[node name="successfulPurchase" type="AudioStreamPlayer" parent="."]
+[node name="click" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
 stream = SubResource("AudioStreamRandomizer_da4mp")
 bus = &"UI"
 
-[node name="unsuccessfulPurchase" type="AudioStreamPlayer" parent="."]
-unique_name_in_owner = true
-stream = ExtResource("7_uvhqi")
-bus = &"UI"
-
 [connection signal="pressed" from="popupVbox/contents/top/close" to="." method="close"]
-[connection signal="pressed" from="popupVbox/bottom/hBoxContainer/cancel" to="." method="close"]
-[connection signal="pressed" from="popupVbox/bottom/hBoxContainer/purchase" to="." method="purchase"]
+[connection signal="pressed" from="popupVbox/bottom/hBoxContainer/left" to="click" method="play"]
+[connection signal="pressed" from="popupVbox/bottom/hBoxContainer/left" to="." method="addToSlide" binds= [-1]]
+[connection signal="pressed" from="popupVbox/bottom/hBoxContainer/right" to="click" method="play"]
+[connection signal="pressed" from="popupVbox/bottom/hBoxContainer/right" to="." method="addToSlide" binds= [1]]

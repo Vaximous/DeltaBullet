@@ -1,11 +1,11 @@
 @tool
 extends Marker3D
 
-enum IconType{
+enum IconType {
 	STORY,
 	SAFEHOUSE,
 	MISSION,
-	CURRENT
+	CURRENT,
 }
 
 enum Types {
@@ -32,14 +32,7 @@ const defaultEaseType = Tween.EASE_OUT
 const defaultTweenSpeed: float = 1
 
 @export_category("Marker")
-var defaultMarkerIcon : IconType = 0
-var markerIcon : IconType = 0:
-	set(value):
-		markerIcon = value
-		notify_property_list_changed()
-		if is_instance_valid(get_tree()):
-			await get_tree().process_frame
-			setMarkerIcon(value)
+var defaultMarkerIcon: IconType = 0
 @export_subgroup("Marker Identity")
 @export var locationName: String = "":
 	set(value):
@@ -55,6 +48,14 @@ var markerIcon : IconType = 0:
 		iconColor = value
 		notify_property_list_changed
 	get: return iconColor
+
+var markerIcon: IconType = 0:
+	set(value):
+		markerIcon = value
+		notify_property_list_changed()
+		if is_instance_valid(get_tree()):
+			await get_tree().process_frame
+			setMarkerIcon(value)
 
 		#notify_property_list_changed()
 
@@ -285,7 +286,7 @@ func getNavPoint() -> Vector3:
 	return $navPoint.global_position
 
 
-func setMarkerIcon(icon:IconType):
+func setMarkerIcon(icon: IconType):
 	if is_instance_valid(%icon):
 		%icon.frame = icon
 
@@ -311,11 +312,11 @@ func _get_property_list() -> Array[Dictionary]:
 
 		ret.append(
 			{
-		"name": &"markerIcon",
-		"type": TYPE_INT,
-		"hint": PROPERTY_HINT_ENUM,
-		"usage": PROPERTY_USAGE_EDITOR | PROPERTY_USAGE_STORAGE,
-		"hint_string": ",".join(IconType.keys())
+			"name": &"markerIcon",
+			"type": TYPE_INT,
+			"hint": PROPERTY_HINT_ENUM,
+			"usage": PROPERTY_USAGE_EDITOR | PROPERTY_USAGE_STORAGE,
+			"hint_string": ",".join(IconType.keys())
 			}
 		)
 
@@ -443,8 +444,8 @@ func _get_property_list() -> Array[Dictionary]:
 							{
 							"name": &"propertyRewards",
 							"type": TYPE_ARRAY,
-							"hint" : PROPERTY_HINT_RESOURCE_TYPE,
-							"hint_string" : "RewardDefinition",
+							"hint": PROPERTY_HINT_RESOURCE_TYPE,
+							"hint_string": "RewardDefinition",
 							"usage": PROPERTY_USAGE_EDITOR | PROPERTY_USAGE_STORAGE,
 							}
 						)

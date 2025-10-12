@@ -1,5 +1,17 @@
 extends Node
 
+func createGamePopup(popup:PopupInfobank)->CanvasLayer:
+	gameManager.getPauseMenu().canPause = false
+	var infopop = load("res://assets/scenes/ui/infopopup/infoPopup.tscn").instantiate()
+	var clayer = create_canvas_layer(3)
+	infopop.informationBank = popup
+	clayer.add_child(infopop)
+	infopop.tree_exited.connect(clayer.queue_free)
+	infopop.tree_exited.connect(gameManager.hideMouse)
+	infopop.tree_exited.connect(func():gameManager.getPauseMenu().canPause = true)
+	gameManager.showMouse()
+	return clayer
+
 ##Get node and kill its children
 func queueFreeNodeChildren(node : Node) -> void:
 	for ch in node.get_children():

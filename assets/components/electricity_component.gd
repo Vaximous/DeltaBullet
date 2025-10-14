@@ -30,7 +30,7 @@ signal powered_off
 var connected_from: ElectricityComponent
 
 
-static func get_electricity_component(of_node: Node) -> ElectricityComponent:
+static func get_component(of_node: Node) -> ElectricityComponent:
 	if of_node is ElectricityComponent:
 		return of_node
 	return of_node.get_node_or_null("electricityComponent")

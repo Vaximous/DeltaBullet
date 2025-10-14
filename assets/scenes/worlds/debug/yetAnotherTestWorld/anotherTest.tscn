@@ -48,15 +48,15 @@
 [ext_resource type="PackedScene" uid="uid://bpv3s5oyvrbi5" path="res://assets/entities/props/breaker/breakerBox.tscn" id="36_ax0jb"]
 [ext_resource type="PackedScene" uid="uid://kix84vcxiehe" path="res://assets/components/ElectricityComponent.tscn" id="37_ubdkt"]
 [ext_resource type="PackedScene" uid="uid://dvlgwsns22d45" path="res://assets/components/sceneInstancerComponent/sceneInstancerComponent.tscn" id="38_cnm4n"]
-[ext_resource type="PackedScene" uid="uid://rcf0g45km41v" path="res://assets/entities/explosion/explosionEffect/ElectricExplosionEffect.tscn" id="39_cnm4n"]
+[ext_resource type="PackedScene" path="res://assets/entities/explosion/explosionEffect/ElectricExplosionEffect.tscn" id="39_cnm4n"]
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_sxpqr"]
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_afll2"]
 panorama = ExtResource("22_0op2q")
 
 [sub_resource type="Sky" id="Sky_nj1fe"]
-sky_material = SubResource("PanoramaSkyMaterial_sxpqr")
+sky_material = SubResource("PanoramaSkyMaterial_afll2")
 
-[sub_resource type="Environment" id="Environment_vah23"]
+[sub_resource type="Environment" id="Environment_sxpqr"]
 background_mode = 2
 sky = SubResource("Sky_nj1fe")
 reflected_light_source = 1
@@ -470,7 +470,7 @@ hatedGroups = Array[StringName]([&"\"Evil\""])
 spawnGroup = Array[StringName]([&"Hostile", &"Player"])
 
 [node name="worldEnvironment" parent="Environment" index="0"]
-environment = SubResource("Environment_vah23")
+environment = SubResource("Environment_sxpqr")
 
 [node name="reflectionProbe" parent="Environment" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09741, 11.4137, 5.65805)
@@ -620,8 +620,11 @@ size = Vector3(11, 0.0952148, 10.1826)
 material = SubResource("StandardMaterial3D_iw4gj")
 
 [node name="omniLight3d" type="OmniLight3D" parent="Geometry/navigationRegion3d/csgCombiner3d/csgCombiner3d/Wall25" index="0"]
-transform = Transform3D(1.0000001, 0, 2.9802322e-08, 0, 1, 0, -2.9802322e-08, 0, 1.0000001, 0, -0.6343608, 0)
+transform = Transform3D(1.0000001, 0, 2.9802322e-08, 0, 1, 0, -2.9802322e-08, 0, 1.0000001, 0, -1.8345094, 0)
 shadow_enabled = true
+omni_range = 14.213
+omni_attenuation = -0.159
+omni_shadow_mode = 0
 
 [node name="ElectricityComponent" parent="Geometry/navigationRegion3d/csgCombiner3d/csgCombiner3d/Wall25/omniLight3d" index="0" instance=ExtResource("37_ubdkt")]
 

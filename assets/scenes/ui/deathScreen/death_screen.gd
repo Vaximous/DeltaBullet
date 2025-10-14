@@ -31,7 +31,7 @@ func fadeOut()->void:
 	queue_free()
 
 func _on_restart_button_pressed() -> void:
-	gameManager.playSowund(preload("res://assets/sounds/ui/transitions/transitionRandomizer.tres"),-10)
+	gameManager.playSound(preload("res://assets/sounds/ui/transitions/transitionRandomizer.tres"),-10)
 	gameManager.restartScene()
 	fadeOut()
 

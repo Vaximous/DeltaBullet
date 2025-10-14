@@ -14,7 +14,7 @@ func _ready()->void:
 	versionLabel.text = ProjectSettings.get_setting("application/config/version")
 
 func _process(delta)->void:
-	continueCheck()
+	#continueCheck()
 	if optionsMenu.visible:
 		gameLogo.modulate = lerp(gameLogo.modulate,Color(1, 1, 1, 0),12*delta)
 		versionLabel.modulate = lerp(versionLabel.modulate,Color(1, 1, 1, 0),12*delta)

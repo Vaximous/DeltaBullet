@@ -47,6 +47,7 @@ anim_speed_max = 1.0
 transparency = 1
 cull_mode = 2
 vertex_color_use_as_albedo = true
+albedo_color = Color(1, 1, 1, 0.42745098)
 albedo_texture = ExtResource("2_1d2xj")
 billboard_mode = 3
 billboard_keep_scale = true

@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://5y4hkwqs45ej"]
+[gd_scene load_steps=38 format=3 uid="uid://5y4hkwqs45ej"]
 
 [ext_resource type="PackedScene" uid="uid://dend7ate7mq6e" path="res://assets/entities/bulletHoles/default/BulletHoleBase.tscn" id="1_vuclq"]
 [ext_resource type="Texture2D" uid="uid://dxgkacxbki8ag" path="res://assets/textures/bullet/holes/metal/metal1.png" id="2_y3ad8"]
@@ -14,6 +14,7 @@
 [ext_resource type="AudioStream" uid="uid://h7eyo6wtetri" path="res://assets/sounds/impact/metal/bullet_impact_metal_light_06.wav" id="11_cncj1"]
 [ext_resource type="AudioStream" uid="uid://dl6gvtuytfc7y" path="res://assets/sounds/impact/metal/bullet_impact_metal_light_07.wav" id="12_y07bf"]
 [ext_resource type="AudioStream" uid="uid://c2ys5agnuiif2" path="res://assets/sounds/impact/metal/bullet_impact_metal_light_08.wav" id="13_hulnr"]
+[ext_resource type="Texture2D" uid="uid://bepkbon3axypu" path="res://assets/models/effects/shoot_flare_1.png" id="15_gqk27"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_nc3ry"]
 random_pitch = 1.05
@@ -50,6 +51,44 @@ emission_curve = SubResource("CurveTexture_t8ufm")
 [sub_resource type="QuadMesh" id="QuadMesh_ida67"]
 material = ExtResource("6_sxd4d")
 size = Vector2(0.02, 0.1)
+
+[sub_resource type="Curve" id="Curve_gqk27"]
+_limits = [0.0, 3.0, 0.0, 1.0]
+_data = [Vector2(0, 3), 0.0, -0.826575, 0, 0, Vector2(1, 0), -5.2809, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_uilnx"]
+curve = SubResource("Curve_gqk27")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_jqpfw"]
+particle_flag_align_y = true
+direction = Vector3(0, 1, 0)
+spread = 4.696
+initial_velocity_min = 3.05
+initial_velocity_max = 15.0
+gravity = Vector3(0, -19.8, 0)
+scale_min = 0.5
+scale_max = 0.59999996
+color = Color(1, 1, 0, 1)
+emission_curve = SubResource("CurveTexture_uilnx")
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_cb57y"]
+load_path = "res://.godot/imported/spark.png-81510591edeaafcb46d1dae5039251df.s3tc.ctex"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cncj1"]
+transparency = 1
+cull_mode = 2
+albedo_color = Color(0.772549, 0.572549, 0, 1)
+albedo_texture = SubResource("CompressedTexture2D_cb57y")
+metallic = 1.0
+metallic_specular = 0.0
+emission_enabled = true
+emission = Color(0.9530782, 0.8129768, 0.26314119, 1)
+emission_energy_multiplier = 14.26
+
+[sub_resource type="QuadMesh" id="QuadMesh_y07bf"]
+material = SubResource("StandardMaterial3D_cncj1")
+size = Vector2(0.005, 0.19)
 
 [sub_resource type="Curve" id="Curve_ida67"]
 _limits = [0.0, 5.0, 0.0, 5.0]
@@ -105,9 +144,95 @@ particles_anim_loop = false
 material = SubResource("StandardMaterial3D_y07bf")
 size = Vector2(0.3, 0.3)
 
+[sub_resource type="Animation" id="Animation_gqk27"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("omniLight3d:light_energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.42]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("omniLight3d")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"values": []
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("sprite3d:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.3372549)]
+}
+
+[sub_resource type="Animation" id="Animation_ida67"]
+resource_name = "fire"
+step = 0.0333333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("omniLight3d:light_energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.13333334),
+"transitions": PackedFloat32Array(0.48296815, 1),
+"update": 0,
+"values": [1.42, 0.0]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("omniLight3d")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.13333334),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("sprite3d:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(0.27739242, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.3372549), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_uilnx"]
+_data = {
+&"RESET": SubResource("Animation_gqk27"),
+&"fire": SubResource("Animation_ida67")
+}
+
 [node name="MetalHole" node_paths=PackedStringArray("particleArray", "soundArray") instance=ExtResource("1_vuclq")]
 bulletTextures = Array[Texture2D]([ExtResource("2_y3ad8"), ExtResource("3_mhqwu"), ExtResource("4_s7q15"), ExtResource("5_uha8x")])
-particleArray = [NodePath("explosionSparks"), NodePath("smoke")]
+particleArray = [NodePath("explosionSparks"), NodePath("smoke"), NodePath("explosionSparks2")]
 soundArray = [NodePath("audioStreamPlayer3d")]
 decalSize = 0.05
 
@@ -127,7 +252,19 @@ fixed_fps = 0
 process_material = SubResource("ParticleProcessMaterial_osy6d")
 draw_pass_1 = SubResource("QuadMesh_ida67")
 
-[node name="smoke" type="GPUParticles3D" parent="." index="3"]
+[node name="explosionSparks2" type="GPUParticles3D" parent="." index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.29297805, 0)
+emitting = false
+amount = 7
+lifetime = 2.0
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+fixed_fps = 0
+process_material = SubResource("ParticleProcessMaterial_jqpfw")
+draw_pass_1 = SubResource("QuadMesh_y07bf")
+
+[node name="smoke" type="GPUParticles3D" parent="." index="4"]
 unique_name_in_owner = true
 emitting = false
 amount = 5
@@ -140,3 +277,20 @@ fixed_fps = 0
 visibility_aabb = AABB(-0.309371, -0.3, -0.342307, 0.609581, 0.866252, 0.642307)
 process_material = SubResource("ParticleProcessMaterial_cb57y")
 draw_pass_1 = SubResource("QuadMesh_hulnr")
+
+[node name="animationPlayer" type="AnimationPlayer" parent="." index="5"]
+libraries = {
+&"": SubResource("AnimationLibrary_uilnx")
+}
+
+[node name="omniLight3d" type="OmniLight3D" parent="." index="6"]
+light_color = Color(0.9411765, 1, 1, 1)
+light_energy = 1.42
+
+[node name="sprite3d" type="Sprite3D" parent="." index="7"]
+transform = Transform3D(0.135, 0, 0, 0, 0.135, 0, 0, 0, 0.135, 0, 0, 0)
+modulate = Color(1, 1, 1, 0.3372549)
+billboard = 1
+texture = ExtResource("15_gqk27")
+
+[connection signal="bulletHoleEmitted" from="." to="animationPlayer" method="play" binds= ["fire"]]

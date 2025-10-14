@@ -18,7 +18,9 @@ metadata/_custom_type_script = "uid://mxfwtg66nag2"
 
 [sub_resource type="Resource" id="Resource_6twbg"]
 script = ExtResource("1_f220g")
-infoText = "Right now, you're in the [b][color=green]Apartment.[/color][/b] The apartment is one of the beginner safehouses the player will have access to, from here you will be able to access the contract list (Not yet implemented) and the world map. The world map will allow you to travel to different areas within the first act, allowing you to purchase new weapons and buy new properties alongside new clothing options. The contract list is what you will be using to select different contracts to play, earning you grit to upgrade yourself."
+infoText = "Right now, you're in the [b][color=green]Apartment.[/color][/b] The apartment is one of the beginner safehouses the player will have access to, from here you will be able to access the contract list (Not yet implemented) and the world map. 
+
+The world map will allow you to travel to different areas within the first act, allowing you to purchase new weapons and buy new properties alongside new clothing options. The contract list is what you will be using to select different contracts to play, earning you grit to upgrade yourself."
 metadata/_custom_type_script = "uid://mxfwtg66nag2"
 
 [sub_resource type="Resource" id="Resource_k4qmf"]

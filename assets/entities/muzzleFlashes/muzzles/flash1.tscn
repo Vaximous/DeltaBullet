@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bvvxnmgamquay"]
+[gd_scene load_steps=26 format=3 uid="uid://bvvxnmgamquay"]
 
 [ext_resource type="PackedScene" uid="uid://hsjkl45euvqf" path="res://assets/entities/muzzleFlashes/muzzleFlash.tscn" id="1_cbtny"]
 [ext_resource type="Texture2D" uid="uid://c4wogkx8pvo6g" path="res://assets/textures/smoke/smokeSheet.png" id="2_gd5jg"]
@@ -88,10 +88,57 @@ vertex_color_use_as_albedo = true
 albedo_color = Color(2, 1.10196, 0.603922, 1)
 albedo_texture = ExtResource("6_88iyc")
 
+[sub_resource type="Curve" id="Curve_f74nf"]
+_data = [Vector2(0, 1), 0.0, -0.079009935, 0, 0, Vector2(0.16744184, 0), -0.72364897, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_88iyc"]
+curve = SubResource("Curve_f74nf")
+
+[sub_resource type="Curve" id="Curve_ehpgi"]
+_limits = [0.0, 3.0, 0.0, 1.0]
+_data = [Vector2(0, 3), 0.0, -0.826575, 0, 0, Vector2(1, 0), -5.2809, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_0oiex"]
+curve = SubResource("Curve_ehpgi")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_704oq"]
+particle_flag_align_y = true
+inherit_velocity_ratio = 1.0
+spread = 65.739
+initial_velocity_min = 3.05
+initial_velocity_max = 11.8
+gravity = Vector3(0, -19.8, 0)
+scale_min = 0.5
+scale_max = 0.59999996
+color = Color(1, 1, 0.6039216, 1)
+alpha_curve = SubResource("CurveTexture_88iyc")
+emission_curve = SubResource("CurveTexture_0oiex")
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_5oy2p"]
+load_path = "res://.godot/imported/spark.png-81510591edeaafcb46d1dae5039251df.s3tc.ctex"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n5eet"]
+transparency = 1
+cull_mode = 2
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.772549, 0.572549, 0, 1)
+albedo_texture = SubResource("CompressedTexture2D_5oy2p")
+metallic = 1.0
+metallic_specular = 0.0
+emission_enabled = true
+emission = Color(0.99049515, 0.9120492, 0.6363705, 1)
+emission_energy_multiplier = 9.36
+
+[sub_resource type="QuadMesh" id="QuadMesh_prx40"]
+material = SubResource("StandardMaterial3D_n5eet")
+size = Vector2(0.005, 0.19)
+
 [node name="Flash1" node_paths=PackedStringArray("muzzleEmitters", "muzzleLights", "muzzleMeshes") instance=ExtResource("1_cbtny")]
 lightIntensity = 2.0
 meshTime = 0.18
-muzzleEmitters = [NodePath("smoke")]
+muzzleEmitters = [NodePath("smoke"), NodePath("explosionSparks2")]
 muzzleLights = [NodePath("omniLight3d"), NodePath("omniLight3d2")]
 muzzleMeshes = [NodePath("ShootFlare"), NodePath("ShootFlare2")]
 randomRotX = true
@@ -126,3 +173,14 @@ surface_material_override/0 = SubResource("StandardMaterial3D_ehpgi")
 [node name="ShootFlare2" parent="." index="4" instance=ExtResource("5_f74nf")]
 transform = Transform3D(-6.76557e-09, -0.718688, 0, 0.154778, -3.14147e-08, 0, 0, 0, 0.151782, 0.798386, 0.00224278, 2.25835e-08)
 surface_material_override/0 = SubResource("StandardMaterial3D_704oq")
+
+[node name="explosionSparks2" type="GPUParticles3D" parent="." index="5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0032663643, 0)
+emitting = false
+amount = 5
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+fixed_fps = 0
+process_material = SubResource("ParticleProcessMaterial_704oq")
+draw_pass_1 = SubResource("QuadMesh_prx40")

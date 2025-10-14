@@ -48,3 +48,5 @@ func setInformationPanel()->void:
 		%infoText.text = informationBank.infoSlides[currentSlide].infoText
 		if is_instance_valid(informationBank.infoSlides[currentSlide].infoTexture):
 			%infoPicture.texture = informationBank.infoSlides[currentSlide].infoTexture
+		else:
+			%infoPicture.texture = null

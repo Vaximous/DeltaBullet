@@ -2126,8 +2126,8 @@ func staggerEnd() -> void:
 	isStaggered = false
 
 
-func doStagger(stagger, speed: float = 1.0, randomChance: bool = false) -> void:
-	if get_meta(&"canBeStaggered") == false or isStaggered or forceAnimation: return
+func doStagger(stagger, speed: float = 1.0, randomChance: bool = false, interruptible:bool=false) -> void:
+	if get_meta(&"canBeStaggered") == false or isStaggered and !interruptible or forceAnimation: return
 	if randomChance:
 		if [true, false].pick_random() == false:
 			return

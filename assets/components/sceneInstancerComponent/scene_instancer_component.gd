@@ -1,10 +1,9 @@
 extends Node3D
 
+@export var scene: PackedScene
 
-@export var scene : PackedScene
 
-
-func instance_scene(parent : Node = null) -> Node:
+func instance_scene(parent: Node = null) -> Node:
 	if parent == null:
 		if gameManager.world != null:
 			parent = gameManager.world

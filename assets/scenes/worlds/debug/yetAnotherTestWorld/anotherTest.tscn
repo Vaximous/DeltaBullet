@@ -1,4 +1,4 @@
-[gd_scene load_steps=70 format=4 uid="uid://ccnq3cc8k6nt5"]
+[gd_scene load_steps=74 format=4 uid="uid://ccnq3cc8k6nt5"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_iq3s1"]
 [ext_resource type="Resource" uid="uid://cm1dad74uaa1i" path="res://assets/scenes/worlds/debug/yetAnotherTestWorld/anotherTestData.tres" id="2_givre"]
@@ -44,16 +44,19 @@
 [ext_resource type="AudioStream" uid="uid://c1mk4s30dq3nc" path="res://assets/music/menu/Idlehoodtune.wav" id="24_qkxav"]
 [ext_resource type="PhysicsMaterial" uid="uid://cdxrasph25xol" path="res://assets/resources/PhysicsMaterials/wood_physics_material.tres" id="29_0op2q"]
 [ext_resource type="PackedScene" uid="uid://xtveejtd5yy8" path="res://assets/entities/props/ExplosiveBarrel/ExplosiveBarrel.tscn" id="31_snp5j"]
+[ext_resource type="AudioStream" uid="uid://4y4g5bdwetx4" path="res://assets/sounds/electricity/electricity-zaps-04.mp3" id="33_sxpqr"]
 [ext_resource type="PackedScene" uid="uid://bpv3s5oyvrbi5" path="res://assets/entities/props/breaker/breakerBox.tscn" id="36_ax0jb"]
+[ext_resource type="PackedScene" uid="uid://kix84vcxiehe" path="res://assets/components/ElectricityComponent.tscn" id="37_ubdkt"]
+[ext_resource type="PackedScene" uid="uid://dvlgwsns22d45" path="res://assets/components/sceneInstancerComponent/sceneInstancerComponent.tscn" id="38_cnm4n"]
+[ext_resource type="PackedScene" uid="uid://rcf0g45km41v" path="res://assets/entities/explosion/explosionEffect/ElectricExplosionEffect.tscn" id="39_cnm4n"]
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_12hni"]
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_sxpqr"]
 panorama = ExtResource("22_0op2q")
-energy_multiplier = 0.85
 
 [sub_resource type="Sky" id="Sky_nj1fe"]
-sky_material = SubResource("PanoramaSkyMaterial_12hni")
+sky_material = SubResource("PanoramaSkyMaterial_sxpqr")
 
-[sub_resource type="Environment" id="Environment_fccdg"]
+[sub_resource type="Environment" id="Environment_vah23"]
 background_mode = 2
 sky = SubResource("Sky_nj1fe")
 reflected_light_source = 1
@@ -467,7 +470,7 @@ hatedGroups = Array[StringName]([&"\"Evil\""])
 spawnGroup = Array[StringName]([&"Hostile", &"Player"])
 
 [node name="worldEnvironment" parent="Environment" index="0"]
-environment = SubResource("Environment_fccdg")
+environment = SubResource("Environment_vah23")
 
 [node name="reflectionProbe" parent="Environment" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.09741, 11.4137, 5.65805)
@@ -615,6 +618,15 @@ transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, -2.98023e-08, 0, 1, -9.53674
 use_collision = true
 size = Vector3(11, 0.0952148, 10.1826)
 material = SubResource("StandardMaterial3D_iw4gj")
+
+[node name="omniLight3d" type="OmniLight3D" parent="Geometry/navigationRegion3d/csgCombiner3d/csgCombiner3d/Wall25" index="0"]
+transform = Transform3D(1.0000001, 0, 2.9802322e-08, 0, 1, 0, -2.9802322e-08, 0, 1.0000001, 0, -0.6343608, 0)
+shadow_enabled = true
+
+[node name="ElectricityComponent" parent="Geometry/navigationRegion3d/csgCombiner3d/csgCombiner3d/Wall25/omniLight3d" index="0" instance=ExtResource("37_ubdkt")]
+
+[node name="audioStreamPlayer3d" type="AudioStreamPlayer3D" parent="Geometry/navigationRegion3d/csgCombiner3d/csgCombiner3d/Wall25/omniLight3d/ElectricityComponent" index="0"]
+stream = ExtResource("33_sxpqr")
 
 [node name="Wall23" type="CSGBox3D" parent="Geometry/navigationRegion3d/csgCombiner3d/csgCombiner3d" index="3"]
 transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, -2.98023e-08, 0, 1, 0.114982, -0.490112, 0.12714)
@@ -774,7 +786,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.228889, 0.779267, 0.028408
 shape = SubResource("BoxShape3D_r7ihw")
 
 [node name="breakerBox" parent="Geometry/navigationRegion3d" index="19" instance=ExtResource("36_ax0jb")]
-transform = Transform3D(-0.19842838, 0, 0.28831607, 0, 0.35000002, 0, -0.28831607, 0, -0.19842838, 11.439185, 2.7479157, 11.512237)
+transform = Transform3D(-0.20827143, 0, 0.2812881, 0, 0.35000002, 0, -0.2812881, 0, -0.20827143, 11.439185, 2.7479157, 11.239891)
+metadata/_edit_group_ = true
+
+[node name="ElectricityComponent" parent="Geometry/navigationRegion3d/breakerBox" index="4" node_paths=PackedStringArray("connected_to") instance=ExtResource("37_ubdkt")]
+connected_to = NodePath("../../csgCombiner3d/csgCombiner3d/Wall25/omniLight3d/ElectricityComponent")
+powered = true
+
+[node name="sceneInstancerComponent" parent="Geometry/navigationRegion3d/breakerBox/ElectricityComponent" index="0" instance=ExtResource("38_cnm4n")]
+scene = ExtResource("39_cnm4n")
 
 [node name="Uzi" parent="Props" index="0" instance=ExtResource("5_gs5af")]
 transform = Transform3D(0.721047, -0.348327, 0.598965, 0.26794, 0.937373, 0.222575, -0.638983, 0, 0.769221, -9.71416, 2.71492, 9.35189)
@@ -989,9 +1009,17 @@ transform = Transform3D(0.79714155, 0, 0.6037925, 0, 1, 0, -0.6037925, 0, 0.7971
 shape = SubResource("BoxShape3D_0op2q")
 
 [connection signal="objectUsed" from="Geometry/navigationRegion3d/PlayerCloset/closetInteraction" to="Geometry/navigationRegion3d/PlayerCloset" method="_onClosetUsed"]
+[connection signal="powered_off" from="Geometry/navigationRegion3d/csgCombiner3d/csgCombiner3d/Wall25/omniLight3d/ElectricityComponent" to="Geometry/navigationRegion3d/csgCombiner3d/csgCombiner3d/Wall25/omniLight3d" method="hide"]
+[connection signal="powered_on" from="Geometry/navigationRegion3d/csgCombiner3d/csgCombiner3d/Wall25/omniLight3d/ElectricityComponent" to="Geometry/navigationRegion3d/csgCombiner3d/csgCombiner3d/Wall25/omniLight3d" method="show"]
+[connection signal="state_change" from="Geometry/navigationRegion3d/csgCombiner3d/csgCombiner3d/Wall25/omniLight3d/ElectricityComponent" to="Geometry/navigationRegion3d/csgCombiner3d/csgCombiner3d/Wall25/omniLight3d/ElectricityComponent/audioStreamPlayer3d" method="play" unbinds=1]
 [connection signal="objectUsed" from="Geometry/navigationRegion3d/csgtruck/worldMapInteract" to="Geometry/navigationRegion3d/csgtruck/worldMapInteract" method="_on_object_used"]
+[connection signal="HPisDead" from="Geometry/navigationRegion3d/breakerBox/healthComponent" to="Geometry/navigationRegion3d/breakerBox/ElectricityComponent" method="disable"]
+[connection signal="powered_off" from="Geometry/navigationRegion3d/breakerBox/ElectricityComponent" to="Geometry/navigationRegion3d/breakerBox/ElectricityComponent/sceneInstancerComponent" method="instance_scene"]
 [connection signal="triggerActivated" from="Props/node3d/pawnTrigger" to="Props/node3d" method="_on_pawn_trigger_trigger_activated"]
-[connection signal="objectUsed" from="Props/interactiveObject" to="Props/interactiveObject" method="_on_object_used"]
 [connection signal="objectUsed" from="Props/interactiveObject" to="Props/interactiveObject" method="spawnSomeEnemies"]
+[connection signal="objectUsed" from="Props/interactiveObject" to="Props/interactiveObject" method="_on_object_used"]
 [connection signal="timeout" from="Props/interactiveObject/timer" to="Props/interactiveObject" method="spawnSomeEnemies"]
 [connection signal="triggerActivated" from="pawnTrigger" to="mapLogic" method="_on_pawn_trigger_trigger_activated"]
+
+[editable path="Geometry/navigationRegion3d/breakerBox"]
+[editable path="Geometry/navigationRegion3d/breakerBox/breaker"]

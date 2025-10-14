@@ -3,6 +3,7 @@ extends Node3D
 
 signal powered_on
 signal powered_off
+signal state_change(new_state: bool)
 
 ##If it's connected to another ElectricityComponent, it give power to that component.
 @export var connected_to: ElectricityComponent:
@@ -18,14 +19,23 @@ signal powered_off
 ##If it's powered, the children will also be powered.
 @export var powered: bool = false:
 	set(value):
+		if disabled:
+			value = false
 		if powered != value:
 			powered = value
 			if powered:
 				powered_on.emit()
 			else:
 				powered_off.emit()
+			state_change.emit(powered)
 			if connected_to != null:
 				connected_to.powered = powered
+
+var disabled: bool = false:
+	set(value):
+		if value:
+			powered = false
+		disabled = value
 
 var connected_from: ElectricityComponent
 
@@ -34,6 +44,30 @@ static func get_component(of_node: Node) -> ElectricityComponent:
 	if of_node is ElectricityComponent:
 		return of_node
 	return of_node.get_node_or_null("electricityComponent")
+
+
+func disable() -> void:
+	disabled = true
+
+
+func enable() -> void:
+	disabled = false
+
+
+func set_disabled(state: bool) -> void:
+	disabled = state
+
+
+func power_on() -> void:
+	powered = true
+
+
+func power_off() -> void:
+	powered = false
+
+
+func set_power(power: bool) -> void:
+	powered = power
 
 
 func is_root() -> bool:

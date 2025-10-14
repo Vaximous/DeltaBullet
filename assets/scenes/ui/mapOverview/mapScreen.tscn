@@ -288,55 +288,55 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("%map/worldEnvironment:environment:background_color")
+tracks/4/path = NodePath("%map/worldEnvironment:environment:fog_light_color")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(0.15564, 0.15480001, 0.18, 1)]
+"values": [Color(1, 1, 1, 1)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("%map/worldEnvironment:environment:fog_light_color")
+tracks/5/path = NodePath("%map/worldEnvironment:environment:fog_depth_end")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(1, 1, 1, 1)]
+"values": [15.0]
 }
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("%map/worldEnvironment:environment:fog_depth_end")
+tracks/6/path = NodePath("%map/worldEnvironment:environment:fog_depth_begin")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [15.0]
+"values": [0.0]
 }
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("%map/worldEnvironment:environment:fog_depth_begin")
+tracks/7/path = NodePath("vignette:material:shader_parameter/color")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [0.0]
+"values": [Color(1, 1, 1, 1)]
 }
 tracks/8/type = "value"
 tracks/8/imported = false
 tracks/8/enabled = true
-tracks/8/path = NodePath("vignette:material:shader_parameter/color")
+tracks/8/path = NodePath("%AreaInformation:modulate")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
@@ -348,38 +348,38 @@ tracks/8/keys = {
 tracks/9/type = "value"
 tracks/9/imported = false
 tracks/9/enabled = true
-tracks/9/path = NodePath("%AreaInformation:modulate")
+tracks/9/path = NodePath("%map/worldEnvironment:environment:fog_height")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(1, 1, 1, 1)]
+"values": [0.0]
 }
 tracks/10/type = "value"
 tracks/10/imported = false
 tracks/10/enabled = true
-tracks/10/path = NodePath("%map/worldEnvironment:environment:fog_height")
+tracks/10/path = NodePath("%map/worldEnvironment:environment:fog_height_density")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [0.0]
+"values": [2.0]
 }
 tracks/11/type = "value"
 tracks/11/imported = false
 tracks/11/enabled = true
-tracks/11/path = NodePath("%map/worldEnvironment:environment:fog_height_density")
+tracks/11/path = NodePath("%map/worldEnvironment:environment:fog_sky_affect")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [2.0]
+"values": [1.0]
 }
 
 [sub_resource type="Animation" id="Animation_206y2"]
@@ -436,98 +436,98 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("%map/worldEnvironment:environment:background_color")
+tracks/4/path = NodePath("%map/worldEnvironment:environment:fog_light_color")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
 "times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(0.20306323, 1),
+"transitions": PackedFloat32Array(0.5, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 1), Color(0.15564, 0.15480001, 0.18, 1)]
+"values": [Color(1, 1, 1, 1), Color(0.6666667, 0.6745098, 0.6666667, 1)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("%map/worldEnvironment:environment:fog_light_color")
+tracks/5/path = NodePath("%map/worldEnvironment:environment:fog_depth_end")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(0.5, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(0.15564, 0.15480001, 0.18, 1)]
-}
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("%map/worldEnvironment:environment:fog_depth_end")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
 "times": PackedFloat32Array(0, 0.96666664),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [200.0, 300.0]
 }
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("%map/worldEnvironment:environment:fog_depth_begin")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("%map/worldEnvironment:environment:fog_depth_begin")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
 "times": PackedFloat32Array(0, 2),
 "transitions": PackedFloat32Array(0.5, 1),
 "update": 0,
 "values": [150.0, 200.0]
 }
-tracks/8/type = "value"
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/path = NodePath("vignette:material:shader_parameter/color")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = {
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("vignette:material:shader_parameter/color")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
 "times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 0.2871746),
 "update": 0,
 "values": [Color(0.43605796, 8.663535e-07, 1.6845763e-07, 1), Color(0.15564, 0.15480001, 0.18, 1)]
 }
-tracks/9/type = "value"
-tracks/9/imported = false
-tracks/9/enabled = true
-tracks/9/path = NodePath("%AreaInformation:modulate")
-tracks/9/interp = 1
-tracks/9/loop_wrap = true
-tracks/9/keys = {
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("%AreaInformation:modulate")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
 "times": PackedFloat32Array(0.4, 1),
 "transitions": PackedFloat32Array(-2, 1),
 "update": 0,
 "values": [Color(0, 0, 0, 0), Color(1, 1, 1, 1)]
 }
-tracks/10/type = "value"
-tracks/10/imported = false
-tracks/10/enabled = true
-tracks/10/path = NodePath("%map/worldEnvironment:environment:fog_height")
-tracks/10/interp = 1
-tracks/10/loop_wrap = true
-tracks/10/keys = {
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("%map/worldEnvironment:environment:fog_height")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
 "times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(-2, 1),
 "update": 0,
 "values": [32.0, 0.5]
 }
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("%map/worldEnvironment:environment:fog_height_density")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.5, 0.0]
+}
 tracks/11/type = "value"
 tracks/11/imported = false
 tracks/11/enabled = true
-tracks/11/path = NodePath("%map/worldEnvironment:environment:fog_height_density")
+tracks/11/path = NodePath("%map/worldEnvironment:environment:fog_sky_affect")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [0.5]
+"values": [1.0, 0.0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_avv0b"]
@@ -642,9 +642,6 @@ process_material = SubResource("ParticleProcessMaterial_5gb03")
 [node name="pingParticle" parent="mapScreen/subViewportContainer/subViewport/map/areaNodes/testRewardProperty" index="2"]
 process_material = SubResource("ParticleProcessMaterial_wficc")
 
-[node name="cornerUpLeft" parent="mapScreen/subViewportContainer/subViewport/map/areaNodes/testRewardProperty/visualHolder" index="0"]
-transform = Transform3D(0, 0, 0.99999964, 0, 1, 0, -0.99999964, 0, 0, 4.4210873, 0, -4.579485)
-
 [node name="pingParticle" parent="mapScreen/subViewportContainer/subViewport/map/areaNodes/testRewardProperty2" index="2"]
 process_material = SubResource("ParticleProcessMaterial_1x2q7")
 
@@ -673,9 +670,9 @@ layout_mode = 1
 anchors_preset = -1
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 36.0
+offset_left = 14.0
 offset_top = -66.0
-offset_right = 249.0
+offset_right = 227.0
 offset_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -816,7 +813,7 @@ texture = ExtResource("12_od2qg")
 
 [node name="playerRank" type="HBoxContainer" parent="."]
 clip_contents = true
-anchors_preset = -1
+anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -325.0

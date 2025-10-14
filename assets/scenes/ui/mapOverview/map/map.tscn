@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=4 uid="uid://c63b0ewnfkf4n"]
+[gd_scene load_steps=69 format=4 uid="uid://c63b0ewnfkf4n"]
 
 [ext_resource type="Script" uid="uid://t733jevi3esu" path="res://assets/scenes/ui/mapOverview/map/map.gd" id="1_rkk0n"]
 [ext_resource type="Environment" uid="uid://dyvr8n1vauu0k" path="res://assets/scenes/ui/mapOverview/mapEnvironment.tres" id="2_m7rdm"]
@@ -23,6 +23,8 @@
 [ext_resource type="Script" uid="uid://c84guc6w8jnwe" path="res://assets/scenes/ui/mapOverview/rewardDefinition/rewardDefinition.gd" id="19_3gufb"]
 [ext_resource type="AudioStream" uid="uid://b0jti5a6gqvcg" path="res://assets/sounds/ambient/689713__felixblume__city-parking-lot-ambience-in-car-wash-at-dusk-with-traffic-city-hum-and-bell-ringing-far.wav" id="19_lmyb2"]
 [ext_resource type="AudioStream" uid="uid://2l3hukuuinhw" path="res://assets/sounds/ambient/wind.wav" id="20_riqnu"]
+[ext_resource type="PackedScene" uid="uid://dnn8vw5td7mpv" path="res://assets/components/CameraFollow.tscn" id="24_d7cw3"]
+[ext_resource type="Texture2D" uid="uid://djho1o4a46mla" path="res://assets/textures/blood/ParticleCloudWhite.png" id="25_lunbr"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_htbkg"]
 radius = 0.065
@@ -219,6 +221,106 @@ uv1_offset = Vector3(1.1991097, 0, 0)
 script = SubResource("GDScript_uyve1")
 scroll_speed = Vector3(-1, 0, 0)
 
+[sub_resource type="Gradient" id="Gradient_rtr4q"]
+offsets = PackedFloat32Array(0, 0.45915493, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_gfcwr"]
+gradient = SubResource("Gradient_rtr4q")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_d7cw3"]
+emission_shape = 3
+emission_box_extents = Vector3(800, 16, 800)
+angle_min = -720.0
+angle_max = 1.0728835e-05
+direction = Vector3(1, 0, -1)
+spread = 0.0
+initial_velocity_min = 32.0
+initial_velocity_max = 32.0
+angular_velocity_min = -150.78001
+angular_velocity_max = 141.18999
+gravity = Vector3(0, 0, 0)
+scale_min = 64.0
+scale_max = 256.0
+color = Color(1, 1, 1, 0.45900002)
+color_ramp = SubResource("GradientTexture1D_gfcwr")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3uxhu"]
+transparency = 1
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("25_lunbr")
+emission = Color(1, 1, 1, 1)
+proximity_fade_enabled = true
+proximity_fade_distance = 4.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_drlcm"]
+material = SubResource("StandardMaterial3D_3uxhu")
+
+[sub_resource type="Gradient" id="Gradient_d7cw3"]
+offsets = PackedFloat32Array(0, 0.45915493, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_lunbr"]
+gradient = SubResource("Gradient_d7cw3")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_rtr4q"]
+emission_shape_scale = Vector3(1, 0.13, 1.36)
+emission_shape = 1
+emission_sphere_radius = 50.0
+angle_min = -720.0
+angle_max = 1.0728835e-05
+direction = Vector3(1, 0, -1)
+spread = 0.0
+initial_velocity_min = 8.0
+initial_velocity_max = 8.0
+angular_velocity_min = -150.78001
+angular_velocity_max = 141.18999
+gravity = Vector3(0, 0, 0)
+scale_min = 8.0
+scale_max = 32.0
+color = Color(1, 1, 1, 0.476)
+color_ramp = SubResource("GradientTexture1D_lunbr")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_yk5o2"]
+emission_shape = 3
+emission_box_extents = Vector3(800, 12, 800)
+angle_min = -720.0
+angle_max = 1.0728835e-05
+direction = Vector3(1, 0, -1)
+spread = 0.0
+initial_velocity_min = 32.0
+initial_velocity_max = 32.0
+angular_velocity_min = -150.78001
+angular_velocity_max = 141.18999
+gravity = Vector3(0, 0, 0)
+scale_min = 64.0
+scale_max = 256.0
+color_ramp = SubResource("GradientTexture1D_gfcwr")
+
+[sub_resource type="Gradient" id="Gradient_lunbr"]
+offsets = PackedFloat32Array(0, 0.45915493, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_rtr4q"]
+gradient = SubResource("Gradient_lunbr")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_gfcwr"]
+emission_shape = 3
+emission_box_extents = Vector3(800, 12, 800)
+angle_min = -720.0
+angle_max = 1.0728835e-05
+direction = Vector3(1, 0, -1)
+spread = 0.0
+initial_velocity_min = 32.0
+initial_velocity_max = 32.0
+angular_velocity_min = -150.78001
+angular_velocity_max = 141.18999
+gravity = Vector3(0, 0, 0)
+scale_min = 32.0
+scale_max = 128.0
+color = Color(1, 1, 1, 0.21800001)
+color_ramp = SubResource("GradientTexture1D_rtr4q")
+
 [node name="map" type="Node3D" node_paths=PackedStringArray("navRegion", "modelHolder", "worldEnv")]
 script = ExtResource("1_rkk0n")
 mapName = &"Lacren"
@@ -248,7 +350,7 @@ transform = Transform3D(0.7071067, 0, 0.7071067, 0, 1, 0, -0.7071067, 0, 0.70710
 
 [node name="camVert" type="Node3D" parent="cameraController/Camera/camHoriz"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 0.5, 0.86602557, 0, -0.86602557, 0.5, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 0.6427877, 0.76604456, 0, -0.76604456, 0.6427877, 0, 0, 0)
 
 [node name="springArm3d" type="SpringArm3D" parent="cameraController/Camera/camHoriz/camVert"]
 unique_name_in_owner = true
@@ -728,7 +830,7 @@ transform = Transform3D(8.8421955, 0, 0, 0, 14.30909, 0, 0, 0, 9.158997, 0, 0, 0
 transform = Transform3D(1.0000033, 0, 0, 0, 1, 0, 0, 0, 1.0000033, 0, 0, 0)
 
 [node name="cornerUpLeft" parent="areaNodes/testRewardProperty/visualHolder" index="0"]
-transform = Transform3D(0, 0, 0.99999964, 0, 1, 0, -0.99999964, 0, 0, 4.4210854, 0, -4.579485)
+transform = Transform3D(0, 0, 0.99999964, 0, 1, 0, -0.99999964, 0, 0, 4.4210873, 0, -4.579485)
 
 [node name="cornerUpRight" parent="areaNodes/testRewardProperty/visualHolder" index="1"]
 transform = Transform3D(1.0000014, 0, -8.940697e-08, 0, 1, 0, 8.940697e-08, 0, 1.0000014, 4.4210854, 0, 4.579483)
@@ -873,6 +975,67 @@ max_db = 0.0
 autoplay = true
 panning_strength = 0.0
 bus = &"Ambience"
+
+[node name="CloudReflection" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.4543705, 11.503265, -12.70014)
+cast_shadow = 0
+extra_cull_margin = 16384.0
+ignore_occlusion_culling = true
+amount = 16
+lifetime = 12.0
+preprocess = 16.0
+use_fixed_seed = true
+seed = 3568566732
+process_material = SubResource("ParticleProcessMaterial_d7cw3")
+draw_pass_1 = SubResource("PlaneMesh_drlcm")
+
+[node name="CloudyCity" type="GPUParticles3D" parent="."]
+transform = Transform3D(0.97743064, 0, 0.21125656, 0, 1, 0, -0.21125656, 0, 0.97743064, 121.03879, 14.856842, -6.629239)
+cast_shadow = 0
+extra_cull_margin = 16384.0
+ignore_occlusion_culling = true
+amount = 64
+lifetime = 2.0
+preprocess = 4.0
+speed_scale = 0.5
+use_fixed_seed = true
+seed = 3568566732
+visibility_aabb = AABB(-777.2795, -13.629389, -1025.5793, 1824.2903, 27.363148, 1722.0917)
+process_material = SubResource("ParticleProcessMaterial_rtr4q")
+draw_pass_1 = SubResource("PlaneMesh_drlcm")
+
+[node name="cameraFollow" parent="." instance=ExtResource("24_d7cw3")]
+scale_factor = Vector3(1, 0, 1)
+
+[node name="CloudReflection" type="GPUParticles3D" parent="cameraFollow"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.454033, -78.17493, -28.496843)
+cast_shadow = 0
+extra_cull_margin = 16384.0
+ignore_occlusion_culling = true
+amount = 128
+lifetime = 12.0
+preprocess = 16.0
+speed_scale = 0.5
+use_fixed_seed = true
+seed = 3568566732
+visibility_aabb = AABB(-757.9261, -13.854248, -1019.21594, 1800.387, 27.453606, 1795.1936)
+process_material = SubResource("ParticleProcessMaterial_yk5o2")
+draw_pass_1 = SubResource("PlaneMesh_drlcm")
+
+[node name="CloudsAboveEverywhere" type="GPUParticles3D" parent="cameraFollow"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.454033, 14.62756, -28.496843)
+cast_shadow = 0
+extra_cull_margin = 16384.0
+ignore_occlusion_culling = true
+amount = 100
+lifetime = 12.0
+preprocess = 16.0
+speed_scale = 0.5
+use_fixed_seed = true
+seed = 3568566732
+visibility_aabb = AABB(-777.2795, -13.629389, -1025.5793, 1824.2903, 27.363148, 1722.0917)
+process_material = SubResource("ParticleProcessMaterial_gfcwr")
+draw_pass_1 = SubResource("PlaneMesh_drlcm")
 
 [connection signal="selectedMarker" from="mapSelectionMarker" to="." method="_on_map_selection_marker_selected_marker"]
 [connection signal="path_changed" from="pathVisualizerStartPosition/pathVisualizerNavAgent" to="pathVisualizerStartPosition/path3d" method="_on_path_visualizer_nav_agent_path_changed"]

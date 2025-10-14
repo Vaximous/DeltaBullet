@@ -1,25 +1,23 @@
 [gd_resource type="Environment" load_steps=6 format=3 uid="uid://dyvr8n1vauu0k"]
 
+[ext_resource type="Texture2D" uid="uid://cg6ygto3njhtw" path="res://assets/textures/panoramas/citrus_orchard_road_puresky.png" id="1_61by5"]
+
 [sub_resource type="Gradient" id="Gradient_p8ko3"]
 colors = PackedColorArray(0, 0, 0, 1, 0.996078, 0.941176, 0.811765, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_od2qg"]
 gradient = SubResource("Gradient_p8ko3")
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_s27yt"]
-load_path = "res://.godot/imported/panoramatest1.png-b6abf0ac9e52f51c8497d847bef752cc.bptc.ctex"
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_ck0rk"]
+panorama = ExtResource("1_61by5")
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_vvgek"]
-panorama = SubResource("CompressedTexture2D_s27yt")
-
-[sub_resource type="Sky" id="Sky_1x2q7"]
-sky_material = SubResource("PanoramaSkyMaterial_vvgek")
+[sub_resource type="Sky" id="Sky_1hi5b"]
+sky_material = SubResource("PanoramaSkyMaterial_ck0rk")
 
 [resource]
-background_mode = 1
-background_color = Color(0.15564, 0.15480001, 0.18, 1)
-sky = SubResource("Sky_1x2q7")
-ambient_light_energy = 2.0
+background_mode = 2
+background_color = Color(1, 1, 1, 1)
+sky = SubResource("Sky_1hi5b")
 reflected_light_source = 1
 ssil_intensity = 0.75
 sdfgi_use_occlusion = true

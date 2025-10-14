@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://kix84vcxiehe"]
+
+[ext_resource type="Script" uid="uid://bdgeeyklb4o48" path="res://assets/components/electricity_component.gd" id="1_5krat"]
+
+[node name="ElectricityComponent" type="Node3D"]
+script = ExtResource("1_5krat")

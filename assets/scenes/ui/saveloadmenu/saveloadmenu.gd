@@ -2,6 +2,7 @@ extends Control
 
 @onready var panelLabel: Label = $panel/textureRect/label
 @onready var overridePanel: Panel = $panel/overwritePanel
+@onready var removeSavePanel: Panel = $panel/removePanel
 @onready var saveContainer: VBoxContainer = $panel/scrollContainer/saveContainer
 @onready var saveNamePanel: Panel = $panel/saveNamePanel
 @onready var saveName: LineEdit = %SaveNameInputField
@@ -10,6 +11,7 @@ extends Control
 func _ready() -> void:
 	clearSaves()
 	hidePanel()
+	gameManager.getEventSignal("removeSave").connect(showRemoveSavePanel)
 
 
 func _unhandled_input(_event):
@@ -19,6 +21,7 @@ func _unhandled_input(_event):
 
 func initSavePanel() -> void:
 	gameManager.getEventSignal("overwriteSave").connect(showOverridePanel)
+	gameManager.getEventSignal("removeSave").connect(hideOverridePanel)
 	clearSaves()
 	createSaveMaker()
 	showPanel()
@@ -80,6 +83,19 @@ func showOverridePanel() -> void:
 	tween.set_parallel(true)
 	tween.tween_property(overridePanel, "modulate", Color(1, 1, 1, 1), 0.3)
 
+func hideRemoveSavePanel() -> void:
+	removeSavePanel.visible = true
+	var tween = create_tween()
+	tween.set_parallel(true)
+	await tween.tween_property(removeSavePanel, "modulate", Color(1, 1, 1, 0), 0.3).finished
+	removeSavePanel.hide()
+
+func showRemoveSavePanel() -> void:
+	removeSavePanel.modulate = Color.TRANSPARENT
+	removeSavePanel.visible = true
+	var tween = create_tween()
+	tween.set_parallel(true)
+	tween.tween_property(removeSavePanel, "modulate", Color(1, 1, 1, 1), 0.3)
 
 func hideSaveNamePanel() -> void:
 	saveNamePanel.visible = true
@@ -113,6 +129,18 @@ func saveGame() -> void:
 	gameManager.activeCamera.hud.show()
 	gameManager.getPauseMenu().show()
 	show()
+
+func deleteSave()->void:
+	print("user://saves/%s.pwnSave"%[gameManager.saveOverwrite,gameManager.saveOverwrite])
+	if gameManager.currentSave == "user://saves/%s/%s.pwnSave"%[gameManager.saveOverwrite,gameManager.saveOverwrite]:
+		gameManager.getEventSignal("refreshCurrSave").emit()
+		gameManager.currentSave = ""
+
+	gameManager.notifyCheck("'%s' Sucessfully removed."%gameManager.saveOverwrite, 2, 1.5)
+	Util.rmdir("user://saves/%s"%gameManager.saveOverwrite)
+	clearSaves()
+	scanSaves()
+	hideRemoveSavePanel()
 
 
 func createSaveMaker() -> void:

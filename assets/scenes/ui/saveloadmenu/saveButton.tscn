@@ -11,15 +11,15 @@
 [ext_resource type="AudioStream" uid="uid://b61ylgh6ym6my" path="res://assets/sounds/ui/menu/Menu_click_3.wav" id="6_pbqbx"]
 [ext_resource type="AudioStream" uid="uid://cg2gg2gqhitg4" path="res://assets/sounds/ui/menu/Menu_click_4.wav" id="7_ont7j"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hgw5i"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1sutc"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_uklys"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qqgmi"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dkqhi"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qqgmi"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_uklys"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1sutc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hgw5i"]
 
 [sub_resource type="Gradient" id="Gradient_06uxp"]
 colors = PackedColorArray(0.196078, 0, 0, 1, 0.356863, 0, 0, 0)
@@ -46,19 +46,19 @@ stream_3/stream = ExtResource("7_ont7j")
 [node name="saveButton" type="Button"]
 custom_minimum_size = Vector2(0, 190)
 anchors_preset = -1
-anchor_right = 0.662
-anchor_bottom = 0.211
-offset_right = 0.800049
-offset_bottom = 0.0999908
+anchor_right = 0.379
+anchor_bottom = 0.21100001
+offset_right = 0.5999756
+offset_bottom = 0.099990845
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 theme = ExtResource("1_6sqyy")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_hgw5i")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_1sutc")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_uklys")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_dkqhi")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_qqgmi")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_dkqhi")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_uklys")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_1sutc")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_hgw5i")
 script = ExtResource("2_hc6b0")
 
 [node name="background" type="TextureRect" parent="."]
@@ -120,8 +120,16 @@ stream = SubResource("AudioStreamRandomizer_j0nlr")
 volume_db = -1.0
 bus = &"UI"
 
+[node name="removeSave" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+offset_right = 44.0
+offset_bottom = 43.0
+text = "X"
+
 [connection signal="focus_entered" from="." to="." method="hoverOn"]
 [connection signal="focus_exited" from="." to="." method="hoverOff"]
 [connection signal="mouse_entered" from="." to="." method="hoverOn"]
 [connection signal="mouse_exited" from="." to="." method="hoverOff"]
 [connection signal="pressed" from="." to="." method="_on_pressed"]
+[connection signal="pressed" from="removeSave" to="." method="startRemoveSave"]

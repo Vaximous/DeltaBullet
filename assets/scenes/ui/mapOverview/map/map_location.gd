@@ -53,9 +53,7 @@ var markerIcon: IconType = 0:
 	set(value):
 		markerIcon = value
 		notify_property_list_changed()
-		if is_instance_valid(get_tree()):
-			await get_tree().process_frame
-			setMarkerIcon(value)
+
 
 		#notify_property_list_changed()
 
@@ -131,6 +129,7 @@ var locationDescription: String = ""
 func _ready() -> void:
 	%icon.position.y = collisionShape.shape.size.y - 4.0
 	setupMap()
+	setMarkerIcon(markerIcon)
 
 
 func _process(_delta: float) -> void:

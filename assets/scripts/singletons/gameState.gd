@@ -15,25 +15,8 @@ var levels : Dictionary = {
 }
 var saveVersion : float = 1.0
 var stateInfo : Dictionary = {}
-var _gameState : Dictionary = {
-	"saveVersion" : 1.0,
-	"stateSave" : {
-		"screenshot" = "",
-		"saveName" = "",
-		"timestamp" = Time.get_unix_time_from_system(),
-		"dateDict" = Time.get_date_dict_from_system(),
-		"saveLocation" = "gameManager.world.worldData.worldName",
-		"saveScene" = "",
-		"prologueComplete" = gameManager.get_persistent_data().get("seen_prologue", false),
-		"pawninfo" = "",
-		"areaStats" = [],
-		"pawnRank" = 0,
-		"grit" = 0,
-		"position" = Vector3.ZERO,
-		"skills" = [],
-		"ownedProperties" = []
-	}
-}
+var _gameState : Dictionary = {}
+
 
 func clearStates()->void:
 		_gameState.clear()

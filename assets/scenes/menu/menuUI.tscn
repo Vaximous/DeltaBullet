@@ -1,77 +1,13 @@
 [gd_scene load_steps=12 format=3 uid="uid://b1x2t2na1bc2b"]
 
 [ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="1_cg2cc"]
+[ext_resource type="Script" uid="uid://cuu8q7lgw6whq" path="res://assets/scenes/menu/menuUI.gd" id="2_ktkeu"]
 [ext_resource type="Texture2D" uid="uid://cchng1uogx7qf" path="res://assets/textures/misc/logo.png" id="3_hv6kb"]
 [ext_resource type="PackedScene" uid="uid://wncyofb1f8i7" path="res://assets/scenes/ui/options/optionsMenu.tscn" id="4_fyhf6"]
 [ext_resource type="Texture2D" uid="uid://dc3fkfugwvtla" path="res://assets/textures/misc/company-logo (1).png" id="5_bto6s"]
 [ext_resource type="PackedScene" uid="uid://ba0s8u6mtjxns" path="res://assets/scenes/menu/menuButton.tscn" id="5_nxhqu"]
 [ext_resource type="PackedScene" uid="uid://81cyr0xg0y7d" path="res://assets/scenes/ui/saveloadmenu/saveloadmenu.tscn" id="6_8a5q4"]
 [ext_resource type="PackedScene" uid="uid://dylch0jp14e1b" path="res://assets/scripts/SmackneckClient/login_screen.tscn" id="7_ig8dm"]
-
-[sub_resource type="GDScript" id="GDScript_xob6c"]
-script/source = "extends Control
-@onready var gameLogo : TextureRect = $gameLogo
-@onready var verSeperator : HSeparator = $verSep
-@onready var versionLabel : Label = $versionLabel
-@onready var optionsMenu : Control = $Options
-@onready var buttonHolder : VBoxContainer = $buttonHolder
-var anykey = false
-var pressed = false
-# Called when the node enters the scene tree for the first time.
-func _ready()->void:
-	SmackneckClient.Authentication.auth_success.connect(%smacknetConnect.hide)
-	gameManager.clearTemporaryPawnInfo()
-	versionLabel.text = ProjectSettings.get_setting(\"application/config/version\")
-	if checkCurrentSave():
-		%continueButton.show()
-
-func _process(delta)->void:
-	if optionsMenu.visible:
-		gameLogo.modulate = lerp(gameLogo.modulate,Color(1, 1, 1, 0),12*delta)
-		versionLabel.modulate = lerp(versionLabel.modulate,Color(1, 1, 1, 0),12*delta)
-		buttonHolder.modulate = lerp(buttonHolder.modulate,Color(1, 1, 1, 0),12*delta)
-		verSeperator.modulate = lerp(versionLabel.modulate,Color(1, 1, 1, 0),12*delta)
-	else:
-		gameLogo.modulate = lerp(gameLogo.modulate,Color(1, 1, 1, 1),12*delta)
-		verSeperator.modulate = lerp(verSeperator.modulate,Color(1, 1, 1, 1),12*delta)
-		versionLabel.modulate = lerp(versionLabel.modulate,Color(1, 1, 1, 1),12*delta)
-		buttonHolder.modulate = lerp(buttonHolder.modulate,Color(1, 1, 1, 1),12*delta)
-
-func _on_play_button_pressed()->void:
-	gameManager.playSound(gameManager.getGlobalSound(\"startGame\"), -15)
-	gameManager.clearTemporaryPawnInfo()
-	gameManager.currentSave = \"\"
-	gameState.clearStates()
-	musicManager.change_song_to(null,0.5)
-	await Fade.fade_out(0.3, Color(0,0,0,1),\"GradientVertical\",false,true).finished
-	gameManager.loadWorld(\"res://assets/scenes/worlds/areas/playerHome/playerHome.tscn\")
-
-func _on_quit_button_pressed()->void:
-	await Fade.fade_out(0.4, Color(0,0,0,1),\"GradientVertical\",false,true).finished
-	get_tree().quit()
-
-func _on_options_button_pressed()->void:
-	optionsMenu.show()
-
-func _on_credits_button_pressed()->void:
-	gameManager.notify_warn(\"Not yet implemented.\", 2, 10)
-
-func _on_continue_button_pressed() -> void:
-	gameManager.playSound(gameManager.getGlobalSound(\"startGame\"), -15)
-	gameManager.clearTemporaryPawnInfo()
-	gameManager.currentSave = gameManager.get_persistent_data()[\"lastSave\"]
-	musicManager.change_song_to(null,0.5)
-	await Fade.fade_out(0.3, Color(0,0,0,1),\"GradientVertical\",false,true).finished
-	gameState.loadGame(gameManager.get_persistent_data()[\"lastSave\"])
-
-func checkCurrentSave():
-	return gameManager.get_persistent_data().has(\"lastSave\")
-
-
-func _on_smacknet_connect_pressed() -> void:
-	if !%LoginScreen.visible:
-		%LoginScreen.show()
-"
 
 [sub_resource type="Gradient" id="Gradient_qjgg7"]
 offsets = PackedFloat32Array(0, 0.5, 1)
@@ -94,7 +30,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 mouse_filter = 2
 theme = ExtResource("1_cg2cc")
-script = SubResource("GDScript_xob6c")
+script = ExtResource("2_ktkeu")
 
 [node name="gradientBG" type="TextureRect" parent="."]
 visible = false

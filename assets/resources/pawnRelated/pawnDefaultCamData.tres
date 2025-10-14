@@ -4,14 +4,10 @@
 
 [resource]
 script = ExtResource("1_2kdei")
-isHudEnabled = true
 useZoomFOV = false
 zoomSpringAmount = 0.5
 cameraOffset = Vector3(0.3, 0.33, 1.67)
 camLerpSpeed = 20.0
 itemEquipOffset = Vector3(0.555, 0, 0)
-itemEquipLerpSpeed = 5.0
-zoomAmount = 20.0
-zoomInSpeed = 40.0
-zoomOutSpeed = 20.0
-zoomSpeed = 5.0
+zoomInSpeed = 15.0
+zoomOutSpeed = 15.0

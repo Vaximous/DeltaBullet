@@ -195,6 +195,89 @@ grow_horizontal = 1
 grow_vertical = 0
 text = "no"
 
+[node name="removePanel" type="Panel" parent="panel"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -284.5
+offset_top = -146.5
+offset_right = 284.5
+offset_bottom = 146.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="textureRect" type="TextureRect" parent="panel/removePanel"]
+layout_mode = 0
+offset_left = -65.5
+offset_top = -16.5
+offset_right = 190.5
+offset_bottom = 23.5
+texture = SubResource("GradientTexture1D_7fdao")
+
+[node name="label" type="Label" parent="panel/removePanel/textureRect"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 2.0
+offset_right = 170.0
+offset_bottom = 37.0
+theme_override_font_sizes/font_size = 41
+text = "DELETE SAVE"
+vertical_alignment = 1
+
+[node name="label" type="Label" parent="panel/removePanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -272.5
+offset_top = -103.5
+offset_right = 273.5
+offset_bottom = 62.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 36
+text = "Are you sure you want to remove the save in this slot? 
+
+This cannot be reversed."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="yesButton" parent="panel/removePanel" instance=ExtResource("3_2ws27")]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -283.0
+offset_top = -63.0
+offset_right = 35.0
+offset_bottom = 3.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Yes"
+
+[node name="noButton" parent="panel/removePanel" instance=ExtResource("3_2ws27")]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_right = 0.0
+anchor_bottom = 1.0
+offset_top = -63.0
+offset_right = 279.0
+offset_bottom = -17.0
+grow_horizontal = 1
+grow_vertical = 0
+text = "no"
+
 [node name="saveNamePanel" type="Panel" parent="panel"]
 visible = false
 layout_mode = 1
@@ -269,5 +352,7 @@ text = "Accept"
 [connection signal="pressed" from="panel/closeButton" to="." method="hidePanel"]
 [connection signal="pressed" from="panel/overwritePanel/yesButton" to="." method="_on_yes_button_pressed"]
 [connection signal="pressed" from="panel/overwritePanel/noButton" to="." method="hideOverridePanel"]
+[connection signal="pressed" from="panel/removePanel/yesButton" to="." method="deleteSave"]
+[connection signal="pressed" from="panel/removePanel/noButton" to="." method="hideRemoveSavePanel"]
 [connection signal="pressed" from="panel/saveNamePanel/closeButton" to="." method="hideSaveNamePanel"]
 [connection signal="pressed" from="panel/saveNamePanel/acceptButton" to="." method="saveGame"]

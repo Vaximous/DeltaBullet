@@ -15,6 +15,7 @@ var sceneLoad : String
 			saveName.text = "Create New Save"
 			saveLocation.text = ""
 			saveTimestamp.text = ""
+			%removeSave.hide()
 var saveFile:
 	set(value):
 		saveFile = value
@@ -73,3 +74,7 @@ func _on_pressed()->void:
 		2:
 			gameManager.getEventSignal("overwriteSave").emit()
 			gameManager.saveOverwrite = saveName.text
+
+func startRemoveSave()->void:
+		gameManager.saveOverwrite = saveName.text
+		gameManager.getEventSignal("removeSave").emit()

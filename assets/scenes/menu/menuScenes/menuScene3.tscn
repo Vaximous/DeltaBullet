@@ -6,10 +6,18 @@
 [sub_resource type="GDScript" id="GDScript_bcvoe"]
 resource_name = "menuscene3"
 script/source = "extends Node3D
+@onready var worldEnv : WorldEnvironment = $worldEnvironment
 
 # Called when the node enters the scene tree for the first time.
 func _ready()->void:
 	$animationPlayer.play(\"new_animation\")
+	gameManager.updateGraphics(worldEnv)
+	if !UserConfig.configs_updated.is_connected(gameManager.updateGraphics.bind(worldEnv)):
+		UserConfig.configs_updated.connect(gameManager.updateGraphics.bind(worldEnv))
+	else:
+		UserConfig.configs_updated.disconnect(gameManager.updateGraphics.bind(worldEnv))
+		UserConfig.configs_updated.connect(gameManager.updateGraphics.bind(worldEnv))
+
 func _init()->void:
 	gameManager.freeOrphans.connect(free_me_orphan)
 func free_me_orphan()->void:
@@ -43,8 +51,6 @@ sdfgi_use_occlusion = true
 sdfgi_read_sky_light = false
 sdfgi_cascades = 3
 sdfgi_min_cell_size = 0.15625
-sdfgi_cascade0_distance = 10.0
-sdfgi_max_distance = 80.0
 sdfgi_y_scale = 2
 glow_enabled = true
 glow_normalized = true
@@ -150,7 +156,7 @@ transform = Transform3D(0.977075, 0, 0.212894, 0, 1, 0, -0.212894, 0, 0.977075, 
 transform = Transform3D(0.721809, 0, -0.692093, 0, 1, 0, 0.692093, 0, 0.721809, 334.753, 135.456, -709.149)
 
 [node name="camera3d" type="Camera3D" parent="."]
-transform = Transform3D(0.866025, 0.25, -0.433013, -2.18557e-08, 0.866025, 0.5, 0.5, -0.433013, 0.75, 23.9789, 314.961, 98.5593)
+transform = Transform3D(0.8660249, 0.25000018, -0.4330129, -2.1855698e-08, 0.86602503, 0.5000003, 0.5, -0.43301272, 0.7499998, 23.9789, 314.961, 98.5593)
 environment = SubResource("Environment_2lsrc")
 fov = 90.0
 

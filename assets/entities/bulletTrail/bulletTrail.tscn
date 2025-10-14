@@ -1,12 +1,26 @@
-[gd_scene load_steps=3 format=3 uid="uid://wb3grtjgigng"]
+[gd_scene load_steps=6 format=3 uid="uid://wb3grtjgigng"]
 
 [ext_resource type="Script" uid="uid://chcwhgdmausuw" path="res://assets/scripts/bulletTrail/bulletTrail.gd" id="1_u8knr"]
 
+[sub_resource type="Gradient" id="Gradient_2gvr1"]
+offsets = PackedFloat32Array(0, 0.32692307, 0.64903843, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0.6313726, 0.6313726, 0.6313726, 0.9607843, 0.9340804, 0.9340805, 0.93408036, 0.9795518, 0.83033526, 0.83033514, 0.83033514, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_cit01"]
+gradient = SubResource("Gradient_2gvr1")
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_7b5v6"]
+gradient = SubResource("Gradient_2gvr1")
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_atsew"]
 transparency = 1
+vertex_color_use_as_albedo = true
+albedo_texture = SubResource("GradientTexture1D_cit01")
 emission_enabled = true
-emission = Color(1, 1, 0, 1)
-emission_energy_multiplier = 16.0
+emission = Color(1, 1, 0.5686275, 1)
+emission_energy_multiplier = 1.41
+emission_on_uv2 = true
+emission_texture = SubResource("GradientTexture1D_7b5v6")
 
 [node name="bulletTrail" type="MeshInstance3D"]
 top_level = true

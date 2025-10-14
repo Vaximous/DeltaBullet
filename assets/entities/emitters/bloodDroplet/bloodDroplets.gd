@@ -34,7 +34,8 @@ func _physics_process(delta: float) -> void:
 	if mesh:
 		mesh.position = global_position
 		mesh.mesh.size.x = velocity.length() * 0.005
-		mesh.look_at(global_position + velocity, norm, true)
+		if not (norm).cross(global_position + velocity).is_zero_approx():
+			mesh.look_at(global_position + velocity, norm, true)
 		mesh.global_position = global_position
 
 	params.from = global_position

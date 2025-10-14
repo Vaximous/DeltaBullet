@@ -1,5 +1,23 @@
 extends Node
 
+#Check if file exists
+func doesFileExist(filePath : String)->bool:
+	if FileAccess.file_exists(filePath):
+		print("File exists at: " + filePath)
+		return true
+	else:
+		print("File does not exist at: " + filePath)
+		return false
+
+#Remove directory
+func rmdir(directory: String) -> void:
+	for file in DirAccess.get_files_at(directory):
+		DirAccess.remove_absolute(directory.path_join(file))
+	for dir in DirAccess.get_directories_at(directory):
+		rmdir(directory.path_join(dir))
+	DirAccess.remove_absolute(directory)
+
+# Create a popup to display info
 func createGamePopup(popup:PopupInfobank)->CanvasLayer:
 	gameManager.getPauseMenu().canPause = false
 	var infopop = load("res://assets/scenes/ui/infopopup/infoPopup.tscn").instantiate()

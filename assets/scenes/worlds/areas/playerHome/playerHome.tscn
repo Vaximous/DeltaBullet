@@ -67,12 +67,11 @@ worldDescription = "Yes.. My home.."
 worldLoadingTexture = ExtResource("3_6em3y")
 worldType = 2
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_8gbvr"]
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_7i0qu"]
 panorama = ExtResource("3_rcju0")
-energy_multiplier = 0.85
 
 [sub_resource type="Sky" id="Sky_nj1fe"]
-sky_material = SubResource("PanoramaSkyMaterial_8gbvr")
+sky_material = SubResource("PanoramaSkyMaterial_7i0qu")
 
 [sub_resource type="Environment" id="Environment_6hcyr"]
 background_mode = 2
@@ -1621,9 +1620,7 @@ script/source = "extends Node
 
 
 func _on_pawn_trigger_trigger_activated(body: Variant) -> void:
-	if !gameState.getSeenWelcomeDemoMessage():
-		var popup = Util.createGamePopup(load(\"res://assets/resources/infobanks/testInfobank/welcometest.tres\"))
-		popup.tree_exited.connect(gameState.setSeenWelcomeDemoMessage.bind(true))
+	pass
 "
 
 [node name="playerHome" instance=ExtResource("1_ypyko")]

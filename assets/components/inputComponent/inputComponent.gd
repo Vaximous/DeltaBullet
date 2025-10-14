@@ -149,7 +149,7 @@ func _handleStopAim(pawn: BasePawn) -> void:
 
 
 func _handleAim(pawn: BasePawn, cam: Node, item: Node) -> void:
-	if !is_instance_valid(cam) or !is_instance_valid(item):
+	if !is_instance_valid(cam):
 		return
 
 	pawn.turnAmount = -cam.vertical.rotation.x
@@ -158,8 +158,9 @@ func _handleAim(pawn: BasePawn, cam: Node, item: Node) -> void:
 	if !pawn.meshLookAt and !pawn.isInCover:
 		pawn.meshLookAt = true
 
-	if !item.isAiming and (!pawn.isInCover or pawn.peekable):
-		item.isAiming = true
+	if is_instance_valid(item):
+		if !item.isAiming and (!pawn.isInCover or pawn.peekable):
+			item.isAiming = true
 
 	pawn.freeAim = false
 	pawn.freeAimTimer.stop()
@@ -175,8 +176,9 @@ func _handleAim(pawn: BasePawn, cam: Node, item: Node) -> void:
 			pawn.isPeeking = false
 			pawn.enableCoverTransition()
 			pawn.meshLookAt = false
-			if item.isAiming:
-				item.isAiming = false
+			if is_instance_valid(item):
+				if item.isAiming:
+					item.isAiming = false
 
 
 func _handleThrowReleased(pawn: BasePawn) -> void:
@@ -197,9 +199,9 @@ func _handleThrowPressed(pawn: BasePawn) -> void:
 	pawn.armThrowable()
 
 func _cycleItem(pawn: BasePawn, direction: int) -> void:
-	if !is_instance_valid(pawn.healthComponent) or pawn.healthComponent.isDead or pawn.isUsingPhone:
-		return
 	var max_index = pawn.itemInventory.size() - 1
+	if !is_instance_valid(pawn.healthComponent) or pawn.healthComponent.isDead or pawn.isUsingPhone or (pawn.currentItemIndex + direction) > max_index or (pawn.currentItemIndex + direction) < 0 :
+		return
 	pawn.currentItemIndex = clamp(pawn.currentItemIndex + direction, 0, max_index)
 
 

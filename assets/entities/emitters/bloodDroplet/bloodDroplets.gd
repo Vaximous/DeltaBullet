@@ -18,6 +18,7 @@ var params: PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.new()
 
 func _ready() -> void:
 	#gameManager.registerPhysicsEntity(self)
+	set_physics_process(false)
 	if mesh:
 		var dup = mesh.mesh.duplicate()
 		mesh.mesh = dup

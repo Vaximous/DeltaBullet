@@ -580,6 +580,9 @@ func _physics_process(delta: float) -> void:
 				else:
 					peekable = false
 
+			if isPlayerPawn() and freeAim:
+				turnAmount = -attachedCam.vertical.rotation.x
+
 			#Point the cover casts in the direction of the player, if its the player. otherwise just use the meshrotation
 			if isPlayerPawn() and is_instance_valid(attachedCam) and !isInCover:
 				%coverHolder.rotation_degrees.y = attachedCam.horizontal.global_rotation_degrees.y

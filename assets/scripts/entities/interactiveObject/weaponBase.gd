@@ -291,7 +291,6 @@ func fire()->void:
 
 	#Weapon is capable of firing.
 	if !isFiring:
-
 		shot_fired.emit()
 		spawn_bullet_casing()
 		isFiring = true
@@ -317,6 +316,7 @@ func fire()->void:
 			currentAmmo -= weaponResource.ammoConsumption
 
 		if weaponCast != null:
+			weaponOwner.setFireAdditive(-0.05,0.05)
 			for b in weaponResource.weaponShots:
 				spawnProjectile(weaponCast)
 				applyRecoil(weaponCast)

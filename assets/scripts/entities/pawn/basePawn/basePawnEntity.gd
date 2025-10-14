@@ -421,6 +421,7 @@ var idleSpaceTween: Tween
 var crouchSpaceTween: Tween
 var bodyIKTween: Tween
 var meshRotationTween: Tween
+var fireTween : Tween
 var meshRotationTweenMovement: Tween
 var flinchTween: Tween
 var phoneTween: Tween
@@ -504,6 +505,7 @@ func _ready() -> void:
 
 	fixRot()
 	setupPawnColor()
+	setAdditiveAnimation()
 	for i in getAllHitboxes():
 		i.connect(&"damaged", flinch.bind(2))
 
@@ -966,7 +968,36 @@ func setLeftHandFilter(value: bool = true) -> void:
 	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:L_Pinkie0", value)
 	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:L_Pinkie1", value)
 	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:L_Pinkie2", value)
+	#Additive
+	var filterBlend2: AnimationNodeAdd2 = animationTree.tree_root.get_node("Add2")
+	filterBlend2.set_filter_path("..:[Functions/Functions]", true)
+	filterBlend2.set_filter_path("MaleSkeleton/Skeleton3D:L_Shoulder", value)
+	filterBlend2.set_filter_path("MaleSkeleton/Skeleton3D:L_UpperArm", value)
+	filterBlend2.set_filter_path("MaleSkeleton/Skeleton3D:L_Forearm", value)
+	filterBlend2.set_filter_path("MaleSkeleton/Skeleton3D:L_Hand", value)
+	filterBlend2.set_filter_path("MaleSkeleton/Skeleton3D:L_Thumb0", value)
+	filterBlend2.set_filter_path("MaleSkeleton/Skeleton3D:L_Thumb1", value)
+	filterBlend2.set_filter_path("MaleSkeleton/Skeleton3D:L_Thumb2", value)
+	filterBlend2.set_filter_path("MaleSkeleton/Skeleton3D:L_Index0", value)
+	filterBlend2.set_filter_path("MaleSkeleton/Skeleton3D:L_Index1", value)
+	filterBlend2.set_filter_path("MaleSkeleton/Skeleton3D:L_Index2", value)
+	filterBlend2.set_filter_path("MaleSkeleton/Skeleton3D:L_Middle0", value)
+	filterBlend2.set_filter_path("MaleSkeleton/Skeleton3D:L_Middle1", value)
+	filterBlend2.set_filter_path("MaleSkeleton/Skeleton3D:L_Middle2", value)
+	filterBlend2.set_filter_path("MaleSkeleton/Skeleton3D:L_Ring0", value)
+	filterBlend2.set_filter_path("MaleSkeleton/Skeleton3D:L_Ring1", value)
+	filterBlend2.set_filter_path("MaleSkeleton/Skeleton3D:L_Ring2", value)
+	filterBlend2.set_filter_path("MaleSkeleton/Skeleton3D:L_Pinkie0", value)
+	filterBlend2.set_filter_path("MaleSkeleton/Skeleton3D:L_Pinkie1", value)
+	filterBlend2.set_filter_path("MaleSkeleton/Skeleton3D:L_Pinkie2", value)
 
+func setFireAdditive(minvalue:float,maxvalue:float)->void:
+	#var addBlend: AnimationNodeAdd2 = animationTree.tree_root.get_node("Add2")
+	animationTree.set("parameters/Add2/add_amount",randf_range(minvalue,maxvalue))
+	if fireTween:
+		fireTween.kill()
+	fireTween = create_tween()
+	fireTween.tween_property(animationTree,"parameters/Add2/add_amount",0,randf_range(0.15,0.25)).set_ease(gameManager.defaultEaseType).set_trans(gameManager.defaultTransitionType)
 
 func setRightHandFilter(value: bool = true) -> void:
 	var filterBlend: AnimationNodeBlend2 = animationTree.tree_root.get_node("weaponBlend")
@@ -990,7 +1021,28 @@ func setRightHandFilter(value: bool = true) -> void:
 	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:R_Pinkie0", value)
 	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:R_Pinkie1", value)
 	filterBlend.set_filter_path("MaleSkeleton/Skeleton3D:R_Pinkie2", value)
-
+	#Additive
+	var filterBlend2: AnimationNodeAdd2 = animationTree.tree_root.get_node("Add2")
+	filterBlend2.set_filter_path("..:[Functions/Functions]", true)
+	filterBlend2.set_filter_path("MaleSkeleton/Skeleton3D:R_Shoulder", value)
+	filterBlend2.set_filter_path("MaleSkeleton/Skeleton3D:R_UpperArm", value)
+	filterBlend2.set_filter_path("MaleSkeleton/Skeleton3D:R_Forearm", value)
+	filterBlend2.set_filter_path("MaleSkeleton/Skeleton3D:R_Hand", value)
+	filterBlend2.set_filter_path("MaleSkeleton/Skeleton3D:R_Thumb0", value)
+	filterBlend2.set_filter_path("MaleSkeleton/Skeleton3D:R_Thumb1", value)
+	filterBlend2.set_filter_path("MaleSkeleton/Skeleton3D:R_Thumb2", value)
+	filterBlend2.set_filter_path("MaleSkeleton/Skeleton3D:R_Index0", value)
+	filterBlend2.set_filter_path("MaleSkeleton/Skeleton3D:R_Index1", value)
+	filterBlend2.set_filter_path("MaleSkeleton/Skeleton3D:R_Index2", value)
+	filterBlend2.set_filter_path("MaleSkeleton/Skeleton3D:R_Middle0", value)
+	filterBlend2.set_filter_path("MaleSkeleton/Skeleton3D:R_Middle1", value)
+	filterBlend2.set_filter_path("MaleSkeleton/Skeleton3D:R_Middle2", value)
+	filterBlend2.set_filter_path("MaleSkeleton/Skeleton3D:R_Ring0", value)
+	filterBlend2.set_filter_path("MaleSkeleton/Skeleton3D:R_Ring1", value)
+	filterBlend2.set_filter_path("MaleSkeleton/Skeleton3D:R_Ring2", value)
+	filterBlend2.set_filter_path("MaleSkeleton/Skeleton3D:R_Pinkie0", value)
+	filterBlend2.set_filter_path("MaleSkeleton/Skeleton3D:R_Pinkie1", value)
+	filterBlend2.set_filter_path("MaleSkeleton/Skeleton3D:R_Pinkie2", value)
 
 func setLeftHandFilterCover(value: bool = true) -> void:
 	var filterBlend: AnimationNodeBlend2 = animationTree.tree_root.get_node("coverBlend")
@@ -1226,6 +1278,8 @@ func setupAnimationTree() -> void:
 		animationTree.tree_root = dupRoot
 		animationTree.active = true
 		animationPlayer.active = true
+		var filterBlend2: AnimationNodeAnimation = animationTree.tree_root.get_node("additiveAnim")
+		filterBlend2.animation = "PawnAnim/Idle"
 
 
 func setRunBlendFilters(value: bool) -> void:
@@ -2060,12 +2114,20 @@ func playPhoneBeepSound() -> void:
 	%phoneBeep.play()
 
 
+func setAdditiveAnimation()->void:
+	var filterBlend2: AnimationNodeAnimation = animationTree.tree_root.get_node("additiveAnim")
+	if animationPlayer.has_animation("weaponAnims/fire"):
+		filterBlend2.animation = "weaponAnims/fire"
+	else:
+		filterBlend2.animation = "PawnAnim/Idle"
+
+
 func staggerEnd() -> void:
 	isStaggered = false
 
 
-func doStagger(stagger, speed: float = 1.0, randomChance: bool = false) -> void:
-	if get_meta(&"canBeStaggered") == false or isStaggered or forceAnimation: return
+func doStagger(stagger, speed: float = 1.0, randomChance: bool = false, interruptible:bool=false) -> void:
+	if get_meta(&"canBeStaggered") == false or isStaggered and !interruptible or forceAnimation: return
 	if randomChance:
 		if [true, false].pick_random() == false:
 			return

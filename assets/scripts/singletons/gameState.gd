@@ -242,6 +242,16 @@ func getOwnedProperty(id:StringName)->int:
 	var properties = getGameState()
 	return properties["ownedProperties"].find(id)
 
+func setSeenWelcomeDemoMessage(value:bool)->bool:
+	var state = getGameState()
+	var seen = state.get_or_add("seenWelcomeMessageDemo",false)
+	state["seenWelcomeMessageDemo"] = value
+	return seen
+
+func getSeenWelcomeDemoMessage()->bool:
+	var state = getGameState()
+	return state.get_or_add("seenWelcomeMessageDemo",false)
+
 func getSaveDateDict()->Dictionary:
 	var saveInfo = getGameState()
 	return saveInfo.get_or_add("dateDict", Time.get_date_dict_from_system())

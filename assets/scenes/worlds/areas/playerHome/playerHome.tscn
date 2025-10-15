@@ -1,4 +1,4 @@
-[gd_scene load_steps=195 format=4 uid="uid://c8bkdy6aqwxls"]
+[gd_scene load_steps=198 format=4 uid="uid://c8bkdy6aqwxls"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_ypyko"]
 [ext_resource type="PackedScene" uid="uid://boicvk4qeqmbd" path="res://assets/entities/pawnSpawn/pawnSpawn.tscn" id="2_v576b"]
@@ -54,6 +54,10 @@
 [ext_resource type="PackedScene" uid="uid://dakipfkiu0xqt" path="res://assets/components/musicChangeZone/music_change_zone.tscn" id="51_7i0qu"]
 [ext_resource type="AudioStream" uid="uid://c107fr0piwph4" path="res://assets/music/ambient/initial.wav" id="52_dvo7e"]
 [ext_resource type="PackedScene" uid="uid://7ueyays7enj5" path="res://assets/entities/trigger/pawnTrigger.tscn" id="54_8gbvr"]
+[ext_resource type="PackedScene" uid="uid://cd4ipeu135f18" path="res://assets/models/world/ladder/LadderProp.tscn" id="55_briwp"]
+[ext_resource type="ArrayMesh" uid="uid://cv6dggflkxt6j" path="res://assets/models/interior/walltrim/interior_wall_trims_corner.res" id="55_cj522"]
+[ext_resource type="ArrayMesh" uid="uid://8ru033wgrbts" path="res://assets/models/interior/walltrim/interior_wall_trims_side.res" id="56_dsxxh"]
+[ext_resource type="ArrayMesh" uid="uid://dyhcfjjpp47qc" path="res://assets/models/interior/walltrim/interior_wall_trims_edge.res" id="57_uotc0"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_6ok4a"]
 panorama = ExtResource("3_rcju0")
@@ -67,13 +71,13 @@ worldDescription = "Yes.. My home.."
 worldLoadingTexture = ExtResource("3_6em3y")
 worldType = 2
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_7i0qu"]
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_afll2"]
 panorama = ExtResource("3_rcju0")
 
 [sub_resource type="Sky" id="Sky_nj1fe"]
-sky_material = SubResource("PanoramaSkyMaterial_7i0qu")
+sky_material = SubResource("PanoramaSkyMaterial_afll2")
 
-[sub_resource type="Environment" id="Environment_6hcyr"]
+[sub_resource type="Environment" id="Environment_dsxxh"]
 background_mode = 2
 sky = SubResource("Sky_nj1fe")
 reflected_light_source = 1
@@ -1605,11 +1609,6 @@ func _on_object_used(user: Variant) -> void:
 [sub_resource type="BoxShape3D" id="BoxShape3D_cj522"]
 size = Vector3(7.573242, 4.390564, 5.8936768)
 
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_6hcyr"]
-random_pitch = 1.1
-streams_count = 1
-stream_0/stream = ExtResource("52_dvo7e")
-
 [sub_resource type="BoxShape3D" id="BoxShape3D_gugwl"]
 size = Vector3(19.384232, 3.60657, 25.998413)
 
@@ -1627,11 +1626,11 @@ func _on_pawn_trigger_trigger_activated(body: Variant) -> void:
 worldData = SubResource("Resource_3bd3l")
 
 [node name="pawnSpawn" parent="Spawns/playerSpawns" index="0" instance=ExtResource("2_v576b")]
-transform = Transform3D(-0.999163, 0, -0.0408992, 0, 1, 0, 0.0408992, 0, -0.999163, 8.41205, 4.00722, -1.01851)
+transform = Transform3D(-0.999163, 0, -0.0408992, 0, 1, 0, 0.0408992, 0, -0.999163, 8.41205, 4.549556, -1.01851)
 pawnType = 0
 
 [node name="worldEnvironment" parent="Environment" index="0"]
-environment = SubResource("Environment_6hcyr")
+environment = SubResource("Environment_dsxxh")
 compositor = SubResource("Compositor_fvwrp")
 
 [node name="reflectionProbe" parent="Environment" index="1"]
@@ -2397,15 +2396,198 @@ shape = SubResource("BoxShape3D_cj522")
 
 [node name="MusicChangeZone" parent="Misc" index="5" instance=ExtResource("51_7i0qu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.09155, 4.86931, 0)
-area_music = SubResource("AudioStreamRandomizer_6hcyr")
+area_music = ExtResource("52_dvo7e")
 switch_back_on_exit = true
 
 [node name="collisionShape3d" type="CollisionShape3D" parent="Misc/MusicChangeZone" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.2248, 1.3032799, -8.384094)
 shape = SubResource("BoxShape3D_gugwl")
 
+[node name="LadderProp" parent="Misc" index="7" instance=ExtResource("55_briwp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 9, 1)
+
 [node name="mapLogic" parent="." index="7"]
 script = SubResource("GDScript_dsxxh")
+
+[node name="interiorWallTrimsCorner" type="MeshInstance3D" parent="." index="8"]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 6.9920874, 3.9700031, -4.0016956)
+mesh = ExtResource("55_cj522")
+
+[node name="interiorWallTrimsSide" type="MeshInstance3D" parent="." index="9"]
+transform = Transform3D(-0.9999999, 0, -2.6317102e-07, 0, 1, 0, 8.742276e-08, 0, -3.0103257, 6.991997, 3.9700031, -4.643068)
+mesh = ExtResource("56_dsxxh")
+blend_shapes/extendLeft = 0.0
+blend_shapes/extendRight = 0.0
+
+[node name="interiorWallTrimsSide18" type="MeshInstance3D" parent="." index="10"]
+transform = Transform3D(-0.9999999, 0, -2.0193767e-07, 0, 1, 0, 8.742276e-08, 0, -2.3098977, 6.991997, 3.9700031, -6.5943346)
+mesh = ExtResource("56_dsxxh")
+blend_shapes/extendLeft = 0.0
+blend_shapes/extendRight = 0.0
+
+[node name="interiorWallTrimsSide19" type="MeshInstance3D" parent="." index="11"]
+transform = Transform3D(-0.9999997, 0, -8.5823507e-07, 0, 1, 0, 8.742275e-08, 0, -9.817065, 8.991997, 3.9700031, -8.521549)
+mesh = ExtResource("56_dsxxh")
+blend_shapes/extendLeft = 0.0
+blend_shapes/extendRight = 0.0
+
+[node name="interiorWallTrimsSide20" type="MeshInstance3D" parent="." index="12"]
+transform = Transform3D(-0.9999998, 0, -1.9245341e-07, 0, 1, 0, 8.7422755e-08, 0, -2.2014105, 8.991997, 3.9700031, -11.696827)
+mesh = ExtResource("56_dsxxh")
+blend_shapes/extendLeft = 0.0
+blend_shapes/extendRight = 0.0
+
+[node name="interiorWallTrimsSide21" type="MeshInstance3D" parent="." index="13"]
+transform = Transform3D(7.54979e-08, 0, -1, 0, 1, 0, 1, 0, 7.54979e-08, 9.291997, 3.9700031, -11.238652)
+mesh = ExtResource("56_dsxxh")
+blend_shapes/extendLeft = 0.0
+blend_shapes/extendRight = 0.0
+
+[node name="interiorWallTrimsSide22" type="MeshInstance3D" parent="." index="14"]
+transform = Transform3D(1.1924875e-08, 0, 1, 0, 1, 0, -1, 0, 1.1924875e-08, 9.291997, 3.9700031, -10.238652)
+mesh = ExtResource("56_dsxxh")
+blend_shapes/extendLeft = 0.0
+blend_shapes/extendRight = 0.0
+
+[node name="interiorWallTrimsSide2" type="MeshInstance3D" parent="." index="15"]
+transform = Transform3D(-4.371138e-08, 0, 3.0103261, 0, 1, 0, -1, 0, -1.3158554e-07, 6.5919967, 3.9700031, -4.001489)
+mesh = ExtResource("56_dsxxh")
+blend_shapes/extendLeft = 0.0
+blend_shapes/extendRight = 0.0
+
+[node name="interiorWallTrimsSide10" type="MeshInstance3D" parent="." index="16"]
+transform = Transform3D(-4.3711367e-08, 0, 27.180357, 0, 1, 0, -0.99999964, 0, -1.1880912e-06, 0.3255232, 3.9700031, -4.001489)
+mesh = ExtResource("56_dsxxh")
+blend_shapes/extendLeft = 0.0
+blend_shapes/extendRight = 0.0
+
+[node name="interiorWallTrimsSide11" type="MeshInstance3D" parent="." index="17"]
+transform = Transform3D(-4.3711378e-08, 0, -27.180355, 0, 1, 0, 0.99999964, 0, -1.188091e-06, 3.3255231, 3.9700031, -18.00149)
+mesh = ExtResource("56_dsxxh")
+blend_shapes/extendLeft = 0.0
+blend_shapes/extendRight = 0.0
+
+[node name="interiorWallTrimsSide12" type="MeshInstance3D" parent="." index="18"]
+transform = Transform3D(-0.9999995, 0, 1.6079457e-06, 0, 1, 0, -8.742274e-08, 0, -18.39276, 6.9926243, 3.9700031, -15.20149)
+mesh = ExtResource("56_dsxxh")
+blend_shapes/extendLeft = 0.0
+blend_shapes/extendRight = 0.0
+
+[node name="interiorWallTrimsSide13" type="MeshInstance3D" parent="." index="19"]
+transform = Transform3D(0.9999995, 0, 5.1159077e-13, 0, 1, 0, 7.1054274e-15, 0, 27.589138, -0.007375717, 3.9700031, -13.70149)
+mesh = ExtResource("56_dsxxh")
+blend_shapes/extendLeft = 0.0
+blend_shapes/extendRight = 0.0
+
+[node name="interiorWallTrimsSide14" type="MeshInstance3D" parent="." index="20"]
+transform = Transform3D(0.9999995, 0, 5.1159077e-13, 0, 1, 0, 7.1054274e-15, 0, 27.589138, -4.0073757, 3.9700031, -6.7014904)
+mesh = ExtResource("56_dsxxh")
+blend_shapes/extendLeft = 0.0
+blend_shapes/extendRight = 0.0
+
+[node name="interiorWallTrimsSide15" type="MeshInstance3D" parent="." index="21"]
+transform = Transform3D(-4.3711374e-08, 0, -13.518678, 0, 1, 0, 0.99999946, 0, -5.9091985e-07, -2.4335947, 3.9700031, -9.001491)
+mesh = ExtResource("56_dsxxh")
+blend_shapes/extendLeft = 0.0
+blend_shapes/extendRight = 0.0
+
+[node name="interiorWallTrimsSide3" type="MeshInstance3D" parent="." index="22"]
+transform = Transform3D(-0.99999994, 0, -2.210637e-07, 0, 1, 0, 8.742276e-08, 0, -2.528674, 6.043354, 3.9700031, -3.463518)
+mesh = ExtResource("56_dsxxh")
+blend_shapes/extendLeft = 0.0
+blend_shapes/extendRight = 0.0
+
+[node name="interiorWallTrimsSide8" type="MeshInstance3D" parent="." index="23"]
+transform = Transform3D(0.99999994, 0, 4.4212737e-07, 0, 1, 0, -1.7484552e-07, 0, 2.528674, 5.043354, 3.9700031, -3.463518)
+mesh = ExtResource("56_dsxxh")
+blend_shapes/extendLeft = 0.0
+blend_shapes/extendRight = 0.0
+
+[node name="interiorWallTrimsSide9" type="MeshInstance3D" parent="." index="24"]
+transform = Transform3D(1.3113414e-07, 0, -2.7815413, 0, 1, 0, 0.99999994, 0, 3.6475507e-07, 4.443354, 3.9700031, -3.0030417)
+mesh = ExtResource("56_dsxxh")
+blend_shapes/extendLeft = 0.0
+blend_shapes/extendRight = 0.0
+
+[node name="interiorWallTrimsEdge" type="MeshInstance3D" parent="." index="25"]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 6.043354, 3.9700031, -4.001651)
+mesh = ExtResource("57_uotc0")
+
+[node name="interiorWallTrimsEdge4" type="MeshInstance3D" parent="." index="26"]
+transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, 5.043354, 3.9700031, -4.001651)
+mesh = ExtResource("57_uotc0")
+
+[node name="interiorWallTrimsEdge2" type="MeshInstance3D" parent="." index="27"]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 6.043354, 3.9700031, -3.0030417)
+mesh = ExtResource("57_uotc0")
+
+[node name="interiorWallTrimsEdge3" type="MeshInstance3D" parent="." index="28"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.043354, 3.9700031, -3.0030417)
+mesh = ExtResource("57_uotc0")
+
+[node name="interiorWallTrimsSide4" type="MeshInstance3D" parent="." index="29"]
+transform = Transform3D(-4.37114e-08, 0, -17.5032, 0, 1, 0, 1.0000002, 0, -7.6508917e-07, 9.039542, 3.9700031, -3.0030417)
+mesh = ExtResource("56_dsxxh")
+blend_shapes/extendLeft = 0.0
+blend_shapes/extendRight = 0.0
+
+[node name="interiorWallTrimsSide6" type="MeshInstance3D" parent="." index="30"]
+transform = Transform3D(-1.0000004, 0, 1.6831965e-06, 0, 1, 0, -8.74228e-08, 0, -19.253521, 10.991088, 3.9700031, 0.15536852)
+mesh = ExtResource("56_dsxxh")
+blend_shapes/extendLeft = 0.0
+blend_shapes/extendRight = 0.0
+
+[node name="interiorWallTrimsSide7" type="MeshInstance3D" parent="." index="31"]
+transform = Transform3D(1.0000002, 0, -2.2737368e-13, 0, 1, 0, 0, 0, 19.25352, 3.991088, 3.9700031, 0.15536852)
+mesh = ExtResource("56_dsxxh")
+blend_shapes/extendLeft = 0.0
+blend_shapes/extendRight = 0.0
+
+[node name="interiorWallTrimsSide5" type="MeshInstance3D" parent="." index="32"]
+transform = Transform3D(1.3113421e-07, 0, 24.504482, 0, 1, 0, -1.0000002, 0, 3.2133744e-06, 7.039542, 3.9700031, 2.9969583)
+mesh = ExtResource("56_dsxxh")
+blend_shapes/extendLeft = 0.0
+blend_shapes/extendRight = 0.0
+
+[node name="interiorWallTrimsEdge5" type="MeshInstance3D" parent="." index="33"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.007375896, 3.9700031, -9.001491)
+mesh = ExtResource("57_uotc0")
+
+[node name="interiorWallTrimsEdge6" type="MeshInstance3D" parent="." index="34"]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 6.9926243, 3.9700031, -12.005116)
+mesh = ExtResource("57_uotc0")
+
+[node name="interiorWallTrimsSide16" type="MeshInstance3D" parent="." index="35"]
+transform = Transform3D(-4.37114e-08, 0, -5.7200003, 0, 1, 0, 1.0000002, 0, -2.5002916e-07, 8.097877, 3.9700031, -12.005116)
+mesh = ExtResource("56_dsxxh")
+blend_shapes/extendLeft = 0.0
+blend_shapes/extendRight = 0.0
+
+[node name="interiorWallTrimsSide17" type="MeshInstance3D" parent="." index="36"]
+transform = Transform3D(-4.37114e-08, 0, 5.7200003, 0, 0.99999994, 0, -1.0000001, 0, -2.5002913e-07, 8.097877, 3.9700031, -7.0007086)
+mesh = ExtResource("56_dsxxh")
+blend_shapes/extendLeft = 0.0
+blend_shapes/extendRight = 0.0
+
+[node name="interiorWallTrimsEdge7" type="MeshInstance3D" parent="." index="37"]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 8.991997, 3.9700031, -11.238652)
+mesh = ExtResource("57_uotc0")
+
+[node name="interiorWallTrimsEdge8" type="MeshInstance3D" parent="." index="38"]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 8.991997, 3.9700031, -10.238652)
+mesh = ExtResource("57_uotc0")
+
+[node name="interiorWallTrimsEdge9" type="MeshInstance3D" parent="." index="39"]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 6.9919405, 3.9700031, -7.0007086)
+mesh = ExtResource("57_uotc0")
+
+[node name="interiorWallTrimsEdge10" type="MeshInstance3D" parent="." index="40"]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 6.9919405, 3.9700031, -5.1671395)
+mesh = ExtResource("57_uotc0")
+
+[node name="interiorWallTrimsEdge11" type="MeshInstance3D" parent="." index="41"]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 6.9919405, 3.9700031, -6.1671395)
+mesh = ExtResource("57_uotc0")
 
 [connection signal="objectUsed" from="Props/PlayerCloset/closetInteraction" to="Props/PlayerCloset" method="_onClosetUsed"]
 [connection signal="objectUsed" from="Props/worldMapInteract" to="Props/worldMapInteract" method="_on_object_used"]

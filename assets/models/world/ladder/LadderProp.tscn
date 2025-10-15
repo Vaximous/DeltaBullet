@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://cd4ipeu135f18"]
+
+[ext_resource type="Script" uid="uid://cmybpj2b2up65" path="res://assets/models/world/ladder/ladder_prop.gd" id="1_wkarp"]
+
+[node name="LadderProp" type="Node3D"]
+script = ExtResource("1_wkarp")
+metadata/_edit_group_ = true

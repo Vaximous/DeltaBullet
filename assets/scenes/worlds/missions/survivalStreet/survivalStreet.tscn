@@ -1,4 +1,4 @@
-[gd_scene load_steps=200 format=4 uid="uid://ddgk7ndlf2mqo"]
+[gd_scene load_steps=205 format=4 uid="uid://ddgk7ndlf2mqo"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_m6lju"]
 [ext_resource type="PackedScene" uid="uid://boicvk4qeqmbd" path="res://assets/entities/pawnSpawn/pawnSpawn.tscn" id="2_81ovr"]
@@ -22,12 +22,17 @@
 [ext_resource type="Texture2D" uid="uid://cgw54mi6aoswb" path="res://assets/textures/urban/sld_Building_38.tga" id="17_dsb3y"]
 [ext_resource type="PackedScene" uid="uid://7kxdrnrmipu" path="res://assets/components/spawnTriggerArea/WaveSpawner.tscn" id="17_pu0n2"]
 [ext_resource type="Script" uid="uid://fcvxp6w8y4kk" path="res://assets/components/spawnTriggerArea/wavespawnerwave.gd" id="18_ebr84"]
+[ext_resource type="PackedScene" uid="uid://cd4ipeu135f18" path="res://assets/models/world/ladder/LadderProp.tscn" id="19_f85fs"]
 [ext_resource type="Script" uid="uid://ksi7km8jp8p3" path="res://assets/entities/pawnSpawn/pawn_spawn_parameters.gd" id="19_i2f5p"]
 [ext_resource type="PackedScene" uid="uid://bhct4s7gjydkm" path="res://assets/models/props/utilitypole_test.tscn" id="19_uow02"]
 [ext_resource type="PackedScene" uid="uid://cix8a7ilvw57" path="res://assets/entities/clothing/Hats/Balaclava/balaclava.tscn" id="20_7otvn"]
+[ext_resource type="ArrayMesh" uid="uid://33b53b8qms7n" path="res://assets/models/world/ladder/ladder-parts_rung.res" id="20_ui04g"]
+[ext_resource type="ArrayMesh" uid="uid://blh7j5xc74wcx" path="res://assets/models/world/ladder/ladder-parts_wall-connection.res" id="21_7so1t"]
 [ext_resource type="PackedScene" uid="uid://bidurnqgd1c74" path="res://assets/entities/weapons/m4/m4.tscn" id="21_w4opb"]
+[ext_resource type="ArrayMesh" uid="uid://xkx43owmn6ly" path="res://assets/models/world/ladder/ladder-parts_top-half.res" id="22_nqsbi"]
 [ext_resource type="PackedScene" uid="uid://wtqya32cwdbk" path="res://assets/entities/weapons/Beretta/Beretta.tscn" id="22_p20f0"]
 [ext_resource type="PackedScene" uid="uid://dsxt078giobel" path="res://assets/entities/weapons/Uzi/Uzi.tscn" id="23_gd8nn"]
+[ext_resource type="ArrayMesh" uid="uid://dl3gpeb8lf61x" path="res://assets/models/world/ladder/ladder-parts_bottom.res" id="23_lrxeo"]
 [ext_resource type="PackedScene" uid="uid://d10o2e44ltrnl" path="res://assets/entities/clothing/ArmoredShirt/armor_shirt.tscn" id="24_avx4k"]
 [ext_resource type="PackedScene" uid="uid://bb5qvdslt6004" path="res://assets/entities/clothing/Pants/armored_pants.tscn" id="25_dsb3y"]
 [ext_resource type="PackedScene" uid="uid://d0fe1gvul4uht" path="res://assets/entities/weapons/glock/Glock.tscn" id="25_gd8nn"]
@@ -46,13 +51,13 @@ worldName = "Street Shots"
 worldDescription = "Survival."
 metadata/_custom_type_script = ExtResource("2_yyaa6")
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_mlyy0"]
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_afll2"]
 panorama = ExtResource("3_dsb3y")
 
 [sub_resource type="Sky" id="Sky_nj1fe"]
-sky_material = SubResource("PanoramaSkyMaterial_mlyy0")
+sky_material = SubResource("PanoramaSkyMaterial_afll2")
 
-[sub_resource type="Environment" id="Environment_npyfc"]
+[sub_resource type="Environment" id="Environment_f85fs"]
 background_mode = 2
 sky = SubResource("Sky_nj1fe")
 reflected_light_source = 1
@@ -969,7 +974,7 @@ transform = Transform3D(-0.862884, 0, 0.505401, 0, 1, 0, -0.505401, 0, -0.862884
 active = false
 
 [node name="worldEnvironment" parent="Environment" index="0"]
-environment = SubResource("Environment_npyfc")
+environment = SubResource("Environment_f85fs")
 
 [node name="navigationRegion3d" type="NavigationRegion3D" parent="Geometry" index="0"]
 navigation_mesh = SubResource("NavigationMesh_hqscl")
@@ -1493,6 +1498,1136 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.6, 0, 14.1691, -5.66794)
 material_override = SubResource("StandardMaterial3D_uow02")
 use_collision = true
 size = Vector3(17.9497, 38.8773, 18.7737)
+
+[node name="LadderProp" parent="Geometry/navigationRegion3d/node3d6" index="2" instance=ExtResource("19_f85fs")]
+transform = Transform3D(-1.350127, 0, -1.1803186e-07, 0, 1.350127, 0, 1.1803186e-07, 0, -1.350127, -9.225464, -4.2110796, 1.4586773)
+top_rung = 2
+rung_count = 62
+
+[node name="Rung0" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="1"]
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector0" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp/Rung0" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung1" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4134, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung2" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8268, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector2" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp/Rung2" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung3" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2402, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung4" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6536, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector4" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp/Rung4" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung45" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.067, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung46" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4804, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector6" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp/Rung46" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung47" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8938, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung48" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="9"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.3072, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector8" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp/Rung48" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung49" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="10"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.7206, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung50" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="11"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.134, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector10" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp/Rung50" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung51" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="12"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.5474, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung52" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="13"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.9608, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector12" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp/Rung52" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung53" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="14"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.3742, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung54" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="15"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.7876, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector14" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp/Rung54" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung55" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="16"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.201, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung56" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="17"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.6144, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector16" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp/Rung56" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung57" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="18"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.0278, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung58" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="19"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.4412, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector18" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp/Rung58" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung59" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="20"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.8546, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung60" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="21"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.268, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector20" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp/Rung60" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung61" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="22"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.6814, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung62" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="23"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.0948, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector22" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp/Rung62" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung63" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="24"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.5082, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung64" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="25"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.9216, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector24" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp/Rung64" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung65" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="26"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.335, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung66" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="27"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.7484, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector26" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp/Rung66" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung67" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="28"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.1618, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung68" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="29"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.5752, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector28" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp/Rung68" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung69" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="30"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.9886, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung70" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="31"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.402, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector30" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp/Rung70" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung71" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="32"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.8154, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung72" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="33"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13.2288, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector32" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp/Rung72" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung73" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="34"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13.6422, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung74" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="35"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14.0556, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector34" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp/Rung74" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung75" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="36"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14.469, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung76" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="37"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14.8824, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector36" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp/Rung76" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung77" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="38"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 15.2958, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung78" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="39"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 15.7092, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector38" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp/Rung78" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung79" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="40"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 16.1226, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung80" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="41"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 16.536, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector40" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp/Rung80" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung81" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="42"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 16.9494, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung82" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="43"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 17.3628, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector42" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp/Rung82" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung83" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="44"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 17.7762, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung84" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="45"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 18.1896, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector44" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp/Rung84" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung85" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="46"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 18.603, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung86" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="47"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 19.0164, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector46" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp/Rung86" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung87" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="48"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 19.4298, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung88" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="49"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 19.8432, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector48" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp/Rung88" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung89" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="50"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20.2566, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung90" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="51"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20.67, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector50" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp/Rung90" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung91" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="52"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 21.0834, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung92" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="53"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 21.4968, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector52" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp/Rung92" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung93" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="54"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 21.9102, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung94" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="55"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 22.3236, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector54" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp/Rung94" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung95" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="56"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 22.737, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung96" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="57"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 23.1504, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector56" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp/Rung96" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung97" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="58"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 23.5638, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung98" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="59"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 23.9772, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector58" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp/Rung98" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung99" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="60"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 24.3906, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung121" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="61"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 24.804, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector60" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp/Rung121" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung122" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="62"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 25.2174, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Top" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp" index="63"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 25.6308, 0)
+mesh = ExtResource("22_nqsbi")
+metadata/generated = true
+
+[node name="LadderProp5" parent="Geometry/navigationRegion3d/node3d6" index="3" instance=ExtResource("19_f85fs")]
+transform = Transform3D(-1.350127, 7.7200407e-22, -1.1803184e-07, 1.1803184e-07, -5.901592e-08, -1.350127, -5.159337e-15, -1.350127, 5.901592e-08, -9.225464, 9.650709, -6.7688236)
+rung_count = 10
+connector_interval = 3
+
+[node name="Rung0" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp5" index="2"]
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector0" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp5/Rung0" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 3.5527137e-15, 7.1054274e-15, -3.5527137e-15, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung3" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp5" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4134, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung4" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp5" index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8268, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung7" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp5" index="5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2402, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector3" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp5/Rung7" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 3.5527137e-15, 7.1054274e-15, -3.5527137e-15, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung8" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp5" index="6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6536, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung11" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp5" index="7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.067, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung12" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp5" index="8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4804, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector6" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp5/Rung12" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 3.5527137e-15, 7.1054274e-15, -3.5527137e-15, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung15" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp5" index="9"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8938, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung16" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp5" index="10"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.3072, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung19" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp5" index="11"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.7206, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector9" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp5/Rung19" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 3.5527137e-15, 7.1054274e-15, -3.5527137e-15, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="LadderProp6" parent="Geometry/navigationRegion3d/node3d6" index="4" instance=ExtResource("19_f85fs")]
+transform = Transform3D(-1.350127, 7.7200407e-22, -1.1803184e-07, 1.1803184e-07, -5.901592e-08, -1.350127, -5.159337e-15, -1.350127, 5.901592e-08, -9.225464, 19.005339, -6.7688227)
+rung_count = 10
+connector_interval = 3
+
+[node name="Rung0" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp6" index="2"]
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector0" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp6/Rung0" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 3.5527137e-15, 7.1054274e-15, -3.5527137e-15, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung3" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp6" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4134, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung4" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp6" index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8268, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung7" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp6" index="5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2402, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector3" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp6/Rung7" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 3.5527137e-15, 7.1054274e-15, -3.5527137e-15, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung8" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp6" index="6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6536, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung11" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp6" index="7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.067, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung12" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp6" index="8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4804, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector6" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp6/Rung12" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 3.5527137e-15, 7.1054274e-15, -3.5527137e-15, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung15" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp6" index="9"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8938, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung16" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp6" index="10"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.3072, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung19" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp6" index="11"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.7206, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector9" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp6/Rung19" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 3.5527137e-15, 7.1054274e-15, -3.5527137e-15, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="LadderProp7" parent="Geometry/navigationRegion3d/node3d6" index="5" instance=ExtResource("19_f85fs")]
+transform = Transform3D(-1.350127, 7.7200407e-22, -1.1803184e-07, 1.1803184e-07, -5.901592e-08, -1.350127, -5.159337e-15, -1.350127, 5.901592e-08, -9.225464, 29.733938, 0.6518955)
+rung_count = 24
+connector_interval = 3
+connector_offset = 1
+
+[node name="Rung0" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp7" index="3"]
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung3" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp7" index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4134, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector1" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp7/Rung3" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 3.5527137e-15, 7.1054274e-15, -3.5527137e-15, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung4" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp7" index="5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8268, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung7" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp7" index="6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2402, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung8" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp7" index="7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6536, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector4" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp7/Rung8" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 3.5527137e-15, 7.1054274e-15, -3.5527137e-15, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung11" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp7" index="8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.067, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung12" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp7" index="9"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4804, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung15" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp7" index="10"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8938, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector7" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp7/Rung15" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 3.5527137e-15, 7.1054274e-15, -3.5527137e-15, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung16" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp7" index="11"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.3072, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung19" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp7" index="12"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.7206, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung20" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp7" index="13"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.134, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector10" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp7/Rung20" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 3.5527137e-15, 7.1054274e-15, -3.5527137e-15, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung23" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp7" index="14"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.5474, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung24" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp7" index="15"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.9608, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung27" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp7" index="16"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.3742, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector13" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp7/Rung27" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 3.5527137e-15, 7.1054274e-15, -3.5527137e-15, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung28" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp7" index="17"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.7876, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung31" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp7" index="18"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.201, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung32" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp7" index="19"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.6144, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector16" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp7/Rung32" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 3.5527137e-15, 7.1054274e-15, -3.5527137e-15, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung35" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp7" index="20"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.0278, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung36" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp7" index="21"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.4412, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung39" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp7" index="22"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.8546, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector19" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp7/Rung39" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 3.5527137e-15, 7.1054274e-15, -3.5527137e-15, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung40" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp7" index="23"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.268, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung43" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp7" index="24"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.6814, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung44" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp7" index="25"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.0948, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector22" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp7/Rung44" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 3.5527137e-15, 7.1054274e-15, -3.5527137e-15, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung47" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp7" index="26"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.5082, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="LadderProp3" parent="Geometry/navigationRegion3d/node3d6" index="6" instance=ExtResource("19_f85fs")]
+transform = Transform3D(-1.350127, 0, -1.1803186e-07, 0, 1.350127, 0, 1.1803186e-07, 0, -1.350127, -9.225464, -3.7440262, -13.381026)
+bottom_rung = true
+rung_count = 25
+
+[node name="Bottom" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp3" index="2"]
+mesh = ExtResource("23_lrxeo")
+metadata/generated = true
+
+[node name="Rung5" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp3" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4134, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector0" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp3/Rung5" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung6" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp3" index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8268, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung7" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp3" index="5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2402, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector2" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp3/Rung7" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung8" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp3" index="6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6536, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung9" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp3" index="7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.067, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector4" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp3/Rung9" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung10" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp3" index="8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4804, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung11" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp3" index="9"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8938, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector6" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp3/Rung11" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung12" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp3" index="10"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.3072, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung13" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp3" index="11"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.7206, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector8" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp3/Rung13" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung14" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp3" index="12"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.134, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung15" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp3" index="13"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.5474, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector10" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp3/Rung15" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung16" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp3" index="14"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.9608, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung17" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp3" index="15"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.3742, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector12" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp3/Rung17" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung18" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp3" index="16"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.7876, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung19" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp3" index="17"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.201, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector14" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp3/Rung19" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung20" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp3" index="18"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.6144, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung21" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp3" index="19"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.0278, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector16" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp3/Rung21" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung22" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp3" index="20"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.4412, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung23" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp3" index="21"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.8546, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector18" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp3/Rung23" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung24" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp3" index="22"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.268, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung25" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp3" index="23"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.6814, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector20" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp3/Rung25" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung26" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp3" index="24"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.0948, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung27" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp3" index="25"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.5082, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector22" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp3/Rung27" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung28" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp3" index="26"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.9216, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung29" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp3" index="27"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.335, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector24" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp3/Rung29" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="LadderProp4" parent="Geometry/navigationRegion3d/node3d6" index="7" instance=ExtResource("19_f85fs")]
+transform = Transform3D(-1.350127, 0, -1.1803186e-07, 0, 1.350127, 0, 1.1803186e-07, 0, -1.350127, -9.225464, 18.358149, -13.381026)
+top_rung = 2
+rung_count = 18
+
+[node name="Rung5" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp4" index="2"]
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector0" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp4/Rung5" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung6" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp4" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4134, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung7" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp4" index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8268, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector2" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp4/Rung7" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung8" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp4" index="5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2402, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung9" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp4" index="6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6536, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector4" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp4/Rung9" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung10" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp4" index="7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.067, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung11" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp4" index="8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4804, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector6" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp4/Rung11" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung12" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp4" index="9"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8938, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung13" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp4" index="10"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.3072, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector8" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp4/Rung13" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung14" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp4" index="11"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.7206, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung15" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp4" index="12"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.134, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector10" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp4/Rung15" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung16" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp4" index="13"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.5474, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung17" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp4" index="14"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.9608, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector12" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp4/Rung17" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung18" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp4" index="15"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.3742, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung19" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp4" index="16"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.7876, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector14" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp4/Rung19" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung20" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp4" index="17"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.201, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Rung21" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp4" index="18"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.6144, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Connector16" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp4/Rung21" index="0"]
+transform = Transform3D(1, 0, -7.1054274e-15, 0, 1, 0, 7.1054274e-15, 0, 1, 0, 0, 0)
+mesh = ExtResource("21_7so1t")
+metadata/generated = true
+
+[node name="Rung22" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp4" index="19"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.0278, 0)
+mesh = ExtResource("20_ui04g")
+metadata/generated = true
+
+[node name="Top2" type="MeshInstance3D" parent="Geometry/navigationRegion3d/node3d6/LadderProp4" index="20"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.4412, 0)
+mesh = ExtResource("22_nqsbi")
+metadata/generated = true
 
 [node name="node3d4" type="Node3D" parent="Geometry/navigationRegion3d" index="13"]
 transform = Transform3D(0.694939, 0, 0, 0, 0.484648, 0, 0, 0, 0.484648, -17.3752, 5.49992, -10.7278)

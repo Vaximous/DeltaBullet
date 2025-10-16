@@ -178,7 +178,7 @@ func setupMap() -> void:
 			if travelScene:
 				var scene = travelScene.instantiate()
 				locationDescription = scene.worldData.worldDescription
-				scene.free()
+				scene.queue_free()
 
 
 func playOpenAnimation() -> void:

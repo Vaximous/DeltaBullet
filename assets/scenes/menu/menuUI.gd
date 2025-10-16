@@ -12,9 +12,9 @@ func _ready()->void:
 	SmackneckClient.Authentication.auth_success.connect(%smacknetConnect.hide)
 	gameManager.clearTemporaryPawnInfo()
 	versionLabel.text = ProjectSettings.get_setting("application/config/version")
+	continueCheck()
 
 func _process(delta)->void:
-	#continueCheck()
 	if optionsMenu.visible:
 		gameLogo.modulate = lerp(gameLogo.modulate,Color(1, 1, 1, 0),12*delta)
 		versionLabel.modulate = lerp(versionLabel.modulate,Color(1, 1, 1, 0),12*delta)

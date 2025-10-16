@@ -55,9 +55,9 @@
 [ext_resource type="AudioStream" uid="uid://c107fr0piwph4" path="res://assets/music/ambient/initial.wav" id="52_dvo7e"]
 [ext_resource type="PackedScene" uid="uid://7ueyays7enj5" path="res://assets/entities/trigger/pawnTrigger.tscn" id="54_8gbvr"]
 [ext_resource type="PackedScene" uid="uid://cd4ipeu135f18" path="res://assets/models/world/ladder/LadderProp.tscn" id="55_briwp"]
-[ext_resource type="ArrayMesh" uid="uid://cv6dggflkxt6j" path="res://assets/models/interior/walltrim/interior_wall_trims_corner.res" id="55_cj522"]
-[ext_resource type="ArrayMesh" uid="uid://8ru033wgrbts" path="res://assets/models/interior/walltrim/interior_wall_trims_side.res" id="56_dsxxh"]
-[ext_resource type="ArrayMesh" uid="uid://dyhcfjjpp47qc" path="res://assets/models/interior/walltrim/interior_wall_trims_edge.res" id="57_uotc0"]
+[ext_resource type="ArrayMesh" uid="uid://bek8o15wn28ie" path="res://assets/models/interior/walltrim/interior_wall_trims_corner.res" id="55_cj522"]
+[ext_resource type="ArrayMesh" uid="uid://ct3rl5ixayv1i" path="res://assets/models/interior/walltrim/interior_wall_trims_side.res" id="56_dsxxh"]
+[ext_resource type="ArrayMesh" uid="uid://2vbj6lrob6tv" path="res://assets/models/interior/walltrim/interior_wall_trims_edge.res" id="57_uotc0"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_6ok4a"]
 panorama = ExtResource("3_rcju0")
@@ -77,7 +77,7 @@ panorama = ExtResource("3_rcju0")
 [sub_resource type="Sky" id="Sky_nj1fe"]
 sky_material = SubResource("PanoramaSkyMaterial_afll2")
 
-[sub_resource type="Environment" id="Environment_dsxxh"]
+[sub_resource type="Environment" id="Environment_briwp"]
 background_mode = 2
 sky = SubResource("Sky_nj1fe")
 reflected_light_source = 1
@@ -1630,7 +1630,7 @@ transform = Transform3D(-0.999163, 0, -0.0408992, 0, 1, 0, 0.0408992, 0, -0.9991
 pawnType = 0
 
 [node name="worldEnvironment" parent="Environment" index="0"]
-environment = SubResource("Environment_dsxxh")
+environment = SubResource("Environment_briwp")
 compositor = SubResource("Compositor_fvwrp")
 
 [node name="reflectionProbe" parent="Environment" index="1"]

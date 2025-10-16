@@ -1,44 +1,42 @@
 @tool
 extends Node3D
 
-
 const M_TOP_CURVED = preload("res://assets/models/world/ladder/ladder-parts_top-curved.res")
 const M_TOP_HALF = preload("res://assets/models/world/ladder/ladder-parts_top-half.res")
 const M_BOTTOM = preload("res://assets/models/world/ladder/ladder-parts_bottom.res")
 const M_RUNG = preload("res://assets/models/world/ladder/ladder-parts_rung.res")
 const M_CONNECTOR = preload("res://assets/models/world/ladder/ladder-parts_wall-connection.res")
-const RUNG_OFFSET : float = 0.41339999999999993
+const RUNG_OFFSET: float = 0.41339999999999993
 
-
-@export_enum("None", "Curved", "Half") var top_rung : int = 0:
+@export_enum("None", "Curved", "Half") var top_rung: int = 0:
 	set(value):
 		top_rung = value
 		create_ladder()
 		if Engine.is_editor_hint():
 			EditorInterface.get_selection().clear()
 			EditorInterface.get_selection().add_node(self)
-@export var bottom_rung : bool = false:
+@export var bottom_rung: bool = false:
 	set(value):
 		bottom_rung = value
 		create_ladder()
 		if Engine.is_editor_hint():
 			EditorInterface.get_selection().clear()
 			EditorInterface.get_selection().add_node(self)
-@export_range(0, 100, 1) var rung_count : int = 0:
+@export_range(0, 100, 1) var rung_count: int = 0:
 	set(value):
 		rung_count = value
 		create_ladder()
 		if Engine.is_editor_hint():
 			EditorInterface.get_selection().clear()
 			EditorInterface.get_selection().add_node(self)
-@export_range(1, 100, 1) var connector_interval : int = 2:
+@export_range(1, 100, 1) var connector_interval: int = 2:
 	set(value):
 		connector_interval = value
 		create_ladder()
 		if Engine.is_editor_hint():
 			EditorInterface.get_selection().clear()
 			EditorInterface.get_selection().add_node(self)
-@export_range(0, 100, 1) var connector_offset : int = 0:
+@export_range(0, 100, 1) var connector_offset: int = 0:
 	set(value):
 		connector_offset = value
 		create_ladder()
@@ -52,7 +50,7 @@ func create_ladder() -> void:
 		if child.has_meta("generated"):
 			child.queue_free()
 
-	var rung_position : float = 0.0
+	var rung_position: float = 0.0
 
 	#Create bottom most rung
 	if bottom_rung:
@@ -88,7 +86,7 @@ func create_ladder() -> void:
 			top.name = "Top"
 
 
-func create_mesh_instance(mesh : ArrayMesh) -> MeshInstance3D:
+func create_mesh_instance(mesh: ArrayMesh) -> MeshInstance3D:
 	var m := MeshInstance3D.new()
 	m.mesh = mesh
 	add_child(m)

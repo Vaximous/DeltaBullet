@@ -31,13 +31,17 @@ signal state_change(new_state: bool)
 			if connected_to != null:
 				connected_to.powered = powered
 
-var disabled: bool = false:
+@export_storage var disabled: bool = false:
 	set(value):
 		if value:
 			powered = false
 		disabled = value
 
 var connected_from: ElectricityComponent
+
+
+func _ready() -> void:
+	state_change.emit(powered)
 
 
 static func get_component(of_node: Node) -> ElectricityComponent:
@@ -72,6 +76,12 @@ func set_power(power: bool) -> void:
 
 func is_root() -> bool:
 	return connected_from == null
+
+
+func set_power_no_signal(power: bool) -> void:
+	set_block_signals(true)
+	powered = power
+	set_block_signals(false)
 
 
 func _exit_tree() -> void:

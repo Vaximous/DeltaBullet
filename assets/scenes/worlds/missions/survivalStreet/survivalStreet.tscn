@@ -1,4 +1,4 @@
-[gd_scene load_steps=205 format=4 uid="uid://ddgk7ndlf2mqo"]
+[gd_scene load_steps=208 format=4 uid="uid://ddgk7ndlf2mqo"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_m6lju"]
 [ext_resource type="PackedScene" uid="uid://boicvk4qeqmbd" path="res://assets/entities/pawnSpawn/pawnSpawn.tscn" id="2_81ovr"]
@@ -33,13 +33,16 @@
 [ext_resource type="PackedScene" uid="uid://wtqya32cwdbk" path="res://assets/entities/weapons/Beretta/Beretta.tscn" id="22_p20f0"]
 [ext_resource type="PackedScene" uid="uid://dsxt078giobel" path="res://assets/entities/weapons/Uzi/Uzi.tscn" id="23_gd8nn"]
 [ext_resource type="ArrayMesh" uid="uid://dl3gpeb8lf61x" path="res://assets/models/world/ladder/ladder-parts_bottom.res" id="23_lrxeo"]
+[ext_resource type="ArrayMesh" uid="uid://bq8354qxk7m7" path="res://assets/models/world/brickedgeflourishes/brickedgeflourishes_brickedgeflourish16.res" id="24_7so1t"]
 [ext_resource type="PackedScene" uid="uid://d10o2e44ltrnl" path="res://assets/entities/clothing/ArmoredShirt/armor_shirt.tscn" id="24_avx4k"]
 [ext_resource type="PackedScene" uid="uid://bb5qvdslt6004" path="res://assets/entities/clothing/Pants/armored_pants.tscn" id="25_dsb3y"]
 [ext_resource type="PackedScene" uid="uid://d0fe1gvul4uht" path="res://assets/entities/weapons/glock/Glock.tscn" id="25_gd8nn"]
+[ext_resource type="ArrayMesh" uid="uid://rtuociiybuk4" path="res://assets/models/world/brickedgeflourishes/brickedgeflourishes_brickedgeflourish4.res" id="25_nqsbi"]
 [ext_resource type="PackedScene" uid="uid://7ueyays7enj5" path="res://assets/entities/trigger/pawnTrigger.tscn" id="27_i2f5p"]
 [ext_resource type="PackedScene" uid="uid://cgghffeqks1ac" path="res://assets/entities/clothing/Gloves/left_glove_fingerless.tscn" id="27_w4opb"]
 [ext_resource type="PackedScene" uid="uid://bap501mpmqgb" path="res://assets/entities/clothing/Gloves/right_glove_fingerless.tscn" id="28_p20f0"]
 [ext_resource type="PackedScene" uid="uid://bgk584lddf4aa" path="res://assets/entities/weapons/BattlecadeAssaultRifle/BattlecadeAssaultRifle.tscn" id="29_p20f0"]
+[ext_resource type="PackedScene" uid="uid://bt4oo8icv7es0" path="res://assets/models/world/ACunit/AC_unit.tscn" id="43_nqsbi"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_6tefn"]
 panorama = ExtResource("3_dsb3y")
@@ -57,10 +60,9 @@ panorama = ExtResource("3_dsb3y")
 [sub_resource type="Sky" id="Sky_nj1fe"]
 sky_material = SubResource("PanoramaSkyMaterial_afll2")
 
-[sub_resource type="Environment" id="Environment_f85fs"]
+[sub_resource type="Environment" id="Environment_nqsbi"]
 background_mode = 2
 sky = SubResource("Sky_nj1fe")
-reflected_light_source = 1
 tonemap_mode = 3
 ssao_enabled = true
 ssao_intensity = 3.5
@@ -494,6 +496,12 @@ shadow_mesh = SubResource("ArrayMesh_cnll3")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ebr84"]
 albedo_texture = ExtResource("14_4xjgg")
+emission_energy_multiplier = 16.0
+emission_texture = ExtResource("14_4xjgg")
+heightmap_scale = 0.25
+heightmap_deep_parallax = true
+heightmap_min_layers = 16
+heightmap_max_layers = 64
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_dsb3y"]
 data = PackedVector3Array(1.7075, -0.1482, 1.6898, 1.7075, -0.1482, 0, -1.7075, -0.1482, 0, -1.7075, -0.1482, 0, -1.7075, -0.1482, 1.6898, 1.7075, -0.1482, 1.6898, 1.7075, 0.1268, 1.6898, 1.7075, 0.1268, 0, 1.7075, -0.1482, 0, 1.7075, -0.1482, 0, 1.7075, -0.1482, 1.6898, 1.7075, 0.1268, 1.6898, -1.7075, 0.1268, 1.6898, -1.7075, 0.1268, 0, 1.7075, 0.1268, 0, 1.7075, 0.1268, 0, 1.7075, 0.1268, 1.6898, -1.7075, 0.1268, 1.6898, -1.7075, -0.1482, 1.6898, -1.7075, -0.1482, 0, -1.7075, 0.1268, 0, -1.7075, 0.1268, 0, -1.7075, 0.1268, 1.6898, -1.7075, -0.1482, 1.6898, 1.7075, 0.2047, 1.6898, -1.7075, 0.2047, 1.6898, -1.7075, -0.2047, 1.6898, -1.7075, -0.2047, 1.6898, 1.7075, -0.2047, 1.6898, 1.7075, 0.2047, 1.6898, 1.7075, 0.2047, 1.7728, 1.7075, -0.2047, 1.7728, -1.7075, -0.2047, 1.7728, -1.7075, -0.2047, 1.7728, -1.7075, 0.2047, 1.7728, 1.7075, 0.2047, 1.7728, 1.7075, -0.2047, 1.7728, 1.7075, -0.2047, 1.6898, -1.7075, -0.2047, 1.6898, -1.7075, -0.2047, 1.6898, -1.7075, -0.2047, 1.7728, 1.7075, -0.2047, 1.7728, 1.7075, 0.2047, 1.7728, 1.7075, 0.2047, 1.6898, 1.7075, -0.2047, 1.6898, 1.7075, -0.2047, 1.6898, 1.7075, -0.2047, 1.7728, 1.7075, 0.2047, 1.7728, -1.7075, 0.2047, 1.7728, -1.7075, 0.2047, 1.6898, 1.7075, 0.2047, 1.6898, 1.7075, 0.2047, 1.6898, 1.7075, 0.2047, 1.7728, -1.7075, 0.2047, 1.7728, -1.7075, -0.2047, 1.7728, -1.7075, -0.2047, 1.6898, -1.7075, 0.2047, 1.6898, -1.7075, 0.2047, 1.6898, -1.7075, 0.2047, 1.7728, -1.7075, -0.2047, 1.7728)
@@ -974,7 +982,7 @@ transform = Transform3D(-0.862884, 0, 0.505401, 0, 1, 0, -0.505401, 0, -0.862884
 active = false
 
 [node name="worldEnvironment" parent="Environment" index="0"]
-environment = SubResource("Environment_f85fs")
+environment = SubResource("Environment_nqsbi")
 
 [node name="navigationRegion3d" type="NavigationRegion3D" parent="Geometry" index="0"]
 navigation_mesh = SubResource("NavigationMesh_hqscl")
@@ -2863,6 +2871,234 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.85273)
 light_color = Color(1, 1, 0.772549, 1)
 omni_range = 11.122
 
+[node name="brickedgeflourishesBrickedgeflourish16" type="MeshInstance3D" parent="Geometry/navigationRegion3d" index="34"]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 29.06916, 0.123084456, 14.9)
+mesh = ExtResource("24_7so1t")
+
+[node name="brickedgeflourishesBrickedgeflourish17" type="MeshInstance3D" parent="Geometry/navigationRegion3d/brickedgeflourishesBrickedgeflourish16" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1906486, 0)
+mesh = ExtResource("24_7so1t")
+skeleton = NodePath("../..")
+
+[node name="brickedgeflourishesBrickedgeflourish17" type="MeshInstance3D" parent="Geometry/navigationRegion3d/brickedgeflourishesBrickedgeflourish16/brickedgeflourishesBrickedgeflourish17" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1906486, 0)
+mesh = ExtResource("24_7so1t")
+skeleton = NodePath("../..")
+
+[node name="brickedgeflourishesBrickedgeflourish17" type="MeshInstance3D" parent="Geometry/navigationRegion3d/brickedgeflourishesBrickedgeflourish16/brickedgeflourishesBrickedgeflourish17/brickedgeflourishesBrickedgeflourish17" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1906486, 0)
+mesh = ExtResource("25_nqsbi")
+skeleton = NodePath("../..")
+
+[node name="brickedgeflourishesBrickedgeflourish20" type="MeshInstance3D" parent="Geometry/navigationRegion3d" index="35"]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 28.56916, -0.78290427, 29)
+mesh = ExtResource("24_7so1t")
+
+[node name="brickedgeflourishesBrickedgeflourish17" type="MeshInstance3D" parent="Geometry/navigationRegion3d/brickedgeflourishesBrickedgeflourish20" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1906486, 0)
+mesh = ExtResource("24_7so1t")
+skeleton = NodePath("../..")
+
+[node name="brickedgeflourishesBrickedgeflourish17" type="MeshInstance3D" parent="Geometry/navigationRegion3d/brickedgeflourishesBrickedgeflourish20/brickedgeflourishesBrickedgeflourish17" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1906486, 0)
+mesh = ExtResource("24_7so1t")
+skeleton = NodePath("../..")
+
+[node name="brickedgeflourishesBrickedgeflourish17" type="MeshInstance3D" parent="Geometry/navigationRegion3d/brickedgeflourishesBrickedgeflourish20/brickedgeflourishesBrickedgeflourish17/brickedgeflourishesBrickedgeflourish17" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1906486, 0)
+mesh = ExtResource("24_7so1t")
+skeleton = NodePath("../..")
+
+[node name="brickedgeflourishesBrickedgeflourish21" type="MeshInstance3D" parent="Geometry/navigationRegion3d" index="36"]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 28.56916, -0.78290427, 40.942814)
+mesh = ExtResource("24_7so1t")
+
+[node name="brickedgeflourishesBrickedgeflourish17" type="MeshInstance3D" parent="Geometry/navigationRegion3d/brickedgeflourishesBrickedgeflourish21" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1906486, 0)
+mesh = ExtResource("24_7so1t")
+skeleton = NodePath("../..")
+
+[node name="brickedgeflourishesBrickedgeflourish17" type="MeshInstance3D" parent="Geometry/navigationRegion3d/brickedgeflourishesBrickedgeflourish21/brickedgeflourishesBrickedgeflourish17" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1906486, 0)
+mesh = ExtResource("24_7so1t")
+skeleton = NodePath("../..")
+
+[node name="brickedgeflourishesBrickedgeflourish17" type="MeshInstance3D" parent="Geometry/navigationRegion3d/brickedgeflourishesBrickedgeflourish21/brickedgeflourishesBrickedgeflourish17/brickedgeflourishesBrickedgeflourish17" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1906486, 0)
+mesh = ExtResource("24_7so1t")
+skeleton = NodePath("../..")
+
+[node name="brickedgeflourishesBrickedgeflourish22" type="MeshInstance3D" parent="Geometry/navigationRegion3d" index="37"]
+transform = Transform3D(1, 0, -1.7881393e-07, 0, 1, 0, 1.7881393e-07, 0, 1, 39.86916, -0.78290427, 40.94281)
+mesh = ExtResource("24_7so1t")
+
+[node name="brickedgeflourishesBrickedgeflourish17" type="MeshInstance3D" parent="Geometry/navigationRegion3d/brickedgeflourishesBrickedgeflourish22" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1906486, 0)
+mesh = ExtResource("24_7so1t")
+skeleton = NodePath("../..")
+
+[node name="brickedgeflourishesBrickedgeflourish17" type="MeshInstance3D" parent="Geometry/navigationRegion3d/brickedgeflourishesBrickedgeflourish22/brickedgeflourishesBrickedgeflourish17" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1906486, 0)
+mesh = ExtResource("24_7so1t")
+skeleton = NodePath("../..")
+
+[node name="brickedgeflourishesBrickedgeflourish17" type="MeshInstance3D" parent="Geometry/navigationRegion3d/brickedgeflourishesBrickedgeflourish22/brickedgeflourishesBrickedgeflourish17/brickedgeflourishesBrickedgeflourish17" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1906486, 0)
+mesh = ExtResource("24_7so1t")
+skeleton = NodePath("../..")
+
+[node name="brickedgeflourishesBrickedgeflourish23" type="MeshInstance3D" parent="Geometry/navigationRegion3d" index="38"]
+transform = Transform3D(1.1920929e-07, 0, 1, 0, 1, 0, -1, 0, 1.1920929e-07, 39.869164, -0.78290427, 28.999994)
+mesh = ExtResource("24_7so1t")
+
+[node name="brickedgeflourishesBrickedgeflourish17" type="MeshInstance3D" parent="Geometry/navigationRegion3d/brickedgeflourishesBrickedgeflourish23" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1906486, 0)
+mesh = ExtResource("24_7so1t")
+skeleton = NodePath("../..")
+
+[node name="brickedgeflourishesBrickedgeflourish17" type="MeshInstance3D" parent="Geometry/navigationRegion3d/brickedgeflourishesBrickedgeflourish23/brickedgeflourishesBrickedgeflourish17" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1906486, 0)
+mesh = ExtResource("24_7so1t")
+skeleton = NodePath("../..")
+
+[node name="brickedgeflourishesBrickedgeflourish17" type="MeshInstance3D" parent="Geometry/navigationRegion3d/brickedgeflourishesBrickedgeflourish23/brickedgeflourishesBrickedgeflourish17/brickedgeflourishesBrickedgeflourish17" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1906486, 0)
+mesh = ExtResource("24_7so1t")
+skeleton = NodePath("../..")
+
+[node name="brickedgeflourishesBrickedgeflourish24" type="MeshInstance3D" parent="Geometry/navigationRegion3d" index="39"]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 11.56916, -0.78290427, 29)
+mesh = ExtResource("24_7so1t")
+
+[node name="brickedgeflourishesBrickedgeflourish17" type="MeshInstance3D" parent="Geometry/navigationRegion3d/brickedgeflourishesBrickedgeflourish24" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1906486, 0)
+mesh = ExtResource("24_7so1t")
+skeleton = NodePath("../..")
+
+[node name="brickedgeflourishesBrickedgeflourish17" type="MeshInstance3D" parent="Geometry/navigationRegion3d/brickedgeflourishesBrickedgeflourish24/brickedgeflourishesBrickedgeflourish17" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1906486, 0)
+mesh = ExtResource("24_7so1t")
+skeleton = NodePath("../..")
+
+[node name="brickedgeflourishesBrickedgeflourish17" type="MeshInstance3D" parent="Geometry/navigationRegion3d/brickedgeflourishesBrickedgeflourish24/brickedgeflourishesBrickedgeflourish17/brickedgeflourishesBrickedgeflourish17" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1906486, 0)
+mesh = ExtResource("24_7so1t")
+skeleton = NodePath("../..")
+
+[node name="brickedgeflourishesBrickedgeflourish25" type="MeshInstance3D" parent="Geometry/navigationRegion3d" index="40"]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 11.56916, -0.78290427, 40.942814)
+mesh = ExtResource("24_7so1t")
+
+[node name="brickedgeflourishesBrickedgeflourish17" type="MeshInstance3D" parent="Geometry/navigationRegion3d/brickedgeflourishesBrickedgeflourish25" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1906486, 0)
+mesh = ExtResource("24_7so1t")
+skeleton = NodePath("../..")
+
+[node name="brickedgeflourishesBrickedgeflourish17" type="MeshInstance3D" parent="Geometry/navigationRegion3d/brickedgeflourishesBrickedgeflourish25/brickedgeflourishesBrickedgeflourish17" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1906486, 0)
+mesh = ExtResource("24_7so1t")
+skeleton = NodePath("../..")
+
+[node name="brickedgeflourishesBrickedgeflourish17" type="MeshInstance3D" parent="Geometry/navigationRegion3d/brickedgeflourishesBrickedgeflourish25/brickedgeflourishesBrickedgeflourish17/brickedgeflourishesBrickedgeflourish17" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1906486, 0)
+mesh = ExtResource("24_7so1t")
+skeleton = NodePath("../..")
+
+[node name="brickedgeflourishesBrickedgeflourish26" type="MeshInstance3D" parent="Geometry/navigationRegion3d" index="41"]
+transform = Transform3D(1, 0, -1.7881393e-07, 0, 1, 0, 1.7881393e-07, 0, 1, 22.86916, -0.78290427, 40.94281)
+mesh = ExtResource("24_7so1t")
+
+[node name="brickedgeflourishesBrickedgeflourish17" type="MeshInstance3D" parent="Geometry/navigationRegion3d/brickedgeflourishesBrickedgeflourish26" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1906486, 0)
+mesh = ExtResource("24_7so1t")
+skeleton = NodePath("../..")
+
+[node name="brickedgeflourishesBrickedgeflourish17" type="MeshInstance3D" parent="Geometry/navigationRegion3d/brickedgeflourishesBrickedgeflourish26/brickedgeflourishesBrickedgeflourish17" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1906486, 0)
+mesh = ExtResource("24_7so1t")
+skeleton = NodePath("../..")
+
+[node name="brickedgeflourishesBrickedgeflourish17" type="MeshInstance3D" parent="Geometry/navigationRegion3d/brickedgeflourishesBrickedgeflourish26/brickedgeflourishesBrickedgeflourish17/brickedgeflourishesBrickedgeflourish17" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1906486, 0)
+mesh = ExtResource("24_7so1t")
+skeleton = NodePath("../..")
+
+[node name="brickedgeflourishesBrickedgeflourish27" type="MeshInstance3D" parent="Geometry/navigationRegion3d" index="42"]
+transform = Transform3D(1.1920929e-07, 0, 1, 0, 1, 0, -1, 0, 1.1920929e-07, 22.869164, -0.78290427, 28.999994)
+mesh = ExtResource("24_7so1t")
+
+[node name="brickedgeflourishesBrickedgeflourish17" type="MeshInstance3D" parent="Geometry/navigationRegion3d/brickedgeflourishesBrickedgeflourish27" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1906486, 0)
+mesh = ExtResource("24_7so1t")
+skeleton = NodePath("../..")
+
+[node name="brickedgeflourishesBrickedgeflourish17" type="MeshInstance3D" parent="Geometry/navigationRegion3d/brickedgeflourishesBrickedgeflourish27/brickedgeflourishesBrickedgeflourish17" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1906486, 0)
+mesh = ExtResource("24_7so1t")
+skeleton = NodePath("../..")
+
+[node name="brickedgeflourishesBrickedgeflourish17" type="MeshInstance3D" parent="Geometry/navigationRegion3d/brickedgeflourishesBrickedgeflourish27/brickedgeflourishesBrickedgeflourish17/brickedgeflourishesBrickedgeflourish17" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1906486, 0)
+mesh = ExtResource("24_7so1t")
+skeleton = NodePath("../..")
+
+[node name="brickedgeflourishesBrickedgeflourish17" type="MeshInstance3D" parent="Geometry/navigationRegion3d" index="43"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.14019, 0.123084456, 14.9)
+mesh = ExtResource("24_7so1t")
+
+[node name="brickedgeflourishesBrickedgeflourish17" type="MeshInstance3D" parent="Geometry/navigationRegion3d/brickedgeflourishesBrickedgeflourish17" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1906486, 0)
+mesh = ExtResource("24_7so1t")
+skeleton = NodePath("../..")
+
+[node name="brickedgeflourishesBrickedgeflourish17" type="MeshInstance3D" parent="Geometry/navigationRegion3d/brickedgeflourishesBrickedgeflourish17/brickedgeflourishesBrickedgeflourish17" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1906486, 0)
+mesh = ExtResource("24_7so1t")
+skeleton = NodePath("../..")
+
+[node name="brickedgeflourishesBrickedgeflourish17" type="MeshInstance3D" parent="Geometry/navigationRegion3d/brickedgeflourishesBrickedgeflourish17/brickedgeflourishesBrickedgeflourish17/brickedgeflourishesBrickedgeflourish17" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1906486, 0)
+mesh = ExtResource("25_nqsbi")
+skeleton = NodePath("../..")
+
+[node name="brickedgeflourishesBrickedgeflourish18" type="MeshInstance3D" parent="Geometry/navigationRegion3d" index="44"]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 40.14019, 0.123084456, 3.2230725)
+mesh = ExtResource("24_7so1t")
+
+[node name="brickedgeflourishesBrickedgeflourish17" type="MeshInstance3D" parent="Geometry/navigationRegion3d/brickedgeflourishesBrickedgeflourish18" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1906486, 0)
+mesh = ExtResource("24_7so1t")
+skeleton = NodePath("../..")
+
+[node name="brickedgeflourishesBrickedgeflourish17" type="MeshInstance3D" parent="Geometry/navigationRegion3d/brickedgeflourishesBrickedgeflourish18/brickedgeflourishesBrickedgeflourish17" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1906486, 0)
+mesh = ExtResource("24_7so1t")
+skeleton = NodePath("../..")
+
+[node name="brickedgeflourishesBrickedgeflourish17" type="MeshInstance3D" parent="Geometry/navigationRegion3d/brickedgeflourishesBrickedgeflourish18/brickedgeflourishesBrickedgeflourish17/brickedgeflourishesBrickedgeflourish17" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1906486, 0)
+mesh = ExtResource("25_nqsbi")
+skeleton = NodePath("../..")
+
+[node name="brickedgeflourishesBrickedgeflourish19" type="MeshInstance3D" parent="Geometry/navigationRegion3d" index="45"]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 29.069, 0.123, 3.223)
+mesh = ExtResource("24_7so1t")
+
+[node name="brickedgeflourishesBrickedgeflourish17" type="MeshInstance3D" parent="Geometry/navigationRegion3d/brickedgeflourishesBrickedgeflourish19" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1906486, 0)
+mesh = ExtResource("24_7so1t")
+skeleton = NodePath("../..")
+
+[node name="brickedgeflourishesBrickedgeflourish17" type="MeshInstance3D" parent="Geometry/navigationRegion3d/brickedgeflourishesBrickedgeflourish19/brickedgeflourishesBrickedgeflourish17" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1906486, 0)
+mesh = ExtResource("24_7so1t")
+skeleton = NodePath("../..")
+
+[node name="brickedgeflourishesBrickedgeflourish17" type="MeshInstance3D" parent="Geometry/navigationRegion3d/brickedgeflourishesBrickedgeflourish19/brickedgeflourishesBrickedgeflourish17/brickedgeflourishesBrickedgeflourish17" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1906486, 0)
+mesh = ExtResource("25_nqsbi")
+skeleton = NodePath("../..")
+
 [node name="node3d" parent="Geometry" index="1" instance=ExtResource("19_uow02")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.731468, 0.2546258, 17.895573)
 
@@ -2976,6 +3212,9 @@ triggerGroups = Array[String](["Player", "Pawn"])
 [node name="collisionShape3d" type="CollisionShape3D" parent="Misc/node3d/pawnTrigger" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.471237, -36.6576, 21.2093)
 shape = SubResource("BoxShape3D_w4opb")
+
+[node name="windowAC3" parent="." index="8" instance=ExtResource("43_nqsbi")]
+transform = Transform3D(-4.091386e-08, 0, 0.936, 0, 0.936, 0, -0.936, 0, -4.091386e-08, -6.9, 10.210676, 13.807523)
 
 [connection signal="ready" from="Misc/WaveSpawner" to="Misc/WaveSpawner" method="countdown_next_wave"]
 [connection signal="triggerActivated" from="Misc/node3d/pawnTrigger" to="Misc/node3d" method="_on_pawn_trigger_trigger_activated"]

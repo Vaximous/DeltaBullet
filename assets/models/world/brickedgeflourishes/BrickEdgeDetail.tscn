@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://dlwgr2mkhpakd"]
+
+[ext_resource type="Script" uid="uid://qkxt4tag32g7" path="res://assets/models/world/brickedgeflourishes/brick_edge_detail.gd" id="1_mtfru"]
+[ext_resource type="ArrayMesh" uid="uid://cb6yd382nlrvk" path="res://assets/models/world/brickedgeflourishes/brickedgeflourishes_brickedgeflourish8.res" id="1_r5f0v"]
+
+[node name="BrickEdgeDetail" type="MeshInstance3D"]
+mesh = ExtResource("1_r5f0v")
+script = ExtResource("1_mtfru")

@@ -8,4 +8,4 @@ extends Node3D
 func _process(delta: float) -> void:
 	var cam : Camera3D = get_viewport().get_camera_3d()
 	if cam != null:
-		global_position = cam.global_position * scale_factor
+		global_position = lerp(global_position,cam.global_position * scale_factor,5*delta)

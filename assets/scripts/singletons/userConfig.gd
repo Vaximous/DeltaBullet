@@ -25,9 +25,31 @@ var audio_voice_volume : float = 0.6
 var audio_custom_music_enabled : bool = false
 
 #graphics settings
+enum SSAOQuality {
+	VERY_LOW,
+	LOW,
+	MEDIUM,
+	HIGH,
+	VERY_HIGH
+}
+enum SSILQuality {
+	VERY_LOW,
+	LOW,
+	MEDIUM,
+	HIGH,
+	VERY_HIGH
+}
+enum SSRQuality {
+	LOW,
+	MEDIUM,
+	HIGH
+}
 @export var graphics_shadow_filter_quality : RenderingServer.ShadowQuality = 1
 @export  var graphics_shadow_quality : RenderingServer.ShadowQuality = 3
 var graphics_motion_blur : bool = false
+var graphics_ssao_quality : SSAOQuality = SSAOQuality.MEDIUM
+var graphics_ssil_quality : SSILQuality = SSILQuality.MEDIUM
+var graphics_ssr_quality : SSRQuality = SSRQuality.MEDIUM
 var graphics_resolution : int = 0
 var graphics_fullscreen : bool = false
 var graphics_Ssao: bool = true
@@ -117,6 +139,9 @@ func applyConfigs() -> void:
 	AudioServer.set_bus_volume_db(5, audio_voice_volume)
 	applyShadowQuality()
 	applyShadowFilterQuality()
+	applySSAOQuality()
+	applySSILQuality()
+	applySSRQuality()
 	get_window().mode = Window.MODE_EXCLUSIVE_FULLSCREEN if graphics_fullscreen else Window.MODE_WINDOWED
 	configs_updated.emit()
 
@@ -135,6 +160,114 @@ func getSettingsDict() -> Dictionary:
 
 func getOption(optionString:String):
 	return optionString
+
+func applySSRQuality()->void:
+	match graphics_ssr_quality:
+		SSRQuality.LOW:
+			RenderingServer.environment_set_ssr_roughness_quality(RenderingServer.ENV_SSR_ROUGHNESS_QUALITY_LOW)
+		SSRQuality.MEDIUM:
+			RenderingServer.environment_set_ssr_roughness_quality(RenderingServer.ENV_SSR_ROUGHNESS_QUALITY_MEDIUM)
+		SSRQuality.HIGH:
+			RenderingServer.environment_set_ssr_roughness_quality(RenderingServer.ENV_SSR_ROUGHNESS_QUALITY_HIGH)
+
+func applySSILQuality()->void:
+	match graphics_ssil_quality:
+		SSILQuality.VERY_LOW:
+			ProjectSettings.set_setting("rendering/environment/ssil/half_size",true)
+			ProjectSettings.set_setting("rendering/environment/ssil/quality",SSILQuality.VERY_LOW)
+			RenderingServer.environment_set_ssil_quality(RenderingServer.ENV_SSIL_QUALITY_VERY_LOW,true,
+			ProjectSettings.get_setting("rendering/environment/ssil/adaptive_target"),
+			ProjectSettings.get_setting("rendering/environment/ssil/blur_passes"),
+			ProjectSettings.get_setting("rendering/environment/ssil/fadeout_from"),
+			ProjectSettings.get_setting("rendering/environment/ssil/fadeout_to")
+			)
+		SSILQuality.LOW:
+			ProjectSettings.set_setting("rendering/environment/ssil/half_size",true)
+			ProjectSettings.set_setting("rendering/environment/ssil/quality",SSILQuality.LOW)
+			RenderingServer.environment_set_ssil_quality(RenderingServer.ENV_SSIL_QUALITY_LOW,true,
+			ProjectSettings.get_setting("rendering/environment/ssil/adaptive_target"),
+			ProjectSettings.get_setting("rendering/environment/ssil/blur_passes"),
+			ProjectSettings.get_setting("rendering/environment/ssil/fadeout_from"),
+			ProjectSettings.get_setting("rendering/environment/ssil/fadeout_to")
+			)
+		SSILQuality.MEDIUM:
+			ProjectSettings.set_setting("rendering/environment/ssil/half_size",true)
+			ProjectSettings.set_setting("rendering/environment/ssil/quality",SSILQuality.MEDIUM)
+			RenderingServer.environment_set_ssil_quality(RenderingServer.ENV_SSIL_QUALITY_MEDIUM,true,
+			ProjectSettings.get_setting("rendering/environment/ssil/adaptive_target"),
+			ProjectSettings.get_setting("rendering/environment/ssil/blur_passes"),
+			ProjectSettings.get_setting("rendering/environment/ssil/fadeout_from"),
+			ProjectSettings.get_setting("rendering/environment/ssil/fadeout_to")
+			)
+		SSILQuality.HIGH:
+			ProjectSettings.set_setting("rendering/environment/ssil/half_size",false)
+			ProjectSettings.set_setting("rendering/environment/ssil/quality",SSILQuality.HIGH)
+			RenderingServer.environment_set_ssil_quality(RenderingServer.ENV_SSIL_QUALITY_HIGH,
+			ProjectSettings.get_setting("rendering/environment/ssil/half_size"),
+			ProjectSettings.get_setting("rendering/environment/ssil/adaptive_target"),
+			ProjectSettings.get_setting("rendering/environment/ssil/blur_passes"),
+			ProjectSettings.get_setting("rendering/environment/ssil/fadeout_from"),
+			ProjectSettings.get_setting("rendering/environment/ssil/fadeout_to")
+			)
+		SSILQuality.VERY_HIGH:
+			ProjectSettings.set_setting("rendering/environment/ssil/half_size",false)
+			ProjectSettings.set_setting("rendering/environment/ssil/quality",SSILQuality.VERY_HIGH)
+			RenderingServer.environment_set_ssil_quality(RenderingServer.ENV_SSIL_QUALITY_ULTRA,
+			ProjectSettings.get_setting("rendering/environment/ssil/half_size"),
+			1.0,
+			ProjectSettings.get_setting("rendering/environment/ssil/blur_passes"),
+			ProjectSettings.get_setting("rendering/environment/ssil/fadeout_from"),
+			ProjectSettings.get_setting("rendering/environment/ssil/fadeout_to")
+			)
+
+func applySSAOQuality()->void:
+	match graphics_ssao_quality:
+		SSAOQuality.VERY_LOW:
+			ProjectSettings.set_setting("rendering/environment/ssao/half_size",true)
+			ProjectSettings.set_setting("rendering/environment/ssao/quality",SSAOQuality.VERY_LOW)
+			RenderingServer.environment_set_ssao_quality(RenderingServer.ENV_SSAO_QUALITY_VERY_LOW,true,
+			ProjectSettings.get_setting("rendering/environment/ssao/adaptive_target"),
+			ProjectSettings.get_setting("rendering/environment/ssao/blur_passes"),
+			ProjectSettings.get_setting("rendering/environment/ssao/fadeout_from"),
+			ProjectSettings.get_setting("rendering/environment/ssao/fadeout_to")
+			)
+		SSAOQuality.LOW:
+			RenderingServer.environment_set_ssao_quality(RenderingServer.ENV_SSAO_QUALITY_LOW,true,
+			ProjectSettings.get_setting("rendering/environment/ssao/adaptive_target"),
+			ProjectSettings.get_setting("rendering/environment/ssao/blur_passes"),
+			ProjectSettings.get_setting("rendering/environment/ssao/fadeout_from"),
+			ProjectSettings.get_setting("rendering/environment/ssao/fadeout_to")
+			)
+			ProjectSettings.set_setting("rendering/environment/ssao/half_size",true)
+			ProjectSettings.set_setting("rendering/environment/ssao/quality",SSAOQuality.LOW)
+		SSAOQuality.MEDIUM:
+			RenderingServer.environment_set_ssao_quality(RenderingServer.ENV_SSAO_QUALITY_MEDIUM,true,
+			ProjectSettings.get_setting("rendering/environment/ssao/adaptive_target"),
+			ProjectSettings.get_setting("rendering/environment/ssao/blur_passes"),
+			ProjectSettings.get_setting("rendering/environment/ssao/fadeout_from"),
+			ProjectSettings.get_setting("rendering/environment/ssao/fadeout_to")
+			)
+			ProjectSettings.set_setting("rendering/environment/ssao/half_size",true)
+			ProjectSettings.set_setting("rendering/environment/ssao/quality",SSAOQuality.MEDIUM)
+		SSAOQuality.HIGH:
+			RenderingServer.environment_set_ssao_quality(RenderingServer.ENV_SSAO_QUALITY_HIGH,false,
+			ProjectSettings.get_setting("rendering/environment/ssao/adaptive_target"),
+			ProjectSettings.get_setting("rendering/environment/ssao/blur_passes"),
+			ProjectSettings.get_setting("rendering/environment/ssao/fadeout_from"),
+			ProjectSettings.get_setting("rendering/environment/ssao/fadeout_to")
+			)
+			ProjectSettings.set_setting("rendering/environment/ssao/half_size",false)
+			ProjectSettings.set_setting("rendering/environment/ssao/quality",SSAOQuality.HIGH)
+		SSAOQuality.VERY_HIGH:
+			RenderingServer.environment_set_ssao_quality(RenderingServer.ENV_SSAO_QUALITY_ULTRA,false,
+			1.0,
+			ProjectSettings.get_setting("rendering/environment/ssao/blur_passes"),
+			ProjectSettings.get_setting("rendering/environment/ssao/fadeout_from"),
+			ProjectSettings.get_setting("rendering/environment/ssao/fadeout_to")
+			)
+			ProjectSettings.set_setting("rendering/environment/ssao/half_size",false)
+			ProjectSettings.set_setting("rendering/environment/ssao/adaptive_target",1.0)
+			ProjectSettings.set_setting("rendering/environment/ssao/quality",5)
 
 func applyShadowFilterQuality() -> void:
 	match graphics_shadow_filter_quality:

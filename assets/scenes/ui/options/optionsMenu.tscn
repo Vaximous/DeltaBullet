@@ -12,20 +12,23 @@
 resource_name = "optionsNode"
 script/source = "extends Control
 
-@onready var msaaOption : MenuButton = $panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer/msaa/msaaOptions
-@onready var shadowFilterQualityPopup : MenuButton = $panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer/shadowFilterQuality/shadowFilterQualityOptions
-@onready var shadowQualityPopup : MenuButton = $panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer/shadowQuality/shadowQuality
+@onready var msaaOption : MenuButton = $panelHolder/panel/optionsPanel/Video/scrollContainer/marginContainer/vBoxContainer/msaa/msaaOptions
+@onready var shadowFilterQualityPopup : MenuButton = $panelHolder/panel/optionsPanel/Video/scrollContainer/marginContainer/vBoxContainer/shadowFilterQuality/shadowFilterQualityOptions
+@onready var shadowQualityPopup : MenuButton = $panelHolder/panel/optionsPanel/Video/scrollContainer/marginContainer/vBoxContainer/shadowQuality/shadowQuality
+@onready var ssaoQualityPopup : MenuButton = $panelHolder/panel/optionsPanel/Video/scrollContainer/marginContainer/vBoxContainer/ssaoQuality/ssaoQuality
+@onready var ssilQualityPopup : MenuButton = $panelHolder/panel/optionsPanel/Video/scrollContainer/marginContainer/vBoxContainer/ssilQuality/ssilQuality
+@onready var ssrQualityPopup : MenuButton = $panelHolder/panel/optionsPanel/Video/scrollContainer/marginContainer/vBoxContainer/ssrQuality/ssrQuality
 @onready var save_button : Button = $panelHolder/panel/saveSettings
 @onready var revert_button : Button = $panelHolder/panel/revertSettings
 const setting_remap : Dictionary = {
-	'graphics_vsync' = ^'panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer/VSync:button_pressed',
-	'graphics_motion_blur' = ^'panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer/motionBlur:button_pressed',
-	'graphics_fullscreen' = ^'panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer/Fullscreen:button_pressed',
-	'graphics_fxaa' = ^'panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer/fxaaToggle:button_pressed',
-	'graphics_Sdfgi' = ^'panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer/sdfgiToggle:button_pressed',
-	'graphics_Ssil' = ^'panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer/ssilToggle:button_pressed',
-	'graphics_Ssr' = ^'panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer/ssrToggle:button_pressed',
-	'graphics_Ssao' = ^'panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer/ssaoToggle:button_pressed',
+	'graphics_vsync' = ^'panelHolder/panel/optionsPanel/Video/scrollContainer/marginContainer/vBoxContainer/VSync:button_pressed',
+	'graphics_motion_blur' = ^'panelHolder/panel/optionsPanel/Video/scrollContainer/marginContainer/vBoxContainer/motionBlur:button_pressed',
+	'graphics_fullscreen' = ^'panelHolder/panel/optionsPanel/Video/scrollContainer/marginContainer/vBoxContainer/Fullscreen:button_pressed',
+	'graphics_fxaa' = ^'panelHolder/panel/optionsPanel/Video/scrollContainer/marginContainer/vBoxContainer/fxaaToggle:button_pressed',
+	'graphics_Sdfgi' = ^'panelHolder/panel/optionsPanel/Video/scrollContainer/marginContainer/vBoxContainer/sdfgiToggle:button_pressed',
+	'graphics_Ssil' = ^'panelHolder/panel/optionsPanel/Video/scrollContainer/marginContainer/vBoxContainer/ssilToggle:button_pressed',
+	'graphics_Ssr' = ^'panelHolder/panel/optionsPanel/Video/scrollContainer/marginContainer/vBoxContainer/ssrToggle:button_pressed',
+	'graphics_Ssao' = ^'panelHolder/panel/optionsPanel/Video/scrollContainer/marginContainer/vBoxContainer/ssaoToggle:button_pressed',
 	'game_camera_screentilt_always' = ^'panelHolder/panel/optionsPanel/Game/marginContainer/vBoxContainer/alwaysCamRoll:button_pressed',
 	'game_show_fps' = ^'panelHolder/panel/optionsPanel/Game/marginContainer/vBoxContainer/showFPSButton:button_pressed',
 	'game_simple_crosshairs' = ^'panelHolder/panel/optionsPanel/Game/marginContainer/vBoxContainer/simpleCrosshairs:button_pressed',
@@ -66,6 +69,9 @@ func setText()->void:
 
 func _process(delta)->void:
 	if visible:
+		%ssaoQuality.visible = %ssaoToggle.button_pressed
+		%ssilQuality.visible = %ssilToggle.button_pressed
+		%ssrQuality.visible = %ssrToggle.button_pressed
 		modulate = lerp(modulate,Color.WHITE,16*delta)
 	else:
 		modulate = lerp(modulate,Color.TRANSPARENT,16*delta)
@@ -96,6 +102,9 @@ func applySettings()->void:
 		UserConfig.set(s, getRemappedValue(s))
 	UserConfig.graphics_shadow_filter_quality = shadowFilterQualityPopup.get_popup().get_focused_item()
 	UserConfig.graphics_shadow_quality = shadowQualityPopup.get_popup().get_focused_item()
+	UserConfig.graphics_ssao_quality = ssaoQualityPopup.get_popup().get_focused_item()
+	UserConfig.graphics_ssr_quality = ssrQualityPopup.get_popup().get_focused_item()
+	UserConfig.graphics_ssil_quality = ssilQualityPopup.get_popup().get_focused_item()
 	UserConfig.graphics_msaa = msaaOption.get_popup().get_focused_item()
 	UserConfig.applyShadowQuality()
 	UserConfig.applyShadowFilterQuality()
@@ -163,6 +172,30 @@ func _on_ragdoll_delete_time_value_changed(value)->void:
 func _on_decal_remove_time_slider_value_changed(value)->void:
 	$panelHolder/panel/optionsPanel/Performance/marginContainer/vBoxContainer/decalRemoveTime/decalRemoveTimeAmt.text = str(value)
 
+func changessrQualitytext(id)->void:
+	var selectedID = id
+	print(selectedID)
+	if id <= -1:
+		id = 0
+	ssrQualityPopup.get_popup().set_focused_item(id)
+	ssrQualityPopup.text = ssrQualityPopup.get_popup().get_item_text(id)
+
+func changessilQualitytext(id)->void:
+	var selectedID = id
+	print(selectedID)
+	if id <= -1:
+		id = 0
+	ssilQualityPopup.get_popup().set_focused_item(id)
+	ssilQualityPopup.text = ssilQualityPopup.get_popup().get_item_text(id)
+
+func changessaoQualitytext(id)->void:
+	var selectedID = id
+	print(selectedID)
+	if id <= -1:
+		id = 0
+	ssaoQualityPopup.get_popup().set_focused_item(id)
+	ssaoQualityPopup.text = ssaoQualityPopup.get_popup().get_item_text(id)
+
 func changeQualitytext(id)->void:
 	var selectedID = id
 	print(selectedID)
@@ -189,6 +222,15 @@ func setupMenuPopups():
 	shadowFilterQualityPopup.get_popup().id_pressed.connect(changeQualityfiltertext)
 	shadowFilterQualityPopup.get_popup().set_focused_item(UserConfig.graphics_shadow_filter_quality)
 	shadowFilterQualityPopup.text = shadowFilterQualityPopup.get_popup().get_item_text(UserConfig.graphics_shadow_filter_quality)
+	ssrQualityPopup.get_popup().id_pressed.connect(changessrQualitytext)
+	ssrQualityPopup.get_popup().set_focused_item(UserConfig.graphics_ssr_quality)
+	ssrQualityPopup.text = ssrQualityPopup.get_popup().get_item_text(UserConfig.graphics_ssr_quality)
+	ssilQualityPopup.get_popup().id_pressed.connect(changessilQualitytext)
+	ssilQualityPopup.get_popup().set_focused_item(UserConfig.graphics_ssil_quality)
+	ssilQualityPopup.text = ssilQualityPopup.get_popup().get_item_text(UserConfig.graphics_ssil_quality)
+	ssaoQualityPopup.get_popup().id_pressed.connect(changessaoQualitytext)
+	ssaoQualityPopup.get_popup().set_focused_item(UserConfig.graphics_ssao_quality)
+	ssaoQualityPopup.text = ssaoQualityPopup.get_popup().get_item_text(UserConfig.graphics_ssao_quality)
 	shadowQualityPopup.get_popup().id_pressed.connect(changeQualitytext)
 	shadowQualityPopup.get_popup().set_focused_item(UserConfig.graphics_shadow_quality)
 	shadowQualityPopup.text = shadowQualityPopup.get_popup().get_item_text(UserConfig.graphics_shadow_quality)
@@ -338,7 +380,7 @@ offset_bottom = -63.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_j35o7")
-current_tab = 3
+current_tab = 1
 
 [node name="Game" type="Control" parent="panelHolder/panel/optionsPanel"]
 visible = false
@@ -382,71 +424,103 @@ text = "Simple Crosshairs
 "
 
 [node name="Video" type="Control" parent="panelHolder/panel/optionsPanel"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
-[node name="marginContainer" type="MarginContainer" parent="panelHolder/panel/optionsPanel/Video"]
+[node name="scrollContainer" type="ScrollContainer" parent="panelHolder/panel/optionsPanel/Video"]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
+anchors_preset = -1
+anchor_right = 1.0070001
 anchor_bottom = 1.0
+offset_right = 0.28692627
+offset_bottom = -2.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="marginContainer" type="MarginContainer" parent="panelHolder/panel/optionsPanel/Video/scrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
 
-[node name="vBoxContainer" type="VBoxContainer" parent="panelHolder/panel/optionsPanel/Video/marginContainer"]
+[node name="vBoxContainer" type="VBoxContainer" parent="panelHolder/panel/optionsPanel/Video/scrollContainer/marginContainer"]
 layout_mode = 2
 
-[node name="Fullscreen" type="CheckButton" parent="panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer"]
+[node name="Fullscreen" type="CheckButton" parent="panelHolder/panel/optionsPanel/Video/scrollContainer/marginContainer/vBoxContainer"]
 layout_mode = 2
 text = "Fullscreen"
 
-[node name="motionBlur" type="CheckButton" parent="panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer"]
+[node name="motionBlur" type="CheckButton" parent="panelHolder/panel/optionsPanel/Video/scrollContainer/marginContainer/vBoxContainer"]
 layout_mode = 2
 text = "Motion Blur"
 
-[node name="VSync" type="CheckButton" parent="panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer"]
+[node name="VSync" type="CheckButton" parent="panelHolder/panel/optionsPanel/Video/scrollContainer/marginContainer/vBoxContainer"]
 layout_mode = 2
 text = "VSync"
 
-[node name="sdfgiToggle" type="CheckButton" parent="panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer"]
+[node name="sdfgiToggle" type="CheckButton" parent="panelHolder/panel/optionsPanel/Video/scrollContainer/marginContainer/vBoxContainer"]
 layout_mode = 2
 text = "Signed distance field global illumination (SDFGI)"
 
-[node name="ssrToggle" type="CheckButton" parent="panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer"]
+[node name="ssrToggle" type="CheckButton" parent="panelHolder/panel/optionsPanel/Video/scrollContainer/marginContainer/vBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Screen-Space Reflections"
 
-[node name="ssaoToggle" type="CheckButton" parent="panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer"]
-layout_mode = 2
-text = "Screen-Space Ambient Occlusion"
-
-[node name="ssilToggle" type="CheckButton" parent="panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer"]
-layout_mode = 2
-text = "Screen-Space Indirect Lighting"
-
-[node name="fxaaToggle" type="CheckButton" parent="panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer"]
-layout_mode = 2
-text = "FXAA"
-
-[node name="shadowQuality" type="Control" parent="panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer"]
+[node name="ssrQuality" type="Control" parent="panelHolder/panel/optionsPanel/Video/scrollContainer/marginContainer/vBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 33.905)
 layout_mode = 2
 
-[node name="shadowQualityLabel" type="Label" parent="panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer/shadowQuality"]
+[node name="ssrQualityLabel" type="Label" parent="panelHolder/panel/optionsPanel/Video/scrollContainer/marginContainer/vBoxContainer/ssrQuality"]
 layout_mode = 0
 offset_left = 6.0
 offset_right = 150.0
 offset_bottom = 27.0
 theme_override_fonts/font = ExtResource("2_rm30o")
 theme_override_font_sizes/font_size = 24
-text = "Shadow Quality"
+text = "SSR Quality"
 
-[node name="shadowQuality" type="MenuButton" parent="panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer/shadowQuality"]
+[node name="ssrQuality" type="MenuButton" parent="panelHolder/panel/optionsPanel/Video/scrollContainer/marginContainer/vBoxContainer/ssrQuality"]
+layout_mode = 0
+offset_left = 151.0
+offset_right = 945.0
+offset_bottom = 31.0
+theme_override_font_sizes/font_size = 16
+text = "Very High
+"
+alignment = 2
+item_count = 3
+popup/item_0/text = "Low"
+popup/item_0/id = 0
+popup/item_1/text = "Medium"
+popup/item_1/id = 1
+popup/item_2/text = "High"
+popup/item_2/id = 2
+
+[node name="ssaoToggle" type="CheckButton" parent="panelHolder/panel/optionsPanel/Video/scrollContainer/marginContainer/vBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Screen-Space Ambient Occlusion"
+
+[node name="ssaoQuality" type="Control" parent="panelHolder/panel/optionsPanel/Video/scrollContainer/marginContainer/vBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 33.905)
+layout_mode = 2
+
+[node name="ssaoQualityLabel" type="Label" parent="panelHolder/panel/optionsPanel/Video/scrollContainer/marginContainer/vBoxContainer/ssaoQuality"]
+layout_mode = 0
+offset_left = 6.0
+offset_right = 150.0
+offset_bottom = 27.0
+theme_override_fonts/font = ExtResource("2_rm30o")
+theme_override_font_sizes/font_size = 24
+text = "SSAO Quality"
+
+[node name="ssaoQuality" type="MenuButton" parent="panelHolder/panel/optionsPanel/Video/scrollContainer/marginContainer/vBoxContainer/ssaoQuality"]
 layout_mode = 0
 offset_left = 151.0
 offset_right = 945.0
@@ -467,11 +541,89 @@ popup/item_3/id = 3
 popup/item_4/text = "Very High"
 popup/item_4/id = 4
 
-[node name="shadowFilterQuality" type="Control" parent="panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer"]
+[node name="ssilToggle" type="CheckButton" parent="panelHolder/panel/optionsPanel/Video/scrollContainer/marginContainer/vBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Screen-Space Indirect Lighting"
+
+[node name="ssilQuality" type="Control" parent="panelHolder/panel/optionsPanel/Video/scrollContainer/marginContainer/vBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 33.905)
+layout_mode = 2
+
+[node name="ssilQualityLabel" type="Label" parent="panelHolder/panel/optionsPanel/Video/scrollContainer/marginContainer/vBoxContainer/ssilQuality"]
+layout_mode = 0
+offset_left = 6.0
+offset_right = 150.0
+offset_bottom = 27.0
+theme_override_fonts/font = ExtResource("2_rm30o")
+theme_override_font_sizes/font_size = 24
+text = "SSIL Quality"
+
+[node name="ssilQuality" type="MenuButton" parent="panelHolder/panel/optionsPanel/Video/scrollContainer/marginContainer/vBoxContainer/ssilQuality"]
+layout_mode = 0
+offset_left = 151.0
+offset_right = 945.0
+offset_bottom = 31.0
+theme_override_font_sizes/font_size = 16
+text = "Very High
+"
+alignment = 2
+item_count = 5
+popup/item_0/text = "Very Low"
+popup/item_0/id = 0
+popup/item_1/text = "Low"
+popup/item_1/id = 1
+popup/item_2/text = "Medium"
+popup/item_2/id = 2
+popup/item_3/text = "High"
+popup/item_3/id = 3
+popup/item_4/text = "Very High"
+popup/item_4/id = 4
+
+[node name="fxaaToggle" type="CheckButton" parent="panelHolder/panel/optionsPanel/Video/scrollContainer/marginContainer/vBoxContainer"]
+layout_mode = 2
+text = "FXAA"
+
+[node name="shadowQuality" type="Control" parent="panelHolder/panel/optionsPanel/Video/scrollContainer/marginContainer/vBoxContainer"]
+custom_minimum_size = Vector2(0, 33.905)
+layout_mode = 2
+
+[node name="shadowQualityLabel" type="Label" parent="panelHolder/panel/optionsPanel/Video/scrollContainer/marginContainer/vBoxContainer/shadowQuality"]
+layout_mode = 0
+offset_left = 6.0
+offset_right = 150.0
+offset_bottom = 27.0
+theme_override_fonts/font = ExtResource("2_rm30o")
+theme_override_font_sizes/font_size = 24
+text = "Shadow Quality"
+
+[node name="shadowQuality" type="MenuButton" parent="panelHolder/panel/optionsPanel/Video/scrollContainer/marginContainer/vBoxContainer/shadowQuality"]
+layout_mode = 0
+offset_left = 151.0
+offset_right = 945.0
+offset_bottom = 31.0
+theme_override_font_sizes/font_size = 16
+text = "Very High
+"
+alignment = 2
+item_count = 5
+popup/item_0/text = "Very Low"
+popup/item_0/id = 0
+popup/item_1/text = "Low"
+popup/item_1/id = 1
+popup/item_2/text = "Medium"
+popup/item_2/id = 2
+popup/item_3/text = "High"
+popup/item_3/id = 3
+popup/item_4/text = "Very High"
+popup/item_4/id = 4
+
+[node name="shadowFilterQuality" type="Control" parent="panelHolder/panel/optionsPanel/Video/scrollContainer/marginContainer/vBoxContainer"]
 custom_minimum_size = Vector2(0, 37.905)
 layout_mode = 2
 
-[node name="shadowFilterQualityLabel" type="Label" parent="panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer/shadowFilterQuality"]
+[node name="shadowFilterQualityLabel" type="Label" parent="panelHolder/panel/optionsPanel/Video/scrollContainer/marginContainer/vBoxContainer/shadowFilterQuality"]
 layout_mode = 0
 offset_left = 6.0
 offset_right = 150.0
@@ -480,7 +632,7 @@ theme_override_fonts/font = ExtResource("2_rm30o")
 theme_override_font_sizes/font_size = 24
 text = "Shadow Filter Quality"
 
-[node name="shadowFilterQualityOptions" type="MenuButton" parent="panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer/shadowFilterQuality"]
+[node name="shadowFilterQualityOptions" type="MenuButton" parent="panelHolder/panel/optionsPanel/Video/scrollContainer/marginContainer/vBoxContainer/shadowFilterQuality"]
 layout_mode = 0
 offset_left = 151.0
 offset_right = 945.0
@@ -506,11 +658,11 @@ popup/item_6/id = 6
 popup/item_7/text = "Max"
 popup/item_7/id = 7
 
-[node name="msaa" type="Control" parent="panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer"]
+[node name="msaa" type="Control" parent="panelHolder/panel/optionsPanel/Video/scrollContainer/marginContainer/vBoxContainer"]
 custom_minimum_size = Vector2(0, 37.905)
 layout_mode = 2
 
-[node name="msaaLabel" type="Label" parent="panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer/msaa"]
+[node name="msaaLabel" type="Label" parent="panelHolder/panel/optionsPanel/Video/scrollContainer/marginContainer/vBoxContainer/msaa"]
 layout_mode = 0
 offset_left = 6.0
 offset_right = 150.0
@@ -519,7 +671,7 @@ theme_override_fonts/font = ExtResource("2_rm30o")
 theme_override_font_sizes/font_size = 24
 text = "MSAA"
 
-[node name="msaaOptions" type="MenuButton" parent="panelHolder/panel/optionsPanel/Video/marginContainer/vBoxContainer/msaa"]
+[node name="msaaOptions" type="MenuButton" parent="panelHolder/panel/optionsPanel/Video/scrollContainer/marginContainer/vBoxContainer/msaa"]
 layout_mode = 0
 offset_left = 44.0
 offset_right = 945.0
@@ -702,6 +854,7 @@ text = "50"
 label_settings = SubResource("LabelSettings_pfmxh")
 
 [node name="Controls" type="Control" parent="panelHolder/panel/optionsPanel"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 3
 

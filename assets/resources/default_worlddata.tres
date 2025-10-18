@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="WorldData" load_steps=5 format=3 uid="uid://bvealloycjss6"]
+
+[ext_resource type="Script" uid="uid://b31u24at18p5t" path="res://assets/resources/customResources/worldData/worldData.gd" id="1_pb6p6"]
+[ext_resource type="Texture2D" uid="uid://d0f0crtwpmoka" path="res://assets/textures/panoramas/panoramatest1.png" id="2_ik33w"]
+[ext_resource type="Texture2D" uid="uid://dwy1ieh8lo0m0" path="res://assets/scenes/worlds/areas/playerHome/previewscreenTest.png" id="3_sfopq"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_pb6p6"]
+panorama = ExtResource("2_ik33w")
+
+[resource]
+script = ExtResource("1_pb6p6")
+worldEditable = true
+skyTexture = SubResource("PanoramaSkyMaterial_pb6p6")
+worldName = "default"
+worldDescription = "default world data fallback"
+worldLoadingTexture = ExtResource("3_sfopq")

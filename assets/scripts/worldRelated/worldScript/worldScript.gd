@@ -21,6 +21,10 @@ class_name WorldScene
 @export var worldData : WorldData:
 	set(value):
 		worldData = value
+	get:
+		if worldData == null:
+			return preload("res://assets/resources/default_worlddata.tres").duplicate()
+		return worldData
 
 func _enter_tree()->void:
 	if !Engine.is_editor_hint():
@@ -128,6 +132,7 @@ func setupWorld()-> void:
 			if !worldData.soundScape == null:
 				musicManager.change_song_to(worldData.soundScape)
 			else:
+				musicManager.change_song_to(null)
 				print_rich("[color=red]The soundscape.. Its null retard.[/color]")
 	else:
 		print_rich("[color=red]Set the world data for this world!!![/color]")

@@ -1,0 +1,144 @@
+[remap]
+
+importer="scene"
+importer_version=1
+type="PackedScene"
+uid="uid://bknc1cwtq0o03"
+path="res://.godot/imported/big-interior-set.glb-620bc4c299ce7e6803c006b5775e784a.scn"
+
+[deps]
+
+source_file="res://assets/models/interior/big-interior-set.glb"
+dest_files=["res://.godot/imported/big-interior-set.glb-620bc4c299ce7e6803c006b5775e784a.scn"]
+
+[params]
+
+nodes/root_type=""
+nodes/root_name=""
+nodes/root_script=null
+nodes/apply_root_scale=true
+nodes/root_scale=1.0
+nodes/import_as_skeleton_bones=false
+nodes/use_name_suffixes=true
+nodes/use_node_type_suffixes=true
+meshes/ensure_tangents=true
+meshes/generate_lods=true
+meshes/create_shadow_meshes=true
+meshes/light_baking=1
+meshes/lightmap_texel_size=0.2
+meshes/force_disable_compression=false
+skins/use_named_skins=true
+animation/import=true
+animation/fps=30
+animation/trimming=false
+animation/remove_immutable_tracks=true
+animation/import_rest_as_RESET=false
+import_script/path=""
+materials/extract=0
+materials/extract_format=0
+materials/extract_path=""
+_subresources={
+"meshes": {
+"big-interior-set_FilingCabinetDrawerMesh": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://assets/models/interior/interior-set/big-interior-set_FilingCabinetDrawerMesh.res",
+"save_to_file/path": "uid://c03vkjf8ipqxw"
+},
+"big-interior-set_FilingCabinetDrawerMesh2": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://assets/models/interior/interior-set/big-interior-set_FilingCabinetDrawerMesh2.res",
+"save_to_file/path": "uid://bxi21htdym0h1"
+},
+"big-interior-set_FilingCabinetDrawerMesh3": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://assets/models/interior/interior-set/big-interior-set_FilingCabinetDrawerMesh3.res",
+"save_to_file/path": "uid://dppedl6wtt1ct"
+},
+"big-interior-set_FilingCabinetDrawerMesh4": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://assets/models/interior/interior-set/big-interior-set_FilingCabinetDrawerMesh4.res",
+"save_to_file/path": "uid://chnfuoml8ebx8"
+},
+"big-interior-set_FilingCabinetMesh": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://assets/models/interior/interior-set/big-interior-set_FilingCabinetMesh.res",
+"save_to_file/path": "uid://bb24kisdmtfr4"
+},
+"big-interior-set_InteriorWallCornerMesh": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://assets/models/interior/interior-set/big-interior-set_InteriorWallCornerMesh.res",
+"save_to_file/path": "uid://dcac01fcne7tb"
+},
+"big-interior-set_InteriorWallEdgeMesh": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://assets/models/interior/interior-set/big-interior-set_InteriorWallEdgeMesh.res",
+"save_to_file/path": "uid://bxwfam7fsg408"
+},
+"big-interior-set_InteriorWallMesh": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://assets/models/interior/interior-set/big-interior-set_InteriorWallMesh.res",
+"save_to_file/path": "uid://gt1olxvr3rgs"
+},
+"big-interior-set_InteriorWallSmallBendMesh": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://assets/models/interior/interior-set/big-interior-set_InteriorWallSmallBendMesh.res",
+"save_to_file/path": "uid://b5l3ow75wpl0o"
+},
+"big-interior-set_InteriorWallStandardDoorframeMesh": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://assets/models/interior/interior-set/big-interior-set_InteriorWallStandardDoorframeMesh.res",
+"save_to_file/path": "uid://ckqxjcjly61o8"
+},
+"big-interior-set_TableMesh": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": true,
+"save_to_file/fallback_path": "res://assets/models/interior/interior-set/big-interior-set_TableMesh.res",
+"save_to_file/path": "uid://dp63mhayk2wqe"
+}
+}
+}
+gltf/naming_version=2
+gltf/embedded_image_handling=1

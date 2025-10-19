@@ -1,4 +1,4 @@
-[gd_scene load_steps=198 format=4 uid="uid://c8bkdy6aqwxls"]
+[gd_scene load_steps=199 format=4 uid="uid://c8bkdy6aqwxls"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_ypyko"]
 [ext_resource type="PackedScene" uid="uid://boicvk4qeqmbd" path="res://assets/entities/pawnSpawn/pawnSpawn.tscn" id="2_v576b"]
@@ -58,6 +58,7 @@
 [ext_resource type="ArrayMesh" uid="uid://bek8o15wn28ie" path="res://assets/models/interior/walltrim/interior_wall_trims_corner.res" id="55_cj522"]
 [ext_resource type="ArrayMesh" uid="uid://ct3rl5ixayv1i" path="res://assets/models/interior/walltrim/interior_wall_trims_side.res" id="56_dsxxh"]
 [ext_resource type="ArrayMesh" uid="uid://2vbj6lrob6tv" path="res://assets/models/interior/walltrim/interior_wall_trims_edge.res" id="57_uotc0"]
+[ext_resource type="PackedScene" uid="uid://d0ya4qmyyuluh" path="res://assets/models/props/filing_cabinet.tscn" id="59_uotc0"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_6ok4a"]
 panorama = ExtResource("3_rcju0")
@@ -2588,6 +2589,9 @@ mesh = ExtResource("57_uotc0")
 [node name="interiorWallTrimsEdge11" type="MeshInstance3D" parent="." index="41"]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 6.9919405, 3.9700031, -6.1671395)
 mesh = ExtResource("57_uotc0")
+
+[node name="FilingCabinet" parent="." index="42" instance=ExtResource("59_uotc0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5209513, 4.5688505, -11)
 
 [connection signal="objectUsed" from="Props/PlayerCloset/closetInteraction" to="Props/PlayerCloset" method="_onClosetUsed"]
 [connection signal="objectUsed" from="Props/worldMapInteract" to="Props/worldMapInteract" method="_on_object_used"]

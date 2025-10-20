@@ -74,6 +74,8 @@ func create_staircase() -> void:
 		collider.shape = CS_StairStep
 		collider.name = "StepCollider%d" % i
 
+		mi3d.tree_exiting.connect(collider.queue_free, CONNECT_PERSIST)
+
 
 func create_mesh_instance(mesh: ArrayMesh) -> MeshInstance3D:
 	var m := MeshInstance3D.new()

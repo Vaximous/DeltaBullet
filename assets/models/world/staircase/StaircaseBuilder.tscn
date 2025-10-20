@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://6hhnx80q2euv"]
+
+[ext_resource type="Script" uid="uid://cdrlg5gnk7gs7" path="res://assets/models/world/staircase/staircase_builder.gd" id="1_rawfx"]
+
+[node name="StaircaseBuilder" type="Node3D"]
+script = ExtResource("1_rawfx")
+step_count = 8
+metadata/_edit_group_ = true

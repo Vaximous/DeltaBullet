@@ -45,10 +45,19 @@ const RUNG_OFFSET: float = 0.41339999999999993
 			EditorInterface.get_selection().add_node(self)
 
 
+func _ready() -> void:
+	if Engine.is_editor_hint():
+		create_ladder()
+
+
 func create_ladder() -> void:
-	for child in get_children():
+	for child in get_children(true):
 		if child.has_meta("generated"):
 			child.queue_free()
+
+	if Engine.is_editor_hint():
+		if get_tree().edited_scene_root == self:
+			return
 
 	var rung_position: float = 0.0
 
@@ -89,7 +98,7 @@ func create_ladder() -> void:
 func create_mesh_instance(mesh: ArrayMesh) -> MeshInstance3D:
 	var m := MeshInstance3D.new()
 	m.mesh = mesh
-	add_child(m)
+	add_child(m, false, InternalMode.INTERNAL_MODE_FRONT)
 	if Engine.is_editor_hint():
 		m.set_owner(get_tree().edited_scene_root)
 	m.set_meta("generated", true)

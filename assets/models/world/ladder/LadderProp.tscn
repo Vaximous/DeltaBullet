@@ -4,4 +4,7 @@
 
 [node name="LadderProp" type="Node3D"]
 script = ExtResource("1_wkarp")
+top_rung = 2
+bottom_rung = true
+rung_count = 5
 metadata/_edit_group_ = true

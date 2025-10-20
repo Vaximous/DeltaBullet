@@ -68,7 +68,8 @@ func create_staircase() -> void:
 
 		var collider := CollisionShape3D.new()
 		staticbody.add_child(collider, false, Node.INTERNAL_MODE_FRONT)
-		collider.set_owner(get_tree().edited_scene_root)
+		if Engine.is_editor_hint():
+			collider.set_owner(get_tree().edited_scene_root)
 		collider.global_position = mi3d.global_position
 		collider.shape = CS_StairStep
 		collider.name = "StepCollider%d" % i

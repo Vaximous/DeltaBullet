@@ -45,7 +45,11 @@ enum SSRQuality {
 	HIGH
 }
 @export var graphics_shadow_filter_quality : RenderingServer.ShadowQuality = 1
-@export  var graphics_shadow_quality : RenderingServer.ShadowQuality = 3
+@export  var graphics_shadow_quality : RenderingServer.ShadowQuality = 3:
+	set(value):
+		graphics_shadow_quality = value
+		if value == -1:
+			graphics_shadow_quality = 0
 var graphics_motion_blur : bool = false
 var graphics_ssao_quality : SSAOQuality = SSAOQuality.MEDIUM
 var graphics_ssil_quality : SSILQuality = SSILQuality.MEDIUM

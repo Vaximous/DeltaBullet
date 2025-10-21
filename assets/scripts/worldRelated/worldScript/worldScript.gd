@@ -66,8 +66,6 @@ func _ready()->void:
 				worldSky.environment.sky.sky_material = worldData.skyTexture.duplicate()
 
 
-
-
 func orphanDelete()->void:
 	for i in get_children():
 		remove_child(i)

@@ -15,6 +15,17 @@ func _ready() -> void:
 	connections.resize(get_airduct_attachment_points().size())
 
 
+func check_open_ports() -> void:
+	for port in connections.size():
+		var item = connections[port]
+		if not is_instance_valid(item):
+			open_port(port)
+			continue
+		if not item.is_inside_tree():
+			open_port(port)
+			continue
+
+
 func get_airduct_attachment_points() -> Array[Transform3D]:
 	var tf : Array[Transform3D] = []
 	for child in get_children():
@@ -25,14 +36,17 @@ func get_airduct_attachment_points() -> Array[Transform3D]:
 
 
 func attach_part(part_index : int, port_index : int) -> void:
-	if connections[port_index] != null:
-		printerr("Port %s is in use by %s!" % [port_index, connections[port_index]])
-		return
+	if part_index != 3:
+		if connections[port_index] != null:
+			printerr("Port %s is in use by %s!" % [port_index, connections[port_index]])
+			return
 	var inst = AirductGizmoPlugin.get_airduct_segment(part_index)
-	inst.tree_exited.connect(open_port.bind(port_index))
 	add_child(inst)
 
-	inst.set_owner(get_tree().get_edited_scene_root())
+	if Engine.is_editor_hint():
+		inst.set_owner(get_tree().get_edited_scene_root())
+		EditorInterface.get_selection().clear()
+		EditorInterface.get_selection().add_node(inst)
 	inst.transform = get_airduct_attachment_points()[port_index]
 	inst.global_rotation.y += PI
 

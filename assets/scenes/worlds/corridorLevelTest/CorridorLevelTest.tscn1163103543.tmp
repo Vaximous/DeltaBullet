@@ -1,0 +1,69 @@
+[gd_scene load_steps=25 format=3 uid="uid://dlbbothh8l8p7"]
+
+[ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_826ci"]
+[ext_resource type="PackedScene" uid="uid://boicvk4qeqmbd" path="res://assets/entities/pawnSpawn/pawnSpawn.tscn" id="2_ui4qq"]
+[ext_resource type="Script" uid="uid://b31u24at18p5t" path="res://assets/resources/customResources/worldData/worldData.gd" id="2_x1gey"]
+[ext_resource type="Texture2D" uid="uid://d0f0crtwpmoka" path="res://assets/textures/panoramas/panoramatest1.png" id="3_us1hc"]
+[ext_resource type="Texture2D" uid="uid://dwy1ieh8lo0m0" path="res://assets/scenes/worlds/areas/playerHome/previewscreenTest.png" id="4_27tat"]
+[ext_resource type="Texture2D" uid="uid://bfttaom6lw465" path="res://assets/envs/gradient_color_correction_blue_tint.tres" id="6_27tat"]
+[ext_resource type="PackedScene" uid="uid://drmdlwujt5jf7" path="res://assets/models/world/airducts/segments/AirDuct4WaySplit.tscn" id="7_us1hc"]
+[ext_resource type="PackedScene" uid="uid://8a4bn7j73pvs" path="res://assets/models/world/airducts/segments/AirductConnector.tscn" id="8_gyml6"]
+[ext_resource type="PackedScene" uid="uid://xatm581k4c7x" path="res://assets/models/world/airducts/segments/AirDuct45BendLeft.tscn" id="8_lteud"]
+[ext_resource type="ArrayMesh" uid="uid://3c1dklxevgqx" path="res://assets/models/world/airducts/meshes/AirDucts_DuctConnector.res" id="9_2jf6q"]
+[ext_resource type="ArrayMesh" uid="uid://dfmojc5d2eo1x" path="res://assets/models/world/airducts/meshes/AirDucts_Duct45BendLeft.res" id="9_dwuvn"]
+[ext_resource type="Script" uid="uid://bnhisqq4if7la" path="res://assets/models/world/airducts/segments/airduct_segment_script.gd" id="10_4vmtv"]
+[ext_resource type="PackedScene" uid="uid://sbdndngaybk1" path="res://assets/models/world/airducts/segments/AirDuctSingle.tscn" id="11_lteud"]
+[ext_resource type="ArrayMesh" uid="uid://bkks2kqt4isw4" path="res://assets/models/world/airducts/meshes/AirDucts_DuctSingle.res" id="12_dwuvn"]
+[ext_resource type="PackedScene" uid="uid://nyjgienllydo" path="res://assets/models/world/airducts/segments/AirDuctSharpBendRight.tscn" id="13_f62s0"]
+[ext_resource type="ArrayMesh" uid="uid://cofjtvdpkyck3" path="res://assets/models/world/airducts/meshes/AirDucts_Duct90BendRight.res" id="14_u7vrb"]
+[ext_resource type="PackedScene" uid="uid://3qblgwd4tix8" path="res://assets/models/world/airducts/segments/AirDuctSharpBendLeft.tscn" id="15_l2vi1"]
+[ext_resource type="ArrayMesh" uid="uid://78dqqiyd05n" path="res://assets/models/world/airducts/meshes/AirDucts_Duct90BendLeft.res" id="16_f62s0"]
+[ext_resource type="ArrayMesh" uid="uid://biljmnecag4dl" path="res://assets/models/world/airducts/meshes/AirDucts_Duct4Split.res" id="19_f62s0"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_pb6p6"]
+panorama = ExtResource("3_us1hc")
+
+[sub_resource type="Resource" id="Resource_bb775"]
+script = ExtResource("2_x1gey")
+worldEditable = true
+skyTexture = SubResource("PanoramaSkyMaterial_pb6p6")
+worldName = "default"
+worldDescription = "default world data fallback"
+worldLoadingTexture = ExtResource("4_27tat")
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_afll2"]
+panorama = ExtResource("3_us1hc")
+
+[sub_resource type="Sky" id="Sky_nj1fe"]
+sky_material = SubResource("PanoramaSkyMaterial_afll2")
+
+[sub_resource type="Environment" id="Environment_us1hc"]
+background_mode = 2
+sky = SubResource("Sky_nj1fe")
+reflected_light_source = 1
+tonemap_mode = 3
+ssao_enabled = true
+ssao_intensity = 3.5
+ssao_power = 1.5529
+ssao_detail = 5.0
+ssao_horizon = 0.07
+ssil_intensity = 0.75
+ssil_sharpness = 0.45
+ssil_normal_rejection = 0.0
+sdfgi_use_occlusion = true
+sdfgi_y_scale = 2
+glow_enabled = true
+glow_levels/5 = 0.0
+glow_levels/6 = 1.0
+glow_normalized = true
+glow_bloom = 0.1
+glow_blend_mode = 1
+fog_light_energy = 0.0
+fog_sun_scatter = 0.17
+fog_density = 0.009
+fog_sky_affect = 0.765
+fog_height = 96.8
+fog_height_density = 0.089
+volumetric_fog_density = 0.2457
+volumetric_fog_albedo = Color(0.848227, 0.767118, 0.651965, 1)
+adjustment_enab

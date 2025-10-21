@@ -1,0 +1,39 @@
+[gd_scene load_steps=3 format=3 uid="uid://4unojbt6m0lt"]
+
+[ext_resource type="Script" uid="uid://cxqsagmwr80e5" path="res://addons/airducteditorgizmotool/airduct_option_popup_panel.gd" id="1_n0pgj"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fx6od"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[node name="panelContainer" type="PanelContainer"]
+offset_right = 121.0
+offset_bottom = 51.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_fx6od")
+script = ExtResource("1_n0pgj")
+
+[node name="vBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="title" type="Label" parent="vBoxContainer"]
+layout_mode = 2
+text = "Select a Piece"
+
+[node name="hSeparator" type="HSeparator" parent="vBoxContainer"]
+layout_mode = 2
+
+[node name="OptionsContainer" type="VBoxContainer" parent="vBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="button" type="Button" parent="."]
+layout_mode = 2

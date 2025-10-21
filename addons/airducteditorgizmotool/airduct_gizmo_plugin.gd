@@ -1,8 +1,22 @@
-extends EditorNode3DGizmoPlugin
 class_name AirductGizmoPlugin
+extends EditorNode3DGizmoPlugin
 
+enum Segments {
+	OmniSplit,
+	Left45,
+	Right45,
+	DuctConnector,
+	LongAirduct,
+	Left90,
+	Right90,
+	Single,
+	VentDown,
+	VentLeft,
+	VentRight,
+	TSplit,
+}
 
-const airduct_segments : Array[String] = [
+const airduct_segments: Array[String] = [
 	"res://assets/models/world/airducts/segments/AirDuct4WaySplit.tscn",
 	"res://assets/models/world/airducts/segments/AirDuct45BendLeft.tscn",
 	"res://assets/models/world/airducts/segments/AirDuct45BendRight.tscn",
@@ -17,21 +31,37 @@ const airduct_segments : Array[String] = [
 	"res://assets/models/world/airducts/segments/AirDuctTSplit.tscn"
 ]
 
-enum Segments {
-	OmniSplit,
-	Left45,
-	Right45,
-	DuctConnector,
-	LongAirduct,
-	Left90,
-	Right90,
-	Single,
-	VentDown,
-	VentLeft,
-	VentRight,
-	TSplit
-}
 
+#endregion
+#region Duct Stuff
+static func create_popup_panel(selected_part_name : String) -> Window:
+	var popup : PanelContainer = load("res://addons/airducteditorgizmotool/AirductOptionPopupPanel.tscn").instantiate()
+	popup.setup_available_parts(selected_part_name)
+	var window := Window.new()
+	window.add_child(popup)
+	EditorInterface.popup_dialog(window, Rect2i(DisplayServer.mouse_get_position(), popup.size))
+	window.set_deferred(&"min_size", popup.size)
+	window.reset_size.call_deferred()
+	window.close_requested.connect(window.queue_free)
+	popup.tree_exited.connect(window.queue_free)
+	popup.part_selected.connect(window.queue_free.unbind(1))
+	return window
+
+
+static func get_segment_by_name(name: String) -> MeshInstance3D:
+	var k = Segments.find_key(name)
+	if k is int:
+		return get_airduct_segment(k)
+	return null
+
+
+static func get_airduct_segment(index: int) -> MeshInstance3D:
+	var path = airduct_segments[index]
+	var scn = load(path)
+	if scn is PackedScene:
+		return scn.instantiate()
+	return null
+#endregion
 
 #region Gizmo / Editor Stuff
 
@@ -55,7 +85,9 @@ func _get_handle_value(gizmo: EditorNode3DGizmo, handle_id: int, secondary: bool
 
 func _commit_handle(gizmo: EditorNode3DGizmo, handle_id: int, secondary: bool, restore: Variant, cancel: bool) -> void:
 	var duct = gizmo.get_node_3d()
-	duct.attach_part([0, 1, 2, 4, 5, 6, 7, 8, 9, 10, 11].pick_random(), handle_id)
+	duct.check_open_ports()
+	var panel = create_popup_panel(duct.segment_name).get_child(0)
+	panel.part_selected.connect(_on_panel_selected_part.bind(handle_id, duct))
 
 
 func _redraw(gizmo: EditorNode3DGizmo) -> void:
@@ -75,24 +107,9 @@ func _has_gizmo(for_node_3d: Node3D) -> bool:
 	return for_node_3d is MeshInstance3D and for_node_3d.has_method(&"get_airduct_attachment_points")
 
 
-#endregion
-#region Duct Stuff
-
-
-static func get_segment_by_name(name : String) -> MeshInstance3D:
-	var k = Segments.find_key(name)
-	if k is int:
-		return get_airduct_segment(k)
-	return null
-
-
-
-static func get_airduct_segment(index : int) -> MeshInstance3D:
-	var path = airduct_segments[index]
-	var scn = load(path)
-	if scn is PackedScene:
-		return scn.instantiate()
-	return null
-
-
-#endregion
+func _on_panel_selected_part(part_name : String, port : int, duct : Node3D) -> void:
+	duct.check_open_ports()
+	print(part_name, port, duct, Segments)
+	var new_duct = Segments[part_name]
+	duct.attach_part(new_duct, port)
+	return

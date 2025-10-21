@@ -1,0 +1,9 @@
+[gd_resource type="Shortcut" load_steps=2 format=3 uid="uid://cjxeynm6iiunw"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_bqlkp"]
+device = -1
+keycode = 84
+unicode = 116
+
+[resource]
+events = [SubResource("InputEventKey_bqlkp")]

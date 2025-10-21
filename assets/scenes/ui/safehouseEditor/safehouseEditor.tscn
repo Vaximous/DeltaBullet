@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://euaxty1qfugn"]
+[gd_scene load_steps=13 format=3 uid="uid://euaxty1qfugn"]
 
 [ext_resource type="Script" uid="uid://ch735riwicvap" path="res://assets/scenes/ui/safehouseEditor/safehouse_editor.gd" id="1_8svem"]
 [ext_resource type="Theme" uid="uid://dao2ag1gbfjb2" path="res://assets/resources/themes/safehouseEditorTheme.tres" id="2_3feuy"]
@@ -28,6 +28,14 @@ region = Rect2(0, 96, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_b6gap"]
 atlas = ExtResource("3_4fyhw")
 region = Rect2(0, 128, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4fyhw"]
+atlas = ExtResource("3_4fyhw")
+region = Rect2(0, 160, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q4ecc"]
+atlas = ExtResource("3_4fyhw")
+region = Rect2(0, 192, 32, 32)
 
 [node name="safehouseEditor" type="CanvasLayer"]
 script = ExtResource("1_8svem")
@@ -120,35 +128,42 @@ size_flags_horizontal = 0
 layout_mode = 2
 
 [node name="selectTool" type="Button" parent="control/editorTools/panelContainer/hBoxContainer"]
+custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
 mouse_default_cursor_shape = 2
-text = "Select"
 icon = SubResource("AtlasTexture_4fona")
+icon_alignment = 1
 
 [node name="translateTool" type="Button" parent="control/editorTools/panelContainer/hBoxContainer"]
+custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
 mouse_default_cursor_shape = 2
-text = "Translate
+text = "
 "
 icon = SubResource("AtlasTexture_qpr2n")
+icon_alignment = 1
 
 [node name="rotateTool" type="Button" parent="control/editorTools/panelContainer/hBoxContainer"]
+custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
 mouse_default_cursor_shape = 2
-text = "Rotate
+text = "
 "
 icon = SubResource("AtlasTexture_nbv6y")
+icon_alignment = 1
 
 [node name="placeTool" type="Button" parent="control/editorTools/panelContainer/hBoxContainer"]
+custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
 mouse_default_cursor_shape = 2
-text = "Place"
 icon = SubResource("AtlasTexture_twrkh")
+icon_alignment = 1
 
 [node name="Delete" type="Button" parent="control/editorTools/panelContainer/hBoxContainer"]
+custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
-text = "Delete"
 icon = SubResource("AtlasTexture_b6gap")
+icon_alignment = 1
 
 [node name="control" type="Control" parent="control/editorTools/panelContainer/hBoxContainer"]
 custom_minimum_size = Vector2(32, 0)
@@ -157,12 +172,14 @@ layout_mode = 2
 [node name="Undo" type="Button" parent="control/editorTools/panelContainer/hBoxContainer"]
 custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
-text = "Undo"
+icon = SubResource("AtlasTexture_4fyhw")
+icon_alignment = 1
 
 [node name="Redo" type="Button" parent="control/editorTools/panelContainer/hBoxContainer"]
 custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
-text = "Redo"
+icon = SubResource("AtlasTexture_q4ecc")
+icon_alignment = 1
 
 [node name="HistoryContainerPanel" type="PanelContainer" parent="control"]
 unique_name_in_owner = true

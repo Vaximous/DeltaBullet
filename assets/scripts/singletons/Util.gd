@@ -40,6 +40,11 @@ func queueFreeNodeChildren(node: Node) -> void:
 		ch.queue_free()
 
 
+func removeNodeFromTree(node : Node) -> void:
+	if node.is_inside_tree():
+		node.get_parent().remove_child(node)
+
+
 func display_message_simple(text: String, duration: float = 5.0, abort_if_displaying: bool = false, parent: Node = null) -> Control:
 	var script := preload("res://assets/scenes/ui/popup_message.gd")
 	return script.display_text(text, duration, abort_if_displaying, parent)

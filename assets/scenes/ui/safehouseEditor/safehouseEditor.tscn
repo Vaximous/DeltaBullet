@@ -1,60 +1,87 @@
-[gd_scene load_steps=6 format=3 uid="uid://euaxty1qfugn"]
+[gd_scene load_steps=11 format=3 uid="uid://euaxty1qfugn"]
 
 [ext_resource type="Script" uid="uid://ch735riwicvap" path="res://assets/scenes/ui/safehouseEditor/safehouse_editor.gd" id="1_8svem"]
-[ext_resource type="PackedScene" uid="uid://uo3piwv2xb4d" path="res://assets/scenes/ui/safehouseEditor/editorItem.tscn" id="2_3feuy"]
+[ext_resource type="Theme" uid="uid://dao2ag1gbfjb2" path="res://assets/resources/themes/safehouseEditorTheme.tres" id="2_3feuy"]
 [ext_resource type="Script" uid="uid://w0n6ndvsufm1" path="res://addons/Gizmo3DScript/gizmo3D.gd" id="3_3feuy"]
+[ext_resource type="Texture2D" uid="uid://cqyqr8yty5af4" path="res://assets/textures/ui/customization/safehouse_editor_button_atlas.png" id="3_4fyhw"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_8svem"]
 shadow_size = 6
 shadow_color = Color(0, 0, 0, 0.717647)
 
-[sub_resource type="LabelSettings" id="LabelSettings_3feuy"]
-outline_color = Color(0, 0, 0, 1)
-shadow_size = 4
-shadow_color = Color(0, 0, 0, 0.470588)
+[sub_resource type="AtlasTexture" id="AtlasTexture_4fona"]
+atlas = ExtResource("3_4fyhw")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qpr2n"]
+atlas = ExtResource("3_4fyhw")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nbv6y"]
+atlas = ExtResource("3_4fyhw")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_twrkh"]
+atlas = ExtResource("3_4fyhw")
+region = Rect2(0, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b6gap"]
+atlas = ExtResource("3_4fyhw")
+region = Rect2(0, 128, 32, 32)
 
 [node name="safehouseEditor" type="CanvasLayer"]
 script = ExtResource("1_8svem")
 
-[node name="itemContainer" type="MarginContainer" parent="."]
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_top = -291.0
-offset_right = 260.0
-offset_bottom = 310.0
+[node name="control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
 grow_vertical = 2
-size_flags_horizontal = 0
+mouse_filter = 2
+theme = ExtResource("2_3feuy")
 
-[node name="categoryPanel" type="PanelContainer" parent="itemContainer"]
+[node name="itemContainer" type="MarginContainer" parent="control"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -316.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 0
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="categoryPanel" type="PanelContainer" parent="control/itemContainer"]
 clip_contents = true
 layout_mode = 2
 mouse_filter = 1
 
-[node name="vBoxContainer" type="VBoxContainer" parent="itemContainer/categoryPanel"]
+[node name="Inventory" type="VBoxContainer" parent="control/itemContainer/categoryPanel"]
 layout_mode = 2
 
-[node name="label" type="Label" parent="itemContainer/categoryPanel/vBoxContainer"]
+[node name="label" type="Label" parent="control/itemContainer/categoryPanel/Inventory"]
 layout_mode = 2
-text = "Toolbox"
+text = "Inventory"
 label_settings = SubResource("LabelSettings_8svem")
 horizontal_alignment = 1
 
-[node name="categoryContainer" type="PanelContainer" parent="itemContainer/categoryPanel/vBoxContainer"]
+[node name="categoryContainer" type="PanelContainer" parent="control/itemContainer/categoryPanel/Inventory"]
 layout_mode = 2
 
-[node name="hBoxContainer" type="HBoxContainer" parent="itemContainer/categoryPanel/vBoxContainer/categoryContainer"]
+[node name="hBoxContainer" type="HBoxContainer" parent="control/itemContainer/categoryPanel/Inventory/categoryContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="categoryLabel" type="Label" parent="itemContainer/categoryPanel/vBoxContainer/categoryContainer/hBoxContainer"]
+[node name="menuButton" type="MenuButton" parent="control/itemContainer/categoryPanel/Inventory/categoryContainer/hBoxContainer"]
+custom_minimum_size = Vector2(256, 0)
 layout_mode = 2
-text = "Category:"
-label_settings = SubResource("LabelSettings_3feuy")
-
-[node name="menuButton" type="MenuButton" parent="itemContainer/categoryPanel/vBoxContainer/categoryContainer/hBoxContainer"]
-layout_mode = 2
-text = "Exquisite"
+text = "Living Room"
 item_count = 4
 popup/item_0/text = "Living Room"
 popup/item_0/id = 0
@@ -65,150 +92,113 @@ popup/item_2/id = 2
 popup/item_3/text = "Kitchen"
 popup/item_3/id = 3
 
-[node name="scrollContainer" type="ScrollContainer" parent="itemContainer/categoryPanel/vBoxContainer"]
+[node name="scrollContainer" type="ScrollContainer" parent="control/itemContainer/categoryPanel/Inventory"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="itemContainer" type="GridContainer" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer"]
+[node name="itemContainer" type="GridContainer" parent="control/itemContainer/categoryPanel/Inventory/scrollContainer"]
 unique_name_in_owner = true
 clip_contents = true
 layout_mode = 2
 columns = 3
 
-[node name="safehouseItem" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
-layout_mode = 2
-
-[node name="safehouseItem2" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
-layout_mode = 2
-
-[node name="safehouseItem3" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
-layout_mode = 2
-
-[node name="safehouseItem4" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
-layout_mode = 2
-
-[node name="safehouseItem5" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
-layout_mode = 2
-
-[node name="safehouseItem6" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
-layout_mode = 2
-
-[node name="safehouseItem7" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
-layout_mode = 2
-
-[node name="safehouseItem8" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
-layout_mode = 2
-
-[node name="safehouseItem9" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
-layout_mode = 2
-
-[node name="safehouseItem10" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
-layout_mode = 2
-
-[node name="safehouseItem11" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
-layout_mode = 2
-
-[node name="safehouseItem12" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
-layout_mode = 2
-
-[node name="safehouseItem13" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
-layout_mode = 2
-
-[node name="safehouseItem14" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
-layout_mode = 2
-
-[node name="safehouseItem15" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
-layout_mode = 2
-
-[node name="safehouseItem16" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
-layout_mode = 2
-
-[node name="safehouseItem17" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
-layout_mode = 2
-
-[node name="safehouseItem18" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
-layout_mode = 2
-
-[node name="safehouseItem19" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
-layout_mode = 2
-
-[node name="safehouseItem20" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
-layout_mode = 2
-
-[node name="safehouseItem21" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
-layout_mode = 2
-
-[node name="safehouseItem22" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
-layout_mode = 2
-
-[node name="safehouseItem23" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
-layout_mode = 2
-
-[node name="safehouseItem24" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
-layout_mode = 2
-
-[node name="safehouseItem25" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
-layout_mode = 2
-
-[node name="safehouseItem26" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
-layout_mode = 2
-
-[node name="safehouseItem27" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
-layout_mode = 2
-
-[node name="safehouseItem28" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
-layout_mode = 2
-
-[node name="safehouseItem29" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
-layout_mode = 2
-
-[node name="safehouseItem30" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
-layout_mode = 2
-
-[node name="safehouseItem31" parent="itemContainer/categoryPanel/vBoxContainer/scrollContainer/itemContainer" instance=ExtResource("2_3feuy")]
-layout_mode = 2
-
-[node name="editorTools" type="MarginContainer" parent="."]
-offset_right = 610.0
+[node name="editorTools" type="MarginContainer" parent="control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -212.5
+offset_right = 212.5
 offset_bottom = 84.0
+grow_horizontal = 2
 
-[node name="panelContainer" type="PanelContainer" parent="editorTools"]
+[node name="panelContainer" type="PanelContainer" parent="control/editorTools"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="hBoxContainer" type="HBoxContainer" parent="control/editorTools/panelContainer"]
 layout_mode = 2
 
-[node name="hBoxContainer" type="HBoxContainer" parent="editorTools/panelContainer"]
-layout_mode = 2
-
-[node name="selectTool" type="Button" parent="editorTools/panelContainer/hBoxContainer"]
-layout_mode = 2
-mouse_default_cursor_shape = 2
-text = "Select Tool "
-
-[node name="translateTool" type="Button" parent="editorTools/panelContainer/hBoxContainer"]
+[node name="selectTool" type="Button" parent="control/editorTools/panelContainer/hBoxContainer"]
 layout_mode = 2
 mouse_default_cursor_shape = 2
-text = "Translate Tool
+text = "Select"
+icon = SubResource("AtlasTexture_4fona")
+
+[node name="translateTool" type="Button" parent="control/editorTools/panelContainer/hBoxContainer"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "Translate
 "
+icon = SubResource("AtlasTexture_qpr2n")
 
-[node name="rotateTool" type="Button" parent="editorTools/panelContainer/hBoxContainer"]
+[node name="rotateTool" type="Button" parent="control/editorTools/panelContainer/hBoxContainer"]
 layout_mode = 2
 mouse_default_cursor_shape = 2
-text = "Rotate Tool
+text = "Rotate
 "
+icon = SubResource("AtlasTexture_nbv6y")
 
-[node name="placeTool" type="Button" parent="editorTools/panelContainer/hBoxContainer"]
+[node name="placeTool" type="Button" parent="control/editorTools/panelContainer/hBoxContainer"]
 layout_mode = 2
 mouse_default_cursor_shape = 2
-text = "Place Tool
-"
+text = "Place"
+icon = SubResource("AtlasTexture_twrkh")
+
+[node name="Delete" type="Button" parent="control/editorTools/panelContainer/hBoxContainer"]
+layout_mode = 2
+text = "Delete"
+icon = SubResource("AtlasTexture_b6gap")
+
+[node name="control" type="Control" parent="control/editorTools/panelContainer/hBoxContainer"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+
+[node name="Undo" type="Button" parent="control/editorTools/panelContainer/hBoxContainer"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+text = "Undo"
+
+[node name="Redo" type="Button" parent="control/editorTools/panelContainer/hBoxContainer"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+text = "Redo"
+
+[node name="HistoryContainerPanel" type="PanelContainer" parent="control"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -192.0
+offset_bottom = 51.0
+grow_horizontal = 0
+
+[node name="vBoxContainer" type="VBoxContainer" parent="control/HistoryContainerPanel"]
+layout_mode = 2
+
+[node name="label" type="Label" parent="control/HistoryContainerPanel/vBoxContainer"]
+layout_mode = 2
+text = "History"
+
+[node name="hSeparator" type="HSeparator" parent="control/HistoryContainerPanel/vBoxContainer"]
+layout_mode = 2
+
+[node name="HistoryContainer" type="VBoxContainer" parent="control/HistoryContainerPanel/vBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
 
 [node name="gizmo3d" type="Node3D" parent="."]
 unique_name_in_owner = true
 script = ExtResource("3_3feuy")
 mode = 0
-metadata/_custom_type_script = ExtResource("3_3feuy")
+metadata/_custom_type_script = "uid://w0n6ndvsufm1"
 
-[connection signal="pressed" from="editorTools/panelContainer/hBoxContainer/selectTool" to="." method="setTool" binds= [0]]
-[connection signal="pressed" from="editorTools/panelContainer/hBoxContainer/translateTool" to="." method="setTool" binds= [1]]
-[connection signal="pressed" from="editorTools/panelContainer/hBoxContainer/rotateTool" to="." method="setTool" binds= [2]]
-[connection signal="pressed" from="editorTools/panelContainer/hBoxContainer/placeTool" to="." method="deselectObject"]
-[connection signal="pressed" from="editorTools/panelContainer/hBoxContainer/placeTool" to="." method="setTool" binds= [3]]
+[connection signal="pressed" from="control/editorTools/panelContainer/hBoxContainer/selectTool" to="." method="setTool" binds= [0]]
+[connection signal="pressed" from="control/editorTools/panelContainer/hBoxContainer/translateTool" to="." method="setTool" binds= [1]]
+[connection signal="pressed" from="control/editorTools/panelContainer/hBoxContainer/rotateTool" to="." method="setTool" binds= [2]]
+[connection signal="pressed" from="control/editorTools/panelContainer/hBoxContainer/placeTool" to="." method="deselectObject"]
+[connection signal="pressed" from="control/editorTools/panelContainer/hBoxContainer/placeTool" to="." method="setTool" binds= [3]]
+[connection signal="pressed" from="control/editorTools/panelContainer/hBoxContainer/Delete" to="." method="setTool" binds= [4]]
+[connection signal="pressed" from="control/editorTools/panelContainer/hBoxContainer/Undo" to="." method="undoChange"]
+[connection signal="pressed" from="control/editorTools/panelContainer/hBoxContainer/Redo" to="." method="redoChange"]

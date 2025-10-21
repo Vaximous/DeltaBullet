@@ -2,8 +2,8 @@
 
 [ext_resource type="PhysicsMaterial" uid="uid://cc5ltv4umlj8t" path="res://assets/resources/PhysicsMaterials/metal_physics_material.tres" id="1_4fs3w"]
 [ext_resource type="Script" uid="uid://cd4iini3uq6ci" path="res://assets/scripts/entities/propRigidBody/propRigidBody.gd" id="1_oqafm"]
-[ext_resource type="ArrayMesh" uid="uid://bdr2mj63exna2" path="res://assets/models/interior/interior-set/big-interior-set_FilingCabinetMesh.res" id="2_4fs3w"]
-[ext_resource type="ArrayMesh" uid="uid://buwbg2oxflb1q" path="res://assets/models/interior/interior-set/big-interior-set_FilingCabinetDrawerMesh.res" id="3_yfn2i"]
+[ext_resource type="ArrayMesh" uid="uid://bb24kisdmtfr4" path="res://assets/models/interior/interior-set/big-interior-set_FilingCabinetMesh.res" id="2_4fs3w"]
+[ext_resource type="ArrayMesh" uid="uid://c03vkjf8ipqxw" path="res://assets/models/interior/interior-set/big-interior-set_FilingCabinetDrawerMesh.res" id="3_yfn2i"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_k8s7e"]
 size = Vector3(0.24407959, 0.21008301, 0.4013672)
@@ -37,7 +37,6 @@ node_a = NodePath("../..")
 node_b = NodePath("DrawerRigidbody")
 linear_limit/upper_distance = 0.28
 linear_limit/lower_distance = 0.0
-metadata/_edit_lock_ = true
 
 [node name="DrawerRigidbody" type="RigidBody3D" parent="FilingCabinetRigidbody/Cabinet/DrawerSlider"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.060547113, 0.06097436, 0)

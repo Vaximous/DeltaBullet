@@ -48,7 +48,7 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -316.0
+offset_top = -220.0
 grow_horizontal = 2
 grow_vertical = 0
 size_flags_horizontal = 0
@@ -188,6 +188,14 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 
+[node name="gizmoMessageLabel" type="Label" parent="control"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 1320.0
+offset_top = 656.0
+offset_right = 1360.0
+offset_bottom = 679.0
+
 [node name="gizmo3d" type="Node3D" parent="."]
 unique_name_in_owner = true
 script = ExtResource("3_3feuy")
@@ -202,3 +210,5 @@ metadata/_custom_type_script = "uid://w0n6ndvsufm1"
 [connection signal="pressed" from="control/editorTools/panelContainer/hBoxContainer/Delete" to="." method="setTool" binds= [4]]
 [connection signal="pressed" from="control/editorTools/panelContainer/hBoxContainer/Undo" to="." method="undoChange"]
 [connection signal="pressed" from="control/editorTools/panelContainer/hBoxContainer/Redo" to="." method="redoChange"]
+[connection signal="begin_action" from="gizmo3d" to="." method="_on_gizmo_3d_begin_action"]
+[connection signal="end_action" from="gizmo3d" to="." method="_on_gizmo_3d_end_action"]

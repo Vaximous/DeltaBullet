@@ -64,6 +64,8 @@ var _editing: bool:
 	set(value):
 		_editing = value
 		if !value:
+			if not _message.is_empty():
+				end_action.emit()
 			_message = ""
 ## If the user is currently interacting with is gizmo.
 var editing: bool:
@@ -141,6 +143,9 @@ var translate_snap := 1.0
 ## Value to snap scaling to, if enabled.
 @export_range(0.0, 5.0)
 var scale_snap = .25
+
+signal begin_action(action_description : String)
+signal end_action
 
 var _move_gizmo: Array[ArrayMesh] = []
 var _move_plane_gizmo: Array[ArrayMesh] = []
@@ -1151,6 +1156,8 @@ func _update_transform(shift: bool) -> void:
 			var x := "%.3f" % smotion_snapped.x
 			var y := "%.3f" % smotion_snapped.y
 			var z := "%.3f" % smotion_snapped.z
+			if _message.is_empty():
+				begin_action.emit("Scale Item")
 			_message = TranslationServer.translate("Scaling") + ": (" + x + ", " + y + ", " + z + ")"
 			if slocal_coords:
 				smotion = _edit.original.basis.inverse() * smotion
@@ -1205,6 +1212,8 @@ func _update_transform(shift: bool) -> void:
 			var x := "%.3f" % tmotion_snapped.x
 			var y := "%.3f" % tmotion_snapped.y
 			var z := "%.3f" % tmotion_snapped.z
+			if _message.is_empty():
+				begin_action.emit("Translate Item")
 			_message = TranslationServer.translate("Translating") + ": (" + x + ", " + y + ", " + z + ")"
 			if tlocal_coords:
 				tmotion = transform.basis.inverse() * tmotion
@@ -1265,6 +1274,8 @@ func _update_transform(shift: bool) -> void:
 
 			angle = snappedf(rad_to_deg(angle), snap)
 			var d := "%.3f" % angle
+			if _message.is_empty():
+				begin_action.emit("Rotate Item")
 			_message = TranslationServer.translate("Rotating") + ": {" + d + "} " + TranslationServer.translate("degrees")
 			angle = deg_to_rad(angle)
 

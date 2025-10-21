@@ -5,7 +5,7 @@ const TOOL_TRANSLATE: int = 1
 const TOOL_ROTATE: int = 2
 const TOOL_PLACE: int = 3
 const TOOL_DELETE: int = 4
-const HISTORY_LIMIT : int = 30
+const HISTORY_LIMIT: int = 30
 const EditorInstancedNodeGroup := &"SafehoueEditorInstances"
 
 @export_enum("Select", "Translate", "Rotate", "Place") var selectedTool = 0
@@ -14,7 +14,13 @@ var selectedMaterial = preload("res://assets/materials/editor/editorSelected.tre
 var autoselectAfterPlace: bool = true
 var placedItems: Array
 var leaving: bool = false
-var selectedObject: Node3D
+var selectedObject: Node3D:
+	set(value):
+		if selectedObject is RigidBody3D:
+			selectedObject.freeze = false
+		selectedObject = value
+		if value is RigidBody3D:
+			value.freeze = true
 var selectedItem: PackedScene:
 	set(value):
 		selectedItem = value
@@ -38,6 +44,8 @@ var instanced_nodes: Array[Node]
 
 
 func _physics_process(delta: float) -> void:
+	%gizmoMessageLabel.text = %gizmo3d.message
+
 	if Input.is_action_pressed("gRightClick"):
 		if !gameManager.isMouseHidden() and !leaving:
 			gameManager.hideMouse()
@@ -173,12 +181,12 @@ func initEditor() -> void:
 
 func clearOrphanedAndExpiredNodes() -> void:
 	#Clear nodes that are instanced, but not tracked by any history.
-	var tracked : Array[Node]
-	for i in editRedo:
-		tracked.append_array(i.tracked_items.keys())
+	var tracked: Array[Node]
 	for i in editUndo:
-		tracked.append_array(i.tracked_items.keys())
-	var erase_list : Array
+		tracked.append_array(i.pre_action.keys())
+	for i in editRedo:
+		tracked.append_array(i.post_action.keys())
+	var erase_list: Array
 	for i in instanced_nodes:
 		if not is_instance_valid(i):
 			erase_list.append(i)
@@ -203,10 +211,14 @@ func addActionToUndoList(action_description: String) -> SafehouseEditState:
 	return state
 
 
+func commitLastActionToRedo() -> void:
+	editUndo.back().track_redo_state(get_tree().get_nodes_in_group(EditorInstancedNodeGroup))
+
+
 func refreshUndoRedoHistoryContainer() -> void:
 	Util.queueFreeNodeChildren(%HistoryContainer)
 
-	var title : Label = Label.new()
+	var title: Label = Label.new()
 	title.text = "Undo"
 	if not editUndo.is_empty():
 		%HistoryContainer.add_child(title)
@@ -214,7 +226,7 @@ func refreshUndoRedoHistoryContainer() -> void:
 
 	for i in editUndo:
 		#TODO : make this a button that you can press
-		var label : Label = Label.new()
+		var label: Label = Label.new()
 		label.text = i.action_description
 		%HistoryContainer.add_child(label)
 
@@ -226,7 +238,7 @@ func refreshUndoRedoHistoryContainer() -> void:
 
 	for i in editRedo:
 		#TODO : make this a button that you can press
-		var label : Label = Label.new()
+		var label: Label = Label.new()
 		label.text = i.action_description
 		%HistoryContainer.add_child(label)
 
@@ -239,7 +251,7 @@ func undoChange() -> void:
 	if revert == null:
 		return
 	editRedo.append(revert)
-	revert.revert()
+	revert.undo()
 	refreshUndoRedoHistoryContainer()
 
 
@@ -249,11 +261,11 @@ func redoChange() -> void:
 	if revert == null:
 		return
 	editUndo.append(revert)
-	revert.revert()
+	revert.redo()
 	refreshUndoRedoHistoryContainer()
 
 
-func deleteItem(item : Node) -> void:
+func deleteItem(item: Node) -> void:
 	%gizmo3d.clear_selection()
 	if selectedItem == item:
 		selectedItem = null
@@ -261,6 +273,8 @@ func deleteItem(item : Node) -> void:
 	addActionToUndoList("Delete Item")
 	#don't queue free from memory cause of undo/redo system
 	Util.removeNodeFromTree(item)
+	#commit to redo so when you redo it works
+	commitLastActionToRedo()
 	return
 
 
@@ -269,6 +283,7 @@ func setSelectedObject(object: Node3D) -> void:
 	selectedObject = object
 	if selectedTool == TOOL_DELETE:
 		deleteItem(object)
+		return
 	%gizmo3d.select(selectedObject)
 	for i in object.get_children():
 		if i is MeshInstance3D:
@@ -294,6 +309,7 @@ func placeItem(gPosition: Vector3) -> void:
 	instanced_nodes.append(inst)
 	if autoselectAfterPlace:
 		setSelectedObject(inst)
+	commitLastActionToRedo()
 
 
 class SafehouseEditState extends RefCounted:
@@ -314,12 +330,23 @@ class SafehouseEditState extends RefCounted:
 			"selectedTool": editor.selectedTool,
 		}
 
+		pre_action = create_state_dict(nodes)
+		return
+
+
+	func create_state_dict(nodes: Array[Node]) -> Dictionary[Node, Dictionary]:
+		var state_dict: Dictionary[Node, Dictionary] = {}
 		for n in nodes:
 			var prop_dict := {}
 			if n is Node3D:
 				prop_dict["global_transform"] = n.global_transform
-			pre_action[n] = prop_dict
-		return
+			state_dict[n] = prop_dict
+		return state_dict
+
+
+	func track_redo_state(nodes: Array[Node]) -> void:
+		if post_action.is_empty():
+			post_action = create_state_dict(nodes)
 
 
 	func undo() -> void:
@@ -341,7 +368,11 @@ class SafehouseEditState extends RefCounted:
 					print("Undo- Removing node %s, since it isn't tracked." % node)
 					node.get_parent().remove_child(node)
 
+
 	func redo() -> void:
+		if post_action.is_empty():
+			assert(false, "post_action array is empty, did you forget to set after '%s'?" % action_description)
+
 		for node: Node in editor.instanced_nodes:
 			#Node is tracked
 			if node in post_action:
@@ -357,6 +388,7 @@ class SafehouseEditState extends RefCounted:
 				if node.is_inside_tree():
 					print("Redo- Removing node %s, since it isn't tracked." % node)
 					node.get_parent().remove_child(node)
+
 
 #class SafehouseEditState extends RefCounted:
 	###Describe what you did- ie "rotated Chair"
@@ -378,3 +410,13 @@ class SafehouseEditState extends RefCounted:
 	#func revert() -> void:
 		#for key in revert_state.keys():
 			#item.set(key, revert_state[key])
+
+
+func _on_gizmo_3d_begin_action(action_description: String) -> void:
+	addActionToUndoList(action_description)
+	#pass # Replace with function body.
+
+
+func _on_gizmo_3d_end_action() -> void:
+	commitLastActionToRedo()
+	#pass # Replace with function body.

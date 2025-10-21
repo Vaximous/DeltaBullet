@@ -1,12 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://d0ya4qmyyuluh"]
+[gd_scene load_steps=8 format=3 uid="uid://d0ya4qmyyuluh"]
 
 [ext_resource type="PhysicsMaterial" uid="uid://cc5ltv4umlj8t" path="res://assets/resources/PhysicsMaterials/metal_physics_material.tres" id="1_4fs3w"]
 [ext_resource type="Script" uid="uid://cd4iini3uq6ci" path="res://assets/scripts/entities/propRigidBody/propRigidBody.gd" id="1_oqafm"]
 [ext_resource type="ArrayMesh" uid="uid://bb24kisdmtfr4" path="res://assets/models/interior/interior-set/big-interior-set_FilingCabinetMesh.res" id="2_4fs3w"]
-[ext_resource type="ArrayMesh" uid="uid://c03vkjf8ipqxw" path="res://assets/models/interior/interior-set/big-interior-set_FilingCabinetDrawerMesh.res" id="3_yfn2i"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_k8s7e"]
-size = Vector3(0.24407959, 0.21008301, 0.4013672)
+[ext_resource type="PackedScene" uid="uid://26pjqojls3yn" path="res://assets/models/props/DrawerRigidbody.tscn" id="4_4fs3w"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_00neg"]
 size = Vector3(0.38845214, 0.061279297, 0.46289063)
@@ -38,78 +35,35 @@ node_b = NodePath("DrawerRigidbody")
 linear_limit/upper_distance = 0.28
 linear_limit/lower_distance = 0.0
 
-[node name="DrawerRigidbody" type="RigidBody3D" parent="FilingCabinetRigidbody/Cabinet/DrawerSlider"]
+[node name="DrawerRigidbody" parent="FilingCabinetRigidbody/Cabinet/DrawerSlider" instance=ExtResource("4_4fs3w")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.060547113, 0.06097436, 0)
-mass = 2.0
-physics_material_override = ExtResource("1_4fs3w")
-script = ExtResource("1_oqafm")
-metadata/_custom_type_script = "uid://cd4iini3uq6ci"
-
-[node name="Drawer" type="MeshInstance3D" parent="FilingCabinetRigidbody/Cabinet/DrawerSlider/DrawerRigidbody"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.060547113, -0.06097436, 0)
-mesh = ExtResource("3_yfn2i")
-skeleton = NodePath("../../../../..")
-
-[node name="collisionShape3d" type="CollisionShape3D" parent="FilingCabinetRigidbody/Cabinet/DrawerSlider/DrawerRigidbody"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.043914795, 0.057402074, 0)
-shape = SubResource("BoxShape3D_k8s7e")
 
 [node name="DrawerSlider2" type="SliderJoint3D" parent="FilingCabinetRigidbody/Cabinet"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.060547113, 0.2857067, 0)
 node_a = NodePath("../..")
-node_b = NodePath("DrawerRigidbody")
 linear_limit/upper_distance = 0.28
 linear_limit/lower_distance = 0.0
 
-[node name="DrawerRigidbody" type="RigidBody3D" parent="FilingCabinetRigidbody/Cabinet/DrawerSlider2"]
-mass = 2.0
-physics_material_override = ExtResource("1_4fs3w")
-
-[node name="Drawer" type="MeshInstance3D" parent="FilingCabinetRigidbody/Cabinet/DrawerSlider2/DrawerRigidbody"]
-mesh = ExtResource("3_yfn2i")
-skeleton = NodePath("../../../../..")
-
-[node name="collisionShape3d" type="CollisionShape3D" parent="FilingCabinetRigidbody/Cabinet/DrawerSlider2/DrawerRigidbody"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1026001, 0.057402074, 0)
-shape = SubResource("BoxShape3D_k8s7e")
+[node name="DrawerRigidbody" parent="FilingCabinetRigidbody/Cabinet/DrawerSlider2" instance=ExtResource("4_4fs3w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.060547113, 0.06097436, 0)
 
 [node name="DrawerSlider3" type="SliderJoint3D" parent="FilingCabinetRigidbody/Cabinet"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.060547113, 0.51095206, 0)
 node_a = NodePath("../..")
-node_b = NodePath("DrawerRigidbody")
 linear_limit/upper_distance = 0.28
 linear_limit/lower_distance = 0.0
 
-[node name="DrawerRigidbody" type="RigidBody3D" parent="FilingCabinetRigidbody/Cabinet/DrawerSlider3"]
-mass = 2.0
-physics_material_override = ExtResource("1_4fs3w")
-
-[node name="Drawer" type="MeshInstance3D" parent="FilingCabinetRigidbody/Cabinet/DrawerSlider3/DrawerRigidbody"]
-mesh = ExtResource("3_yfn2i")
-skeleton = NodePath("../../../../..")
-
-[node name="collisionShape3d" type="CollisionShape3D" parent="FilingCabinetRigidbody/Cabinet/DrawerSlider3/DrawerRigidbody"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1026001, 0.057402074, 0)
-shape = SubResource("BoxShape3D_k8s7e")
+[node name="DrawerRigidbody" parent="FilingCabinetRigidbody/Cabinet/DrawerSlider3" instance=ExtResource("4_4fs3w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.060547113, 0.06097436, 0)
 
 [node name="DrawerSlider4" type="SliderJoint3D" parent="FilingCabinetRigidbody/Cabinet"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.060547113, 0.73629993, 0)
 node_a = NodePath("../..")
-node_b = NodePath("DrawerRigidbody")
 linear_limit/upper_distance = 0.28
 linear_limit/lower_distance = 0.0
 
-[node name="DrawerRigidbody" type="RigidBody3D" parent="FilingCabinetRigidbody/Cabinet/DrawerSlider4"]
-mass = 2.0
-physics_material_override = ExtResource("1_4fs3w")
-
-[node name="Drawer" type="MeshInstance3D" parent="FilingCabinetRigidbody/Cabinet/DrawerSlider4/DrawerRigidbody"]
-mesh = ExtResource("3_yfn2i")
-skeleton = NodePath("../../../../..")
-
-[node name="collisionShape3d" type="CollisionShape3D" parent="FilingCabinetRigidbody/Cabinet/DrawerSlider4/DrawerRigidbody"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1026001, 0.057402074, 0)
-shape = SubResource("BoxShape3D_k8s7e")
+[node name="DrawerRigidbody" parent="FilingCabinetRigidbody/Cabinet/DrawerSlider4" instance=ExtResource("4_4fs3w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.060547113, 0.06097436, 0)
 
 [node name="Bottom" type="CollisionShape3D" parent="FilingCabinetRigidbody"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.032287583, 0.030639648, 0)

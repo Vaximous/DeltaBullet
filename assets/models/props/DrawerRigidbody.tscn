@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://26pjqojls3yn"]
+
+[ext_resource type="PhysicsMaterial" uid="uid://cc5ltv4umlj8t" path="res://assets/resources/PhysicsMaterials/metal_physics_material.tres" id="1_3o67j"]
+[ext_resource type="Script" uid="uid://cd4iini3uq6ci" path="res://assets/scripts/entities/propRigidBody/propRigidBody.gd" id="2_hfuyj"]
+[ext_resource type="ArrayMesh" uid="uid://c03vkjf8ipqxw" path="res://assets/models/interior/interior-set/big-interior-set_FilingCabinetDrawerMesh.res" id="3_uvduw"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_k8s7e"]
+size = Vector3(0.34667206, 0.21008301, 0.4013672)
+
+[node name="DrawerRigidbody" type="RigidBody3D"]
+mass = 2.0
+physics_material_override = ExtResource("1_3o67j")
+script = ExtResource("2_hfuyj")
+metadata/_custom_type_script = "uid://cd4iini3uq6ci"
+
+[node name="Drawer" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.060547113, -0.06097436, 0)
+mesh = ExtResource("3_uvduw")
+skeleton = NodePath("../../../../..")
+
+[node name="collisionShape3d" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.11079788, 0.057402074, 0)
+shape = SubResource("BoxShape3D_k8s7e")

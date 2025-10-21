@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://07fn7hxwjnq2"]
+
+[ext_resource type="Texture2D" uid="uid://ch0ujslxhf54g" path="res://assets/textures/Developer_Textures/Orange/texture_01.png" id="1_klmxt"]
+[ext_resource type="ArrayMesh" uid="uid://cesfkjct1bdbe" path="res://assets/models/interior/interior-set/big-interior-set_Cube.res" id="2_iy3nl"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jhafe"]
+albedo_color = Color(0.8196546, 0.8196545, 0.8196545, 1)
+albedo_texture = ExtResource("1_klmxt")
+uv1_triplanar = true
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_mbyse"]
+data = PackedVector3Array(-0.0403, 0, 0.91929996, -0.0403, 2.0298998, 0, -0.0403, 2.0298998, 0.91929996, -0.0403, 0, 0.91929996, -0.0403, 0, 0, -0.0403, 2.0298998, 0, -0.0403, 0, 0, 0, 2.0298998, 0, -0.0403, 2.0298998, 0, -0.0403, 0, 0, 0, 0, 0, 0, 2.0298998, 0, 0, 0, 0, 0, 2.0298998, 0.91929996, 0, 2.0298998, 0, 0, 0, 0, 0, 0, 0.91929996, 0, 2.0298998, 0.91929996, 0, 0, 0.91929996, -0.0403, 2.0298998, 0.91929996, 0, 2.0298998, 0.91929996, 0, 0, 0.91929996, -0.0403, 0, 0.91929996, -0.0403, 2.0298998, 0.91929996, -0.0403, 0, 0, 0, 0, 0.91929996, 0, 0, 0, -0.0403, 0, 0, -0.0403, 0, 0.91929996, 0, 0, 0.91929996, 0, 2.0298998, 0, -0.0403, 2.0298998, 0.91929996, -0.0403, 2.0298998, 0, 0, 2.0298998, 0, 0, 2.0298998, 0.91929996, -0.0403, 2.0298998, 0.91929996)
+
+[node name="DoorReference" type="Node3D"]
+
+[node name="bigInteriorSetCube" type="MeshInstance3D" parent="."]
+top_level = true
+material_override = SubResource("StandardMaterial3D_jhafe")
+mesh = ExtResource("2_iy3nl")
+skeleton = NodePath("")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="bigInteriorSetCube"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="bigInteriorSetCube/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_mbyse")

@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://dswx6p4ntsa8"]
+
+[ext_resource type="ArrayMesh" uid="uid://65q30p6tuq3h" path="res://assets/models/interior/interior-set/big-interior-set_InteriorWallStandardDoorframeMesh_002.res" id="1_ms3um"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_341dr"]
+data = PackedVector3Array(0.0779, 2.1072, -0.6534, 0.0779, 3, 0.6534, 0.0779, 3, -0.6534, 0.0779, 2.1072, -0.6534, 0.0779, 2.1072, 0.6534, 0.0779, 3, 0.6534, -0.0779, 2.1072, -0.6534, -0.0779, 3, 0.6534, -0.0779, 2.1072, 0.6534, -0.0779, 2.1072, -0.6534, -0.0779, 3, -0.6534, -0.0779, 3, 0.6534, 0.0779, 2.1072, -0.6534, -0.0779, 3, -0.6534, -0.0779, 2.1072, -0.6534, 0.0779, 2.1072, -0.6534, 0.0779, 3, -0.6534, -0.0779, 3, -0.6534, 0.0779, 2.1072, -0.6534, -0.0779, 2.1072, 0.6534, 0.0779, 2.1072, 0.6534, 0.0779, 2.1072, -0.6534, -0.0779, 2.1072, -0.6534, -0.0779, 2.1072, 0.6534, 0.0779, 2.1072, 0.6534, -0.0779, 3, 0.6534, 0.0779, 3, 0.6534, 0.0779, 2.1072, 0.6534, -0.0779, 2.1072, 0.6534, -0.0779, 3, 0.6534)
+
+[node name="bigInteriorSetInteriorWallStandardDoorframeMesh002" type="MeshInstance3D"]
+mesh = ExtResource("1_ms3um")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_341dr")

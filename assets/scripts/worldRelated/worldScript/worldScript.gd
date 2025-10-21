@@ -22,7 +22,7 @@ class_name WorldScene
 	set(value):
 		worldData = value
 	get:
-		if worldData == null:
+		if worldData == null and not Engine.is_editor_hint():
 			return preload("res://assets/resources/default_worlddata.tres").duplicate()
 		return worldData
 

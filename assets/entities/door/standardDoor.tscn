@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://cn0q7g7huptl"]
+
+[ext_resource type="PackedScene" uid="uid://36wgm1ed6j3p" path="res://assets/entities/door/doorBase.tscn" id="1_tifjs"]
+[ext_resource type="ArrayMesh" uid="uid://b08udimemwxod" path="res://assets/models/interior/interior-set/big-interior-set_Cube.res" id="2_nn7bi"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_nmm38"]
+points = PackedVector3Array(0, 2.0298667, 0.9193024, -0.040309593, 2.0298667, 0.9193024, 0, 0, 0.9193024, 0, 2.0298667, 0, -0.040309593, 2.0298667, 0, -0.040309593, 0, 0.9193024, 0, 0, 0, -0.040309593, 0, 0)
+
+[node name="doorBase" instance=ExtResource("1_tifjs")]
+
+[node name="collisionShape3d" parent="doorMesh/interactionDoor" index="0"]
+shape = SubResource("ConvexPolygonShape3D_nmm38")
+
+[node name="meshInstance3d" type="MeshInstance3D" parent="doorMesh" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.0153784, 0, 0, 0)
+mesh = ExtResource("2_nn7bi")

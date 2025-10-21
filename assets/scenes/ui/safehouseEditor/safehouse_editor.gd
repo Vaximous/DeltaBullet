@@ -157,12 +157,9 @@ func clearItemPanel() -> void:
 
 func deselectObject() -> void:
 	if is_instance_valid(selectedObject):
-		for i in selectedObject.get_children():
+		for i in Util.get_children_recursive(selectedObject):
 			if i is MeshInstance3D:
 				i.material_override = null
-				for ichild in i.get_children():
-					if ichild is MeshInstance3D:
-						ichild.material_override = null
 	%gizmo3d.clear_selection()
 	selectedObject = null
 
@@ -285,18 +282,10 @@ func setSelectedObject(object: Node3D) -> void:
 		deleteItem(object)
 		return
 	%gizmo3d.select(selectedObject)
-	for i in object.get_children():
+	for i in Util.get_children_recursive(object):
 		if i is MeshInstance3D:
 			i.material_override = selectedMaterial
-			for ichild in i.get_children():
-				if ichild is MeshInstance3D:
-					ichild.material_override = selectedMaterial
 
-	#if event.is_action_pressed("gEditorMouseToggle"):
-		#if Input.mouse_mode == Input.MOUSE_MODE_HIDDEN or Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-			#gameManager.showMouse()
-		#else:
-			#gameManager.hideMouse()
 
 
 func placeItem(gPosition: Vector3) -> void:
@@ -310,6 +299,20 @@ func placeItem(gPosition: Vector3) -> void:
 	if autoselectAfterPlace:
 		setSelectedObject(inst)
 	commitLastActionToRedo()
+
+	#func revert() -> void:
+		#for key in revert_state.keys():
+			#item.set(key, revert_state[key])
+
+
+func _on_gizmo_3d_begin_action(action_description: String) -> void:
+	addActionToUndoList(action_description)
+	#pass # Replace with function body.
+
+
+func _on_gizmo_3d_end_action() -> void:
+	commitLastActionToRedo()
+	#pass # Replace with function body.
 
 
 class SafehouseEditState extends RefCounted:
@@ -389,7 +392,6 @@ class SafehouseEditState extends RefCounted:
 					print("Redo- Removing node %s, since it isn't tracked." % node)
 					node.get_parent().remove_child(node)
 
-
 #class SafehouseEditState extends RefCounted:
 	###Describe what you did- ie "rotated Chair"
 	#var action_description: String
@@ -407,16 +409,3 @@ class SafehouseEditState extends RefCounted:
 				#revert_state[p] = item.get(p)
 #
 #
-	#func revert() -> void:
-		#for key in revert_state.keys():
-			#item.set(key, revert_state[key])
-
-
-func _on_gizmo_3d_begin_action(action_description: String) -> void:
-	addActionToUndoList(action_description)
-	#pass # Replace with function body.
-
-
-func _on_gizmo_3d_end_action() -> void:
-	commitLastActionToRedo()
-	#pass # Replace with function body.

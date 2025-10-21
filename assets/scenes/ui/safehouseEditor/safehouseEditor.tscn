@@ -1,25 +1,80 @@
-[gd_scene load_steps=13 format=3 uid="uid://euaxty1qfugn"]
+[gd_scene load_steps=31 format=3 uid="uid://euaxty1qfugn"]
 
 [ext_resource type="Script" uid="uid://ch735riwicvap" path="res://assets/scenes/ui/safehouseEditor/safehouse_editor.gd" id="1_8svem"]
 [ext_resource type="Theme" uid="uid://dao2ag1gbfjb2" path="res://assets/resources/themes/safehouseEditorTheme.tres" id="2_3feuy"]
 [ext_resource type="Script" uid="uid://w0n6ndvsufm1" path="res://addons/Gizmo3DScript/gizmo3D.gd" id="3_3feuy"]
 [ext_resource type="Texture2D" uid="uid://cqyqr8yty5af4" path="res://assets/textures/ui/customization/safehouse_editor_button_atlas.png" id="3_4fyhw"]
+[ext_resource type="FontFile" uid="uid://b3s7umd01feyu" path="res://assets/fonts/Carthage Pro Regular.ttf" id="4_4fona"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_8svem"]
 shadow_size = 6
 shadow_color = Color(0, 0, 0, 0.717647)
 
+[sub_resource type="InputEventKey" id="InputEventKey_qpr2n"]
+device = -1
+keycode = 49
+unicode = 49
+
+[sub_resource type="Shortcut" id="Shortcut_nbv6y"]
+events = [SubResource("InputEventKey_qpr2n")]
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_4fona"]
 atlas = ExtResource("3_4fyhw")
 region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="LabelSettings" id="LabelSettings_twrkh"]
+font = ExtResource("4_4fona")
+font_size = 12
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="InputEventKey" id="InputEventKey_b6gap"]
+device = -1
+keycode = 50
+unicode = 50
+
+[sub_resource type="Shortcut" id="Shortcut_q4ecc"]
+events = [SubResource("InputEventKey_b6gap")]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qpr2n"]
 atlas = ExtResource("3_4fyhw")
 region = Rect2(0, 32, 32, 32)
 
+[sub_resource type="InputEventKey" id="InputEventKey_28ls7"]
+device = -1
+keycode = 51
+unicode = 51
+
+[sub_resource type="Shortcut" id="Shortcut_t6h6r"]
+events = [SubResource("InputEventKey_28ls7")]
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_nbv6y"]
 atlas = ExtResource("3_4fyhw")
 region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="InputEventKey" id="InputEventKey_tsjge"]
+device = -1
+keycode = 52
+unicode = 52
+
+[sub_resource type="Shortcut" id="Shortcut_ta8dt"]
+events = [SubResource("InputEventKey_tsjge")]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vdil6"]
+atlas = ExtResource("3_4fyhw")
+region = Rect2(0, 224, 32, 32)
+
+[sub_resource type="InputEventKey" id="InputEventKey_tqjiw"]
+device = -1
+keycode = 53
+unicode = 53
+
+[sub_resource type="Shortcut" id="Shortcut_dcg3k"]
+events = [SubResource("InputEventKey_tqjiw")]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3tfh3"]
+atlas = ExtResource("3_4fyhw")
+region = Rect2(0, 256, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_twrkh"]
 atlas = ExtResource("3_4fyhw")
@@ -29,9 +84,25 @@ region = Rect2(0, 96, 32, 32)
 atlas = ExtResource("3_4fyhw")
 region = Rect2(0, 128, 32, 32)
 
+[sub_resource type="InputEventKey" id="InputEventKey_vt4hx"]
+device = -1
+ctrl_pressed = true
+keycode = 90
+
+[sub_resource type="Shortcut" id="Shortcut_x1om3"]
+events = [SubResource("InputEventKey_vt4hx")]
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_4fyhw"]
 atlas = ExtResource("3_4fyhw")
 region = Rect2(0, 160, 32, 32)
+
+[sub_resource type="InputEventKey" id="InputEventKey_eabw5"]
+device = -1
+ctrl_pressed = true
+keycode = 89
+
+[sub_resource type="Shortcut" id="Shortcut_7l7cg"]
+events = [SubResource("InputEventKey_eabw5")]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q4ecc"]
 atlas = ExtResource("3_4fyhw")
@@ -50,43 +121,39 @@ grow_vertical = 2
 mouse_filter = 2
 theme = ExtResource("2_3feuy")
 
-[node name="itemContainer" type="MarginContainer" parent="control"]
+[node name="BottomDock" type="HBoxContainer" parent="control"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -220.0
+offset_top = -196.0
 grow_horizontal = 2
 grow_vertical = 0
-size_flags_horizontal = 0
-theme_override_constants/margin_left = 0
-theme_override_constants/margin_top = 0
-theme_override_constants/margin_right = 0
-theme_override_constants/margin_bottom = 0
 
-[node name="categoryPanel" type="PanelContainer" parent="control/itemContainer"]
+[node name="categoryPanel" type="PanelContainer" parent="control/BottomDock"]
 clip_contents = true
 layout_mode = 2
+size_flags_horizontal = 3
 mouse_filter = 1
 
-[node name="Inventory" type="VBoxContainer" parent="control/itemContainer/categoryPanel"]
+[node name="Inventory" type="VBoxContainer" parent="control/BottomDock/categoryPanel"]
 layout_mode = 2
 
-[node name="label" type="Label" parent="control/itemContainer/categoryPanel/Inventory"]
+[node name="label" type="Label" parent="control/BottomDock/categoryPanel/Inventory"]
 layout_mode = 2
 text = "Inventory"
 label_settings = SubResource("LabelSettings_8svem")
 horizontal_alignment = 1
 
-[node name="categoryContainer" type="PanelContainer" parent="control/itemContainer/categoryPanel/Inventory"]
+[node name="categoryContainer" type="PanelContainer" parent="control/BottomDock/categoryPanel/Inventory"]
 layout_mode = 2
 
-[node name="hBoxContainer" type="HBoxContainer" parent="control/itemContainer/categoryPanel/Inventory/categoryContainer"]
+[node name="hBoxContainer" type="HBoxContainer" parent="control/BottomDock/categoryPanel/Inventory/categoryContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="menuButton" type="MenuButton" parent="control/itemContainer/categoryPanel/Inventory/categoryContainer/hBoxContainer"]
+[node name="menuButton" type="MenuButton" parent="control/BottomDock/categoryPanel/Inventory/categoryContainer/hBoxContainer"]
 custom_minimum_size = Vector2(256, 0)
 layout_mode = 2
 text = "Living Room"
@@ -100,23 +167,36 @@ popup/item_2/id = 2
 popup/item_3/text = "Kitchen"
 popup/item_3/id = 3
 
-[node name="scrollContainer" type="ScrollContainer" parent="control/itemContainer/categoryPanel/Inventory"]
+[node name="scrollContainer" type="ScrollContainer" parent="control/BottomDock/categoryPanel/Inventory"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="itemContainer" type="GridContainer" parent="control/itemContainer/categoryPanel/Inventory/scrollContainer"]
+[node name="itemContainer" type="HFlowContainer" parent="control/BottomDock/categoryPanel/Inventory/scrollContainer"]
 unique_name_in_owner = true
 clip_contents = true
 layout_mode = 2
-columns = 3
+
+[node name="CurrentSelectPanel" type="PanelContainer" parent="control/BottomDock"]
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="vBoxContainer" type="VBoxContainer" parent="control/BottomDock/CurrentSelectPanel"]
+layout_mode = 2
+
+[node name="label" type="Label" parent="control/BottomDock/CurrentSelectPanel/vBoxContainer"]
+layout_mode = 2
+text = "Selected"
+
+[node name="hSeparator" type="HSeparator" parent="control/BottomDock/CurrentSelectPanel/vBoxContainer"]
+layout_mode = 2
 
 [node name="editorTools" type="MarginContainer" parent="control"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -212.5
-offset_right = 212.5
+offset_left = -262.0
+offset_right = 262.0
 offset_bottom = 84.0
 grow_horizontal = 2
 
@@ -130,65 +210,296 @@ layout_mode = 2
 [node name="selectTool" type="Button" parent="control/editorTools/panelContainer/hBoxContainer"]
 custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
+tooltip_text = "Select
+Select an item
+Hotkey : [1]"
 mouse_default_cursor_shape = 2
+shortcut = SubResource("Shortcut_nbv6y")
+shortcut_in_tooltip = false
 icon = SubResource("AtlasTexture_4fona")
 icon_alignment = 1
+
+[node name="Keybind" type="Label" parent="control/editorTools/panelContainer/hBoxContainer/selectTool"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -16.0
+offset_top = -21.0
+offset_right = -2.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 1
+text = "1"
+label_settings = SubResource("LabelSettings_twrkh")
+horizontal_alignment = 2
+vertical_alignment = 2
 
 [node name="translateTool" type="Button" parent="control/editorTools/panelContainer/hBoxContainer"]
 custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
+tooltip_text = "Move
+Move the selected item
+Hotkey : [2]"
 mouse_default_cursor_shape = 2
+shortcut = SubResource("Shortcut_q4ecc")
+shortcut_in_tooltip = false
 text = "
 "
 icon = SubResource("AtlasTexture_qpr2n")
 icon_alignment = 1
 
+[node name="Keybind" type="Label" parent="control/editorTools/panelContainer/hBoxContainer/translateTool"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -16.0
+offset_top = -21.0
+offset_right = -2.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 1
+text = "2"
+label_settings = SubResource("LabelSettings_twrkh")
+horizontal_alignment = 2
+vertical_alignment = 2
+
 [node name="rotateTool" type="Button" parent="control/editorTools/panelContainer/hBoxContainer"]
 custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
+tooltip_text = "Rotate
+Rotate  the selected item
+Hotkey : [3]"
 mouse_default_cursor_shape = 2
+shortcut = SubResource("Shortcut_t6h6r")
+shortcut_in_tooltip = false
 text = "
 "
 icon = SubResource("AtlasTexture_nbv6y")
 icon_alignment = 1
 
-[node name="placeTool" type="Button" parent="control/editorTools/panelContainer/hBoxContainer"]
+[node name="Keybind" type="Label" parent="control/editorTools/panelContainer/hBoxContainer/rotateTool"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -16.0
+offset_top = -21.0
+offset_right = -2.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 1
+text = "3"
+label_settings = SubResource("LabelSettings_twrkh")
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="editTool" type="Button" parent="control/editorTools/panelContainer/hBoxContainer"]
 custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
+tooltip_text = "Edit
+Edit an items properties, such as Color.
+Hotkey : [4]"
 mouse_default_cursor_shape = 2
+shortcut = SubResource("Shortcut_ta8dt")
+shortcut_in_tooltip = false
+text = "
+"
+icon = SubResource("AtlasTexture_vdil6")
+icon_alignment = 1
+
+[node name="Keybind" type="Label" parent="control/editorTools/panelContainer/hBoxContainer/editTool"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -16.0
+offset_top = -21.0
+offset_right = -2.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 1
+text = "4"
+label_settings = SubResource("LabelSettings_twrkh")
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="wireTool" type="Button" parent="control/editorTools/panelContainer/hBoxContainer"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+tooltip_text = "Wire
+Connect wires to switches for powering stuff.
+Hotkey : [5]"
+mouse_default_cursor_shape = 2
+shortcut = SubResource("Shortcut_dcg3k")
+shortcut_in_tooltip = false
+text = "
+"
+icon = SubResource("AtlasTexture_3tfh3")
+icon_alignment = 1
+
+[node name="Keybind" type="Label" parent="control/editorTools/panelContainer/hBoxContainer/wireTool"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -16.0
+offset_top = -21.0
+offset_right = -2.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 1
+text = "5"
+label_settings = SubResource("LabelSettings_twrkh")
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="placeTool" type="Button" parent="control/editorTools/panelContainer/hBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+tooltip_text = "Place
+Place new items 
+Hotkey : [6]"
+mouse_default_cursor_shape = 2
+shortcut_in_tooltip = false
 icon = SubResource("AtlasTexture_twrkh")
 icon_alignment = 1
 
-[node name="Delete" type="Button" parent="control/editorTools/panelContainer/hBoxContainer"]
+[node name="Keybind" type="Label" parent="control/editorTools/panelContainer/hBoxContainer/placeTool"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -16.0
+offset_top = -21.0
+offset_right = -2.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 1
+text = "6"
+label_settings = SubResource("LabelSettings_twrkh")
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="DeleteButton" type="Button" parent="control/editorTools/panelContainer/hBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
+tooltip_text = "Delete
+Delete items with a single click
+Hotkey : [7]"
+shortcut_in_tooltip = false
 icon = SubResource("AtlasTexture_b6gap")
 icon_alignment = 1
 
-[node name="control" type="Control" parent="control/editorTools/panelContainer/hBoxContainer"]
-custom_minimum_size = Vector2(32, 0)
-layout_mode = 2
+[node name="Keybind" type="Label" parent="control/editorTools/panelContainer/hBoxContainer/DeleteButton"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -16.0
+offset_top = -21.0
+offset_right = -2.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 1
+text = "7"
+label_settings = SubResource("LabelSettings_twrkh")
+horizontal_alignment = 2
+vertical_alignment = 2
 
-[node name="Undo" type="Button" parent="control/editorTools/panelContainer/hBoxContainer"]
+[node name="control" type="Control" parent="control/editorTools/panelContainer/hBoxContainer"]
 custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
+
+[node name="UndoButton" type="Button" parent="control/editorTools/panelContainer/hBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+tooltip_text = "Undo
+UNDO the last action
+Hotkey : [Ctrl + Z]"
+shortcut = SubResource("Shortcut_x1om3")
 icon = SubResource("AtlasTexture_4fyhw")
 icon_alignment = 1
 
-[node name="Redo" type="Button" parent="control/editorTools/panelContainer/hBoxContainer"]
+[node name="Keybind" type="Label" parent="control/editorTools/panelContainer/hBoxContainer/UndoButton"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -16.0
+offset_top = -21.0
+offset_right = -2.0
+grow_horizontal = 0
+grow_vertical = 0
+tooltip_text = "Undo
+UNDO the last action
+"
+mouse_filter = 1
+text = "CTRL+Z"
+label_settings = SubResource("LabelSettings_twrkh")
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="RedoButton" type="Button" parent="control/editorTools/panelContainer/hBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
+tooltip_text = "Redo
+REDO the last action
+Hotkey : [Ctrl + Y]"
+shortcut = SubResource("Shortcut_7l7cg")
+shortcut_in_tooltip = false
 icon = SubResource("AtlasTexture_q4ecc")
 icon_alignment = 1
 
+[node name="Keybind" type="Label" parent="control/editorTools/panelContainer/hBoxContainer/RedoButton"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -16.0
+offset_top = -21.0
+offset_right = -2.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 1
+text = "CTRL+Y"
+label_settings = SubResource("LabelSettings_twrkh")
+horizontal_alignment = 2
+vertical_alignment = 2
+
 [node name="HistoryContainerPanel" type="PanelContainer" parent="control"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -192.0
-offset_bottom = 51.0
+offset_top = 136.0
+offset_bottom = 187.0
 grow_horizontal = 0
 
 [node name="vBoxContainer" type="VBoxContainer" parent="control/HistoryContainerPanel"]
@@ -201,7 +512,10 @@ text = "History"
 [node name="hSeparator" type="HSeparator" parent="control/HistoryContainerPanel/vBoxContainer"]
 layout_mode = 2
 
-[node name="HistoryContainer" type="VBoxContainer" parent="control/HistoryContainerPanel/vBoxContainer"]
+[node name="scrollContainer" type="ScrollContainer" parent="control/HistoryContainerPanel/vBoxContainer"]
+layout_mode = 2
+
+[node name="HistoryContainer" type="VBoxContainer" parent="control/HistoryContainerPanel/vBoxContainer/scrollContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 
@@ -222,10 +536,12 @@ metadata/_custom_type_script = "uid://w0n6ndvsufm1"
 [connection signal="pressed" from="control/editorTools/panelContainer/hBoxContainer/selectTool" to="." method="setTool" binds= [0]]
 [connection signal="pressed" from="control/editorTools/panelContainer/hBoxContainer/translateTool" to="." method="setTool" binds= [1]]
 [connection signal="pressed" from="control/editorTools/panelContainer/hBoxContainer/rotateTool" to="." method="setTool" binds= [2]]
+[connection signal="pressed" from="control/editorTools/panelContainer/hBoxContainer/editTool" to="." method="setTool" binds= [2]]
+[connection signal="pressed" from="control/editorTools/panelContainer/hBoxContainer/wireTool" to="." method="setTool" binds= [2]]
 [connection signal="pressed" from="control/editorTools/panelContainer/hBoxContainer/placeTool" to="." method="deselectObject"]
 [connection signal="pressed" from="control/editorTools/panelContainer/hBoxContainer/placeTool" to="." method="setTool" binds= [3]]
-[connection signal="pressed" from="control/editorTools/panelContainer/hBoxContainer/Delete" to="." method="setTool" binds= [4]]
-[connection signal="pressed" from="control/editorTools/panelContainer/hBoxContainer/Undo" to="." method="undoChange"]
-[connection signal="pressed" from="control/editorTools/panelContainer/hBoxContainer/Redo" to="." method="redoChange"]
+[connection signal="pressed" from="control/editorTools/panelContainer/hBoxContainer/DeleteButton" to="." method="deleteItem"]
+[connection signal="pressed" from="control/editorTools/panelContainer/hBoxContainer/UndoButton" to="." method="undoChange"]
+[connection signal="pressed" from="control/editorTools/panelContainer/hBoxContainer/RedoButton" to="." method="redoChange"]
 [connection signal="begin_action" from="gizmo3d" to="." method="_on_gizmo_3d_begin_action"]
 [connection signal="end_action" from="gizmo3d" to="." method="_on_gizmo_3d_end_action"]

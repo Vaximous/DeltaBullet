@@ -139,7 +139,8 @@ func setTool(value: int) -> void:
 	#if value != selectedTool:
 		#addActionToUndoList("Change Tool")
 	selectedTool = value
-	%gizmo3d.mode = value
+	if value != 4:
+		%gizmo3d.mode = value
 
 
 func createItemButtons() -> void:
@@ -205,6 +206,7 @@ func addActionToUndoList(action_description: String) -> SafehouseEditState:
 		editUndo.pop_front()
 	clearOrphanedAndExpiredNodes()
 	refreshUndoRedoHistoryContainer()
+
 	return state
 
 
@@ -262,10 +264,14 @@ func redoChange() -> void:
 	refreshUndoRedoHistoryContainer()
 
 
-func deleteItem(item: Node) -> void:
+func deleteItem(item: Node = null) -> void:
+	if item == null:
+		item = selectedObject
 	%gizmo3d.clear_selection()
-	if selectedItem == item:
-		selectedItem = null
+	if selectedObject == item:
+		selectedObject = null
+	if item == null:
+		return
 
 	addActionToUndoList("Delete Item")
 	#don't queue free from memory cause of undo/redo system

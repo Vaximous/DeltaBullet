@@ -65,6 +65,7 @@ Console="*res://assets/scenes/menu/dev/Console.tscn"
 
 [debug]
 
+settings/stdout/print_fps=true
 settings/physics_interpolation/enable_warnings=false
 file_logging/enable_file_logging=true
 file_logging/max_log_files=10

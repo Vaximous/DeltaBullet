@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://husij7bsed4n"]
+
+[ext_resource type="Script" uid="uid://da68hl2dvutsg" path="res://assets/entities/lights/spotlight_with_glow.gd" id="1_ayon5"]
+
+[node name="SpotlightWithGlow" type="Node3D"]
+script = ExtResource("1_ayon5")
+spotlight_light_range = null
+spotlight_light_attenuation = null
+metadata/_edit_group_ = true
+
+[node name="spotLight3d" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+
+[node name="omniLight3d" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4056443, 0)

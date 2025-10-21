@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://bufl3b4q8pfgj"]
+
+[ext_resource type="Script" uid="uid://dcdk1gtq2wlu2" path="res://assets/components/light_flicker_component.gd" id="1_hp5x8"]
+
+[node name="lightFlickerComponent" type="Node"]
+script = ExtResource("1_hp5x8")
+property_path = "light_energy"

@@ -287,6 +287,7 @@ mesh = SubResource("ArrayMesh_7fjf0")
 
 [node name="GeoCombiner" type="CSGCombiner3D" parent="Geometry" index="2"]
 layers = 0
+use_collision = true
 
 [node name="Walls" type="CSGCombiner3D" parent="Geometry/GeoCombiner" index="0"]
 layers = 0
@@ -529,7 +530,7 @@ spotlight_light_range = 8.0
 spotlight_light_attenuation = 1.0
 spotlight_light_angle = 80.0
 spotlight_light_color = Color(0.92168134, 1, 1, 1)
-spotlight_light_energy = 0.9407931
+spotlight_light_energy = 0.84652865
 spotlight_light_angle_attenuation = 0.23325719
 spotlight_cast_shadow = true
 
@@ -550,7 +551,7 @@ spotlight_light_range = 8.0
 spotlight_light_attenuation = 1.0
 spotlight_light_angle = 80.0
 spotlight_light_color = Color(0.92168134, 1, 1, 1)
-spotlight_light_energy = 0.96543103
+spotlight_light_energy = 0.9976086
 spotlight_light_angle_attenuation = 0.23325719
 spotlight_cast_shadow = true
 
@@ -571,7 +572,7 @@ spotlight_light_range = 8.0
 spotlight_light_attenuation = 1.0
 spotlight_light_angle = 80.0
 spotlight_light_color = Color(0.92168134, 1, 1, 1)
-spotlight_light_energy = 0.9128366
+spotlight_light_energy = 0.7987096
 spotlight_light_angle_attenuation = 0.23325719
 spotlight_cast_shadow = true
 
@@ -592,7 +593,7 @@ spotlight_light_range = 8.0
 spotlight_light_attenuation = 1.0
 spotlight_light_angle = 80.0
 spotlight_light_color = Color(0.92168134, 1, 1, 1)
-spotlight_light_energy = 0.8217133
+spotlight_light_energy = 0.8882821
 spotlight_light_angle_attenuation = 0.23325719
 spotlight_cast_shadow = true
 
@@ -613,7 +614,7 @@ spotlight_light_range = 8.0
 spotlight_light_attenuation = 1.0
 spotlight_light_angle = 80.0
 spotlight_light_color = Color(0.92168134, 1, 1, 1)
-spotlight_light_energy = 0.98096675
+spotlight_light_energy = 0.79119813
 spotlight_light_angle_attenuation = 0.23325719
 spotlight_cast_shadow = true
 
@@ -634,7 +635,7 @@ spotlight_light_range = 8.0
 spotlight_light_attenuation = 1.0
 spotlight_light_angle = 80.0
 spotlight_light_color = Color(0.92168134, 1, 1, 1)
-spotlight_light_energy = 0.88884795
+spotlight_light_energy = 0.8338933
 spotlight_light_angle_attenuation = 0.23325719
 spotlight_cast_shadow = true
 
@@ -655,7 +656,7 @@ spotlight_light_range = 8.0
 spotlight_light_attenuation = 1.0
 spotlight_light_angle = 80.0
 spotlight_light_color = Color(0.92168134, 1, 1, 1)
-spotlight_light_energy = 0.99907833
+spotlight_light_energy = 0.79867226
 spotlight_light_angle_attenuation = 0.23325719
 spotlight_cast_shadow = true
 
@@ -676,7 +677,7 @@ spotlight_light_range = 8.0
 spotlight_light_attenuation = 1.0
 spotlight_light_angle = 73.82
 spotlight_light_color = Color(0.92168134, 1, 1, 1)
-spotlight_light_energy = 0.9884802
+spotlight_light_energy = 0.9127375
 spotlight_light_angle_attenuation = 0.23325719
 spotlight_cast_shadow = true
 

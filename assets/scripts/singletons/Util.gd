@@ -11,6 +11,10 @@ func doesFileExist(filePath: String) -> bool:
 		return false
 
 
+func random_vector2() -> Vector2:
+	return Vector2(randf()-0.5, randf()-0.5) * 2.0
+
+
 #Remove directory
 func rmdir(directory: String) -> void:
 	for file in DirAccess.get_files_at(directory):

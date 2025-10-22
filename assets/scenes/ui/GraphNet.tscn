@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://d2rdaw28mcn7k"]
+
+[ext_resource type="Script" uid="uid://b17l25rs6e0o7" path="res://assets/scenes/ui/graph_net.gd" id="1_iysn4"]
+
+[node name="GraphNet" type="Node2D"]
+position = Vector2(632, 312)
+script = ExtResource("1_iysn4")
+
+[node name="label" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "graph test"

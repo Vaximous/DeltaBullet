@@ -25,6 +25,8 @@ var _flicker_value: float = 0.0:
 
 
 func _process(delta: float) -> void:
+	if Engine.is_editor_hint() and not ProjectSettings.get_setting("smackneck/dev/light_flicker_preview"):
+		return
 	var _property_path: NodePath = NodePath(property_path).get_as_property_path()
 	var add = randf_range(-flicker_delta, flicker_delta)
 	if flicker_multiply_by_deltatime:

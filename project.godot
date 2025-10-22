@@ -408,6 +408,10 @@ anti_aliasing/quality/screen_space_aa=1
 occlusion_culling/use_occlusion_culling=true
 environment/defaults/default_environment="uid://dnig6jq4e6pjs"
 
+[smackneck]
+
+dev/light_flicker_preview=true
+
 [steam]
 
 initialization/app_id=2689810

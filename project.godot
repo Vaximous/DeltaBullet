@@ -410,7 +410,7 @@ environment/defaults/default_environment="uid://dnig6jq4e6pjs"
 
 [smackneck]
 
-dev/light_flicker_preview=true
+dev/light_flicker_preview=false
 
 [steam]
 

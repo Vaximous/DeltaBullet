@@ -13,4 +13,6 @@ shape = SubResource("ConvexPolygonShape3D_nmm38")
 
 [node name="meshInstance3d" type="MeshInstance3D" parent="doorMesh" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.0153784, 0, 0, 0)
+gi_mode = 2
+gi_lightmap_texel_scale = 0.5
 mesh = ExtResource("2_nn7bi")

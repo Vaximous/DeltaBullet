@@ -829,7 +829,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27, 0, 11)
 scale_factor = Vector3(1, 0, 1)
 
 [node name="gpuParticles3d" type="GPUParticles3D" parent="Misc/Particles/cameraFollow" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.7565845, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.055014133, 0)
 material_override = SubResource("StandardMaterial3D_dwuvn")
 amount = 100
 lifetime = 3.0

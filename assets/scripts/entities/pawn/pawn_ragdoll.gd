@@ -242,7 +242,7 @@ func _on_remove_timer_timeout()-> void:
 
 func doRagdollHeadshot(pawn:BasePawn = null, dismember : bool = false, shotvel:Vector3 = Vector3.ONE,hitPos: Vector3 = Vector3.ZERO,sound:bool = true)-> void:
 	for x in randi_range(2,7):
-		var gib = gameManager.createGib(headBone.global_position)
+		var gib = gameManager.createGib(PoolingManager.GIB_TYPE.FLESH,headBone.global_position)
 		if is_instance_valid(pawn):
 			gib.velocity += pawn.velocity
 	var destroyedHeads : Array = [preload("res://assets/models/pawn/male/headDestroyed1.tres"),preload("res://assets/models/pawn/male/headDestroyed2.tres"),preload("res://assets/models/pawn/male/headDestroyed3.tres")]

@@ -465,17 +465,6 @@ var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 ##Pawn Parts
 @onready var headHitbox: Hitbox = $BoneAttatchments/Neck/Hitbox
 @onready var head: MeshInstance3D = $Mesh/MaleSkeleton/Skeleton3D/MaleHead
-@onready var upperChest: MeshInstance3D = $Mesh/MaleSkeleton/Skeleton3D/Male_UpperBody
-@onready var shoulders: MeshInstance3D = $Mesh/MaleSkeleton/Skeleton3D/Male_Shoulders
-@onready var leftUpperArm: MeshInstance3D = $Mesh/MaleSkeleton/Skeleton3D/Male_LeftArm
-@onready var rightUpperArm: MeshInstance3D = $Mesh/MaleSkeleton/Skeleton3D/Male_RightArm
-@onready var leftForearm: MeshInstance3D = $Mesh/MaleSkeleton/Skeleton3D/Male_LeftForearm
-@onready var rightForearm: MeshInstance3D = $Mesh/MaleSkeleton/Skeleton3D/Male_RightForearm
-@onready var lowerBody: MeshInstance3D = $Mesh/MaleSkeleton/Skeleton3D/Male_LowerBody
-@onready var leftUpperLeg: MeshInstance3D = $Mesh/MaleSkeleton/Skeleton3D/Male_LeftThigh
-@onready var rightUpperLeg: MeshInstance3D = $Mesh/MaleSkeleton/Skeleton3D/Male_RightThigh
-@onready var leftLowerLeg: MeshInstance3D = $Mesh/MaleSkeleton/Skeleton3D/Male_LeftKnee
-@onready var rightLowerLeg: MeshInstance3D = $Mesh/MaleSkeleton/Skeleton3D/Male_RightKnee
 @onready var maleBody: MeshInstance3D = $Mesh/MaleSkeleton/Skeleton3D/maleBody
 @onready var aimBlockRaycast: RayCast3D = $Mesh/aimDetect
 @onready var floorcheck: RayCast3D = $floorCast

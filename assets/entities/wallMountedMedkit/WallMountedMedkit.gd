@@ -17,8 +17,8 @@ func _process(delta)->void:
 func healPawn(pawn:BasePawn)->void:
 	if !beenUsed:
 		if pawn:
-			if pawn.healthComponent.health < 100:
-				pawn.healthComponent.setHealth(100)
+			if pawn.healthComponent.health < pawn.get_meta(&"spawnHP"):
+				pawn.healthComponent.addHealth(pawn.get_meta(&"spawnHP") - pawn.healthComponent.health)
 				if pawn.attachedCam:
 					pawn.attachedCam.fireVignette(0.9,Color.DARK_OLIVE_GREEN)
 					pawn.attachedCam.fireRecoil(0,randf_range(5.15,7.8),0,true)
@@ -26,6 +26,7 @@ func healPawn(pawn:BasePawn)->void:
 					gameManager.activeCamera.hud.gameNotifications.add_child(_notification)
 					_notification.doNotification(null,"Medkit", "Health fully recovered.")
 					gameManager.playSound(gameManager.getGlobalSound("healSound"))
+					pawn.playGrabAnimation()
 					#useSound.play()
 				remove_from_group("Interactable")
 				beenUsed = true

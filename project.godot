@@ -61,6 +61,7 @@ gameState="*res://assets/scripts/singletons/gameState.gd"
 SmackneckClient="*res://assets/scripts/SmackneckClient/SmackneckClient.gd"
 Util="*res://assets/scripts/singletons/Util.gd"
 DevTools="*res://assets/scripts/devtools/dev_tools.tscn"
+PoolingManager="*res://assets/scripts/singletons/pooling_manager.gd"
 Console="*res://assets/scenes/menu/dev/Console.tscn"
 
 [debug]

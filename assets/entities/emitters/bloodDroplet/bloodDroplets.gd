@@ -1,9 +1,6 @@
 class_name BloodDroplet
 extends CharacterBody3D
 
-const framesRecalculation: int = 5
-
-var framesSinceRecalc: int = 0
 var meshDraw = ImmediateMesh.new()
 var tween: Tween
 var alive: bool = false:
@@ -34,7 +31,7 @@ func _physics_process(delta: float) -> void:
 	if mesh:
 		mesh.position = global_position
 		mesh.mesh.size.x = velocity.length() * 0.005
-		if not (norm).cross(global_position + velocity).is_zero_approx():
+		if !(norm).cross(global_position + velocity).is_zero_approx():
 			mesh.look_at(global_position + velocity, norm, true)
 		mesh.global_position = global_position
 

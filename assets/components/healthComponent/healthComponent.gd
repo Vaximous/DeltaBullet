@@ -22,6 +22,12 @@ func _ready()->void:
 	if is_instance_valid(get_owner()):
 		componentOwner = get_owner()
 
+func addHealth(value:float)->float:
+	if is_instance_valid(self) and is_instance_valid(componentOwner):
+		healthChanged.emit(value)
+		health += value
+		healthCheck()
+	return health
 
 func setHealth(value:float)->float:
 	if is_instance_valid(self) and is_instance_valid(componentOwner):

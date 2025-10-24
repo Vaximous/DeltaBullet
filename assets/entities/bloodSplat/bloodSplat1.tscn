@@ -124,5 +124,3 @@ volume_db = -18.0
 max_distance = 10.0
 bus = &"Sounds"
 attenuation_filter_cutoff_hz = 20500.0
-
-[node name="visibleOnScreenEnabler3d" type="VisibleOnScreenEnabler3D" parent="."]

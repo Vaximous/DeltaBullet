@@ -110,6 +110,7 @@ func spawnPawn(forceParent : Node = null, _params : PawnSpawnParameters = null) 
 					pawn.set_meta(&"teams", [&"Player",&"Friendly"])
 					pawn.set_meta(&"isPlayer", true)
 					pawn.set_meta(&"canBeStaggered", false)
+					pawn.set_meta(&"spawnHP", pawn.healthComponent.defaultHP)
 					gameManager.allPawns.append(pawn)
 					if gameManager.temporaryPawnInfo.size() <= 0:
 						if gameManager.currentSave != "" or gameManager.currentSave != " " or gameManager.currentSave != null:

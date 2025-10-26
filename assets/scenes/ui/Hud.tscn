@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://birbjoai58xb7" path="res://assets/textures/crosshair/crosshair001.png" id="4_uhc5s"]
 [ext_resource type="AudioStream" uid="uid://d3eqn61hfgwuf" path="res://assets/sounds/playerhurt/playerhurtambience.wav" id="5_dhgxm"]
 [ext_resource type="Texture2D" uid="uid://bkhy36pmg4nfi" path="res://assets/textures/ui/hpBar.png" id="6_0pnxc"]
-[ext_resource type="Texture2D" uid="uid://dnujlo6y6vcq4" path="res://assets/textures/crosshair/crosshair006.png" id="6_kfu1x"]
+[ext_resource type="Texture2D" uid="uid://bymv7nt6e8ghx" path="res://assets/textures/crosshair/crosshair179.png" id="6_kfu1x"]
 [ext_resource type="Texture2D" uid="uid://btlv87lcgekb7" path="res://assets/textures/ui/healthbar.png" id="7_mtxcq"]
 [ext_resource type="Texture2D" uid="uid://btse3nqgw3085" path="res://assets/textures/ui/ammoBar.png" id="8_x878b"]
 [ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="9_bxaeg"]

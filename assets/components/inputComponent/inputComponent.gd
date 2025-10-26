@@ -3,7 +3,11 @@ extends Component
 
 #Variables
 ##Enables the movement keys to be emitted
-var movementEnabled: bool = true
+var movementEnabled: bool = true:
+	set(value):
+		movementEnabled = value
+		if !movementEnabled:
+			inputDir = Vector3.ZERO
 ##Enables the mouse action buttons to be emitted
 var mouseActionsEnabled: bool = true
 var mouseButtonInput: InputEventMouseButton = InputEventMouseButton.new()

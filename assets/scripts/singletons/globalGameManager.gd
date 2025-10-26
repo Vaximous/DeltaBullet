@@ -854,6 +854,9 @@ func initCustomization(pawn: BasePawn) -> void:
 	removeShop()
 	removeCustomization()
 	removeWorldMap()
+	for i in playerPawns:
+		i.inputComponent.movementEnabled = false
+		i.inputComponent.mouseActionsEnabled = false
 	gameManager.pauseMenu.canPause = false
 	var _customizationUI = customizationUI.instantiate()
 	_customizationUI.add_to_group(&"customizationUI")
@@ -877,6 +880,9 @@ func removeCustomization() -> void:
 	for i in get_children():
 		if i.is_in_group(&"customizationUI"):
 			i.queue_free()
+	for i in playerPawns:
+		i.inputComponent.movementEnabled = true
+		i.inputComponent.mouseActionsEnabled = true
 	#gameManager.pauseMenu.canPause = true
 
 

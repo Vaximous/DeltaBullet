@@ -1,4 +1,4 @@
-[gd_scene load_steps=65 format=3 uid="uid://c63b0ewnfkf4n"]
+[gd_scene load_steps=66 format=3 uid="uid://c63b0ewnfkf4n"]
 
 [ext_resource type="Script" uid="uid://t733jevi3esu" path="res://assets/scenes/ui/mapOverview/map/map.gd" id="1_rkk0n"]
 [ext_resource type="Environment" uid="uid://dyvr8n1vauu0k" path="res://assets/scenes/ui/mapOverview/mapEnvironment.tres" id="2_m7rdm"]
@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://guuwxb1s6c86" path="res://assets/scenes/worlds/debug/waveSpawnerTest.tscn" id="14_3gufb"]
 [ext_resource type="PackedScene" uid="uid://dpeqrnidy6scn" path="res://assets/scenes/worlds/debug/debugWorld.tscn" id="15_d7cw3"]
 [ext_resource type="PackedScene" uid="uid://1uuvtqrmyqus" path="res://assets/scenes/worlds/activeragdolltest/activeragdolltest.tscn" id="16_lunbr"]
+[ext_resource type="PackedScene" uid="uid://dlbbothh8l8p7" path="res://assets/scenes/worlds/corridorLevelTest/CorridorLevelTest.tscn" id="17_d7cw3"]
 [ext_resource type="PackedScene" uid="uid://b883b6dhrfe8q" path="res://assets/scenes/worlds/testscene2/testscene2.tscn" id="17_rtr4q"]
 [ext_resource type="PackedScene" uid="uid://cgunekse1vc0y" path="res://assets/scenes/worlds/debug/modeltest/DebugWorldTest.tscn" id="18_lmyb2"]
 [ext_resource type="AudioStream" uid="uid://dccqaa0buyajj" path="res://assets/sounds/ambient/690009__matth3wc04__warehouse-ambience-wind-and-such.mp3" id="18_mp7cn"]
@@ -725,6 +726,49 @@ frame = 2
 [node name="navPoint" parent="areaNodes/debugstreet" index="7"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3738346, 0, 0)
 
+[node name="debugstreet2" parent="areaNodes" instance=ExtResource("4_fvi35")]
+transform = Transform3D(0.5728614, 0, 0.8196522, 0, 1, 0, -0.8196522, 0, 0.5728614, 18.50695, 1.5363638, -13.835965)
+locationName = "Corridor Level Test"
+iconColor = Color(0.53977627, 0, 0.12294883, 1)
+markerIcon = 2
+travelScene = ExtResource("17_d7cw3")
+hasCollectibleNotes = true
+hasExploration = true
+hasCollectibleItems = true
+
+[node name="pingParticle" parent="areaNodes/debugstreet2" index="2"]
+transform = Transform3D(8.765902, 0, 0, 0, 1, 0, 0, 0, 5.6881104, 0, 0, 0)
+process_material = SubResource("ParticleProcessMaterial_m7rdm")
+
+[node name="collisionShape3d" parent="areaNodes/debugstreet2/area3d" index="0"]
+transform = Transform3D(1.0000029, 0, 0, 0, 1, 0, 0, 0, 1.0000029, 0, 0, 0)
+shape = SubResource("BoxShape3D_riqnu")
+
+[node name="positionReference" parent="areaNodes/debugstreet2" index="4"]
+transform = Transform3D(8.765902, 0, 0, 0, 15.891914, 0, 0, 0, 5.6881104, 0, 0, 0)
+
+[node name="visualHolder" parent="areaNodes/debugstreet2" index="5"]
+transform = Transform3D(1.000004, 0, -5.066395e-07, 0, 1, 0, 5.066395e-07, 0, 1.000004, 0, 0, 0)
+
+[node name="cornerUpLeft" parent="areaNodes/debugstreet2/visualHolder" index="0"]
+transform = Transform3D(0, 0, 0.99999976, 0, 1, 0, -0.99999976, 0, 0, 4.3829308, 0, -2.8440447)
+
+[node name="cornerUpRight" parent="areaNodes/debugstreet2/visualHolder" index="1"]
+transform = Transform3D(0.99999976, 0, 0, 0, 1, 0, 0, 0, 0.99999976, 4.3829346, 0, 2.8440418)
+
+[node name="cornerBottomRight" parent="areaNodes/debugstreet2/visualHolder" index="2"]
+transform = Transform3D(1.1324883e-06, 0, -1.0000021, 0, 1, 0, 1.0000021, 0, 1.1324883e-06, -4.3829308, 0, 2.8440475)
+
+[node name="cornerBottomLeft" parent="areaNodes/debugstreet2/visualHolder" index="3"]
+transform = Transform3D(-1.0000021, 0, -1.1324883e-06, 0, 1, 0, 1.1324883e-06, 0, -1.0000021, -4.3829327, 0, -2.84404)
+
+[node name="icon" parent="areaNodes/debugstreet2" index="6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.891914, 0)
+frame = 2
+
+[node name="navPoint" parent="areaNodes/debugstreet2" index="7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3738346, 0, 0)
+
 [node name="testRewardProperty" parent="areaNodes" instance=ExtResource("4_fvi35")]
 transform = Transform3D(0.7904651, 0, -0.6125069, 0, 1, 0, 0.6125069, 0, 0.7904651, 33.86205, 1.5156269, -12.5924635)
 locationName = "Test Reward Property"
@@ -753,7 +797,7 @@ transform = Transform3D(8.8421955, 0, 0, 0, 14.30909, 0, 0, 0, 9.158997, 0, 0, 0
 transform = Transform3D(1.0000033, 0, 0, 0, 1, 0, 0, 0, 1.0000033, 0, 0, 0)
 
 [node name="cornerUpLeft" parent="areaNodes/testRewardProperty/visualHolder" index="0"]
-transform = Transform3D(0, 0, 0.99999964, 0, 1, 0, -0.99999964, 0, 0, 4.4210873, 0, -4.579485)
+transform = Transform3D(0, 0, 0.99999964, 0, 1, 0, -0.99999964, 0, 0, 4.4210854, 0, -4.579485)
 
 [node name="cornerUpRight" parent="areaNodes/testRewardProperty/visualHolder" index="1"]
 transform = Transform3D(1.0000014, 0, -8.940697e-08, 0, 1, 0, 8.940697e-08, 0, 1.0000014, 4.4210854, 0, 4.579483)
@@ -963,5 +1007,6 @@ draw_pass_1 = SubResource("PlaneMesh_drlcm")
 [editable path="areaNodes/interiortest"]
 [editable path="areaNodes/activeragdolltest"]
 [editable path="areaNodes/debugstreet"]
+[editable path="areaNodes/debugstreet2"]
 [editable path="areaNodes/testRewardProperty"]
 [editable path="areaNodes/testRewardProperty2"]

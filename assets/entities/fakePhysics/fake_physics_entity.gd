@@ -1,21 +1,34 @@
 class_name FakePhysicsEntity
 extends CharacterBody3D
-signal bounced
+signal bounced(p,norm)
 var tween : Tween
 @export_category("Fake Physics Entity")
 @export var mesh : MeshInstance3D
+@export var impact_particles : Array[GPUParticles3D]
 @export var collisionSounds : Array[AudioStreamPlayer3D]
 @export var continuousCollision : bool = false
+var decalTimer: float = 0.5
 var rotational_velocity : Vector3
 var first_bounce = true
 var colNormal : Vector3
+var alive : bool = false
 
 func _enter_tree() -> void:
+	set_physics_process(false)
+	set_process(false)
 	await get_tree().process_frame
-	gameManager.registerPhysicsEntity(self)
+	#gameManager.registerPhysicsEntity(self)
+	rotation = Vector3(randf_range(-360, 360), randf_range(-360, 360), randf_range(-360, 360))
+	get_tree().create_timer(UserConfig.game_decal_remove_time).timeout.connect(removeGib)
+
+func playImpactParticles()->void:
+	for i in impact_particles:
+		if is_instance_valid(i):
+			i.restart()
 
 func _ready() -> void:
 	#gameManager.beginCleanup()
+	alive = false
 	if mesh:
 		mesh.transparency = 0
 		mesh.show()
@@ -25,21 +38,37 @@ func _ready() -> void:
 		mesh.top_level = true
 	rotational_velocity = Vector3(randf_range(-PI, PI), randf_range(-PI, PI), randf_range(-PI, PI)) * 10.0
 
+func reset(pposition: Vector3, vel: Vector3):
+	global_position = pposition
+	velocity = vel
+	alive = true
+
 func playAudios()->void:
 	for i in collisionSounds:
 		i.play()
 
 func _physics_process(delta: float) -> void:
+	if not alive:
+		return
+
 	if Engine.get_physics_frames() % 2 == 0:
 		if mesh:
 			mesh.position = global_position
 			mesh.rotation += rotational_velocity * delta
 		velocity += get_gravity() * delta * 3
 		#print(get_gravity())
+
+		if decalTimer > 0:
+			decalTimer -= delta
+		if decalTimer <= 0:
+			decalTimer = 0
+
 		var col = move_and_collide(velocity * delta)
 		if col is KinematicCollision3D:
 			colNormal = col.get_normal()
-			bounced.emit()
+			playImpactParticles()
+			bounced.emit(global_position,colNormal)
+			decalTimer = 0.5
 			if first_bounce and !continuousCollision:
 				playAudios()
 				first_bounce = false
@@ -50,14 +79,16 @@ func _physics_process(delta: float) -> void:
 			velocity *= 0.35
 			rotational_velocity *= randf_range(0.5, 1.2)
 			if velocity.length() < 1.0:
+				alive = false
 				set_physics_process(false)
 				#print("Stap")
 
-		if tween:
-			tween.kill()
-		tween = create_tween()
-		tween.parallel().tween_method(meshInterpRot,mesh.rotation,rotational_velocity * delta,0.05).set_trans(Tween.TRANS_LINEAR)
-		tween.parallel().tween_method(meshInterpPos,mesh.position,global_position,0.05).set_trans(Tween.TRANS_LINEAR)
+		if is_instance_valid(mesh):
+			if tween:
+				tween.kill()
+			tween = create_tween()
+			tween.parallel().tween_method(meshInterpRot,mesh.rotation,rotational_velocity * delta,0.05).set_trans(Tween.TRANS_LINEAR)
+			tween.parallel().tween_method(meshInterpPos,mesh.position,global_position,0.05).set_trans(Tween.TRANS_LINEAR)
 
 func meshInterpRot(rot:Vector3)->void:
 	if mesh:
@@ -66,6 +97,15 @@ func meshInterpRot(rot:Vector3)->void:
 func meshInterpPos(pos:Vector3)->void:
 	if mesh:
 		mesh.position = pos
+
+func removeGib()->void:
+	alive = false
+	hide()
+	set_physics_process(false)
+
+func set_gib_mesh(_mesh:Mesh)->void:
+	if mesh:
+		mesh.mesh = _mesh
 
 func fadeInMesh()->void:
 	mesh.transparency = 1

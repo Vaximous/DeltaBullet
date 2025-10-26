@@ -8,14 +8,6 @@ signal freeOrphans
 signal worldLoaded
 #endregion
 
-#region Pooling
-#BloodDroplet Pooling
-const MAX_DROPLETS = 64
-var droplet_pool: Array[BloodDroplet] = []
-var droplet_index := 0
-
-#endregion
-
 #region Constants
 # Constants
 const defaultTweenSpeed: float = 0.25
@@ -52,6 +44,10 @@ var menuScenes = [
 	preload("res://assets/scenes/menu/menuScenes/menuScene2.tscn"),
 	preload("res://assets/scenes/menu/menuScenes/menuScene3.tscn")
 ]
+var gib_meshes : Dictionary = {
+	"flesh_gib_1": preload("res://assets/models/gore/gib1.res"),
+	"flesh_gib_2": preload("res://assets/models/gore/gib2.tres")
+}
 var defaultPawnTreeRoot = load("res://assets/entities/pawnEntity/pawnEntityTree.tres")
 var worldMapUI: PackedScene = preload("res://assets/scenes/ui/mapOverview/mapScreen.tscn")
 var customizationUI: PackedScene = preload("res://assets/scenes/ui/customization/customizationUI.tscn")
@@ -110,7 +106,11 @@ var allPawns: Array[BasePawn]
 var saveOverwrite: String
 var currentSave: String
 var dialogueCamLerpSpeed: float = 5.0
-var world: WorldScene
+var world: WorldScene:
+	set(value):
+		world = value
+		if is_instance_valid(world):
+			PoolingManager.initAllPools(world)
 var pauseMenu: PauseMenu
 #endregion
 
@@ -123,7 +123,8 @@ var isMultiplayerGame: bool = false
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	SmackneckClient.masterserver_connected.connect(sm_PushGame)
-	worldLoaded.connect(initDropletPool)
+	#worldLoaded.connect(PoolingManager.initAllPools.bind(gameManager.world))
+	#worldLoaded.connect(PoolingManager.initGibletPool)
 	worldLoaded.connect(giveModifierToPlayers)
 	UserConfig.configs_updated.connect(cleanupChecker)
 	add_child(soundPlayer)
@@ -175,6 +176,7 @@ func _process(delta: float) -> void:
 	#DisplayServer.window_set_title(ProjectSettings.get_setting("application/config/name"))
 #endregion
 
+
 #region Gameplay Effects
 func pawnKillSlowMo()->void:
 	if gameManager.getCurrentPawn() and !gameManager.bulletTime:
@@ -209,17 +211,7 @@ func freeOrphanNodes():
 	freeOrphans.emit()
 #endregion
 
-#region Pooling Funcs
-func initDropletPool()->void:
-	droplet_pool.clear()
-	for i in MAX_DROPLETS:
-		var d : BloodDroplet = preload("res://assets/entities/emitters/bloodDroplet/bloodDrop.tscn").instantiate()
-		d.hide()
-		if is_instance_valid(world):
-			world.pooledObjects.add_child(d)
-			droplet_pool.append(d)
 
-#endregion
 
 #region Phone Calls
 func queuePhoneCall(dialogue: ActorDialogue) -> void:
@@ -623,8 +615,8 @@ func updateGraphics(env:WorldEnvironment)->void:
 #region Blood Effects
 func createDroplet(position: Vector3, velocity: Vector3 = Vector3.ONE, amount: int = 1, normal: Vector3 = Vector3.UP, allowRandomFlip: bool = true):
 	if is_instance_valid(world):
-		var d = droplet_pool[droplet_index]
-		droplet_index = (droplet_index + 1) % MAX_DROPLETS
+		var d = PoolingManager.droplet_pool[PoolingManager.droplet_index]
+		PoolingManager.droplet_index = (PoolingManager.droplet_index + 1) % PoolingManager.MAX_DROPLETS
 		if allowRandomFlip:
 			var flipVel = [true, false].pick_random()
 			if !flipVel:
@@ -634,21 +626,6 @@ func createDroplet(position: Vector3, velocity: Vector3 = Vector3.ONE, amount: i
 		else:
 			d.reset(position, velocity, normal)
 		d.show()
-		#OLD CODE
-		#for i in amount:
-			##var flipVel = [true,false].pick_random()
-			#var droplet: BloodDroplet = bloodDrop.instantiate()
-			#droplet.norm = normal
-			#world.worldParticles.add_child(droplet)
-			#droplet.global_position = position
-			#if allowRandomFlip:
-				#var flipVel = [true, false].pick_random()
-				#if !flipVel:
-					#droplet.velocity += Vector3(velocity.x * randf_range(-1, 2), velocity.y * randf_range(-1, 2), velocity.z * randf_range(-1, 2))
-				#else:
-					#droplet.velocity += -Vector3(velocity.x * randf_range(-1, 2), velocity.y * randf_range(-1, 2), velocity.z * randf_range(-1, 2))
-			#else:
-				#droplet.velocity += Vector3(velocity.x * randf_range(1, 3), velocity.y * randf_range(1, 3), velocity.z * randf_range(1, 3))
 #endregion
 
 #region Event Signals
@@ -1100,15 +1077,23 @@ func create_surface_transform(origin: Vector3, incoming_vector: Vector3, surface
 #endregion
 
 #region Gibs
-func createGib(position: Vector3, velocity: Vector3 = Vector3.ONE) -> FakePhysicsEntity:
-	var gib = [preload("res://assets/entities/gore/dismemberGib.tscn"), preload("res://assets/entities/gore/dismemberGib2.tscn")].pick_random()
-	var inst = gib.instantiate()
-	inst.velocity.y = velocity.y * randf_range(5, 16)
-	inst.velocity.x = velocity.x * randf_range(-2, 2)
-	inst.velocity.z = velocity.z * randf_range(-2, 2)
-	gameManager.world.add_child(inst)
-	inst.global_position = position
-	return inst
+func createGib(gib_type:PoolingManager.GIB_TYPE,position: Vector3, velocity: Vector3 = Vector3.ONE) -> FakePhysicsEntity:
+	if is_instance_valid(world):
+		var d = PoolingManager.gib_pool[PoolingManager.gib_index]
+		PoolingManager.gib_index = (PoolingManager.gib_index + 1) % PoolingManager.MAX_GIBS
+		d.reset(position, velocity)
+		d.velocity.y = velocity.y * randf_range(5, 16)
+		d.velocity.x = velocity.x * randf_range(-2, 2)
+		d.velocity.z = velocity.z * randf_range(-2, 2)
+		match gib_type:
+			PoolingManager.GIB_TYPE.FLESH:
+				if d.bounced.is_connected(gameManager.createSplat):
+					d.bounced.disconnect(gameManager.createSplat)
+				d.bounced.connect(gameManager.createSplat)
+				d.set_gib_mesh(gib_meshes[["flesh_gib_1","flesh_gib_2"].pick_random()])
+		d.show()
+		return d
+	return
 #endregion
 
 #region Player Visibility

@@ -1,7 +1,7 @@
 [gd_resource type="ArrayMesh" load_steps=3 format=4 uid="uid://dll2o7yv4tm2t"]
 
 [ext_resource type="Material" uid="uid://cmkj35g6w356q" path="res://assets/materials/pawnMaterial/MALE.tres" id="1_3p50h"]
-[ext_resource type="Material" uid="uid://bj43s2j62gbf4" path="res://assets/entities/gore/dismemberGibMaterial.tres" id="2_nviqw"]
+[ext_resource type="Material" uid="uid://bj43s2j62gbf4" path="res://assets/entities/gib/dismemberGibMaterial.tres" id="2_nviqw"]
 
 [resource]
 resource_name = "MaleBody_Rigging_AnimsB3_New_MaleHead_002"

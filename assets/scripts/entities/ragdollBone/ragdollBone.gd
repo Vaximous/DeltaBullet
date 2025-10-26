@@ -316,7 +316,7 @@ func createActiveRagdollJoint()->void:
 
 func doPulverizeEffect()->void:
 	if canBeDismembered and !has_meta("exploded"):
-		var gib = gameManager.createGib(global_position)
+		var gib = gameManager.createGib(PoolingManager.GIB_TYPE.FLESH,global_position)
 		gib.velocity += linear_velocity
 		#doBleed()
 		gameManager.createPulverizeSound(global_position)

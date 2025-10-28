@@ -165,6 +165,10 @@ func cleanupChecker()->void:
 				decals.erase(i)
 		physEntities.clear()
 
+func _physics_process(delta: float) -> void:
+	for i in allPawns:
+		if is_instance_valid(i):
+			i.update_pawn_movement(delta)
 
 func _process(delta: float) -> void:
 		#physEntities = Engine.get_main_loop().get_nodes_in_group(&"physicsEntity")

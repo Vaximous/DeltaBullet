@@ -2171,6 +2171,9 @@ func _on_footsteps_finished() -> void:
 		#if !meshLookAt:
 			#disableBodyIK()
 
+func update_pawn_movement(delta:float)->void:
+	if movementController.enabled:
+		movementController.update(delta)
 
 func _on_health_component_on_damaged(dealer: Node3D, hitDirection: Vector3) -> void:
 	if is_instance_valid(self) and !isPawnDead:

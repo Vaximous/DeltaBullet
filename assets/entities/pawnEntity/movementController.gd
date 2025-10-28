@@ -19,32 +19,41 @@ var velocity : Vector3
 var cameraRotation : float
 var gravity : float = ProjectSettings.get_setting("physics/3d/default_gravity")
 
-func _physics_process(delta: float) -> void:
-	if enabled and !pawnControlling.isPawnDead and is_instance_valid(pawnControlling):
-		if pawnControlling.pawnEnabled and !pawnControlling.isPawnDead:
-			velocity.x = speed * movementDirection.normalized().x
-			velocity.z = speed * movementDirection.normalized().z
+func update(delta: float) -> void:
+	if not pawnControlling.pawnEnabled or pawnControlling.isPawnDead: return
+	if not enabled or not is_instance_valid(pawnControlling): return
 
-			if not pawnControlling.is_on_floor() or pawnControlling.snappedToStairsLastFrame:
-				pawnControlling.velocity.y -= gravity * delta
+	if movementDirection.length_squared() > 0.001:
+		movementDirection = movementDirection.normalized()
 
-			if !pawnControlling.is_on_floor():
-				pawnControlling.canJump = false
-			else:
-				pawnControlling.canJump = true
+	velocity.x = speed * movementDirection.x
+	velocity.z = speed * movementDirection.z
 
-			pawnControlling.velocity.z = pawnControlling.velocity.lerp(velocity,acceleration*delta).z
-			pawnControlling.velocity.x = pawnControlling.velocity.lerp(velocity,acceleration*delta).x
+	if  !pawnControlling.is_on_floor() or pawnControlling.snappedToStairsLastFrame:
+		pawnControlling.velocity.y -= gravity * delta
 
-			if velocity != Vector3.ZERO and !pawnControlling.meshLookAt and !pawnControlling.isInCover:
-				doMeshRotation(delta)
-			elif pawnControlling.meshLookAt:
-				doMeshLookat(delta)
+	pawnControlling.canJump = pawnControlling.is_on_floor()
+
+	var pawn_velocity := pawnControlling.velocity
+	pawn_velocity.x = lerp(pawn_velocity.x, velocity.x, acceleration * delta)
+	pawn_velocity.z = lerp(pawn_velocity.z, velocity.z, acceleration * delta)
+
+	pawnControlling.velocity = pawn_velocity
+
+	if !pawnControlling.meshLookAt and !pawnControlling.isInCover and movementDirection.length_squared() > 0.0001:
+		doMeshRotation(delta)
+	elif pawnControlling.meshLookAt:
+		doMeshLookat(delta)
+
+	#if velocity != Vector3.ZERO and !pawnControlling.meshLookAt and !pawnControlling.isInCover:
+		#doMeshRotation(delta)
+	#elif pawnControlling.meshLookAt:
+		#doMeshLookat(delta)
 
 
-			if !pawnControlling.snapUpStairCheck(delta):
-				pawnControlling.stairSnapCheck()
-				pawnControlling.move_and_slide()
+	#if !pawnControlling.snapUpStairCheck(delta):
+		#pawnControlling.stairSnapCheck()
+	pawnControlling.move_and_slide()
 
 func onMovementStateSet(state:MovementState)->void:
 	if enabled and !pawnControlling.isPawnDead and is_instance_valid(pawnControlling):

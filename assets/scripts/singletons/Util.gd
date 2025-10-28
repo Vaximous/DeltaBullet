@@ -14,6 +14,12 @@ func doesFileExist(filePath: String) -> bool:
 func random_vector2() -> Vector2:
 	return Vector2(randf()-0.5, randf()-0.5) * 2.0
 
+#Line of sight test, returns whether or not can see
+func is_line_of_sight(phys_space : PhysicsDirectSpaceState3D, pos_1 : Vector3, pos_2 : Vector3, mask : int, collide_with_areas : bool = false, collide_with_bodies : bool = true) -> bool:
+	var ray = PhysicsRayQueryParameters3D.create(pos_1, pos_2, mask, [])
+	ray.collide_with_areas = collide_with_areas
+	ray.collide_with_bodies = collide_with_bodies
+	return phys_space.intersect_ray(ray).is_empty()
 
 #Remove directory
 func rmdir(directory: String) -> void:

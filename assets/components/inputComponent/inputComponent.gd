@@ -24,30 +24,28 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	var pawn := controllingPawn
-	if !is_instance_valid(pawn) or pawn.isPawnDead or !mouseActionsEnabled or !gameManager.isMouseHidden():
+	if !is_instance_valid(controllingPawn) or controllingPawn.isPawnDead or !mouseActionsEnabled or !gameManager.isMouseHidden():
 		return
 
-	var cam := pawn.attachedCam
-	var item := pawn.currentItem
+	var cam := controllingPawn.attachedCam
+	var item := controllingPawn.currentItem
 	var rightClick := Input.is_action_pressed("gRightClick")
 	var leftClick := Input.is_action_pressed("gLeftClick")
 	var throwPressed := Input.is_action_pressed("gThrowThrowable")
 	var throwReleased := Input.is_action_just_released("gThrowThrowable")
 
 	if throwPressed:
-		_handleThrowPressed(pawn)
+		_handleThrowPressed(controllingPawn)
 	if throwReleased:
-		_handleThrowReleased(pawn)
+		_handleThrowReleased(controllingPawn)
 	if rightClick:
-		_handleAim(pawn, cam, item)
+		_handleAim(controllingPawn, cam, item)
 
 	if leftClick:
-		_handleFire(pawn)
+		_handleFire(controllingPawn)
 
 func _input(event: InputEvent) -> void:
-	var pawn := controllingPawn
-	if !is_instance_valid(pawn) or pawn.isPawnDead or !gameManager.isMouseHidden():
+	if !is_instance_valid(controllingPawn) or controllingPawn.isPawnDead or !gameManager.isMouseHidden():
 		return
 
 	if !mouseActionsEnabled:
@@ -55,57 +53,57 @@ func _input(event: InputEvent) -> void:
 
 	# Mouse wheel inventory cycling
 	if event.is_action_pressed("gMwheelUp"):
-		_cycleItem(pawn, + 1)
+		_cycleItem(controllingPawn, + 1)
 	elif event.is_action_pressed("gMwheelDown"):
-		_cycleItem(pawn, -1)
+		_cycleItem(controllingPawn, -1)
 
 	# One-shot actions
 	if event.is_action_pressed("gFlashlight"):
-		pawn.toggleFlashlight()
+		controllingPawn.toggleFlashlight()
 
 	if event.is_action_pressed("gCrouch"):
-		pawn.isCrouching = !pawn.isCrouching
+		controllingPawn.isCrouching = !controllingPawn.isCrouching
 
 	if event.is_action_pressed("gSafehouseEditor"):
 		if gameManager.world.worldData.worldEditable:
 			gameManager.initializeSafehouseEditor()
 
 	if event.is_action_pressed("gCover"):
-		if pawn.canUseCover:
-			pawn.toggleCover()
+		if controllingPawn.canUseCover:
+			controllingPawn.toggleCover()
 
 	if event.is_action_pressed("gToggleCamera"):
-		if is_instance_valid(pawn.attachedCam):
-			pawn.attachedCam.mirroredCamera = !pawn.attachedCam.mirroredCamera
+		if is_instance_valid(controllingPawn.attachedCam):
+			controllingPawn.attachedCam.mirroredCamera = !controllingPawn.attachedCam.mirroredCamera
 
 	if event.is_action_pressed("gJump"):
-		if pawn.canJump and !pawn.isUsingPhone:
-			pawn.jump()
+		if controllingPawn.canJump and !controllingPawn.isUsingPhone:
+			controllingPawn.jump()
 
 	if event.is_action_pressed("gBulletTimeToggle"):
-		if !pawn.isUsingPhone:
-			pawn.toggleBulletTime()
+		if !controllingPawn.isUsingPhone:
+			controllingPawn.toggleBulletTime()
 
 	if event.is_action_pressed("gReloadWeapon"):
-		if is_instance_valid(pawn.currentItem) and !pawn.isUsingPhone and pawn.currentItem.canReloadWeapon:
-			pawn.currentItem.reloadWeapon()
+		if is_instance_valid(controllingPawn.currentItem) and !controllingPawn.isUsingPhone and controllingPawn.currentItem.canReloadWeapon:
+			controllingPawn.currentItem.reloadWeapon()
 
 	if event.is_action_pressed("gUse"):
-		_handleUse(pawn)
+		_handleUse(controllingPawn)
 
 	if event.is_action_pressed("dKill"):
-		_killPlayer(pawn)
+		_killPlayer(controllingPawn)
 
 	if event.is_action_pressed("gTabMenu"):
-		_handleTabMenu(pawn)
+		_handleTabMenu(controllingPawn)
 
 	if event.is_action_released("gRightClick"):
-		_handleStopAim(pawn)
+		_handleStopAim(controllingPawn)
 
 	# Movement — only update when keyboard event is movement
 	if movementEnabled and event is InputEventKey:
-		pawn.direction = getInputDir()
-		_updateMovementState(pawn)
+		controllingPawn.direction = getInputDir()
+		_updateMovementState(controllingPawn)
 
 
 func getInputDir() -> Vector3:

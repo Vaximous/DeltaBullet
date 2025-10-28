@@ -59,7 +59,6 @@ var pawnOwner: BasePawn = null:
 		pawnOwner = value
 		aimCast.add_exception(pawnOwner)
 		for i in pawnOwner.getAllHitboxes():
-			i.damaged.connect(setToAttackState)
 			aimCast.add_exception(i)
 var lookTween: Tween
 var castLerp: Transform3D
@@ -89,19 +88,24 @@ func _enter_tree() -> void:
 
 func _ready() -> void:
 	setPawnType()
-
+	update_goap()
 	#navigationAgent.velocity = nextPosition
 	#print(pawnOwner.direction.move_toward((nextPosition-pawnOwner.global_transform.origin).normalized(),0.25))
 
 	#pawnOwner.direction = pawnOwner.direction.move_toward(dir,0.25)
 	#pawnOwner.movementController.movementDirection = nextPosition
 
+
 func update_goap()->void:
+	if !ai_process_enabled: return
+
 	%GOAP.aiComponent = self
-	blackboard.get_or_add("agent",navigationAgent)
-	blackboard.get_or_add("pawns",gameManager.allPawns)
-	blackboard.get_or_add("active_pawn",pawnOwner)
-	blackboard.get_or_add("closest_pawn",get_closest_pawn())
+	var agent = blackboard.get_or_add("agent",navigationAgent)
+	var pawns = blackboard.get_or_add("pawns",gameManager.allPawns)
+	var close_pawn = blackboard.get_or_add("closest_pawn",get_closest_pawn())
+	blackboard["pawns"] = gameManager.allPawns
+	blackboard["closest_pawn"] = get_closest_pawn()
+	#blackboard.get_or_add("active_pawn",pawnOwner)
 	%GOAP.blackboard = blackboard
 
 
@@ -224,15 +228,20 @@ func rayTest(from: Vector3, to: Vector3) -> Dictionary:
 	var result = get_world_3d().direct_space_state.intersect_ray(ray)
 	return result
 
+
 func get_closest_pawn()->BasePawn:
+	if !is_instance_valid(pawnOwner): return
 	var closest_dist : float = INF
 	var closest_pawn : BasePawn
+
+
 	for pawn in blackboard.get_or_add("pawns",gameManager.allPawns):
 		if pawn is BasePawn:
 			if pawn == blackboard.get_or_add("active_pawn",pawnOwner):
 				#dont include self
 				continue
-			var dist = pawn.global_position.distance_to(blackboard["active_pawn"].global_position)
+				
+			var dist = pawn.global_position.distance_to(pawnOwner.global_position)
 			if dist < closest_dist:
 				closest_dist = dist
 				closest_pawn = pawn

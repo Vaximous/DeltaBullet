@@ -47,7 +47,7 @@ var nextPosition: Vector3 = Vector3.ZERO
 		targetPosition = value
 		if navigationAgent.target_position != targetPosition:
 			navigationAgent.target_position = Vector3(targetPosition.x, targetPosition.y + 0.03, targetPosition.z)
-
+var blackboard : Dictionary = {}
 @export var safeVelocity: Vector3 = Vector3.ZERO
 @export var targetedPawns: Array[BasePawn]
 @export var pawnsCanSee: Array[BasePawn]
@@ -82,8 +82,6 @@ var last_ai_process_tick: int
 		aimCast = value
 @onready var aimCastEnd: Marker3D = $aiAimcast/aiAimcastEnd
 @onready var pawnDebugLabel: Label3D = $debugPawnStats
-@onready var stateMachine: FiniteStateMachine = $pawnFSM
-
 
 func _enter_tree() -> void:
 	instances.append(self)
@@ -98,31 +96,43 @@ func _ready() -> void:
 	#pawnOwner.direction = pawnOwner.direction.move_toward(dir,0.25)
 	#pawnOwner.movementController.movementDirection = nextPosition
 
+func update_goap()->void:
+	%GOAP.aiComponent = self
+	blackboard.get_or_add("agent",navigationAgent)
+	blackboard.get_or_add("pawns",gameManager.allPawns)
+	blackboard.get_or_add("active_pawn",pawnOwner)
+	blackboard.get_or_add("closest_pawn",get_closest_pawn())
+	%GOAP.blackboard = blackboard
+
 
 func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint(): return
 
 	if pawnOwner.forceAnimation: return
 
-	#Pawn Recoil Work
-	aimTargetRecoil.x = lerp(aimTargetRecoil.x, 0.01, recoilReturnSpeed * delta)
-	aimTargetRecoil.y = lerp(aimTargetRecoil.y, 0.01, recoilReturnSpeed * delta)
-	aimTargetRecoil.z = lerp(aimTargetRecoil.z, 0.01, recoilReturnSpeed * delta)
 
-	##Add the pawns that the pawn currently has in their view
-	for i in gameManager.allPawns:
-		if canSeeObject(i) and i != pawnOwner and pawnOwner.global_position.distance_to(i.global_position) < maxDetectionRange:
-			if !pawnsCanSee.has(i):
-				pawnsCanSee.append(i)
-			##For now just switch to searching
-			if stateMachine.current_state != stateMachine.get_state("Attack"):
-				if !checkIfTargetIsOnTeam(i) or checkIfTargetIsOnHostileTeam(i):
-					if !targetedPawns.has(i):
-						targetedPawns.append(i)
-					stateMachine.change_state("Attack")
-		elif !canSeeObject(i) or pawnOwner.global_position.distance_to(i.global_position) > maxDetectionRange:
-			if pawnsCanSee.has(i):
-				pawnsCanSee.erase(i)
+
+
+	##OLD Pawn AI
+	##Pawn Recoil Work
+	#aimTargetRecoil.x = lerp(aimTargetRecoil.x, 0.01, recoilReturnSpeed * delta)
+	#aimTargetRecoil.y = lerp(aimTargetRecoil.y, 0.01, recoilReturnSpeed * delta)
+	#aimTargetRecoil.z = lerp(aimTargetRecoil.z, 0.01, recoilReturnSpeed * delta)
+#
+	###Add the pawns that the pawn currently has in their view
+	#for i in gameManager.allPawns:
+		#if canSeeObject(i) and i != pawnOwner and pawnOwner.global_position.distance_to(i.global_position) < maxDetectionRange:
+			#if !pawnsCanSee.has(i):
+				#pawnsCanSee.append(i)
+			###For now just switch to searching
+			#if stateMachine.current_state != stateMachine.get_state("Attack"):
+				#if !checkIfTargetIsOnTeam(i) or checkIfTargetIsOnHostileTeam(i):
+					#if !targetedPawns.has(i):
+						#targetedPawns.append(i)
+					#stateMachine.change_state("Attack")
+		#elif !canSeeObject(i) or pawnOwner.global_position.distance_to(i.global_position) > maxDetectionRange:
+			#if pawnsCanSee.has(i):
+				#pawnsCanSee.erase(i)
 
 
 ##Returns ai_process_enabled
@@ -162,14 +172,7 @@ func getDirFromAngle(angleInDeg: float) -> Vector3:
 
 
 func setPawnType() -> void:
-	await get_tree().process_frame
-	match pawnType:
-		0:
-			stateMachine.change_state("Idle")
-		1:
-			stateMachine.change_state("Wander")
-		2:
-			stateMachine.change_state("Patrol")
+	pass
 
 
 func setToAttackState(_amount, _impulse, _vector, dealer: BasePawn) -> void:
@@ -177,7 +180,7 @@ func setToAttackState(_amount, _impulse, _vector, dealer: BasePawn) -> void:
 		targetedPawns.append(dealer)
 
 	#print("%s is Changing to attack" %pawnOwner.name)
-	stateMachine.change_state("Attack")
+	#stateMachine.change_state("Attack")
 	if dealer:
 		lookAtPosition(dealer.global_position)
 
@@ -221,6 +224,19 @@ func rayTest(from: Vector3, to: Vector3) -> Dictionary:
 	var result = get_world_3d().direct_space_state.intersect_ray(ray)
 	return result
 
+func get_closest_pawn()->BasePawn:
+	var closest_dist : float = INF
+	var closest_pawn : BasePawn
+	for pawn in blackboard.get_or_add("pawns",gameManager.allPawns):
+		if pawn is BasePawn:
+			if pawn == blackboard.get_or_add("active_pawn",pawnOwner):
+				#dont include self
+				continue
+			var dist = pawn.global_position.distance_to(blackboard["active_pawn"].global_position)
+			if dist < closest_dist:
+				closest_dist = dist
+				closest_pawn = pawn
+	return closest_pawn
 
 func getCurrentWeapon() -> Weapon:
 	return pawnOwner.currentItem
@@ -301,7 +317,7 @@ func _ai_process(physics_delta: float) -> void:
 	aimCast.global_position = Vector3(pawnOwner.global_position.x, pawnOwner.global_position.y + 1.5, pawnOwner.global_position.z)
 	aimCast.target_position.z = -maxAttackRange
 	var ai_process_delta = get_and_update_ai_process_delta(Time.get_ticks_msec())
-	stateMachine._ai_process(physics_delta, ai_process_delta)
+	#stateMachine._ai_process(physics_delta, ai_process_delta)
 
 	nextPosition = navigationAgent.get_next_path_position()
 

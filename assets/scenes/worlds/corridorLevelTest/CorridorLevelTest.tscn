@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=4 uid="uid://dlbbothh8l8p7"]
+[gd_scene load_steps=69 format=4 uid="uid://dlbbothh8l8p7"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_826ci"]
 [ext_resource type="PackedScene" uid="uid://boicvk4qeqmbd" path="res://assets/entities/pawnSpawn/pawnSpawn.tscn" id="2_ui4qq"]
@@ -262,6 +262,9 @@ color = Color(1, 1, 1, 0.551)
 color_ramp = SubResource("GradientTexture1D_iiplj")
 
 [sub_resource type="QuadMesh" id="QuadMesh_utu8w"]
+
+[sub_resource type="BoxOccluder3D" id="BoxOccluder3D_xcftx"]
+size = Vector3(1.0504845, 2.0420094, 0.22358991)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_iiplj"]
 size = Vector3(3.1000001, 2, 5)
@@ -1075,6 +1078,18 @@ lifetime = 3.0
 fixed_fps = 60
 process_material = SubResource("ParticleProcessMaterial_u7vrb")
 draw_pass_1 = SubResource("QuadMesh_utu8w")
+
+[node name="occluderInstance3d" type="OccluderInstance3D" parent="Misc" index="6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.21670645, 1.4974947, 3.534071)
+occluder = SubResource("BoxOccluder3D_xcftx")
+
+[node name="occluderInstance3d2" type="OccluderInstance3D" parent="Misc" index="7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.92327, 1.5648463, 17.831394)
+occluder = SubResource("BoxOccluder3D_xcftx")
+
+[node name="occluderInstance3d3" type="OccluderInstance3D" parent="Misc" index="8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.604468, 1.5648463, 25.720274)
+occluder = SubResource("BoxOccluder3D_xcftx")
 
 [node name="PawnTriggerArea3D" parent="mapLogic" index="0" instance=ExtResource("15_4vmtv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -58, 0, 11)

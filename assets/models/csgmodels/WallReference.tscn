@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://d0tdh88rcf8q1"]
+[gd_scene load_steps=0 format=3 uid="uid://d0tdh88rcf8q1"]
 
 [node name="WallReference" type="CSGBox3D"]
 use_collision = true

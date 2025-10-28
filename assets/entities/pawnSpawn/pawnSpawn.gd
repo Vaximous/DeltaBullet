@@ -155,6 +155,7 @@ func spawnPawn(forceParent : Node = null, _params : PawnSpawnParameters = null) 
 				pawn.inputComponent = controller
 				pawn.checkComponents()
 				pawn.fixRot()
+				pawn.inputComponent.pawnOwner = pawn
 				controller.pawnType = aiType
 				#controller.aiSkill = aiSkill
 				gameManager.allPawns.append(pawn)

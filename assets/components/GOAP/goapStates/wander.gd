@@ -1,6 +1,6 @@
 extends GOAP_Action
 
-func count_requirements() -> int:
+func _count_requirements() -> int:
 	if !blackboard.has_all(["targetLastSeenPosition"]):
 		return 0
 	return 669699

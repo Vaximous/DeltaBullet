@@ -1,7 +1,7 @@
 extends GOAP_Action
 
 #No particular requirement, skip generally
-func count_requirements() -> int:
+func _count_requirements() -> int:
 	return INF
 
 

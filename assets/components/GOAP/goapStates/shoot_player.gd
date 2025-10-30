@@ -1,7 +1,7 @@
 extends GOAP_Action
 var iter : int = 0
 #Requires line-of-sight
-func count_requirements() -> int:
+func _count_requirements() -> int:
 	var req : int = 0
 	if blackboard.get("currentItem") == null:
 		#Doesn't have a weapon, need to equip...

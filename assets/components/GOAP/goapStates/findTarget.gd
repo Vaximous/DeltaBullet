@@ -5,7 +5,7 @@ var lastSearchPoint : Vector3
 
 #Will search for a couple seconds
 var searchStartTime : int
-func count_requirements() -> int:
+func _count_requirements() -> int:
 	var req : int = 0
 	if not blackboard.has("targetLastSeenPosition"):
 		req += 10

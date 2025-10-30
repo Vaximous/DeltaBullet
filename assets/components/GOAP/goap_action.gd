@@ -25,8 +25,11 @@ var current_path: Array[GOAP_Action] = []
 var distance_sum: int = 1
 
 
-#Checks if it's capable of preforming the action. IE, can see player, can move, etc.
-#Override!
+@warning_ignore("unused_parameter")
+func _process_action(delta: float) -> void:
+	pass
+
+
 func calculate_distance_sum() -> int:
 	distance_sum = 1 + count_requirements()
 	#print("%s SUM = %s" % [name, distance_sum])
@@ -41,12 +44,9 @@ func count_requirements() -> int:
 	return _count_requirements()
 
 
-func _count_requirements() -> int:
-	return 1
-
-
-func process_action() -> void:
+func process_action(delta: float) -> void:
 	state = ActionState.BUSY
+	_process_action(delta)
 	return
 
 
@@ -59,18 +59,21 @@ func get_state() -> ActionState:
 func get_shortest_action_path(recalculating: bool = false) -> Array[GOAP_Action]:
 	#Skip heavy processing here
 	if not recalculating and !current_path.is_empty():
+		#Don't recalculate path, just get best one
+		current_path.sort_custom(_sort_action)
+		for i in current_path:
+			i.get_shortest_action_path(false)
 		return current_path
 	#Recursive process
 	var path: Array[GOAP_Action] = []
 	var next_choices: Array[GOAP_Action]
-	#Distance = 1 + requirements, so that our algorithm can find the action path with the least requirements.
-	if distance_sum > 1:
-		#If I can't do it, check requirements.
+	if not has_requirement():
+		#If I can't do it, check requirements / dependencies.
 		for req in requirements:
 			req.calculate_distance_sum()
 			next_choices.append(req)
 	#Sort next_choices by our calculated distance
-	next_choices.sort_custom(func(a: GOAP_Action, b: GOAP_Action): return a.distance_sum < b.distance_sum)
+	next_choices.sort_custom(_sort_action)
 	#Pick the one with the least distance, continue
 	for idx in next_choices.size():
 		var choice: GOAP_Action = next_choices[idx]
@@ -117,12 +120,13 @@ func refresh() -> void:
 func set_blackboard(_blackboard: Dictionary) -> void:
 	blackboard = _blackboard
 	for i in requirements:
-		i.set_blackboard(_blackboard)
+		if i.blackboard != _blackboard:
+			i.set_blackboard(_blackboard)
 	for i in fallbacks:
-		i.set_blackboard(_blackboard)
+		if i.blackboard != _blackboard:
+			i.set_blackboard(_blackboard)
 
 
-#region helper functions
 func is_available() -> bool:
 	return state == ActionState.AVAILABLE
 
@@ -135,6 +139,17 @@ func is_failed() -> bool:
 	return state == ActionState.FAILED
 
 
+func exit() -> void:
+	blackboard["action_time"] = 0.0
+	_exit()
+
+
+func enter() -> void:
+	blackboard["action_time"] = 0.0
+	_enter()
+
+
+#region helper functions
 func getTargetEnemy() -> BasePawn:
 	var result = blackboard.get_or_add("target", blackboard.get("closestPawn", null))
 	if result != null:
@@ -149,7 +164,18 @@ func getCurrentPawn() -> BasePawn:
 
 func getNavAgent() -> NavigationAgent3D:
 	return blackboard.get("navAgent")
+
 #endregion
+
+
+##Requirements are tallied and represented as a single number. Larger number = more important,
+##ie- you cant shoot without a gun.
+func _count_requirements() -> int:
+	return 1
+
+
+func _sort_action(a: GOAP_Action, b: GOAP_Action) -> bool:
+	return a.distance_sum < b.distance_sum
 
 
 func _refresh() -> void:

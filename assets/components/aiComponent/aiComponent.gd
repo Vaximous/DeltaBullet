@@ -240,7 +240,7 @@ func get_closest_pawn()->BasePawn:
 			if pawn == blackboard.get_or_add("active_pawn",pawnOwner):
 				#dont include self
 				continue
-				
+
 			var dist = pawn.global_position.distance_to(pawnOwner.global_position)
 			if dist < closest_dist:
 				closest_dist = dist

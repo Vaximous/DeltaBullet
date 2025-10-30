@@ -6,14 +6,14 @@ extends Node
 var aiComponent: AIComponent
 var blackboard: Dictionary
 var current_path: Array[GOAP_Action]
-var last_action: GOAP_Action:
+var current_action: GOAP_Action:
 	set(value):
-		if value != last_action:
-			if last_action != null:
-				last_action._exit()
+		if value != current_action:
+			if current_action != null:
+				current_action._exit()
 			if value != null:
 				value._enter()
-		last_action = value
+		current_action = value
 
 
 func score_goal() -> float:
@@ -27,6 +27,26 @@ func score_goal() -> float:
 	return score - get_index()
 
 
+func evaluate_action_repath() -> void:
+	#Check for a better action path
+	var tries: int = 0
+	while get_current_action().is_failed() and tries < 10:
+		renew_action_path()
+		if current_path.is_empty():
+			#Don't bother, there's nothing to do.
+			return
+		tries += 1
+
+	#The chosen action is failed. Do nothing.
+	if get_current_action().is_failed():
+		#printerr("Failed! Couldn't process this goal. Pick a different one.")
+		return
+
+	#The chosen action lacks requirements, or is requesting a repath.
+	if !get_current_action().has_requirement() or is_repath_requested():
+		renew_action_path()
+
+
 func refresh_actions() -> void:
 	primary_action.refresh()
 
@@ -38,33 +58,20 @@ func renew_action_path() -> void:
 
 func get_current_action() -> GOAP_Action:
 	if current_path.is_empty():
-		renew_action_path()
-	last_action = current_path.front()
+		return null
 	return current_path.front()
 
 
 ##Executes the current plan by doing the current action- or picking a new one if the current action failed.
-func execute_plan() -> bool:
-	var tries: int = 0
-	#It will attempt to renew the path until a valid, unfailed path is found, or the limit of attempts is reached.
-	while get_current_action().is_failed() and tries < 10:
-		renew_action_path()
-		tries += 1
-	#If after 5 tries the paths are all failing, we probably failed to complete this goal.
-	if get_current_action().is_failed():
-		#printerr("Failed! Couldn't process this goal. Pick a different one.")
-		return false
-	#Otherwise, if the selected path simply doesn't have the requirement, get a new path.
-	if !get_current_action().has_requirement() or is_repath_requested():
-		renew_action_path()
+func execute_plan(delta : float) -> void:
 	#Process the action chosen.
-	get_current_action().process_action()
-	return true
+	get_current_action().process_action(delta)
+	blackboard_add_if_not_has("action_time", 0.0)
+	blackboard["action_time"] += delta
 
 
 func is_repath_requested() -> bool:
 	return get_current_action().goal_request_repath
-
 
 
 #Determines if this has a path that it can take.
@@ -80,6 +87,11 @@ func has_valid_paths() -> bool:
 func set_blackboard(_blackboard: Dictionary) -> void:
 	blackboard = _blackboard
 	primary_action.set_blackboard(_blackboard)
+
+
+func blackboard_add_if_not_has(key : String, value : Variant) -> void:
+	if not blackboard.has(key):
+		blackboard[key] = value
 
 
 func _score_goal() -> float:

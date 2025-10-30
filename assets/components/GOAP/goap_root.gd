@@ -16,6 +16,7 @@ var current_goal: GOAP_Goal:
 		if value != current_goal:
 			goal_changed.emit()
 		current_goal = value
+		current_goal.refresh_actions()
 		current_goal.aiComponent = aiComponent
 
 
@@ -28,14 +29,14 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	if current_goal != null:
-		current_goal.execute_plan()
+		current_goal.reevaluate_actions()
+		current_goal.execute_plan(delta)
 
 
 func ai_process() -> void:
 	var best_goal = get_best_goal()
 	if best_goal != current_goal:
 		current_goal = best_goal
-		current_goal.refresh_actions()
 		print("Set goal to %s" % current_goal.name)
 
 

@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://b53hvcf0hvvkw"]
+[gd_scene load_steps=11 format=3 uid="uid://b53hvcf0hvvkw"]
 
+[ext_resource type="Script" uid="uid://6gdyem6cg7ut" path="res://assets/components/aiComponent/aiComponent.gd" id="1_4ltvf"]
 [ext_resource type="Script" uid="uid://ba1sdvnfipt0w" path="res://assets/components/GOAP/goap_root.gd" id="2_oq0my"]
-[ext_resource type="Script" uid="uid://6gdyem6cg7ut" path="res://assets/components/aiComponent/aiComponent.gd" id="4_gaqok"]
+[ext_resource type="Script" uid="uid://ckkmcgo5uuwwv" path="res://assets/components/GOAP/goap_goal.gd" id="3_4ltvf"]
 
 [sub_resource type="Gradient" id="Gradient_4vyck"]
 colors = PackedColorArray(0, 0, 0, 1, 1, 1, 0.32549, 1)
@@ -16,8 +17,150 @@ albedo_color = Color(1, 0, 0, 0.309804)
 
 [sub_resource type="ImmediateMesh" id="ImmediateMesh_nrp35"]
 
+[sub_resource type="GDScript" id="GDScript_4ltvf"]
+resource_name = "ShootPawn"
+script/source = "extends GOAP_Action
+
+#Requires line-of-sight
+func count_requirements() -> int:
+	var req : int = 0
+	if !blackboard.get_or_add(\"active_pawn\"): return 2
+
+	if blackboard.get_or_add(\"active_pawn\").currentItem == null:
+		#Equip item
+		req += 10
+	var target = blackboard[\"close_enemy_pawn\"]
+	if target:
+		var cansee = Util.is_line_of_sight(get_viewport().find_world_3d().direct_space_state, target.global_position, blackboard[\"active_pawn\"].global_position, 0b1)
+		if cansee:
+			blackboard[\"enemy_last_seen_position\"] = target.global_position
+		else:
+			req += 10
+	else:
+		#No target, 2 requirements (target + sight) missing
+		req += 2
+	return req
+
+func _enter() -> void:
+	iter += 1
+	if is_instance_valid(get_target_pawn()):
+		blackboard[\"look_target\"] = get_target_pawn().global_position
+	var depreciation = (action_enter_time - exit_time) * 0.001 * 2.0
+	aim_confidence_factor = max(aim_confidence_factor - depreciation, 0.0)
+	print(\"Aim confidence depreciated: %s\" % depreciation)
+
+
+
+var iter : int = 0
+var exit_time : int = 0
+
+func get_target_pawn() -> BasePawn:
+	return blackboard.get_or_add(\"target_pawn\", blackboard.get(\"close_enemy_pawn\", null))
+
+func get_active_pawn()->BasePawn:
+	return blackboard.get(\"active_pawn\", null)
+
+func get_distance_to_target() -> float:
+	return get_target_pawn().global_position.distance_to(get_active_pawn().global_position)
+
+var aim_confidence_factor : float = 0.0
+func get_aim_confidence() -> float:
+	#Need to not reset to 0 if you leave and re-enter quickly.
+	return 1.0 - clamp(smoothstep(2.0, 50.0, get_distance_to_target()) - smoothstep(0.0, 60.0, aim_confidence_factor * 8.0), 0.0, 1.0)
+
+var last_path_refresh_time : int = 0
+func process_action() -> void:
+	#Shoot at the pawn
+	blackboard.get_or_add(\"look_target\",Vector3.ZERO)
+	var pawn : BasePawn = blackboard[\"active_pawn\"]
+	var target = blackboard[\"close_enemy_pawn\"]
+	if pawn.isPawnDead: return
+	if target:
+		var cansee = Util.is_line_of_sight(get_viewport().find_world_3d().direct_space_state, target.global_position, blackboard[\"active_pawn\"].global_position, 0b1)
+		if cansee:
+			blackboard[\"enemy_last_seen_position\"] = target.global_position
+		else:
+			goal_request_repath = true
+			return
+	aim_confidence_factor += Util.get_ai_process_delta()
+	blackboard[\"look_target\"] = lerp(
+		blackboard.get(\"look_target\", Vector3.ZERO),
+		get_target_pawn().global_position + (get_target_pawn().velocity * get_physics_process_delta_time() * get_active_pawn().global_position.distance_to(get_target_pawn().global_position) * 0.5 / (1 * get_physics_process_delta_time())),
+		get_aim_confidence()
+		)
+		#The further you are, the slower it will adjust its aim.
+		#It will also adjust its aim slower as it first spots you.
+	#if Engine.get_physics_frames() % 5 == 0:
+		#print(\"%s| Distance- %s, Time- %s\" % [
+			#get_aim_confidence(),
+			#smoothstep(2.0, 50.0, get_distance_to_target()),
+			#smoothstep(0.0, 60.0, aim_confidence_factor * 8.0)])
+		#var n = MeshInstance3D.new()
+		#n.mesh = PrismMesh.new()
+		#GameManager.current_level.add_child(n)
+		#n.scale = Vector3.ONE * get_aim_confidence()
+		#n.global_position = blackboard[\"look_target\"]
+	var distfactor = 0.25 + (smoothstep(2.0,20.0,get_active_pawn().global_position.distance_to(get_target_pawn().global_position)) * 0.75)
+	var shoot_time = (50 + (800 * smoothstep(0, 3000, Time.get_ticks_msec() - exit_time) * distfactor))
+	#if get_action_time() > shoot_time:
+	get_active_pawn().currentItem.fire()
+	if getNavAgent().is_navigation_finished() or randi()%64 == 0 and (Time.get_ticks_msec() - last_path_refresh_time) > 1500:
+		getNavAgent().target_position = get_target_pawn().global_position
+		last_path_refresh_time = Time.get_ticks_msec()
+	return
+
+func _exit() -> void:
+	#Track after a second
+	exit_time = Time.get_ticks_msec()
+	var iterbefore : int = iter
+	var known_pos : Vector3 = get_target_pawn().global_position
+	while get_target_pawn().global_position.distance_to(known_pos) < 5.0:
+		if iterbefore == iter:
+			#Notifications.send_notification(\"I still know where you are...\")
+			blackboard[\"enemy_last_seen_position\"] = get_target_pawn().global_position
+			getNavAgent().target_position = blackboard[\"enemy_last_seen_position\"]
+		await get_tree().create_timer(1.0).timeout
+"
+
+[sub_resource type="GDScript" id="GDScript_dphas"]
+resource_name = "Nothing"
+script/source = "extends GOAP_Action
+
+#No particular requirement, skip generally
+func count_requirements() -> int:
+	return INF
+
+
+func process_action() -> void:
+	#don't do anything at all
+	return
+"
+
+[sub_resource type="GDScript" id="GDScript_f33xd"]
+resource_name = "EquipItem"
+script/source = "extends GOAP_Action
+#Equips a weapon
+func count_requirements() -> int:
+	var pawn : BasePawn = blackboard.get_or_add(\"active_pawn\",null)
+	if pawn and pawn.itemInventory.size() == 0:
+		fail_me()
+		return 1
+	if pawn and pawn.currentItem == null:
+		pawn.currentItemIndex = 1
+		pawn.currentItem.weaponCast = blackboard.get(\"aimcast\")
+		#Notifications.send_notification(\"Equip.\")
+		return 1
+	#continue to next
+	return 100
+
+
+func process_action() -> void:
+	#don't do anything at all
+	return
+"
+
 [node name="aiComponent" type="Node3D"]
-script = ExtResource("4_gaqok")
+script = ExtResource("1_4ltvf")
 
 [node name="navigationAgent3d" type="NavigationAgent3D" parent="."]
 path_desired_distance = 2.0
@@ -58,13 +201,33 @@ debug_shape_custom_color = Color(1, 0.823529, 0, 1)
 material_override = SubResource("StandardMaterial3D_giynp")
 mesh = SubResource("ImmediateMesh_nrp35")
 
-[node name="GOAP" type="Node" parent="."]
+[node name="GOAP" type="Node" parent="." groups=["GOAP_AI"]]
 unique_name_in_owner = true
 script = ExtResource("2_oq0my")
 
+[node name="KillPawn" type="Node" parent="GOAP" node_paths=PackedStringArray("primary_action")]
+script = ExtResource("3_4ltvf")
+primary_action = NodePath("../../Actions/ShootPawn")
+metadata/_custom_type_script = "uid://ckkmcgo5uuwwv"
+
 [node name="Actions" type="Node" parent="."]
 
+[node name="ShootPawn" type="Node" parent="Actions" node_paths=PackedStringArray("requirements", "fallbacks")]
+script = SubResource("GDScript_4ltvf")
+requirements = [NodePath("../EquipItem")]
+fallbacks = [NodePath("../Nothing")]
+metadata/_custom_type_script = "uid://d2ktha3mgjiwg"
+
+[node name="Nothing" type="Node" parent="Actions"]
+script = SubResource("GDScript_dphas")
+metadata/_custom_type_script = "uid://d2ktha3mgjiwg"
+
+[node name="EquipItem" type="Node" parent="Actions"]
+script = SubResource("GDScript_f33xd")
+metadata/_custom_type_script = "uid://d2ktha3mgjiwg"
+
 [node name="update_timer" type="Timer" parent="."]
+autostart = true
 
 [connection signal="velocity_computed" from="navigationAgent3d" to="." method="_on_navigation_agent_3d_velocity_computed"]
 [connection signal="timeout" from="update_timer" to="." method="update_goap"]

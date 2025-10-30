@@ -1,6 +1,13 @@
 extends MeshInstance3D
 class_name BulletTrail
 @export_category("Bullet Trail")
+var active : bool = false:
+	set(value):
+		active = value
+		if active:
+			process_mode = Node.PROCESS_MODE_INHERIT
+		else:
+			process_mode = Node.PROCESS_MODE_DISABLED
 @onready var onscreenNotifier : VisibleOnScreenNotifier3D = $visibleOnScreenNotifier3d
 var defaultBulletColor : Color = Color(1,1,0,1)
 var bulletColor : Color = defaultBulletColor:
@@ -34,19 +41,33 @@ func _physics_process(delta)->void:
 			if !get_material_override() == null:
 				transparency = lerpf(transparency,2.0,3.0*delta)
 				if transparency >= 0.9:
-					queue_free()
+					disable()
 	else:
-		queue_free()
+		disable()
+
+func disable()->void:
+	active = false
+	hide()
+
+func reset(pos_start: Vector3, pos_end : Vector3)->void:
+	initTrail(pos_start,pos_end)
+	transparency = 0
+	show()
+	active = true
 
 func initTrail(pos1, pos2)->void:
 	bulletStart = pos1
 	bulletEnd = pos2
-	var meshDraw = ImmediateMesh.new()
-	self.mesh = meshDraw
-	meshDraw.surface_begin(Mesh.PRIMITIVE_LINES, get_material_override())
-	meshDraw.surface_add_vertex(bulletStart)
-	meshDraw.surface_add_vertex(bulletEnd)
-	meshDraw.surface_end()
+	if !mesh:
+		var meshDraw = ImmediateMesh.new()
+		self.mesh = meshDraw
+		meshDraw.surface_begin(Mesh.PRIMITIVE_LINES, get_material_override())
+		meshDraw.surface_add_vertex(bulletStart)
+		meshDraw.surface_add_vertex(bulletEnd)
+		meshDraw.surface_end()
+	else:
+		bulletStart = pos1
+		bulletEnd = pos2
 
 func _on_timer_timeout()->void:
-	queue_free()
+	disable()

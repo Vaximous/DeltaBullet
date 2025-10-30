@@ -19,7 +19,7 @@ signal weaponBlockedChange
 @export_subgroup("Behavior")
 @export var ejectionPoint: Marker3D
 @export var smokeEffect: PackedScene
-@export var projectile: PackedScene = preload("res://assets/entities/projectiles/Bullet.tscn")
+@export var projectile: PoolingManager.BULLET_TYPES = PoolingManager.BULLET_TYPES.BULLET
 @export var muzzlePoint: Marker3D
 @export var muzzleFlashes: Array[PackedScene]
 @export var isReloading: bool = false:
@@ -365,27 +365,25 @@ func setBlendShapeValue(mesh: NodePath, blendShape: int, value: float) -> void:
 
 func spawnProjectile(raycaster: RayCast3D) -> void:
 	#print(raycaster.get_path())
-	var bulletTrail: BulletTrail
-	if weaponResource.useBulletTrail:
-		bulletTrail = weaponResource.defaultBulletTrail.instantiate()
-	var p: Projectile = projectile.instantiate() as Projectile
+	var ray_target_point := get_hit_target(raycaster)
+
+	var p: Projectile = PoolingManager.create_projectile(
+		gameManager.world,projectile,
+		muzzlePoint.global_transform.origin,
+		self,
+		-(muzzlePoint.global_transform.origin - ray_target_point).normalized() * weaponResource.bulletSpeed
+	) as Projectile
 	if is_instance_valid(weaponOwner):
 		p.max_damage = weaponResource.weaponDamage * gameManager.get_modified_stat(weaponOwner, &"damageModifier")
 	else:
 		p.max_damage = weaponResource.weaponDamage
 
-	var ray_target_point := get_hit_target(raycaster)
-
-	p.projectile_owner = self
-	gameManager.world.worldMisc.add_child(p)
-	p.global_transform.origin = muzzlePoint.global_transform.origin
 	p.add_exception(weaponOwner)
 	for hitbox in weaponOwner.getAllHitboxes():
 		p.add_exception(hitbox)
-	#print("%s == %s : %s" % [raycaster.get_collision_point(), ray_target_point, raycaster.get_collision_point() == ray_target_point])
-	p.velocity = -(muzzlePoint.global_transform.origin - ray_target_point).normalized() * weaponResource.bulletSpeed
-	if bulletTrail != null:
-		gameManager.world.worldMisc.add_child(bulletTrail)
+
+	#Trail
+	if weaponResource.useBulletTrail:
 		var ray = PhysicsRayQueryParameters3D.new()
 		ray.from = muzzlePoint.global_position
 		ray.to = ray_target_point
@@ -393,9 +391,9 @@ func spawnProjectile(raycaster: RayCast3D) -> void:
 		ray.collide_with_areas = true
 		var result = get_world_3d().direct_space_state.intersect_ray(ray)
 		if result:
-			bulletTrail.initTrail(muzzlePoint.global_position, result.position)
+			PoolingManager.create_trail(gameManager.world,muzzlePoint.global_position, result.position)
 		else:
-			bulletTrail.initTrail(muzzlePoint.global_position, ray_target_point)
+			PoolingManager.create_trail(gameManager.world,muzzlePoint.global_position,ray_target_point)
 	return
 
 

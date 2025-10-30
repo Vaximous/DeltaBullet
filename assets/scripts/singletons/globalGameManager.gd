@@ -166,6 +166,8 @@ func cleanupChecker()->void:
 		physEntities.clear()
 
 func _physics_process(delta: float) -> void:
+	if get_tree().paused: return
+
 	for i in allPawns:
 		if is_instance_valid(i):
 			i.update_pawn_movement(delta)

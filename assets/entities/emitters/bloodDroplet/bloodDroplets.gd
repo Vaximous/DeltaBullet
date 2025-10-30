@@ -7,6 +7,10 @@ var alive: bool = false:
 	set(value):
 		alive = value
 		set_physics_process(value)
+		if alive:
+			process_mode = Node.PROCESS_MODE_INHERIT
+		else:
+			process_mode = Node.PROCESS_MODE_DISABLED
 var norm: Vector3
 var params: PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.new()
 

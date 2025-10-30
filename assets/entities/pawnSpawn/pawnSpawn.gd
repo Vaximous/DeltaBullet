@@ -200,6 +200,7 @@ func spawnPawn(forceParent : Node = null, _params : PawnSpawnParameters = null) 
 				if equipWeaponOnSpawn:
 					pawn.currentItemIndex = weaponToEquip
 		pawnSpawned.emit(pawn)
+		#pawn.process_mode = Node.PROCESS_MODE_PAUSABLE
 		return pawn
 	return null
 

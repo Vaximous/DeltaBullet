@@ -11,7 +11,13 @@ var decalTimer: float = 0.5
 var rotational_velocity : Vector3
 var first_bounce = true
 var colNormal : Vector3
-var alive : bool = false
+var alive : bool = false:
+	set(value):
+		alive = value
+		if alive:
+			process_mode = Node.PROCESS_MODE_INHERIT
+		else:
+			process_mode = Node.PROCESS_MODE_DISABLED
 
 func _enter_tree() -> void:
 	set_physics_process(false)

@@ -12,8 +12,14 @@ var last_hit_data: Dictionary
 func _ready() -> void:
 	hit_back_faces = false
 
+func disable()->void:
+	super()
+	insideMaterial = null
+	last_hit_data.clear()
 
 func _physics_process(delta: float) -> void:
+	if !active: return
+
 	var hit_data = step(velocity * delta)
 
 	if not hit_data.has("col"):
@@ -30,7 +36,7 @@ func _physics_process(delta: float) -> void:
 	if collisionMaterial != insideMaterial:
 		enter_material(collisionMaterial, col, col_point, col_normal)
 	else:
-		queue_free()
+		disable()
 
 
 func set_projectile_owner(value: Node) -> void:
@@ -42,6 +48,7 @@ func set_projectile_owner(value: Node) -> void:
 
 
 func enter_material(material: DB_PhysicsMaterial, collisionObject: Object, collisionPoint: Vector3, collisionNormal: Vector3) -> void:
+	if !active: return
 	insideMaterial = material
 	#print(material)
 	if collisionPoint.is_finite():
@@ -73,7 +80,7 @@ func enter_material(material: DB_PhysicsMaterial, collisionObject: Object, colli
 						collisionPoint - global_position,
 						self
 					)
-				queue_free()
+				disable()
 	#if penetration_power > 0:
 		#var hit = gather_collision_info()
 		#if hit:
@@ -85,11 +92,11 @@ func enter_material(material: DB_PhysicsMaterial, collisionObject: Object, colli
 		#print("Power reduction = %s" % [material.penetration_entry_cost / penetration_power])
 	#else:
 	#distance_traveled = max_distance
-	queue_free()
+	disable()
 
 
 #func exit_material(hit_data: Dictionary) -> void:
-	#queue_free()
+	#disable()
 
 
 func get_damage() -> float:
@@ -105,6 +112,7 @@ func get_damage() -> float:
 
 
 func _add_distance(distance: float) -> void:
+	if !active: return
 	if insideMaterial:
 		distance *= (1.0 + (insideMaterial.penetration_resistance / penetration_power))
 		#print("distance increased!!! %s, %s" % [distance_traveled, distance])
@@ -112,6 +120,7 @@ func _add_distance(distance: float) -> void:
 
 
 func _on_flyby_area_body_entered(body: Node3D) -> void:
+	if !active: return
 	if body is BasePawn:
 		if body.isPlayerPawn():
 			if !%flybySound.playing:

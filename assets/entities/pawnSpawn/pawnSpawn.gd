@@ -199,6 +199,8 @@ func spawnPawn(forceParent : Node = null, _params : PawnSpawnParameters = null) 
 				pawn.healthComponent.setHealth(pawn.healthComponent.defaultHP)
 				if equipWeaponOnSpawn:
 					pawn.currentItemIndex = weaponToEquip
+				#await get_tree().process_frame
+				gameManager.disable_pawn(pawn)
 		pawnSpawned.emit(pawn)
 		#pawn.process_mode = Node.PROCESS_MODE_PAUSABLE
 		return pawn

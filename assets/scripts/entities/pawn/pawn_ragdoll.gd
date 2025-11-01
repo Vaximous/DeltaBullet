@@ -237,8 +237,16 @@ func setAngularMotorForceLimit(b:PhysicalBone3D,value:float = 0):
 	b.set("joint_constraints/y/angular_motor_force_limit",value)
 	b.set("joint_constraints/z/angular_motor_force_limit",value)
 
-func _on_remove_timer_timeout()-> void:
+func destroy()->void:
+	for i in get_children():
+		if i is BulletHole:
+			i.reparent(gameManager.world.pooledObjects)
+			i.active = false
+			i.disable()
 	queue_free()
+
+func _on_remove_timer_timeout()-> void:
+	destroy()
 
 func doRagdollHeadshot(pawn:BasePawn = null, dismember : bool = false, shotvel:Vector3 = Vector3.ONE,hitPos: Vector3 = Vector3.ZERO,sound:bool = true)-> void:
 	for x in randi_range(2,7):

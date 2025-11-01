@@ -14,6 +14,11 @@ signal damaged(amount,impulse,vector, dealer,bone)
 @export var hitboxDamageMult:float = 1.0
 var boneId:int
 # Called when the node enters the scene tree for the first time.
+func _exit_tree() -> void:
+	for i in get_children():
+		if i is BulletHole:
+			i.reparent(gameManager.world.pooledObjects)
+
 func _ready()->void:
 	if enabled:
 		if is_instance_valid(healthComponent.componentOwner):

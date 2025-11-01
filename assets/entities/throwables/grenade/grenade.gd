@@ -3,8 +3,16 @@ var exploded : bool = false
 @export var explosionRadius : float = 65.0
 @export var explosionImpulse :float  = 10.0
 
+func destroy()->void:
+	for i in get_children():
+		if i is BulletHole:
+			i.reparent(gameManager.world.pooledObjects)
+			i.active = false
+			i.disable()
+	queue_free()
+
 func createExplosion()->void:
-	if exploded: queue_free()
+	if exploded: destroy()
 	exploded = true
 	var explo : ExplosionArea
 	if dealer:
@@ -27,7 +35,7 @@ func activateThrowable()->void:
 	super()
 	if !exploded:
 		createExplosion()
-	queue_free()
+	destroy()
 
 
 func _on_health_component_health_depleted(_dealer: Node3D) -> void:

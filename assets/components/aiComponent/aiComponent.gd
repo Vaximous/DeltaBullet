@@ -110,7 +110,7 @@ func _physics_process(delta: float) -> void:
 	aimTargetRecoil.z = lerp(aimTargetRecoil.z, 0.01, recoilReturnSpeed * delta)
 
 	##Add the pawns that the pawn currently has in their view
-	for i in gameManager.allPawns:
+	for i in %aiArea.get_overlapping_bodies():
 		if canSeeObject(i) and i != pawnOwner and pawnOwner.global_position.distance_to(i.global_position) < maxDetectionRange:
 			if !pawnsCanSee.has(i):
 				pawnsCanSee.append(i)

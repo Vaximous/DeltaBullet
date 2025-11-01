@@ -1,6 +1,13 @@
 extends Node
 
-#Pooling
+#Dictionaries
+var bullet_holes : Dictionary = {
+	"bullet_hole_flesh" : preload("res://assets/entities/bulletHoles/flesh/BulletHole_Flesh.tscn"),
+	"bullet_hole_generic" : preload("res://assets/entities/bulletHoles/generic/BulletHoleGeneric.tscn"),
+	"bullet_hole_metal" : preload("res://assets/entities/bulletHoles/metal/bulletHoleMetal.tscn"),
+	"bullet_hole_wood" : preload("res://assets/entities/bulletHoles/wood/WoodBullethole.tscn")
+}
+
 var entity_dict : Dictionary = {
 	"droplet" : preload("res://assets/entities/emitters/bloodDroplet/bloodDrop.tscn"),
 	"giblet": preload("res://assets/entities/gib/giblet.tscn"),
@@ -8,12 +15,38 @@ var entity_dict : Dictionary = {
 	"bullet_trail" : preload("res://assets/entities/bulletTrail/bulletTrail.tscn")
 }
 
+#Pooling bullet holes
+enum HOLE_MATERIALS{
+	GENERIC,
+	METAL,
+	WOOD,
+	FLESH
+}
+
+const MAX_HOLE_METAL = 32
+const MAX_HOLE_WOOD = 32
+const MAX_HOLE_FLESH = 32
+const MAX_HOLE_GENERIC = 32
+
+var bullet_hole_generic_pool: Array[BulletHole] = []
+var bullet_hole_generic_index := 0
+
+var bullet_hole_flesh_pool: Array[BulletHole] = []
+var bullet_hole_flesh_index := 0
+
+var bullet_hole_metal_pool: Array[BulletHole] = []
+var bullet_hole_metal_index := 0
+
+var bullet_hole_wood_pool: Array[BulletHole] = []
+var bullet_hole_wood_index := 0
+
+#Pooling entities
 const MAX_DROPLETS = 64
 const MAX_GIBS = 64
-const MAX_BULLETS = 2
+const MAX_BULLETS = 128
 const MAX_ROCKETS = 32
 const MAX_GRENADESHELLS = 32
-const MAX_TRAILS = 32
+const MAX_TRAILS = 64
 
 var droplet_pool: Array[BloodDroplet] = []
 var droplet_index := 0
@@ -42,6 +75,24 @@ var trail_pool: Array[BulletTrail] = []
 var trail_index := 0
 
 #region Create object from pool funcs
+func create_bullet_hole(parent:Node,bullet_hole_type:HOLE_MATERIALS, pos : Vector3 = Vector3.ONE, rot : float = 0.0, normal : Vector3 = Vector3.ONE,bulletVel : Vector3 = Vector3.ONE)->BulletHole:
+	var hole : BulletHole
+	if is_instance_valid(parent):
+		match bullet_hole_type:
+			HOLE_MATERIALS.GENERIC:
+				hole = bullet_hole_generic_pool[PoolingManager.bullet_hole_generic_index]
+				bullet_hole_generic_index = (PoolingManager.bullet_hole_generic_index + 1) % PoolingManager.MAX_HOLE_GENERIC
+
+
+			HOLE_MATERIALS.FLESH:
+				hole = bullet_hole_flesh_pool[PoolingManager.bullet_hole_flesh_index]
+				bullet_hole_flesh_index = (PoolingManager.bullet_hole_flesh_index + 1) % PoolingManager.MAX_HOLE_FLESH
+
+	if hole:
+		hole.reparent(parent)
+		hole.reset(pos, rot, normal, bulletVel)
+	return hole
+
 func create_projectile(world:WorldScene,projectile_type:BULLET_TYPES, position: Vector3,p_owner:Node3D, velocity: Vector3 = Vector3.ONE)->Projectile:
 	var projectile : Projectile
 	if is_instance_valid(world):
@@ -67,11 +118,13 @@ func create_trail(world:WorldScene, position_start: Vector3,position_end: Vector
 
 #region Pooling Funcs
 func initAllPools(world:WorldScene)->void:
-	await gameManager.worldLoaded
-	initDropletPool(world)
-	initGibletPool(world)
-	initBulletPool(world)
-	initTrailPool(world)
+	if is_instance_valid(world):
+		initDropletPool(world)
+		initGibletPool(world)
+		initBulletPool(world)
+		initTrailPool(world)
+		init_bullet_hole_flesh_pool(world)
+		init_bullet_hole_generic_pool(world)
 
 func initTrailPool(world:WorldScene) -> void:
 	trail_pool.clear()
@@ -108,4 +161,22 @@ func initDropletPool(world:WorldScene) -> void:
 		if is_instance_valid(world):
 			world.pooledObjects.add_child(d)
 			droplet_pool.append(d)
+
+func init_bullet_hole_generic_pool(world:WorldScene) -> void:
+	bullet_hole_generic_pool.clear()
+	for i in MAX_HOLE_GENERIC:
+		var d: BulletHole = bullet_holes["bullet_hole_generic"].instantiate()
+		d.disable()
+		if is_instance_valid(world):
+			world.pooledObjects.add_child(d)
+			bullet_hole_generic_pool.append(d)
+
+func init_bullet_hole_flesh_pool(world:WorldScene) -> void:
+	bullet_hole_flesh_pool.clear()
+	for i in MAX_HOLE_FLESH:
+		var d: BulletHole = bullet_holes["bullet_hole_flesh"].instantiate()
+		d.disable()
+		if is_instance_valid(world):
+			world.pooledObjects.add_child(d)
+			bullet_hole_flesh_pool.append(d)
 #endregion

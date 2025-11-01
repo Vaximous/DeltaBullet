@@ -21,11 +21,25 @@ func _ready() -> void:
 	InputMap.action_set_deadzone("gLookLeft", gameManager.deadzone)
 	InputMap.action_set_deadzone("gLookRight", gameManager.deadzone)
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	if !is_instance_valid(controllingPawn) or controllingPawn.isPawnDead or !mouseActionsEnabled or !gameManager.isMouseHidden():
 		return
+
+	#Distance based pawn node enabling, only works if the input component is attached.
+	#This is just for the logic as this would likely be implemented in a better way down the line
+	for i in gameManager.allPawns:
+		if !i == controllingPawn:
+			var enableDist = 20
+			var distance = controllingPawn.global_position.distance_to(i.global_position)
+
+			if distance <= enableDist:
+				gameManager.enable_pawn(i)
+			else:
+				gameManager.disable_pawn(i)
+
+
+
 
 	var cam := controllingPawn.attachedCam
 	var item := controllingPawn.currentItem

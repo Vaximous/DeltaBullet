@@ -44,7 +44,8 @@ anim_speed_max = 2.5
 
 [sub_resource type="QuadMesh" id="QuadMesh_5noax"]
 
-[sub_resource type="GDScript" id="GDScript_fb3dx"]
+[sub_resource type="GDScript" id="GDScript_jouan"]
+resource_name = "BloodSpurt_Small"
 script/source = "extends GPUParticles3D
 @export var minParticles : int = 5
 @export var maxParticles : int = 8
@@ -52,16 +53,22 @@ script/source = "extends GPUParticles3D
 
 func _ready()->void:
 	material_override = gameManager.bloodSpurts.pick_random()
-	amount = randi_range(minParticles,maxParticles)
+	play()
 	await get_tree().process_frame
+	if !finished.is_connected(_destroy):
+		finished.connect(_destroy)
+	get_tree().create_timer(2).timeout.connect(_destroy)
+
+func play()->void:
+	show()
+	process_mode = Node.PROCESS_MODE_INHERIT
+	amount = randi_range(minParticles,maxParticles)
 	restart()
 	%bloodSmoke.restart()
-	finished.connect(queue_free)
-	get_tree().create_timer(2).timeout.connect(queue_free)
-
 
 func _destroy()->void:
-	queue_free()
+	process_mode = Node.PROCESS_MODE_DISABLED
+	hide()
 "
 
 [sub_resource type="Curve" id="Curve_ksiwr"]
@@ -124,7 +131,7 @@ randomness = 0.54
 fixed_fps = 0
 process_material = SubResource("ParticleProcessMaterial_ow2gb")
 draw_pass_1 = SubResource("QuadMesh_5noax")
-script = SubResource("GDScript_fb3dx")
+script = SubResource("GDScript_jouan")
 
 [node name="bloodSmoke" type="GPUParticles3D" parent="."]
 unique_name_in_owner = true

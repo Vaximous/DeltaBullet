@@ -103,6 +103,7 @@ mesh = SubResource("PlaneMesh_d3vlo")
 skeleton = NodePath("../../..")
 
 [node name="animationPlayer" type="AnimationPlayer" parent="node3d" index="2"]
+unique_name_in_owner = true
 libraries = {
 &"": SubResource("AnimationLibrary_ksiwr")
 }

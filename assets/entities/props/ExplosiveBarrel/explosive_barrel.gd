@@ -14,7 +14,7 @@ func burn()->void:
 
 
 func createExplosion(burnchance:bool=true)->void:
-	if exploded: queue_free()
+	if exploded: destroy()
 	exploded = true
 	var explo : ExplosionArea = ExplosionArea.createExplosionArea(explosionRadius,90,explosionImpulse,null)
 	gameManager.world.worldMisc.add_child(explo)
@@ -24,12 +24,19 @@ func createExplosion(burnchance:bool=true)->void:
 	explo.explosionLOS = false
 	explo.explode()
 
+func destroy()->void:
+	for i in get_children():
+		if i is BulletHole:
+			i.reparent(gameManager.world.pooledObjects)
+			i.active = false
+			i.disable()
+	queue_free()
 
 func _on_health_component_health_depleted(dealer: Node3D) -> void:
 	_dealer = dealer
 	if !exploded:
 		createExplosion(burnChance)
-	queue_free()
+	destroy()
 
 
 func _on_hitbox_damaged(amount: Variant, impulse: Variant, vector: Variant, dealer: Variant) -> void:

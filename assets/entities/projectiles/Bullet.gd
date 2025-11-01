@@ -52,14 +52,23 @@ func enter_material(material: DB_PhysicsMaterial, collisionObject: Object, colli
 	insideMaterial = material
 	#print(material)
 	if collisionPoint.is_finite():
-		globalParticles.spawnBulletHolePackedScene(
-			material.bullet_hole,
-			collisionObject,
-			collisionPoint,
-			randf_range(0, 180),
-			collisionNormal.round(),
-			velocity.normalized() * randf_range(8, 20)
+		PoolingManager.create_bullet_hole(
+		collisionObject,
+		material.bullet_hole,
+		collisionPoint,
+		randf_range(0, 180),
+		collisionNormal.round(),
+		velocity.normalized() * randf_range(8, 20)
 		)
+
+		#globalParticles.spawnBulletHolePackedScene(
+			#material.bullet_hole,
+			#collisionObject,
+			#collisionPoint,
+			#randf_range(0, 180),
+			#collisionNormal.round(),
+			#velocity.normalized() * randf_range(8, 20)
+		#)
 
 	if collisionObject.has_method(&"hit"):
 		if is_instance_valid(projectile_owner):

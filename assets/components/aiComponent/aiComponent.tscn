@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://b53hvcf0hvvkw"]
+[gd_scene load_steps=14 format=3 uid="uid://b53hvcf0hvvkw"]
 
 [ext_resource type="Script" uid="uid://b268i2svd6x8f" path="res://addons/finite_state_machine/scripts/finite_state_machine.gd" id="2_ubyph"]
 [ext_resource type="Script" uid="uid://6gdyem6cg7ut" path="res://assets/components/aiComponent/aiComponent.gd" id="4_gaqok"]
@@ -21,6 +21,9 @@ cull_mode = 2
 albedo_color = Color(1, 0, 0, 0.309804)
 
 [sub_resource type="ImmediateMesh" id="ImmediateMesh_nrp35"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_nrp35"]
+radius = 10.153
 
 [node name="aiComponent" type="Node3D"]
 script = ExtResource("4_gaqok")
@@ -104,6 +107,14 @@ debug_shape_custom_color = Color(1, 0.823529, 0, 1)
 [node name="visualMesh" type="MeshInstance3D" parent="."]
 material_override = SubResource("StandardMaterial3D_giynp")
 mesh = SubResource("ImmediateMesh_nrp35")
+
+[node name="aiArea" type="Area3D" parent="."]
+unique_name_in_owner = true
+collision_layer = 0
+collision_mask = 8
+
+[node name="collisionShape3d" type="CollisionShape3D" parent="aiArea"]
+shape = SubResource("SphereShape3D_nrp35")
 
 [connection signal="velocity_computed" from="navigationAgent3d" to="." method="_on_navigation_agent_3d_velocity_computed"]
 [connection signal="timeout" from="pawnFSM/Wander/forceTargetReset" to="pawnFSM/Wander" method="_on_force_target_reset_timeout"]

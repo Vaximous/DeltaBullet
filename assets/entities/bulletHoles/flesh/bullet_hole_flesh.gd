@@ -2,8 +2,8 @@ extends BulletHole
 
 
 func _on_bullet_hole_emitted() -> void:
-	var spurts = [$bloodSpurt, $bloodSpurtBigSpray]
-	spurts.pick_random().queue_free()
+	var spurts = [%bloodSpurt, %bloodSpurtBigSpray]
+	spurts.pick_random().play()
 	for i in randi_range(4, 8):
 		gameManager.createDroplet(
 			global_position,

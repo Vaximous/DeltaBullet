@@ -9,7 +9,14 @@ const defaultEaseType = Tween.EASE_OUT
 
 @export_category("Bullet Hole")
 var removing: bool = false
-@export var forceGlobalPosition: bool = false
+var active : bool = false:
+	set(value):
+		active = value
+		if active:
+			process_mode = Node.PROCESS_MODE_INHERIT
+		else:
+			process_mode = Node.PROCESS_MODE_DISABLED
+
 @export var bulletTextures: Array[Texture2D]
 @export var decal: Decal
 @export var particleArray: Array[GPUParticles3D]
@@ -35,12 +42,12 @@ func _enter_tree() -> void:
 
 
 func _ready() -> void:
+	pass
 	#gameManager.decals.append(self)
-	gameManager.registerDecal(self)
-	initializeBulletHole()
+	#gameManager.registerDecal(self)
+	#initializeBulletHole()
 
 #	gameManager.beginCleanup()
-
 
 func deleteHole() -> void:
 	if !removing:
@@ -49,8 +56,22 @@ func deleteHole() -> void:
 			holeTween.kill()
 		holeTween = create_tween().set_ease(defaultEaseType).set_trans(defaultTransitionType)
 		await holeTween.tween_property(decal, "modulate", Color.TRANSPARENT, 0.25).finished
-		queue_free()
+		disable()
 
+func disable()->void:
+	active = false
+	hide()
+
+func reset(_pos : Vector3 = Vector3.ONE, _rot : float = 0.0, _normal : Vector3 = Vector3.ONE,_bulletVel : Vector3 = Vector3.ONE)->void:
+	active = true
+	decal.modulate = Color.WHITE
+	removing = false
+	normal = _normal
+	rot = _rot
+	colPoint = _pos
+	bulletVelocity = _bulletVel
+	initializeBulletHole()
+	show()
 
 func setSoundVariables(audio: AudioStreamPlayer3D) -> void:
 	audio.bus = &"Sounds"
@@ -68,15 +89,17 @@ func setSoundVariables(audio: AudioStreamPlayer3D) -> void:
 
 
 func initializeBulletHole() -> void:
+	if !active: return
 	#Play the sounds
 	for sounds in soundArray:
 		#sounds.max_db = audioVolume
 		#print(audioVolume)
+		sounds.process_mode = Node.ProcessMode.PROCESS_MODE_INHERIT
 		sounds.volume_db = audioVolume
-		sounds.reparent(gameManager.world.worldMisc)
+		#sounds.reparent(gameManager.world.worldMisc)
 		setSoundVariables(sounds)
 		#print(sounds.volume_db)
-		sounds.finished.connect(sounds.queue_free)
+		sounds.finished.connect(func():sounds.process_mode = Node.PROCESS_MODE_DISABLED)
 		sounds.play()
 
 	#Make particle emitters face the direction of the normal
@@ -92,7 +115,8 @@ func initializeBulletHole() -> void:
 
 	#Create the timer for the hole to fade
 	var timer = get_tree().create_timer(UserConfig.game_decal_remove_time)
-	timer.timeout.connect(deleteHole)
+	if !timer.timeout.is_connected(deleteHole):
+		timer.timeout.connect(deleteHole)
 
 	#Assign Bullet Hole Textures
 	if bulletTextures.size() > 0:
@@ -107,21 +131,25 @@ func initializeBulletHole() -> void:
 		if particles.is_queued_for_deletion():
 			continue
 		#Forces the position of the particles to be set to the collision point (Wont be used much, is an old thing)
-		if forceGlobalPosition:
-			await get_tree().process_frame
-			if colPoint != Vector3.ZERO:
-				particles.global_position = colPoint
-			else:
-				particles.queue_free()
-		#Reparent to particles in world
-		particles.reparent(gameManager.world.worldParticles)
+		#if forceGlobalPosition:
+			#await get_tree().process_frame
+			#if colPoint != Vector3.ZERO:
+				#particles.global_position = colPoint
+			#else:
+				#disable()
+		##Reparent to particles in world
+		#particles.reparent(gameManager.world.worldParticles)
 
 		#Connect finished to queue_free()
-		if !particles.finished.is_connected(particles.queue_free):
-			particles.finished.connect(particles.queue_free)
+		if !particles.finished.is_connected(func():particles.process_mode = Node.PROCESS_MODE_DISABLED):
+			particles.finished.connect(func():particles.process_mode = Node.PROCESS_MODE_DISABLED)
 
 		#Turns the particle on
-		particles.emitting = true
+		particles.top_level = true
+		particles.process_mode = Node.PROCESS_MODE_INHERIT
+		particles.global_transform = gameManager.create_surface_transform(colPoint, bulletVelocity, normal)
+		particles.restart()
+
 
 
 func setDecalScale() -> void:

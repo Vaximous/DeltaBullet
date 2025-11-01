@@ -74,6 +74,7 @@ var richPresenceEnabled: bool = false
 var activeCamera: PlayerCamera = null
 var debugEnabled: bool = false
 var pawnDebug: bool = false
+var nearbyPawns : Array[BasePawn]
 #endregion
 
 #region Settings
@@ -109,8 +110,9 @@ var dialogueCamLerpSpeed: float = 5.0
 var world: WorldScene:
 	set(value):
 		world = value
-		if is_instance_valid(world):
-			PoolingManager.initAllPools(world)
+		#await get_tree().process_frame
+		#if is_instance_valid(world):
+			#PoolingManager.initAllPools(world)
 var pauseMenu: PauseMenu
 #endregion
 
@@ -126,7 +128,7 @@ func _ready() -> void:
 	#worldLoaded.connect(PoolingManager.initAllPools.bind(gameManager.world))
 	#worldLoaded.connect(PoolingManager.initGibletPool)
 	worldLoaded.connect(giveModifierToPlayers)
-	UserConfig.configs_updated.connect(cleanupChecker)
+	#UserConfig.configs_updated.connect(cleanupChecker)
 	add_child(soundPlayer)
 	initializeSteam()
 	DisplayServer.window_set_title(ProjectSettings.get_setting("application/config/name"))
@@ -139,6 +141,16 @@ func _ready() -> void:
 		pass
 	await get_tree().process_frame
 	SmackneckClient.connect_to_masterserver()
+
+func disable_pawn(pawn:BasePawn)->void:
+	if pawn.process_mode == Node.PROCESS_MODE_DISABLED: return
+
+	pawn.process_mode = Node.PROCESS_MODE_DISABLED
+
+func enable_pawn(pawn:BasePawn)->void:
+	if pawn.process_mode == Node.PROCESS_MODE_INHERIT: return
+
+	pawn.process_mode = Node.PROCESS_MODE_INHERIT
 
 func sm_PushGame()->void:
 	SmackneckClient.put_message("MESSAGE",{"msg":"set_game", "game": "Delta Bullet"})
@@ -170,7 +182,8 @@ func _physics_process(delta: float) -> void:
 
 	for i in allPawns:
 		if is_instance_valid(i):
-			i.update_pawn_movement(delta)
+			if !i.process_mode == Node.ProcessMode.PROCESS_MODE_DISABLED or i.isPlayerPawn():
+				i.update_pawn_movement(delta)
 
 func _process(delta: float) -> void:
 		#physEntities = Engine.get_main_loop().get_nodes_in_group(&"physicsEntity")

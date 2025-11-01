@@ -134,3 +134,5 @@ func setupWorld()-> void:
 				print_rich("[color=red]The soundscape.. Its null retard.[/color]")
 	else:
 		print_rich("[color=red]Set the world data for this world!!![/color]")
+
+	PoolingManager.initAllPools(self)

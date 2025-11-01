@@ -4,6 +4,8 @@ class_name BulletTrail
 var active : bool = false:
 	set(value):
 		active = value
+		set_physics_process(value)
+		set_process(value)
 		if active:
 			process_mode = Node.PROCESS_MODE_INHERIT
 		else:
@@ -29,8 +31,10 @@ var bulletEnd : Vector3
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta)->void:
+	if !active: return
+
 	if onscreenNotifier.is_on_screen():
-		if mesh:
+		if (mesh as Mesh):
 			bulletStart = lerp(bulletStart,Vector3(bulletEnd.x,bulletEnd.y,bulletEnd.z),delta*bulletSpeed)
 			mesh.clear_surfaces()
 			mesh.surface_begin(Mesh.PRIMITIVE_LINES)
@@ -47,27 +51,31 @@ func _physics_process(delta)->void:
 
 func disable()->void:
 	active = false
+	if mesh:
+		mesh.clear_surfaces()
 	hide()
 
 func reset(pos_start: Vector3, pos_end : Vector3)->void:
 	initTrail(pos_start,pos_end)
-	transparency = 0
 	show()
 	active = true
 
+
 func initTrail(pos1, pos2)->void:
+	get_tree().create_timer(2).timeout.connect(disable)
+	transparency = 0
 	bulletStart = pos1
 	bulletEnd = pos2
 	if !mesh:
 		var meshDraw = ImmediateMesh.new()
 		self.mesh = meshDraw
-		meshDraw.surface_begin(Mesh.PRIMITIVE_LINES, get_material_override())
-		meshDraw.surface_add_vertex(bulletStart)
-		meshDraw.surface_add_vertex(bulletEnd)
-		meshDraw.surface_end()
 	else:
-		bulletStart = pos1
-		bulletEnd = pos2
+		mesh.clear_surfaces()
+	mesh.surface_begin(Mesh.PRIMITIVE_LINES, get_material_override())
+	mesh.surface_add_vertex(bulletStart)
+	mesh.surface_add_vertex(bulletEnd)
+	mesh.surface_end()
+
 
 func _on_timer_timeout()->void:
 	disable()

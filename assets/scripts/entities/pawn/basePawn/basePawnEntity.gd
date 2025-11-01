@@ -613,6 +613,9 @@ func checkComponents() -> void:
 
 func endPawn() -> void:
 	if is_instance_valid(self) and not self.is_queued_for_deletion():
+		for i in get_children():
+			if i is BulletHole:
+				i.reparent(gameManager.world.pooledObjects)
 		get_tree().create_timer(2).timeout.connect(queue_free)
 		#process_mode = Node.PROCESS_MODE_DISABLED
 		#direction = Vector3.ZERO

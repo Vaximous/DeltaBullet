@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://cj1va0l7e2wcb"]
+[gd_scene load_steps=29 format=3 uid="uid://cj1va0l7e2wcb"]
 
 [ext_resource type="PackedScene" uid="uid://dend7ate7mq6e" path="res://assets/entities/bulletHoles/default/BulletHoleBase.tscn" id="1_y0rpe"]
 [ext_resource type="Texture2D" uid="uid://bec1o4nxcwu58" path="res://assets/textures/bullet/holes/flesh/flesh1.png" id="2_g3210"]
@@ -19,6 +19,33 @@ stream_0/stream = ExtResource("3_tt2cq")
 stream_1/stream = ExtResource("4_etq7i")
 stream_2/stream = ExtResource("5_s28yx")
 stream_3/stream = ExtResource("7_0i6sn")
+
+[sub_resource type="GDScript" id="GDScript_fb3dx"]
+script/source = "extends GPUParticles3D
+@export var minParticles : int = 5
+@export var maxParticles : int = 8
+
+
+func _ready()->void:
+	material_override = gameManager.bloodSpurts.pick_random()
+	play()
+	await get_tree().process_frame
+	if !finished.is_connected(_destroy):
+		finished.connect(_destroy)
+	get_tree().create_timer(2).timeout.connect(_destroy)
+
+func play()->void:
+	show()
+	process_mode = Node.PROCESS_MODE_INHERIT
+	amount = randi_range(minParticles,maxParticles)
+	restart()
+	%bloodSmoke.restart()
+	%animationPlayer.play(\"splat\")
+
+func _destroy()->void:
+	process_mode = Node.PROCESS_MODE_DISABLED
+	hide()
+"
 
 [sub_resource type="Gradient" id="Gradient_cb5rd"]
 offsets = PackedFloat32Array(0.0215054, 1)
@@ -125,7 +152,6 @@ size = Vector2(0.3, 0.3)
 
 [node name="bulletHole_Flesh" node_paths=PackedStringArray("particleArray", "soundArray") instance=ExtResource("1_y0rpe")]
 script = ExtResource("2_tbna7")
-forceGlobalPosition = true
 bulletTextures = Array[Texture2D]([ExtResource("2_g3210")])
 particleArray = [NodePath("bloodSpurt"), NodePath("impactParticle"), NodePath("smokeParticle"), NodePath("bloodSpurtBigSpray")]
 soundArray = [NodePath("audioStreamPlayer3d")]
@@ -141,9 +167,14 @@ bus = &"Sounds"
 attenuation_filter_db = 0.0
 
 [node name="bloodSpurt" parent="." index="2" instance=ExtResource("6_b318v")]
+unique_name_in_owner = true
 physics_interpolation_mode = 1
+visible = false
 
 [node name="bloodSpurtBigSpray" parent="." index="3" instance=ExtResource("9_vuivo")]
+unique_name_in_owner = true
+visible = false
+script = SubResource("GDScript_fb3dx")
 
 [node name="impactParticle" type="GPUParticles3D" parent="." index="4"]
 physics_interpolation_mode = 1

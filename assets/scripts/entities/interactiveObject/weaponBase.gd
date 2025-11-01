@@ -509,7 +509,12 @@ func raycastHit(raycaster: RayCast3D = null):
 	if colliding != null:
 		var phys_mat: DB_PhysicsMaterial = gameManager.getColliderPhysicsMaterial(colliding)
 		#Create the bullet hole
-		globalParticles.spawnBulletHolePackedScene(phys_mat.bullet_hole, colliding, hitPoint, randf_range(0, 2), hitNormal)
+		PoolingManager.create_bullet_hole(gameManager.world,
+		phys_mat.bullet_hole,
+		hitPoint,
+		randf_range(0,2),
+		hitNormal
+		)
 		#if colliding.is_in_group("Flesh"):
 			#var fleshHole = globalParticles.spawnBulletHole("Flesh",colliding,hitPoint,randf_range(0, 2),hitNormal)
 		#else:

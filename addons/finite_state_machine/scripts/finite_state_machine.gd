@@ -64,7 +64,8 @@ func _ready() -> void:
 # Calls the 'on_physics_process' function on the current state.
 func _physics_process(delta: float) -> void:
 	if is_instance_valid(current_state) and current_state.is_current_state():
-		current_state.on_physics_process(delta)
+		if Engine.get_physics_frames() % 16 == 0:
+			current_state.on_physics_process(delta)
 
 
 #AIManager handling

@@ -550,7 +550,7 @@ func _physics_process(delta: float) -> void:
 
 				if attachedCam:
 					#directionNormal = directionNormal.rotated(Vector3.UP,-attachedCam.horizontal.global_rotation_degrees.y).normalized()
-					print(directionNormal.dot(Vector3(coverNormal.x, 0, coverNormal.z)))
+					#print(directionNormal.dot(Vector3(coverNormal.x, 0, coverNormal.z)))
 					if directionNormal.dot(Vector3(coverNormal.x, 0, coverNormal.z)) > 0.9:
 						if peekTween:
 							peekTween.kill()

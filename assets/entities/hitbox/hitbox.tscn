@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cos0eijlpcj7n"]
 
-[ext_resource type="Script" path="res://assets/scripts/entities/hitbox/hitbox.gd" id="1_qj7f6"]
+[ext_resource type="Script" uid="uid://bljf2d3r4oqda" path="res://assets/scripts/entities/hitbox/hitbox.gd" id="1_qj7f6"]
 
 [node name="Hitbox" type="Area3D" groups=["Flesh"]]
 collision_layer = 16

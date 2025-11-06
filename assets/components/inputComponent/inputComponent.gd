@@ -29,17 +29,13 @@ func _process(_delta: float) -> void:
 	#Distance based pawn node enabling, only works if the input component is attached.
 	#This is just for the logic as this would likely be implemented in a better way down the line
 	for i in gameManager.allPawns:
-		if !i == controllingPawn:
-			var enableDist = 20
+		if !i == controllingPawn and !i.has_meta(&"ignore_activation_range"):
 			var distance = controllingPawn.global_position.distance_to(i.global_position)
 
-			if distance <= enableDist:
+			if distance <= gameManager.pawn_activation_range:
 				gameManager.enable_pawn(i)
 			else:
 				gameManager.disable_pawn(i)
-
-
-
 
 	var cam := controllingPawn.attachedCam
 	var item := controllingPawn.currentItem
@@ -57,6 +53,19 @@ func _process(_delta: float) -> void:
 
 	if leftClick:
 		_handleFire(controllingPawn)
+
+func _physics_process(delta: float) -> void:
+	if !is_instance_valid(controllingPawn) or controllingPawn.isPawnDead or !mouseActionsEnabled or !gameManager.isMouseHidden():
+		return
+
+	for i in PoolingManager.active_entities:
+		if !is_instance_valid(i): return
+
+		if i.alive:
+			var distance = controllingPawn.global_position.distance_to(i.global_position)
+
+			if distance <= gameManager.entity_physics_activation_range:
+				i.process_entity(delta)
 
 func _input(event: InputEvent) -> void:
 	if !is_instance_valid(controllingPawn) or controllingPawn.isPawnDead or !gameManager.isMouseHidden():

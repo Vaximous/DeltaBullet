@@ -9,8 +9,10 @@ var alive: bool = false:
 		set_physics_process(value)
 		if alive:
 			process_mode = Node.PROCESS_MODE_INHERIT
+			#PoolingManager.active_entities.append(self)
 		else:
 			process_mode = Node.PROCESS_MODE_DISABLED
+			#PoolingManager.active_entities.erase(self)
 var norm: Vector3
 var params: PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.new()
 

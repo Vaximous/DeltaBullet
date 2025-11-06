@@ -14,18 +14,14 @@ signal damaged(amount,impulse,vector, dealer,bone)
 @export var hitboxDamageMult:float = 1.0
 var boneId:int
 # Called when the node enters the scene tree for the first time.
-func _exit_tree() -> void:
-	for i in get_children():
-		if i is BulletHole:
-			i.reparent(gameManager.world.pooledObjects)
-
 func _ready()->void:
 	if enabled:
 		if is_instance_valid(healthComponent.componentOwner):
 			if healthComponent.componentOwner is BasePawn:
 				await healthComponent.componentOwner.ready
 				healthComponent.componentOwner.hitboxes.append(self)
-				set_meta(&"physics_material_override", preload("res://assets/resources/PhysicsMaterials/flesh_physics_material.tres"))
+				var mat : DB_PhysicsMaterial = preload("res://assets/resources/PhysicsMaterials/flesh_physics_material.tres")
+				set_meta(&"physics_material_override", mat)
 		if !get_parent() == null:
 			if get_parent() is BoneAttachment3D:
 				boneId = get_parent().get_bone_idx()

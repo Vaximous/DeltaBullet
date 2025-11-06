@@ -5,11 +5,6 @@ var attached : Node3D:
 		if value != null:
 			drawString()
 
-func _physics_process(delta: float) -> void:
-	super(delta)
-	if is_instance_valid(attached) and attached != null:
-		updateString()
-
 func updateString()->void:
 	if %string.mesh:
 		%string.mesh.clear_surfaces()

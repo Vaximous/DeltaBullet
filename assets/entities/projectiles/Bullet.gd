@@ -22,7 +22,7 @@ func _physics_process(delta: float) -> void:
 
 	var hit_data = step(velocity * delta)
 
-	if not hit_data.has("col"):
+	if  !hit_data.has("col"):
 		return
 
 	last_hit_data = hit_data
@@ -32,6 +32,8 @@ func _physics_process(delta: float) -> void:
 	#var remainder: float = hit_data.remainder
 
 	var collisionMaterial: DB_PhysicsMaterial = gameManager.getColliderPhysicsMaterial(col)
+
+	if !collisionMaterial: return
 
 	if collisionMaterial != insideMaterial:
 		enter_material(collisionMaterial, col, col_point, col_normal)

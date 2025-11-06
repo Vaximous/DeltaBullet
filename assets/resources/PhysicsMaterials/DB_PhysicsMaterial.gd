@@ -1,5 +1,5 @@
-extends PhysicsMaterial
 class_name DB_PhysicsMaterial
+extends PhysicsMaterial
 
 @export_subgroup("Penetration")
 ##Power Cost per distance

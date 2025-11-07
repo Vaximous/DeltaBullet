@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://cj4o5uyit11od"]
+
+[ext_resource type="Script" uid="uid://b7vtjc2j11vag" path="res://assets/entities/reticle_cursor/reticle_cursor.gd" id="1_y0o3m"]
+
+[node name="ReticleCrosshair" type="Node2D"]
+script = ExtResource("1_y0o3m")
+arcs = 0

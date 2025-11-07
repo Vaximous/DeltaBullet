@@ -31,6 +31,8 @@ func _physics_process(delta: float) -> void:
 	if not alive:
 		return
 
+
+
 	global_position += velocity * delta
 	velocity += get_gravity() * delta * 10
 

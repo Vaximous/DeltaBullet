@@ -110,19 +110,20 @@ func _physics_process(delta: float) -> void:
 	aimTargetRecoil.z = lerp(aimTargetRecoil.z, 0.01, recoilReturnSpeed * delta)
 
 	##Add the pawns that the pawn currently has in their view
-	for i in %aiArea.get_overlapping_bodies():
-		if canSeeObject(i) and i != pawnOwner and pawnOwner.global_position.distance_to(i.global_position) < maxDetectionRange:
-			if !pawnsCanSee.has(i):
-				pawnsCanSee.append(i)
-			##For now just switch to searching
-			if stateMachine.current_state != stateMachine.get_state("Attack"):
-				if !checkIfTargetIsOnTeam(i) or checkIfTargetIsOnHostileTeam(i):
-					if !targetedPawns.has(i):
-						targetedPawns.append(i)
-					stateMachine.change_state("Attack")
-		elif !canSeeObject(i) or pawnOwner.global_position.distance_to(i.global_position) > maxDetectionRange:
-			if pawnsCanSee.has(i):
-				pawnsCanSee.erase(i)
+	if Engine.get_physics_frames() % 16 == 0:
+		for i in %aiArea.get_overlapping_bodies():
+			if canSeeObject(i) and i != pawnOwner and pawnOwner.global_position.distance_to(i.global_position) < maxDetectionRange:
+				if !pawnsCanSee.has(i):
+					pawnsCanSee.append(i)
+				##For now just switch to searching
+				if stateMachine.current_state != stateMachine.get_state("Attack"):
+					if !checkIfTargetIsOnTeam(i) or checkIfTargetIsOnHostileTeam(i):
+						if !targetedPawns.has(i):
+							targetedPawns.append(i)
+						stateMachine.change_state("Attack")
+			elif !canSeeObject(i) or pawnOwner.global_position.distance_to(i.global_position) > maxDetectionRange:
+				if pawnsCanSee.has(i):
+					pawnsCanSee.erase(i)
 
 
 ##Returns ai_process_enabled

@@ -75,6 +75,8 @@ var activeCamera: PlayerCamera = null
 var debugEnabled: bool = false
 var pawnDebug: bool = false
 var nearbyPawns : Array[BasePawn]
+var pawn_activation_range : float = 26
+var entity_physics_activation_range : float = 10
 #endregion
 
 #region Settings
@@ -521,6 +523,7 @@ func restartScene() -> void:
 	playerPawns.clear()
 	targetedEnemies.clear()
 	allPawns.clear()
+	PoolingManager.active_entities.clear()
 	musicManager.fade_all_audioplayers_out(0.5)
 	await Fade.fade_out(0.3, Color(0, 0, 0, 1), "GradientVertical", false, true).finished
 	get_tree().reload_current_scene()
@@ -778,6 +781,7 @@ func loadWorld(worldscene: String, fadein: bool = false) -> void:
 	get_tree().change_scene_to_file("res://assets/scenes/menu/loadingscreen/emptyLoaderScene.tscn")
 	await get_tree().process_frame
 	allPawns.clear()
+	PoolingManager.active_entities.clear()
 	#freeOrphanNodes()
 	musicManager.fade_all_audioplayers_out()
 	var loader = load("res://assets/scenes/menu/loadingscreen/loadingScreen.tscn")
@@ -900,8 +904,9 @@ func removeCustomization() -> void:
 		if i.is_in_group(&"customizationUI"):
 			i.queue_free()
 	for i in playerPawns:
-		i.inputComponent.movementEnabled = true
-		i.inputComponent.mouseActionsEnabled = true
+		if is_instance_valid(i) and is_instance_valid(i.inputComponent):
+			i.inputComponent.movementEnabled = true
+			i.inputComponent.mouseActionsEnabled = true
 	#gameManager.pauseMenu.canPause = true
 
 

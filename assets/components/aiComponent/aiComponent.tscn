@@ -23,7 +23,7 @@ albedo_color = Color(1, 0, 0, 0.309804)
 [sub_resource type="ImmediateMesh" id="ImmediateMesh_nrp35"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_nrp35"]
-radius = 10.153
+radius = 15.0
 
 [node name="aiComponent" type="Node3D"]
 script = ExtResource("4_gaqok")

@@ -74,6 +74,8 @@ var gib_index := 0
 var trail_pool: Array[BulletTrail] = []
 var trail_index := 0
 
+var active_entities : Array
+
 #region Create object from pool funcs
 func create_bullet_hole(parent:Node,bullet_hole_type:HOLE_MATERIALS, pos : Vector3 = Vector3.ONE, rot : float = 0.0, normal : Vector3 = Vector3.ONE,bulletVel : Vector3 = Vector3.ONE)->BulletHole:
 	var hole : BulletHole
@@ -82,8 +84,12 @@ func create_bullet_hole(parent:Node,bullet_hole_type:HOLE_MATERIALS, pos : Vecto
 			HOLE_MATERIALS.GENERIC:
 				hole = bullet_hole_generic_pool[PoolingManager.bullet_hole_generic_index]
 				bullet_hole_generic_index = (PoolingManager.bullet_hole_generic_index + 1) % PoolingManager.MAX_HOLE_GENERIC
-
-
+			HOLE_MATERIALS.WOOD:
+				hole = bullet_hole_wood_pool[PoolingManager.bullet_hole_wood_index]
+				bullet_hole_wood_index = (PoolingManager.bullet_hole_wood_index + 1) % PoolingManager.MAX_HOLE_WOOD
+			HOLE_MATERIALS.METAL:
+				hole = bullet_hole_metal_pool[PoolingManager.bullet_hole_metal_index]
+				bullet_hole_metal_index = (PoolingManager.bullet_hole_metal_index + 1) % PoolingManager.MAX_HOLE_METAL
 			HOLE_MATERIALS.FLESH:
 				hole = bullet_hole_flesh_pool[PoolingManager.bullet_hole_flesh_index]
 				bullet_hole_flesh_index = (PoolingManager.bullet_hole_flesh_index + 1) % PoolingManager.MAX_HOLE_FLESH
@@ -123,8 +129,8 @@ func initAllPools(world:WorldScene)->void:
 		initGibletPool(world)
 		initBulletPool(world)
 		initTrailPool(world)
-		init_bullet_hole_flesh_pool(world)
-		init_bullet_hole_generic_pool(world)
+		for i in HOLE_MATERIALS.size():
+			init_bullet_hole_pool(i,world)
 
 func initTrailPool(world:WorldScene) -> void:
 	trail_pool.clear()
@@ -161,6 +167,39 @@ func initDropletPool(world:WorldScene) -> void:
 		if is_instance_valid(world):
 			world.pooledObjects.add_child(d)
 			droplet_pool.append(d)
+
+func init_bullet_hole_pool(bullet_hole : HOLE_MATERIALS, world:WorldScene)->void:
+	if !is_instance_valid(world): return
+	var d : BulletHole
+	match bullet_hole:
+		HOLE_MATERIALS.WOOD:
+			bullet_hole_wood_pool.clear()
+			for i in MAX_HOLE_WOOD:
+				d = bullet_holes["bullet_hole_wood"].instantiate()
+				bullet_hole_wood_pool.append(d)
+				d.disable()
+				world.pooledObjects.add_child(d)
+		HOLE_MATERIALS.METAL:
+			bullet_hole_metal_pool.clear()
+			for i in MAX_HOLE_METAL:
+				d = bullet_holes["bullet_hole_metal"].instantiate()
+				bullet_hole_metal_pool.append(d)
+				d.disable()
+				world.pooledObjects.add_child(d)
+		HOLE_MATERIALS.FLESH:
+			bullet_hole_flesh_pool.clear()
+			for i in MAX_HOLE_FLESH:
+				d = bullet_holes["bullet_hole_flesh"].instantiate()
+				bullet_hole_flesh_pool.append(d)
+				d.disable()
+				world.pooledObjects.add_child(d)
+		HOLE_MATERIALS.GENERIC:
+			bullet_hole_generic_pool.clear()
+			for i in MAX_HOLE_GENERIC:
+				d = bullet_holes["bullet_hole_generic"].instantiate()
+				bullet_hole_generic_pool.append(d)
+				d.disable()
+				world.pooledObjects.add_child(d)
 
 func init_bullet_hole_generic_pool(world:WorldScene) -> void:
 	bullet_hole_generic_pool.clear()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=4 uid="uid://dlbbothh8l8p7"]
+[gd_scene load_steps=69 format=4 uid="uid://dlbbothh8l8p7"]
 
 [ext_resource type="PackedScene" uid="uid://b4dpjminsf4mx" path="res://assets/scenes/worlds/worldBase/worldBase.tscn" id="1_826ci"]
 [ext_resource type="PackedScene" uid="uid://boicvk4qeqmbd" path="res://assets/entities/pawnSpawn/pawnSpawn.tscn" id="2_ui4qq"]
@@ -42,6 +42,7 @@
 [ext_resource type="PackedScene" uid="uid://bn07wnk5k005c" path="res://assets/entities/weapons/HoneyBadger/honeybadger.tscn" id="20_ie1tj"]
 [ext_resource type="Curve" uid="uid://cex2ggwxevnuj" path="res://assets/entities/projectiles/linear_falloff_curve.tres" id="21_3yrc4"]
 [ext_resource type="Texture2D" uid="uid://c7b38t83ckisx" path="res://assets/textures/crosshair/crosshair161.png" id="22_habjy"]
+[ext_resource type="PhysicsMaterial" uid="uid://cc5ltv4umlj8t" path="res://assets/resources/PhysicsMaterials/metal_physics_material.tres" id="35_hqeoe"]
 [ext_resource type="PackedScene" uid="uid://fbfo4av0cb8r" path="res://assets/entities/wallMountedMedkit/WallMountedMedkit.tscn" id="38_h8qm6"]
 [ext_resource type="PackedScene" uid="uid://cg7xkjglc0gqo" path="res://assets/entities/props/hospitalCozyChair.tscn" id="39_xcftx"]
 
@@ -62,7 +63,7 @@ metadata/_custom_type_script = "uid://b31u24at18p5t"
 [sub_resource type="Sky" id="Sky_nj1fe"]
 sky_material = SubResource("PanoramaSkyMaterial_tipwx")
 
-[sub_resource type="Environment" id="Environment_xcftx"]
+[sub_resource type="Environment" id="Environment_1p1te"]
 background_mode = 2
 sky = SubResource("Sky_nj1fe")
 reflected_light_source = 1
@@ -390,7 +391,7 @@ weaponToEquip = 1
 pawnColor = Color(0.596094, 0.1343908, 0.15959242, 1)
 
 [node name="worldEnvironment" parent="Environment" index="0"]
-environment = SubResource("Environment_xcftx")
+environment = SubResource("Environment_1p1te")
 
 [node name="reflectionProbe" parent="Environment" index="1"]
 visible = false
@@ -623,6 +624,7 @@ material = SubResource("StandardMaterial3D_tb7db")
 layers = 0
 material_override = SubResource("StandardMaterial3D_gyml6")
 use_collision = true
+metadata/physics_material_override = ExtResource("35_hqeoe")
 
 [node name="csgBox3d" type="CSGBox3D" parent="Geometry/navigationRegion3d/GeoCombiner/Floors" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, 0, 4.5)

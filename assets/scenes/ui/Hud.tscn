@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://1d1rfqprpnrb"]
+[gd_scene load_steps=36 format=3 uid="uid://1d1rfqprpnrb"]
 
 [ext_resource type="Script" uid="uid://bqcb21u5nterd" path="res://assets/entities/camera/HUD.gd" id="1_on6xd"]
 [ext_resource type="Shader" uid="uid://c75blutw6w8na" path="res://assets/scenes/ui/radialBlur.gdshader" id="2_4y830"]
@@ -17,6 +17,7 @@
 [ext_resource type="AudioStream" uid="uid://d0dglkiwj36a3" path="res://assets/sounds/misc/bullettimeon.wav" id="13_paei5"]
 [ext_resource type="AudioStream" uid="uid://d3dmtb1tyo4ct" path="res://assets/sounds/misc/bullettimeoff.wav" id="14_i7djv"]
 [ext_resource type="Texture2D" uid="uid://t12ascuq76yu" path="res://assets/textures/ui/sniperscope.png" id="15_dux2x"]
+[ext_resource type="PackedScene" uid="uid://cj4o5uyit11od" path="res://assets/entities/reticle_cursor/reticle_cursor.tscn" id="18_y2tuk"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kfu1x"]
 shader = ExtResource("2_4y830")
@@ -585,6 +586,10 @@ billboard = 1
 double_sided = false
 render_priority = 1
 texture = ExtResource("4_uhc5s")
+
+[node name="ReticleCrosshair" parent="." instance=ExtResource("18_y2tuk")]
+physics_interpolation_mode = 1
+visible = false
 
 [node name="worldEditButton" type="Control" parent="."]
 unique_name_in_owner = true

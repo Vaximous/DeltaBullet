@@ -83,6 +83,7 @@ func start_next_wave() -> void:
 				if is_instance_valid(gameManager.getCurrentPawn()):
 					wavePawn[1].inputComponent.targetedPawns.append(gameManager.getCurrentPawn())
 					wavePawn[1].inputComponent.stateMachine.change_state("Attack")
+					wavePawn[1].set_meta(&"ignore_activation_range",true)
 					wavePawn[1].inputComponent.lookAtPosition(gameManager.getCurrentPawn().global_position)
 				#print(wavePawn[1].inputComponent.pawnFSM.current_state)
 			#Wait for the duration before spawning next pawn.

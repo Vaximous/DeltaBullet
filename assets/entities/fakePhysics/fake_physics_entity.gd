@@ -16,8 +16,10 @@ var alive : bool = false:
 		alive = value
 		if alive:
 			process_mode = Node.PROCESS_MODE_INHERIT
+			PoolingManager.active_entities.append(self)
 		else:
 			process_mode = Node.PROCESS_MODE_DISABLED
+			PoolingManager.active_entities.erase(self)
 
 func _enter_tree() -> void:
 	set_physics_process(false)
@@ -31,6 +33,10 @@ func playImpactParticles()->void:
 	for i in impact_particles:
 		if is_instance_valid(i):
 			i.restart()
+
+func _exit_tree() -> void:
+	if PoolingManager.active_entities.has(self):
+		PoolingManager.active_entities.erase(self)
 
 func _ready() -> void:
 	#gameManager.beginCleanup()
@@ -53,7 +59,7 @@ func playAudios()->void:
 	for i in collisionSounds:
 		i.play()
 
-func _physics_process(delta: float) -> void:
+func process_entity(delta: float) -> void:
 	if not alive:
 		return
 

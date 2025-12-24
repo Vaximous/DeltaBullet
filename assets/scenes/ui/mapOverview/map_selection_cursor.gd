@@ -18,6 +18,8 @@ func _input(event: InputEvent) -> void:
 
 
 func selectMarker(marker: Area3D):
+	if !marker.owner.enabled: return
+
 	if map.mapScreen.selectedMarker:
 		#Deselected
 		if map.mapScreen.selectedMarker.isLocationCurrent():
@@ -51,10 +53,12 @@ func deselectMarker() -> void:
 
 func _on_area_3d_area_entered(area: Area3D) -> void:
 	if area.owner.has_method("playOpenAnimation"):
-		area.owner.playOpenAnimation()
-		area.owner.hoverSound.play()
+		if area.owner.enabled:
+			area.owner.playOpenAnimation()
+			area.owner.hoverSound.play()
 
 
 func _on_area_3d_area_exited(area: Area3D) -> void:
 	if area.owner.has_method("playCloseAnimation"):
-		area.owner.playCloseAnimation()
+		if area.owner.enabled:
+			area.owner.playCloseAnimation()

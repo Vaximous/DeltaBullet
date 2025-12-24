@@ -159,7 +159,7 @@ func apply_ragdoll_motor(b: PhysicalBone3D, target_basis: Basis, kp: float = 500
 
 func boneSetup()->void:
 	excludeAllAI()
-	set_meta(&"physics_material_override", preload("res://assets/resources/PhysicsMaterials/flesh_physics_material.tres"))
+	set_meta(&"physics_material_override", gameManager.get_physics_material(&"flesh_physics_material"))
 	setBoneCooldownTimer()
 	audioCooldown = 0.0
 	createAudioPlayer()

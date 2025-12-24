@@ -1,7 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://cpd5r8bmx2885"]
+[gd_scene load_steps=15 format=3 uid="uid://cpd5r8bmx2885"]
 
 [ext_resource type="Script" uid="uid://bn6twcdxleakc" path="res://assets/scripts/entities/interactiveObject/weaponBase.gd" id="1_37cvt"]
 [ext_resource type="AudioStream" uid="uid://c7ulnbplr7bm8" path="res://assets/sounds/weapons/dryfire1.wav" id="2_dmwe3"]
+[ext_resource type="PackedScene" uid="uid://btf1orhx5rvco" path="res://assets/components/alertAIComponent/ai_alert_component.tscn" id="3_7l2u7"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_psxhm"]
 bounce = 0.35
@@ -35,6 +36,9 @@ _data = {
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_latvr"]
 streams_count = 1
 stream_0/stream = ExtResource("2_dmwe3")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_1v660"]
+radius = 10.0
 
 [node name="weaponBase" type="RigidBody3D" groups=["Interactable"]]
 collision_layer = 32
@@ -75,6 +79,22 @@ unique_name_in_owner = true
 max_polyphony = 2
 bus = &"Sounds"
 
+[node name="aiAlertComponent" parent="." node_paths=PackedStringArray("attached") instance=ExtResource("3_7l2u7")]
+unique_name_in_owner = true
+attached = NodePath("..")
+activation_type = 1
+refreshing = false
+
+[node name="alert_collision_shape" type="CollisionShape3D" parent="aiAlertComponent"]
+unique_name_in_owner = true
+shape = SubResource("SphereShape3D_1v660")
+
+[node name="timer" type="Timer" parent="aiAlertComponent"]
+unique_name_in_owner = true
+wait_time = 1.5
+
 [connection signal="aimingStart" from="." to="." method="playAimSound"]
 [connection signal="dry_fired" from="." to="dryFire" method="play"]
 [connection signal="freeaimStart" from="." to="." method="playAimSound"]
+[connection signal="shot_fired" from="." to="." method="do_alert"]
+[connection signal="timeout" from="aiAlertComponent/timer" to="." method="_on_timer_timeout"]

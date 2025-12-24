@@ -26,6 +26,7 @@ weaponDamage = 80.0
 weaponFireRate = 0.8
 bulletPenetration = 1000.0
 weaponImpulse = 70.0
+weapon_alert_range = 35.0
 damageFalloff = ExtResource("1_threb")
 forcedCrosshair = ExtResource("1_22a00")
 useFOV = true

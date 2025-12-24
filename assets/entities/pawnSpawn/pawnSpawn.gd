@@ -101,7 +101,7 @@ func spawnPawn(forceParent : Node = null, _params : PawnSpawnParameters = null) 
 					pawn.global_position.y = global_position.y + 0.1
 					pawn.global_position.z = global_position.z
 					pawn.rotation.y = global_rotation.y
-					pawn.healthComponent.defaultHP = 550
+					pawn.healthComponent.defaultHP = 150
 					pawn.componentHolder.add_child(controller)
 					pawn.inputComponent = controller
 					pawn.checkComponents()

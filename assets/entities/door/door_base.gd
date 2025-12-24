@@ -30,6 +30,7 @@ extends Node3D
 @export var interactiveObject : InteractiveObject
 @export var doorMesh : Node3D
 @export var doorOpenSpeed : float = 0.25
+@export var mirrored : bool = false
 const defaultTransitionType = Tween.TRANS_QUAD
 const defaultEaseType = Tween.EASE_OUT
 var doorTween : Tween
@@ -71,7 +72,10 @@ func openRequest(pawn:BasePawn):
 			if !isDoorOpen:
 				#Detect which side player is on, for now just do default open animation if its unlocked
 				isDoorOpen = true
-				openDoorFront()
+				if !mirrored:
+					openDoorFront()
+				else:
+					openDoorBack()
 			else:
 				isDoorOpen = false
 				closeDoor()

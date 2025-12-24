@@ -1,8 +1,10 @@
-[gd_scene load_steps=16 format=3 uid="uid://eovl4whsv3lj"]
+[gd_scene load_steps=19 format=3 uid="uid://eovl4whsv3lj"]
 
 [ext_resource type="Script" uid="uid://dos6iw15xdqvj" path="res://assets/scenes/ui/mapOverview/mapPopup.gd" id="1_sgctd"]
 [ext_resource type="Texture2D" uid="uid://bag0nbin3udvs" path="res://assets/textures/misc/bootlogo.png" id="1_yv6rj"]
 [ext_resource type="AudioStream" uid="uid://d1pr7ltc6f600" path="res://assets/sounds/ui/uiappear.wav" id="3_o65sk"]
+[ext_resource type="Texture2D" uid="uid://blqrwj3lod7is" path="res://assets/textures/ui/grit-64.png" id="3_vonld"]
+[ext_resource type="FontFile" uid="uid://cjx7ex8xoirb6" path="res://assets/fonts/Orbitron/static/Orbitron-Black.ttf" id="4_hjkdg"]
 [ext_resource type="AudioStream" uid="uid://cpacq6td0fe4q" path="res://assets/sounds/ui/shop/Buy sound_1.wav" id="4_t2nau"]
 [ext_resource type="AudioStream" uid="uid://c3bhon2ro1hq7" path="res://assets/sounds/ui/shop/Buy sound_2.wav" id="5_vonld"]
 [ext_resource type="AudioStream" uid="uid://cxrbsrsbi167g" path="res://assets/sounds/ui/shop/Buy sound_3.wav" id="6_hjkdg"]
@@ -22,6 +24,13 @@ outline_size = 5
 outline_color = Color(0, 0, 0, 1)
 shadow_size = 3
 shadow_color = Color(0, 0, 0, 0.6627451)
+
+[sub_resource type="LabelSettings" id="LabelSettings_uvhqi"]
+font = ExtResource("4_hjkdg")
+font_size = 36
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+shadow_color = Color(0, 0, 0, 0.3529412)
 
 [sub_resource type="Animation" id="Animation_ces1u"]
 length = 0.001
@@ -260,6 +269,56 @@ layout_mode = 2
 layout_mode = 2
 size_flags_vertical = 3
 alignment = 1
+
+[node name="cost_sep" type="HSeparator" parent="popupVbox/contents/panelContainer/hSplitContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="cost_container" type="CenterContainer" parent="popupVbox/contents/panelContainer/hSplitContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 19.12)
+layout_mode = 2
+
+[node name="hBoxContainer" type="HBoxContainer" parent="popupVbox/contents/panelContainer/hSplitContainer/cost_container"]
+layout_mode = 2
+
+[node name="grit_cost" type="MarginContainer" parent="popupVbox/contents/panelContainer/hSplitContainer/cost_container/hBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="hBoxContainer" type="HBoxContainer" parent="popupVbox/contents/panelContainer/hSplitContainer/cost_container/hBoxContainer/grit_cost"]
+layout_mode = 2
+
+[node name="textureRect" type="TextureRect" parent="popupVbox/contents/panelContainer/hSplitContainer/cost_container/hBoxContainer/grit_cost/hBoxContainer"]
+layout_mode = 2
+texture = ExtResource("3_vonld")
+
+[node name="grit_cost_label" type="Label" parent="popupVbox/contents/panelContainer/hSplitContainer/cost_container/hBoxContainer/grit_cost/hBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "10"
+label_settings = SubResource("LabelSettings_uvhqi")
+
+[node name="vSeparator" type="VSeparator" parent="popupVbox/contents/panelContainer/hSplitContainer/cost_container/hBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="dollen_cost" type="MarginContainer" parent="popupVbox/contents/panelContainer/hSplitContainer/cost_container/hBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="hBoxContainer" type="HBoxContainer" parent="popupVbox/contents/panelContainer/hSplitContainer/cost_container/hBoxContainer/dollen_cost"]
+layout_mode = 2
+
+[node name="textureRect" type="TextureRect" parent="popupVbox/contents/panelContainer/hSplitContainer/cost_container/hBoxContainer/dollen_cost/hBoxContainer"]
+layout_mode = 2
+texture = ExtResource("3_vonld")
+
+[node name="dollen_cost_label" type="Label" parent="popupVbox/contents/panelContainer/hSplitContainer/cost_container/hBoxContainer/dollen_cost/hBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "20"
+label_settings = SubResource("LabelSettings_uvhqi")
 
 [node name="bottom" type="MarginContainer" parent="popupVbox"]
 clip_contents = true

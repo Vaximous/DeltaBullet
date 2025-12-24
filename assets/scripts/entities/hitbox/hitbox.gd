@@ -20,7 +20,7 @@ func _ready()->void:
 			if healthComponent.componentOwner is BasePawn:
 				await healthComponent.componentOwner.ready
 				healthComponent.componentOwner.hitboxes.append(self)
-				var mat : DB_PhysicsMaterial = preload("res://assets/resources/PhysicsMaterials/flesh_physics_material.tres")
+				var mat : DB_PhysicsMaterial = gameManager.get_physics_material(&"flesh_physics_material")
 				set_meta(&"physics_material_override", mat)
 		if !get_parent() == null:
 			if get_parent() is BoneAttachment3D:

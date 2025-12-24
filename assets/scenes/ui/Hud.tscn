@@ -1,6 +1,7 @@
-[gd_scene load_steps=36 format=3 uid="uid://1d1rfqprpnrb"]
+[gd_scene load_steps=37 format=3 uid="uid://1d1rfqprpnrb"]
 
 [ext_resource type="Script" uid="uid://bqcb21u5nterd" path="res://assets/entities/camera/HUD.gd" id="1_on6xd"]
+[ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="2_4myd3"]
 [ext_resource type="Shader" uid="uid://c75blutw6w8na" path="res://assets/scenes/ui/radialBlur.gdshader" id="2_4y830"]
 [ext_resource type="FontFile" uid="uid://xmwjvmqspojb" path="res://assets/fonts/Grand_Aventure_Text.otf" id="2_tf7jg"]
 [ext_resource type="Texture2D" uid="uid://dc3fkfugwvtla" path="res://assets/textures/misc/company-logo (1).png" id="3_4nkiw"]
@@ -743,6 +744,17 @@ offset_right = 20.0
 offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="StateChartDebugger" parent="." instance=ExtResource("2_4myd3")]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.528
+anchor_bottom = 0.528
+offset_left = 752.0
+offset_top = 10.0
+offset_right = 751.6445
+offset_bottom = 9.799988
 
 [connection signal="interactionFound" from="." to="Interact/interactAnimPlayer" method="play"]
 [connection signal="interactionFound" from="." to="Interact/audioStreamPlayer" method="play"]

@@ -27,7 +27,7 @@ func _enter_tree() -> void:
 	await get_tree().process_frame
 	#gameManager.registerPhysicsEntity(self)
 	rotation = Vector3(randf_range(-360, 360), randf_range(-360, 360), randf_range(-360, 360))
-	get_tree().create_timer(UserConfig.game_decal_remove_time).timeout.connect(removeGib)
+	get_tree().create_timer(UserConfig.game_decal_remove_time).timeout.connect(remove_entity)
 
 func playImpactParticles()->void:
 	for i in impact_particles:
@@ -51,9 +51,14 @@ func _ready() -> void:
 	rotational_velocity = Vector3(randf_range(-PI, PI), randf_range(-PI, PI), randf_range(-PI, PI)) * 10.0
 
 func reset(pposition: Vector3, vel: Vector3):
+	decalTimer = 0.5
+	rotational_velocity = Vector3(randf_range(-PI, PI), randf_range(-PI, PI), randf_range(-PI, PI)) * 10.0
+	get_tree().create_timer(UserConfig.game_decal_remove_time).timeout.connect(remove_entity)
 	global_position = pposition
 	velocity = vel
 	alive = true
+	rotation = Vector3(randf_range(-360, 360), randf_range(-360, 360), randf_range(-360, 360))
+	show()
 
 func playAudios()->void:
 	for i in collisionSounds:
@@ -110,7 +115,7 @@ func meshInterpPos(pos:Vector3)->void:
 	if mesh:
 		mesh.position = pos
 
-func removeGib()->void:
+func remove_entity()->void:
 	alive = false
 	hide()
 	set_physics_process(false)

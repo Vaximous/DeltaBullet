@@ -238,7 +238,7 @@ func _process(delta)->void:
 func hpCheck()->void:
 	if is_instance_valid(followEntity) and followEntity is BasePawn:
 		if !followEntity.healthComponent.isDead:
-			if followEntity.healthComponent.health <= 150:
+			if followEntity.healthComponent.health <= followEntity.healthComponent.defaultHP / 2:
 				enableVignette(Color.DARK_RED,2)
 			else:
 				disableVignette()

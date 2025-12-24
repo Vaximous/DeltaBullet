@@ -14,7 +14,7 @@ var tweener: Tween
 
 func _physics_process(delta: float) -> void:
 	if enabled and !pawn.isPawnDead and is_instance_valid(pawn):
-		if pawn.isOnGround():
+		if pawn.isOnGround() and !pawn.isInCover:
 			pawn.pawnMesh.rotation.x = clamp(lerp_angle(pawn.pawnMesh.rotation.x, (Vector3(pawn.velocity.x, 0.0, pawn.velocity.z) * pawn.pawnMesh.global_transform.basis).z * 0.02, delta * 5), -PI / 6, PI / 6)
 		else:
 			pawn.pawnMesh.rotation.x = clamp(lerp_angle(pawn.pawnMesh.rotation.x, (Vector3(pawn.velocity.y, 0.0, pawn.velocity.z) * pawn.pawnMesh.global_transform.basis).z * 0.02, delta * 5), -PI / 6, PI / 6)
@@ -32,6 +32,7 @@ func _physics_process(delta: float) -> void:
 		if pawn.velocity != Vector3.ZERO:
 			pawn.setCoverMoveLBlend(lerpf(animationTree.get("parameters/coverMoveL/blend_position"), Vector2(pawn.velocity.x, pawn.velocity.z).rotated(mesh.rotation.y).x, 16 * delta))
 			pawn.setCoverMoveRBlend(lerpf(animationTree.get("parameters/coverMoveR/blend_position"), Vector2(-pawn.velocity.x, -pawn.velocity.z).rotated(mesh.rotation.y).x, 16 * delta))
+
 		animationTree.set("parameters/aimSprintStrafe/blend_position", Vector2(-pawn.velocity.x, -pawn.velocity.z).rotated(mesh.rotation.y))
 		animationTree.set("parameters/crouchStrafe/blend_position", animationTree.get("parameters/aimSprintStrafe/blend_position"))
 		animationTree.set("parameters/strafeSpace/blend_position", animationTree.get("parameters/aimSprintStrafe/blend_position"))

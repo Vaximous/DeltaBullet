@@ -55,6 +55,9 @@ func update(delta: float) -> void:
 		#pawnControlling.stairSnapCheck()
 	pawnControlling.move_and_slide()
 
+func get_speed()->float:
+	return speed
+
 func onMovementStateSet(state:MovementState)->void:
 	if enabled and !pawnControlling.isPawnDead and is_instance_valid(pawnControlling):
 		speed = state.movementSpeed

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://b53hvcf0hvvkw"]
+[gd_scene load_steps=21 format=3 uid="uid://b53hvcf0hvvkw"]
 
 [ext_resource type="Script" uid="uid://b268i2svd6x8f" path="res://addons/finite_state_machine/scripts/finite_state_machine.gd" id="2_ubyph"]
 [ext_resource type="Script" uid="uid://6gdyem6cg7ut" path="res://assets/components/aiComponent/aiComponent.gd" id="4_gaqok"]
@@ -8,12 +8,13 @@
 [ext_resource type="Script" uid="uid://65yu2g060csf" path="res://assets/components/aiComponent/aiStates/Attack.gd" id="7_m2cst"]
 [ext_resource type="Script" uid="uid://dtb6e32c2tkq1" path="res://assets/components/aiComponent/aiStates/FindCover.gd" id="8_bgtfw"]
 [ext_resource type="Script" uid="uid://yj6cxhxe0s8w" path="res://assets/components/aiComponent/aiStates/Patrol.gd" id="9_8na1r"]
-
-[sub_resource type="Gradient" id="Gradient_4vyck"]
-colors = PackedColorArray(0, 0, 0, 1, 1, 1, 0.32549, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_crd1y"]
-gradient = SubResource("Gradient_4vyck")
+[ext_resource type="Texture2D" uid="uid://ycfbtxweegmx" path="res://assets/textures/ui/maplegend.png" id="9_oqbx8"]
+[ext_resource type="Script" uid="uid://couw105c3bde4" path="res://addons/godot_state_charts/state_chart.gd" id="9_xmj20"]
+[ext_resource type="Script" uid="uid://jk2jm1g6q853" path="res://addons/godot_state_charts/compound_state.gd" id="10_oqbx8"]
+[ext_resource type="Script" uid="uid://cytafq8i1y8qm" path="res://addons/godot_state_charts/atomic_state.gd" id="11_ke2iy"]
+[ext_resource type="Script" uid="uid://c1vp0ojjvaby1" path="res://addons/godot_state_charts/parallel_state.gd" id="11_kvoc5"]
+[ext_resource type="Script" uid="uid://cf1nsco3w0mf6" path="res://addons/godot_state_charts/transition.gd" id="12_kvoc5"]
+[ext_resource type="Script" uid="uid://le5w1cm0ul8p" path="res://addons/godot_state_charts/expression_guard.gd" id="15_kvoc5"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_giynp"]
 transparency = 1
@@ -25,14 +26,22 @@ albedo_color = Color(1, 0, 0, 0.309804)
 [sub_resource type="SphereShape3D" id="SphereShape3D_nrp35"]
 radius = 15.0
 
+[sub_resource type="Resource" id="Resource_340mi"]
+script = ExtResource("15_kvoc5")
+expression = "!is_attacking and !nearestTarget"
+metadata/_custom_type_script = "uid://le5w1cm0ul8p"
+
+[sub_resource type="Resource" id="Resource_kvoc5"]
+script = ExtResource("15_kvoc5")
+expression = "is_attacking == false and !is_alerted"
+metadata/_custom_type_script = "uid://le5w1cm0ul8p"
+
 [node name="aiComponent" type="Node3D"]
 script = ExtResource("4_gaqok")
 aimTargetRecoil = Vector3(0, 0, 0)
 pawnType = 1
 
 [node name="navigationAgent3d" type="NavigationAgent3D" parent="."]
-path_desired_distance = 2.0
-target_desired_distance = 2.0
 avoidance_enabled = true
 debug_path_custom_color = Color(0.0980392, 1, 0, 1)
 
@@ -81,9 +90,14 @@ wait_time = 0.05
 autostart = true
 
 [node name="detectionNotice" type="Sprite3D" parent="."]
-transform = Transform3D(0.0686986, 0, 0, 0, 14.1423, 0, 0, 0, 1.0015, 0, 0, 0)
+unique_name_in_owner = true
+transform = Transform3D(0.325, 0, 0, 0, 0.325, 0, 0, 0, 0.325, 0, 0, 0)
 visible = false
-texture = SubResource("GradientTexture1D_crd1y")
+modulate = Color(1, 1, 1, 0)
+billboard = 2
+texture = ExtResource("9_oqbx8")
+region_enabled = true
+region_rect = Rect2(24, 8, 80, 80)
 
 [node name="debugPawnStats" type="Label3D" parent="."]
 visible = false
@@ -116,5 +130,141 @@ collision_mask = 8
 [node name="collisionShape3d" type="CollisionShape3D" parent="aiArea"]
 shape = SubResource("SphereShape3D_nrp35")
 
+[node name="stateChart" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("9_xmj20")
+initial_expression_properties = {
+&"is_alerted": false,
+&"is_attacking": false,
+&"nearestTarget": null
+}
+metadata/_custom_type_script = "uid://couw105c3bde4"
+
+[node name="Root" type="Node" parent="stateChart"]
+script = ExtResource("11_kvoc5")
+
+[node name="Actions" type="Node" parent="stateChart/Root"]
+script = ExtResource("10_oqbx8")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="stateChart/Root/Actions"]
+script = ExtResource("11_ke2iy")
+
+[node name="toAttack" type="Node" parent="stateChart/Root/Actions/Idle"]
+script = ExtResource("12_kvoc5")
+to = NodePath("../../Attack")
+event = &"begin_attack"
+delay_in_seconds = "0.6"
+
+[node name="to_search" type="Node" parent="stateChart/Root/Actions/Idle"]
+script = ExtResource("12_kvoc5")
+to = NodePath("../../Search")
+event = &"begin_search"
+delay_in_seconds = "0.0"
+
+[node name="Attack" type="Node" parent="stateChart/Root/Actions"]
+script = ExtResource("11_ke2iy")
+
+[node name="to_idle_movement" type="Node" parent="stateChart/Root/Actions/Attack"]
+script = ExtResource("12_kvoc5")
+to = NodePath("../../../MovementActions/Idle")
+event = &"stop_attack_movement"
+delay_in_seconds = "0.0"
+
+[node name="too_close_movement" type="Node" parent="stateChart/Root/Actions/Attack"]
+script = ExtResource("12_kvoc5")
+to = NodePath("../../../MovementActions/too_close")
+event = &"too_close"
+delay_in_seconds = "0.25"
+
+[node name="to_idle" type="Node" parent="stateChart/Root/Actions/Attack"]
+script = ExtResource("12_kvoc5")
+to = NodePath("../../Idle")
+event = &"stop"
+delay_in_seconds = "0.0"
+
+[node name="to_investigate" type="Node" parent="stateChart/Root/Actions/Attack"]
+script = ExtResource("12_kvoc5")
+to = NodePath("../../../MovementActions/Investigate")
+event = &"investigate"
+delay_in_seconds = "0.0"
+
+[node name="Search" type="Node" parent="stateChart/Root/Actions"]
+script = ExtResource("11_ke2iy")
+
+[node name="to_idle" type="Node" parent="stateChart/Root/Actions/Search"]
+script = ExtResource("12_kvoc5")
+to = NodePath("../../Idle")
+event = &"cancel_search"
+delay_in_seconds = "0.0"
+
+[node name="to_attack" type="Node" parent="stateChart/Root/Actions/Search"]
+script = ExtResource("12_kvoc5")
+to = NodePath("../../Attack")
+event = &"begin_attack"
+delay_in_seconds = "0.0"
+
+[node name="MovementActions" type="Node" parent="stateChart/Root"]
+script = ExtResource("10_oqbx8")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="stateChart/Root/MovementActions"]
+script = ExtResource("11_ke2iy")
+
+[node name="to_investigate" type="Node" parent="stateChart/Root/MovementActions/Idle"]
+script = ExtResource("12_kvoc5")
+to = NodePath("../../Investigate")
+event = &"investigate"
+guard = SubResource("Resource_340mi")
+delay_in_seconds = "0.0"
+
+[node name="to_investigate_alert" type="Node" parent="stateChart/Root/MovementActions/Idle"]
+script = ExtResource("12_kvoc5")
+to = NodePath("../../Investigate_alert")
+event = &"investigate_alert"
+guard = SubResource("Resource_kvoc5")
+delay_in_seconds = "0.1"
+
+[node name="Investigate" type="Node" parent="stateChart/Root/MovementActions"]
+script = ExtResource("11_ke2iy")
+
+[node name="to_idle" type="Node" parent="stateChart/Root/MovementActions/Investigate"]
+script = ExtResource("12_kvoc5")
+to = NodePath("../../Idle")
+delay_in_seconds = "0.0"
+
+[node name="Investigate_alert" type="Node" parent="stateChart/Root/MovementActions"]
+script = ExtResource("11_ke2iy")
+
+[node name="to_idle" type="Node" parent="stateChart/Root/MovementActions/Investigate_alert"]
+script = ExtResource("12_kvoc5")
+to = NodePath("../../Idle")
+event = &"to_idle"
+delay_in_seconds = "0.0"
+
+[node name="to_attack" type="Node" parent="stateChart/Root/MovementActions/Investigate_alert"]
+script = ExtResource("12_kvoc5")
+to = NodePath("../../../Actions/Attack")
+event = &"begin_attack"
+delay_in_seconds = "0.0"
+
+[node name="too_close" type="Node" parent="stateChart/Root/MovementActions"]
+script = ExtResource("11_ke2iy")
+
+[node name="to_idle" type="Node" parent="stateChart/Root/MovementActions/too_close"]
+script = ExtResource("12_kvoc5")
+to = NodePath("../../Idle")
+event = &"go_idle"
+delay_in_seconds = "3"
+
+[connection signal="alert_to" from="." to="." method="_on_alert_to"]
 [connection signal="velocity_computed" from="navigationAgent3d" to="." method="_on_navigation_agent_3d_velocity_computed"]
 [connection signal="timeout" from="pawnFSM/Wander/forceTargetReset" to="pawnFSM/Wander" method="_on_force_target_reset_timeout"]
+[connection signal="body_entered" from="aiArea" to="." method="evaluate_body"]
+[connection signal="body_exited" from="aiArea" to="." method="evaluate_body"]
+[connection signal="state_physics_processing" from="stateChart/Root/Actions/Attack" to="." method="shoot_at_enemy"]
+[connection signal="state_entered" from="stateChart/Root/Actions/Search" to="." method="set_detection_amount" binds= [1.0]]
+[connection signal="state_physics_processing" from="stateChart/Root/Actions/Search" to="." method="searching"]
+[connection signal="state_entered" from="stateChart/Root/MovementActions/Investigate" to="." method="investigate"]
+[connection signal="state_entered" from="stateChart/Root/MovementActions/Investigate_alert" to="." method="investigate_alert"]
+[connection signal="state_entered" from="stateChart/Root/MovementActions/too_close" to="." method="move_away_from_target"]

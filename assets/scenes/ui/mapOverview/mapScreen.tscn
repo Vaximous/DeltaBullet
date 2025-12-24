@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=3 uid="uid://bxog5iq8771kh"]
+[gd_scene load_steps=64 format=3 uid="uid://bxog5iq8771kh"]
 
 [ext_resource type="Theme" uid="uid://cmd714lbb53ja" path="res://assets/resources/themes/ui_theme.tres" id="1_iee3r"]
 [ext_resource type="PackedScene" uid="uid://c63b0ewnfkf4n" path="res://assets/scenes/ui/mapOverview/map/map.tscn" id="1_lplem"]
@@ -12,6 +12,7 @@
 [ext_resource type="AudioStream" uid="uid://dci1eyvaxauee" path="res://assets/sounds/ui/map/Map_transition_4.wav" id="9_od2qg"]
 [ext_resource type="AudioStream" uid="uid://d1lgsqudso57r" path="res://assets/music/menu/maptheme.wav" id="10_60wph"]
 [ext_resource type="Texture2D" uid="uid://b4lmvlm0y6lp4" path="res://assets/textures/icons/fatcow/attribution.png" id="12_od2qg"]
+[ext_resource type="Texture2D" uid="uid://blqrwj3lod7is" path="res://assets/textures/ui/grit-64.png" id="13_s27yt"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_od2qg"]
 shader = ExtResource("3_p8ko3")
@@ -179,6 +180,29 @@ scale_max = 1.1999999
 scale_curve = SubResource("CurveTexture_uhde6")
 color = Color(1, 0, 0, 1)
 color_ramp = SubResource("GradientTexture1D_eds7j")
+
+[sub_resource type="Gradient" id="Gradient_1x2q7"]
+offsets = PackedFloat32Array(0.25968993, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_r3bbh"]
+gradient = SubResource("Gradient_1x2q7")
+
+[sub_resource type="Curve" id="Curve_wficc"]
+_data = [Vector2(0, 0), 0.0, 2.8112292, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_wwelr"]
+curve = SubResource("Curve_wficc")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dxf2p"]
+resource_local_to_scene = true
+gravity = Vector3(0, 0, 0)
+scale_min = 1.1999999
+scale_max = 1.1999999
+scale_curve = SubResource("CurveTexture_wwelr")
+color = Color(1, 0, 0, 1)
+color_ramp = SubResource("GradientTexture1D_r3bbh")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wficc"]
 resource_local_to_scene = true
@@ -548,8 +572,8 @@ stream_3/stream = ExtResource("9_od2qg")
 stream_3/weight = 0.0
 
 [sub_resource type="Gradient" id="Gradient_vvgek"]
-offsets = PackedFloat32Array(0, 0.62450594, 1)
-colors = PackedColorArray(1, 0, 0, 0, 0.7058824, 0, 0, 0.25882354, 0.25490198, 0, 0, 1)
+offsets = PackedFloat32Array(0, 0.90140843, 1)
+colors = PackedColorArray(0.57254905, 0.5764706, 0.6039216, 0, 0.57254905, 0.5764706, 0.6039216, 0.3254902, 0.32542574, 0.3185562, 0.33332354, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_1x2q7"]
 gradient = SubResource("Gradient_vvgek")
@@ -560,7 +584,7 @@ outline_size = 3
 outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="Gradient" id="Gradient_wficc"]
-colors = PackedColorArray(0.5647059, 0, 0, 1, 0.60784316, 0, 0, 1)
+colors = PackedColorArray(0.32542574, 0.3185562, 0.33332354, 1, 0.57071215, 0.5755721, 0.6032654, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_wwelr"]
 gradient = SubResource("Gradient_wficc")
@@ -639,8 +663,17 @@ process_material = SubResource("ParticleProcessMaterial_5gb03")
 [node name="pingParticle" parent="mapScreen/subViewportContainer/subViewport/map/areaNodes/debugstreet" index="2"]
 process_material = SubResource("ParticleProcessMaterial_5gb03")
 
+[node name="pingParticle" parent="mapScreen/subViewportContainer/subViewport/map/areaNodes/debugstreet2" index="2"]
+process_material = SubResource("ParticleProcessMaterial_dxf2p")
+
+[node name="cornerUpRight" parent="mapScreen/subViewportContainer/subViewport/map/areaNodes/debugstreet2/visualHolder" index="1"]
+transform = Transform3D(0.99999976, 0, 0, 0, 1, 0, 0, 0, 0.99999976, 4.3829384, 0, 2.8440437)
+
 [node name="pingParticle" parent="mapScreen/subViewportContainer/subViewport/map/areaNodes/testRewardProperty" index="2"]
 process_material = SubResource("ParticleProcessMaterial_wficc")
+
+[node name="cornerUpLeft" parent="mapScreen/subViewportContainer/subViewport/map/areaNodes/testRewardProperty/visualHolder" index="0"]
+transform = Transform3D(0, 0, 0.99999964, 0, 1, 0, -0.99999964, 0, 0, 4.4210873, 0, -4.579485)
 
 [node name="pingParticle" parent="mapScreen/subViewportContainer/subViewport/map/areaNodes/testRewardProperty2" index="2"]
 process_material = SubResource("ParticleProcessMaterial_1x2q7")
@@ -712,26 +745,31 @@ stream = ExtResource("10_60wph")
 volume_db = -5.65
 bus = &"Music"
 
-[node name="hBoxContainer" type="HBoxContainer" parent="."]
+[node name="vBoxContainer" type="VBoxContainer" parent="."]
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -40.0
-offset_bottom = 40.0
+offset_left = -652.0
+offset_bottom = 132.0
 grow_horizontal = 0
 
-[node name="dollenCount" type="HBoxContainer" parent="hBoxContainer"]
+[node name="hBoxContainer" type="HBoxContainer" parent="vBoxContainer"]
+layout_mode = 2
+alignment = 2
+
+[node name="dollenCount" type="HBoxContainer" parent="vBoxContainer/hBoxContainer"]
 unique_name_in_owner = true
+visible = false
 clip_contents = true
 layout_mode = 2
 alignment = 2
 
-[node name="textureRect" type="TextureRect" parent="hBoxContainer/dollenCount"]
+[node name="textureRect" type="TextureRect" parent="vBoxContainer/hBoxContainer/dollenCount"]
 clip_contents = true
 layout_mode = 2
 texture = SubResource("GradientTexture1D_1x2q7")
 
-[node name="dollenLabel" type="Label" parent="hBoxContainer/dollenCount/textureRect"]
+[node name="dollenLabel" type="Label" parent="vBoxContainer/hBoxContainer/dollenCount/textureRect"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -744,14 +782,14 @@ label_settings = SubResource("LabelSettings_r3bbh")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="userInfo" type="MarginContainer" parent="hBoxContainer/dollenCount"]
+[node name="userInfo" type="MarginContainer" parent="vBoxContainer/hBoxContainer/dollenCount"]
 layout_mode = 2
 
-[node name="dock" type="TextureRect" parent="hBoxContainer/dollenCount/userInfo"]
+[node name="dock" type="TextureRect" parent="vBoxContainer/hBoxContainer/dollenCount/userInfo"]
 layout_mode = 2
 texture = SubResource("GradientTexture2D_wwelr")
 
-[node name="dockIcon" type="TextureRect" parent="hBoxContainer/dollenCount/userInfo/dock"]
+[node name="dockIcon" type="TextureRect" parent="vBoxContainer/hBoxContainer/dollenCount/userInfo/dock"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -766,17 +804,17 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("12_od2qg")
 
-[node name="gritCount" type="HBoxContainer" parent="hBoxContainer"]
+[node name="gritCount" type="HBoxContainer" parent="vBoxContainer/hBoxContainer"]
 clip_contents = true
 layout_mode = 2
 alignment = 2
 
-[node name="textureRect" type="TextureRect" parent="hBoxContainer/gritCount"]
+[node name="textureRect" type="TextureRect" parent="vBoxContainer/hBoxContainer/gritCount"]
 clip_contents = true
 layout_mode = 2
 texture = SubResource("GradientTexture1D_1x2q7")
 
-[node name="gritLabel" type="Label" parent="hBoxContainer/gritCount/textureRect"]
+[node name="gritLabel" type="Label" parent="vBoxContainer/hBoxContainer/gritCount/textureRect"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -789,14 +827,14 @@ label_settings = SubResource("LabelSettings_r3bbh")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="userInfo" type="MarginContainer" parent="hBoxContainer/gritCount"]
+[node name="userInfo" type="MarginContainer" parent="vBoxContainer/hBoxContainer/gritCount"]
 layout_mode = 2
 
-[node name="dock" type="TextureRect" parent="hBoxContainer/gritCount/userInfo"]
+[node name="dock" type="TextureRect" parent="vBoxContainer/hBoxContainer/gritCount/userInfo"]
 layout_mode = 2
 texture = SubResource("GradientTexture2D_wwelr")
 
-[node name="dockIcon" type="TextureRect" parent="hBoxContainer/gritCount/userInfo/dock"]
+[node name="dockIcon" type="TextureRect" parent="vBoxContainer/hBoxContainer/gritCount/userInfo/dock"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -809,25 +847,19 @@ offset_right = 16.5
 offset_bottom = 16.5
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("12_od2qg")
+texture = ExtResource("13_s27yt")
 
-[node name="playerRank" type="HBoxContainer" parent="."]
+[node name="playerRank" type="HBoxContainer" parent="vBoxContainer"]
 clip_contents = true
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -325.0
-offset_top = 64.0
-offset_right = -1.0
-offset_bottom = 128.0
+layout_mode = 2
 alignment = 2
 
-[node name="rank" type="TextureRect" parent="playerRank"]
+[node name="rank" type="TextureRect" parent="vBoxContainer/playerRank"]
 clip_contents = true
 layout_mode = 2
 texture = SubResource("GradientTexture1D_1x2q7")
 
-[node name="ranklabel" type="Label" parent="playerRank/rank"]
+[node name="ranklabel" type="Label" parent="vBoxContainer/playerRank/rank"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -840,14 +872,14 @@ label_settings = SubResource("LabelSettings_r3bbh")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="userInfo" type="MarginContainer" parent="playerRank"]
+[node name="userInfo" type="MarginContainer" parent="vBoxContainer/playerRank"]
 layout_mode = 2
 
-[node name="rankPendant" type="TextureRect" parent="playerRank/userInfo"]
+[node name="rankPendant" type="TextureRect" parent="vBoxContainer/playerRank/userInfo"]
 layout_mode = 2
 texture = SubResource("GradientTexture2D_wwelr")
 
-[node name="rankIcon" type="TextureRect" parent="playerRank/userInfo/rankPendant"]
+[node name="rankIcon" type="TextureRect" parent="vBoxContainer/playerRank/userInfo/rankPendant"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -877,6 +909,7 @@ texture = ExtResource("12_od2qg")
 [editable path="mapScreen/subViewportContainer/subViewport/map/areaNodes/interiortest"]
 [editable path="mapScreen/subViewportContainer/subViewport/map/areaNodes/activeragdolltest"]
 [editable path="mapScreen/subViewportContainer/subViewport/map/areaNodes/debugstreet"]
+[editable path="mapScreen/subViewportContainer/subViewport/map/areaNodes/debugstreet2"]
 [editable path="mapScreen/subViewportContainer/subViewport/map/areaNodes/testRewardProperty"]
 [editable path="mapScreen/subViewportContainer/subViewport/map/areaNodes/testRewardProperty2"]
 [editable path="mapScreen/AreaInformation"]

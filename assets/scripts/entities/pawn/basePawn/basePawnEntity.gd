@@ -495,6 +495,10 @@ func _ready() -> void:
 	fixRot()
 	setupPawnColor()
 	setAdditiveAnimation()
+
+	if !isPlayerPawn():
+		%coverHolder.hide()
+
 	for i in getAllHitboxes():
 		i.connect(&"damaged", flinch.bind(2))
 
@@ -520,7 +524,7 @@ func _physics_process(delta: float) -> void:
 
 			preventWeaponFire = aimBlockRaycast.is_colliding()
 
-			#canUseCover = %lowerCoverCast.is_colliding()
+			canUseCover = %lowerCoverCast.is_colliding()
 
 			if $%lowerCoverCast.is_colliding():
 				var offset = 0.2
@@ -726,6 +730,7 @@ func die(killer) -> void:
 		playKillSound()
 		var ragdoll = createRagdoll(lastHitPart, killer)
 		#moveHitboxDecals()
+		ragdoll.set_meta(&"teams", get_meta(&"teams"))
 		moveDecalsToRagdoll(ragdoll)
 		endPawn()
 		hide()
@@ -765,6 +770,7 @@ func createRagdoll(impulse_bone: int = 0, killer = null) -> PawnRagdoll:
 	ragdoll.savedPose = createRagdollPose(ragdoll)
 	ragdoll.targetSkeleton = pawnSkeleton
 	ragdoll.initializeRagdoll(self, velocity, impulse_bone, hitImpulse, hitVector, killer)
+	ragdoll.set_meta(&"perp", killer)
 	return ragdoll
 
 
@@ -1869,6 +1875,12 @@ func stopPhoneCall() -> void:
 	playingCall = false
 	isUsingPhone = false
 
+func get_pawn_center()->Vector3:
+	if !is_inside_tree(): return Vector3.ZERO
+
+	if isCrouching: return Vector3(global_position.x, global_position.y + 0.75, global_position.z)
+
+	return Vector3(global_position.x, global_position.y + 1.5, global_position.z)
 
 func endPhoneCall() -> void:
 	if queuedPhoneCall and !isPawnDead and playingCall:

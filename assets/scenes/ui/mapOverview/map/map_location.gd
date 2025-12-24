@@ -1,6 +1,8 @@
 @tool
 extends Marker3D
 
+@export var enabled : bool = true
+
 enum IconType {
 	STORY,
 	SAFEHOUSE,
@@ -128,6 +130,9 @@ var locationDescription: String = ""
 
 func _ready() -> void:
 	%icon.position.y = collisionShape.shape.size.y - 4.0
+
+	if !enabled: return
+
 	setupMap()
 	setMarkerIcon(markerIcon)
 
@@ -162,23 +167,27 @@ func setVisualMarkers() -> void:
 
 
 func setupMap() -> void:
-	if !Engine.is_editor_hint():
-		playCloseAnimation()
-		if map:
-			defaultMarkerIcon = markerIcon
-			setMarkerIcon(markerIcon)
-			%mapLabel.text = locationName
-			if markerType == Types.PROPERTY:
-				set_meta(&"id", propertyID)
-				set_meta(&"price", propertyPrice)
-				set_meta(&"rewards", propertyRewards)
-				if gameState.hasOwnedProperty(get_meta(&"id")):
-					setPropertyState(PropertyState.Purchased)
+	if Engine.is_editor_hint(): return
 
-			if travelScene:
-				var scene = travelScene.instantiate()
-				locationDescription = scene.worldData.worldDescription
-				scene.queue_free()
+	if !enabled: return
+
+	if !map: return
+
+	playCloseAnimation()
+	defaultMarkerIcon = markerIcon
+	setMarkerIcon(markerIcon)
+	%mapLabel.text = locationName
+	if markerType == Types.PROPERTY:
+		set_meta(&"id", propertyID)
+		set_meta(&"price", propertyPrice)
+		set_meta(&"rewards", propertyRewards)
+		if gameState.hasOwnedProperty(get_meta(&"id")):
+			setPropertyState(PropertyState.Purchased)
+
+		if travelScene:
+			var scene = travelScene.instantiate()
+			locationDescription = scene.worldData.worldDescription
+			scene.queue_free()
 
 
 func playOpenAnimation() -> void:

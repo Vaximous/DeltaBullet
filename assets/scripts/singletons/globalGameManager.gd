@@ -10,6 +10,12 @@ signal worldLoaded
 
 #region Constants
 # Constants
+const PHYSICS_MATERIALS = {
+	"flesh_physics_material": preload("res://assets/resources/PhysicsMaterials/flesh_physics_material.tres"),
+	"metal_physics_material": preload("res://assets/resources/PhysicsMaterials/metal_physics_material.tres"),
+	"generic_physics_material": preload("res://assets/resources/PhysicsMaterials/generic_physics_material.tres"),
+	"wood_physics_material": preload("res://assets/resources/PhysicsMaterials/wood_physics_material.tres")
+}
 const defaultTweenSpeed: float = 0.25
 const defaultTransitionType = Tween.TRANS_QUART
 const defaultEaseType = Tween.EASE_OUT
@@ -144,6 +150,9 @@ func _ready() -> void:
 	await get_tree().process_frame
 	SmackneckClient.connect_to_masterserver()
 
+func get_physics_material(material:StringName)->DB_PhysicsMaterial:
+	return PHYSICS_MATERIALS[material]
+
 func disable_pawn(pawn:BasePawn)->void:
 	if pawn.process_mode == Node.PROCESS_MODE_DISABLED: return
 
@@ -174,7 +183,7 @@ func cleanupChecker()->void:
 	if physEntities.size() >= UserConfig.game_max_physics_entities:
 		for i in physEntities:
 			if is_instance_valid(i):
-				i.queue_free()
+				i.remove_entity()
 			else:
 				decals.erase(i)
 		physEntities.clear()
@@ -400,7 +409,7 @@ func doKillEffect(pawn: BasePawn, deathDealer: BasePawn) -> void:
 				pawn.healthComponent.killerSignalEmitted = true
 
 		if deathDealer.healthComponent.health < deathDealer.healthComponent.defaultHP and !deathDealer.healthComponent.isDead and deathDealer.isPlayerPawn():
-			deathDealer.healthComponent.setHealth(deathDealer.healthComponent.health + 35)
+			deathDealer.healthComponent.setHealth(deathDealer.healthComponent.health + 5)
 
 
 func onPlayerDeath() -> void:
@@ -1239,13 +1248,13 @@ func registerPhysicsEntity(entity:Node3D)->void:
 	if physEntities.size() > UserConfig.game_max_physics_entities:
 		var oldest = physEntities.pop_front()
 		if is_instance_valid(oldest):
-			oldest.queue_free()
+			oldest.remove_entity()
 
 #region Physics Entity Check
 func physEntityCheck() -> void:
 	while get_tree().get_nodes_in_group(&"physicsEntity").size() > UserConfig.game_max_physics_entities:
 		if is_instance_valid(get_tree().get_nodes_in_group(&"physicsEntity")[0]):
-			get_tree().get_nodes_in_group(&"physicsEntity")[0].call_deferred("queue_free")
+			get_tree().get_nodes_in_group(&"physicsEntity")[0].call_deferred("remove_entity")
 			get_tree().get_nodes_in_group(&"physicsEntity").remove_at(0)
 			await get_tree().process_frame
 	return

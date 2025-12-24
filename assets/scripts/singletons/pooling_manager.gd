@@ -12,7 +12,8 @@ var entity_dict : Dictionary = {
 	"droplet" : preload("res://assets/entities/emitters/bloodDroplet/bloodDrop.tscn"),
 	"giblet": preload("res://assets/entities/gib/giblet.tscn"),
 	"bullet" : preload("res://assets/entities/projectiles/Bullet.tscn"),
-	"bullet_trail" : preload("res://assets/entities/bulletTrail/bulletTrail.tscn")
+	"bullet_trail" : preload("res://assets/entities/bulletTrail/bulletTrail.tscn"),
+	"bullet_casing_9mm" : preload("res://assets/entities/casing/BulletCasing.tscn")
 }
 
 #Pooling bullet holes
@@ -47,9 +48,18 @@ const MAX_BULLETS = 128
 const MAX_ROCKETS = 32
 const MAX_GRENADESHELLS = 32
 const MAX_TRAILS = 64
+const MAX_BULLET_CASING_9MM = 32
 
 var droplet_pool: Array[BloodDroplet] = []
 var droplet_index := 0
+
+#Bullet Casing Types
+enum BULLET_CASING_TYPES{
+	NINEMM,
+	MISC,
+}
+var bullet_casing_9mm_pool: Array[FakePhysicsEntity] = []
+var bullet_casing_9mm_index := 0
 
 #Bullet Types
 enum BULLET_TYPES{
@@ -99,6 +109,19 @@ func create_bullet_hole(parent:Node,bullet_hole_type:HOLE_MATERIALS, pos : Vecto
 		hole.reset(pos, rot, normal, bulletVel)
 	return hole
 
+func spawn_bullet_casing(world:WorldScene,casing_type:BULLET_CASING_TYPES, position: Vector3, velocity:Vector3 = Vector3.ONE) -> FakePhysicsEntity:
+	if !world: return null
+	var casing : FakePhysicsEntity
+	match casing_type:
+		BULLET_CASING_TYPES.NINEMM:
+			casing = bullet_casing_9mm_pool[PoolingManager.bullet_casing_9mm_index]
+			bullet_casing_9mm_index = (PoolingManager.bullet_casing_9mm_index + 1) % PoolingManager.MAX_BULLET_CASING_9MM
+			if !casing: return
+			casing.reset(position, velocity)
+			return casing
+	return null
+
+
 func create_projectile(world:WorldScene,projectile_type:BULLET_TYPES, position: Vector3,p_owner:Node3D, velocity: Vector3 = Vector3.ONE)->Projectile:
 	var projectile : Projectile
 	if is_instance_valid(world):
@@ -129,6 +152,8 @@ func initAllPools(world:WorldScene)->void:
 		initGibletPool(world)
 		initBulletPool(world)
 		initTrailPool(world)
+		for i in BULLET_CASING_TYPES.size():
+			init_bullet_casing_pool(i,world)
 		for i in HOLE_MATERIALS.size():
 			init_bullet_hole_pool(i,world)
 
@@ -154,7 +179,7 @@ func initGibletPool(world:WorldScene) -> void:
 	gib_pool.clear()
 	for i in MAX_GIBS:
 		var d: FakePhysicsEntity = entity_dict["giblet"].instantiate()
-		d.hide()
+		d.remove_entity()
 		if is_instance_valid(world):
 			world.pooledObjects.add_child(d)
 			gib_pool.append(d)
@@ -167,6 +192,19 @@ func initDropletPool(world:WorldScene) -> void:
 		if is_instance_valid(world):
 			world.pooledObjects.add_child(d)
 			droplet_pool.append(d)
+
+func init_bullet_casing_pool(bullet_casing_type : BULLET_CASING_TYPES, world:WorldScene)->void:
+	if !is_instance_valid(world): return
+	var d : FakePhysicsEntity
+	match bullet_casing_type:
+		BULLET_CASING_TYPES.NINEMM:
+			bullet_casing_9mm_pool.clear()
+			for i in MAX_BULLET_CASING_9MM:
+				d = entity_dict["bullet_casing_9mm"].instantiate()
+				bullet_casing_9mm_pool.append(d)
+				d.remove_entity()
+				world.pooledObjects.add_child(d)
+
 
 func init_bullet_hole_pool(bullet_hole : HOLE_MATERIALS, world:WorldScene)->void:
 	if !is_instance_valid(world): return

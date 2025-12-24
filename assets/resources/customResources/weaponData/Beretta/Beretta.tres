@@ -26,6 +26,7 @@ weaponDamage = 7.0
 weaponFireRate = 0.22
 bulletPenetration = 0.0
 weaponImpulse = 13.5
+weapon_alert_range = 8.0
 damageFalloff = ExtResource("1_tcsnk")
 scopedFOV = 10
 useCustomCrosshairSize = true

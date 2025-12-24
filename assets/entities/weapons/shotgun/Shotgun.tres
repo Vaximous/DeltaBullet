@@ -35,6 +35,7 @@ weaponDamage = 180.0
 weaponFireRate = 1.2
 weaponImpulse = 30.0
 weaponShots = 8
+weapon_alert_range = 25.0
 damageFalloff = ExtResource("1_s844f")
 useCustomCrosshairSize = true
 forcedCrosshair = ExtResource("7_ljyjj")

@@ -17,6 +17,7 @@ signal weaponBlockedChange
 		currentMagSize = weaponResource.weaponMagSize
 		setWeaponRecoil()
 @export_subgroup("Behavior")
+var alert_allowed : bool = true
 @export var ejectionPoint: Marker3D
 @export var smokeEffect: PackedScene
 @export var projectile: PoolingManager.BULLET_TYPES = PoolingManager.BULLET_TYPES.BULLET
@@ -134,6 +135,7 @@ var defaultBulletTrail = load("res://assets/entities/bulletTrail/bulletTrail.tsc
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 		#resetWeaponMesh()
+	setup_alert_range()
 	objectUsed.connect(equipToPawn)
 	animationTree.tree_root = animationTree.tree_root.duplicate(true)
 	weaponState = (animationTree.get("parameters/weaponState/playback") as AnimationNodeStateMachinePlayback)
@@ -189,6 +191,13 @@ func _physics_process(delta) -> void:
 			else:
 				gameManager.activeCamera.hud.closeCrosshair.modulate = lerp(gameManager.activeCamera.hud.closeCrosshair.modulate, Color.TRANSPARENT, 16 * delta)
 
+func setup_alert_range()->void:
+	if !weaponResource: return
+
+	%alert_collision_shape.shape = %alert_collision_shape.shape.duplicate()
+	var shape = %alert_collision_shape.shape
+	if shape is SphereShape3D:
+		shape.radius = weaponResource.weapon_alert_range
 
 func checkWeaponBlend() -> void:
 	if weaponAnimSet and isEquipped:
@@ -348,15 +357,14 @@ func fire() -> void:
 	return
 
 
-func spawn_bullet_casing() -> void:
-	if ejectionPoint:
-		var casing = preload("res://assets/entities/casing/BulletCasing.tscn")
-		var inst = casing.instantiate()
-		inst.velocity.y = 15 * ejectionPoint.rotation.x
-		inst.velocity.x = randf_range(-1, 1)
-		inst.velocity.z = randf_range(-1, 1)
-		gameManager.world.add_child(inst)
-		inst.global_position = ejectionPoint.global_position
+func spawn_bullet_casing() -> FakePhysicsEntity:
+	if !ejectionPoint: return null
+	var casing = PoolingManager.spawn_bullet_casing(
+		gameManager.world,PoolingManager.BULLET_CASING_TYPES.NINEMM,
+		ejectionPoint.global_position,
+		Vector3(randf_range(-1,1),15 * ejectionPoint.rotation.x,randf_range(-1,1))
+		)
+	return casing
 
 
 func setBlendShapeValue(mesh: NodePath, blendShape: int, value: float) -> void:
@@ -736,7 +744,20 @@ func playWeaponAnimation(animatorNode: String, animationName: StringName, useRel
 		wepAnimator.seek(0.0, true)
 		wepAnimator.play(animationName)
 
+func do_alert()->void:
+	if weaponResource.silent_weapon: return
+	if !alert_allowed : return
+
+	alert_allowed = false
+	if %timer.is_stopped():
+		%timer.start()
+	%aiAlertComponent.perpetrator = weaponOwner
+	%aiAlertComponent.alert()
 
 func playAimSound() -> void:
 	if !%aimSound.playing and weaponRemoteState.get_current_node() == "idle" and !weaponOwner.isUsingPhone:
 		%aimSound.play()
+
+
+func _on_timer_timeout() -> void:
+	alert_allowed = true

@@ -123,7 +123,12 @@ func explode()->void:
 
 
 func _on_body_entered(body: Node3D) -> void:
-	if body is FakePhysicsEntity or body is BloodDroplet or body is Projectile:
+	if body is FakePhysicsEntity:
+		body.remove_entity()
+	elif body is BloodDroplet:
+		body.alive = false
+		body.hide()
+	elif body is Projectile:
 		body.queue_free()
 
 	if !explosionLOS:

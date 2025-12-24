@@ -18,6 +18,31 @@ func initializePanel() -> void:
 	rewardsContainer.hide()
 	if mapScreen:
 		mapScreen.screenBusy = true
+
+	if has_meta(&"price"):
+		%cost_sep.show()
+		%cost_container.show()
+		%grit_cost.show()
+		%grit_cost_label.text = str(get_meta(&"price"))
+	else:
+		%cost_sep.hide()
+		%cost_container.hide()
+		%grit_cost.hide()
+
+	if has_meta(&"price_dollen") and has_meta(&"price"):
+		%vSeparator.show()
+	else:
+		%vSeparator.hide()
+
+	if has_meta(&"price_dollen"):
+		%cost_sep.show()
+		%cost_container.show()
+		%dollen_cost.show()
+		%dollen_cost_label.text = str(get_meta(&"price_dollen"))
+	else:
+		%dollen_cost.hide()
+		%dollen_cost_label.text = str(get_meta(&"price_dollen"))
+
 	if has_meta(&"rewards"):
 		if get_meta(&"rewards").size() > 0:
 			rewardsContainer.show()

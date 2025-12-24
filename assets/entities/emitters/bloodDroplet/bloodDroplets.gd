@@ -9,6 +9,7 @@ var alive: bool = false:
 		set_physics_process(value)
 		if alive:
 			process_mode = Node.PROCESS_MODE_INHERIT
+			get_tree().create_timer(5).timeout.connect(func():alive=false)
 			#PoolingManager.active_entities.append(self)
 		else:
 			process_mode = Node.PROCESS_MODE_DISABLED
@@ -30,8 +31,6 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if not alive:
 		return
-
-
 
 	global_position += velocity * delta
 	velocity += get_gravity() * delta * 10

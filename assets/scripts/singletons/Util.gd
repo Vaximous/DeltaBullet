@@ -14,12 +14,55 @@ func doesFileExist(filePath: String) -> bool:
 func random_vector2() -> Vector2:
 	return Vector2(randf()-0.5, randf()-0.5) * 2.0
 
+# origin   -> position
+# distance -> how far away to get position
+func get_random_position_around_origin(origin: Vector3, distance: float) -> Vector3:
+	var angle:    float   = randf_range(0.0, TAU)
+	var base_vec: Vector3 = Vector3.FORWARD * distance
+	var rot_vec:  Vector3 = base_vec.rotated(Vector3.UP, angle)
+	return origin + rot_vec
+
 #Line of sight test, returns whether or not can see
-func is_line_of_sight(phys_space : PhysicsDirectSpaceState3D, pos_1 : Vector3, pos_2 : Vector3, mask : int, collide_with_areas : bool = false, collide_with_bodies : bool = true) -> bool:
-	var ray = PhysicsRayQueryParameters3D.create(pos_1, pos_2, mask, [])
+func is_line_of_sight(phys_space : PhysicsDirectSpaceState3D, pos_1 : Vector3, pos_2 : Vector3, mask : int, collide_with_areas : bool = false, collide_with_bodies : bool = true,exclude : Array[RID] = []) -> bool:
+	var ray = PhysicsRayQueryParameters3D.create(pos_1, pos_2, mask, exclude)
 	ray.collide_with_areas = collide_with_areas
 	ray.collide_with_bodies = collide_with_bodies
+	#Debug
+	if gameManager.debugEnabled:
+		if !phys_space.intersect_ray(ray).is_empty():
+			var im : ImmediateMesh = ImmediateMesh.new()
+			var meshins : MeshInstance3D = MeshInstance3D.new()
+			var mat : StandardMaterial3D = StandardMaterial3D.new()
+			mat.albedo_color = Color.RED
+			im.clear_surfaces()
+			im.surface_begin(Mesh.PRIMITIVE_LINES,mat)
+			im.surface_add_vertex(pos_1)
+			im.surface_add_vertex(pos_2)
+			im.surface_end()
+			meshins.mesh = im
+			gameManager.world.worldMisc.add_child(meshins)
 	return phys_space.intersect_ray(ray).is_empty()
+
+#Line of sight test, returns what it intersects if there is any
+func is_line_of_sight_with_params(phys_space : PhysicsDirectSpaceState3D, pos_1 : Vector3, pos_2 : Vector3, mask : int, collide_with_areas : bool = false, collide_with_bodies : bool = true,exclude : Array[RID] = []) -> Dictionary:
+	var ray = PhysicsRayQueryParameters3D.create(pos_1, pos_2, mask, exclude)
+	ray.collide_with_areas = collide_with_areas
+	ray.collide_with_bodies = collide_with_bodies
+	#Debug
+	if gameManager.debugEnabled:
+		if !phys_space.intersect_ray(ray).is_empty():
+			var im : ImmediateMesh = ImmediateMesh.new()
+			var meshins : MeshInstance3D = MeshInstance3D.new()
+			var mat : StandardMaterial3D = StandardMaterial3D.new()
+			mat.albedo_color = Color.RED
+			im.clear_surfaces()
+			im.surface_begin(Mesh.PRIMITIVE_LINES,mat)
+			im.surface_add_vertex(pos_1)
+			im.surface_add_vertex(pos_2)
+			im.surface_end()
+			meshins.mesh = im
+			gameManager.world.worldMisc.add_child(meshins)
+	return phys_space.intersect_ray(ray)
 
 #Remove directory
 func rmdir(directory: String) -> void:

@@ -82,7 +82,7 @@ func start_next_wave() -> void:
 				await get_tree().create_timer(0.1).timeout
 				if is_instance_valid(gameManager.getCurrentPawn()):
 					wavePawn[1].inputComponent.targetedPawns.append(gameManager.getCurrentPawn())
-					wavePawn[1].inputComponent.stateMachine.change_state("Attack")
+#					wavePawn[1].inputComponent.stateMachine.change_state("Attack")
 					wavePawn[1].set_meta(&"ignore_activation_range",true)
 					wavePawn[1].inputComponent.lookAtPosition(gameManager.getCurrentPawn().global_position)
 				#print(wavePawn[1].inputComponent.pawnFSM.current_state)

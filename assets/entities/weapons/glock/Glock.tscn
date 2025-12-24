@@ -57,6 +57,7 @@ weaponDamage = 7.9
 weaponFireRate = 0.22
 bulletPenetration = 0.0
 weaponImpulse = 17.0
+weapon_alert_range = 10.0
 damageFalloff = ExtResource("2_mqj12")
 weaponRecoil = Vector3(3.64, 1, 0.25)
 weaponRecoilStrength = 3.0

@@ -151,14 +151,17 @@ material = SubResource("StandardMaterial3D_1rstt")
 size = Vector2(0.3, 0.3)
 
 [node name="bulletHole_Flesh" node_paths=PackedStringArray("particleArray", "soundArray") instance=ExtResource("1_y0rpe")]
+physics_interpolation_mode = 0
 script = ExtResource("2_tbna7")
 bulletTextures = Array[Texture2D]([ExtResource("2_g3210")])
 particleArray = [NodePath("bloodSpurt"), NodePath("impactParticle"), NodePath("smokeParticle"), NodePath("bloodSpurtBigSpray")]
 soundArray = [NodePath("audioStreamPlayer3d")]
 decalSize = 0.055
 
+[node name="decal" parent="." index="0"]
+physics_interpolation_mode = 0
+
 [node name="audioStreamPlayer3d" type="AudioStreamPlayer3D" parent="." index="1"]
-physics_interpolation_mode = 1
 stream = SubResource("AudioStreamRandomizer_17daq")
 attenuation_model = 3
 pitch_scale = 0.75
@@ -168,7 +171,6 @@ attenuation_filter_db = 0.0
 
 [node name="bloodSpurt" parent="." index="2" instance=ExtResource("6_b318v")]
 unique_name_in_owner = true
-physics_interpolation_mode = 1
 visible = false
 
 [node name="bloodSpurtBigSpray" parent="." index="3" instance=ExtResource("9_vuivo")]
@@ -177,7 +179,6 @@ visible = false
 script = SubResource("GDScript_fb3dx")
 
 [node name="impactParticle" type="GPUParticles3D" parent="." index="4"]
-physics_interpolation_mode = 1
 emitting = false
 amount = 30
 one_shot = true
@@ -189,7 +190,6 @@ process_material = SubResource("ParticleProcessMaterial_ppysv")
 draw_pass_1 = SubResource("QuadMesh_m4v2p")
 
 [node name="smokeParticle" type="GPUParticles3D" parent="." index="5"]
-physics_interpolation_mode = 1
 emitting = false
 amount = 14
 one_shot = true

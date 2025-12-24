@@ -163,12 +163,15 @@ func fadeModel(parent: Node3D) -> void:
 
 func scanMarkers() -> void:
 	for markers in getMarkers():
-		if !markers.map:
-			markers.playCloseAnimation()
-			markers.map = self
-			markers.setupMap()
-		if markers.isLocationCurrent():
-			markers.setMarkerMaterial(load(markerColors[1]))
+		if markers.enabled:
+			if !markers.map:
+				markers.playCloseAnimation()
+				markers.map = self
+				markers.setupMap()
+			if markers.isLocationCurrent():
+				markers.setMarkerMaterial(load(markerColors[1]))
+		else:
+			markers.hide()
 
 
 func getMarkers() -> Array[Marker3D]:
